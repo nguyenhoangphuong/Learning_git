@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1033/MQ/trunk/src/UIAutomation/AppleOne/TCs
+END
+login.js
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/1033/MQ/trunk/src/UIAutomation/AppleOne/TCs/login.js
+END
+Multitasking.js
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/1033/MQ/trunk/src/UIAutomation/AppleOne/TCs/Multitasking.js
+END
+branching.js
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/1033/MQ/trunk/src/UIAutomation/AppleOne/TCs/branching.js
+END
+Handler.js
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/1033/MQ/trunk/src/UIAutomation/AppleOne/TCs/Handler.js
+END
+data-driven.js
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/1033/MQ/trunk/src/UIAutomation/AppleOne/TCs/data-driven.js
+END
+login-fail.js
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/1033/MQ/trunk/src/UIAutomation/AppleOne/TCs/login-fail.js
+END

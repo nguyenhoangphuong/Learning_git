@@ -1,0 +1,34 @@
+#!/usr/bin/expect
+
+# Input argument
+# $1 INSTRUMENT_TEMPLATE
+# $2 APPLICATION
+# $3 TC_DIR
+# $4 TC_CONFIG
+# $5 TC_REPORT
+# $6 EMAIL
+# $7 JOB_NAME
+# $8 fruitstrapbin
+# $9 DEVICE UDID
+# $10 DEVICE_INFO
+
+proc exec_it {command}     {
+    set timeout 5
+    set output ""
+    spawn udidetect -z
+    log_user 0
+    expect {
+        screen {
+            append output $expect_out(buffer)
+            exp_continue
+        }
+        timeout {
+            #return [string trimleft $expect_out(buffer) $command]
+        }
+    } 
+
+    return [string trimleft $output $command]
+}
+
+puts [exec_it "udidetect -z"]
+

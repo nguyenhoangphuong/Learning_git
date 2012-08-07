@@ -1,0 +1,2912 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="MFOTD" soapui-version="4.5.0" abortOnError="false" runType="SEQUENTIAL" resourceRoot="" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.actions.iface.tools.soapui.TestRunnerAction@values-local"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="Environment" value="Default"/>
+  <con:entry key="Global Properties" value=""/>
+  <con:entry key="TestSuite" value="TestSuite 1"/>
+  <con:entry key="Report to Generate" value=""/>
+  <con:entry key="Password" value=""/>
+  <con:entry key="soapui-setings.xml Password" value=""/>
+  <con:entry key="TestRunner Path" value=""/>
+  <con:entry key="Tool Args" value=""/>
+  <con:entry key="Ignore Errors" value="false"/>
+  <con:entry key="Host:Port" value=""/>
+  <con:entry key="WSS Password Type" value=""/>
+  <con:entry key="Save Project" value="false"/>
+  <con:entry key="Enable UI" value="false"/>
+  <con:entry key="System Properties" value=""/>
+  <con:entry key="Domain" value=""/>
+  <con:entry key="Coverage Report" value="false"/>
+  <con:entry key="Export JUnit Results" value="false"/>
+  <con:entry key="Open Report" value="false"/>
+  <con:entry key="Project Properties" value=""/>
+  <con:entry key="Project Password" value=""/>
+  <con:entry key="Export All" value="false"/>
+  <con:entry key="Report Format(s)" value=""/>
+  <con:entry key="TestCase" value="TestCase 1"/>
+  <con:entry key="Print Report" value="false"/>
+  <con:entry key="Username" value=""/>
+  <con:entry key="Root Folder" value=""/>
+  <con:entry key="Save After" value="false"/>
+  <con:entry key="Add Settings" value="false"/>
+  <con:entry key="Endpoint" value=""/>
+</xml-fragment>]]></con:setting></con:settings><con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="MFOTD" type="rest" basePath="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint></con:endpoints><con:resource name="General" path="/mfotd/v1/cards"><con:settings/><con:parameters/><con:method name="Get All Cards" method="GET"><con:settings/><con:parameters><con:parameter><con:name>api_key</con:name><con:value>1137232830</con:value><con:style>QUERY</con:style><con:default>1137232830</con:default></con:parameter></con:parameters><con:representation type="FAULT"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>404</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>404</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:car="http://ec2-23-20-33-23.compute-1.amazonaws.com/mfotd/v1/cards">car:Response</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>404 500</con:status><con:params/><con:element xmlns:car="http://ec2-23-20-33-23.compute-1.amazonaws.com/mfotd/v1/cards">car:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Request 1" mediaType="application/xml" accept="null"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method><con:method name="Get Cards With Parameter" method="GET"><con:settings/><con:parameters><con:parameter required="false" disableUrlEncoding="false"><con:name>api_key</con:name><con:value>1137232830</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default>1137232830</con:default><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>last_update</con:name><con:value>0</con:value><con:style>QUERY</con:style><con:default>0</con:default></con:parameter></con:parameters><con:representation type="FAULT"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>404 500</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>404</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:car="http://ec2-23-20-33-23.compute-1.amazonaws.com/mfotd/v1/cards">car:Response</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>404 500</con:status><con:params/><con:element xmlns:car="http://ec2-23-20-33-23.compute-1.amazonaws.com/mfotd/v1/cards">car:Fault</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Get cards with param is 0" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request><con:request name="Get cards with param is an character" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="last_update" value="a" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:request></con:method></con:resource><con:resource name="Announcements" path="/mfotd/v1/announcements?api_key=1137232830"><con:settings/><con:parameters/><con:method name="Get all announcements" method="GET"><con:settings/><con:parameters><con:parameter><con:name>api_key</con:name><con:value>1137232830</con:value><con:style>QUERY</con:style><con:default>1137232830</con:default></con:parameter></con:parameters><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ann="http://ec2-23-20-33-23.compute-1.amazonaws.com/mfotd/v1/announcements">ann:Response</con:element></con:representation><con:request name="Request 1" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method><con:method name="Get announcements with parameter" method="GET"><con:settings/><con:parameters><con:parameter required="false" disableUrlEncoding="false"><con:name>api_key</con:name><con:value>1137232830</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default>1137232830</con:default><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>last_update</con:name><con:value>0</con:value><con:style>QUERY</con:style><con:default>0</con:default></con:parameter></con:parameters><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ann="http://ec2-23-20-33-23.compute-1.amazonaws.com/mfotd/v1/announcements">ann:Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element>html</con:element></con:representation><con:request name="Get announcements with param 0" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request><con:request name="Get announcements with param is an character" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="last_update" value="a" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:request></con:method></con:resource><con:resource name="delete" path="/mfotd/admin/card/remove"><con:settings/><con:parameters><con:parameter><con:name>card_id</con:name><con:value>21</con:value><con:style>QUERY</con:style><con:default>21</con:default></con:parameter></con:parameters><con:method name="DeleteByID" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>500 404</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Delete" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="card_id" value="869" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:request></con:method></con:resource><con:resource name="AddCard" path="/mfotd/admin/card/create_by_get"><con:settings/><con:parameters><con:parameter><con:name>card[quote_author]</con:name><con:value>testtest</con:value><con:style>QUERY</con:style><con:default>testtest</con:default></con:parameter><con:parameter><con:name>card[character_name]</con:name><con:value>test</con:value><con:style>QUERY</con:style><con:default>test</con:default></con:parameter><con:parameter><con:name>card[date]</con:name><con:value>20120528</con:value><con:style>QUERY</con:style><con:default>20120528</con:default></con:parameter><con:parameter><con:name>card[quote]</con:name><con:value>quotetest</con:value><con:style>QUERY</con:style><con:default>quotetest</con:default></con:parameter><con:parameter><con:name>card[image_url]</con:name><con:value>http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x</con:value><con:style>QUERY</con:style><con:default>http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x</con:default></con:parameter></con:parameters><con:method name="AddNewCard" method="GET"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/x-www-form-urlencoded</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>404</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:cre="http://ec2-23-20-33-23.compute-1.amazonaws.com/mfotd/admin/card/create_by_get">cre:Response</con:element></con:representation><con:request name="Request 1" mediaType="application/x-www-form-urlencoded" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource name="deleteAnn" path="/mfotd/admin/announcement/remove"><con:settings/><con:parameters><con:parameter><con:name>announcement_id</con:name><con:value/><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default/><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="DeleteByID" method="GET"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Request 1" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="announcement_id" value="19" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:request></con:method></con:resource><con:resource name="AddAnn" path="/mfotd/admin/announcement/create_by_get"><con:settings/><con:parameters><con:parameter required="true"><con:name>announcement[text]</con:name><con:value>khoa</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default>khoa</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter required="true"><con:name>announcement[title]</con:name><con:value>ABC</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default>ABC</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter required="true"><con:name>announcement[image_url]</con:name><con:value>http://s3.amazonaws.com/mfotd_images/staging_perry_card_28_4221971870375082054_2x</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default>http://s3.amazonaws.com/mfotd_images/staging_perry_card_28_4221971870375082054_2x</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="AddNewCard" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:cre="http://ec2-23-20-33-23.compute-1.amazonaws.com/mfotd/admin/card/create_by_get">cre:Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>404 500</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/x-www-form-urlencoded</con:mediaType><con:params/></con:representation><con:request name="RequestAdd" mediaType="application/x-www-form-urlencoded" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource name="Dang Nhap" path="/mfotd/admin/sessions/create"><con:settings/><con:parameters><con:parameter><con:name>username</con:name><con:value>admin</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default>admin</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>pass</con:name><con:value>thinkdifferent</con:value><con:style>QUERY</con:style><con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type><con:default>thinkdifferent</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Method 1" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/x-www-form-urlencoded</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Request 1" mediaType="application/x-www-form-urlencoded" postQueryString="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:testSuite name="TestSuite 2"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true" id="9a19f45e-dc4c-4861-9048-b930df649476"><con:settings/><con:testStep type="restrequest" name="Get all announcements - Request 1"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/announcements?api_key=1137232830" methodName="Get all announcements" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get all announcements - Request 1" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 200
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def announcements = holder.get("announcements");
+def time = holder.get("time");
+
+assert time > 0;
+//get duoc may cai announcement
+//assert announcements.size() == 2;
+
+for (i=0 ; i &lt; announcements.size() ; i++)
+{
+	def announcementRoot =  announcements.get(i);
+	//no announcement is deleted
+	assert announcementRoot.get("deleted") == null;
+
+	def idRoot = announcementRoot.get("announcement_id"); 
+	def dateRoot = announcementRoot.get("date");
+	def imageURLRoot = announcementRoot.get("image_url");
+	def textRoot = announcementRoot.get("text");
+	def titleRoot = announcementRoot.get("title");
+	// id is integer
+
+	assert idRoot > -100;
+	
+	assert idRoot != null;
+	assert dateRoot != null;
+	assert imageURLRoot != null;
+	assert textRoot != null;
+	assert titleRoot != null;
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+			
+		//date is in order and attribute not duplicated   
+		if (i != announcements.size()-1)
+		{
+			for(j = i+1 ; j &lt;announcements.size() ; j++)
+			{
+				assert announcements.get(j).get("date") != dateRoot;
+				assert announcements.get(j).get("announcement_id") != idRoot;								
+				//assert announcements.get(j).get("image_url") != imageURLRoot;
+				assert announcements.get(j).get("text") != textRoot;
+				assert announcements.get(j).get("title") != titleRoot;
+			}
+		}
+	}
+	
+}
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 9" searchProperties="true" id="e17d094f-74a3-4981-82f3-d396bd6d80ee"><con:settings/><con:testStep type="restrequest" name="Get announcements with parameter - Get announcements with param 0"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/announcements?api_key=1137232830" methodName="Get announcements with parameter" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get announcements with parameter - Get announcements with param 0" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 200
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def announcements = holder.get("announcements");
+def time = holder.get("time");
+
+assert time > 0;
+//get duoc may cai announcement
+//assert announcements.size() == 14;
+def count = 0;
+
+for (i=0 ; i &lt; announcements.size() ; i++)
+{
+	def announcementRoot =  announcements.get(i);
+	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+
+		def idRoot = announcementRoot.get("announcement_id"); 
+		def dateRoot = announcementRoot.get("date");
+		def imageURLRoot = announcementRoot.get("image_url");
+		def textRoot = announcementRoot.get("text");
+		def titleRoot = announcementRoot.get("title");
+		
+		// id is integer
+		assert idRoot > -100;
+	
+		assert idRoot != null;
+		assert dateRoot != null;
+		assert imageURLRoot != null;
+		assert textRoot != null;
+		assert titleRoot != null;
+			
+		//date is in order and attribute not duplicated   
+		if (i != announcements.size()-1)
+		{
+			
+			for(j = i+1 ; j &lt;announcements.size() ; j++)
+			{
+				if (announcements.get(j).get("deleted") == null)
+				{
+					assert announcements.get(j).get("date") != dateRoot;
+					assert announcements.get(j).get("announcement_id") != idRoot;								
+					//assert announcements.get(j).get("image_url") != imageURLRoot;
+					assert announcements.get(j).get("text") != textRoot;
+					assert announcements.get(j).get("title") != titleRoot;
+				}
+			}
+		}
+	}
+	else
+	{
+		count = count + 1;
+		def idRoot = announcementRoot.get("announcement_id"); 
+		assert idRoot != null;
+	}
+	
+	
+}
+
+//assert count == 11;
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 10" searchProperties="true" id="42057986-6063-486d-aea2-02c3b27d7889"><con:settings/><con:testStep type="restrequest" name="Get announcements with parameter - Get announcements with param is an character"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/announcements?api_key=1137232830" methodName="Get announcements with parameter" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get announcements with parameter - Get announcements with param is an character" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 404
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def error = holder.get("error_message");
+
+assert error != null
+
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="last_update" value="a" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Delete by ID Ann" searchProperties="true" id="8ba5aee5-84ce-4b56-ace8-f3ffda63e086"><con:settings/><con:testStep type="restrequest" name="DangNhap"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/admin/sessions/create" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="DangNhap" mediaType="application/x-www-form-urlencoded" postQueryString="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="DeleteByID"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/admin/announcement/remove" methodName="DeleteByID" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="DeleteByID" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="announcement_id" value="90" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Delete All Ann" searchProperties="true" id="37cd83ab-2c52-4e8b-8181-880b1c2384d5"><con:settings/><con:testStep type="groovy" name="DeleteAll"><con:settings/><con:config><script>import com.eviware.soapui.model.testsuite.TestRunner.Status
+
+// cap nhat property vao test case
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"]
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+
+////-----------------------Xu li--------------------------
+def ResponseMessage = tc.testSteps["All announcements template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+
+for (i=0 ; i &lt; announcements.size() ; i++)
+{
+	def id =  announcements.get(i).get("announcement_id");	
+	// Xoa
+	def tcDel = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Delete by ID Ann"]
+	tcDel.testSteps["DeleteByID"].setPropertyValue("announcement_id", id.toString() )
+	def runnerDel = tcDel.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+	
+}
+
+
+
+
+
+
+
+
+
+</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Template" searchProperties="true" id="64b8d26c-4633-4120-884e-ce43e8306f86"><con:settings/><con:testStep type="restrequest" name="All announcements template"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/announcements?api_key=1137232830" methodName="Get all announcements" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="All announcements template" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Get with param Template"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/announcements?api_key=1137232830" methodName="Get announcements with parameter" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get with param Template" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="last_update" value="1339732651" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Add and Check Ann" searchProperties="true" id="776447fe-fd84-4ae3-a614-6ef38b74bc85"><con:settings/><con:testStep type="restrequest" name="DangNhap"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/admin/sessions/create" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="DangNhap" mediaType="application/x-www-form-urlencoded" postQueryString="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="properties" name="Parameter"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>text</con:name><con:value>TEXT4</con:value></con:property><con:property><con:name>image_url</con:name><con:value>http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x</con:value></con:property><con:property><con:name>title</con:name><con:value>TITLE4</con:value></con:property><con:property><con:name>date</con:name><con:value>20120505</con:value></con:property><con:property><con:name>updated_at</con:name><con:value>1339732651</con:value></con:property><con:property><con:name>QUOTE</con:name><con:value>QUOTE4</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="transfer" name="Transfer to Template"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>Transfer1</con:name><con:sourceType>text</con:sourceType><con:sourceStep>Parameter</con:sourceStep><con:targetType>announcement[text]</con:targetType><con:targetStep>AddNewAnnouncement</con:targetStep></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" useXQuery="false" ignoreEmpty="false"><con:name>Transfer2</con:name><con:sourceType>image_url</con:sourceType><con:sourceStep>Parameter</con:sourceStep><con:targetType>announcement[image_url]</con:targetType><con:targetStep>AddNewAnnouncement</con:targetStep></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>Transfer3</con:name><con:sourceType>title</con:sourceType><con:sourceStep>Parameter</con:sourceStep><con:targetType>announcement[title]</con:targetType><con:targetStep>AddNewAnnouncement</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="groovy" name="GetTime"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+
+import java.text.*
+import java.util.*
+
+def Prop = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Add and Check Ann"].getTestStepByName( "Parameter" );
+
+def time = System.currentTimeMillis() / 1000
+time = (int)time + 1;
+
+Prop.setPropertyValue( "updated_at", time.toString() )
+
+
+
+
+
+
+
+
+
+
+</script></con:config></con:testStep><con:testStep type="restrequest" name="AddNewAnnouncement"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/admin/announcement/create_by_get" methodName="AddNewCard" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="AddNewAnnouncement" mediaType="application/x-www-form-urlencoded" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="announcement[title]" value="TITLE4"/>
+  <con:entry key="announcement[text]" value="TEXT4"/>
+  <con:entry key="announcement[image_url]" value="http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x"/>
+</con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestNumberOfAnnouncements" searchProperties="true"><con:settings/><con:testStep type="groovy" name="Prepare Data"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Add and Check Ann"];
+
+
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE0" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_announcement_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("title", "TITLE0" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120501")
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+
+
+def time = Integer.parseInt(tc.testSteps["Parameter"].getPropertyValue("updated_at"));
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("at_first", time.toString()) 
+def timebefore = time - 10
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("before_first", timebefore.toString()) 
+
+//---------------------------------------------------------------
+
+Thread.sleep(5000)
+
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE1" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_announcement_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("title", "TITLE1" )
+
+tc.testSteps["Parameter"].setPropertyValue("date", "20120502")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+//---------------------------------------------------------------
+
+Thread.sleep(5000)
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE2" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_announcement_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("title", "TITLE2" )
+
+tc.testSteps["Parameter"].setPropertyValue("date", "20120503")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+time = Integer.parseInt(tc.testSteps["Parameter"].getPropertyValue("updated_at"));
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("exact_mid", time.toString()) 
+def timeafter = time + 1;
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("between", timeafter.toString()) 
+
+//---------------------------------------------------------------
+Thread.sleep(5000)
+
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE3" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_announcement_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("title", "TITLE3" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120504")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+//---------------------------------------------------------------
+Thread.sleep(5000)
+
+
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE4" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_announcement_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("title", "TITLE4" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120505")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+time = Integer.parseInt(tc.testSteps["Parameter"].getPropertyValue("updated_at"));
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("at_last", time.toString()) 
+timeafter = time + 1;
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("after_last", timeafter.toString()) 
+
+//---------------------------------------------------------------
+</script></con:config></con:testStep><con:testStep type="properties" name="parameter"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>before_first</con:name><con:value>1339732609</con:value></con:property><con:property><con:name>at_first</con:name><con:value>1339732619</con:value></con:property><con:property><con:name>between</con:name><con:value>1339732636</con:value></con:property><con:property><con:name>exact_mid</con:name><con:value>1339732635</con:value></con:property><con:property><con:name>at_last</con:name><con:value>1339732650</con:value></con:property><con:property><con:name>after_last</con:name><con:value>1339732651</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="before first"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_first");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i; 
+		def text = textBase + j.toString();
+		def title = textAuthorBase + j.toString();		
+		def date = dateBase + j*86400;
+
+		assert announcementRoot.get("date") == date;						
+		assert announcementRoot.get("text") == text;
+		assert announcementRoot.get("title") == title;
+		i++;
+	}
+				
+}
+
+assert count == 5
+</script></con:config></con:testStep><con:testStep type="groovy" name="at first"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_first");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+1; 
+		def text = textBase + j.toString();
+		def title = textAuthorBase + j.toString();		
+		def date = dateBase + j*86400;
+
+		assert announcementRoot.get("date") == date;						
+		assert announcementRoot.get("text") == text;
+		assert announcementRoot.get("title") == title;
+		i++;
+	}
+				
+}
+
+assert count == 4
+</script></con:config></con:testStep><con:testStep type="groovy" name="between"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_first");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+3; 
+		def text = textBase + j.toString();
+		def title = textAuthorBase + j.toString();		
+		def date = dateBase + j*86400;
+
+		assert announcementRoot.get("date") == date;						
+		assert announcementRoot.get("text") == text;
+		assert announcementRoot.get("title") == title;
+		i++;
+	}
+				
+}
+
+assert count == 2
+</script></con:config></con:testStep><con:testStep type="groovy" name="exact mid"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_first");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+3; 
+		def text = textBase + j.toString();
+		def title = textAuthorBase + j.toString();		
+		def date = dateBase + j*86400;
+
+		assert announcementRoot.get("date") == date;						
+		assert announcementRoot.get("text") == text;
+		assert announcementRoot.get("title") == title;
+		i++;
+	}
+				
+}
+
+assert count == 2
+</script></con:config></con:testStep><con:testStep type="groovy" name="at last"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_first");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		
+	}
+				
+}
+
+assert count == 0
+</script></con:config></con:testStep><con:testStep type="groovy" name="after last"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_first");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+	}
+				
+}
+
+assert count == 0
+</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite name="TestSuite 1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true" id="41d4c336-fce8-4a08-925c-ee2c818862c7"><con:settings/><con:testStep type="restrequest" name="Card - Request Get All Cards"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/cards" methodName="Get All Cards" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Card - Request Get All Cards" mediaType="application/xml" accept=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 200
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>testStepName = messageExchange.modelItem.testStep.name   //to get the Test Step Name
+xmlHold = messageExchange.responseContentAsXml.toString()  //to store the response as Xml string
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context )
+def holder = groovyUtils.getXmlHolder (xmlHold)
+log.info holder.getXml()  // will display /Log the response in Xml
+
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 2"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def cards = holder.get("cards");
+def time = holder.get("time");
+
+assert time > 0;
+
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);
+	//no card is deleted
+	assert cardRoot.get("deleted") == null;
+
+	def idRoot = cardRoot.get("card_id"); 
+	def nameRoot = cardRoot.get("character_name"); 
+	def dateRoot = cardRoot.get("date");
+	def imageURLRoot = cardRoot.get("image_url");
+	def quoteRoot = cardRoot.get("quote");
+	def quoteAuthorRoot = cardRoot.get("quote_author");
+	// id is integer
+
+	assert idRoot > -100;
+	
+	assert idRoot != null;
+	assert nameRoot != null;
+	assert dateRoot != null;
+	assert imageURLRoot != null;
+	assert quoteRoot != null;
+	assert quoteAuthorRoot != null;
+
+	
+	if (cardRoot.get("deleted") == null)
+	{
+			
+		//date is in order and attribute not duplicated   
+		if (i != cards.size()-1)
+		{
+			for(j = i+1 ; j &lt;cards.size() ; j++)
+			{
+				assert cards.get(j).get("date") != dateRoot;
+				assert cards.get(j).get("card_id") != idRoot;
+				assert cards.get(j).get("character_name") != nameRoot;								
+				//assert cards.get(j).get("image_url") != imageURLRoot;
+				assert cards.get(j).get("quote") != quoteRoot;
+				assert cards.get(j).get("quote_author") != quoteAuthorRoot;
+			}
+		}
+	}
+	
+}
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:loadTest name="LoadTest 1 Load"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>60</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type><con:config><testDelay>0</testDelay><randomFactor>0.0</randomFactor></con:config></con:loadStrategy><con:maxAssertionErrors>100</con:maxAssertionErrors><con:statisticsLogFolder/><con:statisticsLogInterval>0</con:statisticsLogInterval><con:logStatisticsOnThreadChange>false</con:logStatisticsOnThreadChange><con:cancelOnReachedLimit>false</con:cancelOnReachedLimit><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval><con:updateStatisticsPerTestStep>false</con:updateStatisticsPerTestStep></con:loadTest><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 9" searchProperties="true" id="b23412ea-accc-4c41-9a9d-e897394793d3"><con:settings/><con:testStep type="restrequest" name="Get Cards With Parameter - Get cards with param is 0"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/cards" methodName="Get Cards With Parameter" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get Cards With Parameter - Get cards with param is 0" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 200
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>testStepName = messageExchange.modelItem.testStep.name   //to get the Test Step Name
+xmlHold = messageExchange.responseContentAsXml.toString()  //to store the response as Xml string
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context )
+def holder = groovyUtils.getXmlHolder (xmlHold)
+log.info holder.getXml()  // will display /Log the response in Xml
+
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 2"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def cards = holder.get("cards");
+def time = holder.get("time");
+
+assert time > 0;
+//get duoc may cai card
+//assert cards.size() == 17;
+def count = 0;
+
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);
+	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+
+		def idRoot = cardRoot.get("card_id"); 
+		def nameRoot = cardRoot.get("character_name"); 
+		def dateRoot = cardRoot.get("date");
+		def imageURLRoot = cardRoot.get("image_url");
+		def quoteRoot = cardRoot.get("quote");
+		def quoteAuthorRoot = cardRoot.get("quote_author");
+		
+		// id is integer
+		assert idRoot > -100;
+	
+		assert idRoot != null;
+		assert nameRoot != null;
+		assert dateRoot != null;
+		assert imageURLRoot != null;
+		assert quoteRoot != null;
+		assert quoteAuthorRoot != null;
+			
+		//date is in order and attribute not duplicated   
+		if (i != cards.size()-1)
+		{
+			
+			for(j = i+1 ; j &lt;cards.size() ; j++)
+			{
+				if (cards.get(j).get("deleted") == null)
+				{
+					assert cards.get(j).get("date") != dateRoot;
+					assert cards.get(j).get("card_id") >= idRoot;
+					assert cards.get(j).get("character_name") != nameRoot;								
+					//assert cards.get(j).get("image_url") != imageURLRoot;
+					assert cards.get(j).get("quote") != quoteRoot;
+					assert cards.get(j).get("quote_author") != quoteAuthorRoot;
+				}
+			}
+		}
+	}
+	else
+	{
+		count = count + 1;
+		def idRoot = cardRoot.get("card_id"); 
+		assert idRoot != null;
+	}
+	
+	
+}
+
+//assert count == 8;
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 10" searchProperties="true" id="52e5cf3f-cad4-4d60-85d0-bafc4585e6ac"><con:settings/><con:testStep type="restrequest" name="Get Cards With Parameter - Get cards with param is an character"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/cards" methodName="Get Cards With Parameter" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get Cards With Parameter - Get cards with param is an character" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 404</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>testStepName = messageExchange.modelItem.testStep.name   //to get the Test Step Name
+xmlHold = messageExchange.responseContentAsXml.toString()  //to store the response as Xml string
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context )
+def holder = groovyUtils.getXmlHolder (xmlHold)
+log.info holder.getXml()  // will display /Log the response in Xml
+
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 2"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def error = holder.get("error_message");
+
+assert error != null
+
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="last_update" value="a" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Template" searchProperties="true" id="8aaea4ea-c540-4e70-99bc-f98613fc4b2a"><con:settings/><con:testStep type="restrequest" name="All cards template"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/cards" methodName="Get All Cards" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="All cards template" mediaType="application/xml" accept="null"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Get with param Template"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/cards" methodName="Get Cards With Parameter" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get with param Template" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="last_update" value="1339732587" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Delete by ID" searchProperties="true" id="7a7f95ce-240a-4569-ad2f-20a5eea41fc9"><con:settings/><con:testStep type="restrequest" name="dangnhap"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/admin/sessions/create" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="dangnhap" mediaType="application/x-www-form-urlencoded" postQueryString="true" accept=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="DeleteByID"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/admin/card/remove" methodName="DeleteByID" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="DeleteByID" mediaType="application/xml" accept=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="card_id" value="1264" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Delete All" searchProperties="true"><con:settings/><con:testStep type="groovy" name="DeleteAll"><con:settings/><con:config><script>import com.eviware.soapui.model.testsuite.TestRunner.Status
+
+// cap nhat property vao test case
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"]
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+
+////-----------------------Xu li--------------------------
+def ResponseMessage = tc.testSteps["All cards template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def id =  cards.get(i).get("card_id");	
+	// Xoa
+	def tcDel = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Delete by ID"]
+	tcDel.testSteps["DeleteByID"].setPropertyValue("card_id", id.toString() )
+	def runnerDel = tcDel.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+	
+}
+
+
+
+
+
+
+
+
+
+</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Add and Check" searchProperties="true" id="199bafc6-85b5-4cff-9e71-be88fc49cbd4"><con:settings/><con:testStep type="restrequest" name="DangNhap"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/admin/sessions/create" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="DangNhap" mediaType="application/x-www-form-urlencoded" postQueryString="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="properties" name="Parameter"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>quote</con:name><con:value>QUOTE0</con:value></con:property><con:property><con:name>image_url</con:name><con:value>http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x</con:value></con:property><con:property><con:name>quote_author</con:name><con:value>QUOTE_AUTHOR0</con:value></con:property><con:property><con:name>charname</con:name><con:value>CHAR_NAME0</con:value></con:property><con:property><con:name>date</con:name><con:value>20120101</con:value></con:property><con:property><con:name>updated_at</con:name><con:value>1340165890</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="transfer" name="Transfer to Template"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>Transfer1</con:name><con:sourceType>quote</con:sourceType><con:sourceStep>Parameter</con:sourceStep><con:targetType>card[quote]</con:targetType><con:targetStep>AddNewCard</con:targetStep></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" transferChildNodes="false"><con:name>Transfer2</con:name><con:sourceType>image_url</con:sourceType><con:sourceStep>Parameter</con:sourceStep><con:targetType>card[image_url]</con:targetType><con:targetStep>AddNewCard</con:targetStep></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false"><con:name>Transfer3</con:name><con:sourceType>quote_author</con:sourceType><con:sourceStep>Parameter</con:sourceStep><con:targetType>card[quote_author]</con:targetType><con:targetStep>AddNewCard</con:targetStep></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" useXQuery="false" ignoreEmpty="false"><con:name>Transfer4</con:name><con:sourceType>charname</con:sourceType><con:sourceStep>Parameter</con:sourceStep><con:targetType>card[character_name]</con:targetType><con:targetStep>AddNewCard</con:targetStep></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true"><con:name>Transfer5</con:name><con:sourceType>date</con:sourceType><con:sourceStep>Parameter</con:sourceStep><con:targetType>card[date]</con:targetType><con:targetStep>AddNewCard</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="groovy" name="GetTime"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+
+import java.text.*
+import java.util.*
+
+def Prop = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Add and Check"].getTestStepByName( "Parameter" );
+
+def time = System.currentTimeMillis() / 1000
+time = (int)time + 1;
+
+Prop.setPropertyValue( "updated_at", time.toString() )
+
+
+
+
+
+
+
+
+
+
+</script></con:config></con:testStep><con:testStep type="restrequest" name="AddNewCard"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/admin/card/create_by_get" methodName="AddNewCard" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="AddNewCard" mediaType="application/x-www-form-urlencoded" postQueryString="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="card[quote]" value="QUOTE0"/>
+  <con:entry key="card[character_name]" value="CHAR_NAME0"/>
+  <con:entry key="card[date]" value="20120101"/>
+  <con:entry key="card[quote_author]" value="QUOTE_AUTHOR0"/>
+</con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestNumberOfCards" searchProperties="true" id="b25434fb-c5c0-42d1-a0f0-06c5c2c22a81"><con:settings/><con:testStep type="groovy" name="Prepare Data"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+//nam 1970
+def cal = Calendar.instance
+def rootTime = "1970-01-01T00:00:00Z";
+Date d1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(rootTime)
+cal.setTime d1
+def timeRoot =  cal.getTimeInMillis() - 3600000;
+log.info(timeRoot)
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Add and Check"];
+
+
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE0" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", "QUOTE_AUTHOR0" )
+tc.testSteps["Parameter"].setPropertyValue("charname", "CHARNAME0" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120501")
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["AddNewCard"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+
+def cardRoot = holder.get("card");
+
+
+//gan lai thong so card dau tien
+def timeTemp = cardRoot.get("updated_at")
+d1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(timeTemp)
+cal.setTime d1
+def time1 =  cal.getTimeInMillis()
+def time = (time1 - timeRoot)/ 1000;
+
+
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("at_first", time.toString()) 
+def timebefore = time - 10
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("before_first", timebefore.toString()) 
+
+//---------------------------------------------------------------
+
+Thread.sleep(5000)
+
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE1" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", "QUOTE_AUTHOR1" )
+tc.testSteps["Parameter"].setPropertyValue("charname", "CHARNAME1" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120502")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+//---------------------------------------------------------------
+
+Thread.sleep(5000)
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE2" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", "QUOTE_AUTHOR2" )
+tc.testSteps["Parameter"].setPropertyValue("charname", "CHARNAME2" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120503")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+ResponseMessage = tc.testSteps["AddNewCard"].testRequest.response.contentAsString
+
+holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+
+cardRoot = holder.get("card");
+	
+//gan lai thong so card dau tien
+timeTemp = cardRoot.get("updated_at")
+d1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(timeTemp)
+cal.setTime d1
+time1 =  cal.getTimeInMillis()
+time = (time1 - timeRoot)/ 1000;
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("exact_mid", time.toString()) 
+def timeafter = time + 1;
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("between", timeafter.toString()) 
+
+//---------------------------------------------------------------
+Thread.sleep(5000)
+
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE3" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", "QUOTE_AUTHOR3" )
+tc.testSteps["Parameter"].setPropertyValue("charname", "CHARNAME3" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120504")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+//---------------------------------------------------------------
+Thread.sleep(5000)
+
+
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE4" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", "QUOTE_AUTHOR4" )
+tc.testSteps["Parameter"].setPropertyValue("charname", "CHARNAME4" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120505")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+ResponseMessage = tc.testSteps["AddNewCard"].testRequest.response.contentAsString
+
+holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+
+cardRoot = holder.get("card");
+	
+//gan lai thong so card dau tien
+timeTemp = cardRoot.get("updated_at")
+d1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(timeTemp)
+cal.setTime d1
+time1 =  cal.getTimeInMillis()
+time = (time1 - timeRoot)/ 1000;
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("at_last", time.toString()) 
+timeafter = time + 1;
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("after_last", timeafter.toString()) 
+
+//---------------------------------------------------------------
+</script></con:config></con:testStep><con:testStep type="properties" name="parameter"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>before_first</con:name><con:value>1339732545</con:value></con:property><con:property><con:name>at_first</con:name><con:value>1339732555</con:value></con:property><con:property><con:name>between</con:name><con:value>1339732572</con:value></con:property><con:property><con:name>exact_mid</con:name><con:value>1339732571</con:value></con:property><con:property><con:name>at_last</con:name><con:value>1339732586</con:value></con:property><con:property><con:name>after_last</con:name><con:value>1339732587</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="before first"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("before_first");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+
+def count = 0;
+def quoteBase ="QUOTE"
+def quoteAuthorBase ="QUOTE_AUTHOR"
+def CharnameBase ="CHARNAME"
+def dateBase = 1335830400
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated   
+		def quote = quoteBase + i.toString();
+		def quote_author = quoteAuthorBase + i.toString();
+		def charname = CharnameBase + i.toString();
+		def date = dateBase + i*86400;
+
+		assert cardRoot.get("date") == date;
+		assert cardRoot.get("character_name") == charname;								
+		assert cardRoot.get("quote") == quote;
+		assert cardRoot.get("quote_author") == quote_author;
+		
+	}
+				
+}
+
+assert count == 5
+</script></con:config></con:testStep><con:testStep type="groovy" name="at first"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_first");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+def count = 0;
+
+def quoteBase ="QUOTE"
+def quoteAuthorBase ="QUOTE_AUTHOR"
+def CharnameBase ="CHARNAME"
+def dateBase = 1335830400
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+1; 
+		def quote = quoteBase + j.toString();
+		def quote_author = quoteAuthorBase + j.toString();
+		def charname = CharnameBase + j.toString();
+		def date = dateBase + j*86400;
+
+		assert cardRoot.get("date") == date;
+		assert cardRoot.get("character_name") == charname;								
+		assert cardRoot.get("quote") == quote;
+		assert cardRoot.get("quote_author") == quote_author;
+		
+	}
+				
+}
+
+assert count == 4
+</script></con:config></con:testStep><con:testStep type="groovy" name="between"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("between");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+def count = 0;
+
+def quoteBase ="QUOTE"
+def quoteAuthorBase ="QUOTE_AUTHOR"
+def CharnameBase ="CHARNAME"
+def dateBase = 1335830400
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+3; 
+		def quote = quoteBase + j.toString();
+		def quote_author = quoteAuthorBase + j.toString();
+		def charname = CharnameBase + j.toString();
+		def date = dateBase + j*86400;
+
+		assert cardRoot.get("date") == date;
+		assert cardRoot.get("character_name") == charname;								
+		assert cardRoot.get("quote") == quote;
+		assert cardRoot.get("quote_author") == quote_author;
+		
+	}
+				
+}
+
+assert count == 2
+</script></con:config></con:testStep><con:testStep type="groovy" name="exact mid"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("exact_mid");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+def count = 0;
+
+def quoteBase ="QUOTE"
+def quoteAuthorBase ="QUOTE_AUTHOR"
+def CharnameBase ="CHARNAME"
+def dateBase = 1335830400
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+3; 
+		def quote = quoteBase + j.toString();
+		def quote_author = quoteAuthorBase + j.toString();
+		def charname = CharnameBase + j.toString();
+		def date = dateBase + j*86400;
+
+		assert cardRoot.get("date") == date;
+		assert cardRoot.get("character_name") == charname;								
+		assert cardRoot.get("quote") == quote;
+		assert cardRoot.get("quote_author") == quote_author;
+		
+	}
+				
+}
+
+assert count == 2
+</script></con:config></con:testStep><con:testStep type="groovy" name="at last"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_last");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+def count = 0;
+
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+	}
+				
+}
+
+assert count == 0
+</script></con:config></con:testStep><con:testStep type="groovy" name="after last"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("after_last");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+def count = 0;
+
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+	}
+				
+}
+
+assert count == 0
+</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite name="Flow_Control"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="All_Card_SLL" searchProperties="true" id="1efd7bc5-ffbe-49f2-aaf8-e15929ea1682"><con:settings/><con:testStep type="groovy" name="Groovy Script"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+//nam 1970
+def cal = Calendar.instance
+//def rootTime = "1970-01-01T00:00:00Z";
+def rootTime = "2011-12-31T00:00:00Z";
+Date d1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(rootTime)
+cal.setTime d1
+def timeRoot =  cal.getTimeInMillis() //- 3600000;
+log.info(timeRoot)
+
+SimpleDateFormat monthDayYearformatter; 
+def resultDate; 
+
+
+def quote = "QUOTE";
+def image_url = "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x";
+def quote_author = "QUOTE_AUTHOR"
+def charname = "CHAR_NAME"
+def date = timeRoot;
+
+
+for (def i=0 ; i&lt;1 ; i++)
+{
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Add and Check"];
+
+def quote1 = quote + i.toString();
+def quote_author1 = quote_author +i.toString();
+def charname1 = charname +i.toString();
+date = date + 86400000 ;
+monthDayYearformatter = new SimpleDateFormat("yyyyMMdd");
+resultDate = monthDayYearformatter.format(date);
+log.info(i)
+log.info(resultDate)
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", quote1 )
+tc.testSteps["Parameter"].setPropertyValue("image_url", image_url )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", quote_author1 )
+tc.testSteps["Parameter"].setPropertyValue("charname", charname1 )
+tc.testSteps["Parameter"].setPropertyValue("date", resultDate.toString())
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+}</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite name="TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="DangNhap" searchProperties="true" id="3abfac54-7e50-4e13-a3b2-3379273bbb01"><con:settings/><con:testStep type="restrequest" name="dangnhap"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/admin/sessions/create" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="dangnhap" mediaType="application/x-www-form-urlencoded" postQueryString="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Get All Cards" searchProperties="true" id="df04bbdf-a5e3-4400-957c-7799eedd3da3"><con:settings/><con:testStep type="restrequest" name="Card - Request Get All Cards"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/cards" methodName="Get All Cards" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Card - Request Get All Cards" mediaType="application/xml" accept=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 200
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>testStepName = messageExchange.modelItem.testStep.name   //to get the Test Step Name
+xmlHold = messageExchange.responseContentAsXml.toString()  //to store the response as Xml string
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context )
+def holder = groovyUtils.getXmlHolder (xmlHold)
+log.info holder.getXml()  // will display /Log the response in Xml
+
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 2"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def cards = holder.get("cards");
+def time = holder.get("time");
+
+assert time > 0;
+//get duoc may cai card
+//assert cards.size() == 17;
+def count = 0;
+
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);
+	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+
+		def idRoot = cardRoot.get("card_id"); 
+		def nameRoot = cardRoot.get("character_name"); 
+		def dateRoot = cardRoot.get("date");
+		def imageURLRoot = cardRoot.get("image_url");
+		def quoteRoot = cardRoot.get("quote");
+		def quoteAuthorRoot = cardRoot.get("quote_author");
+		
+		// id is integer
+		assert idRoot > -100;
+	
+		assert idRoot != null;
+		assert nameRoot != null;
+		assert dateRoot != null;
+		assert imageURLRoot != null;
+		assert quoteRoot != null;
+		assert quoteAuthorRoot != null;
+			
+		//date is in order and attribute not duplicated   
+		if (i != cards.size()-1)
+		{
+			
+			for(j = i+1 ; j &lt;cards.size() ; j++)
+			{
+				if (cards.get(j).get("deleted") == null)
+				{
+				
+					assert cards.get(j).get("date") != dateRoot;
+					
+					assert cards.get(j).get("card_id") != idRoot;
+					assert cards.get(j).get("character_name") != nameRoot;								
+					//assert cards.get(j).get("image_url") != imageURLRoot;
+					assert cards.get(j).get("quote") != quoteRoot;
+					assert cards.get(j).get("quote_author") != quoteAuthorRoot;
+				}
+			}
+		}
+	}
+	else
+	{
+		count = count + 1;
+		def idRoot = cardRoot.get("card_id"); 
+		assert idRoot != null;
+	}
+	
+	
+}
+
+//assert count == 8;
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:loadTest name="LoadTest  - get all cards"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>60</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval></con:loadTest><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetCardWith0" searchProperties="true" id="35dd1dfa-ff49-4e29-ab33-edfde747e5c9"><con:settings/><con:testStep type="restrequest" name="Get Cards With Parameter - Get cards with param is 0"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/cards" methodName="Get Cards With Parameter" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get Cards With Parameter - Get cards with param is 0" mediaType="application/xml" accept=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 200
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>testStepName = messageExchange.modelItem.testStep.name   //to get the Test Step Name
+xmlHold = messageExchange.responseContentAsXml.toString()  //to store the response as Xml string
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context )
+def holder = groovyUtils.getXmlHolder (xmlHold)
+log.info holder.getXml()  // will display /Log the response in Xml
+
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 2"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def cards = holder.get("cards");
+def time = holder.get("time");
+
+assert time > 0;
+//get duoc may cai card
+//assert cards.size() == 17;
+def count = 0;
+
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);
+	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+
+		def idRoot = cardRoot.get("card_id"); 
+		def nameRoot = cardRoot.get("character_name"); 
+		def dateRoot = cardRoot.get("date");
+		def imageURLRoot = cardRoot.get("image_url");
+		def quoteRoot = cardRoot.get("quote");
+		def quoteAuthorRoot = cardRoot.get("quote_author");
+		
+		// id is integer
+		assert idRoot > -100;
+	
+		assert idRoot != null;
+		assert nameRoot != null;
+		assert dateRoot != null;
+		assert imageURLRoot != null;
+		assert quoteRoot != null;
+		assert quoteAuthorRoot != null;
+			
+		//date is in order and attribute not duplicated   
+		if (i != cards.size()-1)
+		{
+			
+			for(j = i+1 ; j &lt;cards.size() ; j++)
+			{
+				if (cards.get(j).get("deleted") == null)
+				{
+					assert cards.get(j).get("date") != dateRoot;
+					assert cards.get(j).get("card_id") != idRoot;
+					assert cards.get(j).get("character_name") != nameRoot;								
+					//assert cards.get(j).get("image_url") != imageURLRoot;
+					assert cards.get(j).get("quote") != quoteRoot;
+					assert cards.get(j).get("quote_author") != quoteAuthorRoot;
+				}
+			}
+		}
+	}
+	else
+	{
+		count = count + 1;
+		def idRoot = cardRoot.get("card_id"); 
+		assert idRoot != null;
+	}
+	
+	
+}
+
+//assert count == 8;
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:loadTest name="LoadTest - Get Card with 0"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>60</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval></con:loadTest><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NotInvalidCard" searchProperties="true" id="a43a6cf7-a0e0-4197-87ce-3eb86eca1dc5"><con:settings/><con:testStep type="restrequest" name="Get Cards With Parameter - Get cards with param is an character"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/cards" methodName="Get Cards With Parameter" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get Cards With Parameter - Get cards with param is an character" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 404
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>testStepName = messageExchange.modelItem.testStep.name   //to get the Test Step Name
+xmlHold = messageExchange.responseContentAsXml.toString()  //to store the response as Xml string
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context )
+def holder = groovyUtils.getXmlHolder (xmlHold)
+log.info holder.getXml()  // will display /Log the response in Xml
+
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 2"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def error = holder.get("error_message");
+
+assert error != null
+
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="last_update" value="a" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Delete All" searchProperties="true" id="31827393-0b27-47f3-b8f8-8b4b37ea71ec"><con:settings/><con:testStep type="groovy" name="DeleteAll"><con:settings/><con:config><script>import com.eviware.soapui.model.testsuite.TestRunner.Status
+
+// cap nhat property vao test case
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"]
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+
+////-----------------------Xu li--------------------------
+def ResponseMessage = tc.testSteps["All cards template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def id =  cards.get(i).get("card_id");	
+	// Xoa
+	def tcDel = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Delete by ID"]
+	tcDel.testSteps["DeleteByID"].setPropertyValue("card_id", id.toString() )
+	def runnerDel = tcDel.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+	
+}
+
+
+
+
+
+
+
+
+
+</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestNumberOfCards" searchProperties="true" id="8c40e48f-ef54-466c-9498-e5b87de8be70"><con:settings/><con:testStep type="groovy" name="Prepare Data"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+//nam 1970
+def cal = Calendar.instance
+def rootTime = "1970-01-01T00:00:00Z";
+Date d1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(rootTime)
+cal.setTime d1
+def timeRoot =  cal.getTimeInMillis() - 3600000;
+log.info(timeRoot)
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Add and Check"];
+
+
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE0" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", "QUOTE_AUTHOR0" )
+tc.testSteps["Parameter"].setPropertyValue("charname", "CHARNAME0" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120501")
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+
+/////////
+def tcTemplate = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"]
+
+def runner1 = tcTemplate.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+def ResponseMessage = tcTemplate.testSteps["All cards template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+
+def time = holder.get("time");
+///////
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("at_first", time.toString()) 
+def timebefore = time - 10
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("before_first", timebefore.toString()) 
+
+//---------------------------------------------------------------
+
+Thread.sleep(5000)
+
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE1" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", "QUOTE_AUTHOR1" )
+tc.testSteps["Parameter"].setPropertyValue("charname", "CHARNAME1" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120502")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+//---------------------------------------------------------------
+
+Thread.sleep(5000)
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE2" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", "QUOTE_AUTHOR2" )
+tc.testSteps["Parameter"].setPropertyValue("charname", "CHARNAME2" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120503")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+/////////
+tcTemplate = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"]
+
+runner1 = tcTemplate.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+ResponseMessage = tcTemplate.testSteps["All cards template"].testRequest.response.contentAsString
+
+holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+
+time = holder.get("time");
+///////
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("exact_mid", time.toString()) 
+def timeafter = time + 1;
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("between", timeafter.toString()) 
+
+//---------------------------------------------------------------
+Thread.sleep(5000)
+
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE3" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", "QUOTE_AUTHOR3" )
+tc.testSteps["Parameter"].setPropertyValue("charname", "CHARNAME3" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120504")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+//---------------------------------------------------------------
+Thread.sleep(5000)
+
+
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("quote", "QUOTE4" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("quote_author", "QUOTE_AUTHOR4" )
+tc.testSteps["Parameter"].setPropertyValue("charname", "CHARNAME4" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120505")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+/////////
+tcTemplate = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"]
+
+runner1 = tcTemplate.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+ResponseMessage = tcTemplate.testSteps["All cards template"].testRequest.response.contentAsString
+
+holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+
+time = holder.get("time");
+///////
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("at_last", time.toString()) 
+timeafter = time + 1;
+testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"].setPropertyValue("after_last", timeafter.toString()) 
+
+//---------------------------------------------------------------
+</script></con:config></con:testStep><con:testStep type="properties" name="parameter"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>before_first</con:name><con:value>1338888236</con:value></con:property><con:property><con:name>at_first</con:name><con:value>1338888246</con:value></con:property><con:property><con:name>between</con:name><con:value>1338888257</con:value></con:property><con:property><con:name>exact_mid</con:name><con:value>1338888256</con:value></con:property><con:property><con:name>at_last</con:name><con:value>1338888270</con:value></con:property><con:property><con:name>after_last</con:name><con:value>1338888271</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="before first"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("before_first");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+
+def count = 0;
+def quoteBase ="QUOTE"
+def quoteAuthorBase ="QUOTE_AUTHOR"
+def CharnameBase ="CHARNAME"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; cards.size() ; k++)
+{
+	def cardRoot =  cards.get(k);		
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated   
+		def quote = quoteBase + i.toString();
+		def quote_author = quoteAuthorBase + i.toString();
+		def charname = CharnameBase + i.toString();
+		def date = dateBase + i*86400;
+		assert cardRoot.get("date") == date;
+		assert cardRoot.get("character_name") == charname;								
+		assert cardRoot.get("quote") == quote;
+		assert cardRoot.get("quote_author") == quote_author;
+		i++;
+	}
+				
+}
+
+assert count == 5
+</script></con:config></con:testStep><con:testStep type="groovy" name="at first"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_first");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+def count = 0;
+
+def quoteBase ="QUOTE"
+def quoteAuthorBase ="QUOTE_AUTHOR"
+def CharnameBase ="CHARNAME"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; cards.size() ; k++)
+{
+	def cardRoot =  cards.get(k);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+1; 
+		def quote = quoteBase + j.toString();
+		def quote_author = quoteAuthorBase + j.toString();
+		def charname = CharnameBase + j.toString();
+		def date = dateBase + j*86400;
+
+		assert cardRoot.get("date") == date;
+		assert cardRoot.get("character_name") == charname;								
+		assert cardRoot.get("quote") == quote;
+		assert cardRoot.get("quote_author") == quote_author;
+		i++;
+	}
+				
+}
+
+assert count == 4
+</script></con:config></con:testStep><con:testStep type="groovy" name="between"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("between");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+def count = 0;
+
+def quoteBase ="QUOTE"
+def quoteAuthorBase ="QUOTE_AUTHOR"
+def CharnameBase ="CHARNAME"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; cards.size() ; k++)
+{
+	def cardRoot =  cards.get(k);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+3; 
+		def quote = quoteBase + j.toString();
+		def quote_author = quoteAuthorBase + j.toString();
+		def charname = CharnameBase + j.toString();
+		def date = dateBase + j*86400;
+
+		assert cardRoot.get("date") == date;
+		assert cardRoot.get("character_name") == charname;								
+		assert cardRoot.get("quote") == quote;
+		assert cardRoot.get("quote_author") == quote_author;
+		i++;
+		
+	}
+				
+}
+
+assert count == 2
+</script></con:config></con:testStep><con:testStep type="groovy" name="exact mid"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("exact_mid");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+def count = 0;
+
+def quoteBase ="QUOTE"
+def quoteAuthorBase ="QUOTE_AUTHOR"
+def CharnameBase ="CHARNAME"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; cards.size() ; k++)
+{
+	def cardRoot =  cards.get(k);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+3; 
+		def quote = quoteBase + j.toString();
+		def quote_author = quoteAuthorBase + j.toString();
+		def charname = CharnameBase + j.toString();
+		def date = dateBase + j*86400;
+
+		assert cardRoot.get("date") == date;
+		assert cardRoot.get("character_name") == charname;								
+		assert cardRoot.get("quote") == quote;
+		assert cardRoot.get("quote_author") == quote_author;
+
+		i++;
+	}
+				
+}
+
+assert count == 2
+</script></con:config></con:testStep><con:testStep type="groovy" name="at last"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_last");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+def count = 0;
+
+def i = 0;
+for (k=0 ; k &lt; cards.size() ; k++)
+{
+	def cardRoot =  cards.get(k);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		i++;
+	}
+				
+}
+
+assert count == 0
+</script></con:config></con:testStep><con:testStep type="groovy" name="after last"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 1"].testCases["TestNumberOfCards"].testSteps["parameter"];
+def Prop = param.getPropertyValue("after_last");
+// ------------------------Card---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def cards = holder.get("cards");
+def count = 0;
+
+for (i=0 ; i &lt; cards.size() ; i++)
+{
+	def cardRoot =  cards.get(i);	
+	
+	if (cardRoot.get("deleted") == null)
+	{
+		count = count + 1;
+	}
+				
+}
+
+assert count == 0
+</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Get All Anns" searchProperties="true" id="27771c7c-065d-4c30-9e5a-2840ce34e084"><con:settings/><con:testStep type="restrequest" name="Get all announcements - Request 1"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/announcements?api_key=1137232830" methodName="Get all announcements" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get all announcements - Request 1" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 200
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def announcements = holder.get("announcements");
+def time = holder.get("time");
+
+assert time > 0;
+//get duoc may cai announcement
+//assert announcements.size() == 2;
+
+for (i=0 ; i &lt; announcements.size() ; i++)
+{
+	def announcementRoot =  announcements.get(i);
+	//no announcement is deleted
+	assert announcementRoot.get("deleted") == null;
+
+	def idRoot = announcementRoot.get("announcement_id"); 
+	def dateRoot = announcementRoot.get("date");
+	def imageURLRoot = announcementRoot.get("image_url");
+	def textRoot = announcementRoot.get("text");
+	def titleRoot = announcementRoot.get("title");
+	// id is integer
+
+	assert idRoot > -100;
+	
+	assert idRoot != null;
+	assert dateRoot != null;
+	assert imageURLRoot != null;
+	assert textRoot != null;
+	assert titleRoot != null;
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+			
+		//date is in order and attribute not duplicated   
+		if (i != announcements.size()-1)
+		{
+			for(j = i+1 ; j &lt;announcements.size() ; j++)
+			{
+				assert announcements.get(j).get("date") != dateRoot;
+				assert announcements.get(j).get("announcement_id") != idRoot;								
+				//assert announcements.get(j).get("image_url") != imageURLRoot;
+				assert announcements.get(j).get("text") != textRoot;
+				assert announcements.get(j).get("title") != titleRoot;
+			}
+		}
+	}
+	
+}
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:loadTest name="LoadTest - Get all Ann"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>60</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:assertion type="Step Maximum" name="Step Maximum"><con:configuration><name>Step Maximum</name><min-requests>0</min-requests><max-value>10000</max-value><test-step>- Any -</test-step><max-errors>-1</max-errors></con:configuration></con:assertion><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval></con:loadTest><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Check Data with param" searchProperties="true" id="8000922f-c1e0-43ac-970f-44ccc19d2e47"><con:settings/><con:testStep type="restrequest" name="Get announcements with parameter - Get announcements with param 0"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/announcements?api_key=1137232830" methodName="Get announcements with parameter" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get announcements with parameter - Get announcements with param 0" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 200
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def announcements = holder.get("announcements");
+def time = holder.get("time");
+
+assert time > 0;
+//get duoc may cai announcement
+//assert announcements.size() == 14;
+def count = 0;
+
+for (i=0 ; i &lt; announcements.size() ; i++)
+{
+	def announcementRoot =  announcements.get(i);
+	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+
+		def idRoot = announcementRoot.get("announcement_id"); 
+		def dateRoot = announcementRoot.get("date");
+		def imageURLRoot = announcementRoot.get("image_url");
+		def textRoot = announcementRoot.get("text");
+		def titleRoot = announcementRoot.get("title");
+		
+		// id is integer
+		assert idRoot > -100;
+	
+		assert idRoot != null;
+		assert dateRoot != null;
+		assert imageURLRoot != null;
+		assert textRoot != null;
+		assert titleRoot != null;
+			
+		//date is in order and attribute not duplicated   
+		if (i != announcements.size()-1)
+		{
+			
+			for(j = i+1 ; j &lt;announcements.size() ; j++)
+			{
+				if (announcements.get(j).get("deleted") == null)
+				{
+					assert announcements.get(j).get("date") != dateRoot;
+					assert announcements.get(j).get("announcement_id") != idRoot;								
+					//assert announcements.get(j).get("image_url") != imageURLRoot;
+					assert announcements.get(j).get("text") != textRoot;
+					assert announcements.get(j).get("title") != titleRoot;
+				}
+			}
+		}
+	}
+	else
+	{
+		count = count + 1;
+		def idRoot = announcementRoot.get("announcement_id"); 
+		assert idRoot != null;
+	}
+	
+	
+}
+
+//assert count == 11;
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:loadTest name="LoadTest - Get Ann Param"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>60</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval></con:loadTest><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Check invalid param" searchProperties="true" id="6d0a266b-2a36-4567-83bc-e5473e880c33"><con:settings/><con:testStep type="restrequest" name="Get announcements with parameter - Get announcements with param is an character"><con:settings/><con:config service="MFOTD" resourcePath="/mfotd/v1/announcements?api_key=1137232830" methodName="Get announcements with parameter" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Get announcements with parameter - Get announcements with param is an character" mediaType="application/xml"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://ec2-107-22-255-190.compute-1.amazonaws.com</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>def state = messageExchange.responseHeaders["Status"]
+
+assert state != null : "Missing HttpState.. Try to set 'Maintain HTTP session' in test case options"
+
+assert Integer.parseInt(state.get(0)) == 404
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion 1"><con:configuration><scriptText>def holder = net.sf.json.JSONSerializer.toJSON(messageExchange.responseContent);
+//holder la root
+def error = holder.get("error_message");
+
+assert error != null
+
+</scriptText></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="last_update" value="a" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Delete All Ann" searchProperties="true" id="abef5c45-a21a-4786-98ca-86fbecaf4550"><con:settings/><con:testStep type="groovy" name="DeleteAll"><con:settings/><con:config><script>import com.eviware.soapui.model.testsuite.TestRunner.Status
+
+// cap nhat property vao test case
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"]
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+
+////-----------------------Xu li--------------------------
+def ResponseMessage = tc.testSteps["All announcements template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+
+for (i=0 ; i &lt; announcements.size() ; i++)
+{
+	def id =  announcements.get(i).get("announcement_id");	
+	// Xoa
+	def tcDel = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Delete by ID Ann"]
+	tcDel.testSteps["DeleteByID"].setPropertyValue("announcement_id", id.toString() )
+	def runnerDel = tcDel.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+	
+}
+
+
+
+
+
+
+
+
+
+</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestNumberOfAnnouncements" searchProperties="true" id="ff31731a-8725-4802-9053-d3abe78060d0"><con:settings/><con:testStep type="groovy" name="Prepare Data"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Add and Check Ann"];
+
+
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("text", "TEXT0" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("title", "TITLE0" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120501")
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+
+/////////
+def tcTemplate = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"]
+
+def runner1 = tcTemplate.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+def ResponseMessage = tcTemplate.testSteps["All announcements template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+
+def time = holder.get("time");
+///////
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("at_first", time.toString()) 
+def timebefore = time - 10
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("before_first", timebefore.toString()) 
+
+//---------------------------------------------------------------
+
+Thread.sleep(5000)
+
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("text", "TEXT1" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("title", "TITLE1" )
+
+tc.testSteps["Parameter"].setPropertyValue("date", "20120502")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+//---------------------------------------------------------------
+
+Thread.sleep(5000)
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("text", "TEXT2" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("title", "TITLE2" )
+
+tc.testSteps["Parameter"].setPropertyValue("date", "20120503")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+/////////
+tcTemplate = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"]
+
+runner1 = tcTemplate.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+ResponseMessage = tcTemplate.testSteps["All announcements template"].testRequest.response.contentAsString
+
+holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+
+time = holder.get("time");
+///////
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("exact_mid", time.toString()) 
+def timeafter = time + 1;
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("between", timeafter.toString()) 
+
+//---------------------------------------------------------------
+Thread.sleep(5000)
+
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("text", "TEXT3" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("title", "TITLE3" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120504")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+//---------------------------------------------------------------
+Thread.sleep(5000)
+
+
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Parameter"].setPropertyValue("text", "TEXT4" )
+tc.testSteps["Parameter"].setPropertyValue("image_url", "http://s3.amazonaws.com/mfotd_images/staging_perry_card_42_3818437620527938700_2x" )
+tc.testSteps["Parameter"].setPropertyValue("title", "TITLE4" )
+tc.testSteps["Parameter"].setPropertyValue("date", "20120505")
+
+
+//chay test case
+runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+/////////
+tcTemplate = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"]
+
+runner1 = tcTemplate.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+ResponseMessage = tcTemplate.testSteps["All announcements template"].testRequest.response.contentAsString
+
+holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+
+time = holder.get("time");
+///////
+
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("at_last", time.toString()) 
+timeafter = time + 1;
+testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"].setPropertyValue("after_last", timeafter.toString()) 
+
+//---------------------------------------------------------------
+</script></con:config></con:testStep><con:testStep type="properties" name="parameter"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>before_first</con:name><con:value>1338967069</con:value></con:property><con:property><con:name>at_first</con:name><con:value>1338967079</con:value></con:property><con:property><con:name>between</con:name><con:value>1338967080</con:value></con:property><con:property><con:name>exact_mid</con:name><con:value>1338967079</con:value></con:property><con:property><con:name>at_last</con:name><con:value>1338967079</con:value></con:property><con:property><con:name>after_last</con:name><con:value>1338967080</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="before first"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("before_first");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i; 
+		def text = textBase + j.toString();
+		def title = textAuthorBase + j.toString();		
+		def date = dateBase + j*86400;
+
+		//assert announcementRoot.get("date") == date;						
+		assert announcementRoot.get("text") == text;
+		assert announcementRoot.get("title") == title;
+		i++;
+	}
+				
+}
+
+assert count == 5
+</script></con:config></con:testStep><con:testStep type="groovy" name="at first"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_first");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+1; 
+		def text = textBase + j.toString();
+		def title = textAuthorBase + j.toString();		
+		def date = dateBase + j*86400;
+
+		//assert announcementRoot.get("date") == date;						
+		assert announcementRoot.get("text") == text;
+		assert announcementRoot.get("title") == title;
+		i++;
+	}
+				
+}
+
+assert count == 4
+</script></con:config></con:testStep><con:testStep type="groovy" name="between"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("between");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+3; 
+		def text = textBase + j.toString();
+		def title = textAuthorBase + j.toString();		
+		def date = dateBase + j*86400;
+
+		//assert announcementRoot.get("date") == date;						
+		assert announcementRoot.get("text") == text;
+		assert announcementRoot.get("title") == title;
+		i++;
+	}
+				
+}
+
+assert count == 2
+</script></con:config></con:testStep><con:testStep type="groovy" name="exact mid"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("exact_mid");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+		def j = i+3; 
+		def text = textBase + j.toString();
+		def title = textAuthorBase + j.toString();		
+		def date = dateBase + j*86400;
+
+		//assert announcementRoot.get("date") == date;						
+		assert announcementRoot.get("text") == text;
+		assert announcementRoot.get("title") == title;
+		i++;
+	}
+				
+}
+
+assert count == 2
+</script></con:config></con:testStep><con:testStep type="groovy" name="at last"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("at_last");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		
+	}
+				
+}
+
+assert count == 0
+</script></con:config></con:testStep><con:testStep type="groovy" name="after last"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.submit.RequestFilter;
+import com.eviware.soapui.impl.wsdl.submit.transports.http.BaseHttpRequestTransport;
+import com.eviware.soapui.model.iface.Request;
+import com.eviware.soapui.model.iface.Response;
+import com.eviware.soapui.model.iface.SubmitContext;
+import com.eviware.soapui.model.testsuit.testRunner.Status;
+import com.eviware.soapui.support.xml.XmlUtils;
+
+import com.eviware.soapui.model.testsuite.TestRunner.Status
+import java.text.*
+import java.util.*
+
+
+
+def tc = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["Template"];
+
+def param = testRunner.testCase.testSuite.project.testSuites["TestSuite 2"].testCases["TestNumberOfAnnouncements"].testSteps["parameter"];
+def Prop = param.getPropertyValue("after_last");
+// ------------------------Announcement---------------------------------
+///Cap nhap
+
+tc.testSteps["Get with param Template"].setPropertyValue("last_update", Prop)
+
+
+//chay test case
+def runner = tc.run(new com.eviware.soapui.support.types.StringToObjectMap(), false);
+
+////-----------------------Xu li arseertion --------------------------
+def ResponseMessage = tc.testSteps["Get with param Template"].testRequest.response.contentAsString
+
+def holder = net.sf.json.JSONSerializer.toJSON(ResponseMessage);
+//holder la root
+log.info(holder);
+def announcements = holder.get("announcements");
+def count = 0;
+
+def textBase ="TEXT"
+def textAuthorBase ="TITLE"
+def dateBase = 1335830400
+
+def i = 0;
+for (k=0 ; k &lt; announcements.size() ; k++)
+{
+	def announcementRoot =  announcements.get(k);	
+	
+	if (announcementRoot.get("deleted") == null)
+	{
+		count = count + 1;
+		//date is in order and attribute not duplicated  
+	}
+				
+}
+
+assert count == 0
+</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>

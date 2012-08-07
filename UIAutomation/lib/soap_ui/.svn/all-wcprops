@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/1954/MQ/trunk/src/UIAutomation/lib/soap_ui
+END
+runnerSOAPUI.sh
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/1954/MQ/trunk/src/UIAutomation/lib/soap_ui/runnerSOAPUI.sh
+END
+SOAPUI_UIAutomation_script.js
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/1954/MQ/trunk/src/UIAutomation/lib/soap_ui/SOAPUI_UIAutomation_script.js
+END

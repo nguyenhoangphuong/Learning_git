@@ -1,0 +1,11 @@
+#!/usr/bin/expect
+
+set timeout 20
+
+spawn sudo su jenkins -c "JENKINS_HOME=/Users/Shared/Jenkins/Home /Library/Application\\ Support/Jenkins/jenkins-runner.sh"
+
+expect "Password:"
+
+send "misfit\n"
+
+#expect "abcde"
