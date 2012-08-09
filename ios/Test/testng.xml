@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Android client" verbose="1">
+	<listeners>
+		<listener class-name="com.spotify.qa.testng.OnFailure" />
+		<listener class-name="com.spotify.qa.testng.HandleLogFiles" />
+	</listeners>
+	<test name="SmokeTest">
+		<groups>
+			<run>
+				<include name="perry" />
+			</run>
+		</groups>
+		<packages>
+			<package name="com.misfit.*" />
+		</packages>
+	</test>
+</suite>
