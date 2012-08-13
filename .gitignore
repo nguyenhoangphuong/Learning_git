@@ -1,0 +1,13 @@
+target/
+/logs
+/.classpath
+/.project
+/.settings
+/**/*/test-output
+/**/*/target
+*/target
+*~
+graphwalker.properties
+.DS_Store
+
+
