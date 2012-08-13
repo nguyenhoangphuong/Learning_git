@@ -7,7 +7,7 @@
 	<test name="SmokeTest">
 		<groups>
 			<run>
-				<include name="perry" />
+				<include name="Perry" />
 			</run>
 		</groups>
 		<packages>
