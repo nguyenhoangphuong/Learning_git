@@ -18,10 +18,8 @@ public class SampleTest extends AutomationTest {
 
   @Test(groups = {"ios", "Perry", "Perry_1"})
   public void sampleTest() throws InterruptedException, StopConditionException {
-      System.out.println("LOG [SampleTest.sampleTest]:  ---------- 1");
 	  AppHelper.install(AppHelper.getCurrentUdid(), AppHelper.getAppPath());
 	  ShortcutsTyper.delayTime(3000);
-	  System.out.println("LOG [SampleTest.sampleTest]:  ---------- 2");
 	  AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
 				 "script/test.js");
 //	  Logger logger = Util.setupLogger(SampleTest.class);

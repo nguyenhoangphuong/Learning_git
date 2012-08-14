@@ -85,7 +85,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 	}
 
 	@BeforeSuite(alwaysRun = true)
-	public void beforeSuite() {
+	public void beforeSuite() throws FileNotFoundException {
 		// extracts scripts folder
 		try {
 			Files.extractJar("script", true);
