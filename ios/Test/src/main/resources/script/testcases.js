@@ -1,4 +1,4 @@
-#import "/usr/bin/tuneup_js/tuneup.js"
+#import "tuneup.js"
 #import "common.js"
 #import "config.js"
 #import "UC01.js"

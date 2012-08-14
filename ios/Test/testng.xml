@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="Android client" verbose="1">
 	<listeners>
-		<listener class-name="com.spotify.qa.testng.OnFailure" />
-		<listener class-name="com.spotify.qa.testng.HandleLogFiles" />
+		<listener class-name="com.misfit.ta.testng.OnFailure" />
+		<listener class-name="com.misfit.ta.testng.HandleLogFiles" />
 	</listeners>
 	<test name="SmokeTest">
 		<groups>
