@@ -1,0 +1,16 @@
+target/
+/logs
+/.classpath
+/.project
+/.settings
+*/*/test-output
+*/*/null
+*/*/target
+*/*/tools
+*/*/script
+ios/*/*/ios
+/target
+*~
+.DS_Store
+
+
