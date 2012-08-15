@@ -1,1 +1,0 @@
-TC_LIST=( 'login.js' 'login-fail.js')
