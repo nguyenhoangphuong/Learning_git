@@ -79,13 +79,11 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 		pb.command("/bin/sh", "-c","/usr/libexec/PlistBuddy -c \"Print 'All Samples:LogType'\" instrumentscli0.trace/Run 1/Automation Results.plist | /usr/bin/awk -F '=' '/LogType = /{print $2}'");
 		String results = AppHelper.runProcess(pb);
 		
-		details.append("Testcase:  " + method.getName() + " Status8 " + results + "\n");
+//		details.append("Testcase:  " + method.getName() + "\tStatus: " + results + "\n");
 		if (results.equalsIgnoreCase("Passed")) {
 		    passCount++;
-		} else if (results.equalsIgnoreCase("Passed")){
+		} else {
 		    failCount++;
-		}  else {
-		   unknownCount++;
 		}
 		
 	}
