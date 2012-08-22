@@ -11,6 +11,6 @@ target.logElementTree();
 UIALogger.logStart("--------------1");
 
 //throw("An exception");
-UIALogger.logPass("-------------- PASS");
-// UIALogger.logFail("-------------- FAIL");
+// UIALogger.logPass("-------------- PASS");
+UIALogger.logFail("-------------- FAIL");
 

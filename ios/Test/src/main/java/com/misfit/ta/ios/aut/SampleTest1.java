@@ -14,14 +14,14 @@ import com.misfit.ta.utils.ShortcutsTyper;
  * 
  * @author qa
  */
-public class SampleTest extends AutomationTest {
+public class SampleTest1 extends AutomationTest {
 
   @Test(groups = {"ios", "Perry", "Perry_1"})
-  public void sampleTest() throws InterruptedException, StopConditionException {
-	  AppHelper.install(AppHelper.getCurrentUdid(), AppHelper.getAppPath());
-	  ShortcutsTyper.delayTime(3000);
+  public void sampleTest1() throws InterruptedException, StopConditionException {
+//	  AppHelper.install(AppHelper.getCurrentUdid(), AppHelper.getAppPath());
+//	  ShortcutsTyper.delayTime(3000);
 	  AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-				 "script/test.js");
+				 "script/test1.js");
   }
   
   
