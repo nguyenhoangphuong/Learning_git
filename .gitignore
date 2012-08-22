@@ -9,6 +9,8 @@ target/
 */*/tools
 */*/script
 ios/*/*/ios
+*/*/logs
+*/*/instrumentscli*.trace
 /target
 *~
 .DS_Store
