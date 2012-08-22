@@ -4,7 +4,7 @@
 
 	<groupId>com.misfit.qa</groupId>
 	<artifactId>test-ios</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 
 	<packaging>jar</packaging>
@@ -118,7 +118,7 @@
 		<dependency>
 			<groupId>com.misfit.ta</groupId>
 			<artifactId>tools</artifactId>
-			<version>0.0.3</version>
+			<version>0.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
