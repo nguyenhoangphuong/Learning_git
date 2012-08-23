@@ -962,3 +962,8 @@ function verifyBeforeStartShuffleGame() {
 function dummy() {
     UIALogger.logDebug("Some dummy message");
 }
+
+
+function logTree() {
+	target.logElementTree();
+}
