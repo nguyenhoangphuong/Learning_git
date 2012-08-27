@@ -1,15 +1,24 @@
 #import "Agreement.js"
-#import "SignUp.js"
+//#import "SignUp.js"
+#import "../testcaseBase.js"
 
 var target = UIATarget.localTarget();
 
 UIALogger.logStart("Test Demo");
-#var agreement = new Agreement(target);
-#var signup = agreement.TabAgree();
-#signup.FillEmailAndSubmit("");
-#var error = signup.GetErrorMessage();
+logTree();
 
-#if(error == signup.ErrNull)
-#	UIALogger.logPass("Passed");
-#else
-	UIALogger.logFail("Failed");
+
+
+
+
+
+var agreement = new Agreement(target);
+agreement.tapAgree();
+UIALogger.logPass("Pass");
+//signup.FillEmailAndSubmit("");
+//var error = signup.GetErrorMessage();
+//
+//if(error == signup.ErrNull)
+//	UIALogger.logPass("Passed");
+//else
+//	UIALogger.logFail("Failed");

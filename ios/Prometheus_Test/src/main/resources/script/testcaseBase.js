@@ -1,5 +1,5 @@
 #import "tuneup_js/tuneup.js"
-#import "ui_query.js"
+#import "uiquery/uiquery.js"
 #import "common.js"
 #import "config.js"
 

@@ -1,35 +1,31 @@
-#import "_BaseView.js"
+#import "../testcaseBase.js"
 
-Agreement.prototype = new _BaseView();
-Agreement.prototype.constructor = Agreement;
-Agreement.prototype.baseClass = _BaseView.prototype.constructor;
-
-function Agreement(var target)
+function Agreement(target)
 {
 	// Target
 	this.Target = target;
 	this.App = target.frontMostApp();
 	
 	// Fields
-	this.MainView = App.mainWindow();
-	this.AgreeButton = MainView.buttons()["agree"];
-	this.DisagreeButton = MainView.buttons()["disagree"];
+	this.MainView = this.App.mainWindow();
+	this.AgreeButton = this.MainView.buttons()["agree"];
+	this.DisagreeButton = this.MainView.buttons()["disagree"];
 	
 	// Methods
-	this.TabAgree = TabAgree;
+	this.tapAgree = tapAgree;
 	this.TabDisagree = TabDisagree;
 	
 	// Methods definition
-	function TabAgree()
+	function tapAgree()
 	{
-		Wait();
-		AgreeButton.tab();
-		return new SignUp(target);
+		wait();
+		this.AgreeButton.tap();
+//		return new SignUp(target;
 	}
 	
 	function TabDisagree()
 	{
-		Wait();
-		AgreeButton.tab();
+		wait();
+		this.AgreeButton.tap();
 	}
 }

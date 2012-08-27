@@ -966,4 +966,13 @@ function dummy() {
 
 function logTree() {
 	target.logElementTree();
+	wait(1);
+}
+
+function wait(s) {
+	target.delay(s);
+}
+
+function wait() {
+	target.delay(1);
 }

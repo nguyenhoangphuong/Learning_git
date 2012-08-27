@@ -1,8 +1,5 @@
-#import "_BaseView.js"
+#import "../testcaseBase.js"
 
-SignUp.prototype = new _BaseView();
-SignUp.prototype.constructor = SignUp;
-SignUp.prototype.baseClass = _BaseView.prototype.constructor;
 
 function SignUp(var target)
 {
@@ -24,14 +21,14 @@ function SignUp(var target)
 	// Method definition
 	function FillEmailAndSubmit(String email)
 	{
-		Wait();
+		wait();
 		TypeText(Email, email + "\n");
 		alert("fill");
 	}
 	
 	function GetErrorMessage()
 	{
-		Wait(0.2);
+		wait(0.2);
 		return App.staticTexts()[0];
 	}
 }
