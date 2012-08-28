@@ -18,10 +18,10 @@ public class SampleTest1 extends AutomationTest {
 
   @Test(groups = {"ios", "Perry", "Perry_1"})
   public void sampleTest1() throws InterruptedException, StopConditionException {
-	  AppHelper.install(AppHelper.getCurrentUdid(), AppHelper.getAppPath());
-	  ShortcutsTyper.delayTime(3000);
+	  //AppHelper.install(AppHelper.getCurrentUdid(), AppHelper.getAppPath());
+	  //ShortcutsTyper.delayTime(3000);
 	  AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-				 "script/test1.js");
+				 "script/testcases/example.js");
   }
   
   
