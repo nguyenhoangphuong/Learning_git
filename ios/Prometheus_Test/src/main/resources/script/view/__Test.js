@@ -5,15 +5,15 @@
 var target = UIATarget.localTarget();
 
 UIALogger.logStart("Test Demo");
-logTree();
+//logTree();
 
 
 
 
 
 
-var agreement = new Agreement(target);
-agreement.tapAgree();
+//var agreement = new Agreement(target);
+//agreement.tapAgree();
 UIALogger.logPass("Pass");
 //signup.FillEmailAndSubmit("");
 //var error = signup.GetErrorMessage();

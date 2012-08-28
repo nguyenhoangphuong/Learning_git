@@ -23,7 +23,7 @@ function Agreement(target)
 //		return new SignUp(target;
 	}
 	
-	function TabDisagree()
+	function tapDisagree()
 	{
 		wait();
 		this.AgreeButton.tap();
