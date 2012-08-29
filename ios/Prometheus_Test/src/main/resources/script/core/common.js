@@ -15,9 +15,15 @@ function isAboutUsScreen();
 function isGiftBox();
 function winParrotGame();
 function killApp();
-function wait();
-function wait(sec);
-function log(text);
+
+function logtree();
+function wait(s = 1);
+function start(text = "Test started");
+function log(text = "Debug log");
+function pass(text = "Pass");
+function fail(text = "Fail");
+
+function wheelPick(wheel, index = 0, value);
 */
 
 
@@ -965,24 +971,68 @@ function verifyBeforeStartShuffleGame() {
     */
 }
 
-function dummy() {
-    UIALogger.logDebug("Some dummy message");
-}
+// ============== Test helpers
 
-
-function logTree() {
+function logTree() 
+{
 	target.logElementTree();
 	wait(1);
 }
 
-function wait(s) {
+function wait(s)
+{
+	if(typeof s == "undefined")
+		s = 1;
 	target.delay(s);
 }
 
-function wait() {
-	target.delay(1);
+function start(text)
+{
+	if(typeof text == "undefined")
+		text = "Test started";
+	UIALogger.logStart(text);
 }
 
-function log(text) {
+function log(text)
+{
+	if(typeof text == "undefined")
+		text = "Debug log";
     UIALogger.logDebug(text);
+}
+
+function pass(text)
+{
+	if (typeof text == "undefined")
+		text = "Pass";
+	UIALogger.logPass(text);
+}
+
+function fail(text)
+{
+	if(typeof text == "undefined")
+		text = "Fail";
+	UIALogger.logPass(text);
+}
+
+// =============== TA helpers
+function staticTextExist(text)
+{
+	win = app.mainWindow();
+	if(win.staticTexts()[text].isValid())
+		return true;
+	return false;
+}
+
+function wheelPick(picker, wheelIndex, value)
+{
+	if(typeof wheelIndex == "undefined")
+		wheelIndex = 0;
+		
+	wheel = picker.wheels()[wheelIndex];
+	items = wheel.values();
+	
+	if(items.indexOf[value] < 0)
+		fail("Wheel has no such value!");
+
+	wheel.selectValue(value);
 }

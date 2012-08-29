@@ -1,6 +1,5 @@
 #import "../core/testcaseBase.js"
 
-
 function SignUp()
 {
 	// Private fields
@@ -15,9 +14,6 @@ function SignUp()
 	this.fillEmailAndSubmit = fillEmailAndSubmit;
 	this.getErrorMessage = getErrorMessage;
 	
-	this.isEmptyError = isEmptyError;
-	this.isInvalidError = isInvalidError;
-	
 	// Method definition
 	function fillEmailAndSubmit(email)
 	{
@@ -28,24 +24,12 @@ function SignUp()
 	function getErrorMessage()
 	{
 		wait();
-		return app.staticTexts()[0].value();
+		
+		if (mainView.staticTexts()[this.MsgEmpty].isValid())
+        	return this.MsgEmpty;
+	    else if (mainView.staticTexts()[this.MsgInvalid].isValid()) 
+    	    return this.MsgInvalid;
+    	else
+    		return "";
 	}
-	
-	function isEmptyError()
-	{
-		wait(2);
-    	if (mainView.staticTexts()[this.MsgEmpty].isValid())
-        	return true;
-	    else
-    	    return false;
-    }
-    
-    function isInvalidError()
-    {
-    	wait();
-    	if (mainView.staticTexts()[this.MsgInvalid].isValid()) 
-        	return true;
-	    else
-    	    return false;
-    }
 }
