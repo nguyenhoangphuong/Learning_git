@@ -1,4 +1,4 @@
-#import "../testcaseBase.js"
+#import "../core/testcaseBase.js"
 
 function Agreement(target)
 {

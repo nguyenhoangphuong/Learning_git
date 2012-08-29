@@ -1,11 +1,11 @@
-#import "Agreement.js"
+//#import "Agreement.js"
 //#import "SignUp.js"
-#import "../testcaseBase.js"
+#import "../core/testcaseBase.js"
 
 var target = UIATarget.localTarget();
 
 UIALogger.logStart("Test Demo");
-//logTree();
+logTree();
 
 
 

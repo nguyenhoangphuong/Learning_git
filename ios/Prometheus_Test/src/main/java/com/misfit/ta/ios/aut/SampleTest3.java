@@ -21,7 +21,7 @@ public class SampleTest3 extends AutomationTest {
 //	  AppHelper.install(AppHelper.getCurrentUdid(), AppHelper.getAppPath());
 //	  ShortcutsTyper.delayTime(3000);
 	  AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-				 "script/test1.js");
+				 "script/view/__Test.js");
   }
   
   
