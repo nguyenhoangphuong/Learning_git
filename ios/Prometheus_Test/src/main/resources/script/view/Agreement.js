@@ -1,31 +1,26 @@
 #import "../core/testcaseBase.js"
 
-function Agreement(target)
+function Agreement()
 {
-	// Target
-	this.Target = target;
-	this.App = target.frontMostApp();
-	
-	// Fields
-	this.MainView = this.App.mainWindow();
-	this.AgreeButton = this.MainView.buttons()["agree"];
-	this.DisagreeButton = this.MainView.buttons()["disagree"];
+	// Private fields
+	var mainView = app.mainWindow();
+	var agreeButton = mainView.buttons()["agree"];
+	var disagreeButton = mainView.buttons()["disagree"];
 	
 	// Methods
 	this.tapAgree = tapAgree;
-	this.TabDisagree = TabDisagree;
+	this.tapDisagree = tapDisagree;
 	
 	// Methods definition
 	function tapAgree()
 	{
 		wait();
-		this.AgreeButton.tap();
-//		return new SignUp(target;
+		agreeButton.tap();
 	}
 	
 	function tapDisagree()
 	{
 		wait();
-		this.AgreeButton.tap();
+		disagreeButton.tap();
 	}
 }

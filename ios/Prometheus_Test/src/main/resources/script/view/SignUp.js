@@ -1,34 +1,51 @@
-#import "../testcaseBase.js"
+#import "../core/testcaseBase.js"
 
 
-function SignUp(var target)
+function SignUp()
 {
-	// Target
-	this.Target = target;
-	this.App = target.frontMostApp();
-
-	// Fields
-	this.MainView = App.mainWindow();
-	this.Email = MainView.textFields()["email"];
+	// Private fields
+	var mainView = app.mainWindow();
+	var email = mainView.textFields()["email"];
 	
-	this.ErrNull = "Email must not be empty";
-	this.ErrInvalid = "The email is invalid";
+	// Constants
+	this.MsgEmpty = "Email must not be empty";
+	this.MsgInvalid = "The email is invalid";
 	
 	// Methods
-	this.FillEmailAndSubmit = FillEmailAndSubmit;
-	this.GetErrorMessage = GetErrorMessage;
+	this.fillEmailAndSubmit = fillEmailAndSubmit;
+	this.getErrorMessage = getErrorMessage;
+	
+	this.isEmptyError = isEmptyError;
+	this.isInvalidError = isInvalidError;
 	
 	// Method definition
-	function FillEmailAndSubmit(String email)
+	function fillEmailAndSubmit(email)
 	{
 		wait();
-		TypeText(Email, email + "\n");
-		alert("fill");
+		app.keyboard().typeString(email + "\n");
 	}
 	
-	function GetErrorMessage()
+	function getErrorMessage()
 	{
-		wait(0.2);
-		return App.staticTexts()[0];
+		wait();
+		return app.staticTexts()[0].value();
 	}
+	
+	function isEmptyError()
+	{
+		wait(2);
+    	if (mainView.staticTexts()[this.MsgEmpty].isValid())
+        	return true;
+	    else
+    	    return false;
+    }
+    
+    function isInvalidError()
+    {
+    	wait();
+    	if (mainView.staticTexts()[this.MsgInvalid].isValid()) 
+        	return true;
+	    else
+    	    return false;
+    }
 }
