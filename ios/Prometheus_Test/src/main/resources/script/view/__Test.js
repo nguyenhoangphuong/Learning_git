@@ -1,23 +1,15 @@
-<<<<<<< HEAD
-//#import "Agreement.js"
-//#import "SignUp.js"
-#import "../core/testcaseBase.js"
-=======
 #import "Agreement.js"
 #import "SignUp.js"
->>>>>>> Update view wrapper for automation
+#import "../core/testcaseBase.js"
 
 
 UIALogger.logStart("Test Demo");
-<<<<<<< HEAD
-logTree();
-=======
->>>>>>> Update view wrapper for automation
 
-var agreement = new Agreement(target);
+
+var agreement = new Agreement();
 agreement.tapAgree();
 
-var signup = new SignUp(target);
+var signup = new SignUp();
 signup.fillEmailAndSubmit("");
 
 wait(2);
