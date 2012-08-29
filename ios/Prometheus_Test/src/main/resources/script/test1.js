@@ -4,7 +4,7 @@ var target = UIATarget.localTarget()
 
 UIALogger.logStart("RUNNING A TEST TEST CASE11");
 //throw("An exception");
-UIALogger.logStart("--------------0");
+UIALogger.logStart("--------------000000");
 var app = target.frontMostApp();
 var window = app.mainWindow();
 target.logElementTree();
