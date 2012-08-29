@@ -4,6 +4,10 @@ FUNCTION LIST
 This section is the place where you list functions. Please list them as comments
 --------------------------------------------------------------------------------
 
+function convert2DateObject(strDate)
+function verifyStaticTextExist(id,timeout)
+function verifyButtonExist(id,timeout,btab)
+
 function swipeLeft();
 function swipeRight();
 function isMisfitCollectionScreen();
@@ -11,7 +15,9 @@ function isAboutUsScreen();
 function isGiftBox();
 function winParrotGame();
 function killApp();
-
+function wait();
+function wait(sec);
+function log(text);
 */
 
 
@@ -975,4 +981,8 @@ function wait(s) {
 
 function wait() {
 	target.delay(1);
+}
+
+function log(text) {
+    UIALogger.logDebug(text);
 }
