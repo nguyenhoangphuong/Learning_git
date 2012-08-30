@@ -1036,3 +1036,7 @@ function wheelPick(picker, wheelIndex, value)
 
 	wheel.selectValue(value);
 }
+
+function isKeyboardVisible() {
+	return app.keyboard().isVisible();
+}

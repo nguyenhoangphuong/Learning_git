@@ -3,8 +3,8 @@
 function SignUp()
 {
 	// Private fields
-	var mainView = app.mainWindow();
-	var email = mainView.textFields()["email"];
+	var window = app.mainWindow();
+	var email = window.textFields()["email"];
 	
 	// Constants
 	this.MsgEmpty = "Email must not be empty";
@@ -13,6 +13,10 @@ function SignUp()
 	// Methods
 	this.fillEmailAndSubmit = fillEmailAndSubmit;
 	this.getErrorMessage = getErrorMessage;
+	this.pressLicenceAgreement = pressLicenceAgreement;
+	this.closeLicenceAgreement = closeLicenceAgreement;
+	this.isLicenceAgreementShown = isLicenceAgreementShown;
+	
 	
 	// Method definition
 	function fillEmailAndSubmit(email)
@@ -25,11 +29,24 @@ function SignUp()
 	{
 		wait();
 		
-		if (mainView.staticTexts()[this.MsgEmpty].isValid())
+		if (window.staticTexts()[this.MsgEmpty].isValid())
         	return this.MsgEmpty;
-	    else if (mainView.staticTexts()[this.MsgInvalid].isValid()) 
+	    else if (window.staticTexts()[this.MsgInvalid].isValid()) 
     	    return this.MsgInvalid;
     	else
     		return "";
+	}
+	
+	
+	function pressLicenceAgreement() {
+		window.buttons()["Licence Agreement"].tap();
+	}
+	
+	function closeLicenceAgreement() {
+		window.buttons()["agree"].tap();
+	}
+	
+	function isLicenceAgreementShown() {
+		return window.buttons()["agree"].isVisible();
 	}
 }
