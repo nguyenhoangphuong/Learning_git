@@ -11,6 +11,7 @@ function SignUp()
 	this.MsgInvalid = "The email is invalid";
 	
 	// Methods
+	this.isEmailTextFieldVisible = isEmailTextFieldVisible;
 	this.fillEmailAndSubmit = fillEmailAndSubmit;
 	this.getErrorMessage = getErrorMessage;
 	this.pressLicenceAgreement = pressLicenceAgreement;
@@ -19,14 +20,19 @@ function SignUp()
 	
 	
 	// Method definition
+	
+	function isEmailTextFieldVisible() {
+		return window.textFields()["email"].isVisible();
+
+	}
 	function fillEmailAndSubmit(email)
 	{
 		wait();
-		app.keyboard().typeString(email + "\n");
+		window.textFields()["email"].setValue(email);
+		app.keyboard().typeString("\n");
 	}
 	
-	function getErrorMessage()
-	{
+	function getErrorMessage() {
 		wait();
 		
 		if (window.staticTexts()[this.MsgEmpty].isValid())

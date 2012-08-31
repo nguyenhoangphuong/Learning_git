@@ -24,6 +24,8 @@ function Legal()
 	this.setSex = setSex;
 	this.setUnit = setUnit;
 	this.submit = submit;
+	this.changeWeight = changeWeight;
+	this.changeHeight = changeHeight;
 	
 	// Methods definition
 	function setInfo(age, w1, w2, h1, h2)
@@ -60,15 +62,22 @@ function Legal()
 		done.tap();
 	}
 	
-	function changeBody(dx, dy)
-	{
-		/*
-		Increase / Decrease weight and height value by dragging on the human image.
-		- dx: delta x value
-		- dy: delta y value
-		*/
-		
-		
+//	function changeBody(dx, dy) {
+//		/*
+//		Increase / Decrease weight and height value by dragging on the human image.
+//		- dx: delta x value
+//		- dy: delta y value
+//		*/
+//		
+//	}
+	
+	function changeWeight(dx) {
+		swipeVertically(168, 253, 168 + dx);
+		swipeHorizontally(168, 253, 200);
+	}
+	
+	function changeHeight(dy) {
+		swipeHorizontally(168, 253, 253 + dy);
 	}
 	
 	function setSex(sex)

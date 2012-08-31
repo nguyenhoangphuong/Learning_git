@@ -39,17 +39,15 @@ var target = UIATarget.localTarget();
 var app = target.frontMostApp();
 
 /*
- * Date Format 1.2.3
- * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
- * MIT license
- *
- * Includes enhancements by Scott Trenda <scott.trenda.net>
- * and Kris Kowal <cixar.com/~kris.kowal/>
- *
- * Accepts a date, a mask, or a date and a mask.
- * Returns a formatted version of the given date.
- * The date defaults to the current date/time.
- * The mask defaults to dateFormat.masks.default.
+ * Date Format 1.2.3 (c) 2007-2009 Steven Levithan <stevenlevithan.com> MIT
+ * license
+ * 
+ * Includes enhancements by Scott Trenda <scott.trenda.net> and Kris Kowal
+ * <cixar.com/~kris.kowal/>
+ * 
+ * Accepts a date, a mask, or a date and a mask. Returns a formatted version of
+ * the given date. The date defaults to the current date/time. The mask defaults
+ * to dateFormat.masks.default.
  */
 
 var dateFormat = function () {
@@ -67,7 +65,8 @@ var dateFormat = function () {
     return function (date, mask, utc) {
         var dF = dateFormat;
 
-        // You can't provide utc if you skip other args (use the "UTC:" mask prefix)
+        // You can't provide utc if you skip other args (use the "UTC:" mask
+		// prefix)
         if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
             mask = date;
             date = undefined;
@@ -231,16 +230,31 @@ function swipeLeft() {
 	target.delay(1);
 }
 
-function swipeRight() {
+//function swipeHorizontally(startX, endX) {
+//	if (deviceType == "IPOD") {
+//	    target.dragFromToForDuration({x:startX, y:416}, {x:endX, y:402}, 0.6);
+//    } else if (deviceType == "IPAD") {
+//        // IPAD
+//        target.dragFromToForDuration({x:startX, y:416}, {x:endX, y:402}, 0.6);
+//    }
+//}
+//
+//function swipeVertically(startY, endY) {
+//	 if (deviceType == "IPOD") {
+//target.dragFromToForDuration({x:240, y:startY}, {x:16, y:startY}, 0.6);
+//} else if (deviceType == "IPAD") {
+//    // IPAD
+//    target.dragFromToForDuration({x:440, y:endY}, {x:16, y:endY}, 0.6);
+//}
+//}
+
+function swipeVertically(startX, startY, endY) {
 	// swipe right
-	target.delay(1);
-	if (deviceType == "IPOD") {
-        target.dragFromToForDuration({x:16, y:402}, {x:240, y:416}, 0.6);
-    } else if (deviceType == "IPAD") {
-        // IPAD
-        target.dragFromToForDuration({x:16, y:402}, {x:440, y:416}, 0.6);
-    }
-	target.delay(1);
+        target.dragFromToForDuration({x:startX, y:startY}, {x:startX, y:endY}, 0.6);
+}
+
+function swipeHorizontally(startX, startY, endX) {
+        target.dragFromToForDuration({x:startX, y:startY}, {x:endX, y:startY}, 0.6);
 }
 
 function isMisfitCollectionScreen() {
@@ -275,10 +289,10 @@ function killApp() {
 function startShuffleGame() {
     
     target.delay(1);
-    // Start 
-    //target.pushTimeout(10);
-    //target.frontMostApp().mainWindow().buttons()["btn taptostart"].tap();
-    //target.popTimeout();
+    // Start
+    // target.pushTimeout(10);
+    // target.frontMostApp().mainWindow().buttons()["btn taptostart"].tap();
+    // target.popTimeout();
 
 }
 
@@ -305,9 +319,11 @@ function confirmSelectCard(bconfirm,bwin) {
     }
 
     if (bconfirm == 0) {
-        //target.frontMostApp().mainWindow().buttons()["btn areyousure no"].tap(); 
+        // target.frontMostApp().mainWindow().buttons()["btn areyousure
+		// no"].tap();
     } else {
-        //target.frontMostApp().mainWindow().buttons()["btn areyousure yes"].tap();
+        // target.frontMostApp().mainWindow().buttons()["btn areyousure
+		// yes"].tap();
 
         if (bwin) {
             tabtoWinCard();
@@ -320,10 +336,10 @@ function tabtoWinCard() {
      target.delay(5);
     // tap on win card
     target.pushTimeout(10);
-    //if (app.mainWindow().staticTexts()["You're a Misfit!"].isValid()) {
+    // if (app.mainWindow().staticTexts()["You're a Misfit!"].isValid()) {
     target.frontMostApp().mainWindow().staticTexts()["You're a Misfit!"].tapWithOptions({tapOffset:{x:0.56, y:0.62}});
-    //    target.tap({x:157.50, y:301.00});
-    //}
+    // target.tap({x:157.50, y:301.00});
+    // }
     target.popTimeout();
 
 }
@@ -332,8 +348,9 @@ function tabtoWinCard() {
 // atime:lose shuffleGame at second attime
 // bconfirm: confirm the selection: 0 or 1
 // wrongcardnum: chose wrong card number: 1 or 2
-// lock: 0: not verify. 1: verify lock at countdown. 2: verify lock at confirmation card selected
-// tabs: tabs random on the moving card 
+// lock: 0: not verify. 1: verify lock at countdown. 2: verify lock at
+// confirmation card selected
+// tabs: tabs random on the moving card
 function loseShuffleGamebyClickWrongCard(attime,bconfirm,wrongcardnum,lock,btabs) {
 
     // bconfirm is optional, default = 1
@@ -410,24 +427,22 @@ function verifyShuffleGameCountDown(nsecond) {
         } else {
             UIALogger.logFail("Time's up is not valid");
         }
-        //target.frontMostApp().logElementTree();
+        // target.frontMostApp().logElementTree();
         /*
-        name = "Nah, better next time."
-        if (app.mainWindow().staticTexts()[name].isValid()) {
-            UIALogger.logPass("Nah, better next time is valid");
-        } else {
-            UIALogger.logFail("Nah, better next time is not valid");
-        }
-
-        target.frontMostApp().logElementTree()
-        */
+		 * name = "Nah, better next time." if
+		 * (app.mainWindow().staticTexts()[name].isValid()) {
+		 * UIALogger.logPass("Nah, better next time is valid"); } else {
+		 * UIALogger.logFail("Nah, better next time is not valid"); }
+		 * 
+		 * target.frontMostApp().logElementTree()
+		 */
     }
 }
 
-//btabs
+// btabs
 function loseShuffleGamebyTimeout(btabs) {
     // Start the first game
-    //startShuffleGame();
+    // startShuffleGame();
 
     // Wait for animation complete
     target.pushTimeout(15);
@@ -442,13 +457,10 @@ function verifyloseShuffleGame() {
 
     target.delay(5);
     /*
-    name = "Nah, better next time."
-    if (app.mainWindow().staticTexts()[name].isValid()) {
-        UIALogger.logPass(name + " is valid");
-    } else {
-        UIALogger.logFail(name + " is not valid");
-    }
-    */
+	 * name = "Nah, better next time." if
+	 * (app.mainWindow().staticTexts()[name].isValid()) { UIALogger.logPass(name + "
+	 * is valid"); } else { UIALogger.logFail(name + " is not valid"); }
+	 */
     // tap to show next
     UIALogger.logDebug("verifyloseShuffleGame: tab to show next");
     tabOnCard();
@@ -463,16 +475,17 @@ function startParrotGame() {
     target.delay(5);
     target.pushTimeout(10);
     UIALogger.logDebug("startParrotGame: tab to start");
-    //if (app.mainWindow().staticTexts()["Want a second chance?\nCatch me in 10 seconds"].isValid()) {
+    // if (app.mainWindow().staticTexts()["Want a second chance?\nCatch me in 10
+	// seconds"].isValid()) {
         tabOnCard();
-    //}
+    // }
     target.delay(2);
     target.popTimeout();
 }
 
-//btab: tab to go back to MISFIT collection
-//lock: 0: no lock; 1: lock at parrot game
-//locktime: wait amount seconds to lock
+// btab: tab to go back to MISFIT collection
+// lock: 0: no lock; 1: lock at parrot game
+// locktime: wait amount seconds to lock
 function loseParrotGamebyNoClick(btab,lock,locktime) {
 
     // lock is optional, default = 0
@@ -505,7 +518,7 @@ function loseParrotGamebyNoClick(btab,lock,locktime) {
     }
     target.popTimeout();
 
-    //target.tap({x:160.00, y:0.00});
+    // target.tap({x:160.00, y:0.00});
 
     target.delay(2);
     if (btab) {
@@ -554,50 +567,42 @@ function winParrotGame(attime) {
     
     startParrotGame();
 
-    //target.delay(1);
+    // target.delay(1);
     
     // Delay
     target.delay(attime);
 
-    //target.frontMostApp().mainWindow().elements()["Parrot"].tap();
+    // target.frontMostApp().mainWindow().elements()["Parrot"].tap();
 
     if (deviceType == "IPOD") {
         target.tap({x:318.00, y:478.00});
     } else if (deviceType == "IPAD") {
         target.tap({x:700.00, y:986.00});
         target.tap({x:689.00, y:978.00});
-        //target.frontMostApp().logElementTree();
+        // target.frontMostApp().logElementTree();
     }    
     // tab on hidden button position.
-    //target.tap({x:318.00, y:478.00});
+    // target.tap({x:318.00, y:478.00});
 
     tabtoWinCard();
     /*
-    // Win game by click on postion of parrot as quick as possible
-    target.tap({x:32.50, y:61.50});
-    target.tap({x:110.50, y:67.00});
-    target.tap({x:183.50, y:66.00});
-    target.tap({x:282.50, y:55.00});
-    target.tap({x:33.00, y:179.00});
-    target.tap({x:120.00, y:183.50});
-    target.tap({x:190.50, y:183.00});
-    target.tap({x:263.50, y:178.50});
-    target.tap({x:41.00, y:299.00});
-    target.tap({x:113.00, y:298.00});
-    target.tap({x:188.50, y:297.50});
-    target.tap({x:282.50, y:294.00});
-    target.tap({x:36.00, y:417.00});
-    target.tap({x:121.00, y:408.50});
-    target.tap({x:190.00, y:410.50});
-    target.tap({x:276.00, y:409.00});
-    */
+	 * // Win game by click on postion of parrot as quick as possible
+	 * target.tap({x:32.50, y:61.50}); target.tap({x:110.50, y:67.00});
+	 * target.tap({x:183.50, y:66.00}); target.tap({x:282.50, y:55.00});
+	 * target.tap({x:33.00, y:179.00}); target.tap({x:120.00, y:183.50});
+	 * target.tap({x:190.50, y:183.00}); target.tap({x:263.50, y:178.50});
+	 * target.tap({x:41.00, y:299.00}); target.tap({x:113.00, y:298.00});
+	 * target.tap({x:188.50, y:297.50}); target.tap({x:282.50, y:294.00});
+	 * target.tap({x:36.00, y:417.00}); target.tap({x:121.00, y:408.50});
+	 * target.tap({x:190.00, y:410.50}); target.tap({x:276.00, y:409.00});
+	 */
 }
 
-//attime win shuffleGame at second attime
-//bconfirm: confirm = 1, not confirm = 0
+// attime win shuffleGame at second attime
+// bconfirm: confirm = 1, not confirm = 0
 function winShuffleGame(attime,bconfirm) {
     // Start the first game
-    //startShuffleGame();
+    // startShuffleGame();
 
     // bconfirm is optional, default = 1
     if (typeof bconfirm == "undefined") {
@@ -609,7 +614,7 @@ function winShuffleGame(attime,bconfirm) {
         attime = 0;
     }
 
-    //"Pick a card in 10 seconds"
+    // "Pick a card in 10 seconds"
     if (checkCountDown()) {
         target.delay(attime);
         pickCorrectCard();
@@ -640,14 +645,14 @@ function verifywinShuffleGame(lock) {
 function tabMenu() {
     // Open menu
     target.delay(1);
-    //target.tap({x:263.50, y:25.00});
+    // target.tap({x:263.50, y:25.00});
      target.frontMostApp().mainWindow().staticTexts()[1].tapWithOptions({tapOffset:{x:0.48, y:0.60}});
     target.delay(1);
 }
 
-// MISFIT:      item = 0
-// DESK:        item = 1
-// ABOUT US:    item = 2
+// MISFIT: item = 0
+// DESK: item = 1
+// ABOUT US: item = 2
 function openMenu(item,delay) {
 
     // bconfirm is optional, default = 2
@@ -664,13 +669,13 @@ function openMenu(item,delay) {
 }
 
 // item
-//      MISFIT:      item = 0
-//      DESK:        item = 1
-//      ABOUT US:    item = 2
-// bside: use to verify side of current card in MISFIT menu. 
-//      0:   front
-//      1:   back
-//      -1:   not verify
+// MISFIT: item = 0
+// DESK: item = 1
+// ABOUT US: item = 2
+// bside: use to verify side of current card in MISFIT menu.
+// 0: front
+// 1: back
+// -1: not verify
 function verifyMenu(item,bside) {
 
     // bconfirm is optional, default = 1
@@ -721,7 +726,7 @@ function winCardDone() {
     target.frontMostApp().mainWindow().buttons()["btn youaremisfit done"].tap();
 }
 
-//fblock. 1: block before tab, 2: lock after tab. 0: no lock
+// fblock. 1: block before tab, 2: lock after tab. 0: no lock
 function winCardShareFB(fblock) {
     if (fblock == 1) {
         verifyButtonExist("btn youaremisfit fb",2,0);
@@ -731,7 +736,7 @@ function winCardShareFB(fblock) {
 
     target.frontMostApp().mainWindow().buttons()["btn youaremisfit fb"].tap();
 
-    //verify
+    // verify
     verifyStaticTextExist("SHARED",20);
 
     if (fblock == 2) {
@@ -750,7 +755,7 @@ function findAvailableCard() {
 
     for (var i = 0; i < NUMBER_OF_CARD; i++) {
 
-        //  verify the current card
+        // verify the current card
 
 
         // tap to show back
@@ -759,15 +764,15 @@ function findAvailableCard() {
         target.delay(1);
         
         // get length of the quote
-        //var length = target.frontMostApp().mainWindow().staticTexts()[2].
+        // var length = target.frontMostApp().mainWindow().staticTexts()[2].
 
-        //target.pushTimeout(10);
+        // target.pushTimeout(10);
 
         if (target.frontMostApp().mainWindow().buttons()["btn getthiscard"].isValid()) { 
             return 1;
         } 
 
-        //target.popTimeout();
+        // target.popTimeout();
 
         // tap to show front
         tabOnCard();
@@ -794,11 +799,8 @@ function tabOnCard() {
 }
 
 /*
-type:
-    Home: Press home button
-    Lock: Press lock button
-atime: block in seconds 
-*/
+ * type: Home: Press home button Lock: Press lock button atime: block in seconds
+ */
 function lockApp(type,atime) {
     if (type == "Home") {
         target.deactivateAppForDuration(atime);
@@ -818,7 +820,8 @@ function pinchtoOpen() {
     target.popTimeout();
 }
 
-// lock: 0: not verify. 1: verify lock at countdown. 2: verify lock at confirmation card selected. 3: verify lock at time's up
+// lock: 0: not verify. 1: verify lock at countdown. 2: verify lock at
+// confirmation card selected. 3: verify lock at time's up
 // locktime: wait amount seconds to lock
 // return 1: catch count down. 0: Don't have count down
 function checkCountDown(lock,locktime) {
@@ -829,14 +832,14 @@ function checkCountDown(lock,locktime) {
         lock = 0;
     }
 
-    //"Pick a card in 10 seconds"
+    // "Pick a card in 10 seconds"
     var strVerify = /^Pick a card in .*$/
     if (lock == 3) {
         strVerify = /^Pick a card in 2 second.*$/
     }
     var strCount = app.mainWindow().staticTexts()[0].value();
 
-    //target.delay(10);
+    // target.delay(10);
 
     // Wait for animation complete
     var count = 1;
@@ -850,10 +853,10 @@ function checkCountDown(lock,locktime) {
     if (count < Maxtime) {
 
         if (lock == 1 || lock == 3) {
-            //target.delay(locktime);
+            // target.delay(locktime);
             var strCount_ref = app.mainWindow().staticTexts()[0].value();
             lockApp("Lock",2);
-            //target.delay(10);
+            // target.delay(10);
             var strCount_rt = app.mainWindow().staticTexts()[0].value();
             if (strCount_ref == strCount_rt) {
                 UIALogger.logPass("Game is spending");
@@ -878,7 +881,7 @@ function checkCountDown(lock,locktime) {
 
             var strCount_ref = app.mainWindow().staticTexts()[1].value();
             lockApp("Lock",2);
-            //target.delay(10);
+            // target.delay(10);
             var strCount_rt = app.mainWindow().staticTexts()[1].value();
             if (strCount_ref == strCount_rt) {
                 UIALogger.logPass("Game is spending");
@@ -902,15 +905,13 @@ function verifyCardConfirmation() {
 
     // time out 1 secs
     /*
-    target.pushTimeout(1);
-    verifyButtonExist("btn areyousure yes");
-    verifyButtonExist("btn areyousure no");
-    verifyStaticTextExist("Are you sure?");
-    target.popTimeout();
-    */
+	 * target.pushTimeout(1); verifyButtonExist("btn areyousure yes");
+	 * verifyButtonExist("btn areyousure no"); verifyStaticTextExist("Are you
+	 * sure?"); target.popTimeout();
+	 */
 
 }
-// lock: > 0 - lock number. 0: on lock 
+// lock: > 0 - lock number. 0: on lock
 // locktime: wait amount seconds to lock
 // button: "btn resume" or "btn taptostart"
 function verifyLockDuringGame(lock,locktime,button) {
@@ -951,24 +952,18 @@ function verifyBeforeStartShuffleGame() {
 
     target.delay(1);
     /*
-    // verify get this card button 
-    target.pushTimeout(20);
-    if (target.frontMostApp().mainWindow().buttons()["btn taptostart"].isValid()) { 
-        UIALogger.logPass("Tab to start #" + (i + 1).toString() + " is valid");
-    }
-    else {
-        UIALogger.logFail("Tab to start #" + (i + 1).toString() + " is not valid");
-    }
-    
-    target.delay(1);
-    // check Orientation 
-    if (target.deviceOrientation() == 5 ) {
-        UIALogger.logPass("Orientation #" + (i + 1).toString() + " is UIA_DEVICE_ORIENTATION_PORTRAIT");
-    }
-    else {
-        UIALogger.logFail("Orientation #" + (i + 1).toString() + " is not UIA_DEVICE_ORIENTATION_PORTRAIT. It is: " + target.deviceOrientation());
-    }
-    */
+	 * // verify get this card button target.pushTimeout(20); if
+	 * (target.frontMostApp().mainWindow().buttons()["btn
+	 * taptostart"].isValid()) { UIALogger.logPass("Tab to start #" + (i +
+	 * 1).toString() + " is valid"); } else { UIALogger.logFail("Tab to start #" +
+	 * (i + 1).toString() + " is not valid"); }
+	 * 
+	 * target.delay(1); // check Orientation if (target.deviceOrientation() == 5 ) {
+	 * UIALogger.logPass("Orientation #" + (i + 1).toString() + " is
+	 * UIA_DEVICE_ORIENTATION_PORTRAIT"); } else {
+	 * UIALogger.logFail("Orientation #" + (i + 1).toString() + " is not
+	 * UIA_DEVICE_ORIENTATION_PORTRAIT. It is: " + target.deviceOrientation()); }
+	 */
 }
 
 // ============== Test helpers

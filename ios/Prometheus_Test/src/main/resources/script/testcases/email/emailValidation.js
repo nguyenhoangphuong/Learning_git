@@ -21,7 +21,7 @@ var signup = new SignUp();
 signup.pressLicenceAgreement();
 log("In licence agreement");
 wait();
-log(signup.isLicenceAgreementShown());
+log("abcde " + signup.isLicenceAgreementShown());
 signup.closeLicenceAgreement();
 
 
