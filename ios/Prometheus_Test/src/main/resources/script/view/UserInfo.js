@@ -1,5 +1,22 @@
 #import "../core/testcaseBase.js"
 
+/*
+Legal view function:
+- setInfo(age, w1, w2, h1, h2)
+	+ setInfo(18, 83, 0.3, "8'", "5\"") for US
+	+ setInfo(18, 50, 0.4, 1 , 0.99) for SI
+- changeBody(dx, dy)
+	+ changeBody(50, 50) to make fatter and shorter
+	+ changeBody(-50, -50) to make thinner and taller
+- setSex(sex)
+	+ setSex("male");
+	+ setSex("female");
+- setUnit(unit)
+	+ setUnit("us");
+	+ setUnit("si");
+- submit()
+*/
+
 function Legal()
 {
 	// Private fields

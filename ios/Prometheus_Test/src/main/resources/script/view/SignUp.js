@@ -1,5 +1,16 @@
 #import "../core/testcaseBase.js"
 
+/*
+SignUp function
+- fillEmailAndSubmit(email)
+	+ fillEmailAndSubmit("") : enter null email
+	+ fillEmailAndSubmit("test@yahoo.com") : enter valid email
+- getErrorMessage()
+	+ errMsg = getErrorMessage()
+	+ errMsg == signup.MsgEmpty
+	+ errMsg == signup.MsgInvalid
+*/
+
 function SignUp()
 {
 	// Private fields
