@@ -37,13 +37,18 @@ function UserInfo()
 	// Methods
 	this.isVisible = isVisible;
 	this.setInfo = setInfo;
-//	this.changeBody = changeBody;
+	//this.changeBody = changeBody;
 
 	this.setSex = setSex;
 	this.setUnit = setUnit;
+	this.setHeight = setHeight;
+	this.setWeight = setWeight;
+	this.setAge = setAge;
 	this.submit = submit;
 	this.changeWeight = changeWeight;
 	this.changeHeight = changeHeight;
+	this.isMale = isMale;
+	this.isUS = isUS;
 	
 	// Methods definition
 	
@@ -84,6 +89,39 @@ function UserInfo()
 		wheelPick(picker, 1, h2);
 		done.tap();
 	}
+
+	function setHeight(h1, h2)
+	{
+		h1 = h1.toString(); h2 = h2.toString();
+		height.tap();
+		picker = mainView.pickers()[0];
+
+		wheelPick(picker, 0, h1);
+		wheelPick(picker, 1, h2);
+		done.tap();
+	}
+
+	function setWeight(w1, w2)
+	{
+		w1 = w1.toString(); w2 = w2.toString();
+		weight.tap();
+		picker = mainView.pickers()[0];
+		
+		wheelPick(picker, 0, w1);
+		wheelPick(picker, 1, w2);
+		done.tap();
+	}
+
+	function setAge(a)
+	{
+		a = a.toString();		
+		
+		age.tap();
+		picker = mainView.pickers()[0];
+		
+		wheelPick(picker, 0, a);
+		done.tap();
+	}
 	
 //		/*
 //		Increase / Decrease weight and height value by dragging on the human image.
@@ -94,12 +132,14 @@ function UserInfo()
 //	}
 	
 	function changeWeight(dx) {
-		swipeVertically(168, 253, 168 + dx);
-		swipeHorizontally(168, 253, 200);
+		swipeHorizontally(168, 253, 253 + dx);
+		// swipeVertically(168, 253, 168 + dx);
+		//swipeHorizontally(168, 253, 200);
 	}
 	
 	function changeHeight(dy) {
-		swipeHorizontally(168, 253, 253 + dy);
+		// swipeHorizontally(168, 253, 253 + dy);
+		swipeVertically(168, 253, 168 + dy);
 	}
 	
 	function setSex(sex)
@@ -133,6 +173,6 @@ function UserInfo()
 	
 	function isUS()
 	{
-		staticTextExist("lbs");
+		return staticTextExist("lbs");
 	}
 }
