@@ -12,7 +12,9 @@ UIALogger.logStart("TESTTTTT");
 var app = target.frontMostApp();
 var window = app.mainWindow();
 logTree();
-
+//var text= window.staticTexts()[0];
+//log("Value= " + text.value);
+//text.logElement();
 
 pass("==== END ====");
 

@@ -14,6 +14,11 @@ function SignUp()
 	
 	
 	
+	function isVisible() {
+	
+	
+	}
+	
 //	var email = window.textFields()["email"];
 //	
 //	// Constants
