@@ -1,11 +1,18 @@
+#import "../view/SignUp.js"
+#import "../view/UserInfo.js"
+#import "../view/PlanChooser.js"
+#import "../view/WeeklyGoal.js"
+#import "../core/testcaseBase.js"
+
 
 var target = UIATarget.localTarget()
 
-UIALogger.logStart("RUNNING A TEST TEST CASE11");
+UIALogger.logStart("TESTTTTT");
 //throw("An exception");
 var app = target.frontMostApp();
 var window = app.mainWindow();
-target.logElementTree();
+logTree();
 
-UIALogger.logPass("-------------- PASS");
+
+pass("==== END ====");
 

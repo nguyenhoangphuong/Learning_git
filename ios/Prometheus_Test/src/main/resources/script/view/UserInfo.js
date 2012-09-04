@@ -1,7 +1,7 @@
 #import "../core/testcaseBase.js"
 
 /*
-Legal view function:
+UserInfo view function:
 - setInfo(age, w1, w2, h1, h2)
 	+ setInfo(18, 83, 0.3, "8'", "5\"") for US
 	+ setInfo(18, 50, 0.4, 1 , 0.99) for SI
@@ -17,7 +17,7 @@ Legal view function:
 - submit()
 */
 
-function Legal()
+function UserInfo()
 {
 	// Private fields
 	var mainView = app.mainWindow();
@@ -37,7 +37,7 @@ function Legal()
 	// Methods
 	this.isVisible = isVisible;
 	this.setInfo = setInfo;
-	this.changeBody = changeBody;
+//	this.changeBody = changeBody;
 
 	this.setSex = setSex;
 	this.setUnit = setUnit;
