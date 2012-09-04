@@ -4,12 +4,14 @@
 function PlanChooser()
 {
 	// Private fields
+//	var app = target.frontMostApp();
 	var mainWindow = app.mainWindow();
-	var app = target.frontMostApp();
+	
 	
 	var activeBtn = mainWindow.buttons()["active plan"];
 	var normalBtn = mainWindow.buttons()["normal plan"];
 	var easyBtn = mainWindow.buttons()["easy plan"];
+	var otherBtn = mainWindow.buttons()["other"];
 	
 	// Methods
 	this.selectEasy = selectEasy;
@@ -21,19 +23,19 @@ function PlanChooser()
 	// Method definition
 	
 	function selectEasy() {
-		mainWindow.buttons()["easy plan"].tap();
+		easyBtn.tap();
 	}
 	
 	function selectNormal() {
-		mainWindow.buttons()["normal plan"].tap();
+		normalBtn.tap();
 	}
 	
 	function selectActive() {
-		mainWindow.buttons()["active plan"].tap();
+		activeBtn.tap();
 	}
 	
 	function selectOther() {
-		mainWindow.buttons()["other"].tap();
+		otherBtn.tap();
 		target.delay();
 	}
 	

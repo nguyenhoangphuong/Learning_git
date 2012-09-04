@@ -5,6 +5,7 @@ package com.misfit.ta.ios.aut;
 
 
 import com.misfit.ios.AppHelper;
+import com.misfit.ta.Settings;
 import com.misfit.ta.ios.AutomationTest;
 
 /**
@@ -13,7 +14,9 @@ import com.misfit.ta.ios.AutomationTest;
  */
 public class Test extends AutomationTest {
     public static void main(String[] args) {
-        AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-                "script/test1.js");    
+        String bundleName = Settings.getParameter("appBundle");
+        System.out.println("LOG [Test.main]: " + bundleName);
+//        AppHelper.uninstall(AppHelper.getCurrentUdid());
+       AppHelper.cleanCache();
     }
 }

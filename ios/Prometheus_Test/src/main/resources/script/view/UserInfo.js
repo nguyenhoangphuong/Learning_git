@@ -35,6 +35,7 @@ function Legal()
 	var next = mainView.buttons()["done"];
 		
 	// Methods
+	this.isVisible = isVisible;
 	this.setInfo = setInfo;
 	this.changeBody = changeBody;
 
@@ -45,6 +46,11 @@ function Legal()
 	this.changeHeight = changeHeight;
 	
 	// Methods definition
+	
+	function isVisible() {
+		return next.isVisible();
+	
+	}
 	function setInfo(age, w1, w2, h1, h2)
 	{
 		/*
@@ -79,7 +85,6 @@ function Legal()
 		done.tap();
 	}
 	
-//	function changeBody(dx, dy) {
 //		/*
 //		Increase / Decrease weight and height value by dragging on the human image.
 //		- dx: delta x value

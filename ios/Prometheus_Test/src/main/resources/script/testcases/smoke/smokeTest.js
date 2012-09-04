@@ -1,18 +1,36 @@
 #import "../../view/SignUp.js"
 #import "../../view/UserInfo.js"
+#import "../../view/PlanChooser.js"
 #import "../../core/testcaseBase.js"
 
 /**
  * Smoke test
  */
 
+
+
+UIATarget.onAlert = function onAlert(alert){   
+   var name = alert.name();
+   UIALogger.logMessage("Alert "+name+" encountered");
+   app.alert().defaultButton().tap();
+   return true;
+}
+
 var target = UIATarget.localTarget();
 
-UIALogger.logStart("Test email validation");
+UIALogger.logStart("Smoke test STARTED");
+var window = UIATarget.localTarget().frontMostApp().mainWindow();
 
-log("Swipe");
-swipeVertically(168, 253, 100);
-swipeHorizontally(168, 253, 200);
+// inputUserInfo();
+// choosePlan();
+// logTree();
+// wait(4);
+
+
+pass("=== Smoke test END ===");
+
+
+// /-----------------------------------------------
 
 function signup() {
 	wait(2);
@@ -25,16 +43,7 @@ function signup() {
 	log("In licence agreement");
 	wait();
 	signup.closeLicenceAgreement();
-	signup.fillEmailAndSubmit("");
-	if (signup.getErrorMessage() != signup.MsgEmpty) {
-		UIALogger.logFail("Wrong error message: " + signup.getErrorMessage() );
-	}
-
-	signup.fillEmailAndSubmit("dad@");
-	log(signup.getErrorMessage() );
-	if (signup.getErrorMessage() != signup.MsgInvalid) {
-		UIALogger.logFail("Wrong error message: " + signup.getErrorMessage() );
-	}
+	wait();
 	signup.fillEmailAndSubmit("abcd@test.com");
 
 	if (signup.isEmailTextFieldVisible() == 1) {
@@ -44,5 +53,25 @@ function signup() {
 	// should be in user info now
 } 
 
+function inputUserInfo() {
+	
+	signup();
+	var userinfo = new UserInfo();
+	
+	userinfo.submit();
+	
+}
 
-UIALogger.logPass("Pass");
+
+function choosePlan() {
+	inputUserInfo();
+	log("After user info");
+	wait();
+	var planChooser = new PlanChooser();
+	log("before plan chooser");
+	planChooser.selectEasy();
+	log("after plan chooser");
+}
+
+
+
