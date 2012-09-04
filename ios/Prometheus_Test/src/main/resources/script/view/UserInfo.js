@@ -115,7 +115,7 @@ function UserInfo()
 	function setAge(a)
 	{
 		a = a.toString();		
-		
+		UIALogger.logPass(a);
 		age.tap();
 		picker = mainView.pickers()[0];
 		

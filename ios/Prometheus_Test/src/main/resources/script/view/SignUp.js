@@ -33,6 +33,7 @@ function SignUp()
 	// Method definition
 	
 	function isEmailTextFieldVisible() {
+		wait();
 		return window.textFields()["email"].isVisible();
 
 	}
