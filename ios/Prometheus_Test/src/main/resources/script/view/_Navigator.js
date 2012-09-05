@@ -38,16 +38,18 @@ function Navigator()
 	function toUserInfo()
 	{
 		toSignUp();
-		
-		var signup = new SignUp();
-		if (signup.isEmailTextFieldVisible() == 1) {
-			log("Email is visible");
-		}
+		if(staticTextExist("GOAL PLANNER"))
+		{
+			var signup = new SignUp();
+			if (signup.isEmailTextFieldVisible() == 1) {
+				log("Email is visible");
+			}
 
-		signup.fillEmailAndSubmit("abcd@test.com");
+			signup.fillEmailAndSubmit("abcd@test.com");
 
-		if (signup.isEmailTextFieldVisible() == 1) {
-			UILogger.logFail("Should succeed");
+			if (signup.isEmailTextFieldVisible() == 1) {
+				UILogger.logFail("Should succeed");
+			}
 		}
 	}
 	

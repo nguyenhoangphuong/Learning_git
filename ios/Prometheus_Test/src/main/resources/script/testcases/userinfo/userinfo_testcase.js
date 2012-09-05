@@ -1,11 +1,12 @@
 #import "../../view/UserInfo.js"
 #import "../../view/SignUp.js"
-#import "../../view/_Navigation.js"
+#import "../../view/_Navigator.js"
 #import "../../core/testcaseBase.js"
 
 function GoToUserInfoScreen()
 {
 	UIALogger.logPass("GoToUserInfoScreen");
+	var navi = new Navigator();
 	navi.toUserInfo();
 }
 
@@ -33,7 +34,7 @@ function InputHeight()
 {	
 	UIALogger.logPass("InputHeight");
 	userinfo = new UserInfo();
-	userinfo.setHeight(5, 9);
+	userinfo.setHeight("5'", "9\"");
 	// check height is changed
 	if(staticTextExist("5'9\""))
 		UIALogger.logPass("Input height: Pass");
@@ -44,9 +45,9 @@ function InputHeight()
 function InputWeight()
 {	
 	UIALogger.logPass("InputWeight");
-	legal = new Legal();
-	legal.setWeight(122, 0.4);
-	if(staticTextExist("122.4"))
+	legal = new UserInfo();
+	legal.setWeight(150, 0.8);
+	if(staticTextExist("150.8"))
 		UIALogger.logPass("Input weight: Pass");
 	else
 		UIALogger.logFail("Input weight: Fail");
@@ -57,6 +58,7 @@ function InputAge()
 	UIALogger.logPass("InputAge");
 	userinfo = new UserInfo();
 	userinfo.setAge(25);
+	wait(2);
 	if(staticTextExist("25"))
 		UIALogger.logPass("Input age: Pass");
 	else
@@ -154,13 +156,13 @@ function VerifyNextButton()
 UIALogger.logPass("START TEST");
 GoToUserInfoScreen();
 
-CheckDefaultValue();
-InputWeight();
-InputHeight();
+//CheckDefaultValue();
+//InputWeight();
+//InputHeight();
 InputAge();
-InputGender();
-InputUnit();
-VerifyInteruption();
+//InputGender();
+//InputUnit();
+//VerifyInteruption();
 //VerifyOldState();
-VerifyNextButton();
+//VerifyNextButton();
 UIALogger.logPass("END OF TEST");

@@ -57,6 +57,9 @@ function UserInfo()
 	
 	this.isBMIAlertShown = isBMIAlertShown;
 	this.isInfoValid = isInfoValid;
+
+	this.isMale = isMale;
+	this.isUS = isUS;
 	
 	// Methods definition
 	function isVisible()
