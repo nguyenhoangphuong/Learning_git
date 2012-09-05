@@ -41,7 +41,7 @@ function CheckDefaultValue()
 {
 	UIALogger.logPass("CheckDefaultValue");
 
-	legal = new Legal();
+	legal = new UserInfo();
 	// check gender default
 	if(legal.isMale())
 		UIALogger.logPass("Check gender defautl (male): Pass");
@@ -59,7 +59,7 @@ function CheckDefaultValue()
 function InputHeight()
 {	
 	UIALogger.logPass("InputHeight");
-	legal = new Legal();
+	legal = new UserInfo();
 	legal.setHeight(5, 9);
 	// check height is changed
 	if(staticTextExist("5'9\""))
@@ -71,7 +71,7 @@ function InputHeight()
 function InputWeight()
 {	
 	UIALogger.logPass("InputWeight");
-	legal = new Legal();
+	legal = new UserInfo();
 	legal.setWeight(122, 0.4);
 	if(staticTextExist("122.4"))
 		UIALogger.logPass("Input weight: Pass");
@@ -82,7 +82,7 @@ function InputWeight()
 function InputAge()
 {	
 	UIALogger.logPass("InputAge");
-	legal = new Legal();
+	legal = new UserInfo();
 	legal.setAge(25);
 	if(staticTextExist("25"))
 		UIALogger.logPass("Input age: Pass");
@@ -93,7 +93,7 @@ function InputAge()
 function InputGender()
 {	
 	UIALogger.logPass("InputGender");
-	legal = new Legal();
+	legal = new UserInfo();
 	var isMale = legal.isMale();
 	if(isMale)
 		legal.setSex("female");
@@ -109,7 +109,7 @@ function InputGender()
 function InputUnit()
 {	
 	UIALogger.logPass("InputUnit");
-	legal = new Legal();
+	legal = new UserInfo();
 	var isUs = legal.isUS();
 	var tempStr = "lbs";
 	if(isUs)
@@ -134,7 +134,7 @@ function InputUnit()
 function VerifyInteruption()
 {
 	UIALogger.logPass("VerifyInteruption");
-	legal = new Legal();
+	legal = new UserInfo();
 	var isMale = legal.isMale();
 	var isUS = legal.isUS();
 
@@ -152,7 +152,7 @@ function VerifyOldState()
 	// skip because of issue with HOME button action: it don't reopen app after minimizing
 
 	// UIALogger.logPass("VerifyOldState");
-	// legal = new Legal();
+	// legal = new UserInfo();
 	// var isMale = legal.isMale();
 	// var isUS = legal.isUS();
 
@@ -168,7 +168,7 @@ function VerifyOldState()
 function VerifyNextButton()
 {
 	UIALogger.logPass("VerifyNextButton");
-	legal = new Legal();
+	legal = new UserInfo();
 	legal.submit();
 	// verify it will go to choose plan screen
 	if(staticTextExist("Please set your plan"))
@@ -181,13 +181,13 @@ function VerifyNextButton()
 UIALogger.logPass("START TEST");
 GoToUserInfoScreen();
 
-CheckDefaultValue();
-InputWeight();
-InputHeight();
+//CheckDefaultValue();
+//InputWeight();
+//InputHeight();
 InputAge();
-InputGender();
-InputUnit();
-VerifyInteruption();
+//InputGender();
+//InputUnit();
+//VerifyInteruption();
 //VerifyOldState();
-VerifyNextButton();
+//VerifyNextButton();
 UIALogger.logPass("END OF TEST");
