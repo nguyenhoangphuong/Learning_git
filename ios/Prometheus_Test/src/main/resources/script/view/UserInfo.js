@@ -1,20 +1,27 @@
 #import "../core/testcaseBase.js"
+#import "_AlertHandler.js"
 
 /*
 UserInfo view function:
-- setInfo(age, w1, w2, h1, h2)
+- setInfo(age, w1, w2, h1, h2)		:	set user information
 	+ setInfo(18, 83, 0.3, "8'", "5\"") for US
-	+ setInfo(18, 50, 0.4, 1 , 0.99) for SI
-- changeBody(dx, dy)
-	+ changeBody(50, 50) to make fatter and shorter
-	+ changeBody(-50, -50) to make thinner and taller
-- setSex(sex)
+	+ setInfo(18, 50, 0.4, 1 , 0.99) 	for SI
+- changeHeight(dy)					:	change user height by dragging onto image
+	+ dy > 0: make shorter
+	+ dy < 0: make taller
+- changeWeight(dx)					:	change user weight by dragging onto image
+	+ dx > 0: make fatter
+	+ dx < 0: make thinner
+- setSex(sex)						:	set user sex
 	+ setSex("male");
 	+ setSex("female");
-- setUnit(unit)
+- setUnit(unit)						:	set user unit
 	+ setUnit("us");
 	+ setUnit("si");
-- submit()
+- submit()							:	submit the form
+- isInfoValid(age, weight, height, sex, unit)
+									:	check if the info shown on the screen is correct
+- isBMIAlertShown					:	check if the popup BMI is not realistic is shown
 */
 
 function UserInfo()
@@ -35,28 +42,19 @@ function UserInfo()
 	var next = mainView.buttons()["done"];
 		
 	// Methods
-	this.isVisible = isVisible;
 	this.setInfo = setInfo;
-	//this.changeBody = changeBody;
 
 	this.setSex = setSex;
 	this.setUnit = setUnit;
-	this.setHeight = setHeight;
-	this.setWeight = setWeight;
-	this.setAge = setAge;
 	this.submit = submit;
 	this.changeWeight = changeWeight;
 	this.changeHeight = changeHeight;
-	this.isMale = isMale;
-	this.isUS = isUS;
-	
+	this.isBMIAlertShown = isBMIAlertShown;
+
+	this.isInfoValid = isInfoValid;
+		
 	// Methods definition
-	
-	function isVisible() {
-		return next.isVisible();
-	
-	}
-	function setInfo(age, w1, w2, h1, h2)
+	function setInfo(a, w1, w2, h1, h2)
 	{
 		/*
 		example: (18, 83, 0.3, 8, 5) for US
@@ -64,16 +62,23 @@ function UserInfo()
 		*/
 		
 		// to string
-		age = age.toString();
+		a = a.toString();
 		w1 = w1.toString(); w2 = w2.toString();
 		h1 = h1.toString(); h2 = h2.toString();
-		log(w1);log(w2);log(h1);log(h2);		
+
 		// set age
-		// --- age is bug now ---
+		wait();	
+		age.tap();
+		wait(0.5);
+		picker = mainView.pickers()[0];
+		
+		wheelPick(picker, 0, a);
+		done.tap();
 		
 		// set weight
 		wait();	
 		weight.tap();
+		wait(0.5);
 		picker = mainView.pickers()[0];
 		
 		wheelPick(picker, 0, w1);
@@ -83,63 +88,24 @@ function UserInfo()
 		// set height
 		wait();
 		height.tap();
+		wait(0.5);
 		picker = mainView.pickers()[0];
 
 		wheelPick(picker, 0, h1);
 		wheelPick(picker, 1, h2);
 		done.tap();
 	}
-
-	function setHeight(h1, h2)
+	
+	function changeWeight(dx) 
 	{
-		h1 = h1.toString(); h2 = h2.toString();
-		height.tap();
-		picker = mainView.pickers()[0];
-
-		wheelPick(picker, 0, h1);
-		wheelPick(picker, 1, h2);
-		done.tap();
-	}
-
-	function setWeight(w1, w2)
-	{
-		w1 = w1.toString(); w2 = w2.toString();
-		weight.tap();
-		picker = mainView.pickers()[0];
-		
-		wheelPick(picker, 0, w1);
-		wheelPick(picker, 1, w2);
-		done.tap();
-	}
-
-	function setAge(a)
-	{
-		a = a.toString();		
-		UIALogger.logPass(a);
-		age.tap();
-		picker = mainView.pickers()[0];
-		
-		wheelPick(picker, 0, a);
-		done.tap();
+		wait();
+		swipeHorizontally(160, 240, 160 + dx);
 	}
 	
-//		/*
-//		Increase / Decrease weight and height value by dragging on the human image.
-//		- dx: delta x value
-//		- dy: delta y value
-//		*/
-//		
-//	}
-	
-	function changeWeight(dx) {
-		swipeHorizontally(168, 253, 253 + dx);
-		// swipeVertically(168, 253, 168 + dx);
-		//swipeHorizontally(168, 253, 200);
-	}
-	
-	function changeHeight(dy) {
-		// swipeHorizontally(168, 253, 253 + dy);
-		swipeVertically(168, 253, 168 + dy);
+	function changeHeight(dy) 
+	{
+		wait();
+		swipeVertically(160, 240, 240 + dy);
 	}
 	
 	function setSex(sex)
@@ -165,14 +131,34 @@ function UserInfo()
 		next.tap();
 	}
 	
+	function isInfoValid(a, w, h, sex, unit)
+	{
+		if(sex == "male" && !isMale()) return false;
+		if(sex == "female" && isMale()) return false;
+		if(unit == "us" && !isUS()) return false;
+		if(unit == "si" && isUS()) return false;
+		if(!staticTextExist(a.toString())) return false;
+		if(!staticTextExist(w.toString())) return false;
+		if(!staticTextExist(h.toString())) return false;
+		
+		return true;
+	}
+	
+	function isBMIAlertShown()
+	{
+	}
+	
 	// helpers
 	function isMale()
 	{
+		wait(0.2);
 		return female.rect().origin.x > 80;
 	}
 	
 	function isUS()
 	{
+		// x > < 175
+		wait(0.2);
 		return staticTextExist("lbs");
 	}
 }
