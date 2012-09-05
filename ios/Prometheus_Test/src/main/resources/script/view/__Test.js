@@ -1,5 +1,6 @@
 #import "_Navigator.js"
 #import "_AlertHandler.js"
+#import "_Prometheus.js"
 #import "../core/testcaseBase.js"
 
 
@@ -50,6 +51,10 @@ function testAbout()
 
 start("Demo");
 
-testAbout();
+about = new About();
+about.likeApp();
 
-pass("Demo pass");
+if(!prometheus.isActive())
+	pass("Demo pass");
+else
+	fail();

@@ -958,7 +958,6 @@ function verifyBeforeStartShuffleGame() {
 }
 
 // ============== Test helpers
-
 function logTree() 
 {
 	target.logElementTree();
@@ -997,7 +996,7 @@ function fail(text)
 {
 	if(typeof text == "undefined")
 		text = "Fail";
-	UIALogger.logPass(text);
+	UIALogger.logFail(text);
 }
 
 // =============== TA helpers

@@ -3,9 +3,13 @@
 
 /*
 UserInfo view function:
+- isVisible()						:	check if the current view is visible
 - setInfo(age, w1, w2, h1, h2)		:	set user information
 	+ setInfo(18, 83, 0.3, "8'", "5\"") for US
 	+ setInfo(18, 50, 0.4, 1 , 0.99) 	for SI
+- setAge(age)						:	|
+- setWeight(w1, w2)					:	| single function for setting values
+- setHeight(h1, h2)					:	|
 - changeHeight(dy)					:	change user height by dragging onto image
 	+ dy > 0: make shorter
 	+ dy < 0: make taller

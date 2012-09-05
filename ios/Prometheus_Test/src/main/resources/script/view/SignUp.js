@@ -38,8 +38,7 @@ function SignUp()
 	function isEmailTextFieldVisible() 
 	{
 		wait();
-		return window.textFields()["email"].isVisible();
-
+		return email.isVisible();
 	}
 	
 	function fillEmailAndSubmit(email)
