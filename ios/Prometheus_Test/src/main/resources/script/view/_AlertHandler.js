@@ -30,6 +30,7 @@ function Alert()
 	
 	// All the alert title name
 	this.NoInternetAlert = "No connection";
+	this.BMIErrorAlert = "Error";
 	
 	// Methods
 	this.resetAlert = resetAlert;
@@ -65,7 +66,8 @@ function PrometheusAlertHandler(_alert)
 	// check for test-related alert
 	
 	//	----- no internet connection alert
-	if(name == alert.NoInternetAlert)
+	if(	name == alert.NoInternetAlert	||
+		name == alert.BMIErrorAlert	)
 	{
 		// track the alert
 		alert.alertObj = _alert;

@@ -248,15 +248,6 @@ function swipeLeft() {
 //}
 //}
 
-function swipeVertically(startX, startY, endY) {
-	// swipe right
-        target.dragFromToForDuration({x:startX, y:startY}, {x:startX, y:endY}, 0.6);
-}
-
-function swipeHorizontally(startX, startY, endX) {
-        target.dragFromToForDuration({x:startX, y:startY}, {x:endX, y:startY}, 0.6);
-}
-
 function isMisfitCollectionScreen() {
 	return app.mainWindow().staticTexts()["DAILY MISFIT"].isValid();
 }
@@ -990,7 +981,7 @@ function start(text)
 
 function log(text)
 {
-	if(typeof text == "undefined")
+	if (typeof text == "undefined")
 		text = "Debug log";
     UIALogger.logDebug(text);
 }
@@ -1020,18 +1011,73 @@ function staticTextExist(text)
 
 function wheelPick(picker, wheelIndex, value)
 {
-	if(typeof wheelIndex == "undefined")
-		wheelIndex = 0;
-		
+	// wheel and items
 	wheel = picker.wheels()[wheelIndex];
 	items = wheel.values();
 	
-	if(items.indexOf[value] < 0)
-		fail("Wheel has no such value!");
+	// get current value
+	current = wheel.value();
+	current = current.substring(0, current.lastIndexOf("."));
+	
+	// find the index of current and expect value
+	start = items.indexOf(current);	
+	end = items.indexOf(value);
+	steps = Math.abs(end - start);
+	
+	log("start: " + items[start] + " : " + start.toString());
+	log("end: " + items[end] + " : " + end.toString());
+	log("current: " + current + " - value: " + value);
 
-	wheel.selectValue(value);
+	// invalid value
+	if(end < 0)
+		fail("Wheel has no such value [" + value + "]!");
+	
+	// scroll up
+	if(start > end)
+	{
+		while(steps > 0)
+		{
+			wheel.tapWithOptions({tapOffset:{x:0.5, y:0.25}});
+			target.delay(0.5);
+			steps--;
+		}
+	}
+	// scroll down
+	else
+	{
+		while(steps > 0)
+		{
+			wheel.tapWithOptions({tapOffset:{x:0.5, y:0.75}});
+			target.delay(0.5);
+			steps--;
+		}
+	}  
+
+	//wheel.selectValue(items[index]);
 }
 
-function isKeyboardVisible() {
+function isKeyboardVisible()
+{
 	return app.keyboard().isVisible();
+}
+
+function swipeVertically(startX, startY, endY, duration)
+{
+	if(typeof duration == "undefined")
+		duration = 0.6;
+		
+	target.dragFromToForDuration({x:startX, y:startY}, {x:startX, y:endY}, duration);
+}
+
+function swipeHorizontally(startX, startY, endX, duration)
+{
+	if(typeof duration == "undefined")
+		duration = 0.6;	
+
+    target.dragFromToForDuration({x:startX, y:startY}, {x:endX, y:startY}, duration);
+}
+
+function tap(x, y)
+{
+	target.tap({x:x, y:y});
 }

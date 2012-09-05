@@ -14,19 +14,19 @@ function testSignUp()
 	error = signup.getErrorMessage();
 	
 	log(error);
-}
+}	
 
 function testUserInfo()
 {
 	ui = new UserInfo();	
-	//ui.setSex("male");
-	//ui.setSex("female");
+	ui.setSex("male");
+	ui.setSex("female");
 	ui.setUnit("si");
 	ui.setUnit("us");
-	//ui.setInfo(18, 46, 0.5, 1, 0.55);
-	//ui.setInfo(18, 95, 0.3, "6'", "8\"");
-	//ui.changeWeight(-100);
-	//ui.changeHeight(100);
+	ui.setInfo(18, 46, 0.5, 1, 0.55);
+	ui.setInfo(18, 95, 0.3, "6'", "8\"");
+	ui.changeWeight(-100);
+	ui.changeHeight(100);
 }
 
 function testGoalProgress()
@@ -37,8 +37,11 @@ function testGoalProgress()
 	goal.scrollToHistory();
 }
 
-start();
+start("Demo");
 
-testUserInfo();
+ui = new UserInfo();
+ui.setAge(15);
+ui.setWeight(200, 0.5);
+ui.setHeight("6'", "11\"");
 
-pass();
+pass("Demo pass");

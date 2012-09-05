@@ -43,14 +43,18 @@ function UserInfo()
 		
 	// Methods
 	this.setInfo = setInfo;
-
+	this.setAge = setAge;
+	this.setHeight = setHeight;
+	this.setWeight = setWeight;
+	
 	this.setSex = setSex;
 	this.setUnit = setUnit;
 	this.submit = submit;
+	
 	this.changeWeight = changeWeight;
 	this.changeHeight = changeHeight;
+	
 	this.isBMIAlertShown = isBMIAlertShown;
-
 	this.isInfoValid = isInfoValid;
 	
 	function isVisible() {
@@ -60,17 +64,20 @@ function UserInfo()
 	// Methods definition
 	function setInfo(a, w1, w2, h1, h2)
 	{
-		/*
-		example: (18, 83, 0.3, 8, 5) for US
-		         (18, 50, 0.4, 1 , 0.99) for SI
-		*/
-		
-		// to string
-		a = a.toString();
-		w1 = w1.toString(); w2 = w2.toString();
-		h1 = h1.toString(); h2 = h2.toString();
-
 		// set age
+		setAge(a);
+		
+		// set weight
+		setWeight(w1, w2);
+		
+		// set height
+		setHeight(h1, h2);
+	}
+	
+	function setAge(a)
+	{
+		a = a.toString();
+		
 		wait();	
 		age.tap();
 		wait(0.5);
@@ -78,8 +85,12 @@ function UserInfo()
 		
 		wheelPick(picker, 0, a);
 		done.tap();
+	}
+	
+	function setWeight(w1, w2)
+	{
+		w1 = w1.toString(); w2 = w2.toString();
 		
-		// set weight
 		wait();	
 		weight.tap();
 		wait(0.5);
@@ -89,7 +100,15 @@ function UserInfo()
 		wheelPick(picker, 1, w2);
 		done.tap();
 		
-		// set height
+		// check if bmi not realistic
+		if(isBMIAlertShown())
+			cancel.tap();
+	}
+	
+	function setHeight(h1, h2)
+	{
+		h1 = h1.toString(); h2 = h2.toString();
+		
 		wait();
 		height.tap();
 		wait(0.5);
@@ -98,19 +117,12 @@ function UserInfo()
 		wheelPick(picker, 0, h1);
 		wheelPick(picker, 1, h2);
 		done.tap();
+		
+		// check if bmi not realistic
+		if(isBMIAlertShown())
+			cancel.tap();
 	}
 	
-	function changeWeight(dx) 
-	{
-		wait();
-		swipeHorizontally(160, 240, 160 + dx);
-	}
-	
-	function changeHeight(dy) 
-	{
-		wait();
-		swipeVertically(160, 240, 240 + dy);
-	}
 	
 	function setSex(sex)
 	{
@@ -135,6 +147,20 @@ function UserInfo()
 		next.tap();
 	}
 	
+
+	function changeWeight(dx) 
+	{
+		wait();
+		swipeHorizontally(160, 240, 160 + dx);
+	}
+	
+	function changeHeight(dy) 
+	{
+		wait();
+		swipeVertically(160, 240, 240 + dy);
+	}
+	
+	
 	function isInfoValid(a, w, h, sex, unit)
 	{
 		if(sex == "male" && !isMale()) return false;
@@ -150,6 +176,8 @@ function UserInfo()
 	
 	function isBMIAlertShown()
 	{
+		wait(2);
+		return alert.alertTitle != null && alert.alertTitle == alert.BMINotRealistic;
 	}
 	
 	// helpers

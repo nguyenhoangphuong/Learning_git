@@ -26,18 +26,21 @@ function SignUp()
 	this.isEmailTextFieldVisible = isEmailTextFieldVisible;
 	this.fillEmailAndSubmit = fillEmailAndSubmit;
 	this.getErrorMessage = getErrorMessage;
+	
 	this.pressLicenceAgreement = pressLicenceAgreement;
 	this.closeLicenceAgreement = closeLicenceAgreement;
 	this.isLicenceAgreementShown = isLicenceAgreementShown;
 	
+	this.isNoInternetAlertShown = isNoInternetAlertShown;
 	
 	// Method definition
-	
-	function isEmailTextFieldVisible() {
+	function isEmailTextFieldVisible() 
+	{
 		wait();
 		return window.textFields()["email"].isVisible();
 
 	}
+	
 	function fillEmailAndSubmit(email)
 	{
 		wait();
@@ -45,7 +48,8 @@ function SignUp()
 		app.keyboard().typeString("\n");
 	}
 	
-	function getErrorMessage() {
+	function getErrorMessage()
+	{
 		wait();
 		
 		if (window.staticTexts()[this.MsgEmpty].isValid())
@@ -57,15 +61,25 @@ function SignUp()
 	}
 	
 	
-	function pressLicenceAgreement() {
+	function pressLicenceAgreement() 
+	{
 		window.buttons()["Licence Agreement"].tap();
 	}
 	
-	function closeLicenceAgreement() {
+	function closeLicenceAgreement() 
+	{
 		window.buttons()["agree"].tap();
 	}
 	
-	function isLicenceAgreementShown() {
+	function isLicenceAgreementShown() 
+	{
 		return window.buttons()["agree"].isVisible();
+	}
+	
+	
+	function isNoInternetAlertShown()
+	{
+		wait(2);
+		return alert.alertTitle != null && alert.alertTitle == alert.NoInternet;
 	}
 }
