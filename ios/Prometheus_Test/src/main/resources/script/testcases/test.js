@@ -4,7 +4,7 @@
 #import "../view/WeeklyGoal.js"
 #import "../view/_Navigator.js"
 #import "../core/testcaseBase.js"
-#import "commonflow.js"
+
 
 
 var target = UIATarget.localTarget()

@@ -57,9 +57,13 @@ function InputAge()
 {	
 	UIALogger.logPass("InputAge");
 	userinfo = new UserInfo();
-	userinfo.setAge(25);
+	userinfo.setAge(10);
 	wait(2);
-	if(staticTextExist("25"))
+	
+	log("--------------");
+	logTree();
+	
+	if(staticTextExist("10"))
 		UIALogger.logPass("Input age: Pass");
 	else
 		UIALogger.logFail("Input age: Fail");
@@ -153,16 +157,27 @@ function VerifyNextButton()
 }
 
 // Go to User Info screen
-UIALogger.logPass("START TEST");
-GoToUserInfoScreen();
+UIALogger.logStart("START TEST");
+
+wait(2);
+logTree();
+log(staticTextExist("GOAL PLANNER"));
+wait(2);
+//GoToUserInfoScreen();
+//log("Log1: " + staticTextExist("10"));
+//log("Log2: " + staticTextExist("yrs"));
+//log("Log1: " + staticTextExist("10"));
+//log("Log2: " + staticTextExist("190.0"));
+//log("Log3: " + staticTextExist("5'10\""));
 
 //CheckDefaultValue();
 //InputWeight();
 //InputHeight();
-InputAge();
+//InputAge();
 //InputGender();
 //InputUnit();
 //VerifyInteruption();
 //VerifyOldState();
 //VerifyNextButton();
 UIALogger.logPass("END OF TEST");
+	
