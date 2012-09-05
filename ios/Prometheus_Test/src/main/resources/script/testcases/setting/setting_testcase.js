@@ -1,6 +1,7 @@
 #import "../../view/About.js"
 #import "../../view/_Navigator.js"
 #import "../../core/testcaseBase.js"
+#import "../../view/_Prometheus.js"
 
 function GoToSettingScreen()
 {
@@ -15,7 +16,8 @@ function VerifyRateButton()
 	// tap on rate button
 	setting.rateApp();
 	// verify it will open app in app store
-	if(true)
+	// wait();
+	if(!prometheus.isActive())
 		UIALogger.logPass("Rate button: Pass");
 	else
 		UIALogger.logFail("Rate button: Fail");
@@ -28,7 +30,7 @@ function VerifyEmailSupportButton()
 	// tap on email button
 	setting.getSupport();
 	// verify it will open email client
-	if(true)
+	if(!prometheus.isActive())
 		UIALogger.logPass("Email Support button: Pass");
 	else
 		UIALogger.logFail("Email Support button: Fail");
@@ -56,7 +58,7 @@ function VerifyLikeButton()
 	// tap on like button
 	setting.likeApp();
 	// verify it will open misfit's fanpage
-	if(true)
+	if(prometheus.isActive())
 		UIALogger.logPass("Like button: Pass");
 	else
 		UIALogger.logFail("Like button: Fail");
@@ -79,9 +81,9 @@ function VerifyResetButton()
 UIALogger.logPass("START TEST");
 GoToSettingScreen();
 
-//VerifyRateButton();
+VerifyRateButton();
 // VerifyEmailSupportButton();
-VerifyEmailWithoutAccount();
+// VerifyEmailWithoutAccount();
 // VerifyLikeButton();
 // VerifyResetButton();
 
