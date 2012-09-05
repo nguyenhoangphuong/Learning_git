@@ -39,6 +39,7 @@ function GoalProgress()
 	this.scrollToWeekProgress = scrollToWeekProgress;
 	this.scrollToDayProgress = scrollToDayProgress;
 	this.scrollToHistory = scrollToHistory;
+	this.scrollToAbout = scrollToAbout;
 	this.start = start;
 		
 	this.isWeekPlanValid = isWeekPlanValid;
@@ -80,6 +81,11 @@ function GoalProgress()
 	{
 		wait();
 		mainView.scrollRight();
+	}
+
+	function scrollToAbout()
+	{
+		mainView.scrollLeft();
 	}
 	
 	function start()

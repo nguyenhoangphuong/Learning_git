@@ -119,9 +119,9 @@ function Navigator()
 	
 	function toAbout()
 	{
-		toHistory();
-		history = new History();
-		history.scrollToAbout();
+		toTodayGoal();
+		goal = new GoalProgress();
+		goal.scrollToAbout();
 		wait();
 	}
 }
