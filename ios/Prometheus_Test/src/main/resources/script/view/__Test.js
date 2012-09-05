@@ -1,4 +1,5 @@
 #import "_Navigator.js"
+#import "_AlertHandler.js"
 #import "../core/testcaseBase.js"
 
 
@@ -37,11 +38,18 @@ function testGoalProgress()
 	goal.scrollToHistory();
 }
 
+function testAbout()
+{
+	about = new About();
+	about.getSupport();
+	if(about.isNoEmailAlertShown())
+		pass();
+	else
+		fail();
+}
+
 start("Demo");
 
-ui = new UserInfo();
-ui.setAge(15);
-ui.setWeight(200, 0.5);
-ui.setHeight("6'", "11\"");
+testAbout();
 
 pass("Demo pass");

@@ -42,6 +42,7 @@ function UserInfo()
 	var next = mainView.buttons()["done"];
 		
 	// Methods
+	this.isVisible = isVisible;
 	this.setInfo = setInfo;
 	this.setAge = setAge;
 	this.setHeight = setHeight;
@@ -57,11 +58,12 @@ function UserInfo()
 	this.isBMIAlertShown = isBMIAlertShown;
 	this.isInfoValid = isInfoValid;
 	
-	function isVisible() {
+	// Methods definition
+	function isVisible()
+	{
 		return next.isVisble();
 	}
 	
-	// Methods definition
 	function setInfo(a, w1, w2, h1, h2)
 	{
 		// set age
@@ -99,8 +101,9 @@ function UserInfo()
 		wheelPick(picker, 0, w1);
 		wheelPick(picker, 1, w2);
 		done.tap();
-		
+
 		// check if bmi not realistic
+		wait(3);
 		if(isBMIAlertShown())
 			cancel.tap();
 	}
@@ -119,6 +122,7 @@ function UserInfo()
 		done.tap();
 		
 		// check if bmi not realistic
+		wait(3);
 		if(isBMIAlertShown())
 			cancel.tap();
 	}
@@ -176,7 +180,6 @@ function UserInfo()
 	
 	function isBMIAlertShown()
 	{
-		wait(2);
 		return alert.alertTitle != null && alert.alertTitle == alert.BMINotRealistic;
 	}
 	

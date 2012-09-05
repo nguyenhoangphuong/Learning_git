@@ -1,4 +1,5 @@
 #import "../core/testcaseBase.js"
+#import "_AlertHandler.js"
 
 /*
 SignUp function
@@ -79,7 +80,6 @@ function SignUp()
 	
 	function isNoInternetAlertShown()
 	{
-		wait(2);
 		return alert.alertTitle != null && alert.alertTitle == alert.NoInternet;
 	}
 }

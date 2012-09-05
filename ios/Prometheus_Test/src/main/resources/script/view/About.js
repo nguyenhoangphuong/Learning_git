@@ -23,6 +23,9 @@ function About()
 	this.likeApp = likeApp;
 	this.resetPlan = resetPlan;
 	
+	this.isNoEmailAlertShown = isNoEmailAlertShown;
+	this.isResetCofirmAlertShown = isResetConfirmAlertShown;
+	
 	// Methods definition
 	function rateApp()
 	{
@@ -32,6 +35,7 @@ function About()
 	function getSupport()
 	{
 		email.tap();
+		wait(3);
 	}
 	
 	function likeApp()
@@ -42,12 +46,27 @@ function About()
 	function resetPlan(confirm)
 	{
 		if(typeof confirm != "undefined")
-			alertChoice = "no";
+			alertChoice = "No";
 		else if(confirm == "yes")
-			alertChoice = "yes";
+			alertChoice = "Yes";
 		else
-			alertChoice = "no";
-			
+			alertChoice = "No";
+		
 		reset.tap();
+		
+		// wait for alert to shown up
+		wait(3);
+	}
+	
+	function isNoEmailAlertShown()
+	{
+		log("checking: " + alert.NoEmail);
+		return alert.alertTitle != null && alert.alertTitle == alert.NoEmail;
+	}
+	
+	function isResetConfirmAlertShown()
+	{
+		log("checking: " + alert.ResetConfirm);
+		return alert.alertTitle != null && alert.alertTitle == alert.ResetConfirm;
 	}
 }

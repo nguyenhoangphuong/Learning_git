@@ -2,20 +2,21 @@
 This file handler all the alert which relate to the tests.
 
 When an action cause an alert to popup, the alert title and message
-will be store in 3 global vars named:
-	+ alertObj
-	+ alertTitle
-	+ alertMsg
-
-These 2 vars should set to null or empty after using for safe.
+will be store in 2 global vars named:
+	+ alert.alertTitle
+	+ alert.alertMsg
 
 You can also make choice dynamically when handler alert by bypassing
 the setting value for the var alertChoice, and this should do before
 trigger an alert.
 --- For example:
-	alertChoice = "Add";
+	alert.alertChoice = "Add";
 	buttonThatTriggerAlert.tap();
 	wait(2);
+	
+When working with Alert, please make sure to reset alert's properties
+after use by calling
+	alert.reset();
 */
 
 
@@ -23,22 +24,22 @@ trigger an alert.
 function Alert()
 {
 	// Private fields
-	this.alertObj = null;
 	this.alertTitle = null;
 	this.alertMsg = null;
 	this.alertChoice = null;
 	
 	// All the alert title name
-	this.NoInternetAlert = "No connection";
-	this.BMIErrorAlert = "Error";
+	this.NoInternet = "No connection";
+	this.BMINotRealistic = "Error";
+	this.NoEmail = "Warning";
+	this.ResetConfirm = "Confirm";
 	
 	// Methods
-	this.resetAlert = resetAlert;
+	this.reset = reset;
 	
 	// Method definitions
-	function resetAlert()
+	function reset()
 	{
-		alertObj = null;
 		alertTitle = null;
 		alertMsg = null;
 	}
@@ -58,19 +59,22 @@ function PrometheusAlertHandler(_alert)
 {
 	// get alert title and message
 	var name = _alert.name();
-	var message = _alert.staticTexts()[0];
+	var message = _alert.staticTexts()[1].name();
    
 	// log the alert
-	UIALogger.logMessage("Alert " + name + " encountered");
+	log("Alert [" + name + "] encountered");
 	
 	// check for test-related alert
-	
-	//	----- no internet connection alert
-	if(	name == alert.NoInternetAlert	||
-		name == alert.BMIErrorAlert	)
+	if(	name == alert.NoInternet		||
+		name == alert.BMINotRealistic	||
+		name == alert.NoEmail			||
+		name == alert.ResetConfirm)
 	{
+		// log
+		log("Interesting [" + name + "] encountered!");
+		log("Message [" + message + "].");
+		
 		// track the alert
-		alert.alertObj = _alert;
 		alert.alertTitle = name;
 		alert.alertMsg = message;
 		
