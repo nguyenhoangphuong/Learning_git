@@ -33,7 +33,7 @@ function SignUp()
 	this.isLicenceAgreementShown = isLicenceAgreementShown;
 	
 	this.isNoInternetAlertShown = isNoInternetAlertShown;
-	
+	this.fillEmail = fillEmail;
 	// Method definition
 	function isEmailTextFieldVisible() 
 	{
@@ -46,6 +46,11 @@ function SignUp()
 		wait();
 		window.textFields()["email"].setValue(email);
 		app.keyboard().typeString("\n");
+	}
+	function fillEmail(email)
+	{
+		wait();
+		window.textFields()["email"].setValue(email);		
 	}
 	
 	function getErrorMessage()
