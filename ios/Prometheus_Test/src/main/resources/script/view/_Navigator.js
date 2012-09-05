@@ -1,3 +1,12 @@
+#import "SignUp.js"
+#import "UserInfo.js"
+#import "PlanChooser.js"
+#import "GoalProgress.js"
+#import "GoalStart.js"
+#import "History.js"
+#import "About.js"
+#import "../core/testcaseBase.js"
+
 /*
 This file provides methods to navigate to specify view.
 This will go from nothing to the specify view, so kill the app first.
@@ -7,15 +16,6 @@ nav.toSignUp();
 nav.toUserInfo();
 ...
 */
-
-#import "SignUp.js"
-#import "UserInfo.js"
-#import "PlanChooser.js"
-#import "GoalProgress.js"
-#import "GoalStart.js"
-#import "History.js"
-#import "About.js"
-#import "../core/testcaseBase.js"
 
 function Navigator()
 {
@@ -38,9 +38,17 @@ function Navigator()
 	function toUserInfo()
 	{
 		toSignUp();
-		signup = new SignUp();
-		signup.fillEmailAndSubmit("test@misfit.com");
-		wait();
+		
+		var signup = new SignUp();
+		if (signup.isEmailTextFieldVisible() == 1) {
+			log("Email is visible");
+		}
+
+		signup.fillEmailAndSubmit("abcd@test.com");
+
+		if (signup.isEmailTextFieldVisible() == 1) {
+			UILogger.logFail("Should succeed");
+		}
 	}
 	
 	function toPlanChooser()

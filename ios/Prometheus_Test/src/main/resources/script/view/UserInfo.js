@@ -52,7 +52,11 @@ function UserInfo()
 	this.isBMIAlertShown = isBMIAlertShown;
 
 	this.isInfoValid = isInfoValid;
-		
+	
+	function isVisible() {
+		return next.isVisble();
+	}
+	
 	// Methods definition
 	function setInfo(a, w1, w2, h1, h2)
 	{

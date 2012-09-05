@@ -2,6 +2,7 @@
 
 /*
 SignUp function
+- isEmailTextFieldVisible
 - fillEmailAndSubmit(email)
 	+ fillEmailAndSubmit("") : enter null email
 	+ fillEmailAndSubmit("test@yahoo.com") : enter valid email

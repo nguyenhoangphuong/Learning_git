@@ -5,7 +5,7 @@ Weekly goal function
 
 */
 
-function SignUp()
+function WeeklyGoal()
 {
 	// Private fields
 	var window = app.mainWindow();
