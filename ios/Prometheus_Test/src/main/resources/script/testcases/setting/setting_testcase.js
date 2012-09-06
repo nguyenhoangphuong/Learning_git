@@ -6,8 +6,7 @@
 function GoToSettingScreen()
 {
 	UIALogger.logPass("GoToSettingScreen");
-	var navi = new Navigator();
-	navi.toAbout();
+	nav.toAbout();
 }
 
 function VerifyRateButton()
@@ -78,13 +77,13 @@ function VerifyResetButton()
 	alert.reset();
 }
 
-UIALogger.logPass("START TEST");
-GoToSettingScreen();
+//UIALogger.logPass("START TEST");
+//GoToSettingScreen();
 
-VerifyRateButton();
+//VerifyRateButton();
 // VerifyEmailSupportButton();
 // VerifyEmailWithoutAccount();
 // VerifyLikeButton();
 // VerifyResetButton();
 
-UIALogger.logPass("END OF TEST");
+//UIALogger.logPass("END OF TEST");
