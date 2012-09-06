@@ -8,40 +8,45 @@ import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SettingValidator extends AutomationTest {
+	// C2193	Verify "Rate our App" button's action 
 	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })
-	public void runTestCase01() throws InterruptedException, StopConditionException {
+	public void VerifyRateButton() throws InterruptedException, StopConditionException {
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
 					 "script/testcases/setting/testcase_01.js");
 	}
 	
+	// C2194	Verify "Email Support" with an email account has been setup 
 	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })
-	public void runTestCase02() throws InterruptedException, StopConditionException {
+	public void VerifyEmailSupportButton() throws InterruptedException, StopConditionException {
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
 					 "script/testcases/setting/testcase_02.js");
 	}
 	
+	// C2197	Verify "Email Support" without email account
 	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })
-	public void runTestCase03() throws InterruptedException, StopConditionException {
+	public void VerifyEmailWithoutAccount() throws InterruptedException, StopConditionException {
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
 					 "script/testcases/setting/testcase_03.js");
 	}
 	
+	// C2195	Verify "Like our App" button's action 
 	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })
-	public void runTestCase04() throws InterruptedException, StopConditionException {
+	public void VerifyLikeButton() throws InterruptedException, StopConditionException {
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
 					 "script/testcases/setting/testcase_04.js");
 	}
 	
+	// C2196	Verify "Reset Plan" button's action 
 	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })
-	public void runTestCase05() throws InterruptedException, StopConditionException {
+	public void VerifyResetButton() throws InterruptedException, StopConditionException {
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
