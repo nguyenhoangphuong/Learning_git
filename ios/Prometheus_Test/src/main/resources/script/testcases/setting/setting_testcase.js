@@ -17,63 +17,63 @@ function VerifyRateButton()
 	// verify it will open app in app store
 	// wait();
 	if(!prometheus.isActive())
-		UIALogger.logPass("Rate button: Pass");
+		UIALogger.logPass("Verify Rate button: Pass");
 	else
-		UIALogger.logFail("Rate button: Fail");
+		UIALogger.logFail("Verify Rate button: Fail");
 }
 
 function VerifyEmailSupportButton()
 {
-	UIALogger.logPass("VerifyEmailSupportButton");
+	//UIALogger.logPass("VerifyEmailSupportButton");
 	setting = new About();
 	// tap on email button
 	setting.getSupport();
 	// verify it will open email client
 	if(!prometheus.isActive())
-		UIALogger.logPass("Email Support button: Pass");
+		UIALogger.logPass("Verify Email Support button: Pass");
 	else
-		UIALogger.logFail("Email Support button: Fail");
+		UIALogger.logFail("Verify Email Support button: Fail");
 }
 
 function VerifyEmailWithoutAccount()
 {
-	UIALogger.logPass("VerifyEmailWithoutAccount");
+	//UIALogger.logPass("VerifyEmailWithoutAccount");
 	setting = new About();
 	// tap on email button
 	setting.getSupport();
 	// verify it will show pop up
 	if(setting.isNoEmailAlertShown())
-		UIALogger.logPass("Email Support: Pass");
+		UIALogger.logPass("Verify Email Support: Pass");
 	else
-		UIALogger.logFail("Email Support: Fail");
+		UIALogger.logFail("Verify Email Support: Fail");
 
 	alert.reset();
 }
 
 function VerifyLikeButton()
 {
-	UIALogger.logPass("VerifyLikeButton");
+	//UIALogger.logPass("VerifyLikeButton");
 	setting = new About();
 	// tap on like button
 	setting.likeApp();
 	// verify it will open misfit's fanpage
 	if(prometheus.isActive())
-		UIALogger.logPass("Like button: Pass");
+		UIALogger.logPass("Verify Like button: Pass");
 	else
-		UIALogger.logFail("Like button: Fail");
+		UIALogger.logFail("Verify Like button: Fail");
 }
 
 function VerifyResetButton()
 {
-	UIALogger.logPass("VerifyResetButton");
+	//UIALogger.logPass("VerifyResetButton");
 	setting = new About();
 	// tap on Reset button
 	setting.resetPlan("yes");
 	// verify it will go to plan chooser screen
 	if(staticTextExist("Please set your plan"))
-		UIALogger.logPass("Reset plan: Pass");
+		UIALogger.logPass("Verify Reset plan: Pass");
 	else
-		UIALogger.logFail("Reset plan: Fail");
+		UIALogger.logFail("Verify Reset plan: Fail");
 	alert.reset();
 }
 

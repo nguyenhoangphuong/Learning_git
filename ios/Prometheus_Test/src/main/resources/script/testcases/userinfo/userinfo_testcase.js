@@ -5,15 +5,15 @@
 
 function GoToUserInfoScreen()
 {
-	UIALogger.logPass("GoToUserInfoScreen");
 	var navi = new Navigator();
 	navi.toUserInfo();
+	UIALogger.logPass("GoToUserInfoScreen");
 }
 
 // check default values
 function CheckDefaultValue()
 {
-	UIALogger.logPass("CheckDefaultValue");
+	//UIALogger.logPass("CheckDefaultValue");
 
 	userinfo = new UserInfo();
 	// check gender default
@@ -32,7 +32,7 @@ function CheckDefaultValue()
 // current screen is User Info screen
 function InputHeight()
 {	
-	UIALogger.logPass("InputHeight");
+	//UIALogger.logPass("InputHeight");
 	userinfo = new UserInfo();
 	userinfo.setHeight("5'", "9\"");
 	// check height is changed
@@ -44,7 +44,7 @@ function InputHeight()
 
 function InputWeight()
 {	
-	UIALogger.logPass("InputWeight");
+	//UIALogger.logPass("InputWeight");
 	legal = new UserInfo();
 	legal.setWeight(150, 0.8);
 	if(staticTextExist("150.8"))
@@ -55,12 +55,12 @@ function InputWeight()
 
 function InputAge()
 {	
-	UIALogger.logPass("InputAge");
+	//UIALogger.logPass("InputAge");
 	userinfo = new UserInfo();
 	userinfo.setAge(10);
 	wait(2);
 	
-	log("--------------");
+	//log("--------------");
 	logTree();
 	
 	if(staticTextExist("10"))
@@ -71,7 +71,7 @@ function InputAge()
 
 function InputGender()
 {	
-	UIALogger.logPass("InputGender");
+	//UIALogger.logPass("InputGender");
 	userinfo = new UserInfo();
 	var isMale = userinfo.isMale();
 	if(isMale)
@@ -87,7 +87,7 @@ function InputGender()
 
 function InputUnit()
 {	
-	UIALogger.logPass("InputUnit");
+	//UIALogger.logPass("InputUnit");
 	userinfo = new UserInfo();
 	var isUs = userinfo.isUS();
 	var tempStr = "lbs";
@@ -112,7 +112,7 @@ function InputUnit()
 
 function VerifyInteruption()
 {
-	UIALogger.logPass("VerifyInteruption");
+	//UIALogger.logPass("VerifyInteruption");
 	userinfo = new UserInfo();
 	var isMale = userinfo.isMale();
 	var isUS = userinfo.isUS();
@@ -146,7 +146,7 @@ function VerifyOldState()
 
 function VerifyNextButton()
 {
-	UIALogger.logPass("VerifyNextButton");
+	//UIALogger.logPass("VerifyNextButton");
 	userinfo = new UserInfo();
 	userinfo.submit();
 	// verify it will go to choose plan screen
