@@ -31,12 +31,57 @@ function testUserInfo()
 	ui.changeHeight(100);
 }
 
+function testPlanChooser()
+{
+	plan = new PlanChooser();
+	plan.selectOther(18, "no");
+	plan.selectOther(18);
+}
+
 function testGoalProgress()
 {
 	goal = new GoalProgress();
-	goal.scrollToDayProgress();
-	goal.scrollToWeekProgress();
-	goal.scrollToHistory();
+	goal.scrollToDayGoal();
+	goal.scrollToWeekGoal();
+	goal.scrollToAbout();
+	//goal.scrollToGoalPlan();
+}
+
+function testGoalStart()
+{
+	start = new GoalStart();
+	start.pause();
+	start.getCurrentInfo();
+	start.resume();
+	start.finish();
+	start.getResults();
+	start.done();
+}
+
+function testGoalPlan()
+{
+	plan = new GoalPlan();
+	plan.getTotalDays();
+	plan.getPassedDays();
+	plan.getTotalPlanMiles();
+	plan.getRunMiles();
+	plan.getRemainPlanMiles();
+	plan.getWeekInfo();
+	plan.getDayInfoByIndex(0);
+	plan.getDayInfoByIndex(1);
+	plan.getDayInfoByIndex(12);
+	plan.getDayInfoByName("Mon Sep 10th");
+	plan.getDayInfoByName("Sep Mon 10th");
+	plan.getTodayInfo();
+
+	plan.edit();
+	plan.planDayByIndex(1, 4.5);
+	plan.planDayByIndex(2, 0.5, "No");
+	plan.planDayByIndex(12, 4.5);
+	plan.planDayByName("Mon Sep 10th", 4.5);
+	plan.planDayByName("Sep Mon 1oth", 4.5);
+	plan.reset();
+	plan.save();
 }
 
 function testAbout()
@@ -51,10 +96,8 @@ function testAbout()
 
 start("Demo");
 
-about = new About();
-about.likeApp();
 
-if(!prometheus.isActive())
-	pass("Demo pass");
-else
-	fail();
+
+pass("Demo pass");
+
+

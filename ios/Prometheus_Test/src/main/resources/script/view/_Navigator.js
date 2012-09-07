@@ -3,7 +3,7 @@
 #import "PlanChooser.js"
 #import "GoalProgress.js"
 #import "GoalStart.js"
-#import "History.js"
+#import "GoalPlan.js"
 #import "About.js"
 #import "../core/testcaseBase.js"
 

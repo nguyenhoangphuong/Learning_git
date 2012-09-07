@@ -33,6 +33,9 @@ function Alert()
 	this.BMINotRealistic = "Error";
 	this.NoEmail = "Warning";
 	this.ResetConfirm = "Confirm";
+	this.LocationConfirm = "\“Prometheus\” Would Like to Use Your Current Location";
+	this.TooEasy = "Easy goal";
+	this.TooHard = "Too hard";
 	
 	// Methods
 	this.reset = reset;
@@ -68,7 +71,10 @@ function PrometheusAlertHandler(_alert)
 	if(	name == alert.NoInternet		||
 		name == alert.BMINotRealistic	||
 		name == alert.NoEmail			||
-		name == alert.ResetConfirm)
+		name == alert.ResetConfirm		||
+		name == alert.LocationConfirm	||
+		name == alert.TooEasy			||
+		name == alert.TooHard	)
 	{
 		// log
 		log("Interesting [" + name + "] encountered!");
@@ -80,7 +86,7 @@ function PrometheusAlertHandler(_alert)
 		
 		// choose base on the param
 		if(alert.alertChoice != null)
-			_alert.buttons[alert.alertChoice].tap();
+			_alert.buttons()[alert.alertChoice].tap();
 		else
 			_alert.defaultButton().tap();
 			

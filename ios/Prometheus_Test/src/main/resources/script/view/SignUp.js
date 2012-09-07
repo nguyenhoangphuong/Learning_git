@@ -24,6 +24,7 @@ function SignUp()
 	this.MsgInvalid = "The email is invalid";
 	
 	// Methods
+	this.isVisible = isVisible;
 	this.isEmailTextFieldVisible = isEmailTextFieldVisible;
 	this.fillEmailAndSubmit = fillEmailAndSubmit;
 	this.getErrorMessage = getErrorMessage;
@@ -34,7 +35,13 @@ function SignUp()
 	
 	this.isNoInternetAlertShown = isNoInternetAlertShown;
 	this.fillEmail = fillEmail;
+	
 	// Method definition
+	function isVisible()
+	{
+		return isEmailTextFieldVisible();
+	}
+	
 	function isEmailTextFieldVisible() 
 	{
 		wait();

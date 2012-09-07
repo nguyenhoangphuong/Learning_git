@@ -3,18 +3,24 @@
 
 /*
 GoalProgress function:
-- isWeekViewValid()		:	check if current view is WeekProgress view
-- isTodayViewValid()	:	check if current view is TodayProgress view
-- scrollToWeekProgress():	scroll up from today to week view
-- scrollToDayProgress()	:	scroll down from week to day view
-- scrollToHistory()		:	scroll right to history view
-- start()				:	press start button
+- isWeekGoalVisible()		:	check if current view is WeekProgress view
+- isTodayGoalVisible()		:	check if current view is TodayProgress view
+- scrollToWeekGoal()		:	scroll up from today to week view
+- scrollToDayGoal()			:	scroll down from week to day view
+- scrollToGoalPlan()		:	scroll right to goal planning view
+- scrollToAbout()			:	scrol left to about view
+- start()					:	press start button
 
 *not implemented
-- isWeekPlanValid(total, percent)	:	check if the current week plan is valid
-- isTodayPlanValid(total, percent)	:	check if the current today plan is valid
-- isWeatherValid(location, temp)	:	check if the location and temperature is valid
+- getWeekInfo()				:	get total (in miles) and week percent
+	return object ex: {total: 18, percent: 25}
+- getTodayInfo()			:	get total (in miles) and current day percent
+	return object ex: {total: 18, percent: 25}
+- getWeatherInfo()			:	get the location, temperature and image file name
+	return object ex: {location: Ho Chi Minh city, temperature: 81 oF, image: sunny}
 */
+
+// To improve: check isWeekGoalVisible and isTodayGoalVisible
 
 function GoalProgress()
 {
@@ -34,50 +40,62 @@ function GoalProgress()
 	var start = mainView.buttons()["start"];
 	
 	// Methods
-	this.isWeekViewValid = isWeekViewValid;
-	this.isTodayViewValid = isTodayViewValid;
-	this.scrollToWeekProgress = scrollToWeekProgress;
-	this.scrollToDayProgress = scrollToDayProgress;
-	this.scrollToHistory = scrollToHistory;
+	this.isWeekGoalVisible = isWeekGoalVisible;
+	this.isTodayGoalVisible = isTodayGoalVisible;
+	this.scrollToWeekGoal = scrollToWeekGoal;
+	this.scrollToDayGoal = scrollToDayGoal;
+	this.scrollToGoalPlan = scrollToGoalPlan;
 	this.scrollToAbout = scrollToAbout;
 	this.start = start;
 		
-	this.isWeekPlanValid = isWeekPlanValid;
-	this.isTodayPlanValid = isTodayPlanValid;
-	this.isWeatherValid = isWeatherValid;
+	this.getWeekInfo = getWeekInfo;
+	this.getTodayInfo = getTodayInfo;
+	this.getWeatherInfo = getWeatherInfo;
 	
 	this.getQuote = getQuote;
 	
 	// Methods definition
-	function isWeekViewValid()
+	function isWeekGoalVisible()
 	{
-		return weekGoal.isValid() && weekGoal.isVisible();
+		page = window.pageIndicators()[0].value();
+		return page == "page 2 of 3" && weekGoal.isValid() && weekGoal.isVisible();
 	}
 
-	function isTodayViewValid()
+	function isTodayGoalVisible()
 	{
-		return todayGoal.isValid() && todayGoal.isVisible();
+		page = window.pageIndicators()[0].value();
+		return page == "page 2 of 3" && todayGoal.isValid() && todayGoal.isVisible();
 	}
 	
-	function scrollToWeekProgress()
+	function scrollToWeekGoal()
 	{
-		if(isWeekViewValid())
+		/*
+		if(isWeekGoalVisible())
+		{
+			log("Note: current view is week goal");
 			return;
+		}
+		*/
 		
 		wait();
 		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.2}, endOffset:{x:0.5, y:0.5}, duration:0.3});
 	}
 	
-	function scrollToDayProgress()
+	function scrollToDayGoal()
 	{
-		if(isTodayViewValid())
+		/*
+		if(isTodayGoalVisible())
+		{
+			log("Note: current view is today goal");
 			return;
+		}
+		*/
 		
 		wait();
 		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.8}, endOffset:{x:0.5, y:0.5}, duration:0.3});
 	}
 	
-	function scrollToHistory()
+	function scrollToGoalPlan()
 	{
 		wait();
 		mainView.scrollRight();
@@ -85,6 +103,7 @@ function GoalProgress()
 
 	function scrollToAbout()
 	{
+		wait();
 		mainView.scrollLeft();
 	}
 	
@@ -93,17 +112,18 @@ function GoalProgress()
 		start.tap();
 	}
 	
-	function isWeekPlanValid(total, percent)
+	
+	function getWeekInfo()
 	{
 		// currently can't implemented due to accessibility problem
 	}
 	
-	function isTodayPlanValid(total, percent)
+	function getTodayInfo()
 	{
 		// currently can't implemented due to accessibility problem
 	}
 	
-	function isWeatherValid(location, temperature)
+	function getWeatherInfo()
 	{
 		// currently can't implemented due to accessibility problem
 	}

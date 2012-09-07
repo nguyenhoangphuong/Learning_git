@@ -3,6 +3,7 @@
 
 /*
 About functions:
+- isVisible()	:	check if the current view is About
 - rateApp()		:	tap Rate button
 - getSupport()	:	tap Email button and handler message box
 - likeApp()		:	tap Like button
@@ -25,6 +26,8 @@ function About()
 	var reset = mainView.buttons()[3];
 	
 	// Methods
+	this.isVisible = isVisible;
+	
 	this.rateApp = rateApp;
 	this.getSupport = getSupport;
 	this.likeApp = likeApp;
@@ -34,6 +37,13 @@ function About()
 	this.isResetCofirmAlertShown = isResetConfirmAlertShown;
 	
 	// Methods definition
+	function isVisible()
+	{
+		page = window.pageIndicators()[0].value();
+		return page == "page 1 of 3" && rate.isValid() && rate.isVisible();
+	}
+
+	
 	function rateApp()
 	{
 		rate.tap();

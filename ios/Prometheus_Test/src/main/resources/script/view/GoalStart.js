@@ -3,6 +3,7 @@
 
 /*
 GoalStart function:
+- isVisible()	:	check if the current view is GoalStart
 - canPause()	:	check if the progress is running
 - canResume()	:	check if the progress is pausing
 - canDone()		:	check if the progress is finished can be done
@@ -13,22 +14,23 @@ GoalStart function:
 
 *not implemented yet
 - runFor(duration, mile)	:	keep running for "mile" in "duration" seconds
-- isProgressValid(percent)	:	check if current progress is valid
-- isResultValid(duration, mile, speed)	:	check if the result is valid
+- getCurrentInfo()			:	get the current {percent, distance, duration}
+- getResults()				:	get the results {percent, distance, duration, speed}
 */
 
 function GoalStart()
 {
 	// Private fields
 	var window = app.mainWindow();
-	var mainView = app.scrollViews()[0];
+	var mainView = window;
 	
 	var finishBtn = mainView.buttons()["Finish"];
-	var pauseBtn = mainView.buttons()["Pause"];
-	var resumeBtn = mainView.buttons()["Resume"];
+	var toggleBtn = mainView.buttons()[1];
 	var doneBtn = mainView.buttons()["Done"];
 	
 	// Methods
+	this.isVisible = isVisible;
+	
 	this.canPause = canPause;
 	this.canResume = canResume;
 	this.canDone = canDone;
@@ -39,17 +41,24 @@ function GoalStart()
 	this.done = done;
 	
 	this.runFor = runFor;
-	this.isProgressValid = isProgressValid;
+	this.getCurrentInfo = getCurrentInfo;
+	this.getResults = getResults;
 	
 	// Methods definition
+	function isVisible()
+	{
+		return finishBtn.isValid() && finishBtn.isVisible();
+	}
+	
+	
 	function canPause()
 	{
-		return pauseBtn.isValid() && pauseBtn.isVisible();
+		return toggleBtn.name() == "Pause";
 	}
 	
 	function canResume()
 	{
-		return resumeBtn.isValid() && resumeBtn.isVisible();
+		return toggleBtn.name() == "Resume";
 	}
 	
 	function canDone()
@@ -59,39 +68,69 @@ function GoalStart()
 	
 	function finish()
 	{
+		wait();
 		finishBtn.tap();
 	}
 	
 	function pause()
 	{
 		if(canPause())
-			pauseBtn.tap();
+		{
+			wait();
+			toggleBtn.tap();
+		}
 	}
 	
 	function resume()
 	{
 		if(canResume())
-			resumeBtn.tap();
+		{
+			wait();
+			toggleBtn.tap();
+		}
 	}
 	
 	function done()
 	{
 		if(canDone())
+		{
+			wait();
 			doneBtn.tap();
+		}
 	}
 	
 	function runFor(duration, mile)
 	{
-		// this is not implemented yet due to accessibility problem
+		// this is not implemented yet due to data and waiting time problem
 	}
 	
-	function isProgressValid(percent)
+	function getCurrentInfo()
 	{
-		// this is not implemented yet due to accessibility problem
+		var info = {};
+		info.percent = mainView.staticTexts()[2].name();
+		info.duration = mainView.staticTexts()[4].name();
+		info.distance = mainView.staticTexts()[6].name();
+		
+		log("info.percent: " + info.percent);
+		log("info.duration: " + info.duration);
+		log("info.distance: " + info.distance);
+		
+		return info
 	}
 	
-	function isResultValid(duration, mile, speed)
+	function getResults()
 	{
-		// this is not implemented yet due to accessibility problem
+		var info = {};
+		info.percent = mainView.staticTexts()[2].name();
+		info.duration = mainView.staticTexts()[3].name();
+		info.distance = mainView.staticTexts()[5].name();
+		info.speed = mainView.staticTexts()[7].name();
+		
+		log("info.percent: " + info.percent);
+		log("info.duration: " + info.duration);
+		log("info.distance: " + info.distance);
+		log("info.speed: " + info.speed);
+		
+		return info;
 	}
 }
