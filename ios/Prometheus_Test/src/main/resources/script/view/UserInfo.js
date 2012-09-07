@@ -68,7 +68,7 @@ function UserInfo()
 	// Methods definition
 	function isVisible()
 	{
-		return next.isVisble();
+		return next.isVisible();
 	}
 	
 	function setInfo(a, w1, w2, h1, h2)
