@@ -10,17 +10,27 @@ GoalProgress function:
 - scrollToGoalPlan()		:	scroll right to goal planning view
 - scrollToAbout()			:	scrol left to about view
 - start()					:	press start button
+- getWeekInfo()				:	get week information, return an object contains:
+	+ text		:	"7 days goal: 5 miles" (string)
+	+ days		:	7 (int)
+	+ goal		:	5 (float)
+	+ percent	:	25 (float)
+	+ distance	:	1.2 (float)
+- getTodayInfo()			:	get today information, return an object contains:
+	+ text		:	"Today's goal: 0.74 miles"
+	+ goal		:	0.74 (float)
+	+ percent	:	7 (float)
+- getWeatherInfo()			:	get the location, temperature and image name
+	+ location	:	"Ho Chi Minh city"
+	+ temperature:	"30 ºC"
+	+ image		:	"sunny.png"
+- getGPSSignal()			:	get the gps signal strength
+	+ return: "Fair"
+- getQuote()				:	get the random quote
 
-*not implemented
-- getWeekInfo()				:	get total (in miles) and week percent
-	return object ex: {total: 18, percent: 25}
-- getTodayInfo()			:	get total (in miles) and current day percent
-	return object ex: {total: 18, percent: 25}
-- getWeatherInfo()			:	get the location, temperature and image file name
-	return object ex: {location: Ho Chi Minh city, temperature: 81 oF, image: sunny}
+- setStartPoint()			:	set the start point for the next run
 */
 
-// To improve: check isWeekGoalVisible and isTodayGoalVisible
 
 function GoalProgress()
 {
@@ -28,16 +38,19 @@ function GoalProgress()
 	var window = app.mainWindow();
 	var mainView = window.scrollViews()[0];
 	
-	var weekGoal = mainView.staticTexts()["week goal"];
-	var weekProgress = mainView.staticTexts()["week progress"];
-	var todayGoal = mainView.staticTexts()["today goal"];
-	var todayProgress = mainView.staticTexts()["today percent"];
-	
-	var temperature = mainView.staticTexts()["temperature"];
-	var location = mainView.staticTexts()["location"];
-	var quote = mainView.staticTexts()["quote"];
-	
-	var start = mainView.buttons()["start"];
+	var weekGoal = mainView.staticTexts()[2];
+	var weekProgress = mainView.staticTexts()[3];
+	var todayGoal = mainView.staticTexts()[7];
+	var todayProgress = mainView.staticTexts()[8];
+
+	var temperature = mainView.staticTexts()[5];
+	var location = mainView.staticTexts()[4];
+	var weatherimg = mainView.images()[1];
+
+	var gps = mainView.staticTexts()[9];
+	var quote = mainView.staticTexts()[10];
+		
+	var start = mainView.buttons()[6];
 	
 	// Methods
 	this.isWeekGoalVisible = isWeekGoalVisible;
@@ -52,19 +65,23 @@ function GoalProgress()
 	this.getTodayInfo = getTodayInfo;
 	this.getWeatherInfo = getWeatherInfo;
 	
+	this.getGPSSignal = getGPSSignal;
 	this.getQuote = getQuote;
+	
+	this.setStartPoint = setStartPoint;
 	
 	// Methods definition
 	function isWeekGoalVisible()
 	{
 		page = window.pageIndicators()[0].value();
-		return page == "page 2 of 3" && weekGoal.isValid() && weekGoal.isVisible();
+		log("isWeekGoalVisible: " + (page == "page 2 of 3" && weekProgress.isValid() && weekProgress.isVisible()).toString());
+
+		return page == "page 2 of 3" && weekProgress.isValid() && weekProgress.isVisible();
 	}
 
 	function isTodayGoalVisible()
 	{
-		page = window.pageIndicators()[0].value();
-		return page == "page 2 of 3" && todayGoal.isValid() && todayGoal.isVisible();
+		return !isWeekGoalVisible();
 	}
 	
 	function scrollToWeekGoal()
@@ -109,27 +126,98 @@ function GoalProgress()
 	
 	function start()
 	{
+		wait();
 		start.tap();
 	}
 	
 	
 	function getWeekInfo()
 	{
-		// currently can't implemented due to accessibility problem
+		scrollToWeekGoal();
+		wait();
+		
+		text = weekGoal.name();
+		value = weekProgress.name();
+		
+		var info = {};
+		info.text = text;
+		info.days = parseInt(text.substring(0, text.indexOf(" ")));
+		info.goal = parseFloat(text.substring(text.indexOf(":") + 1, text.indexOf("miles")));
+
+		if(value.indexOf("%") >= 0)
+		{
+			info.percent = parseFloat(value);
+			weekProgress.tap();
+			wait();
+			info.distance = parseFloat(weekProgress.name());
+		}
+		else
+		{
+			info.distance = parseFloat(value);
+			weekProgress.tap();
+			wait();
+			info.percent = parseFloat(weekProgress.name());
+		}
+		
+		// logging
+		log("weekinfo.text: " + info.text);
+		log("weekinfo.days: " + info.days);
+		log("weekinfo.goal: " + info.goal);
+		log("weekinfo.percent: " + info.percent);
+		log("weekinfo.distance: " + info.distance);
+		
+		return info;
 	}
 	
 	function getTodayInfo()
 	{
-		// currently can't implemented due to accessibility problem
+		text = todayGoal.name();
+		value = todayProgress.name();
+		
+		var info = {};
+		info.text = text;
+		info.goal = parseFloat(text.substring(text.indexOf(":") + 1, text.indexOf("miles")));
+		info.percent = value;//parseFloat(value);
+
+		// logging
+		log("dayinfo.text: " + info.text);
+		log("dayinfo.goal: " + info.goal);
+		log("dayinfo.percent: " + info.percent);
+
+		return info;
 	}
 	
 	function getWeatherInfo()
 	{
-		// currently can't implemented due to accessibility problem
+		var info = {};
+		info.location = location.name();
+		info.temperature = temperature.name();
+		info.image = weatherimg.name();
+
+		// logging
+		log("weather.location: " + info.location);
+		log("weather.temperature: " + info.temperature);
+		log("weather.image: " + info.image);
+		
+		return info;
 	}
-	
+
+
+	function getGPSSignal()
+	{
+		text = gps.name();
+		gps = text.substring(text.lastIndexOf(" ") + 1);
+		log("gps: " + gps);
+		return gps;
+	}
+		
 	function getQuote()
 	{
-		// currently can't implemented due to accessibility problem
+		log("quote: " + quote.name());
+		return quote.name();
+	}
+	
+	function setStartPoint()
+	{
 	}
 }

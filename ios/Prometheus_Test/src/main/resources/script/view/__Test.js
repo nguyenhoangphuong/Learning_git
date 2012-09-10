@@ -45,6 +45,12 @@ function testGoalProgress()
 	goal.scrollToWeekGoal();
 	goal.scrollToAbout();
 	//goal.scrollToGoalPlan();
+	
+	goal.getWeekInfo();
+	goal.getTodayInfo();
+	goal.getWeatherInfo();
+	goal.getGPSSignal();
+	goal.getQuote();
 }
 
 function testGoalStart()
@@ -96,7 +102,17 @@ function testAbout()
 
 start("Demo");
 
+a = new About();
 
+before = target.frontMostApp().bundleID();
+log(before);
+
+a.rateApp();
+
+if(prometheus.isActive())
+	fail();
+else
+	pass();
 
 pass("Demo pass");
 

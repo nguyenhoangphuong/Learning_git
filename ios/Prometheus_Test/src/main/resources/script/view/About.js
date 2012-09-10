@@ -62,12 +62,15 @@ function About()
 	
 	function resetPlan(confirm)
 	{
+		yes = "Yes";
+		no = "No";
+		
 		if(typeof confirm != "undefined")
-			alertChoice = "No";
+			alert.alertChoice = no;
 		else if(confirm == "yes")
-			alertChoice = "Yes";
+			alert.alertChoice = yes;
 		else
-			alertChoice = "No";
+			alert.alertChoice = no;
 		
 		reset.tap();
 		

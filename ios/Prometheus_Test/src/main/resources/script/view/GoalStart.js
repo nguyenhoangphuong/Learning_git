@@ -7,15 +7,16 @@ GoalStart function:
 - canPause()	:	check if the progress is running
 - canResume()	:	check if the progress is pausing
 - canDone()		:	check if the progress is finished can be done
+
 - pause()		:	pause the progress
 - resume()		:	resume the progress
 - finish()		:	finish the progress
 - done()		:	done after view the stat results
 
-*not implemented yet
-- runFor(duration, mile)	:	keep running for "mile" in "duration" seconds
 - getCurrentInfo()			:	get the current {percent, distance, duration}
 - getResults()				:	get the results {percent, distance, duration, speed}
+
+- setEndPoint()				:	set the end point for the current run
 */
 
 function GoalStart()
@@ -40,9 +41,10 @@ function GoalStart()
 	this.resume = resume;
 	this.done = done;
 	
-	this.runFor = runFor;
 	this.getCurrentInfo = getCurrentInfo;
 	this.getResults = getResults;
+	
+	this.setEndPoint = setEndPoint;
 	
 	// Methods definition
 	function isVisible()
@@ -99,11 +101,7 @@ function GoalStart()
 		}
 	}
 	
-	function runFor(duration, mile)
-	{
-		// this is not implemented yet due to data and waiting time problem
-	}
-	
+		
 	function getCurrentInfo()
 	{
 		var info = {};
@@ -132,5 +130,10 @@ function GoalStart()
 		log("info.speed: " + info.speed);
 		
 		return info;
+	}
+	
+	
+	function setEndPoint()
+	{
 	}
 }
