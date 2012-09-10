@@ -5,6 +5,7 @@
 #import "GoalStart.js"
 #import "GoalPlan.js"
 #import "About.js"
+#import "_Tips.js"
 #import "../core/testcaseBase.js"
 
 /*
@@ -51,6 +52,8 @@ function Navigator()
 				UILogger.logFail("Should succeed");
 			}
 		}
+		wait();
+		tips.closeTips(4);
 	}
 	
 	function toPlanChooser()
@@ -81,6 +84,7 @@ function Navigator()
 		}
 		
 		wait();
+		tips.closeTips(1);
 	}
 	
 	function toTodayGoal()
@@ -93,7 +97,8 @@ function Navigator()
 		{
 			toWeekGoal();
 			goal = new GoalProgress();
-			goal.scrollToDayProgress();
+//			goal.scrollToDayProgress();
+			goal.scrollToDayGoal();
 		}			
 		
 		// since second time the app will

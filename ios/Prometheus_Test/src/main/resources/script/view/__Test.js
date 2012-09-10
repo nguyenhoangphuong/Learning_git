@@ -1,6 +1,7 @@
 #import "_Navigator.js"
 #import "_AlertHandler.js"
 #import "_Prometheus.js"
+#import "About.js"
 #import "../core/testcaseBase.js"
 
 

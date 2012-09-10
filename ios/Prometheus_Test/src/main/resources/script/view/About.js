@@ -60,22 +60,16 @@ function About()
 		like.tap();
 	}
 	
-	function resetPlan(confirm)
+	function resetPlan(yes)
 	{
-		yes = "Yes";
-		no = "No";
-		
-		if(typeof confirm != "undefined")
-			alert.alertChoice = no;
-		else if(confirm == "yes")
-			alert.alertChoice = yes;
-		else
-			alert.alertChoice = no;
-		
 		reset.tap();
-		
-		// wait for alert to shown up
-		wait(3);
+		wait(1);
+		if (yes == true) {
+			window.buttons()["YES"].tap();
+		}
+		else {
+			window.buttons()["NO"].tap();
+		}
 	}
 	
 	

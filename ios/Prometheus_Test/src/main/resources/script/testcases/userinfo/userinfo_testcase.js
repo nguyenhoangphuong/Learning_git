@@ -60,9 +60,6 @@ function InputAge()
 	userinfo.setAge(10);
 	wait(2);
 	
-	//log("--------------");
-	logTree();
-	
 	if(staticTextExist("10"))
 		UIALogger.logPass("Input age: Pass");
 	else

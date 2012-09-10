@@ -68,7 +68,7 @@ function VerifyResetButton()
 	//UIALogger.logPass("VerifyResetButton");
 	setting = new About();
 	// tap on Reset button
-	setting.resetPlan("yes");
+	setting.resetPlan(true);
 	// verify it will go to plan chooser screen
 	if(staticTextExist("Please set your plan"))
 		UIALogger.logPass("Verify Reset plan: Pass");

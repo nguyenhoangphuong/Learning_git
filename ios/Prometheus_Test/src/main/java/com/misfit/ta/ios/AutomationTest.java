@@ -75,16 +75,16 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 		
 		// report IOS test results
 		
-		ProcessBuilder pb = new ProcessBuilder();
-		pb.command("/bin/sh", "-c","/usr/libexec/PlistBuddy -c \"Print 'All Samples:LogType'\" instrumentscli0.trace/Run 1/Automation Results.plist | /usr/bin/awk -F '=' '/LogType = /{print $2}'");
-		String results = AppHelper.runProcess(pb);
-		
-//		details.append("Testcase:  " + method.getName() + "\tStatus: " + results + "\n");
-		if (results.equalsIgnoreCase("Passed")) {
-		    passCount++;
-		} else {
-		    failCount++;
-		}
+//		ProcessBuilder pb = new ProcessBuilder();
+//		pb.command("/bin/sh", "-c","/usr/libexec/PlistBuddy -c \"Print 'All Samples:LogType'\" instrumentscli0.trace/Run 1/Automation Results.plist | /usr/bin/awk -F '=' '/LogType = /{print $2}'");
+//		String results = AppHelper.runProcess(pb);
+//		
+////		details.append("Testcase:  " + method.getName() + "\tStatus: " + results + "\n");
+//		if (results.equalsIgnoreCase("Passed")) {
+//		    passCount++;
+//		} else {
+//		    failCount++;
+//		}
 		
 	}
 
@@ -104,18 +104,18 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 	
 	@AfterSuite(alwaysRun = true)
     public void afterSuite() throws FileNotFoundException {
-	    Files.write(detailReport, "\n===================================" +
-	    		"\n" + "Summary report:\n");
-	    Files.write(detailReport, "TOTAL: " + (passCount + failCount + unknownCount));
-	    Files.write(detailReport, "PASSED: " + passCount);
-	    Files.write(detailReport, "FAILED: " + failCount);
-	    Files.write(detailReport, "UNKNOWN: " + unknownCount);
-	    Files.write(detailReport, "===================================\n");
-	    Files.write(detailReport, details.toString());
-	    passCount=0;
-	    failCount =0;
-	    unknownCount=0;
-	    details = new StringBuffer();
+//	    Files.write(detailReport, "\n===================================" +
+//	    		"\n" + "Summary report:\n");
+//	    Files.write(detailReport, "TOTAL: " + (passCount + failCount + unknownCount));
+//	    Files.write(detailReport, "PASSED: " + passCount);
+//	    Files.write(detailReport, "FAILED: " + failCount);
+//	    Files.write(detailReport, "UNKNOWN: " + unknownCount);
+//	    Files.write(detailReport, "===================================\n");
+//	    Files.write(detailReport, details.toString());
+//	    passCount=0;
+//	    failCount =0;
+//	    unknownCount=0;
+//	    details = new StringBuffer();
 	}
 
 }
