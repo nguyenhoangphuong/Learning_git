@@ -95,13 +95,9 @@ function PrometheusAlertHandler(_alert)
 		alert.alertChoice = null;
 		
 		if (name == alert.LocationConfirm) {
-			log("Wait a bit to close tips in weekgoal");
 			wait(4);
 			tips.closeTips(1);
-			wait();
-		
-		} else {
-			log("Not interesting");
+			wait(3);
 		}
 		return true;
 	}
