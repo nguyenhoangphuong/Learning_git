@@ -19,6 +19,10 @@ function PlanChooser()
 	var mainWindow = app.mainWindow();
 	var pickWindow = app.windows()[1];
 	
+	this.easy=5;
+	this.normal=10;
+	this.active=21;
+	
 	var easyBtn = mainWindow.buttons()[0];	
 	var normalBtn = mainWindow.buttons()[1];
 	var activeBtn = mainWindow.buttons()[2];

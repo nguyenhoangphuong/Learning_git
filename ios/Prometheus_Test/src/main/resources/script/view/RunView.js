@@ -2,8 +2,8 @@
 #import "_AlertHandler.js"
 
 /*
-GoalStart function:
-- isVisible()	:	check if the current view is GoalStart
+RunView function:
+- isVisible()	:	check if the current view is RunView
 - canPause()	:	check if the progress is running
 - canResume()	:	check if the progress is pausing
 - canDone()		:	check if the progress is finished can be done
@@ -19,7 +19,7 @@ GoalStart function:
 - setEndPoint()				:	set the end point for the current run
 */
 
-function GoalStart()
+function RunView()
 {
 	// Private fields
 	var window = app.mainWindow();

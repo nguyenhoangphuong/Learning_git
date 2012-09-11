@@ -2,7 +2,7 @@
 #import "UserInfo.js"
 #import "PlanChooser.js"
 #import "GoalProgress.js"
-#import "GoalStart.js"
+#import "RunView.js"
 #import "GoalPlan.js"
 #import "About.js"
 #import "_Tips.js"
@@ -24,8 +24,9 @@ function Navigator()
 	this.toSignUp = toSignUp;
 	this.toUserInfo = toUserInfo;
 	this.toWeekGoal = toWeekGoal;
+	this.toPlanChooser = toPlanChooser;
 	this.toTodayGoal = toTodayGoal;
-	this.toGoalStart = toGoalStart;
+	this.toRunView = toRunView;
 	this.toHistory = toHistory;
 	this.toAbout = toAbout;
 	
@@ -105,7 +106,7 @@ function Navigator()
 		// automatic open this page from start
 	}
 	
-	function toGoalStart()
+	function toRunView()
 	{
 		toTodayGoal();
 		goal = new GoalProgress();

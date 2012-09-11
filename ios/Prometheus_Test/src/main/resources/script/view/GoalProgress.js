@@ -1,5 +1,7 @@
 #import "../core/testcaseBase.js"
 #import "_AlertHandler.js"
+#import "_Tips.js"
+#import "RunView.js"
 
 /*
 GoalProgress function:
@@ -10,6 +12,7 @@ GoalProgress function:
 - scrollToGoalPlan()		:	scroll right to goal planning view
 - scrollToAbout()			:	scrol left to about view
 - start()					:	press start button
+- simulateARun()				: 	set location, press start and simulate a run
 - getWeekInfo()				:	get week information, return an object contains:
 	+ text		:	"7 days goal: 5 miles" (string)
 	+ days		:	7 (int)
@@ -28,7 +31,6 @@ GoalProgress function:
 	+ return: "Fair"
 - getQuote()				:	get the random quote
 
-- setStartPoint()			:	set the start point for the next run
 */
 
 
@@ -50,7 +52,7 @@ function GoalProgress()
 	var gps = mainView.staticTexts()[9];
 	var quote = mainView.staticTexts()[10];
 		
-	var start = mainView.buttons()[6];
+	var startBtn = mainView.buttons()[6];
 	
 	// Methods
 	this.isWeekGoalVisible = isWeekGoalVisible;
@@ -60,6 +62,7 @@ function GoalProgress()
 	this.scrollToGoalPlan = scrollToGoalPlan;
 	this.scrollToAbout = scrollToAbout;
 	this.start = start;
+	this.simulateARun=simulateARun;
 		
 	this.getWeekInfo = getWeekInfo;
 	this.getTodayInfo = getTodayInfo;
@@ -67,8 +70,6 @@ function GoalProgress()
 	
 	this.getGPSSignal = getGPSSignal;
 	this.getQuote = getQuote;
-	
-	this.setStartPoint = setStartPoint;
 	
 	// Methods definition
 	function isWeekGoalVisible()
@@ -109,7 +110,9 @@ function GoalProgress()
 		*/
 		
 		wait();
-		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.8}, endOffset:{x:0.5, y:0.5}, duration:0.3});
+		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.8}, endOffset:{x:0.5, y:0.2}, duration:0.3});
+		wait(3);
+		tips.closeTips(1);
 	}
 	
 	function scrollToGoalPlan()
@@ -127,7 +130,7 @@ function GoalProgress()
 	function start()
 	{
 		wait();
-		start.tap();
+		startBtn.tap();
 	}
 	
 	
@@ -217,7 +220,35 @@ function GoalProgress()
 		return quote.name();
 	}
 	
-	function setStartPoint()
-	{
+	function simulateARun(miles) {
+		log("Run " + miles);
+		setA();
+		start();
+		wait();
+		for (i=1; i<= miles; i++) {
+			if (i%2 == 1) {
+				setB();
+			} else {
+				setA();
+			}
+			wait();
+		}
+		var run = new RunView();
+		if (!run.canPause()) {
+			fail("The run has not started");
+		} 
+		log("Finish run");
+		run.finish();
 	}
+	
+	function setA() {
+		var pointA = {location:{latitude:10.775154,longitude:106.679465}, options:{speed:8, altitude:200, horizontalAccuracy:10, verticalAccuracy:15}};
+		target.setLocationWithOptions(pointA.location,pointA.options);  
+	}
+	
+	function setB() {
+		var pointB = {location:{latitude:10.768071,longitude:106.667256}, options:{speed:11, altitude:200, horizontalAccuracy:10, verticalAccuracy:15}};
+		target.setLocationWithOptions(pointB.location,pointB.options);
+	}
+
 }

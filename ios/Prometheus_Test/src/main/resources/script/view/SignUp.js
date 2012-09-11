@@ -53,6 +53,8 @@ function SignUp()
 		wait();
 		window.textFields()["email"].setValue(email);
 		app.keyboard().typeString("\n");
+		wait(2);
+		tips.closeTips(4);
 	}
 	function fillEmail(email)
 	{

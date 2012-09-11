@@ -2,7 +2,7 @@
 #import "UserInfo.js"
 #import "PlanChooser.js"
 #import "GoalProgress.js"
-#import "GoalStart.js"
+#import "RunView.js"
 #import "GoalPlan.js"
 #import "About.js"
 #import "../core/testcaseBase.js"
@@ -28,6 +28,7 @@ function Tips()
 		log("Closing tips");
 		for (i=0; i< numberOfTips; i++) {
 			target.tap({x:154.00, y:200.00});
+			wait(3);
 		}
 	}
 	

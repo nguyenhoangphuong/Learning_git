@@ -54,9 +54,9 @@ function testGoalProgress()
 	goal.getQuote();
 }
 
-function testGoalStart()
+function testRunView()
 {
-	start = new GoalStart();
+	start = new RunView();
 	start.pause();
 	start.getCurrentInfo();
 	start.resume();
