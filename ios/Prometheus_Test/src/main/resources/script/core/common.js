@@ -1010,12 +1010,19 @@ function staticTextExist(text)
 
 function wheelPick(picker, wheelIndex, value)
 {
+	wait(2);
 	// wheel and items
 	wheel = picker.wheels()[wheelIndex];
 	items = wheel.values();
-	
+//	logTree();
 	// get current value
 	current = wheel.value();
+	if (current == null) {
+		log("Current is null");
+		wait(5);
+		current = wheel.value();
+	}
+	log("Current= " + current);
 	current = current.substring(0, current.lastIndexOf("."));
 	
 	// find the index of current and expect value
