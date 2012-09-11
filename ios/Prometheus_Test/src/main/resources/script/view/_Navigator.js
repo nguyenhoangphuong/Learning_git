@@ -53,8 +53,7 @@ function Navigator()
 				UILogger.logFail("Should succeed");
 			}
 		}
-		wait();
-		tips.closeTips(4);
+		
 	}
 	
 	function toPlanChooser()

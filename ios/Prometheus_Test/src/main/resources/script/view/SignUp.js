@@ -1,5 +1,7 @@
 #import "../core/testcaseBase.js"
 #import "_AlertHandler.js"
+#import "_Tips.js"
+
 
 /*
 SignUp function
