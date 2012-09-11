@@ -8,12 +8,7 @@
 #import "../core/testcaseBase.js"
 
 /*
-This file provides methods to navigate to specify view.
-This will go from nothing to the specify view, so kill the app first.
-
---- Usage:
-nav.toSignUp();
-nav.toUserInfo();
+This handles the tips
 ...
 */
 

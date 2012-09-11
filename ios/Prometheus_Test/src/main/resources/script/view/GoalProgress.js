@@ -238,6 +238,9 @@ function GoalProgress()
 			fail("The run has not started");
 		} 
 		log("Finish run");
+		// check the crash
+		run.pause();
+		wait();
 		run.finish();
 	}
 	

@@ -1,3 +1,4 @@
+#import "_Tips.js" 
 /*
 This file handler all the alert which relate to the tests.
 
@@ -92,6 +93,16 @@ function PrometheusAlertHandler(_alert)
 			
 		// reset the alertChoice and acknowledge the alert
 		alert.alertChoice = null;
+		
+		if (name == alert.LocationConfirm) {
+			log("Wait a bit to close tips in weekgoal");
+			wait(4);
+			tips.closeTips(1);
+			wait();
+		
+		} else {
+			log("Not interesting");
+		}
 		return true;
 	}
 	
