@@ -101,20 +101,8 @@ function testAbout()
 		fail();
 }
 
-start("Demo");
-
-a = new About();
-
-before = target.frontMostApp().bundleID();
-log(before);
-
-a.rateApp();
-
-if(prometheus.isActive())
-	fail();
-else
-	pass();
+start("Demo");p = new PlanChooser();
+p.getPlanAmounts();
 
 pass("Demo pass");
-
 
