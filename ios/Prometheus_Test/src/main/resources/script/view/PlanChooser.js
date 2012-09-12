@@ -3,10 +3,10 @@ PlanChooser functions:
 - selectEasy()		:	tap easy button
 - selectNormal()	:	tap normal button
 - selectActive()	:	tap active button
-- selectOther(mile, confirm)	:	tap other and pick "mile" value and if
-									click back or done base on confirm
-	+ selectOther(18) for select 18 then process
-	+ selectOther(18, "no") for select 18 then back
+- selectOther()		:	tap other button
+- setValue(mile)	:	select picker value base on "mile"
+- back()			:	tap the back button
+- done()			:	tap the done button
 - isLocationConfirmShown()		:	check if the location require alert is shown
 - getPlanAmounts	:	get the static texts and value of the text of actual plan, return
 						an object consist of:
@@ -45,6 +45,9 @@ function PlanChooser()
 	this.selectNormal = selectNormal;
 	this.selectActive = selectActive;
 	this.selectOther = selectOther;
+	this.setValue = setValue;
+	this.back = back;
+	this.done = done;
 	this.getPlanAmounts = getPlanAmounts;
 	this.isLocationConfirmShown = isLocationConfirmShown;
 	
@@ -67,27 +70,37 @@ function PlanChooser()
 		wait(2);
 	}
 	
-	function selectOther(value, confirm) 
+	function selectOther()
 	{
-		if(typeof confirm == "undefined")
-			confirm = "yes";
-			
 		otherBtn.tap();
 		wait();
-		backBtn = pickWindow.buttons()["Back"];
-		doneBtn = pickWindow.buttons()["Done"];
-		
+	}
+	
+	function setValue(value)
+	{
 		picker = pickWindow.pickers()[0];
-		wheelPick(picker, 0, value.toString());
-		if(confirm == "yes")
+		if(picker.isValid())
+			wheelPick(picker, 0, value.toString());
+	}
+	
+	function back()
+	{
+		backBtn = pickWindow.buttons()["Back"];
+		if(backBtn.isValid())
+		{
+			backBtn.tap();
+			wait(0.2);
+		}
+	}
+	
+	function done()
+	{
+		doneBtn = pickWindow.buttons()["Done"];
+		if(doneBtn.isValid())
 		{
 			doneBtn.tap();
 			wait(2);
 		}
-		else
-			backBtn.tap();
-		
-		wait(0.2);
 	}
 	
 	function getPlanAmounts()
