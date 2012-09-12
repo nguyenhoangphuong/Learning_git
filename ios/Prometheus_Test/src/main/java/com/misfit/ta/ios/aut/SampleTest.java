@@ -16,21 +16,15 @@ import com.misfit.ta.utils.ShortcutsTyper;
  */
 public class SampleTest extends AutomationTest {
 
-  @Test(groups = {"ios", "Perry", "Perry_1"})
-  public void sampleTest() throws InterruptedException, StopConditionException {
-//	  AppHelper.install(AppHelper.getCurrentUdid(), AppHelper.getAppPath());
-//	  ShortcutsTyper.delayTime(3000);
-	  AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-				 "script/view/__Test.js");
-  }
-  
-  @Test(groups = {"ios", "Perry", "Perry_1"})
-  public void sampleTest1() throws InterruptedException, StopConditionException {
-//    AppHelper.install(AppHelper.getCurrentUdid(), AppHelper.getAppPath());
-//    ShortcutsTyper.delayTime(3000);
-      AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-                 "script/view/__Test1.js");
-  }
+	@Test(groups = { "ios", "Prometheus", "MVP1", "chooseplan" })
+	public void RunTest() throws InterruptedException,
+			StopConditionException {
+		//AppHelper.cleanCache();
+	 	//ShortcutsTyper.delayTime(1000);	
+		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+				AppHelper.getAppPath(), "script/testcases/run/run.js");
+	
+	}
   
   
 }

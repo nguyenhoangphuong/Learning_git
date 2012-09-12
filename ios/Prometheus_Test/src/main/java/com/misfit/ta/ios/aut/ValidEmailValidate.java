@@ -9,6 +9,19 @@ import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.utils.ShortcutsTyper;
 public class ValidEmailValidate extends AutomationTest{
 	
+	
+	
+	@Test(groups = { "ios", "Prometheus", "MVP1", "email" })
+	public void CharsTest() throws InterruptedException,
+			StopConditionException {
+		AppHelper.cleanCache();
+	 	ShortcutsTyper.delayTime(1000);		
+		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+				AppHelper.getAppPath(), "script/testcases/email/100CharEmail.js");
+	
+	}
+	
+	
 	@Test(groups = { "ios", "Prometheus", "MVP1", "email" })
 	public void DashDomainTest() throws InterruptedException,
 			StopConditionException {
@@ -18,7 +31,6 @@ public class ValidEmailValidate extends AutomationTest{
 				AppHelper.getAppPath(), "script/testcases/email/DashDomain.js");
 	
 	}
-	
 	@Test(groups = { "ios", "Prometheus", "MVP1", "email" })
 	public void DashUsernameTest() throws InterruptedException,
 			StopConditionException {
@@ -82,5 +94,6 @@ public class ValidEmailValidate extends AutomationTest{
 				AppHelper.getAppPath(), "script/testcases/email/UnicodeUsername.js");
 	
 	}
+	
 	
 }
