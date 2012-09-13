@@ -94,15 +94,39 @@ function testGoalPlan()
 function testAbout()
 {
 	about = new About();
-	about.getSupport();
-	if(about.isNoEmailAlertShown())
+	about.rateApp();
+	target.pushTimeout(5);
+	if(!prometheus.isActive())
 		pass();
 	else
 		fail();
+	target.popTimeout();
 }
 
-start("Demo");p = new PlanChooser();
-p.getPlanAmounts();
+function toWeekGoal()
+{
+	wait(3);
+	target.frontMostApp().keyboard().typeString("bbb@bb.bb\n");
+	wait();
+	target.tap({x:171.00, y:263.50});
+	wait(2);
+	target.tap({x:160.50, y:266.00});
+	wait(2);
+	target.tap({x:168.50, y:271.00});
+	wait(2);
+	target.tap({x:168.50, y:271.00});
+	target.frontMostApp().mainWindow().buttons()[2].tap();
+	wait();
+	target.frontMostApp().mainWindow().buttons()[0].tap();
+	wait(2);
+	target.frontMostApp().mainWindow().scrollViews()[0].tapWithOptions({tapOffset:{x:0.43, y:0.52}});
+	wait();	
+}
 
+start("Demo");w = app.mainWindow();logTree();
+log(w.buttons()[0].value());
+log(w.buttons()[1].value());
+log(w.buttons()[2].value());
+log(w.buttons()[3].value());
 pass("Demo pass");
 

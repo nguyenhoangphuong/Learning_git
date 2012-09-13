@@ -1,5 +1,8 @@
 /*
 PlanChooser functions:
+- isVisible()		: 	check if current view is PlanChooser
+- isManualVisible()	:	check if current view is PlanChooser after tap Other button
+
 - selectEasy()		:	tap easy button
 - selectNormal()	:	tap normal button
 - selectActive()	:	tap active button
@@ -30,7 +33,7 @@ function PlanChooser()
 	this.easy=5;
 	this.normal=10;
 	this.active=21;
-	
+
 	var easyBtn = mainWindow.buttons()[0];	
 	var normalBtn = mainWindow.buttons()[1];
 	var activeBtn = mainWindow.buttons()[2];
@@ -41,17 +44,35 @@ function PlanChooser()
 	var activeTxt = mainWindow.staticTexts()[3];
 	
 	// Methods
+	this.isVisible = isVisible;
+	this.isManualVisible = isManualVisible;
+	
 	this.selectEasy = selectEasy;
 	this.selectNormal = selectNormal;
 	this.selectActive = selectActive;
 	this.selectOther = selectOther;
+	
 	this.setValue = setValue;
+	this.getPickerValue = getPickerValue;
 	this.back = back;
 	this.done = done;
+	
 	this.getPlanAmounts = getPlanAmounts;
 	this.isLocationConfirmShown = isLocationConfirmShown;
 	
-	// Method definition	
+	// Method definition
+	function isVisible()
+	{
+		wait(0.5);
+		return staticTextExist("Please set your plan");
+	}
+	
+	function isManualVisible()
+	{
+		return staticTextExist("Please set your desired distance");
+	}
+	
+	
 	function selectEasy() 
 	{
 		easyBtn.tap();
@@ -76,11 +97,34 @@ function PlanChooser()
 		wait();
 	}
 	
+	
 	function setValue(value)
 	{
 		picker = pickWindow.pickers()[0];
 		if(picker.isValid())
 			wheelPick(picker, 0, value.toString());
+	}
+	
+	function getPickerValue()
+	{
+		wait(0.5);
+		picker = pickWindow.pickers()[0];
+		if(picker.isValid())
+		{
+			wheel = picker.wheels()[0];
+			items = wheel.values();
+
+			// get current value
+			wait(0.5);
+			current = wheel.value();
+			current = current.substring(0, current.lastIndexOf("."));
+			current = parseFloat(current);
+			log("current picker: " + current);
+			
+			return current;
+		}
+		
+		return null;
 	}
 	
 	function back()
@@ -103,6 +147,7 @@ function PlanChooser()
 		}
 	}
 	
+		
 	function getPlanAmounts()
 	{
 		var info = {};

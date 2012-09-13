@@ -23,7 +23,7 @@ function Prometheus()
 	function isActive()
 	{
 		current = target.frontMostApp().bundleID();
-		log("current application:  222" + current);
+		log("current application: " + current);
 		return current == this.AppID;
 	}
 }

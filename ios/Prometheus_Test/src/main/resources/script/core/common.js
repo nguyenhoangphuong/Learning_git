@@ -1014,7 +1014,7 @@ function wheelPick(picker, wheelIndex, value)
 	// wheel and items
 	wheel = picker.wheels()[wheelIndex];
 	items = wheel.values();
-//	logTree();
+
 	// get current value
 	current = wheel.value();
 	if (current == null) {
@@ -1058,8 +1058,6 @@ function wheelPick(picker, wheelIndex, value)
 			steps--;
 		}
 	}  
-
-	//wheel.selectValue(items[index]);
 }
 
 function isKeyboardVisible()
