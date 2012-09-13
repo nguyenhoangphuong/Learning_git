@@ -7,9 +7,12 @@ PlanChooser functions:
 - selectNormal()	:	tap normal button
 - selectActive()	:	tap active button
 - selectOther()		:	tap other button
+
 - setValue(mile)	:	select picker value base on "mile"
+- getPickerValue()	:	get the current value of picker (float)
 - back()			:	tap the back button
 - done()			:	tap the done button
+
 - isLocationConfirmShown()		:	check if the location require alert is shown
 - getPlanAmounts	:	get the static texts and value of the text of actual plan, return
 						an object consist of:
@@ -30,7 +33,7 @@ function PlanChooser()
 	var mainWindow = app.mainWindow();
 	var pickWindow = app.windows()[1];
 	
-	this.easy=5;
+	this.easy=5; 
 	this.normal=10;
 	this.active=21;
 
