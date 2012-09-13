@@ -10,7 +10,7 @@ GoalProgress function:
 - scrollToWeekGoal()		:	scroll up from today to week view
 - scrollToDayGoal()			:	scroll down from week to day view
 - scrollToGoalPlan()		:	scroll right to goal planning view
-- scrollToAbout()			:	scrol left to about view
+- scrollToAbout()			:	scroll left to about view
 - start()					:	press start button
 - simulateARun()				: 	set location, press start and simulate a run
 - getWeekInfo()				:	get week information, return an object contains:
@@ -30,6 +30,8 @@ GoalProgress function:
 - getGPSSignal()			:	get the gps signal strength
 	+ return: "Fair"
 - getQuote()				:	get the random quote
+- setANewGoal()				: 	set a new goal after finish the week goal
+- isSetANewGoalBtnVisible()	:   check if the goal has been achieved
 
 */
 
@@ -71,6 +73,8 @@ function GoalProgress()
 	
 	this.getGPSSignal = getGPSSignal;
 	this.getQuote = getQuote;
+	this.setANewGoal=setANewGoal;
+	this.isSetANewGoalBtnVisible=isSetANewGoalBtnVisible;
 	
 	// Methods definition
 	function isWeekGoalVisible()
@@ -224,9 +228,9 @@ function GoalProgress()
 			wait();
 		}
 		var run = new RunView();
-		if (!run.canPause()) {
-			fail("The run has not started");
-		} 
+//		if (!run.canPause()) {
+//			fail("The run has not started");
+//		} 
 		wait(2);
 		if (stop) {
 			log("Finish run");
@@ -249,6 +253,24 @@ function GoalProgress()
 	function setB() {
 		var pointB = {location:{latitude:10.768071,longitude:106.667256}, options:{speed:11, altitude:200, horizontalAccuracy:10, verticalAccuracy:15}};
 		target.setLocationWithOptions(pointB.location,pointB.options);
+	}
+	
+	function isSetANewGoalBtnVisible() {
+		var btn = mainView.buttons()["Set a new goal"];
+		return btn.isVisible();
+	}
+	
+	function setANewGoal(planType) {
+		var btn = mainView.buttons()["Set a new goal"];
+		btn.tap();
+		var planChooser = new PlanChooser();
+		if (planType == "easy") {
+			planChooser.selectEasy();
+		} else if (planType == "normal") {
+			planChooser.selectNormal();
+		} else {
+			planChooser.selectActive();
+		}
 	}
 
 }

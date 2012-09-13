@@ -39,6 +39,8 @@ function RunView()
 	this.pause = pause;
 	this.resume = resume;
 	this.done = done;
+	this.closeAlert= closeAlert;
+	this.isCongratulationAlertVisible = isCongratulationAlertVisible
 	
 	this.getCurrentInfo = getCurrentInfo;
 	this.getResults = getResults;
@@ -68,6 +70,7 @@ function RunView()
 	
 	function finish()
 	{
+		closeAlert();
 		wait();
 		finishBtn.tap();
 	}
@@ -76,6 +79,7 @@ function RunView()
 	{
 		if(canPause())
 		{
+			closeAlert();
 			wait();
 			toggleBtn.tap();
 		}
@@ -128,6 +132,19 @@ function RunView()
 		log("result.speed: " + info.speed);
 		
 		return info;
+	}
+	
+	function closeAlert() {
+		if (staticTextExist("CONGRATULATION!") && mainView.buttons()[0].isVisible()) {
+			log("User has achieved week goal");
+			mainView.buttons()[0].tap();
+		} else {
+			log("No alert");
+		}
+	}
+	
+	function isCongratulationAlertVisible() {
+		return staticTextExist("CONGRATULATION!");
 	}
 	
 }
