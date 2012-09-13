@@ -146,9 +146,9 @@ function GoalPlan()
 			count++;
 			element = recordsView.staticTexts()[count * 3];
 		}
-		
-		log("Total plan: " + miles.toString());
-		return miles;
+		var result = Math.round(miles);
+		log("Total plan: " + result.toString());
+		return result;
 	}
 	
 	function getRunMiles()

@@ -16,7 +16,6 @@ RunView function:
 - getCurrentInfo()			:	get the current {percent, distance, duration}
 - getResults()				:	get the results {percent, distance, duration, speed}
 
-- setEndPoint()				:	set the end point for the current run
 */
 
 function RunView()
@@ -44,7 +43,6 @@ function RunView()
 	this.getCurrentInfo = getCurrentInfo;
 	this.getResults = getResults;
 	
-	this.setEndPoint = setEndPoint;
 	
 	// Methods definition
 	function isVisible()
@@ -124,16 +122,12 @@ function RunView()
 		info.distance = mainView.staticTexts()[5].name();
 		info.speed = mainView.staticTexts()[7].name();
 		
-		log("info.percent: " + info.percent);
-		log("info.duration: " + info.duration);
-		log("info.distance: " + info.distance);
-		log("info.speed: " + info.speed);
+		log("result.percent: " + info.percent);
+		log("result.duration: " + info.duration);
+		log("result.distance: " + info.distance);
+		log("result.speed: " + info.speed);
 		
 		return info;
 	}
 	
-	
-	function setEndPoint()
-	{
-	}
 }

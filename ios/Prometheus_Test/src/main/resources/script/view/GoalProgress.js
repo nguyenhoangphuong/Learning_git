@@ -63,6 +63,7 @@ function GoalProgress()
 	this.scrollToAbout = scrollToAbout;
 	this.start = start;
 	this.simulateARun=simulateARun;
+	this.simulateARunDontStop= simulateARunDontStop;
 		
 	this.getWeekInfo = getWeekInfo;
 	this.getTodayInfo = getTodayInfo;
@@ -75,6 +76,7 @@ function GoalProgress()
 	function isWeekGoalVisible()
 	{
 		page = window.pageIndicators()[0].value();
+		
 		log("isWeekGoalVisible: " + (page == "page 2 of 3" && weekProgress.isValid() && weekProgress.isVisible()).toString());
 
 		return page == "page 2 of 3" && weekProgress.isValid() && weekProgress.isVisible();
@@ -87,28 +89,12 @@ function GoalProgress()
 	
 	function scrollToWeekGoal()
 	{
-		/*
-		if(isWeekGoalVisible())
-		{
-			log("Note: current view is week goal");
-			return;
-		}
-		*/
-		
 		wait();
 		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.2}, endOffset:{x:0.5, y:0.5}, duration:0.3});
 	}
 	
 	function scrollToDayGoal()
 	{
-		/*
-		if(isTodayGoalVisible())
-		{
-			log("Note: current view is today goal");
-			return;
-		}
-		*/
-		
 		wait();
 		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.8}, endOffset:{x:0.5, y:0.2}, duration:0.3});
 		wait(3);
@@ -221,6 +207,10 @@ function GoalProgress()
 	}
 	
 	function simulateARun(miles) {
+		simulateRunAndStop(miles, true);
+	}
+	
+	function simulateRunAndStop(miles, stop) {
 		log("Run " + miles);
 		setA();
 		start();
@@ -237,11 +227,18 @@ function GoalProgress()
 		if (!run.canPause()) {
 			fail("The run has not started");
 		} 
-		log("Finish run");
+		wait(2);
+		if (stop) {
+			log("Finish run");
 		// check the crash
-		run.pause();
-		wait();
-		run.finish();
+			run.pause();
+			wait();
+			run.finish();
+		}
+	}
+	
+	function simulateARunDontStop(miles) {
+		simulateRunAndStop(miles, false);
 	}
 	
 	function setA() {
