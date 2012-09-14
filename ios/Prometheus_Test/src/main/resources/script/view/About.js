@@ -64,10 +64,15 @@ function About()
 	{
 		reset.tap();
 		wait(1);
-		if (yes == true) {
+		
+		if (yes == true)
+		{
+			alert.alertTitle = alert.ResetConfirm;
 			window.buttons()["YES"].tap();
 		}
-		else {
+		else 
+		{
+			alert.alertTitle = alert.ResetConfirm;
 			window.buttons()["NO"].tap();
 		}
 	}

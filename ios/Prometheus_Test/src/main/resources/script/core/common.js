@@ -12,6 +12,10 @@ This section is the place where you list functions. Please list them as comments
 - pass(text)	:	UIALogger.logPass(default = Pass)
 - fail(text)	:	UIALogger.logFail(default = Fail)
 
+- assertEqual(actual, expected)	:	simplify if(a == b) pass() else fail()
+- assertTrue(expression)		:	simplify if(a == true) pass() else fail()
+- assertFalse(expression)		:	simplify if(a == false) pass() else fail()
+
 *** TA HELPERS ***
 - staticTextExist(text)			:	check if the text is valid and currently visible on screen
 - buttonExist(id)				:	check if button with id is valid and currently visible on screen
@@ -25,6 +29,9 @@ This section is the place where you list functions. Please list them as comments
 - swipeVertically(startX, startY, endY, duration)		:	swipe along Y-axis (duration default = 0.6)
 - swipeHorizontally(startX, startY, endX, duration)		:	swipe along X-axis (duration default = 0.6)
 - tap(x, y)						:	tap on the screen at coord(x, y)
+- lockApp(type, time)			:	cause interruption by pressing Home or Lock button
+	+ lockApp("Home", 2)
+	+ lockApp("Lock", 2)
 
 --------------------------------------------------------------------------------
 IMPLEMENTATION
@@ -76,6 +83,30 @@ function fail(text)
 	if(typeof text == "undefined")
 		text = "Fail";
 	UIALogger.logFail(text);
+}
+
+function assertEqual(actual, expected)
+{
+	if(actual == expected)
+		log("Assert equal pass: " + "[" + actual.toString() + "] == [" + expected.toString() + "]");
+	else
+		fail("Assert equal fail: " + "[" + actual.toString() + "] >< [" + expected.toString() + "]");
+}
+
+function assertTrue(expression)
+{
+	if(expression == true)
+		log("Assert true pass");
+	else
+		fail("Assert true fail");
+}
+
+function assertFalse(expression)
+{
+	if(expression == false)
+		log("Assert false pass");
+	else
+		fail("Assert false fail");
 }
 
 // =============== TA helpers
@@ -185,4 +216,18 @@ function swipeHorizontally(startX, startY, endX, duration)
 function tap(x, y)
 {
 	target.tap({x:x, y:y});
+}
+
+function lockApp(type, atime)
+ {
+    if (type == "Home") 
+    {
+        target.deactivateAppForDuration(atime);
+        target.delay(2);
+    } 
+    else if (type == "Lock") 
+    {
+        target.lockForDuration(atime);
+        target.delay(2);
+    }
 }

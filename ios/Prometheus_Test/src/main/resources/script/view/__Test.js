@@ -123,10 +123,15 @@ function toWeekGoal()
 	wait();	
 }
 
-start("Demo");w = app.mainWindow();logTree();
-log(w.buttons()[0].value());
-log(w.buttons()[1].value());
-log(w.buttons()[2].value());
-log(w.buttons()[3].value());
+start("Demo");
+
+	plan = new GoalPlan();
+	plan.getTotalDays();
+	plan.getPassedDays();
+	plan.getTotalPlanMiles();
+	plan.getRunMiles();
+	plan.getRemainPlanMiles();
+
 pass("Demo pass");
 
+	

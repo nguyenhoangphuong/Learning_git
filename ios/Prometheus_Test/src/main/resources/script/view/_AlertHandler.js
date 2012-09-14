@@ -1,4 +1,5 @@
-#import "_Tips.js" 
+#import "_Tips.js"
+
 /*
 This file handler all the alert which relate to the tests.
 
@@ -31,21 +32,77 @@ function Alert()
 	
 	// All the alert title name
 	this.NoInternet = "No connection";
-	this.BMINotRealistic = "Error";
 	this.NoEmail = "Warning";
-	this.ResetConfirm = "Confirm";
 	this.LocationConfirm = "\“Prometheus\” Would Like to Use Your Current Location";
-	this.TooEasy = "Easy goal";
+	
+	this.ResetConfirm = "Confirm";
 	this.TooHard = "Too hard";
 	
 	// Methods
 	this.reset = reset;
+	this.isCustomAlertShown = isCustomAlertShown;
+	this.getCustomAlertInfo = getCustomAlertInfo;
+	this.confirmCustomAlert = confirmCustomAlert;
 	
 	// Method definitions
 	function reset()
 	{
 		alertTitle = null;
 		alertMsg = null;
+	}
+	
+	function isCustomAlertShown()
+	{
+		win = app.mainWindow();
+		ele = win.staticTexts()[0];
+		
+		if(ele.isValid())
+		{
+			title = ele.name();
+			msg = win.staticTexts()[1].name();
+			
+			if(	title	==	alert.ResetConfirm	||
+				title	==	alert.TooHard	)
+			{
+				log("Message is on screen: [" + title + "]" + " - [" + msg + "]");
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	function getCustomAlertInfo()
+	{
+		if(isCustomAlertShown())
+		{
+			win = app.mainWindow();
+			
+			var info = {};
+			info.title = win.staticTexts()[0].name();
+			info.message = win.staticTexts()[1].name();
+			
+			return info;
+		}
+		
+		return null;
+	}
+	
+	function confirmCustomAlert(confirm)
+	{
+		if(isCustomAlertShown())
+		{
+			if(typeof confirm == "undefined")
+				confirm = 0;
+			
+			win = app.mainWindow();
+			btn = win.buttons()[confirm];
+			
+			if(!btn.isValid())
+				btn = win.buttons()[0];
+				
+			btn.tap();
+		}
 	}
 }
 
@@ -70,12 +127,8 @@ function PrometheusAlertHandler(_alert)
 	
 	// check for test-related alert
 	if(	name == alert.NoInternet		||
-		name == alert.BMINotRealistic	||
 		name == alert.NoEmail			||
-		name == alert.ResetConfirm		||
-		name == alert.LocationConfirm	||
-		name == alert.TooEasy			||
-		name == alert.TooHard	)
+		name == alert.LocationConfirm	)
 	{
 		// log
 		log("Interesting [" + name + "] encountered!");
@@ -94,11 +147,13 @@ function PrometheusAlertHandler(_alert)
 		// reset the alertChoice and acknowledge the alert
 		alert.alertChoice = null;
 		
-		if (name == alert.LocationConfirm) {
-			wait(4);
+		if (name == alert.LocationConfirm)
+		{
+			wait();
 			tips.closeTips(1);
-			wait(3);
+			wait();
 		}
+		
 		return true;
 	}
 	

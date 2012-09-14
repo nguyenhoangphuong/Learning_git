@@ -5,8 +5,9 @@
 GoalPlan functions:
 - isVisible()			:	check if the current view is GoalPlan
 - edit()				:	tap the Edit button
-- reset()				:	tap the Reset button (while in edit mode)
+- reset()				:	tap the Auto Suggest button
 - save()				:	tap the Done button (while in edit mode)
+- cancel()				:	tap the Cancel button (while in edit mode)
 
 - getTotalDays()		:	get the number of days (or records) in this goal
 - getPassedDays()		:	get the number of days (or records) which can't be planned any more
@@ -15,21 +16,33 @@ GoalPlan functions:
 - getRunMiles()			:	get the number of miles that you run
 
 - getWeekInfo()			:	get info of a goal {duration, goal}
-- getDayInfoByIndex(i)	:	get info of a day by index {date, temperature, miles}
-- getDayInfoByName(n)	:	get info of a day by its name {date, temperature, miles}
-- getTodayInfo()		:	get info of today {date, temperature, run, remain}
+	+ duration		: 	"Sep 14 - Sep 20"
+	+ goal			: 	5 (float)
+- getDayInfoByIndex(i)	:	get info of a day by index {text, date, temperature, run, total}
+	+ text			:	"Sat Sep 15th / 76 - 81ºF"
+	+ date			: 	"Sat Sep 15th"
+	+ temperature	: 	"76 - 81ºF"
+	+ run			: 	0.74 (float)
+	+ total			:	1.10 (float)		
+- getDayInfoByName(n)	:	get info of a day by its name {text, date, temperature, run, total}
+- getTodayInfo()		:	get info of today {text, date, temperature, run, total}
 
-- planDayByIndex(i, miles, confirm)		:	set the goal of day i to miles
-	+ planDayByIndex(i, miles)	- choose YES when alert is shown up
-	+ planDayByIndex(i, miles, "No") - choose NO when alert is shown up
-- planDayByName(n, miles, confirm)		:	set the goal of day have name n to miles
-	+ planDayByName(i, miles)	- choose YES when alert is shown up
-	+ planDayByName(i, miles, "No") - choose NO when alert is shown up
+- planDayByIndex(i, miles, confirm)		:	set the goal of day i to miles (and dismiss the alert)
+	+ planDayByIndex(i, miles)			- 	just drag the slider, don't touch the alert
+	+ planDayByIndex(i, miles, false) 	- 	drag the slider and choose NO when the alert shown up
+	+ planDayByIndex(i, miles, true) 	- 	drag the slider and choose YES when the alert shown up
 	
-- isEasyAlertShown()	:	check if the Easy Goal alert is shown up
-- isHardAlertShown()	:	check if the Too Hard alert is shown up
+- planDayByName(n, miles, confirm)		:	similar to planDayByIndex but use NAME instead
+	+ planDayByName("Sat Sep 15th", 0, 4.3)
+
+- isInEditMode()						:	check if the current view is edit mode
+- isHardAlertShown()					:	check if the Too Hard alert is CURRENTLY showing up
+- confirmHardAlert(confirm)				:	close the alert by pressing specify button
+	+ confirm == true || not defined	-	YES button
+	+ confirm == false					-	NO button
 */
 
+maxMPD = 2.95;
 function GoalPlan()
 {
 	// Private fields
@@ -37,20 +50,21 @@ function GoalPlan()
 	var mainView = window.scrollViews()[0];
 	var recordsView = mainView.scrollViews()[0];
 	
-	var editBtn = mainView.buttons()["Edit"];
-	var resetBtn = mainView.buttons()["Reset"];
-	var saveBtn = mainView.buttons()["Done"];
+	var autoBtn = mainView.buttons()[8];
+	var editBtn = mainView.buttons()[10];
+	var cancelBtn = mainView.buttons()[7];
+	var doneBtn = mainView.buttons()[9];
 
-	var weekDays = mainView.staticTexts()[12];
-	var weekGoal = mainView.staticTexts()[11];
-	
-	var maxMPD = 5.31;
+	var weekDays = mainView.staticTexts()[13];
+	var weekGoal = mainView.staticTexts()[12];
+
 	
 	// Methods
 	this.isVisible = isVisible;
 	this.edit = edit;
 	this.reset = reset;
 	this.save = save;
+	this.cancel = cancel;
 	
 	this.getTotalDays = getTotalDays;
 	this.getPassedDays = getPassedDays;
@@ -67,10 +81,11 @@ function GoalPlan()
 	this.planDayByIndex = planDayByIndex;
 	this.planDayByName = planDayByName;
 	
-	this.isEasyAlertShown = isEasyAlertShown;
+	this.isInEditMode = isInEditMode;
 	this.isHardAlertShown = isHardAlertShown;
-
+	this.confirmHardAlert = confirmHardAlert;
 	
+
 	// Methods definition
 	function isVisible()
 	{
@@ -80,20 +95,26 @@ function GoalPlan()
 	
 	function edit()
 	{
-		wait(0.5);
+		wait();
 		editBtn.tap();
 	}
 	
 	function reset()
 	{
-		wait(0.5);
-		resetBtn.tap();
+		wait();
+		autoBtn.tap();
 	}
 	
 	function save()
 	{
-		wait(0.5);
-		saveBtn.tap();
+		wait();
+		doneBtn.tap();
+	}
+	
+	function cancel()
+	{
+		wait();
+		cancelBtn.tap();
 	}
 	
 	
@@ -105,7 +126,7 @@ function GoalPlan()
 		while(element.isValid())
 		{
 			count++;
-			element = recordsView.staticTexts()[count * 3];
+			element = recordsView.staticTexts()[count * 2];
 		}
 		
 		log("Total days: " + count.toString());
@@ -115,12 +136,12 @@ function GoalPlan()
 	function getPassedDays()
 	{
 		count = 0;
-		element = recordsView.staticTexts()[count * 3 + 2];
+		element = recordsView.staticTexts()[count * 2 + 1];
 		
 		while(element.isValid() && element.name().indexOf("/") >= 0)
 		{
 			count++;
-			element = recordsView.staticTexts()[count * 3 + 2];
+			element = recordsView.staticTexts()[count * 2 + 1];
 		}
 		
 		log("Passed days: " + count.toString());
@@ -136,15 +157,17 @@ function GoalPlan()
 		while(element.isValid())
 		{
 			// parse the string to get the miles value
-			value = recordsView.staticTexts()[count * 3 + 2].name();
-			if(value.indexOf("/") >= 0) value = value.substring(value.indexOf("/") + 2, value.indexOf(" miles"));
-			else value = value.substring(0, value.indexOf(" miles"));
+			value = recordsView.staticTexts()[count * 2 + 1].name();
+			if(value.indexOf("/") >= 0) 
+				value = value.substring(value.indexOf("/") + 1, value.indexOf(" miles"));
+			else 
+				value = value.substring(0, value.indexOf(" miles"));
 			
 			// parse the value
 			miles += parseFloat(value);
 			
 			count++;
-			element = recordsView.staticTexts()[count * 3];
+			element = recordsView.staticTexts()[count * 2];
 		}
 		var result = Math.round(miles);
 		log("Total plan: " + result.toString());
@@ -161,15 +184,15 @@ function GoalPlan()
 		{
 			// parse the string to get the miles value
 			// only take the string which have "/" character
-			value = recordsView.staticTexts()[count * 3 + 2].name();
+			value = recordsView.staticTexts()[count * 2 + 1].name();
 			if(value.indexOf("/") >= 0)
 			{
-				value = value.substring(0, value.indexOf(" / "));
+				value = value.substring(0, value.indexOf("/"));
 				miles += parseFloat(value);
 			}
 			
 			count++;
-			element = recordsView.staticTexts()[count * 3];
+			element = recordsView.staticTexts()[count * 2];
 		}
 		
 		log("Distance run: " + miles.toString());
@@ -186,7 +209,7 @@ function GoalPlan()
 		{
 			// parse the string to get the miles value
 			// only take the string that DON'T have the "/" char
-			value = recordsView.staticTexts()[count * 3 + 2].name();
+			value = recordsView.staticTexts()[count * 2 + 1].name();
 			if(value.indexOf("/") < 0)
 			{
 				value = value.substring(0, value.indexOf(" miles"));
@@ -196,7 +219,7 @@ function GoalPlan()
 			}
 			
 			count++;
-			element = recordsView.staticTexts()[count * 3];
+			element = recordsView.staticTexts()[count * 2];
 		}
 		
 		log("Plan remain: " + miles.toString());
@@ -208,7 +231,7 @@ function GoalPlan()
 	{
 		var info = {};
 		info.duration = weekDays.name();
-		info.goal = weekGoal.name();
+		info.goal = parseFloat(weekGoal.name());
 		
 		log("Weekinfo.duration: " + info.duration);
 		log("Weekinfo.goal: " + info.goal);
@@ -224,16 +247,8 @@ function GoalPlan()
 			log("[Input invalid] - Total days is [" + total.toString() + "], but index is [" + index.toString() + "]");
 			return null;
 		}
-		
-		var info = {};
-		info.date = recordsView.staticTexts()[index * 3 + 0].name();
-		info.temperature = recordsView.staticTexts()[index * 3 + 1].name();
-		info.miles = recordsView.staticTexts()[index * 3 + 2].name();
-		
-		log("info.date: " + info.date);
-		log("info.temperature: " + info.temperature);
-		log("info.miles: " + info.miles);
-		
+
+		var info = getDayInfo(index);
 		return info;
 	}
 	
@@ -245,23 +260,15 @@ function GoalPlan()
 		while(element.isValid())
 		{
 			// fount a record which match name
-			if(element.name() == name)
+			if(element.name().indexOf(name) >= 0)
 			{
-				var info = {};
-				info.date = recordsView.staticTexts()[index * 3 + 0].name();
-				info.temperature = recordsView.staticTexts()[index * 3 + 1].name();
-				info.miles = recordsView.staticTexts()[index * 3 + 2].name();
-		
-				log("info.date: " + info.date);
-				log("info.temperature: " + info.temperature);
-				log("info.miles: " + info.miles);
-
+				var info = getDayInfo(index);
 				return info;
 			}
 			
 			// jump to next record
 			index++;
-			element = recordsView.staticTexts()[index * 3];
+			element = recordsView.staticTexts()[index * 2];
 		}
 		
 		// can't find any matched record
@@ -279,24 +286,13 @@ function GoalPlan()
 			// fount a record which match name
 			if(element.name().indexOf("Today") >= 0)
 			{			
-				value = recordsView.staticTexts()[index * 3 + 2].name();
-				var info = {};
-				info.date = recordsView.staticTexts()[index * 3 + 0].name();
-				info.temperature = recordsView.staticTexts()[index * 3 + 1].name();
-				info.run = parseFloat(value.substring(0, value.indexOf(" / ")));
-				info.remain = parseFloat(value.substring(value.indexOf("/") + 2, value.indexOf(" miles")));
-		
-				log("info.date: " + info.date);
-				log("info.temperature: " + info.temperature);
-				log("info.run: " + info.run);
-				log("info.remain: " + info.remain);
-
+				var info = getDayInfo(index);
 				return info;
 			}
 			
 			// jump to next record
 			index++;
-			element = recordsView.staticTexts()[index * 3];
+			element = recordsView.staticTexts()[index * 2];
 		}
 		
 		// can't find any matched record
@@ -306,10 +302,7 @@ function GoalPlan()
 
 
 	function planDayByIndex(index, miles, confirm)
-	{
-		if(typeof confirm == "undefined") confirm = "YES";
-		else confirm = "NO";
-		
+	{	
 		total = getTotalDays();
 		if(index < 0 || index >= total)
 		{
@@ -318,28 +311,53 @@ function GoalPlan()
 		}
 		
 		wait();
-		alert.alertChoice = confirm;
-		recordsView.sliders()[index].dragToValue(miles / maxMPD);
-		wait(2);
+		ratio = miles / maxMPD;
+		ratio = Math.min(ratio, 1);
+		recordsView.sliders()[index].dragToValue(ratio);
+		
+		// if confirm is not set, don't auto click the alert
+		if(typeof confirm == "undefined") return;
+
+		// check if the alert is shown and click the desired button
+		if(confirm == true) confirm = "YES";
+		else confirm = "NO";	
+		
+		wait();
+		if(staticTextExist(alert.TooHard))
+		{
+			alert.alertTitle == alert.TooHard;
+			window.buttons()[confirm].tap();
+		}
 	}
 	
 	function planDayByName(name, miles, confirm)
-	{
-		if(typeof confirm == "undefined") confirm = "YES";
-		else confirm = "NO";
-		
+	{	
 		index = 0;
 		element = recordsView.staticTexts()[index];
 		
 		while(element.isValid())
 		{
 			// fount a record which match name
-			if(element.name() == name)
+			if(element.name().indexOf(name) >= 0)
 			{
 				wait();
-				alert.alertChoice = confirm;
-				recordsView.sliders()[index].dragToValue(miles / maxMPD);
-				wait(2);
+				ratio = miles / maxMPD;
+				ratio = Math.min(ratio, 1);
+				recordsView.sliders()[index].dragToValue(ratio);
+				
+				// if confirm is not set, don't auto click the alert
+				if(typeof confirm == "undefined") return;
+			
+				// check if the alert is shown and click the desired button
+				if(confirm == true) confirm = "YES";
+				else confirm = "NO";	
+		
+				wait();
+				if(staticTextExist(alert.TooHard))
+				{
+					alert.alertTitle == alert.TooHard;
+					window.buttons()[confirm].tap();
+				}
 				
 				return;
 			}
@@ -353,16 +371,74 @@ function GoalPlan()
 		log("[Input invalid] - Can't find any record whose name is [" + name.toString() + "]");
 	}
 	
-	
-	function isEasyAlertShown()
+
+	function isInEditMode()
 	{
-		wait();
-		return alert.alertTitle != null && alert.alertTitle == alert.TooEasy;
+		return cancelBtn.isValid() && cancelBtn.isVisible();
 	}
 	
 	function isHardAlertShown()
 	{
 		wait();
-		return alert.alertTitle != null && alert.alertTitle == alert.TooHard;	
+		info = alert.getCustomAlertInfo();
+		
+		if(info == null)
+			return false;
+			
+		return info.title == alert.TooHard;	
+	}
+	
+	function confirmHardAlert(confirm)
+	{
+		if(isHardAlertShown())
+		{
+			if(typeof confirm == "undefined")
+				confirm = 0;
+			if(confirm == true)
+				confirm = "YES";
+			else
+				confirm = "NO";
+				
+			alert.confirmCustomAlert(confirm);
+		}
+	}
+	
+	
+	// Helpers
+	function getDayInfo(index)
+	{
+		text = recordsView.staticTexts()[index * 2 + 0].name();
+		value = recordsView.staticTexts()[index * 2 + 1].name();
+		var info = {};
+		info.text = text;
+		if(text.indexOf("/") >= 0)
+		{
+			info.date = text.substring(0, text.indexOf(" /"));
+			info.temperature = text.substring(text.indexOf("/ ") + 2);
+		}
+		else
+		{
+			info.date = text;
+			info.temperature = "";
+		}
+		
+		if(value.indexOf("/") >= 0)
+		{		
+			info.run = parseFloat(value.substring(0, value.indexOf("/")));
+			info.total = parseFloat(value.substring(value.indexOf("/") + 1, value.indexOf(" miles")));
+		}
+		else
+		{
+			info.run = 0;
+			info.total = parseFloat(value);
+		}
+		
+		log("info.text: " + info.text);
+		log("info.date: " + info.date);
+		log("info.temperature: " + info.temperature);
+		log("info.run: " + info.run);
+		log("info.total: " + info.total);
+		
+		return info;
 	}
 }
