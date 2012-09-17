@@ -159,9 +159,9 @@ function GoalPlan()
 			// parse the string to get the miles value
 			value = recordsView.staticTexts()[count * 2 + 1].name();
 			if(value.indexOf("/") >= 0) 
-				value = value.substring(value.indexOf("/") + 1, value.indexOf(" miles"));
+				value = value.substring(value.indexOf("/") + 1);
 			else 
-				value = value.substring(0, value.indexOf(" miles"));
+				value = value.substring(0);
 			
 			// parse the value
 			miles += parseFloat(value);
@@ -212,7 +212,7 @@ function GoalPlan()
 			value = recordsView.staticTexts()[count * 2 + 1].name();
 			if(value.indexOf("/") < 0)
 			{
-				value = value.substring(0, value.indexOf(" miles"));
+				value = value.substring(0);
 		
 				// parse the value
 				miles += parseFloat(value);
@@ -319,8 +319,8 @@ function GoalPlan()
 		if(typeof confirm == "undefined") return;
 
 		// check if the alert is shown and click the desired button
-		if(confirm == true) confirm = "YES";
-		else confirm = "NO";	
+		if(confirm == true) confirm = 0;	// Yes
+		else confirm = 1;					// No
 		
 		wait();
 		if(staticTextExist(alert.TooHard))
@@ -349,8 +349,8 @@ function GoalPlan()
 				if(typeof confirm == "undefined") return;
 			
 				// check if the alert is shown and click the desired button
-				if(confirm == true) confirm = "YES";
-				else confirm = "NO";	
+				if(confirm == true) confirm = 0;
+				else confirm = 1;	
 		
 				wait();
 				if(staticTextExist(alert.TooHard))
@@ -395,9 +395,9 @@ function GoalPlan()
 			if(typeof confirm == "undefined")
 				confirm = 0;
 			if(confirm == true)
-				confirm = "YES";
+				confirm = 0;
 			else
-				confirm = "NO";
+				confirm = 1;
 				
 			alert.confirmCustomAlert(confirm);
 		}
@@ -425,7 +425,7 @@ function GoalPlan()
 		if(value.indexOf("/") >= 0)
 		{		
 			info.run = parseFloat(value.substring(0, value.indexOf("/")));
-			info.total = parseFloat(value.substring(value.indexOf("/") + 1, value.indexOf(" miles")));
+			info.total = parseFloat(value.substring(value.indexOf("/") + 1));
 		}
 		else
 		{

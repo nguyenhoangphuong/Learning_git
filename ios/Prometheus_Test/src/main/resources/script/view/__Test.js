@@ -10,33 +10,58 @@ function testSignUp()
 	signup = new SignUp();
 	signup.pressLicenceAgreement();
 	if(!signup.closeLicenceAgreement())
-		fail();
+		log("no license shown");
 	signup.closeLicenceAgreement();
 	
 	signup.fillEmailAndSubmit("");
-	error = signup.getErrorMessage();
+	error1 = signup.getErrorMessage();
+	log(error1);
 	
-	log(error);
+	signup.fillEmailAndSubmit("x");
+	error2 = signup.getErrorMessage();
+	log(error2);
+	
+	if(error1 != signup.MsgEmpty || error2 != signup.MsgInvalid)
+		log("no error message shown");
 }	
 
 function testUserInfo()
 {
-	ui = new UserInfo();	
+	ui = new UserInfo();
+	
+	ui.setSex("female");
+	ui.setSex("male");
 	ui.setSex("male");
 	ui.setSex("female");
 	ui.setUnit("si");
 	ui.setUnit("us");
+	ui.setUnit("us");
+	ui.setUnit("si");
+	
 	ui.setInfo(18, 46, 0.5, 1, 0.55);
+	ui.getInfo();
 	ui.setInfo(18, 95, 0.3, "6'", "8\"");
+	ui.getInfo();
 	ui.changeWeight(-100);
+	ui.getInfo();
 	ui.changeHeight(100);
+	ui.getInfo();
 }
 
 function testPlanChooser()
 {
 	plan = new PlanChooser();
-	plan.selectOther(18, "no");
-	plan.selectOther(18);
+	
+	plan.getPlanAmounts();
+	plan.selectOther()
+	plan.setValue(17);
+	plan.getPickerValue();
+	plan.back();
+	
+	plan.selectOther()
+	plan.setValue(17);
+	plan.getPickerValue();
+	plan.done();
 }
 
 function testGoalProgress()
@@ -44,7 +69,7 @@ function testGoalProgress()
 	goal = new GoalProgress();
 	goal.scrollToDayGoal();
 	goal.scrollToWeekGoal();
-	goal.scrollToAbout();
+	//goal.scrollToAbout();
 	//goal.scrollToGoalPlan();
 	
 	goal.getWeekInfo();

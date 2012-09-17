@@ -23,9 +23,12 @@ UserInfo view function:
 	+ setUnit("us");
 	+ setUnit("si");
 - submit()							:	submit the form
-- isInfoValid(age, weight, height, sex, unit)
-									:	check if the info shown on the screen is correct
-- isBMIAlertShown					:	check if the popup BMI is not realistic is shown
+- isMale()							:	check if sex switch is Male
+- isUS()							:	check if unit switch is US
+- getInfo()							:	return the info {age, weight, height}
+	+ age		:	32 (int)
+	+ weight	:	163.0 (float)
+	+ height	:	"1.75" or "5'5"" (string)
 */
 
 function UserInfo()
@@ -33,17 +36,17 @@ function UserInfo()
 	// Private fields
 	var mainView = app.mainWindow();
 
-	var age = mainView.staticTexts()[0];
-	var weight = mainView.staticTexts()[2];
-	var height = mainView.staticTexts()[4];
-	var cancel = mainView.buttons()["Cancel"];
-	var done = mainView.buttons()["Done"];
-	
-	var male = mainView.staticTexts()["Male"];
-	var female = mainView.staticTexts()["Female"];
-	var us = mainView.staticTexts()["US"];
-	var si = mainView.staticTexts()["SI"];
-	var next = mainView.buttons()["done"];
+	var age = mainView.staticTexts()[1];
+	var weight = mainView.staticTexts()[3];
+	var height = mainView.staticTexts()[5];
+	var cancel = mainView.buttons()[0];
+	var done = mainView.buttons()[1];
+		
+	var male = mainView.staticTexts()[7];
+	var female = mainView.staticTexts()[8];
+	var us = mainView.staticTexts()[9];
+	var si = mainView.staticTexts()[10];
+	var next = mainView.buttons()[2];
 		
 	// Methods
 	this.isVisible = isVisible;
@@ -58,9 +61,6 @@ function UserInfo()
 	
 	this.changeWeight = changeWeight;
 	this.changeHeight = changeHeight;
-	
-	this.isBMIAlertShown = isBMIAlertShown;
-	this.isInfoValid = isInfoValid;
 
 	this.isMale = isMale;
 	this.isUS = isUS;
@@ -89,10 +89,11 @@ function UserInfo()
 		
 		wait();	
 		age.tap();
+		
 		wait(0.5);
 		picker = mainView.pickers()[0];
-		
 		wheelPick(picker, 0, a);
+		
 		done.tap();
 	}
 	
@@ -102,17 +103,13 @@ function UserInfo()
 		
 		wait();	
 		weight.tap();
+		
 		wait(0.5);
 		picker = mainView.pickers()[0];
-		
 		wheelPick(picker, 0, w1);
 		wheelPick(picker, 1, w2);
+		
 		done.tap();
-
-		// check if bmi not realistic
-		wait(3);
-		if(isBMIAlertShown())
-			cancel.tap();
 	}
 	
 	function setHeight(h1, h2)
@@ -121,17 +118,13 @@ function UserInfo()
 		
 		wait();
 		height.tap();
+		
 		wait(0.5);
 		picker = mainView.pickers()[0];
-
 		wheelPick(picker, 0, h1);
 		wheelPick(picker, 1, h2);
-		done.tap();
 		
-		// check if bmi not realistic
-		wait(3);
-		if(isBMIAlertShown())
-			cancel.tap();
+		done.tap();
 	}
 	
 	
@@ -171,24 +164,20 @@ function UserInfo()
 		swipeVertically(160, 240, 240 + dy);
 	}
 	
-	
-	function isInfoValid(a, w, h, sex, unit)
+	function getInfo()
 	{
-		if(sex == "male" && !isMale()) return false;
-		if(sex == "female" && isMale()) return false;
-		if(unit == "us" && !isUS()) return false;
-		if(unit == "si" && isUS()) return false;
-		if(!staticTextExist(a.toString())) return false;
-		if(!staticTextExist(w.toString())) return false;
-		if(!staticTextExist(h.toString())) return false;
+		var info = {};
+		info.age = parseInt(age.name());
+		info.weight = parseFloat(weight.name());
+		info.height = height.name();
 		
-		return true;
+		log("userinfo.age: " + info.age);
+		log("userinfo.weight: " + info.weight);
+		log("userinfo.height: " + info.height);
+		
+		return info;
 	}
 	
-	function isBMIAlertShown()
-	{
-		return alert.alertTitle != null && alert.alertTitle == alert.BMINotRealistic;
-	}
 	
 	// helpers
 	function isMale()

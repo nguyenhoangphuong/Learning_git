@@ -24,9 +24,9 @@ function RunView()
 	var window = app.mainWindow();
 	var mainView = window;
 	
-	var finishBtn = mainView.buttons()["Finish"];
+	var finishBtn = mainView.buttons()[2];
 	var toggleBtn = mainView.buttons()[1];
-	var doneBtn = mainView.buttons()["Done"];
+	var doneBtn = mainView.buttons()[0];
 	
 	// Methods
 	this.isVisible = isVisible;
@@ -134,16 +134,21 @@ function RunView()
 		return info;
 	}
 	
-	function closeAlert() {
-		if (staticTextExist("CONGRATULATION!") && mainView.buttons()[0].isVisible()) {
+	function closeAlert() 
+	{
+		if (staticTextExist("CONGRATULATION!") && mainView.buttons()[0].isVisible()) 
+		{
 			log("User has achieved week goal");
 			mainView.buttons()[0].tap();
-		} else {
+		} 
+		else 
+		{
 			log("No alert");
 		}
 	}
 	
-	function isCongratulationAlertVisible() {
+	function isCongratulationAlertVisible() 
+	{
 		return staticTextExist("CONGRATULATION!");
 	}
 	

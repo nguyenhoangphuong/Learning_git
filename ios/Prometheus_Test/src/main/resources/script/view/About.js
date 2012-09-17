@@ -68,12 +68,12 @@ function About()
 		if (yes == true)
 		{
 			alert.alertTitle = alert.ResetConfirm;
-			window.buttons()["YES"].tap();
+			window.buttons()[0].tap();
 		}
 		else 
 		{
 			alert.alertTitle = alert.ResetConfirm;
-			window.buttons()["NO"].tap();
+			window.buttons()[1].tap();
 		}
 	}
 	

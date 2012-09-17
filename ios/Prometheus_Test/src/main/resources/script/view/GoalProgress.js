@@ -135,7 +135,7 @@ function GoalProgress()
 		var info = {};
 		info.text = text;
 		info.days = parseInt(text.substring(0, text.indexOf(" ")));
-		info.goal = parseFloat(text.substring(text.indexOf(":") + 1, text.indexOf("miles")));
+		info.goal = parseFloat(text.substring(text.indexOf(":") + 1));
 
 		if(value.indexOf("%") >= 0)
 		{
@@ -169,7 +169,7 @@ function GoalProgress()
 		
 		var info = {};
 		info.text = text;
-		info.goal = parseFloat(text.substring(text.indexOf(":") + 1, text.indexOf("miles")));
+		info.goal = parseFloat(text.substring(text.indexOf(":") + 1));
 		info.percent = value;//parseFloat(value);
 
 		// logging

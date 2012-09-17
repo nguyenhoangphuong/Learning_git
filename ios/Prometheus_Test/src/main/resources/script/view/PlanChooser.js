@@ -72,7 +72,7 @@ function PlanChooser()
 	
 	function isManualVisible()
 	{
-		return staticTextExist("Please set your desired distance");
+		return staticTextExist("Please set your WEEKLY plan");
 	}
 	
 	
@@ -132,7 +132,7 @@ function PlanChooser()
 	
 	function back()
 	{
-		backBtn = pickWindow.buttons()["Back"];
+		backBtn = pickWindow.buttons()[0];
 		if(backBtn.isValid())
 		{
 			backBtn.tap();
@@ -142,7 +142,7 @@ function PlanChooser()
 	
 	function done()
 	{
-		doneBtn = pickWindow.buttons()["Done"];
+		doneBtn = pickWindow.buttons()[1];
 		if(doneBtn.isValid())
 		{
 			doneBtn.tap();

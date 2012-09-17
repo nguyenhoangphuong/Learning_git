@@ -19,7 +19,7 @@ function SignUp()
 {
 	// Private fields
 	var window = app.mainWindow();
-	var email = window.textFields()["email"];
+	var email = window.textFields()[0];
 	
 	// Constants
 	this.MsgEmpty = "Email must not be empty";
@@ -50,46 +50,42 @@ function SignUp()
 		return email.isVisible();
 	}
 	
-	function fillEmailAndSubmit(email)
+	function fillEmailAndSubmit(_email)
 	{
 		wait();
-		window.textFields()["email"].setValue(email);
+		email.setValue(_email);
 		app.keyboard().typeString("\n");
 		wait(2);
 		tips.closeTips(4);
 	}
-	function fillEmail(email)
+	
+	function fillEmail(_email)
 	{
 		wait();
-		window.textFields()["email"].setValue(email);		
+		email.setValue(_email);		
 	}
 	
 	function getErrorMessage()
 	{
 		wait();
-		
-		if (window.staticTexts()[this.MsgEmpty].isValid())
-        	return this.MsgEmpty;
-	    else if (window.staticTexts()[this.MsgInvalid].isValid()) 
-    	    return this.MsgInvalid;
-    	else
-    		return "";
+		msg = window.staticTexts()[1].name();
+		return msg;
 	}
 	
 	
 	function pressLicenceAgreement() 
 	{
-		window.buttons()["Licence Agreement"].tap();
+		window.buttons()[0].tap();
 	}
 	
 	function closeLicenceAgreement() 
 	{
-		window.buttons()["agree"].tap();
+		window.buttons()[0].tap();
 	}
 	
 	function isLicenceAgreementShown() 
 	{
-		return window.buttons()["agree"].isVisible();
+		return window.buttons()[0].isVisible();
 	}
 	
 	
