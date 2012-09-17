@@ -85,28 +85,37 @@ function fail(text)
 	UIALogger.logFail(text);
 }
 
-function assertEqual(actual, expected)
+function assertEqual(actual, expected, logs)
 {
+	if(typeof logs == "undefined")
+		logs = "Assert equal";
+		
 	if(actual == expected)
-		log("Assert equal pass: " + "[" + actual.toString() + "] == [" + expected.toString() + "]");
+		log(logs + " pass: " + "[" + actual.toString() + "] == [" + expected.toString() + "]");
 	else
-		fail("Assert equal fail: " + "[" + actual.toString() + "] >< [" + expected.toString() + "]");
+		fail(logs + " fail: " + "[" + actual.toString() + "] >< [" + expected.toString() + "]");
 }
 
-function assertTrue(expression)
+function assertTrue(expression, logs)
 {
+	if(typeof logs == "undefined")
+		logs = "Assert true";
+		
 	if(expression == true)
-		log("Assert true pass");
+		log(logs + ": pass");
 	else
-		fail("Assert true fail");
+		fail(logs + ": fail");
 }
 
-function assertFalse(expression)
+function assertFalse(expression, logs)
 {
+	if(typeof logs == "undefined")
+		logs = "Assert false";
+		
 	if(expression == false)
-		log("Assert false pass");
+		log(logs + ": pass");
 	else
-		fail("Assert false fail");
+		fail(logs + ": fail");
 }
 
 // =============== TA helpers
