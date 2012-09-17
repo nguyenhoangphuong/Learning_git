@@ -169,7 +169,8 @@ function GoalPlan()
 			count++;
 			element = recordsView.staticTexts()[count * 2];
 		}
-		var result = Math.round(miles);
+
+		var result = miles.toFixed(2);
 		log("Total plan: " + result.toString());
 		return result;
 	}
@@ -195,6 +196,7 @@ function GoalPlan()
 			element = recordsView.staticTexts()[count * 2];
 		}
 		
+		miles = miles.toFixed(2);
 		log("Distance run: " + miles.toString());
 		return miles;
 	}
@@ -222,6 +224,7 @@ function GoalPlan()
 			element = recordsView.staticTexts()[count * 2];
 		}
 		
+		miles = miles.toFixed(2);
 		log("Plan remain: " + miles.toString());
 		return miles;
 	}
@@ -432,6 +435,9 @@ function GoalPlan()
 			info.run = 0;
 			info.total = parseFloat(value);
 		}
+		
+		info.run = parseFloat(info.run.toFixed(2));
+		info.total = parseFloat(info.total.toFixed(2));
 		
 		log("info.text: " + info.text);
 		log("info.date: " + info.date);

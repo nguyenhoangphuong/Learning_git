@@ -26,14 +26,22 @@ function toGoalPlan(opt, val)
 // ============================================================= //
 //	VERIFY
 // ============================================================= //
-// e = [0.74, 0.67, 0.62, 0.74, 0.74, 0.76, 0.73]
-function verifyAutoButton(e)
+// e = none
+function verifyAutoButton()
 {
 	// note: e is an array of float (7 elements) which stand for
 	// 		 default value of 7 days plan number
 	
 	gp = new GoalPlan();
 	
+	day0 = gp.getDayInfoByIndex(0);
+	day1 = gp.getDayInfoByIndex(1);
+	day2 = gp.getDayInfoByIndex(2);
+	day3 = gp.getDayInfoByIndex(3);
+	day4 = gp.getDayInfoByIndex(4);
+	day5 = gp.getDayInfoByIndex(5);
+	day6 = gp.getDayInfoByIndex(6);
+
 	gp.edit();		
 	gp.planDayByIndex(1, 1.5, true);
 	gp.planDayByIndex(2, 1.7, true);
@@ -42,26 +50,26 @@ function verifyAutoButton(e)
 	
 	gp.reset();
 	
-	day0 = gp.getDayInfoByIndex(0);
-	assertEqual(day0.total, e[0]);
+	day00 = gp.getDayInfoByIndex(0);
+	assertEqual(day00.total, day0.total);
 	
-	day1 = gp.getDayInfoByIndex(1);
-	assertEqual(day1.total, e[1]);
+	day11 = gp.getDayInfoByIndex(1);
+	assertEqual(day11.total, day1.total);
 
-	day2 = gp.getDayInfoByIndex(2);
-	assertEqual(day2.total, e[2]);
+	day22 = gp.getDayInfoByIndex(2);
+	assertEqual(day22.total, day2.total);
 	
-	day3 = gp.getDayInfoByIndex(3);
-	assertEqual(day3.total, e[3]);
+	day33 = gp.getDayInfoByIndex(3);
+	assertEqual(day33.total, day3.total);
 
-	day4 = gp.getDayInfoByIndex(4);
-	assertEqual(day4.total, e[4]);
+	day44 = gp.getDayInfoByIndex(4);
+	assertEqual(day44.total, day4.total);
 	
-	day5 = gp.getDayInfoByIndex(5);
-	assertEqual(day5.total, e[5]);
+	day55 = gp.getDayInfoByIndex(5);
+	assertEqual(day55.total, day5.total);
 	
-	day6 = gp.getDayInfoByIndex(6);
-	assertEqual(day6.total, e[6]);
+	day66 = gp.getDayInfoByIndex(6);
+	assertEqual(day66.total, day6.total);
 }
 
 // e = none
@@ -272,6 +280,7 @@ function verifyTotalGoal()
 		
 	// easy test: change only some day
 	log("---- total goal test: easy ----");
+	
 	gp.edit();
 	gp.planDayByIndex(2, 1.7, true);
 	gp.planDayByIndex(3, 0.1, true);
@@ -280,26 +289,32 @@ function verifyTotalGoal()
 	t = gp.getTotalPlanMiles();
 	r = gp.getRemainPlanMiles();
 	
-	assertEqual(t, total);
+	assertEqual(t, gp.getWeekInfo().goal);
 	assertEqual(r, remain);	
 	
 	// high test: change all days to high values
 	log("---- total goal test: high ----");
 	gp.reset();
 	gp.edit();
-	gp.planDayByIndex(1, 5, true);
-	gp.planDayByIndex(2, 5, true);
-	gp.planDayByIndex(3, 5, true);
-	gp.planDayByIndex(4, 5, true);
-	gp.planDayByIndex(5, 5, true);
-	gp.planDayByIndex(6, 5, true);
+	gp.planDayByIndex(1, 50, true);
+	gp.planDayByIndex(2, 50, true);
+	gp.planDayByIndex(3, 50, true);
+	gp.planDayByIndex(4, 50, true);
+	gp.planDayByIndex(5, 50, true);
+	gp.planDayByIndex(6, 50, true);
 	gp.save();
 	
+	info = gp.getDayInfoByIndex(0);
 	t = gp.getTotalPlanMiles();
 	r = gp.getRemainPlanMiles();
 	
-	assertEqual(t, total);
-	assertEqual(r, remain);	
+	expectTotal = parseFloat(maxMPD * 6 + info.total);
+	expectTotal = expectTotal.toFixed(2);
+	expectRemain = parseFloat(maxMPD * 6);
+	expectRemain = expectRemain.toFixed(2);
+
+	assertEqual(t, expectTotal);
+	assertEqual(r, expectRemain);
 	
 	// low test: change all days to zeros
 	log("---- total goal test: low ----");
@@ -313,11 +328,12 @@ function verifyTotalGoal()
 	gp.planDayByIndex(6, 0, true);
 	gp.save();
 	
+	info = gp.getDayInfoByIndex(0);
 	t = gp.getTotalPlanMiles();
 	r = gp.getRemainPlanMiles();
 	
-	assertEqual(t, total);
-	assertEqual(r, remain);	
+	assertEqual(t, info.total);
+	assertEqual(r, 0);
 	
 	gp.reset();
 }

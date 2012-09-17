@@ -1,4 +1,5 @@
 #import "goalplan_func.js"
+#import "goalplan_data.js"
 
 /* ------------------
  SUMMARY:
@@ -17,33 +18,29 @@
 // ======================== Test data ======================== //
 norm = 
 {
-	e22	:	[1.47, 1.35, 1.24, 1.47, 1.49, 1.53, 1.45],
-	e51 :	{duration: "Sep 14 - Sep 20", goal: 5},
-	e52	:	{total: 7, passed: 1, days: ["Today Sep 14th", "Sat Sep 15th", "Sun Sep 16th", 
-										"Mon Sep 17th", "Tue Sep 18th", "Wed Sep 19th", "Thu Sep 20th"] },
+	e51 :	e51(10),
+	e52	:	e52(),
 	e53	:
 	{
-		e531 :	{i: 0, e: {date: "Today Sep 14th", temperature: "", run: 0, total: 1.47}},
-		e532 :	{i: 1, e: {date: "Sat Sep 15th", temperature: "", run: 0, total: 1.35}},
-		e533 :	{i: 4, e: {date: "Tue Sep 18th", temperature: "", run: 0, total: 1.49}},
+		e531 :	{i: 0, e: e53(0)},
+		e532 :	{i: 1, e: e53(1)},
+		e533 :	{i: 4, e: e53(4)},
 	},
-	
-	
 };
-maxMPD = 2.95;
+maxMPD = 4.37;
 
 // ======================== Test logic ======================== //
 start("-------- GoalPlan test ---------");
 
 // --- navigate ---
 log("1 - Navigate to GoalPlan view");
-toGoalPlan(1);
+//toGoalPlan(1);
 
 
 // --- buttons verify ---
 log("2 - Verify buttons");
 log("   2.1 - Auto suggest button");
-verifyAutoButton(norm.e22);
+verifyAutoButton();
 log("   2.2 - Edit button");
 verifyEditButton();
 log("   2.3 - Cancel button");
@@ -85,9 +82,8 @@ verifyTodayData(norm.e53.e531.e);
 // --- goal adjustment ---
 log("6 - Verify goal adjustment and edit mode");
 log("   6.1 - Verify max and min range");
-verifyGoalRange(2.95);
+verifyGoalRange(maxMPD);
 log("   6.2 - Verify total goal auto adjust");
 verifyTotalGoal();
-
 
 pass("-------- GoalPlan test ---------");
