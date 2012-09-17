@@ -4,12 +4,29 @@
 #import "About.js"
 #import "../core/testcaseBase.js"
 
+function testAll()
+{
+	testSignUp();
+	signup = new SignUp();
+	signup.fillEmailAndSubmit("abc@def.gh");
+
+	testUserInfo()
+	ui = new UserInfo();
+	ui.submit();
+	
+	testPlanChooser()
+	plan = new PlanChooser();
+	wait(); tips.closeTips(1);
+	
+	testGoalProgress();
+	gp = new GoalProgress();
+}
 
 function testSignUp()
 {
 	signup = new SignUp();
 	signup.pressLicenceAgreement();
-	if(!signup.closeLicenceAgreement())
+	if(!signup.isLicenceAgreementShown())
 		log("no license shown");
 	signup.closeLicenceAgreement();
 	
@@ -20,9 +37,6 @@ function testSignUp()
 	signup.fillEmailAndSubmit("x");
 	error2 = signup.getErrorMessage();
 	log(error2);
-	
-	if(error1 != signup.MsgEmpty || error2 != signup.MsgInvalid)
-		log("no error message shown");
 }	
 
 function testUserInfo()
@@ -40,10 +54,14 @@ function testUserInfo()
 	
 	ui.setInfo(18, 46, 0.5, 1, 0.55);
 	ui.getInfo();
+	
+	ui.setUnit("us");
 	ui.setInfo(18, 95, 0.3, "6'", "8\"");
 	ui.getInfo();
+	
 	ui.changeWeight(-100);
 	ui.getInfo();
+	
 	ui.changeHeight(100);
 	ui.getInfo();
 }
@@ -128,35 +146,9 @@ function testAbout()
 	target.popTimeout();
 }
 
-function toWeekGoal()
-{
-	wait(3);
-	target.frontMostApp().keyboard().typeString("bbb@bb.bb\n");
-	wait();
-	target.tap({x:171.00, y:263.50});
-	wait(2);
-	target.tap({x:160.50, y:266.00});
-	wait(2);
-	target.tap({x:168.50, y:271.00});
-	wait(2);
-	target.tap({x:168.50, y:271.00});
-	target.frontMostApp().mainWindow().buttons()[2].tap();
-	wait();
-	target.frontMostApp().mainWindow().buttons()[0].tap();
-	wait(2);
-	target.frontMostApp().mainWindow().scrollViews()[0].tapWithOptions({tapOffset:{x:0.43, y:0.52}});
-	wait();	
-}
 
 start("Demo");
 
-	plan = new GoalPlan();
-	plan.getTotalDays();
-	plan.getPassedDays();
-	plan.getTotalPlanMiles();
-	plan.getRunMiles();
-	plan.getRemainPlanMiles();
+testGoalProgress();
 
 pass("Demo pass");
-
-	

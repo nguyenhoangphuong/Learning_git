@@ -176,7 +176,7 @@ function wheelPick(picker, wheelIndex, value)
 		while(steps > 0)
 		{
 			wheel.tapWithOptions({tapOffset:{x:0.5, y:0.25}});
-			target.delay(0.5);
+			target.delay(0.1);
 			steps--;
 		}
 	}

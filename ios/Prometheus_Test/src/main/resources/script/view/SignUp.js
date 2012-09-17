@@ -56,7 +56,9 @@ function SignUp()
 		email.setValue(_email);
 		app.keyboard().typeString("\n");
 		wait(2);
-		tips.closeTips(4);
+		
+		if(!isEmailTextFieldVisible())
+			tips.closeTips(4);
 	}
 	
 	function fillEmail(_email)
@@ -75,16 +77,19 @@ function SignUp()
 	
 	function pressLicenceAgreement() 
 	{
+		wait();
 		window.buttons()[0].tap();
 	}
 	
 	function closeLicenceAgreement() 
 	{
+		wait();
 		window.buttons()[0].tap();
 	}
 	
 	function isLicenceAgreementShown() 
 	{
+		wait();	
 		return window.buttons()[0].isVisible();
 	}
 	

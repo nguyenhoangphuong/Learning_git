@@ -72,30 +72,35 @@ function PlanChooser()
 	
 	function isManualVisible()
 	{
+		wait(0.5);
 		return staticTextExist("Please set your WEEKLY plan");
 	}
 	
 	
 	function selectEasy() 
 	{
+		wait(0.5);
 		easyBtn.tap();
 		wait(2);
 	}
 	
 	function selectNormal() 
 	{
+		wait(0.5);
 		normalBtn.tap();
 		wait(2);
 	}
 	
 	function selectActive() 
 	{
+		wait(0.5);
 		activeBtn.tap();
 		wait(2);
 	}
 	
 	function selectOther()
 	{
+		wait(0.5);
 		otherBtn.tap();
 		wait();
 	}
@@ -103,6 +108,7 @@ function PlanChooser()
 	
 	function setValue(value)
 	{
+		wait(0.5);
 		picker = pickWindow.pickers()[0];
 		if(picker.isValid())
 			wheelPick(picker, 0, value.toString());
@@ -132,6 +138,7 @@ function PlanChooser()
 	
 	function back()
 	{
+		wait(0.5);
 		backBtn = pickWindow.buttons()[0];
 		if(backBtn.isValid())
 		{
@@ -142,6 +149,7 @@ function PlanChooser()
 	
 	function done()
 	{
+		wait(0.5);
 		doneBtn = pickWindow.buttons()[1];
 		if(doneBtn.isValid())
 		{

@@ -40,7 +40,6 @@ function UserInfo()
 	var weight = mainView.staticTexts()[3];
 	var height = mainView.staticTexts()[5];
 	var cancel = mainView.buttons()[0];
-	var done = mainView.buttons()[1];
 		
 	var male = mainView.staticTexts()[7];
 	var female = mainView.staticTexts()[8];
@@ -61,7 +60,8 @@ function UserInfo()
 	
 	this.changeWeight = changeWeight;
 	this.changeHeight = changeHeight;
-
+	this.getInfo = getInfo;
+	
 	this.isMale = isMale;
 	this.isUS = isUS;
 	
@@ -94,6 +94,7 @@ function UserInfo()
 		picker = mainView.pickers()[0];
 		wheelPick(picker, 0, a);
 		
+		done = mainView.buttons()[1];
 		done.tap();
 	}
 	
@@ -109,6 +110,7 @@ function UserInfo()
 		wheelPick(picker, 0, w1);
 		wheelPick(picker, 1, w2);
 		
+		done = mainView.buttons()[1];
 		done.tap();
 	}
 	
@@ -124,6 +126,7 @@ function UserInfo()
 		wheelPick(picker, 0, h1);
 		wheelPick(picker, 1, h2);
 		
+		done = mainView.buttons()[1];
 		done.tap();
 	}
 	
