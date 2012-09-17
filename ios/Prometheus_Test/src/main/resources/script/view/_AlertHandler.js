@@ -146,10 +146,12 @@ function PrometheusAlertHandler(_alert)
 			
 		// reset the alertChoice and acknowledge the alert
 		alert.alertChoice = null;
-		
+		log("-------------------");
 		if (name == alert.LocationConfirm)
 		{
-			wait();
+			
+			wait(5);
+			log("Closing the fucking tips");
 			tips.closeTips(1);
 			wait();
 		}

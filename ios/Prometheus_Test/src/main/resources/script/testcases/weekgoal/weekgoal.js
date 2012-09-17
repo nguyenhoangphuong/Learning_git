@@ -19,7 +19,7 @@ function gpsRunLittle() {
 	log("Select active");
 	var planChooser = new PlanChooser();
 	planChooser.selectActive();
-	wait(3);
+//	wait(10);
 	var progress = new GoalProgress();
 
 	wait(2);
@@ -28,8 +28,10 @@ function gpsRunLittle() {
 		fail("Week goal is not visible");
 	}
 	
-	wait();
+	wait(2);
+
 	progress.scrollToDayGoal();
+	wait();
 	var miles = 1;
 	progress.simulateARunDontStop(miles);
 	
