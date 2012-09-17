@@ -18,6 +18,7 @@ public class ChoosePlan extends AutomationTest{
 				AppHelper.getAppPath(), "script/testcases/chooseplan/PlanOther.js");
 	
 	}
+	
 	@Test(groups = { "ios", "Prometheus", "MVP1", "chooseplan" })
 	public void PlanNormalTest() throws InterruptedException,
 			StopConditionException {

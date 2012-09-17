@@ -35,8 +35,32 @@ function choosePlan(option)
 	}
 	if (option == 4)
 	{
-		pc.selectOther(15,"yes");
+		pc.selectOther();
+		if (isManualVisible())
+			pass("Other ok and have unit");
+		else
+			fail("not manual or dont have unit");
+
+		pc.back();
+		 if (pc.isVisible())
+			pass("Back ok");
+		else
+			fail("fail Back button");
+
+		pc.selectOther();	
+		if (isManualVisible())		
+			pass("not tap on button");
+		else
+			fail("Can tap on button");
+		
+	
+		pc.setValue(15);
+		if (pc.getPickerValue()==15)
+			pass("picker good");
+		else
+			fail("picker ngu");
 		weekgoal = 15;
+
 	}
 	if(pc.isLocationConfirmShown())
 		pass("location shown");

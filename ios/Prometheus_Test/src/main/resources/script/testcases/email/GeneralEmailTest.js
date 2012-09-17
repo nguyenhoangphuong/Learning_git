@@ -18,8 +18,9 @@ else
 	fail("Fail. The email is valid");
 
 signup.fillEmail("tvkhoa@domain.com");
+wait(1);
 msg = signup.getErrorMessage();
 if (msg == "")
-	pass();
+	pass("Delete invalid msg");
 else
-	fail();
+	fail("Not delete invalid msg");
