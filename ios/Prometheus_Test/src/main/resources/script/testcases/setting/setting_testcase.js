@@ -22,19 +22,6 @@ function VerifyRateButton()
 		UIALogger.logFail("Verify Rate button: Fail");
 }
 
-function VerifyEmailSupportButton()
-{
-	//UIALogger.logPass("VerifyEmailSupportButton");
-	setting = new About();
-	// tap on email button
-	setting.getSupport();
-	// verify it will open email client
-	if(!prometheus.isActive())
-		UIALogger.logPass("Verify Email Support button: Pass");
-	else
-		UIALogger.logFail("Verify Email Support button: Fail");
-}
-
 function VerifyEmailWithoutAccount()
 {
 	//UIALogger.logPass("VerifyEmailWithoutAccount");

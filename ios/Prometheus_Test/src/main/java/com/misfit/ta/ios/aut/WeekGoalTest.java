@@ -17,7 +17,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class WeekGoalTest extends AutomationTest {
 
   @Test(groups = {"ios", "Prometheus", "weekgoal"})
-  public void sampleTest() throws InterruptedException, StopConditionException {
+  public void WeekGoalTest() throws InterruptedException, StopConditionException {
 	  AppHelper.cleanCache();
 	  ShortcutsTyper.delayTime(1000);
 	  AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 

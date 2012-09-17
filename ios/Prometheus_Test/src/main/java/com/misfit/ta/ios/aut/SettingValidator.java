@@ -17,15 +17,6 @@ public class SettingValidator extends AutomationTest {
 					 "script/testcases/setting/testcase_01.js");
 	}
 	
-	// C2194	Verify "Email Support" with an email account has been setup 
-	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })
-	public void VerifyEmailSupportButton() throws InterruptedException, StopConditionException {
-		AppHelper.cleanCache();
-	 	ShortcutsTyper.delayTime(1000);
-		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-					 "script/testcases/setting/testcase_02.js");
-	}
-	
 	// C2197	Verify "Email Support" without email account
 	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })
 	public void VerifyEmailWithoutAccount() throws InterruptedException, StopConditionException {
