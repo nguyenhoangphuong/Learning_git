@@ -34,7 +34,7 @@ start("-------- GoalPlan test ---------");
 
 // --- navigate ---
 log("1 - Navigate to GoalPlan view");
-//toGoalPlan(1);
+toGoalPlan(1);
 
 
 // --- buttons verify ---
