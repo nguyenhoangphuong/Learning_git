@@ -149,6 +149,7 @@ function testAbout()
 
 start("Demo");
 
+nav.toWeekGoal();
 testGoalProgress();
 
 pass("Demo pass");
