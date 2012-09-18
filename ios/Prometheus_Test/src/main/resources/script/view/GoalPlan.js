@@ -172,7 +172,7 @@ function GoalPlan()
 
 		var result = miles.toFixed(2);
 		log("Total plan: " + result.toString());
-		return result;
+		return Math.round(result);
 	}
 	
 	function getRunMiles()

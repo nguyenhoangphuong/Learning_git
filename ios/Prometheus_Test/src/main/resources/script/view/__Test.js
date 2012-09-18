@@ -2,6 +2,7 @@
 #import "_AlertHandler.js"
 #import "_Prometheus.js"
 #import "About.js"
+#import "GoalPlan.js"
 #import "../core/testcaseBase.js"
 
 function testAll()
@@ -149,7 +150,10 @@ function testAbout()
 
 start("Demo");
 
-nav.toWeekGoal();
-testGoalProgress();
+//logTree();
+
+plan = new GoalPlan();
+log("Visible: " + plan.isVisible());
+plan.getTotalPlanMiles();
 
 pass("Demo pass");
