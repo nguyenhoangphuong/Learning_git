@@ -20,7 +20,13 @@ else
 signup.fillEmail("tvkhoa@domain.com");
 wait(1);
 msg = signup.getErrorMessage();
-if (msg == "")
-	pass("Delete invalid msg");
+
+if (msg != null)
+{
+	if(msg == "")
+		pass("Delete invalid msg");
+	else
+		fail("Not delete invalid msg");
+}
 else
-	fail("Not delete invalid msg");
+	pass("Delete invalid msg");
