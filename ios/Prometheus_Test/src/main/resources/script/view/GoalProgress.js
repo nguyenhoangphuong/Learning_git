@@ -111,7 +111,7 @@ function GoalProgress()
 		wait();
 		mainView.scrollRight();
 		wait(2);
-		tips.closeTips(4);
+		tips.closeTips(5);
 	}
 
 	function scrollToAbout()
