@@ -36,10 +36,7 @@ function choosePlan(option)
 	if (option == 4)
 	{
 		pc.selectOther();
-		if (isManualVisible())
-			pass("Other ok and have unit");
-		else
-			fail("not manual or dont have unit");
+		
 
 		pc.back();
 		 if (pc.isVisible())
@@ -47,18 +44,14 @@ function choosePlan(option)
 		else
 			fail("fail Back button");
 
-		pc.selectOther();	
-		if (isManualVisible())		
-			pass("not tap on button");
-		else
-			fail("Can tap on button");
-		
+		pc.selectOther();			
 	
 		pc.setValue(15);
 		if (pc.getPickerValue()==15)
 			pass("picker good");
 		else
 			fail("picker ngu");
+		pc.done();
 		weekgoal = 15;
 
 	}
@@ -69,8 +62,7 @@ function choosePlan(option)
 
 function verifyPlan(WeekGoal)
 {
-	var gp = new GoalProgress();
-	var weekinfo = gp.getWeekInfo();
+	var gp = new GoalProgress();	
 	gp.scrollToGoalPlan();	
 	wait(1);
 

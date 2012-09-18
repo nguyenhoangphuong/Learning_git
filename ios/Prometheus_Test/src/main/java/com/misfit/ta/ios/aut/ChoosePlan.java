@@ -15,9 +15,11 @@ public class ChoosePlan extends AutomationTest{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-				AppHelper.getAppPath(), "script/testcases/chooseplan/PlanOther.js");
+				AppHelper.getAppPath(), "script/testcases/chooseplan/PlanEasy.js");
 	
 	}
+	
+	
 	
 	@Test(groups = { "ios", "Prometheus", "MVP1", "chooseplan" })
 	public void PlanNormalTest() throws InterruptedException,
@@ -36,6 +38,17 @@ public class ChoosePlan extends AutomationTest{
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
 				AppHelper.getAppPath(), "script/testcases/chooseplan/PlanActive.js");
 	
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVP1", "chooseplan" })
+	public void PlanOtherTest() throws InterruptedException,
+			StopConditionException {
+		AppHelper.cleanCache();
+		ShortcutsTyper.delayTime(1000);
+		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+				AppHelper.getAppPath(),
+				"script/testcases/chooseplan/PlanOther.js");
+
 	}
 }
 	
