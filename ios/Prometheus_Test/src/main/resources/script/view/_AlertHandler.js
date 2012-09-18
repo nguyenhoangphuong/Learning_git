@@ -151,7 +151,6 @@ function PrometheusAlertHandler(_alert)
 		{
 			
 			wait(5);
-			log("Closing the fucking tips");
 			tips.closeTips(1);
 			wait();
 		}

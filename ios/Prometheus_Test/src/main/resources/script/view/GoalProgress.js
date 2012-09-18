@@ -100,7 +100,6 @@ function GoalProgress()
 	function scrollToDayGoal()
 	{
 		wait();
-		log("Dragingggg")
 		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.8}, endOffset:{x:0.5, y:0.2}, duration:0.3});
 		wait(30);
 		tips.closeTips(1);

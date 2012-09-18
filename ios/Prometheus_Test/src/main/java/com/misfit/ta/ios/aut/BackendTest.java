@@ -18,7 +18,7 @@ import com.misfit.ta.utils.TextTool;
  */
 public class BackendTest extends AutomationTest {
 
-  @Test(groups = {"ios", "Prometheus", "backend"})
+  @Test(groups = {"ios", "Disabled", "backend"})
   public void emailSubmitting() throws InterruptedException, StopConditionException {
       String email = TextTool.getRandomString(10) + "@" + "test.com";
       System.out.println("LOG [BackendTest.sampleTest]:email " + email);
@@ -26,7 +26,7 @@ public class BackendTest extends AutomationTest {
       Assert.assertTrue(Backend.isEmailExisting(email), "Email is not in DB");
   }
   
-  @Test(groups = {"ios", "Prometheus", "backend"})
+  @Test(groups = {"ios", "Disabled", "backend"})
   public void emailSubmittingLong() throws InterruptedException, StopConditionException {
       String email = TextTool.getRandomString(1000) + "@" + "test.com";
       System.out.println("LOG [BackendTest.sampleTest]:email " + email);
