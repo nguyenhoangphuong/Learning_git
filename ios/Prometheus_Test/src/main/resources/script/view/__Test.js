@@ -150,10 +150,17 @@ function testAbout()
 
 start("Demo");
 
+<<<<<<< Updated upstream
 //logTree();
 
 plan = new GoalPlan();
 log("Visible: " + plan.isVisible());
 plan.getTotalPlanMiles();
+=======
+gp = new GoalProgress();
+gp.scrollToGoalPlan();
+wait(2);
+tips.closeTips(4);
+>>>>>>> Stashed changes
 
 pass("Demo pass");

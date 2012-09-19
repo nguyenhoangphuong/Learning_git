@@ -55,8 +55,8 @@ function GoalPlan()
 	var cancelBtn = mainView.buttons()[7];
 	var doneBtn = mainView.buttons()[9];
 
-	var weekDays = mainView.staticTexts()[13];
-	var weekGoal = mainView.staticTexts()[12];
+	var weekDays = mainView.staticTexts()[12];
+	var weekGoal = mainView.staticTexts()[11];
 
 	
 	// Methods

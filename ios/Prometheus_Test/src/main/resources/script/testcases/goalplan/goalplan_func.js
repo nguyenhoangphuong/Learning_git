@@ -21,6 +21,15 @@ function toGoalPlan(opt, val)
 		plan.setValue(val);
 		plan.done();
 	}
+	
+	gp = new GoalProgress();
+	gp.scrollToDayGoal();
+	
+	wait(3);
+	gp.scrollToGoalPlan();
+	
+	wait(2);
+	tips.closeTips(5);
 }
 
 // ============================================================= //

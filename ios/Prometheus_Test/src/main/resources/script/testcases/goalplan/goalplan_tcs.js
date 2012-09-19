@@ -7,9 +7,6 @@
  	section except the following:
  	4266, 4267, 4271, 4277, 4286
  
- -	To be improve:
- 	+ Dynamic test data base on current day
- 
  -	To be note:
  	+ Remember to set the global "maxMPD" var value or you will end up
 	sliding with wrong value.
@@ -18,6 +15,7 @@
 // ======================== Test data ======================== //
 norm = 
 {
+	maxMPD : 2.95,
 	e51 :	e51(10),
 	e52	:	e52(),
 	e53	:
@@ -27,7 +25,8 @@ norm =
 		e533 :	{i: 4, e: e53(4)},
 	},
 };
-maxMPD = 4.37;
+
+maxMPD = norm.maxMPD;
 
 // ======================== Test logic ======================== //
 start("-------- GoalPlan test ---------");
