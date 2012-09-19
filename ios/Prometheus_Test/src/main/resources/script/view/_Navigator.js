@@ -40,12 +40,14 @@ function Navigator()
 	function toUserInfo()
 	{
 		toSignUp();
-		if(staticTextExist("GOAL PLANNER"))
+		if(staticTextExist("SHINE"))
 		{
 			var signup = new SignUp();
 			if (signup.isEmailTextFieldVisible() == 1) {
 				log("Email is visible");
 			}
+			else
+				log("No email visible");
 
 			signup.fillEmailAndSubmit("abcd@test.com");
 
