@@ -125,27 +125,25 @@ function VerifyInteruption()
 
 function VerifyOldState()
 {
-	// skip because of issue with HOME button action: it don't reopen app after minimizing
+	UIALogger.logPass("VerifyOldState");
+	userinfo = new UserInfo();
+	var isMale = userinfo.isMale();
+	var isUS = userinfo.isUS();
 
-	// UIALogger.logPass("VerifyOldState");
-	// userinfo = new UserInfo();
-	// var isMale = userinfo.isMale();
-	// var isUS = userinfo.isUS();
+	// lock app by press lock button
+	lockApp("Home", 2);
 
-	// // lock app by press lock button
-	// lockApp("Home", 2);
-
-	// if(staticTextExist("yrs") && isMale == userinfo.isMale() && isUS == userinfo.isUS())
-	// 	UIALogger.logPass("Verify old state: Pass");
-	// else
-	// 	UIALogger.logFail("Verify old state: Fail");
+	if(staticTextExist("yrs") && isMale == userinfo.isMale() && isUS == userinfo.isUS())
+		UIALogger.logPass("Verify old state: Pass");
+	else
+		UIALogger.logFail("Verify old state: Fail");
 }
 
 function VerifyNextButton()
 {
-	//UIALogger.logPass("VerifyNextButton");
 	userinfo = new UserInfo();
 	userinfo.submit();
+	
 	// verify it will go to choose plan screen
 	if(staticTextExist("Please set your plan"))
 		UIALogger.logPass("Verify next button: Pass");
@@ -154,27 +152,18 @@ function VerifyNextButton()
 }
 
 // Go to User Info screen
-UIALogger.logStart("START TEST");
+UIALogger.logStart("---------- UserInfo view tests start ----------");
 
-wait(2);
-logTree();
-log(staticTextExist("GOAL PLANNER"));
-wait(2);
-//GoToUserInfoScreen();
-//log("Log1: " + staticTextExist("10"));
-//log("Log2: " + staticTextExist("yrs"));
-//log("Log1: " + staticTextExist("10"));
-//log("Log2: " + staticTextExist("190.0"));
-//log("Log3: " + staticTextExist("5'10\""));
+GoToUserInfoScreen();
+CheckDefaultValue();
+InputWeight();
+InputHeight();
+InputAge();
+InputGender();
+InputUnit();
+VerifyInteruption();
+VerifyOldState();
+VerifyNextButton();
 
-//CheckDefaultValue();
-//InputWeight();
-//InputHeight();
-//InputAge();
-//InputGender();
-//InputUnit();
-//VerifyInteruption();
-//VerifyOldState();
-//VerifyNextButton();
-UIALogger.logPass("END OF TEST");
+UIALogger.logPass("---------- UserInfo view tests end -----------");
 	

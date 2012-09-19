@@ -24,6 +24,6 @@ public class UserInfoValidator extends AutomationTest {
 		//AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
 		//			 "script/testcases/userinfo/userinfo_testcase.js");
 	 	AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-	 						 "script/testcases/run/run.js");
+	 						 "script/testcases/userinfo/userinfo_testcase.js");
 	}
 }
