@@ -12,12 +12,22 @@ public class ValidEmailValidate extends AutomationTest{
 	
 	
 	@Test(groups = { "ios", "Prometheus", "MVP1", "email" })
-	public void CharsTest() throws InterruptedException,
+	public void CharsLocalTest() throws InterruptedException,
 			StopConditionException {
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);		
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-				AppHelper.getAppPath(), "script/testcases/email/100CharEmail.js");
+				AppHelper.getAppPath(), "script/testcases/email/64CharLocalEmail.js");
+	
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVP1", "email" })
+	public void CharsDomainTest() throws InterruptedException,
+			StopConditionException {
+		AppHelper.cleanCache();
+	 	ShortcutsTyper.delayTime(1000);		
+		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+				AppHelper.getAppPath(), "script/testcases/email/255CharDomainEmail.js");
 	
 	}
 	
@@ -84,7 +94,7 @@ public class ValidEmailValidate extends AutomationTest{
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
 				AppHelper.getAppPath(), "script/testcases/email/UnicodeDomain.js");
 	
-	}
+	} 
 	@Test(groups = { "ios", "Prometheus", "MVP1", "email" })
 	public void UnicodeUsernameTest() throws InterruptedException,
 			StopConditionException {
