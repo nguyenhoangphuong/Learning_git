@@ -5,9 +5,8 @@
 
 function GoToUserInfoScreen()
 {
-	var navi = new Navigator();
-	navi.toUserInfo();
-	UIALogger.logPass("GoToUserInfoScreen");
+	nav.toUserInfo();
+	log("GoToUserInfoScreen");
 }
 
 // check default values
@@ -125,7 +124,6 @@ function VerifyInteruption()
 
 function VerifyOldState()
 {
-	UIALogger.logPass("VerifyOldState");
 	userinfo = new UserInfo();
 	var isMale = userinfo.isMale();
 	var isUS = userinfo.isUS();
@@ -137,6 +135,40 @@ function VerifyOldState()
 		UIALogger.logPass("Verify old state: Pass");
 	else
 		UIALogger.logFail("Verify old state: Fail");
+}
+
+function VerifySwipeToChangeWeight()
+{
+	ui = new UserInfo();
+	ui.setUnit("si");
+	
+	a = ui.getInfo();
+	ui.changeWeight(50);
+	b = ui.getInfo();
+	ui.changeWeight(-50);
+	c = ui.getInfo();
+	
+	assertTrue(b.weight > a.weight, "Check increase weight");
+	assertTrue(b.weight > c.weight, "Check decrease weight");
+}
+
+function VerifySwipeToChangeHeight()
+{
+	ui = new UserInfo();
+	ui.setUnit("si");
+	
+	a = ui.getInfo();
+	ui.changeHeight(50);
+	b = ui.getInfo();
+	ui.changeHeight(-50);
+	c = ui.getInfo();
+	
+	a.height = parseFloat(a.height);
+	b.height = parseFloat(b.height);
+	c.height = parseFloat(c.height);
+			
+	assertTrue(b.height < a.height, "Check decrease height");
+	assertTrue(b.height < c.height, "Check increase height");
 }
 
 function VerifyNextButton()
@@ -161,6 +193,8 @@ InputHeight();
 InputAge();
 InputGender();
 InputUnit();
+VerifySwipeToChangeWeight();
+VerifySwipeToChangeHeight();
 VerifyInteruption();
 VerifyOldState();
 VerifyNextButton();
