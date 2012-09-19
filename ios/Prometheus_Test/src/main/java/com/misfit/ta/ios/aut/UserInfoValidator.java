@@ -19,11 +19,9 @@ public class UserInfoValidator extends AutomationTest {
 	// C2098	Verify "Done" button action
 	@Test(groups = { "ios", "Prometheus", "MVP1", "userinfo" })
 	public void runAllUserInfoTCs() throws InterruptedException, StopConditionException {
-		//AppHelper.cleanCache();
-	 	//ShortcutsTyper.delayTime(1000);
-		//AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-		//			 "script/testcases/userinfo/userinfo_testcase.js");
-	 	AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-	 						 "script/testcases/userinfo/userinfo_testcase.js");
+		AppHelper.cleanCache();
+	 	ShortcutsTyper.delayTime(1000);
+		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
+					 "script/testcases/userinfo/userinfo_testcase.js");
 	}
 }
