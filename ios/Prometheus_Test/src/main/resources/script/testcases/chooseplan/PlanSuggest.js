@@ -33,7 +33,7 @@ function choosePlan(option)
 		
 
 		pc.back();
-		 if (pc.isManualVisible())
+		 if (pc.isVisible())
 			pass("Back ok");
 		else
 			fail("fail Back button");

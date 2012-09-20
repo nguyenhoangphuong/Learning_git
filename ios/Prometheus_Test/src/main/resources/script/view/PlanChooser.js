@@ -37,7 +37,7 @@ function PlanChooser()
 	this.normal=10;
 	this.active=21;
 	
-	var titleStr = "Please set your WEEKLY plan";
+	var titleStr = "Please set your WEEKLY plan ";
 
 	var easyBtn = mainWindow.buttons()[0];	
 	var normalBtn = mainWindow.buttons()[1];
