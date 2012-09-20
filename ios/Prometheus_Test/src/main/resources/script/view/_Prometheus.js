@@ -24,9 +24,12 @@ function Prometheus()
 	{
 		currentApp = target.frontMostApp();
 		if(currentApp == null)
-			return true;
+			return false;
 	
-		currentID = currentApp.bundleID();	
+		currentID = currentApp.bundleID();
+		if(currentID == null)
+			return false;
+				
 		log("current application: " + currentID);
 		
 		return currentID == this.AppID;

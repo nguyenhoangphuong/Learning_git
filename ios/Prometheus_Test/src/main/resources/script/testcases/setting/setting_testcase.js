@@ -44,7 +44,7 @@ function VerifyLikeButton()
 	// tap on like button
 	setting.likeApp();
 	// verify it will open misfit's fanpage
-	if(prometheus.isActive())
+	if(!prometheus.isActive())
 		UIALogger.logPass("Verify Like button: Pass");
 	else
 		UIALogger.logFail("Verify Like button: Fail");
