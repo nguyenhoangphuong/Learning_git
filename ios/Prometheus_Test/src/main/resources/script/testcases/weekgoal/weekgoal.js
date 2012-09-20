@@ -77,26 +77,31 @@ function gpsRunLittle() {
 	run.done();
 	miles = 25;
 	progress.simulateARunDontStop(miles);
+	
+	
 	// make sure there is an alert
+	
 	if (!run.isCongratulationAlertVisible()) {
 		fail("Congratulation alert should have been shown");
 	}
 	log("Finish the run");
+	wait(10);
 	run.finish();
+	log("finish ok");
 	run.done();
+	log("done ok");
 
 	// verify set a new goal button is available
 	
 	progress.scrollToWeekGoal();
+	log("ok good");
 	wait(2);
 	if (!progress.isWeekGoalVisible() && !progress.isSetANewGoalBtnVisible()) {
 		fail("Weekgoal or the reset button is not visible");
 	}
 	progress.setANewGoal("active");
-	wait();
-	if (!progress.isTodayGoalVisible()) {
-		fail("Today goal is not visible");
-	}
+	log("ok good");	
+	log("finish");
 	
 }
 

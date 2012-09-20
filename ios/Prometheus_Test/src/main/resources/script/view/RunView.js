@@ -70,7 +70,7 @@ function RunView()
 	
 	function finish()
 	{
-		closeAlert();
+		closeAlert(true);
 		wait();
 		finishBtn.tap();
 	}
@@ -136,7 +136,7 @@ function RunView()
 	
 	function closeAlert(confirm) 
 	{
-		if(isHardAlertShown())
+		if(isCongratulationAlertVisible())
 		{
 			if(typeof confirm == "undefined")
 				confirm = 0;
@@ -161,7 +161,7 @@ function RunView()
 		
 		if(info == null)
 			return false;
-			
+		
 		return info.title == alert.Congratulation;	
 	}
 	

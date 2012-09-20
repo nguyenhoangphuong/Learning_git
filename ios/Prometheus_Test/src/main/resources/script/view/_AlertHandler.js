@@ -56,14 +56,15 @@ function Alert()
 	{
 		win = app.mainWindow();
 		ele = win.staticTexts()[0];
-		
+	
 		if(ele.isValid())
 		{
 			title = ele.name();
 			msg = win.staticTexts()[1].name();
 			
 			if(	title	==	alert.ResetConfirm	||
-				title	==	alert.TooHard	)
+				title	==	alert.TooHard	||
+				title	==	alert.Congratulation)
 			{
 				log("Message is on screen: [" + title + "]" + " - [" + msg + "]");
 				return true;

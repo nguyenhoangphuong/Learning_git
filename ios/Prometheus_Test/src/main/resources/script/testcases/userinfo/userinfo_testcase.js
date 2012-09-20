@@ -61,7 +61,7 @@ function InputAge()
 	wait(2);
 	
 	info = userinfo.getInfo();
-	assertEqual(info.weight, 10);
+	assertEqual(info.age, 10);
 }
 
 function InputGender()
