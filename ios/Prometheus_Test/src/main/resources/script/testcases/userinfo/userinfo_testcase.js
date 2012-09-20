@@ -33,9 +33,10 @@ function InputHeight()
 {	
 	//UIALogger.logPass("InputHeight");
 	userinfo = new UserInfo();
-	userinfo.setHeight("5'", "9\"");
+	userinfo.setUnit("us");
+	userinfo.setHeight("5'", "9");
 	// check height is changed
-	if(staticTextExist("5'9\""))
+	if(staticTextExist("5'9"))
 		UIALogger.logPass("Input height: Pass");
 	else
 		UIALogger.logFail("Input height: Fail");

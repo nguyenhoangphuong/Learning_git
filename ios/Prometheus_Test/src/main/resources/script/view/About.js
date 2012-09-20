@@ -34,7 +34,7 @@ function About()
 	this.resetPlan = resetPlan;
 	
 	this.isNoEmailAlertShown = isNoEmailAlertShown;
-	this.isResetCofirmAlertShown = isResetConfirmAlertShown;
+	this.isResetConfirmAlertShown = isResetConfirmAlertShown;
 	
 	// Methods definition
 	function isVisible()
