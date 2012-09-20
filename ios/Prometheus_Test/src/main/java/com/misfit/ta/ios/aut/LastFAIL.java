@@ -36,13 +36,13 @@ public class LastFAIL extends AutomationTest {
 					 "script/testcases/setting/testcase_05.js");
 	}
 	
-	  @Test(groups = {"ios", "Prometheus", "MVP1", "fail"})
-	  public void GoalPlanTest() throws InterruptedException, StopConditionException {
-		  AppHelper.cleanCache();
-		  ShortcutsTyper.delayTime(1000);
-		  AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-					 "script/testcases/goalplan/goalplan_tcs.js");
-	  }
+//	  @Test(groups = {"ios", "Prometheus", "MVP1", "fail"})
+//	  public void GoalPlanTest() throws InterruptedException, StopConditionException {
+//		  AppHelper.cleanCache();
+//		  ShortcutsTyper.delayTime(1000);
+//		  AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
+//					 "script/testcases/goalplan/goalplan_tcs.js");
+//	  }
 	  
 		@Test(groups = { "ios", "Prometheus", "MVP1", "fail" })
 		public void runAllUserInfoTCs() throws InterruptedException, StopConditionException {

@@ -27,9 +27,9 @@ function Prometheus()
 			return true;
 	
 		currentID = currentApp.bundleID();	
-		log("current application: " + current);
+		log("current application: " + currentID);
 		
-		return current == this.AppID;
+		return currentID == this.AppID;
 	}
 }
 
