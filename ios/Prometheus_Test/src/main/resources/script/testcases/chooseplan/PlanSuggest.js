@@ -1,14 +1,8 @@
 #import "../../view/_Navigator.js"
-#import "../../core/testcaseBase.js"
-#import "../../view/PlanChooser.js"
-#import "../../core/common.js"
-
-
 
 
 function goToChoosePlan()
 {
-	var nav = new Navigator();
 	nav.toPlanChooser();
 	wait(1);
 }
@@ -39,7 +33,7 @@ function choosePlan(option)
 		
 
 		pc.back();
-		 if (pc.isVisible())
+		 if (pc.isManualVisible())
 			pass("Back ok");
 		else
 			fail("fail Back button");
@@ -68,6 +62,7 @@ function verifyPlan(WeekGoal)
 
 	var goalplan = new GoalPlan();
 	var weekinfogoal = goalplan.getTotalPlanMiles();
+	weekinfogoal = Math.round(weekinfogoal);
 
 	if (weekinfogoal == WeekGoal)
 		pass("pass " + WeekGoal.toString());

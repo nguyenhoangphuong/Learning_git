@@ -22,8 +22,13 @@ function Prometheus()
 	// Method definitions
 	function isActive()
 	{
-		current = target.frontMostApp().bundleID();
+		currentApp = target.frontMostApp();
+		if(currentApp == null)
+			return true;
+	
+		currentID = currentApp.bundleID();	
 		log("current application: " + current);
+		
 		return current == this.AppID;
 	}
 }

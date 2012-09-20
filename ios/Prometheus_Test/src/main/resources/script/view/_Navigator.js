@@ -55,6 +55,8 @@ function Navigator()
 				UILogger.logFail("Should succeed");
 			}
 		}
+		else
+			log("Can't find SHINE title!");
 		
 	}
 	

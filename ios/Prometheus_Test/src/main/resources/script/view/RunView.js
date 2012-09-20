@@ -134,13 +134,20 @@ function RunView()
 		return info;
 	}
 	
-	function closeAlert() 
+	function closeAlert(confirm) 
 	{
-		if (staticTextExist("CONGRATULATION!") && mainView.buttons()[0].isVisible()) 
+		if(isHardAlertShown())
 		{
+			if(typeof confirm == "undefined")
+				confirm = 0;
+			if(confirm == true)
+				confirm = 0;
+			else
+				confirm = 1;
+				
 			log("User has achieved week goal");
-			mainView.buttons()[0].tap();
-		} 
+			alert.confirmCustomAlert(confirm);
+		}
 		else 
 		{
 			log("No alert");
@@ -149,7 +156,13 @@ function RunView()
 	
 	function isCongratulationAlertVisible() 
 	{
-		return staticTextExist("CONGRATULATION!");
+		wait();
+		info = alert.getCustomAlertInfo();
+		
+		if(info == null)
+			return false;
+			
+		return info.title == alert.Congratulation;	
 	}
 	
 }

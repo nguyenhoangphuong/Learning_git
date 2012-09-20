@@ -55,12 +55,15 @@ function VerifyResetButton()
 	//UIALogger.logPass("VerifyResetButton");
 	setting = new About();
 	// tap on Reset button
+	setting.resetPlan(false);
+	assertTrue(setting.isResetConfirmAlertShown(), "Reset confirm alert is shown");
+	assertTrue(setting.isVisible(), "Still in Setting view");
+	
 	setting.resetPlan(true);
-	// verify it will go to plan chooser screen
-	if(staticTextExist("Please set your plan"))
-		UIALogger.logPass("Verify Reset plan: Pass");
-	else
-		UIALogger.logFail("Verify Reset plan: Fail");
+	wait(2);
+	pc = new PlanChooser();
+	assertTrue(pc.isVisible(), "Current view is PlanChooser");
+	
 	alert.reset();
 }
 

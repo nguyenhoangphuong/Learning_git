@@ -36,6 +36,8 @@ function PlanChooser()
 	this.easy=5; 
 	this.normal=10;
 	this.active=21;
+	
+	var titleStr = "Please set your WEEKLY plan";
 
 	var easyBtn = mainWindow.buttons()[0];	
 	var normalBtn = mainWindow.buttons()[1];
@@ -67,13 +69,14 @@ function PlanChooser()
 	function isVisible()
 	{
 		wait(0.5);
-		return staticTextExist("Please set your plan");
+		return staticTextExist(titleStr);
 	}
 	
 	function isManualVisible()
 	{
 		wait(0.5);
-		return staticTextExist("Please set your WEEKLY plan");
+		picker = pickWindow.pickers()[0];
+		return picker.isValid();
 	}
 	
 	

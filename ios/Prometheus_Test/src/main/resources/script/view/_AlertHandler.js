@@ -36,7 +36,8 @@ function Alert()
 	this.LocationConfirm = "\“Prometheus\” Would Like to Use Your Current Location";
 	
 	this.ResetConfirm = "Confirm";
-	this.TooHard = "Too hard";
+	this.TooHard = "That might be tough";
+	this.Congratulation = "Congratulations!";
 	
 	// Methods
 	this.reset = reset;

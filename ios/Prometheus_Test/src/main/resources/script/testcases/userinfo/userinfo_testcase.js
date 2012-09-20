@@ -177,10 +177,8 @@ function VerifyNextButton()
 	userinfo.submit();
 	
 	// verify it will go to choose plan screen
-	if(staticTextExist("Please set your plan"))
-		UIALogger.logPass("Verify next button: Pass");
-	else
-		UIALogger.logFail("Verify next button: Fail");
+	pc = new PlanChooser();
+	assertTrue(pc.isVisilble(), "Verify Next button");
 }
 
 // Go to User Info screen

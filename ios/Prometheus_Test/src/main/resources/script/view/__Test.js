@@ -149,5 +149,5 @@ function testAbout()
 
 
 start("Demo");
-
+nav.toPlanChooser();
 pass("Demo pass");
