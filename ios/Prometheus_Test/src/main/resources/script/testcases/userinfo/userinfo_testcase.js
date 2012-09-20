@@ -60,10 +60,8 @@ function InputAge()
 	userinfo.setAge(10);
 	wait(2);
 	
-	if(staticTextExist("10"))
-		UIALogger.logPass("Input age: Pass");
-	else
-		UIALogger.logFail("Input age: Fail");
+	info = userinfo.getInfo();
+	assertEqual(info.weight, 10);
 }
 
 function InputGender()
@@ -195,7 +193,7 @@ InputUnit();
 VerifySwipeToChangeWeight();
 VerifySwipeToChangeHeight();
 VerifyInteruption();
-VerifyOldState();
+//VerifyOldState();
 VerifyNextButton();
 
 UIALogger.logPass("---------- UserInfo view tests end -----------");
