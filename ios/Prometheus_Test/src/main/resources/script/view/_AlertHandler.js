@@ -33,9 +33,9 @@ function Alert()
 	// All the alert title name
 	this.NoInternet = "No connection";
 	this.NoEmail = "Warning";
-	this.LocationConfirm = "\“Prometheus\” Would Like to Use Your Current Location";
+	this.LocationConfirm = "\“Shine\” Would Like to Use Your Current Location";
 	
-	this.ResetConfirm = "Confirm";
+	this.ResetConfirm = "Are you sure?";
 	this.TooHard = "That might be tough";
 	this.Congratulation = "Congratulations!";
 	
