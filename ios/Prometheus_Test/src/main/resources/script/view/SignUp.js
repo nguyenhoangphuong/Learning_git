@@ -70,7 +70,7 @@ function SignUp()
 	function getErrorMessage()
 	{
 		wait();
-		msg = window.staticTexts()[1].name();
+		msg = window.staticTexts()[0].name();
 		return msg;
 	}
 	

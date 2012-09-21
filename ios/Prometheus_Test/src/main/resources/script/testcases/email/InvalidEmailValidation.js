@@ -30,7 +30,7 @@ function checkInvalidEmail(email)
 	var signup = new SignUp();
 	signup.fillEmailAndSubmit(email);
 	var msg = signup.getErrorMessage();
-	if (msg == "The email is invalid")
+	if (msg == signup.MsgInvalid)
 		UIALogger.logPass("Pass");
 	else
 		UIALogger.logFail("Fail. The email is valid");
@@ -41,7 +41,7 @@ function checkEmptyEmail(email)
 	var signup = new SignUp();
 	signup.fillEmailAndSubmit(email);
 	var msg = signup.getErrorMessage();
-	if (msg == "Email must not be empty")
+	if (msg == signup.MsgEmpty)
 		UIALogger.logPass("Pass");
 	else
 		UIALogger.logFail("Fail. The email is valid");

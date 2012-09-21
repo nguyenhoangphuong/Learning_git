@@ -40,24 +40,18 @@ function Navigator()
 	function toUserInfo()
 	{
 		toSignUp();
-		if(staticTextExist("SHINE"))
-		{
-			var signup = new SignUp();
-			if (signup.isEmailTextFieldVisible() == 1) {
-				log("Email is visible");
-			}
-			else
-				log("No email visible");
 
-			signup.fillEmailAndSubmit("abcd@test.com");
-
-			if (signup.isEmailTextFieldVisible() == 1) {
-				UILogger.logFail("Should succeed");
-			}
+		var signup = new SignUp();
+		if (signup.isEmailTextFieldVisible() == 1) {
+			log("Email is visible");
 		}
 		else
-			log("Can't find SHINE title!");
-		
+			log("No email visible");
+
+		signup.fillEmailAndSubmit("abcd@test.com");
+		if (signup.isEmailTextFieldVisible() == 1) {
+			UILogger.logFail("Should succeed");
+		}		
 	}
 	
 	function toPlanChooser()
@@ -101,7 +95,6 @@ function Navigator()
 		{
 			toWeekGoal();
 			goal = new GoalProgress();
-//			goal.scrollToDayProgress();
 			goal.scrollToDayGoal();
 		}			
 		
