@@ -2,7 +2,7 @@
 #import "_AlertHandler.js"
 #import "_Prometheus.js"
 #import "../core/testcaseBase.js"
-
+#import "MultiGoalChooser.js"
 #import "Home.js"
 #import "MusicSetting.js"
 #import "Settings.js"
@@ -266,5 +266,11 @@ function testMusicSetting()
 }
 
 start("Demo");
+<<<<<<< Updated upstream
 testSettings();
+=======
+var mtc = new MultiGoalChooser();
+mtc.back();
+
+>>>>>>> Stashed changes
 pass("Demo pass");
