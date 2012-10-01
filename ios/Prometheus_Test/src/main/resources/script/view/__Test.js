@@ -5,7 +5,14 @@
 
 #import "Home.js"
 #import "MusicSetting.js"
+#import "Settings.js"
 
+function testSettings()
+{
+	s = new Settings();
+	
+	
+}
 
 function testHome()
 {
@@ -259,5 +266,5 @@ function testMusicSetting()
 }
 
 start("Demo");
-logTree();
+testSettings();
 pass("Demo pass");
