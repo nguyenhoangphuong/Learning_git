@@ -2,8 +2,8 @@
 #import "_AlertHandler.js"
 
 /*
-About (aka Settings) functions:
-- isVisible()		: check if current view is About
+Settings (aka Settings) functions:
+- isVisible()		: check if current view is Settings
 - isSupportView()	: check if current view is Support
 - isTroublemaker()	: check if current user is a troublemaker
 - hasSignedIn()		: check if current user has signed in
@@ -13,7 +13,7 @@ About (aka Settings) functions:
 	- emailSupport(): tap "Email support" button
 	- likePage()	: tap "Like our page" button
 	- goToWebsite()	: tap Website button
-	- backToAbout()	: tap Back button in Support screen
+	- backToSettings()	: tap Back button in Support screen
 - tapFeedback()		: tap "JIRA Feedback" button (w/ troublemaker)
 - resetPlan(confirm)	: tap Reset button and choose Yes/No when alert shown up
 	+ resetPlan("yes")
@@ -56,7 +56,7 @@ function Settings()
 	this.emailSupport = emailSupport;
 	this.likePage = likePage;
 	this.goToWebsite = goToWebsite;
-	this.backToAbout = backToAbout;
+	this.backToSettings = backToSettings;
 	this.tapFeedback = tapFeedback;
 	this.resetPlan = resetPlan;
 	this.signOut = signOut;
@@ -132,7 +132,7 @@ function Settings()
 		website.tap();
 	}
 	
-	function backToAbout()
+	function backToSettings()
 	{
 		// todo: change this function, use supportView
 		back.tap();

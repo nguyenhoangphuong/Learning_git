@@ -28,7 +28,7 @@ function Navigator()
 	this.toTodayGoal = toTodayGoal;
 	this.toRunView = toRunView;
 	this.toHistory = toHistory;
-	this.toAbout = toAbout;
+	this.toSettings = toSettings;
 	
 	// ====================== Method definition ================
 	function toSignUp()
@@ -119,11 +119,11 @@ function Navigator()
 		wait();
 	}
 	
-	function toAbout()
+	function toSettings()
 	{
 		toTodayGoal();
 		goal = new GoalProgress();
-		goal.scrollToAbout();
+		goal.scrollToSettings();
 		wait();
 	}
 }

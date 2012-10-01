@@ -153,8 +153,6 @@ function testGoalProgress()
 	goal = new GoalProgress();
 	goal.scrollToDayGoal();
 	goal.scrollToWeekGoal();
-	//goal.scrollToAbout();
-	//goal.scrollToGoalPlan();
 	
 	goal.getWeekInfo();
 	goal.getTodayInfo();
@@ -200,10 +198,10 @@ function testGoalPlan()
 	plan.save();
 }
 
-function testAbout()
+function testSettings()
 {
-	about = new About();
-	about.rateApp();
+	settings = new Settings();
+	settings.rateApp();
 	target.pushTimeout(5);
 	if(!prometheus.isActive())
 		pass();

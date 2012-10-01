@@ -74,7 +74,7 @@ function exit()
 {
 	var gp = new GoalProgress();
 	gp.scrollToDayGoal();
-	gp.scrollToAbout();
-	var ab = new About();
+	gp.scrollToSettings();
+	var ab = new Settings();
 	ab.resetPlan(true);
 }

@@ -10,7 +10,7 @@ GoalProgress function:
 - scrollToWeekGoal()		:	scroll up from today to week view
 - scrollToDayGoal()			:	scroll down from week to day view
 - scrollToGoalPlan()		:	scroll right to goal planning view
-- scrollToAbout()			:	scroll left to about view
+- scrollToSettings()			:	scroll left to settings view
 - start()					:	press start button
 - simulateARun()				: 	set location, press start and simulate a run
 - getWeekInfo()				:	get week information, return an object contains:
@@ -62,7 +62,7 @@ function GoalProgress()
 	this.scrollToWeekGoal = scrollToWeekGoal;
 	this.scrollToDayGoal = scrollToDayGoal;
 	this.scrollToGoalPlan = scrollToGoalPlan;
-	this.scrollToAbout = scrollToAbout;
+	this.scrollToSettings = scrollToSettings;
 	this.start = start;
 	this.simulateARun=simulateARun;
 	this.simulateARunDontStop= simulateARunDontStop;
@@ -116,7 +116,7 @@ function GoalProgress()
 		tips.closeTips(5);
 	}
 
-	function scrollToAbout()
+	function scrollToSettings()
 	{
 		wait();
 		mainView.scrollLeft();

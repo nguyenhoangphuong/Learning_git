@@ -1,4 +1,4 @@
-#import "../../view/About.js"
+#import "../../view/Settings.js"
 #import "../../view/_Navigator.js"
 #import "../../core/testcaseBase.js"
 #import "../../view/_Prometheus.js"
@@ -6,12 +6,12 @@
 function GoToSettingScreen()
 {
 	UIALogger.logPass("GoToSettingScreen");
-	nav.toAbout();
+	nav.toSettings();
 }
 
 function VerifyRateButton()
 {
-	setting = new About();
+	setting = new Settings();
 	// tap on rate button
 	setting.rateApp();
 	// verify it will open app in app store
@@ -25,7 +25,7 @@ function VerifyRateButton()
 function VerifyEmailWithoutAccount()
 {
 	//UIALogger.logPass("VerifyEmailWithoutAccount");
-	setting = new About();
+	setting = new Settings();
 	// tap on email button
 	setting.getSupport();
 	// verify it will show pop up
@@ -40,7 +40,7 @@ function VerifyEmailWithoutAccount()
 function VerifyLikeButton()
 {
 	//UIALogger.logPass("VerifyLikeButton");
-	setting = new About();
+	setting = new Settings();
 	// tap on like button
 	setting.likeApp();
 	// verify it will open misfit's fanpage
@@ -53,7 +53,7 @@ function VerifyLikeButton()
 function VerifyResetButton()
 {
 	//UIALogger.logPass("VerifyResetButton");
-	setting = new About();
+	setting = new Settings();
 	// tap on Reset button
 	setting.resetPlan(false);
 	assertTrue(setting.isResetConfirmAlertShown(), "Reset confirm alert is shown");
