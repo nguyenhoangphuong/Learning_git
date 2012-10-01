@@ -24,7 +24,7 @@ About (aka Settings) functions:
 - isResetConfirmAlertShown()	: check if the ResetConfirm alert is shown up
 */
 
-function About()
+function Settings()
 {
 	// Private fields
 	var window = app.mainWindow();
@@ -62,15 +62,18 @@ function About()
 	this.signOut = signOut;
 	this.signUp = signUp;
 	
+	this.isSignOutBtnExist = isSignOutBtnExist;
+	
 	this.isNoEmailAlertShown = isNoEmailAlertShown;
 	this.isResetConfirmAlertShown = isResetConfirmAlertShown;
+	this.confirmResetAlert = confirmResetAlert;
 	
 	// Method definitions
 	function isVisible()
 	{
 		// todo: refine
 		page = window.pageIndicators()[0].value();
-		return page == "page 1 of 3" && rate.isValid() && rate.isVisible();
+		return page == "page 1 of 3" && resetBtn.isValid() && resetBtn.isVisible();
 	}
 	
 	function isSupportView()
@@ -146,6 +149,8 @@ function About()
 	{
 		// todo: check
 		reset.tap();
+		
+		// wait for popup
 		wait(1);
 		
 		if (yes == true)

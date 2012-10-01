@@ -4,7 +4,7 @@
 #import "GoalProgress.js"
 #import "RunView.js"
 #import "GoalPlan.js"
-#import "About.js"
+#import "Settings.js"
 #import "../core/testcaseBase.js"
 
 /*

@@ -71,6 +71,11 @@ function log(text)
     UIALogger.logDebug(text);
 }
 
+function hr()
+{
+	UIALogger.logDebug("-------------------------------------------------------");
+}
+
 function pass(text)
 {
 	if (typeof text == "undefined")

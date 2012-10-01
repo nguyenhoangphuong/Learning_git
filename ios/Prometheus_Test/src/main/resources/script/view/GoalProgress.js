@@ -215,57 +215,90 @@ function GoalProgress()
 		return quote.name();
 	}
 	
-	function simulateARun(miles) {
-		simulateRunAndStop(miles, true);
+	function simulateARun(miles, error) 
+	{
+		if(typeof error == "undefined")
+		{
+			error = {};
+			error.AH = 10;
+			error.AV = 15;
+			error.BH = 10;
+			error.BV = 15;
+		}
+		
+		simulateRunAndStop(miles, true, error);
 	}
 	
-	function simulateRunAndStop(miles, stop) {
+	function simulateRunAndStop(miles, stop, error) 
+	{
 		log("Run " + miles);
-		setA();
+		setA(error);
 		start();
 		wait();
-		for (i=1; i<= miles; i++) {
-			if (i%2 == 1) {
-				setB();
-			} else {
-				setA();
+		
+		for (i=1; i<= miles; i++) 
+		{
+			if (i%2 == 1) 
+			{
+				setB(error);
+			} else 
+			{
+				setA(error);
 			}
 			wait();
 		}
+		
 		var run = new RunView();
-//		if (!run.canPause()) {
-//			fail("The run has not started");
-//		} 
+		//if (!run.canPause()) 
+		//{
+		//	fail("The run has not started");
+		//} 
 		wait(2);
-		if (stop) {
+		
+		if (stop) 
+		{
 			log("Finish run");
-		// check the crash
+		 	//check the crash
 			run.pause();
-			wait();
+			wait(2);
 			run.finish();
 		}
 	}
 	
-	function simulateARunDontStop(miles) {
-		simulateRunAndStop(miles, false);
+	function simulateARunDontStop(miles, error) 
+	{
+		if(typeof error == "undefined")
+		{
+			error = {};
+			error.AH = 10;
+			error.AV = 15;
+			error.BH = 10;
+			error.BV = 15;
+		}
+					
+		simulateRunAndStop(miles, false, error);
 	}
 	
-	function setA() {
-		var pointA = {location:{latitude:10.775154,longitude:106.679465}, options:{speed:8, altitude:200, horizontalAccuracy:10, verticalAccuracy:15}};
+	function setA(error) 
+	{
+		var pointA = {location:{latitude:10.775154,longitude:106.679465}, options:{speed:8, altitude:200, horizontalAccuracy: error.AH, verticalAccuracy: error.AV}};
 		target.setLocationWithOptions(pointA.location,pointA.options);  
 	}
 	
-	function setB() {
-		var pointB = {location:{latitude:10.768071,longitude:106.667256}, options:{speed:11, altitude:200, horizontalAccuracy:10, verticalAccuracy:15}};
+	function setB(error) 
+	{
+		var pointB = {location:{latitude:10.768071,longitude:106.667256}, options:{speed:11, altitude:200, horizontalAccuracy: error.BH, verticalAccuracy: error.BV}};
 		target.setLocationWithOptions(pointB.location,pointB.options);
 	}
 	
-	function isSetANewGoalBtnVisible() {
+	function isSetANewGoalBtnVisible() 
+	{
 		var btn = mainView.buttons()["Set a new goal"];
 		return btn.isVisible();
 	}
 	
-	function setANewGoal(planType) {
+	function setANewGoal(planType) 
+	{
 		var btn = mainView.buttons()["Set a new goal"];
 		btn.tap();
 		var planChooser = new PlanChooser();

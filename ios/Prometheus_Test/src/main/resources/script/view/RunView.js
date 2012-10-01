@@ -71,7 +71,7 @@ function RunView()
 	function finish()
 	{
 		closeAlert(true);
-		wait();
+		wait(2);
 		finishBtn.tap();
 	}
 	

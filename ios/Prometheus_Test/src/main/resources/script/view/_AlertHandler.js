@@ -31,9 +31,16 @@ function Alert()
 	this.alertChoice = null;
 	
 	// All the alert title name
-	this.NoInternet = "No connection";
-	this.NoEmail = "Warning";
+	// ----- Home view
+	this.Error = "Error";
+	this.EmptyEmailMsg = "Email must not be empty";
+	this.EmptyPasswordMsg = "Password must not be empty";
+	this.InvalidEmailMsg = "Email is invalid";
+	this.InvalidUserMsg = "User not found";
+	this.ExistedUserMsg = "User existed";
+	
 	this.LocationConfirm = "\“Shine\” Would Like to Use Your Current Location";
+	this.NoEmailAccount = "Warning";
 	
 	this.ResetConfirm = "Are you sure?";
 	this.TooHard = "That might be tough";
@@ -128,9 +135,13 @@ function PrometheusAlertHandler(_alert)
 	log("Alert [" + name + "] encountered");
 	
 	// check for test-related alert
-	if(	name == alert.NoInternet		||
-		name == alert.NoEmail			||
-		name == alert.LocationConfirm	)
+	if(	(name == alert.Error && message == alert.EmptyEmailMsg)		||
+		(name == alert.Error && message == alert.EmptyPasswordMsg)	||
+		(name == alert.Error && message == alert.InvalidEmailMsg)	||
+		(name == alert.Error && message == alert.InvalidUserMsg)	||
+		(name == alert.Error && message == alert.ExistedUserMsg)	||
+		(name == alert.LocationConfirm)								||
+		(name == alert.NoEmailAccount))
 	{
 		// log
 		log("Interesting [" + name + "] encountered!");
@@ -148,10 +159,9 @@ function PrometheusAlertHandler(_alert)
 			
 		// reset the alertChoice and acknowledge the alert
 		alert.alertChoice = null;
-		log("-------------------");
+		
 		if (name == alert.LocationConfirm)
-		{
-			
+		{	
 			wait(5);
 			tips.closeTips(1);
 			wait();

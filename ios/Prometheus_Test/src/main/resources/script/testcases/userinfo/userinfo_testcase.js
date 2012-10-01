@@ -173,6 +173,7 @@ function VerifySwipeToChangeHeight()
 function VerifyNextButton()
 {
 	userinfo = new UserInfo();
+	wait(3);
 	userinfo.submit();
 	
 	// verify it will go to choose plan screen
