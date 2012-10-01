@@ -2,7 +2,7 @@
 #import "_AlertHandler.js"
 
 /*
-Settings (aka Settings) functions:
+Settings functions:
 - isVisible()		: check if current view is Settings
 - isSupportView()	: check if current view is Support
 - isTroublemaker()	: check if current user is a troublemaker
