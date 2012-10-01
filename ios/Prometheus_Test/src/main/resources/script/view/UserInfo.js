@@ -3,32 +3,38 @@
 
 /*
 UserInfo view function:
+=========================================================================================
 - isVisible()						:	check if the current view is visible
+=========================================================================================
 - setInfo(age, w1, w2, h1, h2)		:	set user information
 	+ setInfo(18, 83, 0.3, "8'", "5\"") for US
 	+ setInfo(18, 50, 0.4, 1 , 0.99) 	for SI
 - setAge(age)						:	|
 - setWeight(w1, w2)					:	| single function for setting values
 - setHeight(h1, h2)					:	|
+- setSex(sex)						:	set user sex ("male" / "female")
+- setUnit(unit)						:	set user unit ("us" / "si")
+- submit()							:	submit the form
+=========================================================================================
 - changeHeight(dy)					:	change user height by dragging onto image
 	+ dy > 0: make shorter
 	+ dy < 0: make taller
 - changeWeight(dx)					:	change user weight by dragging onto image
 	+ dx > 0: make fatter
 	+ dx < 0: make thinner
-- setSex(sex)						:	set user sex
-	+ setSex("male");
-	+ setSex("female");
-- setUnit(unit)						:	set user unit
-	+ setUnit("us");
-	+ setUnit("si");
-- submit()							:	submit the form
+=========================================================================================
 - isMale()							:	check if sex switch is Male
 - isUS()							:	check if unit switch is US
 - getInfo()							:	return the info {age, weight, height}
 	+ age		:	32 (int)
 	+ weight	:	163.0 (float)
 	+ height	:	"1.75" or "5'5"" (string)
+=========================================================================================
+
+MAY BE CHANGES
+- setInfo	: base on new design
+- isBackButtonExist: back button may exist in some case
+- isMale : since there will be no Unit switch
 */
 
 function UserInfo()
@@ -68,7 +74,11 @@ function UserInfo()
 	// Methods definition
 	function isVisible()
 	{
-		return next.isVisible();
+		exist = (staticTextExist("yrs") && staticTextExist("lbs") && staticTextExist("ft")) ||
+				(staticTextExist("yrs") && staticTextExist("kg") && staticTextExist("m"));
+		
+		log("UserInfo visible: " + exist);
+		return exist;
 	}
 	
 	function setInfo(a, w1, w2, h1, h2)
@@ -89,10 +99,12 @@ function UserInfo()
 		
 		wait();	
 		age.tap();
+		log("Tap [Age]");
 		
 		wait(0.5);
 		picker = mainView.pickers()[0];
 		wheelPick(picker, 0, a);
+		log("Pick value: " + a);
 		
 		done = mainView.buttons()[1];
 		done.tap();
@@ -104,11 +116,13 @@ function UserInfo()
 		
 		wait();	
 		weight.tap();
+		log("Tap [Weight]");
 		
 		wait(0.5);
 		picker = mainView.pickers()[0];
 		wheelPick(picker, 0, w1);
 		wheelPick(picker, 1, w2);
+		log("Pick value: " + w1 + " - " + w2);
 		
 		done = mainView.buttons()[1];
 		done.tap();
@@ -120,11 +134,13 @@ function UserInfo()
 		
 		wait();
 		height.tap();
+		log("Tap [Height]");
 		
 		wait(0.5);
 		picker = mainView.pickers()[0];
 		wheelPick(picker, 0, h1);
 		wheelPick(picker, 1, h2);
+		log("Pick value: " + h1 + " - " + h2);
 		
 		done = mainView.buttons()[1];
 		done.tap();
@@ -138,6 +154,8 @@ function UserInfo()
 			female.tap();
 		if(sex == "female" && isMale())
 			male.tap();
+		
+		log("Set sex: " + sex);
 	}
 	
 	function setUnit(unit)
@@ -147,11 +165,16 @@ function UserInfo()
 			si.tap();
 		if(unit == "si" && isUS())
 			us.tap();
+		
+		log("Set unit: " + unit);
 	}
 	
 	function submit()
 	{
+		wait(0.5);
 		next.tap();
+		
+		log("Tap [Next]");
 	}
 	
 
@@ -159,12 +182,16 @@ function UserInfo()
 	{
 		wait();
 		swipeHorizontally(160, 240, 160 + dx);
+		
+		log("Change weight by swiping: " + dx);
 	}
 	
 	function changeHeight(dy) 
 	{
 		wait();
 		swipeVertically(160, 240, 240 + dy);
+		
+		log("Change height by swiping: " + dy);
 	}
 	
 	function getInfo()

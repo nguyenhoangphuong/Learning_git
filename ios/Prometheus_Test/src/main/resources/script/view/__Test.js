@@ -45,6 +45,7 @@ function testHome()
 	h.isSignupVisible();
 	h.isTryoutVisible();
 	h.isEmailTextFieldVisible();
+	h.isPasswordTextFieldVisible();
 	h.tapTryout();
 	h.isVisible();
 	h.isTryoutVisible();
@@ -224,23 +225,39 @@ function testGPS(e)
 function testMusicSetting()
 {
 	ms = new MusicSetting();
-	ms.isVisible();	
-	ms.isShuffleOn();
-	ms.isSmartDJOn();
+	
+	// visible
+	hr();
+	ms.isVisible();
+	
+	// shuffle switch
+	hr();
+	ms.switchShuffle(true);
+	ms.switchShuffle(true);
 	ms.switchShuffle(false);
-	ms.switchShuffle(true);
-	ms.switchShuffle(true);
+	ms.switchShuffle(false);	
+	
+	// smart DJ switch
+	hr();
+	ms.switchSmartDJ(true);
+	ms.switchSmartDJ(true);
 	ms.switchSmartDJ(false);
-	ms.switchSmartDJ(true);
-	ms.switchSmartDJ(true);
-	ms.selectPlaylists(["Love", "Sad"]);
-	ms.deselectPlaylists(["Sad"]);
-	ms.togglePlaylists(["Love", "Sad", "MyMusic"]);
+	ms.switchSmartDJ(false);
+	
+	// select / deselect / toggle
+	hr();
+	ms.selectPlaylists("Love");
+	ms.selectPlaylists("Sad");
+	ms.selectPlaylists("MyMusic");
+	ms.selectPlaylists("Favourite");
+	
+	// get infos
+	hr();
 	ms.getNumberOfPlaylist();
 	ms.getAllPlaylistInfo();
 	ms.done();
 }
 
 start("Demo");
-testHome();
+logTree();
 pass("Demo pass");

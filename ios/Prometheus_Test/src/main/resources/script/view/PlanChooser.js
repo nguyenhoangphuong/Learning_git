@@ -1,18 +1,19 @@
 /*
 PlanChooser functions:
+=========================================================================================
 - isVisible()		: 	check if current view is PlanChooser
 - isManualVisible()	:	check if current view is PlanChooser after tap Other button
-
+=========================================================================================
 - selectEasy()		:	tap easy button
 - selectNormal()	:	tap normal button
 - selectActive()	:	tap active button
 - selectOther()		:	tap other button
-
-- setValue(mile)	:	select picker value base on "mile"
+=========================================================================================
+- setValue(val)		:	select picker value base on <val>
 - getPickerValue()	:	get the current value of picker (float)
 - back()			:	tap the back button
 - done()			:	tap the done button
-
+=========================================================================================
 - isLocationConfirmShown()		:	check if the location require alert is shown
 - getPlanAmounts	:	get the static texts and value of the text of actual plan, return
 						an object consist of:
@@ -22,6 +23,7 @@ PlanChooser functions:
 	+ easy			:
 	+ normal		:	10 (float)
 	+ active		:
+=========================================================================================
 */
 
 #import "../core/testcaseBase.js"
@@ -33,9 +35,9 @@ function PlanChooser()
 	var mainWindow = app.mainWindow();
 	var pickWindow = app.windows()[1];
 	
-	this.easy=5; 
-	this.normal=10;
-	this.active=21;
+	this.easy = 5; 
+	this.normal = 10;
+	this.active = 21;
 	
 	var titleStr = "Please set your plan ";
 	var titleManualStr = "Please set your custom plan";
@@ -70,14 +72,20 @@ function PlanChooser()
 	function isVisible()
 	{
 		wait(0.5);
-		return staticTextExist(titleStr);
+		exist = staticTextExist(titleStr);
+		
+		log("PlanChooser visible: " + exist);
+		return exist;
 	}
 	
 	function isManualVisible()
 	{
 		wait(0.5);
 		picker = pickWindow.pickers()[0];
-		return picker.isValid();
+		exist = picker.isValid();
+		
+		log("PlanChooser manual visible: " + exist);
+		return exist;
 	}
 	
 	
@@ -85,6 +93,7 @@ function PlanChooser()
 	{
 		wait(0.5);
 		easyBtn.tap();
+		log("Tap [Easy]");
 		wait(2);
 	}
 	
@@ -92,6 +101,7 @@ function PlanChooser()
 	{
 		wait(0.5);
 		normalBtn.tap();
+		log("Tap [Normal]");
 		wait(2);
 	}
 	
@@ -99,6 +109,7 @@ function PlanChooser()
 	{
 		wait(0.5);
 		activeBtn.tap();
+		log("Tap [Active]");
 		wait(2);
 	}
 	
@@ -106,6 +117,7 @@ function PlanChooser()
 	{
 		wait(0.5);
 		otherBtn.tap();
+		log("Tap [Other]");
 		wait();
 	}
 	
@@ -115,7 +127,13 @@ function PlanChooser()
 		wait(0.5);
 		picker = pickWindow.pickers()[0];
 		if(picker.isValid())
+		{
 			wheelPick(picker, 0, value.toString());
+			log("Pick custom value: " + value);
+			return;
+		}
+		
+		log("No picker visible");
 	}
 	
 	function getPickerValue()
@@ -132,11 +150,12 @@ function PlanChooser()
 			current = wheel.value();
 			current = current.substring(0, current.lastIndexOf("."));
 			current = parseFloat(current);
-			log("current picker: " + current);
+			log("Current picker value: " + current);
 			
 			return current;
 		}
 		
+		log("No picker visible");
 		return null;
 	}
 	
@@ -147,8 +166,12 @@ function PlanChooser()
 		if(backBtn.isValid())
 		{
 			backBtn.tap();
-			wait(0.2);
+			log("Tap [Back]");
+			wait(0.5);
+			return;
 		}
+		
+		log("No [Back] button");
 	}
 	
 	function done()
@@ -158,8 +181,11 @@ function PlanChooser()
 		if(doneBtn.isValid())
 		{
 			doneBtn.tap();
+			log("Tap [Done]");
 			wait(2);
 		}
+		
+		log("No [Done] button");
 	}
 	
 		
@@ -169,9 +195,9 @@ function PlanChooser()
 		info.easytext = easyTxt.name();
 		info.normaltext = normalTxt.name();
 		info.activetext = activeTxt.name();
-		info.easy = parseFloat(easyTxt.name().substring(0, easyTxt.name().indexOf(" miles")));
-		info.normal = parseFloat(normalTxt.name().substring(0, normalTxt.name().indexOf(" miles")));
-		info.active = parseFloat(activeTxt.name().substring(0, activeTxt.name().indexOf(" miles")));
+		info.easy = parseFloat(easyTxt.name());
+		info.normal = parseFloat(normalTxt.name());
+		info.active = parseFloat(activeTxt.name());
 		
 		log("plan.easy: " + info.easytext + " - " + info.easy);
 		log("plan.normal: " + info.normaltext + " - " + info.normal);
@@ -182,6 +208,9 @@ function PlanChooser()
 	
 	function isLocationConfirmShown()
 	{
-		return alert.alertTitle != null && alert.alertTitle == alert.LocationConfirm;
+		shown = alert.alertTitle != null && alert.alertTitle == alert.LocationConfirm;
+		log("Checking alert: [" + alert.alertTitle + "] - [" + alert.alertMsg + "]: " + shown);
+		
+		return shown;
 	}
 }

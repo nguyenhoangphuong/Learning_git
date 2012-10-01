@@ -5,14 +5,19 @@
 
 /*
 GoalProgress function:
+=========================================================================================
 - isWeekGoalVisible()		:	check if current view is WeekProgress view
 - isTodayGoalVisible()		:	check if current view is TodayProgress view
+=========================================================================================
 - scrollToWeekGoal()		:	scroll up from today to week view
 - scrollToDayGoal()			:	scroll down from week to day view
 - scrollToGoalPlan()		:	scroll right to goal planning view
-- scrollToSettings()			:	scroll left to settings view
+- scrollToSettings()		:	scroll left to settings view
+=========================================================================================
 - start()					:	press start button
-- simulateARun()				: 	set location, press start and simulate a run
+- simulateARun()			: 	set location, press start and simulate a run
+- simulateARunDontStop()	:
+=========================================================================================
 - getWeekInfo()				:	get week information, return an object contains:
 	+ text		:	"7 days goal: 5 miles" (string)
 	+ days		:	7 (int)
@@ -30,9 +35,10 @@ GoalProgress function:
 - getGPSSignal()			:	get the gps signal strength
 	+ return: "Fair"
 - getQuote()				:	get the random quote
+=========================================================================================
 - setANewGoal()				: 	set a new goal after finish the week goal
 - isSetANewGoalBtnVisible()	:   check if the goal has been achieved
-
+=========================================================================================
 */
 
 
@@ -59,10 +65,12 @@ function GoalProgress()
 	// Methods
 	this.isWeekGoalVisible = isWeekGoalVisible;
 	this.isTodayGoalVisible = isTodayGoalVisible;
+	
 	this.scrollToWeekGoal = scrollToWeekGoal;
 	this.scrollToDayGoal = scrollToDayGoal;
 	this.scrollToGoalPlan = scrollToGoalPlan;
 	this.scrollToSettings = scrollToSettings;
+	
 	this.start = start;
 	this.simulateARun=simulateARun;
 	this.simulateARunDontStop= simulateARunDontStop;
@@ -70,9 +78,9 @@ function GoalProgress()
 	this.getWeekInfo = getWeekInfo;
 	this.getTodayInfo = getTodayInfo;
 	this.getWeatherInfo = getWeatherInfo;
-	
 	this.getGPSSignal = getGPSSignal;
 	this.getQuote = getQuote;
+	
 	this.setANewGoal=setANewGoal;
 	this.isSetANewGoalBtnVisible=isSetANewGoalBtnVisible;
 	
@@ -80,10 +88,10 @@ function GoalProgress()
 	function isWeekGoalVisible()
 	{
 		page = window.pageIndicators()[0].value();
+		exist = page == "page 2 of 3" && weekProgress.isValid() && weekProgress.isVisible();
 		
-		log("isWeekGoalVisible: " + (page == "page 2 of 3" && weekProgress.isValid() && weekProgress.isVisible()).toString());
-
-		return page == "page 2 of 3" && weekProgress.isValid() && weekProgress.isVisible();
+		log("WeekGoal visible: " + exist);
+		return exist;
 	}
 
 	function isTodayGoalVisible()
@@ -95,15 +103,15 @@ function GoalProgress()
 	{
 		wait();
 		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.2}, endOffset:{x:0.5, y:0.5}, duration:0.3});
+		log("Scroll to WeekGoal");
 	}
 	
 	function scrollToDayGoal()
 	{
 		wait();
-
-		log("Scroll to TodayGoal")
-
 		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.8}, endOffset:{x:0.5, y:0.2}, duration:0.3});
+		log("Scroll to TodayGoal");
+		
 		wait(3);
 		tips.closeTips(1);
 	}
@@ -112,6 +120,8 @@ function GoalProgress()
 	{
 		wait();
 		mainView.scrollRight();
+		log("Scroll to GoalGoal")
+		
 		wait(2);
 		tips.closeTips(5);
 	}
@@ -120,12 +130,14 @@ function GoalProgress()
 	{
 		wait();
 		mainView.scrollLeft();
+		log("Scroll to Settings");
 	}
 	
 	function start()
 	{
 		wait();
 		startBtn.tap();
+		log("Tap [Start]");
 	}
 	
 	
@@ -200,7 +212,6 @@ function GoalProgress()
 		return info;
 	}
 
-
 	function getGPSSignal()
 	{
 		text = gps.name();
@@ -214,6 +225,7 @@ function GoalProgress()
 		log("quote: " + quote.name());
 		return quote.name();
 	}
+	
 	
 	function simulateARun(miles, error) 
 	{

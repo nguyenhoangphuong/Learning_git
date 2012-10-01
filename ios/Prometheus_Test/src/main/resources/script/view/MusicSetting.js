@@ -7,17 +7,15 @@ List of funcitons:
 =========================================================================================
 - switchShuffle(flag = true)	:	[flag: true/false] turn on/off the shuffle switch
 - switchSmartDJ(flag = true)	:	[flag: true/false] turn on/off the smart DJ switch
-- selectPlaylists(playlists)	:	checked the specified playlists
-- deselectPlaylists(playlists)	:	unchecked the specified playlists
-- togglePlaylists(playlists)	:	tap on the specofied playlists to its state 
-	+ <playlists>	:	["Rock", "Ballad", "Pop"] - use name
-	+ <playlists>	:	[0, 2, 5] - use index
+- selectPlaylists(id)			:	checked the specified playlist
+	+ id: "MyMusic" - 	use string
+	+ id: 0			-	use index
 =========================================================================================	
 - done()						:	tap the [Done] button
 =========================================================================================
 - getNumberOfPlaylist()			:	return an [int] - number of playlists
-- getAllPlaylistInfo()			:	return an object contains of playlists' names and states
-	{names: ["Rock", "Ballad", "Pop"], states: [true, false, false]}
+- getAllPlaylistInfo()			:	return an object contains of playlists' names and active one
+	{all: ["Rock", "Ballad", "Pop"], active: "Rock"	}
 - isShuffleOn()					:	return [bool] - state of shuffle
 - isSmartDJOn()					:	return [bool] - state of smart DJ
 =========================================================================================
@@ -43,8 +41,6 @@ function MusicSetting()
 	this.switchShuffle = switchShuffle;
 	this.switchSmartDJ = switchSmartDJ;
 	this.selectPlaylists = selectPlaylists;
-	this.deselectPlaylists = deselectPlaylists;
-	this.togglePlaylists = togglePlaylists;
 	this.done = done;
 	
 	this.getNumberOfPlaylist = getNumberOfPlaylist;
@@ -115,55 +111,18 @@ function MusicSetting()
 		}
 	}
 	
-	function selectPlaylists(playlists)
+	function selectPlaylists(id)
 	{
-		for(i = 0; i < playlists.length; i++)
+		ele = musicList.cells()[id];
+		if(ele.isValid())
 		{
-			ele = musicList.cells()[playlists[i]];
-			if(ele.isValid())
-			{
-				log("Enabled playlist [" + ele.name() + "]");
-				
-				wait(0.5);
-				ele.setValue(1);
-			}
-			else
-				log("Can't find playlist [" + playlists[i] + "]");
+			log("Select playlist [" + ele.name() + "]");
+			
+			wait(0.5);
+			ele.tap();
 		}
-	}
-	
-	function deselectPlaylists(playlists)
-	{
-		for(i = 0; i < playlists.length; i++)
-		{
-			ele = musicList.cells()[playlists[i]];
-			if(ele.isValid())
-			{
-				log("Unenabled playlist [" + ele.name() + "]");
-				
-				wait(0.5);
-				ele.setValue(0);
-			}
-			else
-				log("Can't find playlist [" + playlists[i] + "]");
-		}
-	}
-	
-	function togglePlaylists(playlists)
-	{
-		for(i = 0; i < playlists.length; i++)
-		{
-			ele = musicList.cells()[playlists[i]];
-			if(ele.isValid())
-			{
-				val = (ele.value() == 1? 0: 1);
-				wait(0.5);
-				ele.setValue(val);
-				log("Toggle playlist [" + ele.name() + "]");
-			}
-			else
-				log("Can't find playlist [" + playlists[i] + "]");
-		}
+		else
+			log("Can't find playlist [" + id + "]");
 	}
 	
 	function done()
@@ -192,24 +151,25 @@ function MusicSetting()
 	
 	function getAllPlaylistInfo()
 	{
-		count = -1;
+		count = 0;
 		ele = musicList.cells()[count];
 		
-		info = {names: [], states: []};
+		info = {all: [], active: null};
 		
 		while(ele.isValid())
 		{
 			// save the information
-			info.names[count] = ele.name();
-			info.states[count] = (ele.value() == 1? true: false);
+			info.all[count] = ele.name();
+			if(ele.value() == 1)
+				info.active = ele.name();
 			
 			// advance to next record
 			count++;
 			ele = musicList.cells()[count];
 		}
 		
-		log("Names of playlists: " + info.names);
-		log("States of playlists: " + info.states);
+		log("All playlists: " + info.all);
+		log("Active playlist: " + info.active);
 		return info;
 	}
 	

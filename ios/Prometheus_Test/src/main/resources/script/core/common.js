@@ -11,6 +11,8 @@ This section is the place where you list functions. Please list them as comments
 - log(text)		:	UIALogger.logDebug(default = Debug log)
 - pass(text)	:	UIALogger.logPass(default = Pass)
 - fail(text)	:	UIALogger.logFail(default = Fail)
+- hr()			:	this is the ULTIMATE function! it print -----------------------------------
+					to the log debug. SO AWESOME!
 
 - assertEqual(actual, expected)	:	simplify if(a == b) pass() else fail()
 - assertTrue(expression)		:	simplify if(a == true) pass() else fail()
@@ -61,13 +63,18 @@ function start(text)
 {
 	if(typeof text == "undefined")
 		text = "Test started";
-	UIALogger.logStart(text);
+	UIALogger.logStart("§ --- " + text + " --- §");
 }
 
 function log(text)
 {
 	if (typeof text == "undefined")
 		text = "Debug log";
+    UIALogger.logDebug("•  " + text);
+}
+
+function print(text)
+{
     UIALogger.logDebug(text);
 }
 
@@ -80,14 +87,14 @@ function pass(text)
 {
 	if (typeof text == "undefined")
 		text = "Pass";
-	UIALogger.logPass(text);
+	UIALogger.logPass("§ --- " + text + " --- §");
 }
 
 function fail(text)
 {
 	if(typeof text == "undefined")
 		text = "Fail";
-	UIALogger.logFail(text);
+	UIALogger.logFail("§ --- " + text + " --- §");
 }
 
 function assertEqual(actual, expected, logs)
@@ -96,9 +103,9 @@ function assertEqual(actual, expected, logs)
 		logs = "Assert equal";
 		
 	if(actual == expected)
-		log(logs + " pass: " + "[" + actual.toString() + "] == [" + expected.toString() + "]");
+		log(">>> " + logs + " pass: " + "[" + actual.toString() + "] == [" + expected.toString() + "]");
 	else
-		fail(logs + " fail: " + "[" + actual.toString() + "] >< [" + expected.toString() + "]");
+		fail(">>> " + logs + " fail: " + "[" + actual.toString() + "] >< [" + expected.toString() + "]");
 }
 
 function assertTrue(expression, logs)
@@ -107,9 +114,9 @@ function assertTrue(expression, logs)
 		logs = "Assert true";
 		
 	if(expression == true)
-		log(logs + ": pass");
+		log(">>> " + logs + ": pass");
 	else
-		fail(logs + ": fail");
+		fail(">>> " + logs + ": fail");
 }
 
 function assertFalse(expression, logs)
@@ -118,9 +125,9 @@ function assertFalse(expression, logs)
 		logs = "Assert false";
 		
 	if(expression == false)
-		log(logs + ": pass");
+		log(">>> " + logs + ": pass");
 	else
-		fail(logs + ": fail");
+		fail(">>> " + logs + ": fail");
 }
 
 // =============== TA helpers

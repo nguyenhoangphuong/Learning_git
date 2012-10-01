@@ -3,18 +3,20 @@
 
 /*
 GoalPlan functions:
+=========================================================================================
 - isVisible()			:	check if the current view is GoalPlan
+=========================================================================================
 - edit()				:	tap the Edit button
 - reset()				:	tap the Auto Suggest button
 - save()				:	tap the Done button (while in edit mode)
 - cancel()				:	tap the Cancel button (while in edit mode)
-
+=========================================================================================
 - getTotalDays()		:	get the number of days (or records) in this goal
 - getPassedDays()		:	get the number of days (or records) which can't be planned any more
 - getTotalPlanMiles()	:	get the number of miles that is planned (before and after)
 - getRemainPlanMiles()	:	get the number of miles that is planned for the following days
 - getRunMiles()			:	get the number of miles that you run
-
+=========================================================================================
 - getWeekInfo()			:	get info of a goal {duration, goal}
 	+ duration		: 	"Sep 14 - Sep 20"
 	+ goal			: 	5 (float)
@@ -26,7 +28,7 @@ GoalPlan functions:
 	+ total			:	1.10 (float)		
 - getDayInfoByName(n)	:	get info of a day by its name {text, date, temperature, run, total}
 - getTodayInfo()		:	get info of today {text, date, temperature, run, total}
-
+=========================================================================================
 - planDayByIndex(i, miles, confirm)		:	set the goal of day i to miles (and dismiss the alert)
 	+ planDayByIndex(i, miles)			- 	just drag the slider, don't touch the alert
 	+ planDayByIndex(i, miles, false) 	- 	drag the slider and choose NO when the alert shown up
@@ -34,12 +36,16 @@ GoalPlan functions:
 	
 - planDayByName(n, miles, confirm)		:	similar to planDayByIndex but use NAME instead
 	+ planDayByName("Sat Sep 15th", 0, 4.3)
-
+=========================================================================================
 - isInEditMode()						:	check if the current view is edit mode
 - isHardAlertShown()					:	check if the Too Hard alert is CURRENTLY showing up
 - confirmHardAlert(confirm)				:	close the alert by pressing specify button
 	+ confirm == true || not defined	-	YES button
 	+ confirm == false					-	NO button
+=========================================================================================
+
+MAY BE CHANGES:
+
 */
 
 maxMPD = 2.95;

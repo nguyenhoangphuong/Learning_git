@@ -1,10 +1,3 @@
-#import "SignUp.js"
-#import "UserInfo.js"
-#import "PlanChooser.js"
-#import "GoalProgress.js"
-#import "RunView.js"
-#import "GoalPlan.js"
-#import "Settings.js"
 #import "_Tips.js"
 #import "../core/testcaseBase.js"
 
@@ -12,119 +5,266 @@
 This file provides methods to navigate to specify view.
 This will go from nothing to the specify view, so kill the app first.
 
---- Usage:
-nav.toSignUp();
-nav.toUserInfo();
-...
+--- Functions:
+- toHome()					:	to Home screen
+- toUserInfo(email, pwd)	:	to UserInfo screen
+	+ null, null			:	go to UserInfo by choosing [Try out] without email
+	+ email, null			:	go to UserInfo by [Try out] with email
+	+ email, pwd			:	go to UserInfo by [Log in]
+- toActivity(email, pwd, userinfo)	:	go to ActivitiyChooser screen
+	+ userinfo = null		:	use default user info
+	+ userinfo = {h1, h2, w1, w2, age, sex, unit}
+		ex:	     {100, 0.1, 1, 0.75, 20, "male" ("female"), "si" ("us")}
+- toPlanChooser(email, pwd, userinfo, activity)
+	+ activity: name (string) or index (int)
+		ex: "Swimming" or 3
+- toWeekGoal(email, pwd, userinfo, activity, number)
+	+ number: number of unit / miles / ...
+		ex: 30
+- toTodayGoal(email, pwd, userinfo, activity, number)
+- toRunView(email, pwd, userinfo, activity, number)
+- toGoalPlan(email, pwd, userinfo, activity, number)
+- toHistory(email, pwd, userinfo, activity, number)
+- toSettings(email, pwd, userinfo, activity, number)
 */
 
 function Navigator()
 {
 	// =========================== Methods =====================
-	this.toSignUp = toSignUp;
+	this.toHome = toHome;	
 	this.toUserInfo = toUserInfo;
+	this.toActivity = toActivity;
+	this.toPlanChooser = toPlanChooser;	
 	this.toWeekGoal = toWeekGoal;
-	this.toPlanChooser = toPlanChooser;
 	this.toTodayGoal = toTodayGoal;
 	this.toRunView = toRunView;
+	this.toGoalPlan = toGoalPlan;
 	this.toHistory = toHistory;
 	this.toSettings = toSettings;
 	
 	// ====================== Method definition ================
-	function toSignUp()
+	function toHome()
 	{
-		// just wait for the app to load ^^
+		// wait for the app to load
 		wait(3);
+		print("=> Go to Home screen...");
+		
+		// skip the introduce
+		log("Skip the introduce");
+		app.mainWindow().buttons()[0].tap();
+		wait(0.5);
+		
+		// return the Home view object
+		h = new Home();
+		if(h.isVisible())
+			return h;
+		
+		return null;
 	}
 	
-	function toUserInfo()
+	function toUserInfo(email, password)
 	{
-		toSignUp();
-
-		var signup = new SignUp();
-		if (signup.isEmailTextFieldVisible() == 1) {
-			log("Email is visible");
+		// go to Home first
+		h = toHome();
+		print("=> Go to UserInfo screen...");
+		
+		// checking type
+		if(email == null && password == null)
+			h.tryout();
+		
+		if(email != null && password == null)
+			h.tryout(email);
+		
+		if(email != null && password != null)
+			h.login(email, password);
+		
+		// return the UserInfo view object
+		ui = new UserInfo();
+		if(ui.isVisible())
+			return ui;
+		
+		return null;	
+	}
+	
+	function toActivity(email, password, uinfo)
+	{
+		// go to UserInfo first
+		ui = toUserInfo(email, password);
+		print("=> Go to Activity screen...")
+		
+		// pick value
+		if(uinfo != null)
+		{
+			ui.setInfo(uinfo.age, uinfo.w1, uinfo.w2, uinfo.h1, uinfo.h2);
+			ui.setSex(uinfo.sex);
+			ui.setUnit(uinfo.unit);
 		}
-		else
-			log("No email visible");
-
-		signup.fillEmailAndSubmit("abcd@test.com");
-		if (signup.isEmailTextFieldVisible() == 1) {
-			UILogger.logFail("Should succeed");
-		}		
+		
+		ui.submit();
+		wait(1);
+		
+		// return Activity view object
+		a = new Activity();
+		if(a.isVisible())
+			return a;
+		
+		return null;
 	}
 	
-	function toPlanChooser()
+	function toPlanChooser(email, password, uinfo, activity)
 	{
-		toUserInfo();
-		userinfo = new UserInfo();
-		userinfo.submit();
-		wait();
+		// go to Activity first
+		a = toActivity(email, password, uinfo);
+		print("=> Go to PlanChooser screen...");
+		
+		// pick activity type
+		a.pickActivity(activity);
+		
+		// return PlanChooser view object
+		pc = new PlanChooser();
+		if(pc.isVisible())
+			return pc;
+		
+		return null;
 	}
 	
-	function toWeekGoal()
+	function toWeekGoal(email, password, uinfo, activity, number)
 	{
+		// wait for the app to load
 		wait(3);
-		signup = new SignUp();
+		h = new Home();
 		
 		// first time running
-		if(signup.isEmailTextFieldVisible())
+		if(h.isVisible())
 		{
-			toPlanChooser();
-			plan = new PlanChooser();
-			plan.selectEasy();
+			// to PlanChooser first
+			pc = toPlanChooser(email, password, uinfo, activity);
+			print("=> Go to WeekGoal screen...");
+			
+			// select plan
+			pc.selectOther();
+			pc.setValue(number);
+			pc.done();
+			
+			// close tips
+			wait();
+			tips.closeTips(1);
 		}
-		// second time
+		// second time and on
 		else
 		{
 			goal = new GoalProgress();
 			goal.scrollToWeekProgress();
 		}
 		
-		wait();
-		tips.closeTips(1);
+		// return GoalProgress view object
+		gp = new GoalProgress();
+		if(gp.isWeekGoalVisible())
+			return gp;
+		
+		return null;
 	}
 	
-	function toTodayGoal()
+	function toTodayGoal(email, password, uinfo, activity, number)
 	{
+		// wait for app to load
 		wait(3);
-		signup = new SignUp();
+		h = new Home();
 
 		// first time running
-		if(signup.isEmailTextFieldVisible())
+		if(h.isVisible())
 		{
-			toWeekGoal();
-			goal = new GoalProgress();
-			goal.scrollToDayGoal();
+			// go to WeekGoal first
+			gp = toWeekGoal(email, password, uinfo, activity, number);
+			print("=> Go to TodayGoal screen...");
+			 
+			// swipe down
+			gp.scrollToDayGoal();
+			
+			return gp;
 		}			
 		
 		// since second time the app will
 		// automatic open this page from start
-	}
-	
-	function toRunView()
-	{
-		toTodayGoal();
-		goal = new GoalProgress();
-		goal.start();
 		
-		wait();
+		// return GoalProgress view object
+		gp = new GoalProgress();
+		if(gp.isTodayGoalVisible())
+			return gp;
+		
+		return null;
 	}
 	
-	function toHistory()
+	function toRunView(email, password, uinfo, activity, number)
 	{
-		toTodayGoal();
-		goal = new GoalProgress();
-		goal.scrollToHistory();
+		// go to TodayGoal first
+		gp = toTodayGoal(email, password, uinfo, activity, number);
+		print("=> Go to RunView screen...");
+		
+		// click Start
+		goal.start();
 		wait();
+		
+		// return RunView view object
+		rv = new RunView();
+		if(rv.isVisible())
+			return rv;
+		
+		return null;
+	}
+	
+	function toGoalPlan(email, password, uinfo, activity, number)
+	{
+		// go to TodayGoal first
+		gp = toTodayGoal(email, password, uinfo, activity, number);
+		print("=> Go to GoalPlan screen...");
+		
+		// swipe right
+		gp.scrollToGoalPlan();
+		wait();
+		
+		// return RunView view object
+		p = new GoalPlan();
+		if(p.isVisible())
+			return p;
+		
+		return null;
+	}
+	
+	function toHistory(email, password, uinfo, activity, number)
+	{
+		// go to GoalPlan first
+		p = toGoalPlan(email, password, uinfo, activity, number);
+		print("=> Go to History screen...");
+		
+		// swipe down
+		p.scrollToHistory();
+		wait();
+		
+		// return RunView view object
+		h = new History();
+		if(h.isVisible())
+			return h;
+		
+		return null;
 	}
 	
 	function toSettings()
 	{
-		toTodayGoal();
-		goal = new GoalProgress();
-		goal.scrollToSettings();
+		// go to TodayGoal first
+		gp = toTodayGoal(email, password, uinfo, activity, number);
+		print("=> Go to Setting screen...");
+		
+		// swipe right
+		gp.scrollToSettings();
 		wait();
+		
+		// return RunView view object
+		s = new Settings();
+		if(s.isVisible())
+			return s;
+		
+		return null;
 	}
 }
 

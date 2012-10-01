@@ -9,10 +9,12 @@ List of functions:
 - isTryoutVisible()				:	check if current view is TryOut
 - isEmailTextFieldVisible()		:	check if email field is visible
 - isPasswordTextFieldVisible()	:	check if password field is visible
+- isSkipButtonVisible()			:	check if [Skip] button is visible
 =========================================================================================
 - tapLogin()					:	tap [Login] button
 - tapSignup()					:	tap [Sign up] button
 - tapTryout()					:	tap [Try out] button
+- tapSkip()						:	tap [Skip] button (visible only when choose Tryout)
 - fillEmail(email)				:	fill the email field with <email>
 - fillPassword(pwd)				:	fill the password field with <pwd>
 - submit()						:	submit the form
@@ -47,12 +49,15 @@ function Home()
 	this.isLoginVisible = isLoginVisible;
 	this.isSignupVisible = isSignupVisible;
 	this.isTryoutVisible = isTryoutVisible;
+	
+	this.isSkipButtonVisible = isSkipButtonVisible;
 	this.isEmailTextFieldVisible = isEmailTextFieldVisible;
 	this.isPasswordTextFieldVisible = isPasswordTextFieldVisible;
 	
 	this.tapLogin = tapLogin;
 	this.tapSignup = tapSignup;
 	this.tapTryout = tapTryout;
+	this.tapSkip = tapSkip;
 	this.fillEmail = fillEmail;
 	this.fillPassword = fillPassword;
 	this.submit = submit;
@@ -105,6 +110,14 @@ function Home()
 		return exist;
 	}
 	
+	function isSkipButtonVisible()
+	{
+		exist = tryoutBtn.isVisible() && tryoutBtn.name() == "Skip";
+		
+		log("Skip visible: " + exist);
+		return exist;
+	}
+	
 	function isEmailTextFieldVisible()
 	{
 		exist = emailField.isValid() && emailField.isVisible();
@@ -146,6 +159,16 @@ function Home()
 		
 		wait(0.5);
 		tryoutBtn.tap();
+		wait(0.5);
+	}
+	
+	function tapSkip()
+	{
+		log("Tap [Try out] button");
+		
+		wait(0.5);
+		skipBtn = mainView.buttons()[0];
+		skipBtn.tap();
 		wait(0.5);
 	}
 	
@@ -270,7 +293,12 @@ function Home()
 	function tryout(email)
 	{
 		tapTryout();
-		fillEmail(email);
-		submit();
+		if(typeof email == "undefined")
+			tapSkip();
+		else
+		{
+			fillEmail(email);
+			submit();		
+		}
 	}
 }
