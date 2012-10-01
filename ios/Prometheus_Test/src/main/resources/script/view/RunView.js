@@ -34,7 +34,7 @@ function RunView()
 	var btnMusicToggle = window.buttons()[0];
 	var btnMusicPrevious = window.buttons()[1];
 	var btnMusicNext = window.buttons()[2];
-	var btnDone = window.buttons()[3];
+	var btnDone = window.buttons()["Done"];
 	var btnToggle = window.buttons()[4];
 	var btnFinish = window.buttons()[5];
 	
