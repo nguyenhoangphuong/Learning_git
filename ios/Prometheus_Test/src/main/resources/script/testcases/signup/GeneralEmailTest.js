@@ -8,12 +8,12 @@ else
 	fail();
 
 
-var signup = new SignUp();
-
-signup.fillEmailAndSubmit("@@domain.com");
-var msg = signup.getErrorMessage();
-if (msg == signup.MsgInvalid)
-	pass();
+var signup = new Home();
+signup.fillEmail(email);
+signup.fillPassword("123456");
+signup.submit()	;
+if (signup.isInvalidEmailAlertShown())
+	UIALogger.logPass("Pass");
 else
 {
 	log("current msg: " + msg);

@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import com.misfit.ios.AppHelper;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.utils.ShortcutsTyper;
-public class InvalidEmailValidate extends AutomationTest{
+public class SignupInvalidate extends AutomationTest{
 	
 	@Test(groups = { "ios", "Prometheus", "MVP1", "email" })
 	public void InValidEmailTest() throws InterruptedException,
@@ -15,7 +15,7 @@ public class InvalidEmailValidate extends AutomationTest{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-				AppHelper.getAppPath(), "script/testcases/email/InvalidEmailValidation.js");
+				AppHelper.getAppPath(), "script/testcases/signup/InvalidEmailValidation.js");
 	
 	}
 }
