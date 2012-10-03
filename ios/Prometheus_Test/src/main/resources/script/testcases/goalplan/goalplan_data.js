@@ -1,3 +1,4 @@
+//=================== Test data generator ===================== //
 function toDayString(dateObj, today)
 {
 	if(typeof today == "undefined") today = false;
@@ -85,3 +86,17 @@ function e53(index)
 	
 	return e;
 }
+
+//======================== Test data ======================== //
+norm = 
+{
+	maxMPD : 3.25,
+	e51 :	e51(10),
+	e52	:	e52(),
+	e53	:
+	{
+		e531 :	{i: 0, e: e53(0)},
+		e532 :	{i: 1, e: e53(1)},
+		e533 :	{i: 4, e: e53(4)},
+	},
+};

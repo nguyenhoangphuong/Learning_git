@@ -4,32 +4,9 @@
 // ============================================================= //
 //	NAVIGATION
 // ============================================================= //
-function toGoalPlan(opt, val)
+function toGoalPlan()
 {
-	nav.toPlanChooser();
-	plan = new PlanChooser();
-
-	if(opt == 0)
-		plan.selectEasy();
-	if(opt == 1)
-		plan.selectNormal();
-	if(opt == 2)
-		plan.selectActive();
-	if(opt == 3)
-	{
-		plan.selectOther();
-		plan.setValue(val);
-		plan.done();
-	}
-	
-	gp = new GoalProgress();
-	gp.scrollToDayGoal();
-	
-	wait(3);
-	gp.scrollToGoalPlan();
-	
-	wait(2);
-	tips.closeTips(5);
+	nav.toGoalPlan("existed@test.com", "123456", null, "Running", 10);
 }
 
 // ============================================================= //
