@@ -38,6 +38,7 @@ function Alert()
 	this.InvalidEmailMsg = "Email is invalid";
 	this.InvalidUserMsg = "User not found";
 	this.ExistedUserMsg = "User existed";
+	this.WrongLoginMsg = "Wrong email or password";
 	
 	this.LocationConfirm = "\“Shine\” Would Like to Use Your Current Location";
 	this.NoEmailAccount = "Warning";
@@ -140,6 +141,7 @@ function PrometheusAlertHandler(_alert)
 		(name == alert.Error && message == alert.InvalidEmailMsg)	||
 		(name == alert.Error && message == alert.InvalidUserMsg)	||
 		(name == alert.Error && message == alert.ExistedUserMsg)	||
+		(name == alert.Error && message == alert.WrongLoginMsg)		||
 		(name == alert.LocationConfirm)								||
 		(name == alert.NoEmailAccount))
 	{

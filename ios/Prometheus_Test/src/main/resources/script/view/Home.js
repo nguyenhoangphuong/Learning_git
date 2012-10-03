@@ -24,6 +24,7 @@ List of functions:
 - isInvalidEmailAlertShown()	:	<bool> checking invalid email alert is shown
 - isInvalidUserAlertShown()		:	<bool> checking user not found alert is shown
 - isExistedUserAlertShown()		:	<bool> checking if user existed when sign up alert shown
+- isWrongLoginAlertShown()		:	<bool> checking if wrong email or pwd alert shown
 =========================================================================================
 - login(email, pwd)				:	shortcut for click [Login], fill form, and submit
 - signup(email, pwd)			:	shortcut for click [Sign up], fill form, and submit
@@ -67,6 +68,7 @@ function Home()
 	this.isInvalidEmailAlertShown = isInvalidEmailAlertShown;
 	this.isInvalidUserAlertShown = isInvalidUserAlertShown;
 	this.isExistedUserAlertShown = isExistedUserAlertShown;
+	this.isWrongLoginAlertShown = isWrongLoginAlertShown;
 	
 	this.login = login;
 	this.signup = signup;
@@ -265,6 +267,18 @@ function Home()
 		alert.reset();
 
 		return shown;
+	}
+	
+	function isWrongLoginAlertShown()
+	{
+		shown = alert.alertTitle != null && 
+			alert.alertTitle == alert.Error && 
+			alert.alertMsg == alert.WrongLoginMsg;
+		log("Checking alert: [" + alert.alertTitle + "] - [" + alert.alertMsg + "]: " + shown);
+
+		alert.reset();
+
+		return shown;	
 	}
 	
 	
