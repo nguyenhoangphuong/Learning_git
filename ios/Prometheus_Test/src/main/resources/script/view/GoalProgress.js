@@ -5,42 +5,41 @@
 
 /*
 GoalProgress function:
-=========================================================================================
-- isWeekGoalVisible()		:	check if current view is WeekProgress view
-- isTodayGoalVisible()		:	check if current view is TodayProgress view
-=========================================================================================
-- scrollToWeekGoal()		:	scroll up from today to week view
-- scrollToDayGoal()			:	scroll down from week to day view
-- scrollToGoalPlan()		:	scroll right to goal planning view
-- scrollToSettings()		:	scroll left to settings view
-=========================================================================================
-- start()					:	press start button
-- simulateARun()			: 	set location, press start and simulate a run
-- simulateARunDontStop()	:
-=========================================================================================
-- getWeekInfo()				:	get week information, return an object contains:
-	+ text		:	"7 days goal: 5 miles" (string)
-	+ days		:	7 (int)
-	+ goal		:	5 (float)
-	+ percent	:	25 (float)
-	+ distance	:	1.2 (float)
-- getTodayInfo()			:	get today information, return an object contains:
-	+ text		:	"Today's goal: 0.74 miles"
-	+ goal		:	0.74 (float)
-	+ percent	:	7 (float)
-- getWeatherInfo()			:	get the location, temperature and image name
-	+ location	:	"Ho Chi Minh city"
-	+ temperature:	"30 ºC"
-	+ image		:	"sunny.png"
-- getGPSSignal()			:	get the gps signal strength
-	+ return: "Fair"
-- getQuote()				:	get the random quote
-=========================================================================================
-- setANewGoal()				: 	set a new goal after finish the week goal
-- isSetANewGoalBtnVisible()	:   check if the goal has been achieved
-=========================================================================================
+================================================================================
+- isWeekGoalVisible()	: check if current view is WeekProgress view
+- isTodaysGoalVisible()	: check if current view is TodayProgress view
+================================================================================
+- scrollToWeekGoal()	: scroll up from today to week view
+- scrollToTodaysGoal()	: scroll down from week to day view
+- scrollToPlanner()		: scroll right to goal planning view
+- scrollToSettings()	: scroll left to settings view
+================================================================================
+- start()				: press start button
+- simulateARun()		: set location, press start and simulate a run
+- simulateARunDontStop():
+================================================================================
+- getWeekInfo()			: get week information, return an object contains:
+	+ text		: "7 days goal: 5 miles" (string)
+	+ days		: 7 (int)
+	+ goal		: 5 (float)
+	+ percent	: 25 (float)
+	+ distance	: 1.2 (float)
+- getTodayInfo()		: get today information, return an object contains:
+	+ text		: "Today's goal: 0.74 miles"
+	+ goal		: 0.74 (float)
+	+ percent	: 7 (float)
+- getWeatherInfo()		: get the location, temperature and image name
+	+ location		: "Ho Chi Minh city"
+	+ temperature	: "30 ºC"
+	+ image			: "sunny.png"
+- getGPSSignal()		: get the gps signal strength
+	+ return	: "Fair"
+- getQuote()			: get the random quote
+================================================================================
+- setNewGoal()				: set a new goal after finish the week goal
+- isSetNewGoalBtnVisible()	: check if the goal has been achieved
+================================================================================
 */
-
 
 function GoalProgress()
 {
@@ -64,11 +63,11 @@ function GoalProgress()
 	
 	// Methods
 	this.isWeekGoalVisible = isWeekGoalVisible;
-	this.isTodayGoalVisible = isTodayGoalVisible;
+	this.isTodaysGoalVisible = isTodaysGoalVisible;
 	
 	this.scrollToWeekGoal = scrollToWeekGoal;
-	this.scrollToDayGoal = scrollToDayGoal;
-	this.scrollToGoalPlan = scrollToGoalPlan;
+	this.scrollToTodaysGoal = scrollToTodaysGoal;
+	this.scrollToPlanner = scrollToPlanner;
 	this.scrollToSettings = scrollToSettings;
 	
 	this.start = start;
@@ -81,8 +80,8 @@ function GoalProgress()
 	this.getGPSSignal = getGPSSignal;
 	this.getQuote = getQuote;
 	
-	this.setANewGoal=setANewGoal;
-	this.isSetANewGoalBtnVisible=isSetANewGoalBtnVisible;
+	this.setNewGoal=setNewGoal;
+	this.isSetNewGoalBtnVisible=isSetNewGoalBtnVisible;
 	
 	// Methods definition
 	function isWeekGoalVisible()
@@ -94,7 +93,7 @@ function GoalProgress()
 		return exist;
 	}
 
-	function isTodayGoalVisible()
+	function isTodaysGoalVisible()
 	{
 		return !isWeekGoalVisible();
 	}
@@ -106,21 +105,21 @@ function GoalProgress()
 		log("Scroll to WeekGoal");
 	}
 	
-	function scrollToDayGoal()
+	function scrollToTodaysGoal()
 	{
 		wait();
 		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.8}, endOffset:{x:0.5, y:0.2}, duration:0.3});
-		log("Scroll to TodayGoal");
+		log("Scroll to TodaysGoal");
 		
 		wait(3);
 		tips.closeTips(1);
 	}
 	
-	function scrollToGoalPlan()
+	function scrollToPlanner()
 	{
 		wait();
 		mainView.scrollRight();
-		log("Scroll to GoalGoal")
+		log("Scroll to Planner")
 		
 		wait(2);
 		tips.closeTips(5);
@@ -244,7 +243,7 @@ function GoalProgress()
 	function simulateRunAndStop(miles, stop, error) 
 	{
 		log("Run " + miles);
-		setA(error);
+		setN(error);
 		start();
 		wait();
 		
@@ -303,13 +302,13 @@ function GoalProgress()
 		target.setLocationWithOptions(pointB.location,pointB.options);
 	}
 	
-	function isSetANewGoalBtnVisible() 
+	function isSetNewGoalBtnVisible() 
 	{
 		var btn = mainView.buttons()["Set a new goal"];
 		return btn.isVisible();
 	}
 	
-	function setANewGoal(planType) 
+	function setNewGoal(planType) 
 	{
 		var btn = mainView.buttons()["Set a new goal"];
 		btn.tap();
