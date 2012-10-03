@@ -252,3 +252,11 @@ function lockApp(type, atime)
         target.delay(2);
     }
 }
+
+function generateSignupAccount()
+{
+	today = new Date();
+	ms = today.getTime();
+  
+	return "test" + ms.toString() + "@test.com";
+}
