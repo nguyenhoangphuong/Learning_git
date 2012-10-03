@@ -32,8 +32,7 @@ List of functions:
 - login(email, pwd)				: shortcut for click Login, fill form and submit
 - signUp(email, pwd)			: shortcut for click "Sign up", fill form and
 									submit
-- tryOut(email)					: shortcut for click "Try out", fill form and
-									submit
+- tryOut()						: shortcut for click "Try out"
 ================================================================================
 */
 
@@ -365,17 +364,9 @@ function Home()
 		wait(3);
 	}
 	
-	function tryOut(email)
+	function tryOut()
 	{
 		skipWhatsNew();
 		tapTryOut();
-		
-		if (typeof email == "undefined")
-			tapSkip();
-		else
-		{
-			fillEmail(email);
-			submit();		
-		}
 	}
 }
