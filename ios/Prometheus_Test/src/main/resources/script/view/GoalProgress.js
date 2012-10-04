@@ -47,19 +47,21 @@ function GoalProgress()
 	var window = app.mainWindow();
 	var mainView = window.scrollViews()[0];
 	
-	var weekGoal = mainView.staticTexts()[2];
-	var weekProgress = mainView.staticTexts()[3];
-	var todayGoal = mainView.staticTexts()[7];
-	var todayProgress = mainView.staticTexts()[8];
+	var weekGoal = mainView.staticTexts()[0];
+	var weekProgress = mainView.staticTexts()[1];
+	var todayGoal = mainView.staticTexts()[5];
+	var todayProgress = mainView.staticTexts()[6];
 
-	var temperature = mainView.staticTexts()[5];
-	var location = mainView.staticTexts()[4];
+	var location = mainView.staticTexts()[2];
+	var temperature = mainView.staticTexts()[3];
 	var weatherimg = mainView.images()[1];
 
-	var gps = mainView.staticTexts()[9];
-	var quote = mainView.staticTexts()[10];
+	var gps = mainView.staticTexts()[7];
+	var quote = mainView.staticTexts()[8];
 		
-	var startBtn = mainView.buttons()[6];
+	var startBtn = mainView.buttons()[3];
+	var musicBtn = mainView.buttons()[2];
+	var newGoalBtn = mainView.buttons()[0];
 	
 	// Methods
 	this.isWeekGoalVisible = isWeekGoalVisible;
@@ -87,7 +89,7 @@ function GoalProgress()
 	function isWeekGoalVisible()
 	{
 		page = window.pageIndicators()[0].value();
-		exist = page == "page 2 of 3" && weekProgress.isValid() && weekProgress.isVisible();
+		exist = !(page == "page 2 of 3" && !weekProgress.isVisible() && !weekGoal.isVisible() && startBtn.isVisible());
 		
 		log("WeekGoal visible: " + exist);
 		return exist;
@@ -95,7 +97,11 @@ function GoalProgress()
 
 	function isTodaysGoalVisible()
 	{
-		return !isWeekGoalVisible();
+		page = window.pageIndicators()[0].value();
+		exist = page == "page 2 of 3" && !weekProgress.isVisible() && !weekGoal.isVisible() && startBtn.isVisible();
+		
+		log("TodayGoal visible: " + exist);
+		return exist;
 	}
 	
 	function scrollToWeekGoal()
@@ -304,14 +310,12 @@ function GoalProgress()
 	
 	function isSetNewGoalBtnVisible() 
 	{
-		var btn = mainView.buttons()["Set a new goal"];
-		return btn.isVisible();
+		return newGoalBtn.isVisible();
 	}
 	
 	function setNewGoal(planType) 
 	{
-		var btn = mainView.buttons()["Set a new goal"];
-		btn.tap();
+		newGoalBtn.tap();
 		var planChooser = new PlanChooser();
 		if (planType == "easy") {
 			planChooser.selectEasy();

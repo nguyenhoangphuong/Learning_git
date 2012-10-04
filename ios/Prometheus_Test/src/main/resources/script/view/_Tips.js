@@ -1,3 +1,4 @@
+#import "WhatsNew.js"
 #import "Home.js"
 #import "UserInfo.js"
 #import "PlanChooser.js"

@@ -35,6 +35,8 @@ This section is the place where you list functions. Please list them as comments
 	+ lockApp("Home", 2)
 	+ lockApp("Lock", 2)
 
+- listAllStaticTexts(parent)	:	list all the static texts content (name) of current parent
+- listAllButtons(parent)		:	list all the buttons content (name) of current parent
 --------------------------------------------------------------------------------
 IMPLEMENTATION
 This section is the place where you implement functions declared above
@@ -175,7 +177,6 @@ function wheelPick(picker, wheelIndex, value)
 		wait(5);
 		current = wheel.value();
 	}
-	log("Current= " + current);
 	current = current.substring(0, current.lastIndexOf("."));
 	
 	// find the index of current and expect value
@@ -183,9 +184,6 @@ function wheelPick(picker, wheelIndex, value)
 	end = items.indexOf(value);
 	steps = Math.abs(end - start);
 	
-	log("start: " + items[start] + " : " + start.toString());
-	log("end: " + items[end] + " : " + end.toString());
-	log("current: " + current + " - value: " + value);
 
 	// invalid value
 	if(end < 0)
@@ -259,4 +257,22 @@ function generateSignupAccount()
 	ms = today.getTime();
   
 	return "test" + ms.toString() + "@test.com";
+}
+
+function listAllStaticTexts(p)
+{
+	texts = p.staticTexts();
+	n = texts.length;
+	
+	for(i = 0; i < n; i++)
+		print(i + ": " + texts[i].name());
+}
+
+function listAllButtons(p)
+{
+	btns = p.buttons();
+	n = btns.length;
+	
+	for(i = 0; i < n; i++)
+		print(i + ": " + btns[i].name());
 }

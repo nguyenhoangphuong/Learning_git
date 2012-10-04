@@ -1,8 +1,6 @@
 #import "_Tips.js"
 #import "MultiGoalChooser.js"
 #import "../core/testcaseBase.js"
-#import "Home.js"
-#import "UserInfo.js"
 
 /*
 This file provides methods to navigate to specify view.
@@ -48,88 +46,113 @@ function Navigator()
 	// ====================== Method definitions ================
 	function toHome()
 	{
+		// wait for app to load
+		wait(3);
+		
+		// skip the whats news if there is one
+		var wn = new WhatsNew();
+		if(wn.isVisible())
+		{
+			print("=> Skip the What news...");
+			wn.tapButton();
+			wait(1);
+			print("=> Go to Home screen...");
+		}
+		
+		// reached
 		var h = new Home();
-		
-		log("Go to Home screen ...");
-		h.skipWhatsNew();
-		
-		return h.isVisible() ? h : null;
+		return (h.isVisible()? h : null);
 	}
 	
-	function toUserInfo()
+	function toUserInfo(email, password)
 	{
-		var h = new Home();
+		// go to Home first
+		toHome();
+		h = new Home();
 		
-		log("Go to UserInfo screen by trying out ...");
-		h.tryOut();
-		wait(2);
+		if(h.isVisible())
+		{
+			if(email == null || (typeof email == "undefined"))
+			{
+				// try out
+				print("=> Go to UserInfo screen by trying out ...");
+				h.tryOut();
+				wait(2);
+			}
+			else
+			{
+				// sign up
+				print("=> Go to UserInfo screen by signing up ...");
+				h.signUp(email, password);
+				wait(2);
+			}
+		}
 		
+		// reached
 		var ui = new UserInfo();
-		
 		return ui.isVisible() ? ui : null;
 	}
 	
-	function toMultiGoalChooser(uinfo)
+	function toMultiGoalChooser(email, password, uinfo)
 	{
 		// go to UserInfo first
-		var ui = toUserInfo();
+		toUserInfo(email, password);
+		ui = new UserInfo();
 		
-		if (ui == null)
+		if (ui.isVisible())
 		{
-			log("Cannot go to UserInfo screen");
-			return null;
+			print("=> Go to MultiGoalChooser screen ...");
+			
+			// pick value
+			if (uinfo != null)
+			{
+				ui.setSex(uinfo.sex);
+				ui.setUnit(uinfo.unit);
+				ui.setInfo(uinfo.age, uinfo.w1, uinfo.w2, uinfo.h1, uinfo.h2);
+			}
+			
+			ui.submit();
+			wait(1);
 		}
 		
-		log("Go to MultiGoalChooser screen ...");
-		
-		// pick value
-		if (uinfo != null)
-		{
-			ui.setInfo(uinfo.age, uinfo.w1, uinfo.w2, uinfo.h1, uinfo.h2);
-			ui.setSex(uinfo.sex);
-			ui.setUnit(uinfo.unit);
-		}
-		
-		ui.submit();
-		wait(1);
-		
+		// reached
 		a = new MultiGoalChooser();
-		
 		return a.isVisible() ? a : null;
 	}
 	
 	function toPlanChooser(email, password, uinfo, activity)
 	{
 		// go to Activity first
-		a = toActivity(email, password, uinfo);
-		print("=> Go to PlanChooser screen...");
+		toMultiGoalChooser(email, password, uinfo);
+		a = new MultiGoalChooser();
 		
-		// pick activity type
-		a.pickActivity(activity);
+		if(a.isVisible())
+		{
+			print("=> Go to PlanChooser screen...");
+			
+			// pick activity type
+			a.pickActivity(activity);
+		}
 		
-		// return PlanChooser view object
-		pc = new PlanChooser();
-		if(pc.isVisible())
-			return pc;
-		
-		return null;
+		// reached
+		pc = new PlanChooser();	
+		return (pc.isVisible() ? pc : null);
 	}
 	
 	function to7DayGoal(email, password, uinfo, activity, number)
 	{
-		// wait for the app to load
-		wait(3);
-		h = new Home();
+		// to PlanChooser first
+		toPlanChooser(email, password, uinfo, activity);
+		pc = new PlanChooser();
 		
-		// first time running
-		if(h.isVisible())
+		// if current view is PlanChooser
+		if(pc.isVisible())
 		{
-			// to PlanChooser first
-			pc = toPlanChooser(email, password, uinfo, activity);
-			print("=> Go to WeekGoal screen...");
+			print("=> Go to WeekGoal screen from UserInfo...");
 			
 			// select plan
 			pc.selectOther();
+			wait();
 			pc.setValue(number);
 			pc.done();
 			
@@ -137,49 +160,36 @@ function Navigator()
 			wait();
 			tips.closeTips(1);
 		}
-		// second time and on
+		// else: then it must be TodayGoal
 		else
 		{
 			goal = new GoalProgress();
-			goal.scrollToWeekProgress();
+			
+			if(goal.isTodaysGoalVisible())
+			{
+				print("=> Go to WeekGoal screen from TodayGoal...");
+				goal.scrollToWeekGoal();
+			}
 		}
 		
-		// return GoalProgress view object
+		// reached
 		gp = new GoalProgress();
-		if(gp.isWeekGoalVisible())
-			return gp;
-		
-		return null;
+		return (gp.isWeekGoalVisible() ? gp : null);
 	}
 	
 	function toTodaysGoal(email, password, uinfo, activity, number)
 	{
-		// wait for app to load
-		wait(3);
-		h = new Home();
-
-		// first time running
-		if(h.isVisible())
+		// to WeekGoal first
+		to7DayGoal(email, password, uinfo, activity, number);
+		goal = new GoalProgress();
+		
+		if(goal.isWeekGoalVisible())
 		{
-			// go to WeekGoal first
-			gp = to7DayGoal(email, password, uinfo, activity, number);
 			print("=> Go to TodayGoal screen...");
-			 
-			// swipe down
-			gp.scrollToDayGoal();
-			
-			return gp;
-		}			
+			goal.scrollToTodaysGoal();
+		}
 		
-		// since second time the app will
-		// automatic open this page from start
-		
-		// return GoalProgress view object
-		gp = new GoalProgress();
-		if(gp.isTodayGoalVisible())
-			return gp;
-		
-		return null;
+		return goal.isTodaysGoalVisible() ? goal : null;
 	}
 	
 	function toRunView(email, password, uinfo, activity, number)

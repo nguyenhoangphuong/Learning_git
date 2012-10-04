@@ -32,7 +32,7 @@ function MultiGoalChooser()
 	
 	this.chooseActivityWithIndex = chooseActivityWithIndex;
 	this.back = back;
-	this.chooseActivityWithName = chooseActivityWithName;
+	this.ChooseActivityWithName = ChooseActivityWithName;
 	
 	function isVisible()
 	{
@@ -66,6 +66,9 @@ function MultiGoalChooser()
 		mainWindow.tableViews()[nameTableView].cells()[name].tap();
 	}
     
-    	
+    function pickActivity(id)
+    {
+    	mainWindow.tableViews()[nameTableView].cells()[id].tap();
+    }
 	
 }

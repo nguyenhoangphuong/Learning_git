@@ -183,6 +183,7 @@ function PlanChooser()
 			doneBtn.tap();
 			log("Tap [Done]");
 			wait(2);
+			return;
 		}
 		
 		log("No [Done] button");

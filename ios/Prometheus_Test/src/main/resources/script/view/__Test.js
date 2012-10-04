@@ -266,11 +266,8 @@ function testMusicSetting()
 }
 
 start("Demo");
-<<<<<<< Updated upstream
-testSettings();
-=======
-var mtc = new MultiGoalChooser();
-mtc.back();
-
->>>>>>> Stashed changes
+nav.toTodaysGoal(null, null, {age: 35, w1: 80, w2: 0.5, h1: 1, h2: 0.65, sex: "female", unit: "si"}, "Running", 22);
+//view = app.mainWindow().scrollViews()[0];
+//listAllStaticTexts(view);
+//listAllButtons(view);
 pass("Demo pass");

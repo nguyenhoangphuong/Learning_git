@@ -56,13 +56,13 @@ function GoalPlan()
 	var mainView = window.scrollViews()[0];
 	var recordsView = mainView.scrollViews()[0];
 	
-	var autoBtn = mainView.buttons()[8];
-	var editBtn = mainView.buttons()[10];
-	var cancelBtn = mainView.buttons()[7];
-	var doneBtn = mainView.buttons()[9];
+	var autoBtn = mainView.buttons()[5];
+	var editBtn = mainView.buttons()[7];
+	var cancelBtn = mainView.buttons()[4];
+	var doneBtn = mainView.buttons()[6];
 
-	var weekDays = mainView.staticTexts()[12];
-	var weekGoal = mainView.staticTexts()[11];
+	var weekDays = mainView.staticTexts()[11];
+	var weekGoal = mainView.staticTexts()[10];
 
 	
 	// Methods

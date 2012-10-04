@@ -4,21 +4,15 @@
 List of functions:
 ================================================================================
 - isVisible()					: check if current view is Home
-- assignControls()				: assign buttons, textboxes, ...
-- isWhatsNewVisible()			: check if current view is "What's new"
-- isLoginVisible()				: check if current view is Login
+- isLoginVisible()				: check if current view is "Login"
 - isSignUpVisible()				: check if current view is "Sign up"
-- isTryOutVisible()				: check if current view is "Try out"
+
 - isEmailTextFieldVisible()		: check if email field is visible
 - isPasswordTextFieldVisible()	: check if password field is visible
-- isSkipButtonVisible()			: check if Skip button (when trying out) is
-									visible
 ================================================================================
-- skipWhatsNew()				: skip "What's New"
 - tapLogin()					: tap Login button
 - tapSignUp()					: tap "Sign up" button
 - tapTryOut()					: tap "Try out" button
-- tapSkip()						: tap Skip button (when trying out)
 - fillEmail(email)				: fill the email field with <email>
 - fillPassword(pwd)				: fill the password field with <pwd>
 - submit()						: submit the form
@@ -28,10 +22,10 @@ List of functions:
 - isInvalidEmailAlertShown()	: checking invalid email alert is shown
 - isInvalidUserAlertShown()		: checking user not found alert is shown
 - isExistedUserAlertShown()		: checking if "existed user" alert is shown
+- isWrongLoginAlertShown()		: checking if wrong password alert is shown
 ================================================================================
-- login(email, pwd)				: shortcut for click Login, fill form and submit
-- signUp(email, pwd)			: shortcut for click "Sign up", fill form and
-									submit
+- login(email, pwd)				: shortcut for click "Login", fill form and submit
+- signUp(email, pwd)			: shortcut for click "Sign up", fill form and submit
 - tryOut()						: shortcut for click "Try out"
 ================================================================================
 */
@@ -51,20 +45,15 @@ function Home()
 	
 	// Methods
 	this.isVisible = isVisible;
-	this.assignControls = assignControls;
-	this.isWhatsNewVisible = isWhatsNewVisible;
 	this.isLoginVisible = isLoginVisible;
 	this.isSignUpVisible = isSignUpVisible;
-	this.isTryOutVisible = isTryOutVisible;
+	
 	this.isEmailTextFieldVisible = isEmailTextFieldVisible;
 	this.isPasswordTextFieldVisible = isPasswordTextFieldVisible;
-	this.isSkipButtonVisible = isSkipButtonVisible;
 	
-	this.skipWhatsNew = skipWhatsNew;
 	this.tapLogin = tapLogin;
 	this.tapSignUp = tapSignUp;
 	this.tapTryOut = tapTryOut;
-	this.tapSkip = tapSkip;
 	this.fillEmail = fillEmail;
 	this.fillPassword = fillPassword;
 	this.submit = submit;
@@ -83,37 +72,10 @@ function Home()
 	// Method definition
 	function isVisible()
 	{	
-		exist = loginBtn.isVisible() &&
-				signUpBtn.isVisible() &&
-				tryOutBtn.isVisible() &&
-				loginBtn.name() == "Login";
+		exist = staticTextExist("No data is saved if you just try out");
 		
-		log("[" + loginBtn.name() +
-				"] [" + signUpBtn.name() +
-				"] [" + tryOutBtn.name() + "]");
-		log("Home visible: " + exist);
-		
+		log("Home visible: " + exist);		
 		return exist;
-	}
-	
-	function assignControls()
-	{
-		window = app.mainWindow();
-		mainView = window;
-		
-		loginBtn = mainView.buttons()[0];
-		signUpBtn = mainView.buttons()[1];
-		tryOutBtn = mainView.buttons()[2];
-		
-		emailField = mainView.textFields()[0];
-		pwdField = mainView.secureTextFields()[0];	
-	}
-	
-	function isWhatsNewVisible()
-	{
-		return mainView.buttons().length == 1 && // there is only 1 button
-				mainView.buttons()["Skip"].isValid() &&
-				mainView.buttons()["Skip"].isVisible(); // the button is Skip
 	}
 	
 	function isLoginVisible() 
@@ -139,17 +101,6 @@ function Home()
 		return exist;
 	}
 	
-	function isTryOutVisible()
-	{
-		exist = !loginBtn.isVisible() &&
-				!signUpBtn.isVisible() &&
-				tryOutBtn.isVisible() &&
-				tryOutBtn.name() == "Try out";
-
-		log("TryOut visible: " + exist);
-		
-		return exist;
-	}
 		
 	function isEmailTextFieldVisible()
 	{
@@ -169,27 +120,6 @@ function Home()
 		return exist;
 	}
 	
-	function isSkipButtonVisible()
-	{
-		exist = tryOutBtn.isVisible() && tryOutBtn.name() == "Skip";
-		
-		log("Skip visible: " + exist);
-		
-		return exist;
-	}
-
-	function skipWhatsNew()
-	{
-		wait(1);
-		
-		if (isWhatsNewVisible())
-		{
-			log('Skip "What\'s New" screen');
-			mainView.buttons()["Skip"].tap();
-			wait(3);
-			assignControls();
-		}
-	}
 	
 	function tapLogin()
 	{
@@ -215,16 +145,6 @@ function Home()
 		
 		wait(0.5);
 		tryOutBtn.tap();
-		wait(0.5);
-	}
-	
-	function tapSkip()
-	{
-		log("Tap [Skip] button");
-		
-		wait(0.5);
-		skipBtn = mainView.buttons()[0];
-		skipBtn.tap();
 		wait(0.5);
 	}
 	
@@ -366,7 +286,6 @@ function Home()
 	
 	function tryOut()
 	{
-		skipWhatsNew();
 		tapTryOut();
 	}
 }
