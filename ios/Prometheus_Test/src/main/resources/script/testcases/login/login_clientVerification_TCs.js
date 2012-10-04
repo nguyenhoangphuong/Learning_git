@@ -1,7 +1,7 @@
-#import "loginFuncs.js
+#import "loginFuncs.js"
 
 //======================== Test logic ======================== //
-start("StartScreen: Login client verification");
+start("LoginScreen: Login client verification");
 
 // navigate
 toStartScreen();
@@ -9,4 +9,4 @@ toStartScreen();
 // verify
 verifyClientVerification();
 
-pass("StartScreen: Login client verification");
+pass("LoginScreen: Login client verification");

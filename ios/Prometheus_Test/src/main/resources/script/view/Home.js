@@ -36,9 +36,12 @@ function Home()
 	var window = app.mainWindow();
 	var mainView = window;
 	
-	var loginBtn = mainView.buttons()[0];
-	var signUpBtn = mainView.buttons()[1];
-	var tryOutBtn = mainView.buttons()[2];
+	
+	
+	var titleLogin = "Login";
+	var titleSignup = "Signup";
+	var titleTryout = "Tryout"
+	
 	
 	var emailField = mainView.textFields()[0];
 	var pwdField = mainView.secureTextFields()[0];
@@ -47,6 +50,7 @@ function Home()
 	this.isVisible = isVisible;
 	this.isLoginVisible = isLoginVisible;
 	this.isSignUpVisible = isSignUpVisible;
+	this.isTryoutVisible = isTryoutVisible;
 	
 	this.isEmailTextFieldVisible = isEmailTextFieldVisible;
 	this.isPasswordTextFieldVisible = isPasswordTextFieldVisible;
@@ -80,25 +84,32 @@ function Home()
 	
 	function isLoginVisible() 
 	{
-		exist = loginBtn.isVisible() &&
-				!signUpBtn.isVisible() &&
-				!tryOutBtn.isVisible() &&
-				loginBtn.name() == "Login";
 
-		log("LogIn visible: " + exist);
-		
+		exist = mainView.buttons()[titleLogin].isVisible() && !mainView.buttons()[titleSignup].isVisible() && !mainView.buttons()[titleTryout].isVisible();
+				
+
+		log("Login visible: " + exist);
 		return exist;
 	}
 	
 	function isSignUpVisible()
 	{
-		exist = !loginBtn.isVisible() &&
-				signUpBtn.isVisible() &&
-				!tryOutBtn.isVisible() &&
-				signUpBtn.name() == "Sign up";
 
+		exist = !mainView.buttons()[titleLogin].isVisible() && mainView.buttons()[titleSignup].isVisible() && !mainView.buttons()[titleTryout].isVisible();
+				
 		log("SignUp visible: " + exist);
 		return exist;
+	}
+	
+	
+	function isTryoutVisible()
+	{
+		exist = !mainView.buttons()[titleLogin].isVisible() && !mainView.buttons()[titleSignup].isVisible() && mainView.buttons()[titleTryout].isVisible();
+				
+		log("Tryout visible: " + exist);
+		return exist;
+
+		
 	}
 	
 		
@@ -126,7 +137,7 @@ function Home()
 		log("Tap [Login] button");
 		
 		wait(0.5);
-		loginBtn.tap();
+		mainView.buttons()[titleLogin].tap();
 		wait(0.5);
 	}
 	
@@ -135,7 +146,7 @@ function Home()
 		log("Tap [Sign up] button");
 		
 		wait(0.5);
-		signUpBtn.tap();
+		mainView.buttons()[titleSignup].tap();
 		wait(0.5);
 	}
 	
@@ -144,7 +155,7 @@ function Home()
 		log("Tap [Try out] button");
 		
 		wait(0.5);
-		tryOutBtn.tap();
+		mainView.buttons()[titleTryout].tap();
 		wait(0.5);
 	}
 	
@@ -262,7 +273,7 @@ function Home()
 	
 	function login(email, pwd)
 	{
-		skipWhatsNew();
+		//skipWhatsNew();
 		tapLogin();
 		fillEmail(email);
 		fillPassword(pwd);

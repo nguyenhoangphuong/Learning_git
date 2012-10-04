@@ -1,4 +1,5 @@
 #import "../../view/_Navigator.js"
+#import "../../view/Home.js"
 #import "../../core/testcaseBase.js"
 
 //============================================================= //
@@ -31,37 +32,32 @@ function verifyTranslition()
 	hr();
 	print("<Tap login and then return to home>");
 	h.tapLogin();
-	assertTrue(!h.isVisible() && h.isLoginVisible() && !h.isSignupVisible() && !h.isTryoutVisible(), 
-			"Only Login screen is visible");
-	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(),
-			"Email and Password fields exist");
+	assertTrue(!h.isVisible() && h.isLoginVisible() && !h.isSignUpVisible() && !h.isTryoutVisible(), "Only Login screen is visible");
+	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(), "Email and Password fields exist");
 	h.tapLogin();
-	assertTrue(h.isVisible() && !h.isLoginVisible() && !h.isSignupVisible() && !h.isTryoutVisible(), 
+	wait(1);
+	assertTrue(h.isVisible() && !h.isLoginVisible() && !h.isSignUpVisible() && !h.isTryoutVisible(), 
 			"Only Start screen is visible");
 	
 	// tap sign up and then return to home
 	hr();
 	print("<Tap signup and then return to home>");
-	h.tapSignup();
-	assertTrue(!h.isVisible() && !h.isLoginVisible() && h.isSignupVisible() && !h.isTryoutVisible(), 
+	h.tapSignUp();
+	assertTrue(!h.isVisible() && !h.isLoginVisible() && h.isSignUpVisible() && !h.isTryoutVisible(), 
 			"Only Signup screen is visible");
 	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(),
 			"Email and Password fields exist");
-	h.tapSignup();
-	assertTrue(h.isVisible() && !h.isLoginVisible() && !h.isSignupVisible() && !h.isTryoutVisible(), 
+	h.tapSignUp();
+	assertTrue(h.isVisible() && !h.isLoginVisible() && !h.isSignUpVisible() && !h.isTryoutVisible(), 
 			"Only Start screen is visible");	
 	
 	// tap try out and then return to home
 	hr();
 	print("<Tap tryout and then return to home>");
-	h.tapTryout();
-	assertTrue(!h.isVisible() && !h.isLoginVisible() && !h.isSignupVisible() && h.isTryoutVisible(), 
+	h.tapTryOut();
+	assertTrue(!h.isVisible() && !h.isLoginVisible() && !h.isSignUpVisible() && !h.isTryoutVisible(), 
 			"Only Tryout screen is visible");
-	assertTrue(h.isEmailTextFieldVisible() && !h.isPasswordTextFieldVisible(),
-			"Only Email field exist");
-	h.tapTryout();
-	assertTrue(h.isVisible() && !h.isLoginVisible() && !h.isSignupVisible() && !h.isTryoutVisible(), 
-			"Only Start screen is visible");		
+		
 }
 
 function verifyClientVerification()
@@ -106,13 +102,8 @@ function verifyBackendVerification()
 	print("<Login with wrong password>");
 	h.login(loginTD.existedEmail, loginTD.wrongPwd);
 	assertTrue(h.isWrongLoginAlertShown(), "Wrong password or email alert shown");
+	h.tapLogin();
 	
-	// signup with existed user
-	hr();
-	print("<Signup with existed email>");
-	h.signup(loginTD.existedEmail, loginTD.rightPwd);
-	assertTrue(h.isExistedUserAlertShown(), "Email has been used before alert shown");
-	h.tapSignup();
 }
 
 function verifyValidLogin()

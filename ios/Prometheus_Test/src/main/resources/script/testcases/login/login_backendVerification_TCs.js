@@ -1,7 +1,7 @@
-#import "loginFuncs.js
+#import "loginFuncs.js"
 
 //======================== Test logic ======================== //
-start("StartScreen: Login backend verification");
+start("LoginScreen: Login backend verification");
 
 // navigate
 toStartScreen();
@@ -10,4 +10,4 @@ toStartScreen();
 verifyBackendVerification();
 verifyValidLogin();
 
-pass("StartScreen: Login backend verification");
+pass("LoginScreen: Login backend verification");
