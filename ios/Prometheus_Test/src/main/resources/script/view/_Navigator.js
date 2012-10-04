@@ -96,6 +96,7 @@ function Navigator()
 	function toMultiGoalChooser(email, password, uinfo)
 	{
 		// go to UserInfo first
+
 		toUserInfo(email, password);
 		ui = new UserInfo();
 		
@@ -246,7 +247,7 @@ function Navigator()
 		return null;
 	}
 	
-	function toSettings()
+	function toSettings(email, password, uinfo, activity, number)
 	{
 		// go to TodayGoal first
 		gp = toTodaysGoal(email, password, uinfo, activity, number);
