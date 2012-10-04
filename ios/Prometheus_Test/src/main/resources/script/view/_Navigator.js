@@ -131,8 +131,13 @@ function Navigator()
 		{
 			print("=> Go to PlanChooser screen...");
 			
-			// pick activity type
-			a.pickActivity(activity);
+			if (activity!=null)
+			{
+				// pick activity type
+				a.chooseActivityWithIndex(activity);
+			}
+			else 
+				a.chooseActivityWithIndex(0);
 		}
 		
 		// reached
@@ -154,7 +159,9 @@ function Navigator()
 			// select plan
 			pc.selectOther();
 			wait();
-			pc.setValue(number);
+			if (number !=null)
+				pc.setValue(number);
+			
 			pc.done();
 			
 			// close tips

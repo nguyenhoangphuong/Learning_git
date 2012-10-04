@@ -41,7 +41,8 @@ function Settings()
 	var back = supportView.buttons()[3];
 	var feedback = mainView.buttons()[3];
 	var reset = mainView.buttons()[4];
-	var signOut = mainView.buttons()[5];
+	//khoa: Change name of buttom because name button same as name function
+	var btSignOut = mainView.buttons()[5];
 	var signUp = mainView.buttons()[6];
 	
 	// Methods
@@ -62,18 +63,22 @@ function Settings()
 	this.signOut = signOut;
 	this.signUp = signUp;
 	
-	this.isSignOutBtnExist = isSignOutBtnExist;
+	//khoa
+	//this.isSignOutBtnExist = isSignOutBtnExist;
 	
 	this.isNoEmailAlertShown = isNoEmailAlertShown;
 	this.isResetConfirmAlertShown = isResetConfirmAlertShown;
-	this.confirmResetAlert = confirmResetAlert;
+	//khoa
+	//this.confirmResetAlert = confirmResetAlert;
 	
 	// Method definitions
 	function isVisible()
 	{
 		// todo: refine
 		page = window.pageIndicators()[0].value();
-		return page == "page 1 of 3" && resetBtn.isValid() && resetBtn.isVisible();
+	
+	// khoa: not found reset button
+	//	return page == "page 1 of 3" && resetBtn.isValid() && resetBtn.isVisible();
 	}
 	
 	function isSupportView()
@@ -92,7 +97,7 @@ function Settings()
 	function hasSignedIn()
 	{
 		// todo: refine
-		return signOut.isValid() && signOut.isVisible();
+		return btSignOut.isValid() && btSignOut.isVisible();
 	}
 	
 	function goToProfile()
@@ -169,7 +174,7 @@ function Settings()
 	{
 		// todo: refine
 		if (hasSignedIn())
-			signOut.tap();
+			btSignOut.tap();
 	}
 	
 	function signUp()

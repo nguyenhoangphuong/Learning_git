@@ -34,8 +34,8 @@ function checkValidEmail(email, error)
 function signOutAfterSignUp()
 {
 	nav.toSettings();
-	var st = new Settings();
-	st.signOut();
+	var setting = new Settings();
+	setting.signOut();
 }
 
 

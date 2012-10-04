@@ -1,8 +1,8 @@
 #import "signupFuncs.js"
 
 
-
-start("StartScreen: Login backend verification");
+//======================== Test logic ======================== //
+start("SignUpScreen: Valid email validation");
 
 
 //var genstring = ;
@@ -10,7 +10,7 @@ start("StartScreen: Login backend verification");
 nav.toHome();
 
 //check
-checkValidEmail("email1@one-two.com","DashDomain");
+checkValidEmail("email13@one-two.com","DashDomain");
 checkValidEmail("email-user@onetwo.com","Dash Username");
 checkValidEmail("123456@domain.com","Digit Username");
 checkValidEmail("email@sub.domain.com","DotSub Domain");

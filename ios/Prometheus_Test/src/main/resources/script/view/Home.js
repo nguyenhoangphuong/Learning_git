@@ -274,7 +274,7 @@ function Home()
 	
 	function signUp(email, pwd)
 	{
-		skipWhatsNew();
+		//skipWhatsNew();
 		tapSignUp();
 		fillEmail(email);
 		fillPassword(pwd);

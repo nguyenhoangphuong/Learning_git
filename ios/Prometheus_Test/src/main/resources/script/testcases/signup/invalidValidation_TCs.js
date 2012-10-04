@@ -1,8 +1,6 @@
 #import "signupFuncs.js"
 
-
-
-
+//======================== Test logic ======================== //
 start("SignUpScreen: Validate invalid case");
 
 
