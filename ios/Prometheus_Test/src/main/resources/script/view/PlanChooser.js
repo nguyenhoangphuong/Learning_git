@@ -213,4 +213,14 @@ function PlanChooser()
 		
 		return shown;
 	}
+	
+	/**
+	 * Gets the unit of the current activity
+	 * @returns unit in string
+	 */
+	function getUnit() {
+		var text = easyTxt.name();
+		var unit = text.substring(text.indexOf(" ") + 1, text.indexOf('/'));
+		return unit;
+	}
 }

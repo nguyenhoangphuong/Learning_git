@@ -14,9 +14,9 @@ This section is the place where you list functions. Please list them as comments
 - hr()			:	this is the ULTIMATE function! it print -----------------------------------
 					to the log debug. SO AWESOME!
 
-- assertEqual(actual, expected)	:	simplify if(a == b) pass() else fail()
-- assertTrue(expression)		:	simplify if(a == true) pass() else fail()
-- assertFalse(expression)		:	simplify if(a == false) pass() else fail()
+- assertEqual(actual, expected, logs)	:	simplify if(a == b) pass() else fail()
+- assertTrue(expression, logs)		:	simplify if(a == true) pass() else fail()
+- assertFalse(expression, logs)		:	simplify if(a == false) pass() else fail()
 
 *** TA HELPERS ***
 - staticTextExist(text)			:	check if the text is valid and currently visible on screen

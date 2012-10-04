@@ -1,29 +1,32 @@
 #import "_Tips.js"
+#import "MultiGoalChooser.js"
 #import "../core/testcaseBase.js"
 #import "Home.js"
 #import "UserInfo.js"
 
 /*
-This file provides methods to navigate to specify views.
-This will go from nothing to a specify view, therefore you need to
-kill the app first.
+This file provides methods to navigate to specify view.
+This will go from nothing to the specify view, so kill the app first.
 
 --- Functions:
-- toHome()
-- toUserInfo(email, pwd)			: go to UserInfo by trying out
-- toMultiGoalChooser(userinfo)
-	+ userinfo = null	: use default user info
+- toHome()					:	to Home screen
+- toUserInfo(email, pwd)	:	to UserInfo screen
+	+ null, null			:	go to UserInfo by choosing [Try out] without email
+	+ email, null			:	go to UserInfo by [Try out] with email
+	+ email, pwd			:	go to UserInfo by [Log in]
+- toActivity(email, pwd, userinfo)	:	go to ActivitiyChooser screen
+	+ userinfo = null		:	use default user info
 	+ userinfo = {h1, h2, w1, w2, age, sex, unit}
-		ex: {100, 0.1, 1, 0.75, 20, "male" ("female"), "si" ("us")}
+		ex:	     {100, 0.1, 1, 0.75, 20, "male" ("female"), "si" ("us")}
 - toPlanChooser(email, pwd, userinfo, activity)
 	+ activity			: name (string) or index (int)
 		ex: "Swimming" or 3
-- to7DayGoal(email, pwd, userinfo, activity, number)
-	+ number			: number of unit / miles / ...
+- toWeekGoal(email, pwd, userinfo, activity, number)
+	+ number: number of unit / miles / ...
 		ex: 30
-- toTodaysGoal(email, pwd, userinfo, activity, number)
+- toTodayGoal(email, pwd, userinfo, activity, number)
 - toRunView(email, pwd, userinfo, activity, number)
-- toPlanner(email, pwd, userinfo, activity, number)
+- toGoalPlan(email, pwd, userinfo, activity, number)
 - toHistory(email, pwd, userinfo, activity, number)
 - toSettings(email, pwd, userinfo, activity, number)
 */
