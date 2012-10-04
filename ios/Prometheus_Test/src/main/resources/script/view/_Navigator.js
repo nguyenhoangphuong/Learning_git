@@ -60,10 +60,6 @@ function Navigator()
 		log("Go to UserInfo screen by trying out ...");
 		h.tryOut();
 		wait(2);
-		// TODO: remove this line and 3 lines below when flow is correct
-		var h = new Home();
-		h.fillEmail("a@a.a");
-		h.submit();
 		
 		var ui = new UserInfo();
 		
