@@ -3,10 +3,12 @@
 
 /*
 Settings functions:
+- assignControls()	: assign controls for both Settings and Support views
 - isVisible()		: check if current view is Settings
 - isSupportView()	: check if current view is Support
 - isTroublemaker()	: check if current user is a troublemaker
 - hasSignedIn()		: check if current user has signed in
+- getResetButton()	: get Reset button since there are 2 cases
 - goToProfile		: tap "User Profile" button
 - rateApp()			: tap Rate button
 - tapSupport()		: tap Support button
@@ -20,8 +22,8 @@ Settings functions:
 	+ resetPlan("no")
 - signOut()			: tap "Sign out" button (w/ user having logged in)
 - signUp()			: tap "Sign up" button (w/ user having not logged in)
-- isNoEmailAlertShown()			: check if the NoEmail alert is shown up
-- isResetConfirmAlertShown()	: check if the ResetConfirm alert is shown up
+//- isNoEmailAlertShown()			: check if the NoEmail alert is shown up
+//- isResetConfirmAlertShown()	: check if the ResetConfirm alert is shown up
 */
 
 function Settings()
@@ -29,27 +31,27 @@ function Settings()
 	// Private fields
 	var window = app.mainWindow();
 	var mainView = window.scrollViews()[0];
-	var supportView = window.scrollViews()[0]; // todo: change this
+	var supportView = mainView;
 	
-	// todo: check indexes
-	var profile = mainView.buttons()[0];
-	var rate = mainView.buttons()[1];
-	var support = mainView.buttons()[2];
-	var email = supportView.buttons()[0];
-	var like = supportView.buttons()[1];
-	var website = supportView.buttons()[2];
-	var back = supportView.buttons()[3];
-	var feedback = mainView.buttons()[3];
-	var reset = mainView.buttons()[4];
-	//khoa: Change name of buttom because name button same as name function
-	var btSignOut = mainView.buttons()[5];
-	var signUp = mainView.buttons()[6];
+	var btnProfile = mainView.scrollViews()[0].buttons()["User Profile"];
+	var btnRate = mainView.scrollViews()[0].buttons()["Rate our App"];
+	var btnSupport = mainView.scrollViews()[0].buttons()["Support"];
+	var btnEmail = supportView.buttons()["Email Support"];
+	var btnLike = supportView.buttons()["Like our Page"];
+	var btnWebsite = supportView.buttons()["Website"];
+	var btnBack = supportView.buttons()["Back"];
+	var btnFeedback = mainView.scrollViews()[0].buttons()["Behind the scenes"];
+	var btnReset = getResetButton();
+	var btnSignOut = mainView.scrollViews()[0].buttons()["Sign out"]; // CHECK
+	var btnSignUp = mainView.scrollViews()[0].buttons()["Sign up"];
 	
 	// Methods
+	this.assignControls = assignControls;
 	this.isVisible = isVisible;
 	this.isSupportView = isSupportView;
 	this.isTroublemaker = isTroublemaker;
 	this.hasSignedIn = hasSignedIn;
+	this.getResetButton = getResetButton;
 	
 	this.goToProfile = goToProfile; 
 	this.rateApp = rateApp;
@@ -62,100 +64,125 @@ function Settings()
 	this.resetPlan = resetPlan;
 	this.signOut = signOut;
 	this.signUp = signUp;
-	
-	//khoa
-	//this.isSignOutBtnExist = isSignOutBtnExist;
-	
-	this.isNoEmailAlertShown = isNoEmailAlertShown;
-	this.isResetConfirmAlertShown = isResetConfirmAlertShown;
-	//khoa
-	//this.confirmResetAlert = confirmResetAlert;
+		
+//	this.isNoEmailAlertShown = isNoEmailAlertShown;
+//	this.isResetConfirmAlertShown = isResetConfirmAlertShown;
 	
 	// Method definitions
+	function assignControls()
+	{
+		window = app.mainWindow();
+		mainView = window.scrollViews()[0];
+		supportView = mainView;
+		
+		btnProfile = mainView.scrollViews()[0].buttons()["User Profile"];
+		btnRate = mainView.scrollViews()[0].buttons()["Rate our App"];
+		btnSupport = mainView.scrollViews()[0].buttons()["Support"];
+		btnEmail = supportView.buttons()["Email Support"];
+		btnLike = supportView.buttons()["Like our Page"];
+		btnWebsite = supportView.buttons()["Website"];
+		btnBack = supportView.buttons()["Back"];
+		btnFeedback = mainView.scrollViews()[0].buttons()["Behind the scenes"];
+		btnReset = getResetButton();
+		btnSignOut = mainView.scrollViews()[0].buttons()["Sign out"]; // CHECK
+		btnSignUp = mainView.scrollViews()[0].buttons()["Sign up"];	
+	}
+	
 	function isVisible()
 	{
-		// todo: refine
-		page = window.pageIndicators()[0].value();
-	
-	// khoa: not found reset button
-	//	return page == "page 1 of 3" && resetBtn.isValid() && resetBtn.isVisible();
+		return btnProfile.isValid() && btnProfile.isVisible();
 	}
 	
 	function isSupportView()
 	{
-		// todo: refine
-		return email.isValid() && email.isVisible() &&
-			like.isValid() && like.isVisible();
+		return btnEmail.isValid() && btnEmail.isVisible() &&
+			btnLike.isValid() && btnLike.isVisible();
 	}
 	
 	function isTroublemaker()
 	{
-		// todo: refine
-		return feedback.isValid() && feedback.isVisible();
+		return btnFeedback.isValid() && btnFeedback.isVisible();
 	}
 	
 	function hasSignedIn()
 	{
-		// todo: refine
-		return btSignOut.isValid() && btSignOut.isVisible();
+		// check this function when bug (there is no "Sign out" button) is fixed
+		return btnSignOut.isValid() && btnSignOut.isVisible();
+	}
+	
+	function getResetButton()
+	{
+		if (isTroublemaker())
+			return mainView.scrollViews()[0].buttons()[5];
+		else
+			return mainView.scrollViews()[0].buttons()[3];
 	}
 	
 	function goToProfile()
 	{
-		// todo: refine
-		profile.tap();
+		btnProfile.tap();
 	}
 	
 	function rateApp()
 	{
-		// todo: refine
-		rate.tap();
+		btnRate.tap();
 	}
 	
 	function tapSupport()
 	{
-		// todo: refine
-		support.tap();
+		btnSupport.tap();
 	}
 	
 	function emailSupport()
 	{
-		// todo: change this function, use supportView
-		email.tap();
-		wait(3); // what is this for?
+		if (isVisible())
+		{
+			tapSupport();
+			wait(2);
+		}
+		
+		assignControls();
+		btnEmail.tap();
 	}
 	
 	function likePage()
 	{
-		// todo: change this function, use supportView
-		like.tap();
+		if (isVisible())
+		{
+			tapSupport();
+			wait(2);
+		}
+		
+		assignControls();
+		btnLike.tap();
 	}
 	
 	function goToWebsite()
 	{
-		// todo: change this function, use supportView
-		website.tap();
+		if (isVisible())
+		{
+			tapSupport();
+			wait(2);
+		}
+		
+		assignControls();
+		btnWebsite.tap();
 	}
 	
 	function backToSettings()
 	{
-		// todo: change this function, use supportView
-		back.tap();
+		btnBack.tap();
 	}
 	
 	function tapFeedback()
 	{
-		// todo: refine, maybe add methods to feedback
 		if (isTroublemaker())
-			feedback.tap();
+			btnFeedback.tap();
 	}
 	
 	function resetPlan(yes)
 	{
-		// todo: check
-		reset.tap();
-		
-		// wait for popup
+		btnReset.tap();
 		wait(1);
 		
 		if (yes == true)
@@ -172,30 +199,30 @@ function Settings()
 	
 	function signOut()
 	{
-		// todo: refine
+		// TODO: refine
 		if (hasSignedIn())
 			btSignOut.tap();
 	}
 	
 	function signUp()
 	{
-		// todo: refine, maybe add more steps, just maybe
+		// TODO: refine, maybe add more steps, just maybe
 		if (!hasSignedIn())
-			signUp.tap();
+			btnSignUp.tap();
 	}
 	
-	function isNoEmailAlertShown()
-	{
-		// todo: check
-		log("checking: " + alert.NoEmail);
-		return alert.alertTitle != null && alert.alertTitle == alert.NoEmail;
-	}
-	
-	function isResetConfirmAlertShown()
-	{
-		// todo: check
-		log("checking: " + alert.ResetConfirm);
-		return alert.alertTitle != null &&
-			alert.alertTitle == alert.ResetConfirm;
-	}
+//	function isNoEmailAlertShown()
+//	{
+//		// todo: check
+//		log("checking: " + alert.NoEmail);
+//		return alert.alertTitle != null && alert.alertTitle == alert.NoEmail;
+//	}
+//	
+//	function isResetConfirmAlertShown()
+//	{
+//		// todo: check
+//		log("checking: " + alert.ResetConfirm);
+//		return alert.alertTitle != null &&
+//			alert.alertTitle == alert.ResetConfirm;
+//	}
 }
