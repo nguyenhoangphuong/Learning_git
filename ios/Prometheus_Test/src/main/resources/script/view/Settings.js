@@ -22,8 +22,6 @@ Settings functions:
 	+ resetPlan("no")
 - signOut()			: tap "Sign out" button (w/ user having logged in)
 - signUp()			: tap "Sign up" button (w/ user having not logged in)
-//- isNoEmailAlertShown()			: check if the NoEmail alert is shown up
-//- isResetConfirmAlertShown()	: check if the ResetConfirm alert is shown up
 */
 
 function Settings()
@@ -42,7 +40,7 @@ function Settings()
 	var btnBack = supportView.buttons()["Back"];
 	var btnFeedback = mainView.scrollViews()[0].buttons()["Behind the scenes"];
 	var btnReset = getResetButton();
-	var btnSignOut = mainView.scrollViews()[0].buttons()["Sign out"]; // CHECK
+	var btnSignOut = mainView.scrollViews()[0].buttons()["Sign out"];
 	var btnSignUp = mainView.scrollViews()[0].buttons()["Sign up"];
 	
 	// Methods
@@ -65,9 +63,6 @@ function Settings()
 	this.signOut = signOut;
 	this.signUp = signUp;
 		
-//	this.isNoEmailAlertShown = isNoEmailAlertShown;
-//	this.isResetConfirmAlertShown = isResetConfirmAlertShown;
-	
 	// Method definitions
 	function assignControls()
 	{
@@ -106,7 +101,6 @@ function Settings()
 	
 	function hasSignedIn()
 	{
-		// check this function when bug (there is no "Sign out" button) is fixed
 		return btnSignOut.isValid() && btnSignOut.isVisible();
 	}
 	
@@ -199,30 +193,13 @@ function Settings()
 	
 	function signOut()
 	{
-		// TODO: refine
 		if (hasSignedIn())
-			btSignOut.tap();
+			btnSignOut.tap();
 	}
 	
 	function signUp()
 	{
-		// TODO: refine, maybe add more steps, just maybe
 		if (!hasSignedIn())
 			btnSignUp.tap();
 	}
-	
-//	function isNoEmailAlertShown()
-//	{
-//		// todo: check
-//		log("checking: " + alert.NoEmail);
-//		return alert.alertTitle != null && alert.alertTitle == alert.NoEmail;
-//	}
-//	
-//	function isResetConfirmAlertShown()
-//	{
-//		// todo: check
-//		log("checking: " + alert.ResetConfirm);
-//		return alert.alertTitle != null &&
-//			alert.alertTitle == alert.ResetConfirm;
-//	}
 }
