@@ -54,12 +54,12 @@ function GoalPlan()
 	// Private fields
 	var window = app.mainWindow();
 	var mainView = window.scrollViews()[0];
-	var recordsView = mainView.scrollViews()[0];
+	var recordsView = mainView.scrollViews()[1];
 	
-	var autoBtn = mainView.buttons()[5];
-	var editBtn = mainView.buttons()[7];
-	var cancelBtn = mainView.buttons()[4];
-	var doneBtn = mainView.buttons()[6];
+	var autoBtn = mainView.buttons()[6];
+	var editBtn = mainView.buttons()[8];
+	var cancelBtn = mainView.buttons()[5];
+	var doneBtn = mainView.buttons()[7];
 
 	var weekDays = mainView.staticTexts()[11];
 	var weekGoal = mainView.staticTexts()[10];
@@ -433,7 +433,7 @@ function GoalPlan()
 			info.date = text;
 			info.temperature = "";
 		}
-		
+		log(">>>>>>>>>>>>>>>>"+value);
 		if(value.indexOf("/") >= 0)
 		{		
 			info.run = parseFloat(value.substring(0, value.indexOf("/")));

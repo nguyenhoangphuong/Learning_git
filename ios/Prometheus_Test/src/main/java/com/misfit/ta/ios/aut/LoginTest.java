@@ -17,7 +17,7 @@ public class LoginTest extends AutomationTest{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-									AppHelper.getAppPath(), "script/testcases/signup/login_backendVerification_TCs.js");
+									AppHelper.getAppPath(), "script/testcases/login/login_backendVerification_TCs.js");
 	
 	}
 	
@@ -28,7 +28,7 @@ public class LoginTest extends AutomationTest{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-									AppHelper.getAppPath(), "script/testcases/signup/login_clientVerification_TCs.js");
+									AppHelper.getAppPath(), "script/testcases/login/login_clientVerification_TCs.js");
 		
 	}
 	
@@ -39,7 +39,7 @@ public class LoginTest extends AutomationTest{
 			AppHelper.cleanCache();
 		 	ShortcutsTyper.delayTime(1000);	
 			AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-										AppHelper.getAppPath(), "script/testcases/signup/login_translation_TCs.js");
+										AppHelper.getAppPath(), "script/testcases/login/login_translation_TCs.js");
 			
 		}
 	
