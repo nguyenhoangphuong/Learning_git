@@ -38,6 +38,13 @@ GoalProgress function:
 ================================================================================
 - setNewGoal()				: set a new goal after finish the week goal
 - isSetNewGoalBtnVisible()	: check if the goal has been achieved
+- isMusicBtnVisible()		: check if the music button is on screen
+- isStartBtnVisible()		: check if the start button is on screen
+- isInputTypeAlertShown()	: check if the input type dialog is on screen
+- confirmInputAlert(opt)	: choose option in the input type dialog
+	+ opt = 1: GPS
+	+ opt = 2: Manual
+	+ otherwise or undefined: Cancel
 ================================================================================
 */
 
@@ -83,8 +90,12 @@ function GoalProgress()
 	this.getGPSSignal = getGPSSignal;
 	this.getQuote = getQuote;
 	
-	this.setNewGoal=setNewGoal;
-	this.isSetNewGoalBtnVisible=isSetNewGoalBtnVisible;
+	this.setNewGoal = setNewGoal;
+	this.isSetNewGoalBtnVisible = isSetNewGoalBtnVisible;
+	this.isMusicBtnVisible = isMusicBtnVisible;
+	this.isStartBtnVisible = isStartBtnVisible;
+	this.isInputTypeAlertShown = isInputTypeAlertShown;
+	this.confirmInputAlert = confirmInputAlert;
 	
 	// Methods definition
 	function isWeekGoalVisible()
@@ -333,5 +344,28 @@ function GoalProgress()
 			planChooser.selectActive();
 		}
 	}
-
+	
+	function isMusicBtnVisible()
+	{
+		exist = musicBtn.isValid() && musicBtn.isVisible();
+		log("[Music] visible: " + exist);
+		return exist;
+	}
+	
+	function isStartBtnVisible()
+	{
+		exist = startBtn.isValid() && startBtn.isVisible() && startBtn.name() == "Start";
+		log("[Start] visible: " + exist);
+		return exist;
+	}
+	
+	function isInputTypeAlertShown()
+	{
+		
+	}
+	
+	function confirmInputAlert(opt)
+	{
+		
+	}
 }

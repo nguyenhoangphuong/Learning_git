@@ -13,7 +13,6 @@ UserInfo view function:
 - setWeight(w1, w2)					:	| single function for setting values
 - setHeight(h1, h2)					:	|
 - setSex(sex)						:	set user sex ("male" / "female")
-- setUnit(unit)						:	set user unit ("us" / "si")
 - submit()							:	submit the form
 =========================================================================================
 - changeHeight(dy)					:	change user height by dragging onto image

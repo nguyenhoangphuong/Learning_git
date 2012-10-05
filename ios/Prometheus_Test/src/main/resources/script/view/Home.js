@@ -36,13 +36,10 @@ function Home()
 	// Private fields
 	var window = app.mainWindow();
 	var mainView = window;
-	
-	
-	
+
 	var titleLogin = "Login";
 	var titleSignup = "Signup";
 	var titleTryout = "Tryout"
-	
 	
 	var emailField = mainView.textFields()[0];
 	var pwdField = mainView.secureTextFields()[0];

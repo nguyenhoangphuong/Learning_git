@@ -8,9 +8,11 @@ PlanChooser functions:
 - selectNormal()	:	tap normal button
 - selectActive()	:	tap active button
 - selectOther()		:	tap other button
+- backToActivity()	:	back to Activity view
 =========================================================================================
 - setValue(val)		:	select picker value base on <val>
 - getPickerValue()	:	get the current value of picker (float)
+- getPickerRange()	:	get the {min, max} of picker
 - back()			:	tap the back button
 - done()			:	tap the done button
 =========================================================================================
@@ -40,13 +42,14 @@ function PlanChooser()
 	this.normal = 10;
 	this.active = 21;
 	
-	var titleStr = "Please set your plan";
+	var titleStr = "Set you 7-day fitness plan";
 	var titleManualStr = "Please set your custom plan";
 	
 	var easyBtn = mainWindow.buttons()[0];	
 	var normalBtn = mainWindow.buttons()[1];
 	var activeBtn = mainWindow.buttons()[2];
 	var otherBtn = mainWindow.buttons()[3];
+	var backBtn = mainWindow.buttons()[4];
 	
 	var easyTxt = mainWindow.staticTexts()[1];
 	var normalTxt = mainWindow.staticTexts()[2];
@@ -60,9 +63,11 @@ function PlanChooser()
 	this.selectNormal = selectNormal;
 	this.selectActive = selectActive;
 	this.selectOther = selectOther;
+	this.backToActivity = backToActivity;
 	
 	this.setValue = setValue;
 	this.getPickerValue = getPickerValue;
+	this.getPickerRange = getPickerRange;
 	this.back = back;
 	this.done = done;
 	
@@ -124,10 +129,17 @@ function PlanChooser()
 		wait();
 	}
 	
+	function backToActivity()
+	{
+		wait(0.5);
+		backBtn.tap();
+		log("Tap [Back]");
+		wait();
+	}
+	
 	
 	function setValue(value)
 	{
-		wait(2);
 		picker = app.windows()[1].pickers()[0];
 		
 		if(picker.isValid())
@@ -143,7 +155,7 @@ function PlanChooser()
 	function getPickerValue()
 	{
 		wait(0.5);
-		picker = pickWindow.pickers()[0];
+		picker = app.windows()[1].pickers()[0];
 		if(picker.isValid())
 		{
 			wheel = picker.wheels()[0];
@@ -162,6 +174,31 @@ function PlanChooser()
 		log("No picker visible");
 		return null;
 	}
+	
+	function getPickerRange()
+	{
+		wait(0.5);
+		picker = app.windows()[1].pickers()[0];
+		if(picker.isValid())
+		{
+			wheel = picker.wheels()[0];
+			items = wheel.values();
+
+			// get current value
+			info = {};
+			info.min = parseFloat(items[0]);
+			info.max = parseFloat(items[items.length - 1]);
+			
+			log("PickerRange.min: " + info.min);
+			log("PickerRange.max: " + info.max);
+			
+			return info;
+		}
+		
+		log("No picker visible");
+		return null;
+	}
+	
 	
 	function back()
 	{
@@ -223,9 +260,10 @@ function PlanChooser()
 	 * Gets the unit of the current activity
 	 * @returns unit in string
 	 */
-	function getUnit() {
+	function getUnit() 
+	{
 		var text = easyTxt.name();
-		var unit = text.substring(text.indexOf(" ") + 1, text.indexOf('/'));
+		var unit = text.substring(text.indexOf(" ") + 1);
 		return unit;
 	}
 }

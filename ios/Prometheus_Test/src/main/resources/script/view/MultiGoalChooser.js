@@ -19,7 +19,7 @@ function MultiGoalChooser()
 	var nameTableView = "Empty list";
 	var nameBackButton = "Done";
 	
-	//define name of activity
+	// define name of activity
 	var activities = ["Cycling","Running","Treadmill", "Elliptical", 
 			"Indoor Cycling","Swimming","Push-up","Sit-up",
 			"Leg-lift","Pull-up","Plank"
@@ -51,6 +51,7 @@ function MultiGoalChooser()
     			}
     		return true;  				
     }
+	
 	function chooseActivityWithIndex(index)
 	{		
 		mainWindow.tableViews()[nameTableView].cells()[index].tap();
@@ -64,6 +65,7 @@ function MultiGoalChooser()
     function chooseActivityWithName(name)
 	{		
 		mainWindow.tableViews()[nameTableView].cells()[name].tap();
+		log("Choose Activity: " + name);
 	}
     
     
