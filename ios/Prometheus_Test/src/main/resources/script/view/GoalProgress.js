@@ -157,11 +157,20 @@ function GoalProgress()
 	}
 	
 	
-	function start()
+	function start(confirm)
 	{
 		wait(0.5);
 		startBtn.tap();
 		log("Tap [Start]");
+		
+		// if input type dialog is shown
+		wait();
+		if(isInputTypeAlertShown())
+		{
+			if(typeof confirm == "undefined")
+				confirm = 1;
+			confirmInputAlert(confirm);
+		}
 	}
 	
 	
@@ -361,11 +370,26 @@ function GoalProgress()
 	
 	function isInputTypeAlertShown()
 	{
+		dialog = app.mainWindow().scrollViews()[0];
+		dGPS = dialog.buttons()[1];
+		dManual = dialog.buttons()[2];
 		
+		shown = dGPS.isValid() && dGPS.name() == "GPS" && dManual.isValid() && dManual.name() == "Manual Input";
+		log("Input type dialog shown: " + shown);
+		
+		return shown;
 	}
 	
 	function confirmInputAlert(opt)
 	{
+		if(typeof opt == "undefined") opt = 3;
+		if(opt != 1 && opt != 2) opt = 3;
 		
+		if(isInputTypeAlertShown())
+		{
+			dialog = app.mainWindow().scrollViews()[0];
+			dialog.buttons[opt].tap();
+			log("Confirm Input type alert by tapping [" + dialog.buttons[opt].name() + "]");
+		}
 	}
 }
