@@ -1,7 +1,7 @@
 #import "loginFuncs.js"
 
 //======================== Test logic ======================== //
-start("StartHomeScreen: translition");
+start("StartHomeScreen: translation");
 
 // navigate
 toStartScreen();
@@ -12,4 +12,4 @@ toStartScreen();
 // verify
 verifyTranslition();
 
-pass("StartHomeScreen: translition");
+pass("StartHomeScreen: translation");

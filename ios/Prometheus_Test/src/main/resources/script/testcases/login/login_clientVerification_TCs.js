@@ -8,5 +8,6 @@ toStartScreen();
 
 // verify
 verifyClientVerification();
+verifyValidLogin();
 
 pass("LoginScreen: Login client verification");
