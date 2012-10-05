@@ -162,13 +162,6 @@ function PrometheusAlertHandler(_alert)
 		// reset the alertChoice and acknowledge the alert
 		alert.alertChoice = null;
 		
-		if (name == alert.LocationConfirm)
-		{	
-			wait(5);
-			tips.closeTips(1);
-			wait();
-		}
-		
 		return true;
 	}
 	

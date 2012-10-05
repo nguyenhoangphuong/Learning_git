@@ -5,21 +5,26 @@
 GoalPlan functions:
 =========================================================================================
 - isVisible()			:	check if the current view is GoalPlan
+- isTipsVisible()		:	check if tips on this view is shown up
 =========================================================================================
 - edit()				:	tap the Edit button
 - reset()				:	tap the Auto Suggest button
 - save()				:	tap the Done button (while in edit mode)
 - cancel()				:	tap the Cancel button (while in edit mode)
 =========================================================================================
+- scrollToTodaysGoal()	:	back to TodayGoal view
+- scrollToHistory()		:	scroll to History view
+=========================================================================================
 - getTotalDays()		:	get the number of days (or records) in this goal
 - getPassedDays()		:	get the number of days (or records) which can't be planned any more
-- getTotalPlanMiles()	:	get the number of miles that is planned (before and after)
-- getRemainPlanMiles()	:	get the number of miles that is planned for the following days
-- getRunMiles()			:	get the number of miles that you run
+- getTotalPlanAmount()	:	get the number of miles that is planned (before and after)
+- getRemainPlanAmount()	:	get the number of miles that is planned for the following days
+- getDoneAmount()			:	get the number of miles that you run
 =========================================================================================
+- getUnit()				:	get the unit display in this view ("miles" / "reps"...)
 - getWeekInfo()			:	get info of a goal {duration, goal}
 	+ duration		: 	"Sep 14 - Sep 20"
-	+ goal			: 	5 (float)
+	+ goal			: 	7 (float)
 - getDayInfoByIndex(i)	:	get info of a day by index {text, date, temperature, run, total}
 	+ text			:	"Sat Sep 15th / 76 - 81ºF"
 	+ date			: 	"Sat Sep 15th"
@@ -45,7 +50,7 @@ GoalPlan functions:
 =========================================================================================
 
 MAY BE CHANGES:
-
+- Yes/No index of TooHard alert
 */
 
 maxMPD = 2.95;
@@ -55,30 +60,36 @@ function GoalPlan()
 	var window = app.mainWindow();
 	var mainView = window.scrollViews()[0];
 	var recordsView = mainView.scrollViews()[1];
-	
-	var autoBtn = mainView.buttons()[6];
-	var editBtn = mainView.buttons()[8];
-	var cancelBtn = mainView.buttons()[5];
-	var doneBtn = mainView.buttons()[7];
 
+	var cancelBtn = mainView.buttons()[5];
+	var autoBtn = mainView.buttons()[6];
+	var doneBtn = mainView.buttons()[7];
+	var editBtn = mainView.buttons()[8];
+	
 	var weekDays = mainView.staticTexts()[11];
 	var weekGoal = mainView.staticTexts()[10];
 
 	
 	// Methods
 	this.isVisible = isVisible;
+	this.isTipsVisible = isTipsVisible;
+	
 	this.edit = edit;
 	this.reset = reset;
 	this.save = save;
 	this.cancel = cancel;
 	
+	this.scrollToTodaysGoal = scrollToTodaysGoal;
+	this.scrollToHistory = scrollToHistory;
+	
 	this.getTotalDays = getTotalDays;
 	this.getPassedDays = getPassedDays;
-	this.getTotalPlanMiles = getTotalPlanMiles;
-	this.getRunMiles = getRunMiles;
-	this.getTotalPlanMiles = getTotalPlanMiles;
-	this.getRemainPlanMiles = getRemainPlanMiles;
+	this.getTotalPlanAmount = getTotalPlanAmount;
+	this.getDoneAmount = getDoneAmount;
+	this.getTotalPlanAmount = getTotalPlanAmount;
+	this.getRemainPlanAmount = getRemainPlanAmount;
 	
+	this.getUnit = getUnit;
 	this.getWeekInfo = getWeekInfo;
 	this.getDayInfoByIndex = getDayInfoByIndex;
 	this.getDayInfoByName = getDayInfoByName;	
@@ -96,31 +107,63 @@ function GoalPlan()
 	function isVisible()
 	{
 		page = window.pageIndicators()[0].value();
-		return page == "page 3 of 3" && recordsView.isValid() && recordsView.isVisible();
+		exist = (page == "page 3 of 3" && recordsView.isValid() && recordsView.isVisible()) ||
+				tips.isTipsDisplay("GoalPlan", mainView);
+		
+		log("GoalPlan visible: " + exist);
+		return exist;
 	}
+	
+	function isTipsVisible()
+	{
+		display = tips.isTipsDisplay("GoalPlan");
+		log("Tips on GoalPlan is shown: " + display);
+		
+		return display;
+	}
+	
 	
 	function edit()
 	{
-		wait();
+		wait(0.5);
 		editBtn.tap();
+		log("Tap [Edit]");
 	}
 	
 	function reset()
 	{
-		wait();
+		wait(0.5);
 		autoBtn.tap();
+		log("Tap [Auto Suggest]");
 	}
 	
 	function save()
 	{
-		wait();
+		wait(0.5);
 		doneBtn.tap();
+		log("Tap [Save]");
 	}
 	
 	function cancel()
 	{
-		wait();
+		wait(0.5);
 		cancelBtn.tap();
+		log("Tap [Done]");
+	}
+	
+	
+	function scrollToTodaysGoal()
+	{
+		wait(0.5);
+		mainView.scrollLeft();
+		log("Scroll to TodayGoal");
+	}
+	
+	function scrollToHistory()
+	{
+		wait(0.5);
+		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.2}, endOffset:{x:0.5, y:0.5}, duration:0.3});
+		log("Scroll to History");
 	}
 	
 	
@@ -154,7 +197,7 @@ function GoalPlan()
 		return count;
 	}
 	
-	function getTotalPlanMiles()
+	function getTotalPlanAmount()
 	{
 		count = 0;
 		miles = 0;
@@ -182,7 +225,7 @@ function GoalPlan()
 		return result;
 	}
 	
-	function getRunMiles()
+	function getDoneAmount()
 	{
 		count = 0;
 		miles = 0;
@@ -209,7 +252,7 @@ function GoalPlan()
 		return miles;
 	}
 	
-	function getRemainPlanMiles()
+	function getRemainPlanAmount()
 	{
 		count = 0;
 		miles = 0;
@@ -238,6 +281,15 @@ function GoalPlan()
 		return miles;
 	}
 	
+	
+	function getUnit()
+	{
+		text = weekGoal.name();
+		unit = text.substring(text.indexOf(" ") + 1);
+		
+		log("Unit used: " + unit);
+		return unit;
+	}
 	
 	function getWeekInfo()
 	{

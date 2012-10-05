@@ -133,27 +133,35 @@ function assertFalse(expression, logs)
 }
 
 // =============== TA helpers
-function staticTextExist(text)
+function staticTextExist(text, win)
 {
-	win = app.mainWindow();
+	if(typeof win == "undefined")
+		win = app.mainWindow();
+	
 	return win.staticTexts()[text].isValid() && win.staticTexts()[text].isVisible();
 }
 
-function buttonExist(id) 
+function buttonExist(id, win) 
 {
-	win = app.mainWindow();    
+	if(typeof win == "undefined")
+		win = app.mainWindow();
+	
 	return win.buttons()[id].isValid() && win.buttons()[id].isVisible();
 }
 
-function elementExist(id)
+function elementExist(id, win)
 {
-	win = app.mainWindow();
+	if(typeof win == "undefined")
+		win = app.mainWindow();
+	
 	return win.elements()[id].isValid() && win.elements()[id].isVisible();
 }
 
-function isElementLabelValid(id, label)
+function isElementLabelValid(id, label, win)
 {
-	win = app.mainWindow();
+	if(typeof win == "undefined")
+		win = app.mainWindow();
+	
 	ele = win.elements()[id];
 	if(ele.isValid())
 	{
@@ -265,7 +273,7 @@ function listAllStaticTexts(p)
 	n = texts.length;
 	
 	for(i = 0; i < n; i++)
-		print(i + ": " + texts[i].name());
+		print("StaticText " + i + ": " + texts[i].name());
 }
 
 function listAllButtons(p)
@@ -274,5 +282,11 @@ function listAllButtons(p)
 	n = btns.length;
 	
 	for(i = 0; i < n; i++)
-		print(i + ": " + btns[i].name());
+		print("Button " + i + ": " + btns[i].name());
+}
+
+function listControls(p)
+{
+	listAllStaticTexts(p);
+	listAllButtons(p);
 }

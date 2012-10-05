@@ -71,6 +71,7 @@ function GoalProgress()
 	this.scrollToTodaysGoal = scrollToTodaysGoal;
 	this.scrollToPlanner = scrollToPlanner;
 	this.scrollToSettings = scrollToSettings;
+	this.tapMusic = tapMusic;
 	
 	this.start = start;
 	this.simulateARun=simulateARun;
@@ -89,7 +90,7 @@ function GoalProgress()
 	function isWeekGoalVisible()
 	{
 		page = window.pageIndicators()[0].value();
-		exist = !(page == "page 2 of 3" && !weekProgress.isVisible() && !weekGoal.isVisible() && startBtn.isVisible());
+		exist = (page == "page 2 of 3"  && startBtn.name() == "Start" && !startBtn.isVisible());
 		
 		log("WeekGoal visible: " + exist);
 		return exist;
@@ -98,7 +99,7 @@ function GoalProgress()
 	function isTodaysGoalVisible()
 	{
 		page = window.pageIndicators()[0].value();
-		exist = page == "page 2 of 3" && !weekProgress.isVisible() && !weekGoal.isVisible() && startBtn.isVisible();
+		exist = (page == "page 2 of 3" && startBtn.name() == "Start" && startBtn.isVisible());
 		
 		log("TodayGoal visible: " + exist);
 		return exist;
@@ -106,41 +107,48 @@ function GoalProgress()
 	
 	function scrollToWeekGoal()
 	{
-		wait();
+		wait(0.5);
 		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.2}, endOffset:{x:0.5, y:0.5}, duration:0.3});
 		log("Scroll to WeekGoal");
 	}
 	
 	function scrollToTodaysGoal()
 	{
-		wait();
+		wait(0.5);
 		app.dragInsideWithOptions({startOffset:{x:0.5, y:0.8}, endOffset:{x:0.5, y:0.2}, duration:0.3});
 		log("Scroll to TodaysGoal");
-		
-		wait(3);
-		tips.closeTips(1);
 	}
 	
 	function scrollToPlanner()
 	{
-		wait();
+		wait(0.5);
 		mainView.scrollRight();
-		log("Scroll to Planner")
-		
-		wait(2);
-		tips.closeTips(5);
+		log("Scroll to Planner");
 	}
 
 	function scrollToSettings()
 	{
-		wait();
+		wait(0.5);
 		mainView.scrollLeft();
 		log("Scroll to Settings");
 	}
 	
+	function tapMusic()
+	{
+		if(musicBtn.isValid() && musicBtn.isVisible())
+		{
+			wait(0.5);
+			musicBtn.tap();
+			log("Tap [Music]");
+		}
+		else
+			log("No [Music] on this view");
+	}
+	
+	
 	function start()
 	{
-		wait();
+		wait(0.5);
 		startBtn.tap();
 		log("Tap [Start]");
 	}

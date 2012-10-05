@@ -161,8 +161,7 @@ function Home()
 		
 		wait(0.5);
 		mainView.buttons()[titleTryout].tap();
-		wait(10);
-		tips.closeTips(4);
+		wait(0.5);
 	}
 	
 	function fillEmail(email)
@@ -197,8 +196,6 @@ function Home()
 		
 		// wait for alert
 		wait(10);
-		// close tips in UserInfo
-		tips.closeTips(4);
 	}
 	
 	function isEmptyEmailAlertShown()

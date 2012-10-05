@@ -40,7 +40,7 @@ function PlanChooser()
 	this.normal = 10;
 	this.active = 21;
 	
-	var titleStr = "Please set your plan ";
+	var titleStr = "Please set your plan";
 	var titleManualStr = "Please set your custom plan";
 	
 	var easyBtn = mainWindow.buttons()[0];	
@@ -74,7 +74,8 @@ function PlanChooser()
 	function isVisible()
 	{
 		wait(0.5);
-		exist = staticTextExist(titleStr);
+		exist = staticTextExist(titleStr) || 
+				(easyBtn.name() == "Easy" && normalBtn.name() == "Normal" && activeBtn.name() == "Active");
 		
 		log("PlanChooser visible: " + exist);
 		return exist;
@@ -96,7 +97,7 @@ function PlanChooser()
 		wait(0.5);
 		easyBtn.tap();
 		log("Tap [Easy]");
-		wait(2);
+		wait(3);
 	}
 	
 	function selectNormal() 
@@ -104,7 +105,7 @@ function PlanChooser()
 		wait(0.5);
 		normalBtn.tap();
 		log("Tap [Normal]");
-		wait(2);
+		wait(3);
 	}
 	
 	function selectActive() 
@@ -112,7 +113,7 @@ function PlanChooser()
 		wait(0.5);
 		activeBtn.tap();
 		log("Tap [Active]");
-		wait(2);
+		wait(3);
 	}
 	
 	function selectOther()
@@ -126,16 +127,17 @@ function PlanChooser()
 	
 	function setValue(value)
 	{
-		wait(0.5);
-		picker = pickWindow.pickers()[0];
+		wait(2);
+		picker = app.windows()[1].pickers()[0];
+		
 		if(picker.isValid())
 		{
 			wheelPick(picker, 0, value.toString());
 			log("Pick custom value: " + value);
 			return;
 		}
-		
-		log("No picker visible");
+		else
+			log("No picker visible");
 	}
 	
 	function getPickerValue()
@@ -184,7 +186,7 @@ function PlanChooser()
 		{
 			doneBtn.tap();
 			log("Tap [Done]");
-			wait(2);
+			wait(3);
 			return;
 		}
 		

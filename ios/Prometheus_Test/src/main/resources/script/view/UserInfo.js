@@ -45,23 +45,20 @@ function UserInfo()
 	var age = mainView.staticTexts()[1];
 	var weight = mainView.staticTexts()[3];
 	var height = mainView.staticTexts()[5];
-	var cancel = mainView.buttons()[0];
 		
-	var male = mainView.staticTexts()[7];
-	var female = mainView.staticTexts()[8];
-	var us = mainView.staticTexts()[9];
-	var si = mainView.staticTexts()[10];
 	var next = mainView.buttons()[3];
+	var sex = mainView.buttons()[2];
+	var done = mainView.buttons()[1];
+	var cancel = mainView.buttons()[0];
 		
 	// Methods
 	this.isVisible = isVisible;
+	
 	this.setInfo = setInfo;
 	this.setAge = setAge;
 	this.setHeight = setHeight;
 	this.setWeight = setWeight;
-	
 	this.setSex = setSex;
-	this.setUnit = setUnit;
 	this.submit = submit;
 	
 	this.changeWeight = changeWeight;
@@ -75,22 +72,24 @@ function UserInfo()
 	function isVisible()
 	{
 		exist = (staticTextExist("years") && staticTextExist("lbs") && staticTextExist("feet")) ||
-				(staticTextExist("years") && staticTextExist("kg") && staticTextExist("meters"));
+				(staticTextExist("years") && staticTextExist("kg") && staticTextExist("meters")) ||
+				tips.isTipsDisplay("UserInfo");
 		
 		log("UserInfo visible: " + exist);
 		return exist;
 	}
 	
-	function setInfo(a, w1, w2, h1, h2)
+	
+	function setInfo(a, w1, w2, wu, h1, h2, hu)
 	{
 		// set age
 		setAge(a);
 		
 		// set weight
-		setWeight(w1, w2);
+		setWeight(w1, w2, wu);
 		
 		// set height
-		setHeight(h1, h2);
+		setHeight(h1, h2, hu);
 	}
 	
 	function setAge(a)
@@ -110,7 +109,7 @@ function UserInfo()
 		done.tap();
 	}
 	
-	function setWeight(w1, w2)
+	function setWeight(w1, w2, wu)
 	{
 		w1 = w1.toString(); w2 = w2.toString();
 		
@@ -120,6 +119,7 @@ function UserInfo()
 		
 		wait(0.5);
 		picker = mainView.pickers()[0];
+		wheelPick(picker, 2, wu);
 		wheelPick(picker, 0, w1);
 		wheelPick(picker, 1, w2);
 		log("Pick value: " + w1 + " - " + w2);
@@ -128,7 +128,7 @@ function UserInfo()
 		done.tap();
 	}
 	
-	function setHeight(h1, h2)
+	function setHeight(h1, h2, hu)
 	{
 		h1 = h1.toString(); h2 = h2.toString();
 		
@@ -138,6 +138,7 @@ function UserInfo()
 		
 		wait(0.5);
 		picker = mainView.pickers()[0];
+		wheelPick(picker, 2, hu);
 		wheelPick(picker, 0, h1);
 		wheelPick(picker, 1, h2);
 		log("Pick value: " + h1 + " - " + h2);
@@ -147,26 +148,19 @@ function UserInfo()
 	}
 	
 	
-	function setSex(sex)
+	function setSex(s)
 	{
 		wait();
-		if(sex == "male" && !isMale())
-			female.tap();
-		if(sex == "female" && isMale())
-			male.tap();
-		
-		log("Set sex: " + sex);
-	}
-	
-	function setUnit(unit)
-	{
-		wait();
-		if(unit == "us" && !isUS())
-			si.tap();
-		if(unit == "si" && isUS())
-			us.tap();
-		
-		log("Set unit: " + unit);
+		if(s == "male" && !isMale())
+		{
+			sex.tap();
+			log("Set sex: Male");
+		}
+		if(s == "female" && isMale())
+		{
+			sex.tap();
+			log("Set sex: Female");
+		}
 	}
 	
 	function submit()
@@ -212,14 +206,11 @@ function UserInfo()
 	// helpers
 	function isMale()
 	{
-		wait(0.2);
-		return female.rect().origin.x > 80;
+		return sex.isVisible() && sex.name() == "Male";
 	}
 	
 	function isUS()
 	{
-		// x > < 175
-		wait(0.2);
 		return staticTextExist("lbs");
 	}
 }
