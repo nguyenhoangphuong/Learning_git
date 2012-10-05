@@ -14,47 +14,53 @@ This test verifies that user can:
 - User can reset the activity to choose another one
 */
 
-start("Start a test");
+function runMultiGoalTest() {
 
-var nav = new Navigator();
-//var info = {100, 0.1, 1, 0.75, 20, "male", "us"};
-nav.toMultiGoalChooser(generateSignupAccount(), "123456", null);
-wait();
+	start("Start a test");
 
-
-var activity = new MultiGoalChooser();
-
-assertTrue(activity.isVisible(), "Multi goal view is not visible");
-
-//check the back button, make sure we get back to user info
-activity.back();
-wait();
-
-var info = new UserInfo();
-assertTrue(info.isVisible());
-info.submit();
-wait();
-
-assertTrue(activity.isVisible(), "Multi goal view is not visible again");
+	var nav = new Navigator();
+	//var info = {100, 0.1, 1, 0.75, 20, "male", "us"};
+	nav.toMultiGoalChooser(generateSignupAccount(), "123456", null);
+	wait();
 
 
-activity.chooseActivityWithIndex(0);
-var plan = new PlanChooser();
-assertTrue(plan.isVisible(), "Multi goal view is not visible again");
-//TODO get different unit
-var unit = plan.getUnit();
-log("Unit= " + unit)
-assertTrue(plan.getUnit() == "reps", "Unit is wrong: expected reps, got " + plan.getUnit());
+	var activity = new MultiGoalChooser();
 
-plan.selectEasy();
-wait(3);
-var goal = new GoalProgress();
-goal.scrollToSettings();
+	assertTrue(activity.isVisible(), "Multi goal view is not visible");
 
-var settings = new Settings();
-settings.resetPlan("yes");
+	//check the back button, make sure we get back to user info
+	activity.back();
+	wait();
 
-pass("Test done");
+	var info = new UserInfo();
+	assertTrue(info.isVisible());
+	info.submit();
+	wait();
+
+	assertTrue(activity.isVisible(), "Multi goal view is not visible again");
+
+
+	
+	
+	/// in loop
+	activity.chooseActivityWithIndex(0);
+	var plan = new PlanChooser();
+	assertTrue(plan.isVisible(), "Multi goal view is not visible again");
+	//TODO get different unit
+	var unit = plan.getUnit();
+	log("Unit= " + unit)
+	assertTrue(unit == "miles" || unit == "km", "Unit is wrong: expected reps, got " + plan.getUnit());
+
+	plan.selectEasy();
+	wait(3);
+	var goal = new GoalProgress();
+	goal.scrollToSettings();
+
+	var settings = new Settings();
+	settings.resetPlan("yes");
+
+	pass("Test done");
+}
 
 
 

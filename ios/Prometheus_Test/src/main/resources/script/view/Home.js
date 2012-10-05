@@ -139,7 +139,9 @@ function Home()
 		
 		wait(0.5);
 		mainView.buttons()[titleLogin].tap();
-		wait(0.5);
+		wait(10);
+		tips.closeTips(4);
+
 	}
 	
 	function tapSignUp()
@@ -148,7 +150,9 @@ function Home()
 		
 		wait(0.5);
 		mainView.buttons()[titleSignup].tap();
-		wait(0.5);
+		wait(10);
+		tips.closeTips(4);
+
 	}
 	
 	function tapTryOut()
@@ -157,7 +161,7 @@ function Home()
 		
 		wait(0.5);
 		mainView.buttons()[titleTryout].tap();
-		wait(0.5);
+		wait(10);
 		tips.closeTips(4);
 	}
 	
