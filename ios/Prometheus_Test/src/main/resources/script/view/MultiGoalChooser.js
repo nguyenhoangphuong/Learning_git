@@ -9,6 +9,7 @@ MultiGoalChooser functions:
 - chooseActivityWithName(name)	:	tap button with name
 - back()			:	tap the back button
 =========================================================================================
+- getActivities()	:	get all Activities.
 */
 #import "../core/testcaseBase.js"
 
@@ -19,11 +20,120 @@ function MultiGoalChooser()
 	var nameTableView = "Empty list";
 	var nameBackButton = "Done";
 	
-	// define name of activity
-	var activities = ["Cycling","Running","Treadmill", "Elliptical", 
-			"Indoor Cycling","Swimming","Push-up","Sit-up",
-			"Leg-lift","Pull-up","Plank"
-			];
+	//define name of activity
+	
+
+	var activities = [	
+						{
+							"Name" : "Cycling",  
+							"Unit" : "Distance",
+							"RangeMin" : 10,
+							"RangeMax" : 300,								
+							"EasyPlan" : 70,
+							"MediumPlan" : 140,
+							"HardPlan" : 35*7
+						},
+						{  
+							"Name" : "Running",  
+							"Unit" : "Distance",
+							"RangeMin" : 3,
+							"RangeMax" : 31,								
+							"EasyPlan" : 5,
+							"MediumPlan" : 10,
+							"HardPlan" : 21
+						},
+						
+						{  
+							"Name" : "Treadmill",  
+							"Unit" : "Distance",
+							"RangeMin" : 3,
+							"RangeMax" : 50,								
+							"EasyPlan" : 6,
+							"MediumPlan" : 12,
+							"HardPlan" : 25
+						},
+							
+						{  
+							"Name" : "Elliptical",  
+							"Unit" : "Distance",
+							"RangeMin" : 4,
+							"RangeMax" : 60,								
+							"EasyPlan" : 5,
+							"MediumPlan" : 12,
+							"HardPlan" : 25
+						},
+						 
+						{ 
+						 	"Name" : "Indoor Cycling",  
+							"Unit" : "Distance",
+							"RangeMin" : 10,
+							"RangeMax" : 300,								
+							"EasyPlan" : 70,
+							"MediumPlan" : 140,
+							"HardPlan" : 35*7
+						},
+						
+						{  
+							"Name" : "Swimming", 
+							"Unit" : "LapsLength",
+							"RangeMin" : 50*1*7,
+							"RangeMax" : 50*20*7,								
+							"EasyPlan" : 50*2*7,
+							"MediumPlan" : 50*5*7,
+							"HardPlan" : 50*10*7
+						},
+						
+						{  
+							"Name" : "Push-up", 
+							"Unit" : "Count",
+							"RangeMin" : 5*7,
+							"RangeMax" : 60*7,								
+							"EasyPlan" : 10*7*7,
+							"MediumPlan" : 25*7*7,
+							"HardPlan" : 60*7*7
+						},
+						
+						{  
+							"Name" : "Sit-up", 
+							"Unit" : "Count",
+							"RangeMin" : 5*7,
+							"RangeMax" : 60*7,								
+							"EasyPlan" : 10*7*7,
+							"MediumPlan" : 25*7*7,
+							"HardPlan" : 60*7*7
+						},
+						
+						{  
+							"Name" : "Leg-lift", 
+							"Unit" : "Count",
+							"RangeMin" : 10*7,
+							"RangeMax" : 100*7,								
+							"EasyPlan" : 15*7*7,
+							"MediumPlan" : 25*7*7,
+							"HardPlan" : 40*7*7
+						},
+						
+						{  
+							"Name" : "Pull-up", 
+							"Unit" : "Count",
+							"RangeMin" : 3*7,
+							"RangeMax" : 30*7,								
+							"EasyPlan" : 7*7*7,
+							"MediumPlan" : 12*7*7,
+							"HardPlan" : 20*7*7
+						},
+						
+						{  
+							"Name" : "Plank", 
+							"Unit" : "Duration",
+							"RangeMin" : 70,
+							"RangeMax" : 840,								
+							"EasyPlan" : 210,
+							"MediumPlan" : 420,
+							"HardPlan" : 840
+						}
+						
+ ];
 	
 	// Private fields
 	var mainWindow = app.mainWindow();	
@@ -33,6 +143,7 @@ function MultiGoalChooser()
 	this.chooseActivityWithIndex = chooseActivityWithIndex;
 	this.back = back;
 	this.chooseActivityWithName = chooseActivityWithName;
+	this.getActivities = getActivities;
 	
 	function isVisible()
 	{
@@ -51,7 +162,6 @@ function MultiGoalChooser()
     			}
     		return true;  				
     }
-	
 	function chooseActivityWithIndex(index)
 	{		
 		mainWindow.tableViews()[nameTableView].cells()[index].tap();
@@ -65,7 +175,10 @@ function MultiGoalChooser()
     function chooseActivityWithName(name)
 	{		
 		mainWindow.tableViews()[nameTableView].cells()[name].tap();
-		log("Choose Activity: " + name);
+	}
+	function getActivities()
+	{
+		return activities;
 	}
     
     
