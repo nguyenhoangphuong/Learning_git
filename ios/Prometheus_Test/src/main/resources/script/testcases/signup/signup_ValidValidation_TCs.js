@@ -36,4 +36,4 @@ wait(10);
 
 
 //if pass
-pass("StartScreen: Login backend verification");
+pass("SignUpScreen: Valid email validation");
