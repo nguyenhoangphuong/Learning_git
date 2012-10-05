@@ -51,7 +51,7 @@ function UserInfo()
 	var female = mainView.staticTexts()[8];
 	var us = mainView.staticTexts()[9];
 	var si = mainView.staticTexts()[10];
-	var next = mainView.buttons()[2];
+	var next = mainView.buttons()[3];
 		
 	// Methods
 	this.isVisible = isVisible;
@@ -74,8 +74,8 @@ function UserInfo()
 	// Methods definition
 	function isVisible()
 	{
-		exist = (staticTextExist("yrs") && staticTextExist("lbs") && staticTextExist("ft")) ||
-				(staticTextExist("yrs") && staticTextExist("kg") && staticTextExist("m"));
+		exist = (staticTextExist("years") && staticTextExist("lbs") && staticTextExist("feet")) ||
+				(staticTextExist("years") && staticTextExist("kg") && staticTextExist("meters"));
 		
 		log("UserInfo visible: " + exist);
 		return exist;

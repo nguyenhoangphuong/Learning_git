@@ -25,8 +25,9 @@ function Tips()
 		log("Closing tips");
 		for (i=0; i< numberOfTips; i++) {
 			target.tap({x:154.00, y:200.00});
-			wait(3);
+			wait(4);
 		}
+		wait(2);
 	}
 	
 }

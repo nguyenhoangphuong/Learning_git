@@ -7,6 +7,8 @@
 #import "MusicSetting.js"
 #import "Settings.js"
 
+
+
 function testSettings()
 {
 //	logTree();
@@ -34,5 +36,8 @@ function testSettings()
 }
 
 start("Demo");
-testSettings();
+nav.toTodaysGoal(null, null, {age: 35, w1: 80, w2: 0.5, h1: 1, h2: 0.65, sex: "female", unit: "si"}, "Running", 22);
+//view = app.mainWindow().scrollViews()[0];
+//listAllStaticTexts(view);
+//listAllButtons(view);
 pass("Demo pass");

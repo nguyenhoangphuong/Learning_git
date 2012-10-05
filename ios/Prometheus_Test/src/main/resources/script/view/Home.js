@@ -1,4 +1,5 @@
 #import "../core/testcaseBase.js"
+#import "_Tips.js"
 
 /*
 List of functions:
@@ -157,6 +158,7 @@ function Home()
 		wait(0.5);
 		mainView.buttons()[titleTryout].tap();
 		wait(0.5);
+		tips.closeTips(4);
 	}
 	
 	function fillEmail(email)
@@ -190,7 +192,9 @@ function Home()
 		log("Submiting form...");
 		
 		// wait for alert
-		wait();
+		wait(10);
+		// close tips in UserInfo
+		tips.closeTips(4);
 	}
 	
 	function isEmptyEmailAlertShown()

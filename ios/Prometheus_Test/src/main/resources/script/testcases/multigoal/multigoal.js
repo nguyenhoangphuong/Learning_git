@@ -1,9 +1,10 @@
-#import "../view/Home.js"
-#import "../view/UserInfo.js"
-#import "../view/PlanChooser.js"
-#import "../view/WeeklyGoal.js"
-#import "../view/_Navigator.js"
-#import "../core/testcaseBase.js"
+#import "../../view/Home.js"
+#import "../../view/UserInfo.js"
+#import "../../view/PlanChooser.js"
+#import "../../view/_Navigator.js"
+#import "../../view/MultiGoalChooser.js"
+#import "../../view/GoalProgress.js"
+#import "../../core/testcaseBase.js"
 
 
 /**
@@ -13,10 +14,11 @@ This test verifies that user can:
 - User can reset the activity to choose another one
 */
 
-start();
+start("Start a test");
 
 var nav = new Navigator();
-nav.toActivity(generateSignupAccount(), "123456");
+//var info = {100, 0.1, 1, 0.75, 20, "male", "us"};
+nav.toMultiGoalChooser(generateSignupAccount(), "123456", null);
 wait();
 
 
@@ -39,7 +41,9 @@ assertTrue(activity.isVisible(), "Multi goal view is not visible again");
 activity.chooseActivityWithIndex(0);
 var plan = new PlanChooser();
 assertTrue(plan.isVisible(), "Multi goal view is not visible again");
-//TODO
+//TODO get different unit
+var unit = plan.getUnit();
+log("Unit= " + unit)
 assertTrue(plan.getUnit() == "reps", "Unit is wrong: expected reps, got " + plan.getUnit());
 
 plan.selectEasy();

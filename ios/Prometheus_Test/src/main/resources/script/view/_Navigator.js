@@ -12,7 +12,7 @@ This will go from nothing to the specify view, so kill the app first.
 	+ null, null			:	go to UserInfo by choosing [Try out] without email
 	+ email, null			:	go to UserInfo by [Try out] with email
 	+ email, pwd			:	go to UserInfo by [Log in]
-- toActivity(email, pwd, userinfo)	:	go to ActivitiyChooser screen
+- toMultiGoalChooser(email, pwd, userinfo)	:	go to ActivitiyChooser screen
 	+ userinfo = null		:	use default user info
 	+ userinfo = {h1, h2, w1, w2, age, sex, unit}
 		ex:	     {100, 0.1, 1, 0.75, 20, "male" ("female"), "si" ("us")}

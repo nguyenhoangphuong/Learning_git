@@ -23,6 +23,7 @@ PlanChooser functions:
 	+ easy			:
 	+ normal		:	10 (float)
 	+ active		:
+- getUnit()			: get the unit of this current activity
 =========================================================================================
 */
 
@@ -67,6 +68,7 @@ function PlanChooser()
 	
 	this.getPlanAmounts = getPlanAmounts;
 	this.isLocationConfirmShown = isLocationConfirmShown;
+	this.getUnit = getUnit;
 	
 	// Method definition
 	function isVisible()
