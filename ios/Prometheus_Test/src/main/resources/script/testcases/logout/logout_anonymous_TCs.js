@@ -1,4 +1,4 @@
-#import "loginFuncs.js
+#import "logoutFuncs.js"
 
 //======================== Test logic ======================== //
 // navigate

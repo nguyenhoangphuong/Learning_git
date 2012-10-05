@@ -114,5 +114,5 @@ function verifyValidLogin()
 	hr();
 	print("<Login with valid email and password>");
 	h.login(loginTD.existedEmail, loginTD.rightPwd);
-	assertTrue(!h.loginVisible(), "Login screen is nor more");
+	assertTrue(!h.isLoginVisible(), "Login screen is nor more");
 }
