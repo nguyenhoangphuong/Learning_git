@@ -42,7 +42,7 @@ function PlanChooser()
 	this.normal = 10;
 	this.active = 21;
 	
-	var titleStr = "Set you 7-day fitness plan";
+	var titleStr = "Set your 7-day fitness plan";
 	var titleManualStr = "Please set your custom plan";
 	
 	var easyBtn = mainWindow.buttons()[0];	
@@ -79,8 +79,7 @@ function PlanChooser()
 	function isVisible()
 	{
 		wait(0.5);
-		exist = staticTextExist(titleStr) || 
-				(easyBtn.name() == "Easy" && normalBtn.name() == "Normal" && activeBtn.name() == "Active");
+		exist = staticTextExist(titleStr);
 		
 		log("PlanChooser visible: " + exist);
 		return exist;
