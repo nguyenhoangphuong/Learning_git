@@ -20,8 +20,10 @@ Settings functions:
 - resetPlan(confirm)	: tap Reset button and choose Yes/No when alert shown up
 	+ resetPlan("yes")
 	+ resetPlan("no")
-- signOut()			: tap "Sign out" button (w/ user having logged in)
-- signUp()			: tap "Sign up" button (w/ user having not logged in)
+- signOut(yes = true)	: tap "Sign out" button (w/ user having logged in)
+	+ signOut() or signOut(true)	: tap YES when being asked
+	+ signOut(false)				: tap NO when being asked
+- signUp()				: tap "Sign up" button (w/ user having not logged in)
 */
 
 function Settings()
@@ -191,12 +193,30 @@ function Settings()
 		}
 	}
 	
-	function signOut()
+	function signOut(yes)
 	{
-		if (hasSignedIn())
+		if (!hasSignedIn())
 		{
-			log("Tap Sign out");
-			btnSignOut.tap();
+			log("User has not signed in. No signing out at this time :P");
+			
+			return;
+		}
+		
+		log("Tap Sign out");
+		btnSignOut.tap();
+		
+		if (yes == null)
+			yes = true;
+		
+		if (yes)
+		{
+			log("Tap YES to sign out");
+			window.buttons()["YES"].tap();
+		}
+		else
+		{
+			log("Tap NO to back to Settings");
+			window.buttons()["NO"].tap();
 		}
 	}
 	
