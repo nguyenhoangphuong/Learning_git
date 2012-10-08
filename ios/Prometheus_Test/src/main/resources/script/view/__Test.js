@@ -1,39 +1,43 @@
 #import "_Navigator.js"
 #import "_AlertHandler.js"
 #import "_Prometheus.js"
-#import "__TestArchive.js"
 #import "../core/testcaseBase.js"
 #import "MultiGoalChooser.js"
 #import "Home.js"
 #import "MusicSetting.js"
 #import "Settings.js"
 
-function testHistory()
+function testSettings()
 {
-	h = new History();
+//	logTree();
+	var target = UIATarget.localTarget();
+	var app = target.frontMostApp();
+	var window = app.mainWindow();
+	var mainView = window.scrollViews()[0];
 	
-	h.isVisible();
-	h.isNoHistory();
+	var s = new Settings();
 	
-	info = h.getAllDates();
-	h.getAllRecordsOfDate(info.dates[0]);
-	h.getAllRecordsOfDate(info.dates[1]);
-	
-	//h.scrollToPlanner();
-}
-
-function testHome()
-{
-	h = new Home();
-	h.signUp("existed@test.com", "qwerty1");
-	
+	//log(s.isVisible());
+	//log(s.isSupportView());
+	//log(s.isTroublemaker());
+	//s.getResetButton().tap();
+	//s.goToProfile();
+	//s.rateApp();
+	//s.tapSupport();
+	//s.emailSupport();
+	//s.likePage();
+	//s.goToWebsite();
+	//s.backToSettings();
+	//s.tapFeedback();
+	//s.resetPlan();
+	//s.resetPlan(true);
+	s.signOut();
 }
 
 start("Demo");
-//nav.toRunView(null, null, {age: 35, w1: 80, w2: ".5", wu:"kg", h1: 1, h2: ".65", hu: "meter", sex: "female", unit: "si"}, "Running", 22);
-//listControls(app.mainWindow());
+//testSettings();
+//#import "../testcases/feedback/feedback_tryout.js";
+#import "../testcases/feedback/feedback_non-troublemaker.js";
 //logTree();
-
-testHome();
-
 pass("Demo pass");
+

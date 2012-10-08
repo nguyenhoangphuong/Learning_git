@@ -1,4 +1,4 @@
-/*
+	/*
 PlanChooser functions:
 =========================================================================================
 - isVisible()		: 	check if current view is PlanChooser
@@ -215,7 +215,7 @@ function PlanChooser()
 	function done()
 	{
 		wait(1);
-		doneBtn = pickWindow.buttons()["Done"];
+		doneBtn = app.windows()[1].buttons()["Done"];
 		
 		if (doneBtn.isValid())
 		{

@@ -41,7 +41,8 @@ function Tips()
 	
 			"TodayGoal":
 			[
-			 	"Swipe left to settings.\nSwipe right for weekly plan"
+			 	//"Swipe left to settings.\nSwipe right for weekly plan"
+			 	"Swipe right for settings.\nSwipe left for seven day plan."
 			],
 			
 			"GoalPlan":

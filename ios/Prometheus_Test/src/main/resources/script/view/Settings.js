@@ -194,12 +194,18 @@ function Settings()
 	function signOut()
 	{
 		if (hasSignedIn())
+		{
+			log("Tap Sign out");
 			btnSignOut.tap();
+		}
 	}
 	
 	function signUp()
 	{
 		if (!hasSignedIn())
+		{
+			log("Tap Sign up");
 			btnSignUp.tap();
+		}
 	}
 }
