@@ -77,7 +77,7 @@ function Navigator()
 			{
 				// log in
 				print("=> Go to MultiGoalChooser screen by logging in ...");
-				h.logIn(email, password);
+				h.login(email, password);
 				wait(2);
 			}
 			else if(email == null || (typeof email == "undefined"))
