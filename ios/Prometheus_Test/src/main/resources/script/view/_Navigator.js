@@ -7,26 +7,26 @@ This file provides methods to navigate to specify view.
 This will go from nothing to the specify view, so kill the app first.
 
 --- Functions:
-- toHome()					:	to Home screen
-- toUserInfo(email, pwd)	:	to UserInfo screen
-	+ null, null			:	go to UserInfo by choosing [Try out] without email
-	+ email, null			:	go to UserInfo by [Try out] with email
-	+ email, pwd			:	go to UserInfo by [Log in]
-- toMultiGoalChooser(email, pwd, userinfo)	:	go to ActivitiyChooser screen
-	+ userinfo = null		:	use default user info
+- toHome()						:	to Home screen
+- toUserInfo(email, pwd, login)	:	to UserInfo screen
+	+ null, null				:	go to UserInfo by choosing [Try out] without email
+	+ email, null				:	go to UserInfo by [Try out] with email
+	+ email, pwd				:	go to UserInfo by [Log in]
+- toMultiGoalChooser(email, pwd, userinfo, login)	:	go to ActivitiyChooser screen
+	+ userinfo = null			:	use default user info
 	+ userinfo = {w1, w2, wu, h1, h2, hu, age, sex}
 		ex:	     {100, 0.1, "kg", 1, 0.75, "meter", 20, "male" ("female")}
-- toPlanChooser(email, pwd, userinfo, activity)
+- toPlanChooser(email, pwd, userinfo, activity, login)
 	+ activity			: name (string) or index (int)
 		ex: "Swimming" or 3
-- toWeekGoal(email, pwd, userinfo, activity, number)
+- toWeekGoal(email, pwd, userinfo, activity, number, login)
 	+ number: number of unit / miles / ...
 		ex: 30
-- toTodayGoal(email, pwd, userinfo, activity, number)
-- toRunView(email, pwd, userinfo, activity, number)
-- toGoalPlan(email, pwd, userinfo, activity, number)
-- toHistory(email, pwd, userinfo, activity, number)
-- toSettings(email, pwd, userinfo, activity, number)
+- toTodayGoal(email, pwd, userinfo, activity, number, login)
+- toRunView(email, pwd, userinfo, activity, number, login)
+- toGoalPlan(email, pwd, userinfo, activity, number, login)
+- toHistory(email, pwd, userinfo, activity, number, login)
+- toSettings(email, pwd, userinfo, activity, number, login)
 */
 
 function Navigator()
@@ -62,15 +62,25 @@ function Navigator()
 		return (h.isVisible()? h : null);
 	}
 	
-	function toUserInfo(email, password)
+	function toUserInfo(email, password, login)
 	{
+		if(typeof login == "undefined")
+			login = false;
+		
 		// go to Home first
 		toHome();
 		h = new Home();
 		
 		if(h.isVisible())
 		{
-			if(email == null || (typeof email == "undefined"))
+			if(login)
+			{
+				// log in
+				print("=> Go to MultiGoalChooser screen by logging in ...");
+				h.logIn(email, password);
+				wait(2);
+			}
+			else if(email == null || (typeof email == "undefined"))
 			{
 				// try out
 				print("=> Go to UserInfo screen by trying out ...");
@@ -99,10 +109,10 @@ function Navigator()
 			return null;
 	}
 	
-	function toMultiGoalChooser(email, password, uinfo)
+	function toMultiGoalChooser(email, password, uinfo, login)
 	{
 		// go to UserInfo first
-		toUserInfo(email, password);
+		toUserInfo(email, password, login);
 		ui = new UserInfo();
 		
 		// continue
@@ -126,10 +136,10 @@ function Navigator()
 		return a.isVisible() ? a : null;
 	}
 	
-	function toPlanChooser(email, password, uinfo, activity)
+	function toPlanChooser(email, password, uinfo, activity, login)
 	{
 		// go to Activity first
-		toMultiGoalChooser(email, password, uinfo);
+		toMultiGoalChooser(email, password, uinfo, login);
 		a = new MultiGoalChooser();
 		
 		if(a.isVisible())
@@ -150,10 +160,10 @@ function Navigator()
 		return (pc.isVisible() ? pc : null);
 	}
 	
-	function to7DayGoal(email, password, uinfo, activity, number)
+	function to7DayGoal(email, password, uinfo, activity, number, login)
 	{
 		// to PlanChooser first
-		toPlanChooser(email, password, uinfo, activity);
+		toPlanChooser(email, password, uinfo, activity, login);
 		pc = new PlanChooser();
 		
 		// if current view is PlanChooser
@@ -193,10 +203,10 @@ function Navigator()
 			return null;
 	}
 	
-	function toTodaysGoal(email, password, uinfo, activity, number)
+	function toTodaysGoal(email, password, uinfo, activity, number, login)
 	{
 		// to WeekGoal first
-		to7DayGoal(email, password, uinfo, activity, number);
+		to7DayGoal(email, password, uinfo, activity, number, login);
 		goal = new GoalProgress();
 		
 		if(goal.isWeekGoalVisible())
@@ -216,10 +226,10 @@ function Navigator()
 			return null;
 	}
 	
-	function toRunView(email, password, uinfo, activity, number)
+	function toRunView(email, password, uinfo, activity, number, login)
 	{
 		// go to TodaysGoal first
-		toTodaysGoal(email, password, uinfo, activity, number);
+		toTodaysGoal(email, password, uinfo, activity, number, login);
 		goal = new GoalProgress();
 		
 		if(goal.isTodaysGoalVisible())
@@ -236,10 +246,10 @@ function Navigator()
 		return rv.isVisible() ? rv : null;
 	}
 	
-	function toMusic(email, password, uinfo, activity, number)
+	function toMusic(email, password, uinfo, activity, number, login)
 	{
 		// go to TodaysGoal first
-		toTodaysGoal(email, password, uinfo, activity, number);
+		toTodaysGoal(email, password, uinfo, activity, number, login);
 		goal = new GoalProgress();
 		
 		if(goal.isTodaysGoalVisible())
@@ -256,10 +266,10 @@ function Navigator()
 		return rv.isVisible() ? rv : null;
 	}
 	
-	function toPlanner(email, password, uinfo, activity, number)
+	function toPlanner(email, password, uinfo, activity, number, login)
 	{
 		// go to TodayGoal first
-		toTodaysGoal(email, password, uinfo, activity, number);
+		toTodaysGoal(email, password, uinfo, activity, number, login);
 		goal = new GoalProgress();
 		
 		if(goal.isTodaysGoalVisible())
@@ -283,10 +293,10 @@ function Navigator()
 			return null;
 	}
 	
-	function toHistory(email, password, uinfo, activity, number)
+	function toHistory(email, password, uinfo, activity, number, login)
 	{
 		// go to Planner first
-		toPlanner(email, password, uinfo, activity, number);
+		toPlanner(email, password, uinfo, activity, number, login);
 		p = new GoalPlan();
 		
 		if(p.isVisible())
@@ -303,10 +313,10 @@ function Navigator()
 		return h.isVisible() ? h : null;
 	}
 	
-	function toSettings(email, password, uinfo, activity, number)
+	function toSettings(email, password, uinfo, activity, number, login)
 	{
 		// go to TodayGoal first
-		toTodaysGoal(email, password, uinfo, activity, number);
+		toTodaysGoal(email, password, uinfo, activity, number, login);
 		goal = new GoalProgress();
 		
 		if(goal.isTodaysGoalVisible())

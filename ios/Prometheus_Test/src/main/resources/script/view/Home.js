@@ -159,9 +159,6 @@ function Home()
 		updateTitle();
 		wait(0.5);
 		mainView.buttons()[titleSignup].tap();
-		wait(10);
-		tips.closeTips(4);
-
 	}
 	
 	function tapTryOut()
