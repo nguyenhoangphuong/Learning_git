@@ -1,13 +1,15 @@
 #import "signupFuncs.js"
+#import "../../core/common.js"
 
 
 //======================== Test logic ======================== //
 start("SignUpScreen: Valid email validation");
 
 
+
 //var genstring = ;
 //navigate
-nav.toHome();
+//nav.toHome();
 
 //check
 checkValidEmail("email13@one-two.com","DashDomain");

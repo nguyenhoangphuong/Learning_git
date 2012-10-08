@@ -3,7 +3,6 @@
 //======================== Test logic ======================== //
 start("SignUpScreen: Validate invalid case");
 
-
 //var genstring = ;
 
 //navigate
@@ -25,7 +24,12 @@ checkInvalidEmail("email@-domain.com");
 checkInvalidEmail("emaildomain.com");
 checkInvalidEmail("email@.com");
 checkInvalidEmail("$$$$$$"); 
-checkEmptyPassword();
+checkPassword("");
+checkPassword("aaaaaa");
+checkPassword("111111");
+checkPassword("a1");
+checkPassword("ab234");
+
 checkDuplicatedUser();
 
 //if pass

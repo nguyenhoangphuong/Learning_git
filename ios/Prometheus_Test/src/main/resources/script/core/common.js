@@ -288,6 +288,13 @@ function generateSignupAccount()
 	return "test" + ms.toString() + "@test.com";
 }
 
+function generateRandomDigitString()
+{
+	today = new Date();
+	ms = today.getTime();
+	return ms.toString();
+}
+
 function listAllStaticTexts(p)
 {
 	texts = p.staticTexts();

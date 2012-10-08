@@ -18,11 +18,12 @@ function MultiGoalChooser()
 	// define name
 	var titleStr = "Please pick an activity";
 	var nameTableView = "Empty list";
-	var nameBackButton = "Done";
+	var indexOfButtonBack = 0;
 	
+	// define button
+	var backBtn = target.frontMostApp().mainWindow().buttons()[0];
+		
 	//define name of activity
-	
-
 	var activities = [	
 						{
 							"Name" : "Cycling",  
@@ -88,9 +89,9 @@ function MultiGoalChooser()
 							"Unit" : "Count",
 							"RangeMin" : 5*7,
 							"RangeMax" : 60*7,								
-							"EasyPlan" : 10*7*7,
-							"MediumPlan" : 25*7*7,
-							"HardPlan" : 60*7*7
+							"EasyPlan" : 10*7,
+							"MediumPlan" : 25*7,
+							"HardPlan" : 60*7
 						},
 						
 						{  
@@ -98,9 +99,9 @@ function MultiGoalChooser()
 							"Unit" : "Count",
 							"RangeMin" : 5*7,
 							"RangeMax" : 60*7,								
-							"EasyPlan" : 10*7*7,
-							"MediumPlan" : 25*7*7,
-							"HardPlan" : 60*7*7
+							"EasyPlan" : 10*7,
+							"MediumPlan" : 25*7,
+							"HardPlan" : 60*7
 						},
 						
 						{  
@@ -108,9 +109,9 @@ function MultiGoalChooser()
 							"Unit" : "Count",
 							"RangeMin" : 10*7,
 							"RangeMax" : 100*7,								
-							"EasyPlan" : 15*7*7,
-							"MediumPlan" : 25*7*7,
-							"HardPlan" : 40*7*7
+							"EasyPlan" : 15*7,
+							"MediumPlan" : 25*7,
+							"HardPlan" : 40*7
 						},
 						
 						{  
@@ -118,9 +119,9 @@ function MultiGoalChooser()
 							"Unit" : "Count",
 							"RangeMin" : 3*7,
 							"RangeMax" : 30*7,								
-							"EasyPlan" : 7*7*7,
-							"MediumPlan" : 12*7*7,
-							"HardPlan" : 20*7*7
+							"EasyPlan" : 7*7,
+							"MediumPlan" : 12*7,
+							"HardPlan" : 20*7
 						},
 						
 						{  
@@ -171,7 +172,11 @@ function MultiGoalChooser()
 	function chooseActivityWithIndex(index)
 	{		
 		mainWindow.tableViews()[nameTableView].cells()[index].tap();
-		log("Choose Activity: " + index);
+	}
+
+	function back()
+	{		
+		target.frontMostApp().mainWindow().buttons()[nameBackButton].tap();	
 	}
 	
     function chooseActivityWithName(name)

@@ -11,7 +11,7 @@
 
 function goToMultiGoalChooser()
 {
-	nav.toMultiGoalChooser(generateSignupAccount(), "123456", null);
+	nav.toMultiGoalChooser(generateSignupAccount(), "a123456", null);
 	wait();
 }
 
@@ -23,26 +23,39 @@ function checkBackButtonInTheFirstTime()
 	wait();
 
 	var info = new UserInfo();
-	assertTrue(info.isVisible());
+	assertTrue(info.isVisible(),"work of back button");
 	info.submit();
 	wait();
 
-	assertTrue(activity.isVisible(), "Multi goal view is not visible again");
+	assertTrue(activity.isVisible(), "Multi goal view is visible again");
 	
 }
 
 function checkCorrectData()
 {
+	// get activities
 	var multigoalchooser = new MultiGoalChooser();
 	var activities = multigoalchooser.getActivities();
 	
 	// check all activities
-	for (i=0 ; i < activities.lenght ; i++)
+	for (i=0 ; i < activities.length ; i++)
 	{
-		multigoalchooser.chooseActivityWithIndex(i);
-		checkCorrectUnit(activities[i].Unit);
-		checkCorrectRange(activities[i]);
-		backToMultiGoalChooserScreen();
+		//check swimming
+		if (activities[i].Name != "Swimming")
+		{
+			multigoalchooser.chooseActivityWithName(activities[i].Name);
+			// check unit
+			wait();
+			var isunitcorrect = checkCorrectUnit(activities[i].Unit);
+			assertTrue(isunitcorrect, activities[i].Name + " :check unit");
+			
+			//check range
+			var israngecorrect = checkCorrectRange(activities[i]);
+			assertTrue(israngecorrect, activities[i].Name + " :check range");
+			backToMultiGoalChooserScreen();
+			wait();
+		}
+		
 	}
 }
 
@@ -50,31 +63,57 @@ function checkCorrectUnit(unitexpected)
 {
 	var planchooser = new PlanChooser();
 	var unitactual = planchooser.getUnit();
+/*
+	log(">>>>>Unit>>>>");
+	log(unitexpected);
+	log(unitactual);
+	log(">>>>>>>>>");
+*/
 	
-	if (unitexpected == "Distance" && (unitactual == "km" || unitactual == "miles" )
+	// validate
+	if (unitexpected == "Distance" && (unitactual == "km" || unitactual == "miles" ))
 		return true;
-	if (unitexpected == "LapsLength" && (unitactual == "ft")
+	if (unitexpected == "LapsLength" && (unitactual == "ft"))
 		return true;
-	if (unitexpected == "Count" && (unitactual == "reps")
+	if (unitexpected == "Count" && (unitactual == "reps"))
 		return true;
-	if (unitexpected == "Duration" && (unitactual == "min")
+	if (unitexpected == "Duration" && (unitactual == "secs"))
 		return true;
 	return false;			
 }
 
 function checkCorrectRange(activityexpected)
 {
+	// get range actual
 	var planchooser = new PlanChooser();
 	planchooser.selectOther();
+	wait();
 	var range = planchooser.getPickerRange();
 	var rangemin = range.min;
 	var rangemax = range.max;
+	
+	//get plan amount actual
 	planchooser.back();
+	wait();
 	var planamount = planchooser.getPlanAmounts();
 	var easyplan = planamount.easy;
-	var mediumplan = planamount.medium;
+	var mediumplan = planamount.normal;
 	var hardplan = planamount.active;
-	
+/*
+	log(">>>>>Range>>>>");
+	log(rangemin);
+	log(rangemax);
+	log(easyplan);
+	log(mediumplan);
+	log(hardplan);
+	log(activityexpected.RangeMin);
+	log(activityexpected.RangeMax);
+	log(activityexpected.EasyPlan);
+	log(activityexpected.MediumPlan);
+	log(activityexpected.HardPlan);	
+	log(">>>>>>>>>");
+*/
+	// validate
 	if (activityexpected.RangeMin == rangemin &&
 		activityexpected.RangeMax == rangemax &&
 		activityexpected.EasyPlan == easyplan &&
@@ -91,8 +130,6 @@ function backToMultiGoalChooserScreen()
 	var planchooser = new PlanChooser();
 	planchooser.backToActivity();
 }
-
-
 
 
 

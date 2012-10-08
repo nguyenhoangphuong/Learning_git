@@ -7,13 +7,10 @@
 /**
  * This test cover: - Email validation - Email inputting
  */
-
-var loginTD =
+var signupTD =
 	{
-		existedEmail: "existed@test.com",
-		nonexistedEmail: "nonexisted@test.com",
-		rightPwd: "123456",
-		wrongPwd: "asdaldjk"
+		existedEmail: "testexisted@test.com",		
+		rightPwd: "a123456"
 	}
 
 
@@ -22,7 +19,8 @@ function checkValidEmail(email, error)
 {
 	var signup = new Home();
 	//fill email and correct password
-	signup.signUp(email,"123456");
+	log("begin");
+	signup.signUp(email,signupTD.rightPwd);
 	wait(1);
 	// validate in here
 	assertTrue(!signup.isSignUpVisible(), "Check valid signup:" + error);
@@ -43,7 +41,7 @@ function signOutAfterSignUp()
 function checkInvalidEmail(email)
 {
 	var signup = new Home();
-	signup.signUp(email,"123456");
+	signup.signUp(email,signupTD.rightPwd);
 	assertTrue(signup.isInvalidEmailAlertShown(), "email: " + email + "----- Fail.Expected: not valid. Actual:  valid");
 	signup.tapSignUp();
 	hr();
@@ -52,25 +50,29 @@ function checkInvalidEmail(email)
 function checkEmptyEmail()
 {
 	var signup = new Home();
-	signup.signUp("","123456");
+	signup.signUp("",signupTD.rightPwd);
 	assertTrue(signup.isEmptyEmailAlertShown(), "Empty email: -----Fail.Expected: not valid. Actual: valid");
 	signup.tapSignUp();
 	hr();
 }
 
-function checkEmptyPassword()
+function checkPassword(password)
 {
 	var signup = new Home();
-	signup.signUp("khoathai@yahoo.com","");
-	assertTrue(signup.isEmptyPasswordAlertShown(), "Password empty-----Fail. expected : not valid . Actual : Valid");
+	var genstring = generateRandomDigitString();
+	var email = "nonexisted" + genstring + "@test.com";
+	signup.signUp(email,password);
+	assertTrue(signup.isInvalidPasswordAlertShown(), "Password validate format-----Fail. expected : not valid . Actual : Valid");
 	signup.tapSignUp();
 	hr();
 }
 
+
+
 function checkDuplicatedUser()
 {
 	var signup = new Home();
-	signup.signUp(loginTD.existedEmail,loginTD.rightPwd);
+	signup.signUp(signupTD.existedEmail,signupTD.rightPwd);
 	assertTrue(signup.isExistedUserAlertShown(),"Duplicated user sign up-----Fail. expected : not valid . Actual : Valid");
 	signup.tapSignUp();
 	hr();

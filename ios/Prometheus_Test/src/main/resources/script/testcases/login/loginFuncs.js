@@ -1,7 +1,7 @@
 #import "../../view/_Navigator.js"
 #import "../../view/Home.js"
 #import "../../core/testcaseBase.js"
-
+#import "../../core/common.js"
 //============================================================= //
 // NAVIGATION
 //============================================================= //
@@ -13,11 +13,12 @@ function toStartScreen()
 //============================================================= //
 // DATA
 //============================================================= //
+var genstring = generateRandomDigitString();
 loginTD =
 	{
-		existedEmail: "existed@test.com",
-		nonexistedEmail: "nonexisted@test.com",
-		rightPwd: "123456",
+		existedEmail: "testexisted@test.com",
+		nonexistedEmail: "nonexisted" + genstring + "@test.com",
+		rightPwd: "a123456",
 		wrongPwd: "asdaldjk"
 	}
 
@@ -75,7 +76,7 @@ function verifyClientVerification()
 	hr();
 	print("<Login with empty password>");
 	h.login(loginTD.existedEmail, "")
-	assertTrue(h.isEmptyPasswordAlertShown(), "Empty password alert shown");
+	assertTrue(h.isInvalidPasswordAlertShown(), "Empty password alert shown");
 	h.tapLogin();
 	
 	// login with invalid email

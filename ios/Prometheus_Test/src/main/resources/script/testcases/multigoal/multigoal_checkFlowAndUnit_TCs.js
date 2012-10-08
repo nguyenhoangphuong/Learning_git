@@ -7,6 +7,7 @@ This test verifies that user can:
 - User can reset the activity to choose another one
 */
 
+
 function runMultiGoalTest() {
 
 	start("Start a test");
@@ -27,3 +28,4 @@ function runMultiGoalTest() {
 
 
 
+runMultiGoalTest();

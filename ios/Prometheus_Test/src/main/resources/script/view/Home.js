@@ -70,6 +70,18 @@ function Home()
 	this.signUp = signUp;
 	this.tryOut = tryOut;
 	
+	function updateTitle()
+	{
+		if (mainView.buttons()["Signup"].isVisible())
+			titleSignup = "Signup";
+		if (mainView.buttons()["Sign up"].isVisible())
+			titleSignup = "Sign up";
+		if (mainView.buttons()["Tryout"].isVisible())
+			titleTryout = "Tryout";
+		if (mainView.buttons()["Try out first"].isVisible())
+			titleTryout = "Try out first";
+	}
+	
 	// Method definition
 	function isVisible()
 	{	
@@ -81,7 +93,7 @@ function Home()
 	
 	function isLoginVisible() 
 	{
-
+		updateTitle();
 		exist = mainView.buttons()[titleLogin].isVisible() && !mainView.buttons()[titleSignup].isVisible() && !mainView.buttons()[titleTryout].isVisible();
 				
 
@@ -91,7 +103,7 @@ function Home()
 	
 	function isSignUpVisible()
 	{
-
+		updateTitle();
 		exist = !mainView.buttons()[titleLogin].isVisible() && mainView.buttons()[titleSignup].isVisible() && !mainView.buttons()[titleTryout].isVisible();
 				
 		log("SignUp visible: " + exist);
@@ -101,6 +113,7 @@ function Home()
 	
 	function isTryoutVisible()
 	{
+		updateTitle();
 		exist = !mainView.buttons()[titleLogin].isVisible() && !mainView.buttons()[titleSignup].isVisible() && mainView.buttons()[titleTryout].isVisible();
 				
 		log("Tryout visible: " + exist);
@@ -143,7 +156,7 @@ function Home()
 	function tapSignUp()
 	{
 		log("Tap [Sign up] button");
-		
+		updateTitle();
 		wait(0.5);
 		mainView.buttons()[titleSignup].tap();
 		wait(10);
@@ -154,7 +167,7 @@ function Home()
 	function tapTryOut()
 	{
 		log("Tap [Try out] button");
-		
+		updateTitle();
 		wait(0.5);
 		mainView.buttons()[titleTryout].tap();
 		wait(0.5);
@@ -251,11 +264,11 @@ function Home()
 		return shown;
 	}
 	
-	function isInvalidUserAlertShown()
+	function isInvalidPasswordAlertShown()
 	{
 		shown = alert.alertTitle != null && 
 				alert.alertTitle == alert.Error && 
-				alert.alertMsg == alert.InvalidUserMsg;
+				alert.alertMsg == alert.InvalidPasswordMsg;
 		
 		log("Checking alert: [" +
 				alert.alertTitle + "] - [" + alert.alertMsg + "]: " + shown);
