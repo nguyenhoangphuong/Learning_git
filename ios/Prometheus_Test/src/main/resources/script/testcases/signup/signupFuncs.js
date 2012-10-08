@@ -32,6 +32,7 @@ function checkValidEmail(email, error)
 function signOutAfterSignUp()
 {
 	nav.toSettings();
+	wait();
 	var setting = new Settings();
 	setting.signOut();
 }
@@ -51,7 +52,7 @@ function checkEmptyEmail()
 {
 	var signup = new Home();
 	signup.signUp("",signupTD.rightPwd);
-	assertTrue(signup.isEmptyEmailAlertShown(), "Empty email: -----Fail.Expected: not valid. Actual: valid");
+	assertTrue(signup.isInvalidEmailAlertShown(), "Empty email: -----Fail.Expected: not valid. Actual: valid");
 	signup.tapSignUp();
 	hr();
 }

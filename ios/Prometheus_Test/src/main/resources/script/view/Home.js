@@ -145,11 +145,9 @@ function Home()
 	function tapLogin()
 	{
 		log("Tap [Login] button");
-		
+		updateTitle();
 		wait(0.5);
 		mainView.buttons()[titleLogin].tap();
-		wait(10);
-		tips.closeTips(4);
 
 	}
 	
