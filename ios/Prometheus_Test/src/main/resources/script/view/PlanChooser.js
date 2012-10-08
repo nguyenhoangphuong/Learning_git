@@ -216,9 +216,10 @@ function PlanChooser()
 	
 	function done()
 	{
-		wait(0.5);
-		doneBtn = pickWindow.buttons()[1];
-		if(doneBtn.isValid())
+		wait(1);
+		doneBtn = pickWindow.buttons()["Done"];
+		
+		if (doneBtn.isValid())
 		{
 			doneBtn.tap();
 			log("Tap [Done]");

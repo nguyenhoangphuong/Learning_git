@@ -26,7 +26,8 @@ function Tips()
 		{
 			"UserInfo":
 			[
-			 	"To assist you with a good fitness plan, please input your age, weight and height",
+			 	//"To assist you with a good fitness plan, please input your age, weight and height",
+			 	"Please help \"Shine\" build your personalized plan by inputting your age, weight & height. ",
 			 	"Swipe up or down to adjust height",
 			 	"Swipe left or right to adjust weight",
 			 	"Tap here for manual input"
