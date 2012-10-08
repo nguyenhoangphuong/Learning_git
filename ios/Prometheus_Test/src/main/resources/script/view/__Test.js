@@ -2,10 +2,40 @@
 #import "_AlertHandler.js"
 #import "_Prometheus.js"
 #import "../core/testcaseBase.js"
+#import "MultiGoalChooser.js"
+#import "Home.js"
+#import "MusicSetting.js"
+#import "Settings.js"
 
+function testSettings()
+{
+//	logTree();
+	var target = UIATarget.localTarget();
+	var app = target.frontMostApp();
+	var window = app.mainWindow();
+	var mainView = window.scrollViews()[0];
+	
+	var s = new Settings();
+	
+	//log(s.isVisible());
+	//log(s.isSupportView());
+	//log(s.isTroublemaker());
+	//s.getResetButton().tap();
+	//s.goToProfile();
+	//s.rateApp();
+	//s.tapSupport();
+	//s.emailSupport();
+	//s.likePage();
+	//s.goToWebsite();
+	//s.backToSettings();
+	//s.tapFeedback();
+	//s.resetPlan();
+	//s.resetPlan(true);
+	s.signOut();
+}
 
-start("Demo.");
-//nav.toRunView(null, null, {age: 35, w1: 80, w2: ".5", wu:"kg", h1: 1, h2: ".65", hu: "meter", sex: "female", unit: "si"}, "Running", 22);
-listControls(app.mainWindow().scrollViews()[0]);
-
+start("Demo");
+//testSettings();
+#import "../testcases/musicsettings/musicsettings_havesongs.js";
+//logTree();
 pass("Demo pass");

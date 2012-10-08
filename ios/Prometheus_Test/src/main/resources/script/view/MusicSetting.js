@@ -18,6 +18,8 @@ List of funcitons:
 	{all: ["Rock", "Ballad", "Pop"], active: "Rock"	}
 - isShuffleOn()					:	return [bool] - state of shuffle
 - isSmartDJOn()					:	return [bool] - state of smart DJ
+- areOtherPartsHidden			:	check if other parts are hidden when Smart
+									DJ is turned on
 =========================================================================================
 */
 
@@ -31,7 +33,7 @@ function MusicSetting()
 	var shuffleOffBtn = mainView.staticTexts()[2];
 	var smartOnBtn = mainView.staticTexts()[4];
 	var smartOffBtn = mainView.staticTexts()[5];
-	var musicList = mainView.tableViews()[0];
+	var musicList = mainView.tableViews()[1];
 	
 	var doneBtn = mainView.buttons()[1];
 	
@@ -47,12 +49,16 @@ function MusicSetting()
 	this.getAllPlaylistInfo = getAllPlaylistInfo;
 	this.isShuffleOn = isShuffleOn;
 	this.isSmartDJOn = isSmartDJOn;
+	this.areOtherPartsHidden = areOtherPartsHidden;
 	
 	// Methods definition
 	function isVisible()
 	{
-		exist = staticTextExist("Shuffle") && staticTextExist("Smart DJ");
+		var cellSmartDJ = mainView.tableViews()[0].cells()["Smart DJ, ON, OFF"];
+		
+		exist = cellSmartDJ.isValid() && cellSmartDJ.isVisible();
 		log("MusicSetting visible: " + (exist == 1? "true": "false"));
+		
 		return exist;
 	}
 
@@ -136,16 +142,9 @@ function MusicSetting()
 	
 	function getNumberOfPlaylist()
 	{
-		count = 0;
-		ele = musicList.cells()[count];
-		
-		while(ele.isValid())
-		{
-			count++;
-			ele = musicList.cells()[count];
-		}
-		
+		count = musicList.cells().length;
 		log("Number of playlists: " + count);
+		
 		return count;
 	}
 	
@@ -182,9 +181,15 @@ function MusicSetting()
 	
 	function isSmartDJOn()
 	{
-		state = smartOffBtn.isValid() && smartOffBtn.isVisible();;
+		state = smartOffBtn.isValid() && smartOffBtn.isVisible();
 		log("SmartDJ state: " + state);
 		return state;
+	}
+	
+	function areOtherPartsHidden()
+	{
+		return !shuffleOffBtn.isVisible() &&
+				!musicList.isVisible();
 	}
 	
 	
