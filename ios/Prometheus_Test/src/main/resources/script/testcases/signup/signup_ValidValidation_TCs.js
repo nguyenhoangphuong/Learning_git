@@ -8,10 +8,8 @@ start("SignUpScreen: Valid email validation");
 
 
 var genstring = generateRandomDigitString();
-nav.toSettings("t" + genstring + "@t.t","misfit1");
-//navigate
-//nav.toHome();
 
+nav.toHome();
 //check
 checkValidEmail("email" + genstring+ "@one-two.com","DashDomain");
 wait();

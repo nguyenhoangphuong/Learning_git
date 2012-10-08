@@ -70,8 +70,8 @@ function UserInfo()
 	// Methods definition
 	function isVisible()
 	{
-		exist = (staticTextExist("years") && staticTextExist("lbs") && staticTextExist("feet")) ||
-				(staticTextExist("years") && staticTextExist("kg") && staticTextExist("meters")) ||
+		exist = (staticTextExist("(years)") && staticTextExist("(lbs)") && staticTextExist("(feet)")) ||
+				(staticTextExist("(years)") && staticTextExist("(kg)") && staticTextExist("(meters)")) ||
 				tips.isTipsDisplay("UserInfo");
 		
 		log("UserInfo visible: " + exist);
