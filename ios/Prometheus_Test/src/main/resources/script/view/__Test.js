@@ -1,41 +1,33 @@
 #import "_Navigator.js"
 #import "_AlertHandler.js"
 #import "_Prometheus.js"
+#import "__TestArchive.js"
 #import "../core/testcaseBase.js"
 #import "MultiGoalChooser.js"
 #import "Home.js"
 #import "MusicSetting.js"
 #import "Settings.js"
 
-function testSettings()
+function testHistory()
 {
-//	logTree();
-	var target = UIATarget.localTarget();
-	var app = target.frontMostApp();
-	var window = app.mainWindow();
-	var mainView = window.scrollViews()[0];
+	h = new History();
 	
-	var s = new Settings();
+	h.isVisible();
+	h.isNoHistory();
 	
-	//log(s.isVisible());
-	//log(s.isSupportView());
-	//log(s.isTroublemaker());
-	//s.getResetButton().tap();
-	//s.goToProfile();
-	//s.rateApp();
-	//s.tapSupport();
-	//s.emailSupport();
-	//s.likePage();
-	//s.goToWebsite();
-	//s.backToSettings();
-	//s.tapFeedback();
-	//s.resetPlan();
-	//s.resetPlan(true);
-	s.signOut();
+	info = h.getAllDates();
+	h.getAllRecordsOfDate(info.dates[0]);
+	h.getAllRecordsOfDate(info.dates[1]);
+	
+	//h.scrollToPlanner();
 }
+	
 
 start("Demo");
-//testSettings();
-#import "../testcases/musicsettings/musicsettings_havesongs.js";
+//nav.toRunView(null, null, {age: 35, w1: 80, w2: ".5", wu:"kg", h1: 1, h2: ".65", hu: "meter", sex: "female", unit: "si"}, "Running", 22);
+//listControls(app.mainWindow());
 //logTree();
+
+testHistory();
+
 pass("Demo pass");

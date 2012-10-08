@@ -178,15 +178,13 @@ function PlanChooser()
 	{
 		wait(0.5);
 		picker = app.windows()[1].pickers()[0];
-		if(picker.isValid())
+		range = getWheelRange(picker, 0);
+		
+		if(range != null)
 		{
-			wheel = picker.wheels()[0];
-			items = wheel.values();
-
-			// get current value
 			info = {};
-			info.min = parseFloat(items[0]);
-			info.max = parseFloat(items[items.length - 1]);
+			info.min = parseFloat(range.min);
+			info.max = parseFloat(range.max);
 			
 			log("PickerRange.min: " + info.min);
 			log("PickerRange.max: " + info.max);

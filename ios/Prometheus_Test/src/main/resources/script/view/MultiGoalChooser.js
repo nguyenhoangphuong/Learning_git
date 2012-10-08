@@ -135,41 +135,43 @@ function MultiGoalChooser()
 						
  ];
 	
-	// Private fields
+	// private fields
 	var mainWindow = app.mainWindow();	
+	
+	// methods
 	this.isVisible = isVisible;
 	this.isAllActivitiesVisible = isAllActivitiesVisible;
 	
 	this.chooseActivityWithIndex = chooseActivityWithIndex;
-	this.back = back;
 	this.chooseActivityWithName = chooseActivityWithName;
-	this.getActivities = getActivities;
+	this.back = back;
 	
 	function isVisible()
 	{
 		wait(0.5);
-		return staticTextExist(titleStr);
+		exist = staticTextExist(titleStr);
+		
+		log("MultiGoal visible: " + exist);
+		return exist;
 	}
 	
 	function isAllActivitiesVisible()
     {  	
 		wait(0.5);
-    		for (i=0;i<activities.length;i++)
-    			if (!mainWindow.tableViews()[nameTableView].cells()[activities[i]].isValid())
-    			{
-    				log("Not found :" + activities[i]);
-    				return false;
-    			}
-    		return true;  				
+    	for (i=0; i<activities.length; i++)
+    		if (!mainWindow.tableViews()[nameTableView].cells()[activities[i]].isValid())
+    		{
+    			log("Not found :" + activities[i]);
+    			return false;
+    		}
+    	
+    	log("All activities are valid");
+    	return true;  				
     }
 	function chooseActivityWithIndex(index)
 	{		
 		mainWindow.tableViews()[nameTableView].cells()[index].tap();
-	}
-
-	function back()
-	{		
-		target.frontMostApp().mainWindow().buttons()[nameBackButton].tap();	
+		log("Choose Activity: " + index);
 	}
 	
     function chooseActivityWithName(name)
@@ -181,6 +183,11 @@ function MultiGoalChooser()
 		return activities;
 	}
     
-    
+	function back()
+	{		
+		wait(0.5);
+		target.frontMostApp().mainWindow().buttons()[nameBackButton].tap();
+		log("Tap [Back]");
+	}
 	
 }

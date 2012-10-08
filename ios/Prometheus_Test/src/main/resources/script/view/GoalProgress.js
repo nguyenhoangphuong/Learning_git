@@ -13,6 +13,7 @@ GoalProgress function:
 - scrollToTodaysGoal()	: scroll down from week to day view
 - scrollToPlanner()		: scroll right to goal planning view
 - scrollToSettings()	: scroll left to settings view
+- tapMusic()			: tap the music button
 ================================================================================
 - start()				: press start button
 - simulateARun()		: set location, press start and simulate a run
@@ -294,10 +295,7 @@ function GoalProgress()
 		}
 		
 		var run = new RunView();
-		//if (!run.canPause()) 
-		//{
-		//	fail("The run has not started");
-		//} 
+
 		wait(2);
 		
 		if (stop) 

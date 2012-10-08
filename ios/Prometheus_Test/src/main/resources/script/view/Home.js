@@ -18,10 +18,8 @@ List of functions:
 - fillPassword(pwd)				: fill the password field with <pwd>
 - submit()						: submit the form
 ================================================================================
-- isEmptyEmailAlertShown()		: checking empty email alert is shown
-- isEmptyPasswordAlertShown()	: checking empty password alert is shown
+- isInvalidPasswordAlertShown()	: checking empty password alert is shown
 - isInvalidEmailAlertShown()	: checking invalid email alert is shown
-- isInvalidUserAlertShown()		: checking user not found alert is shown
 - isExistedUserAlertShown()		: checking if "existed user" alert is shown
 - isWrongLoginAlertShown()		: checking if wrong password alert is shown
 ================================================================================
@@ -39,7 +37,8 @@ function Home()
 
 	var titleLogin = "Login";
 	var titleSignup = "Signup";
-	var titleTryout = "Tryout"
+	var titleTryout = "Tryout";
+	var titleLegal = "Legal";
 	
 	var emailField = mainView.textFields()[0];
 	var pwdField = mainView.secureTextFields()[0];
@@ -56,14 +55,14 @@ function Home()
 	this.tapLogin = tapLogin;
 	this.tapSignUp = tapSignUp;
 	this.tapTryOut = tapTryOut;
+	this.tapLegal = tapLegal;
+	this.tapBack = tapBack;
 	this.fillEmail = fillEmail;
 	this.fillPassword = fillPassword;
 	this.submit = submit;
 	
-	this.isEmptyEmailAlertShown = isEmptyEmailAlertShown;
-	this.isEmptyPasswordAlertShown = isEmptyPasswordAlertShown;
 	this.isInvalidEmailAlertShown = isInvalidEmailAlertShown;
-	this.isInvalidUserAlertShown = isInvalidUserAlertShown;
+	this.isInvalidPasswordAlertShown = isInvalidPasswordAlertShown;
 	this.isExistedUserAlertShown = isExistedUserAlertShown;
 	this.isWrongLoginAlertShown = isWrongLoginAlertShown;
 	
@@ -158,6 +157,24 @@ function Home()
 		
 		wait(0.5);
 		mainView.buttons()[titleTryout].tap();
+		wait(0.5);
+	}
+	
+	function tapLegal()
+	{
+		log("Tap [Legal] button");
+		
+		wait(0.5);
+		mainView.buttons()[titleLegal].tap();
+		wait(0.5);
+	}
+	
+	function tapBack()
+	{
+		log("Tap [Back] button");
+		
+		wait(0.5);
+		app.mainWindow().buttons()[0].tap();
 		wait(0.5);
 	}
 	

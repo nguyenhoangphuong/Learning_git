@@ -73,6 +73,7 @@ function GoalPlan()
 	// Methods
 	this.isVisible = isVisible;
 	this.isTipsVisible = isTipsVisible;
+	this.autoSetMPD = autoSetMPD;
 	
 	this.edit = edit;
 	this.reset = reset;
@@ -120,6 +121,29 @@ function GoalPlan()
 		log("Tips on GoalPlan is shown: " + display);
 		
 		return display;
+	}
+	
+	function autoSetMPD()
+	{
+		// drag to maximum
+		editBtn.tap();
+		wait(0.5);
+		
+		n = recordsView.sliders().length;
+		recordsView.sliders()[n - 1].dragToValue(1);
+		
+		// close the alert if there is one
+		if(staticTextExist(alert.TooHard))
+			window.buttons()[1].tap();
+		
+		// get the value
+		value = recordsView.staticTexts()[(n - 1) * 2 + 1].name();
+		
+		// cancel change and set maxMPD;
+		cancelBtn.tap();
+		maxMPD = parseFloat(value);
+		
+		log("The <maxMPD> is automatic set to: " + maxMPD);
 	}
 	
 	
@@ -485,7 +509,7 @@ function GoalPlan()
 			info.date = text;
 			info.temperature = "";
 		}
-		log(">>>>>>>>>>>>>>>>"+value);
+
 		if(value.indexOf("/") >= 0)
 		{		
 			info.run = parseFloat(value.substring(0, value.indexOf("/")));

@@ -26,7 +26,8 @@ This section is the place where you list functions. Please list them as comments
 									and the text displaying is equal to label
 									(*Note: currently this is only work SOMETIMES due to XCode and Instrucment stability)
 
-- wheelPick(wheel, index, value):	auto the picker progress (shouldn't use directly from test script)
+- wheelPick(picker, index, value)	:	auto the picker progress (shouldn't use directly from test script)
+- getWheelRange(picker, wheelindex)	:	get the min item and max item of the wheel
 - isKeyboardVisible()			:	check if the system keyboard is currently shown on screen
 - swipeVertically(startX, startY, endY, duration)		:	swipe along Y-axis (duration default = 0.6)
 - swipeHorizontally(startX, startY, endX, duration)		:	swipe along X-axis (duration default = 0.6)
@@ -213,10 +214,30 @@ function wheelPick(picker, wheelIndex, value)
 		while(steps > 0)
 		{
 			wheel.tapWithOptions({tapOffset:{x:0.5, y:0.75}});
-			target.delay(0.5);
+			target.delay(0.1);
 			steps--;
 		}
 	}  
+}
+
+function getWheelRange(picker, wheelIndex)
+{
+	wait(0.5);
+	if(picker.isValid())
+	{
+		wheel = picker.wheels()[wheelIndex];
+		items = wheel.values();
+
+		// get current value
+		info = {};
+		info.min = items[0];
+		info.max = items[items.length - 1];
+			
+		return info;
+	}
+	
+	log("No picker visible");
+	return null;
 }
 
 function isKeyboardVisible()

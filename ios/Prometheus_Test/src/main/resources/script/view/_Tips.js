@@ -3,6 +3,7 @@
 #import "UserInfo.js"
 #import "PlanChooser.js"
 #import "GoalProgress.js"
+#import "ManualTracking.js"
 #import "MusicSetting.js"
 #import "RunView.js"
 #import "GoalPlan.js"

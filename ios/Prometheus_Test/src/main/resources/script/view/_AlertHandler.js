@@ -33,19 +33,20 @@ function Alert()
 	// All the alert title name
 	// ----- Home view
 	this.Error = "Error";
-	this.EmptyEmailMsg = "Email must not be empty";
-	this.EmptyPasswordMsg = "Password must not be empty";
-	this.InvalidEmailMsg = "Email is invalid";
-	this.InvalidUserMsg = "User not found";
-	this.ExistedUserMsg = "User existed";
-	this.WrongLoginMsg = "Wrong email or password";
+	this.InvalidPasswordMsg = "Sorry, the password should have at least 6 characters, at least 1 digit and 1 letter";
+	this.InvalidEmailMsg = "Sorry, this email is invalid";
+	this.ExistedUserMsg = "Sorry, someone else has used this before";
+	this.WrongLoginMsg = "Incorrect email or password";
 	
 	this.LocationConfirm = "\“Shine\” Would Like to Use Your Current Location";
 	this.NoEmailAccount = "Warning";
 	
+	this.Congratulation = "Congratulations!";
+	this.TodayGoalFinishMsg = "You hit today’s goal!";
+	this.WeekGoalFinishMsg = "You hit your weekly goal!"; 
+	
 	this.ResetConfirm = "Are you sure?";
 	this.TooHard = "That might be tough";
-	this.Congratulation = "Congratulations!";
 	
 	// Methods
 	this.reset = reset;
@@ -70,9 +71,10 @@ function Alert()
 			title = ele.name();
 			msg = win.staticTexts()[1].name();
 			
-			if(	title	==	alert.ResetConfirm	||
-				title	==	alert.TooHard	||
-				title	==	alert.Congratulation)
+			if(	(title	==	alert.ResetConfirm)	||
+				(title	==	alert.TooHard)		||
+				(title	==	alert.Congratulation && msg == alert.TodayGoalFinishMsg) || 
+				(title	==	alert.Congratulation && msg == alert.WeekGoalFinishMsg) )
 			{
 				log("Message is on screen: [" + title + "]" + " - [" + msg + "]");
 				return true;
@@ -136,10 +138,8 @@ function PrometheusAlertHandler(_alert)
 	log("Alert [" + name + "] encountered");
 	
 	// check for test-related alert
-	if(	(name == alert.Error && message == alert.EmptyEmailMsg)		||
-		(name == alert.Error && message == alert.EmptyPasswordMsg)	||
+	if( (name == alert.Error && message == alert.InvalidPasswordMsg)||
 		(name == alert.Error && message == alert.InvalidEmailMsg)	||
-		(name == alert.Error && message == alert.InvalidUserMsg)	||
 		(name == alert.Error && message == alert.ExistedUserMsg)	||
 		(name == alert.Error && message == alert.WrongLoginMsg)		||
 		(name == alert.LocationConfirm)								||
