@@ -13,11 +13,10 @@ function toStartScreen()
 //============================================================= //
 // DATA
 //============================================================= //
-var genstring = generateRandomDigitString();
+
 loginTD =
 	{
 		existedEmail: "testexisted@test.com",
-		nonexistedEmail: "nonexisted" + genstring + "@test.com",
 		rightPwd: "a123456",
 		wrongPwd: "asdaldjk"
 	}
@@ -69,7 +68,7 @@ function verifyClientVerification()
 	hr();
 	print("<Login with empty email>");
 	h.login("", "");
-	assertTrue(h.isEmptyEmailAlertShown(), "Empty email alert shown");
+	assertTrue(h.isInvalidEmailAlertShown(), "Empty email alert shown");
 	h.tapLogin();
 	
 	// login with empty password
@@ -94,8 +93,10 @@ function verifyBackendVerification()
 	// login with non-existed user
 	hr();
 	print("<Login with non-existed email>");
-	h.login(loginTD.nonexistedEmail, loginTD.rightPwd);
-	assertTrue(h.isInvalidUserAlertShown(), "User not exist alert shown");
+	var genstring = generateRandomDigitString();
+	var nonexistedEmail = "nonexisted" + genstring + "@test.com"
+	h.login(nonexistedEmail, loginTD.rightPwd);
+	assertTrue(h.isWrongLoginAlertShown(), "User not exist alert shown");
 	h.tapLogin();
 
 	// login with wrong password
