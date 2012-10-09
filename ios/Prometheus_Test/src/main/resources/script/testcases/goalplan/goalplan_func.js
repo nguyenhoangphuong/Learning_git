@@ -6,7 +6,7 @@
 // ============================================================= //
 function toGoalPlan()
 {
-	//nav.toPlanner(null, null, null, "Running", 10);
+	nav.toPlanner(null, null, null, "Running", 10);
 	gp = new GoalPlan();
 	gp.autoSetMPD();
 }
