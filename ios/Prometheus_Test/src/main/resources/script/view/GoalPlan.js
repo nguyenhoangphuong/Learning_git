@@ -26,9 +26,7 @@ GoalPlan functions:
 	+ duration		: 	"Sep 14 - Sep 20"
 	+ goal			: 	7 (float)
 - getDayInfoByIndex(i)	:	get info of a day by index {text, date, temperature, run, total}
-	+ text			:	"Sat Sep 15th / 76 - 81ºF"
 	+ date			: 	"Sat Sep 15th"
-	+ temperature	: 	"76 - 81ºF"
 	+ run			: 	0.74 (float)
 	+ total			:	1.10 (float)		
 - getDayInfoByName(n)	:	get info of a day by its name {text, date, temperature, run, total}
@@ -407,8 +405,8 @@ function GoalPlan()
 		if(typeof confirm == "undefined") return;
 
 		// check if the alert is shown and click the desired button
-		if(confirm == true) confirm = 0;	// Yes
-		else confirm = 1;					// No
+		if(confirm == true) confirm = 1;	// Yes
+		else confirm = 0;					// No
 		
 		wait();
 		if(staticTextExist(alert.TooHard))
@@ -437,8 +435,8 @@ function GoalPlan()
 				if(typeof confirm == "undefined") return;
 			
 				// check if the alert is shown and click the desired button
-				if(confirm == true) confirm = 0;
-				else confirm = 1;	
+				if(confirm == true) confirm = 1;
+				else confirm = 0;	
 		
 				wait();
 				if(staticTextExist(alert.TooHard))
@@ -481,11 +479,11 @@ function GoalPlan()
 		if(isHardAlertShown())
 		{
 			if(typeof confirm == "undefined")
-				confirm = 0;
-			if(confirm == true)
-				confirm = 0;
-			else
 				confirm = 1;
+			if(confirm == true)
+				confirm = 1;
+			else
+				confirm = 0;
 				
 			alert.confirmCustomAlert(confirm);
 		}
@@ -498,16 +496,16 @@ function GoalPlan()
 		text = recordsView.staticTexts()[index * 2 + 0].name();
 		value = recordsView.staticTexts()[index * 2 + 1].name();
 		var info = {};
-		info.text = text;
+		//info.text = text;
 		if(text.indexOf("/") >= 0)
 		{
 			info.date = text.substring(0, text.indexOf(" /"));
-			info.temperature = text.substring(text.indexOf("/ ") + 2);
+			//info.temperature = text.substring(text.indexOf("/ ") + 2);
 		}
 		else
 		{
 			info.date = text;
-			info.temperature = "";
+			//info.temperature = "";
 		}
 
 		if(value.indexOf("/") >= 0)
@@ -524,9 +522,7 @@ function GoalPlan()
 		info.run = parseFloat(info.run.toFixed(2));
 		info.total = parseFloat(info.total.toFixed(2));
 		
-		log("info.text: " + info.text);
 		log("info.date: " + info.date);
-		log("info.temperature: " + info.temperature);
 		log("info.run: " + info.run);
 		log("info.total: " + info.total);
 		

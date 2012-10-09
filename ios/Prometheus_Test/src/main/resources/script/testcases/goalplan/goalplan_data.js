@@ -80,7 +80,6 @@ function e53(index)
     
 	var e = {};
 	e.date = s;
-	e.temperature = "";
 	e.run = 0;
 	e.total = milesVal[t.getDay()];
 	
@@ -88,10 +87,16 @@ function e53(index)
 }
 
 //======================== Test data ======================== //
+setupData = 
+{
+	activity: "Running",
+	plan: 10
+};
+
 norm = 
 {
 	maxMPD : 3.25,
-	e51 :	e51(10),
+	e51 :	e51(setupData.plan),
 	e52	:	e52(),
 	e53	:
 	{

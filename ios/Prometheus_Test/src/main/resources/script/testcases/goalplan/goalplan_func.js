@@ -6,7 +6,9 @@
 // ============================================================= //
 function toGoalPlan()
 {
-	nav.toGoalPlan("existed@test.com", "123456", null, "Running", 10);
+	//nav.toPlanner(null, null, null, "Running", 10);
+	gp = new GoalPlan();
+	gp.autoSetMPD();
 }
 
 // ============================================================= //
@@ -221,7 +223,7 @@ function verifyDayList(e)
 	}
 }
 
-// e = {date: "Sat Sep 15th", temperature: "86 ºF", run: 0.34, total: 0.76}
+// e = {date: "Sat Sep 15th", run: 0.34, total: 0.76}
 function verifyDayData(i, e)
 {
 	gp = new GoalPlan();
@@ -233,7 +235,7 @@ function verifyDayData(i, e)
 	assertEqual(info.total, e.total);
 }
 
-// e = {date: "Sat Sep 15th", temperature: "86 ºF", run: 0.34, total: 0.76}
+// e = {date: "Sat Sep 15th", run: 0.34, total: 0.76}
 function verifyTodayData(e)
 {
 	gp = new GoalPlan();
@@ -254,12 +256,12 @@ function verifyTotalGoal()
 	gp = new GoalPlan();
 		
 	total = gp.getWeekInfo().goal;
-	remain = gp.getRemainPlanMiles();
+	remain = gp.getRemainPlanAmount();
 	
 	// default check: after reset
 	log("---- total goal test: default ----");
-	t = gp.getTotalPlanMiles();
-	r = gp.getRemainPlanMiles();
+	t = gp.getTotalPlanAmount();
+	r = gp.getRemainPlanAmount();
 	
 	assertEqual(t, total);
 	assertEqual(r, remain);
@@ -268,12 +270,12 @@ function verifyTotalGoal()
 	log("---- total goal test: easy ----");
 	
 	gp.edit();
-	gp.planDayByIndex(2, 1.7, true);
-	gp.planDayByIndex(3, 0.1, true);
+	gp.planDayByIndex(2, 2.1, true);
+	gp.planDayByIndex(3, 1.1, true);
 	gp.save();
 	
-	t = gp.getTotalPlanMiles();
-	r = gp.getRemainPlanMiles();
+	t = gp.getTotalPlanAmount();
+	r = gp.getRemainPlanAmount();
 	
 	assertEqual(t, gp.getWeekInfo().goal);
 	assertEqual(r, remain);	
@@ -291,8 +293,8 @@ function verifyTotalGoal()
 	gp.save();
 	
 	info = gp.getDayInfoByIndex(0);
-	t = gp.getTotalPlanMiles();
-	r = gp.getRemainPlanMiles();
+	t = gp.getTotalPlanAmount();
+	r = gp.getRemainPlanAmount();
 	
 	expectTotal = parseFloat(maxMPD * 6 + info.total);
 	expectTotal = expectTotal.toFixed(2);
@@ -315,8 +317,8 @@ function verifyTotalGoal()
 	gp.save();
 	
 	info = gp.getDayInfoByIndex(0);
-	t = gp.getTotalPlanMiles();
-	r = gp.getRemainPlanMiles();
+	t = gp.getTotalPlanAmount();
+	r = gp.getRemainPlanAmount();
 	
 	assertEqual(t, info.total);
 	assertEqual(r, 0);

@@ -184,12 +184,12 @@ function Settings()
 		if (yes == true)
 		{
 			alert.alertTitle = alert.ResetConfirm;
-			window.buttons()[0].tap();
+			window.buttons()[1].tap();
 		}
 		else 
 		{
 			alert.alertTitle = alert.ResetConfirm;
-			window.buttons()[1].tap();
+			window.buttons()[0].tap();
 		}
 	}
 	

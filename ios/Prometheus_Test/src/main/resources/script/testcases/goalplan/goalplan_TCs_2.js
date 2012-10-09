@@ -3,14 +3,6 @@
 
 
 
-/* ------------------ 
- -	To be note:
- 	+ Remember to set the global "maxMPD" var value or you will end up
-	sliding with wrong value.
- */
-
-maxMPD = norm.maxMPD;
-
 // ======================== Test logic ======================== //
 start("GoalPlan: Min,Max range, goal adjustment");
 
