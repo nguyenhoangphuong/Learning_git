@@ -35,7 +35,7 @@ function Home()
 	var window = app.mainWindow();
 	var mainView = window;
 
-	var titleLogin = "Login";
+	var titleLogin = "Sign in";
 	var titleSignup = "Signup";
 	var titleTryout = "Tryout";
 	var titleLegal = "Legal";
@@ -217,7 +217,7 @@ function Home()
 		log("Submiting form...");
 		
 		// wait for alert
-		wait(10);
+		wait(20);
 	}
 	
 	function isEmptyEmailAlertShown()
