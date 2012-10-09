@@ -30,7 +30,7 @@ function gpsRunLittle() {
 	
 	wait(2);
 
-	progress.scrollToDayGoal();
+	progress.scrollToToaysGoal();
 	wait();
 	var miles = 1;
 	progress.simulateARunDontStop(miles);

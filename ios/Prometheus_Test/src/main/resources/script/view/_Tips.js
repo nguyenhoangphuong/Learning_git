@@ -1,6 +1,7 @@
 #import "WhatsNew.js"
 #import "Home.js"
 #import "UserInfo.js"
+#import "MultiGoalChooser.js"
 #import "PlanChooser.js"
 #import "GoalProgress.js"
 #import "ManualTracking.js"

@@ -174,7 +174,8 @@ function isElementLabelValid(id, label, win)
 
 function wheelPick(picker, wheelIndex, value)
 {
-	wait(2);
+	wait();
+	
 	// wheel and items
 	wheel = picker.wheels()[wheelIndex];
 	items = wheel.values();

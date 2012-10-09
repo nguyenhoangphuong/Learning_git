@@ -3,10 +3,9 @@
 #import "../../core/testcaseBase.js"
 #import "../../view/_Prometheus.js"
 
-function GoToSettingScreen()
+function GoToSettingScreen(email, password)
 {
-	UIALogger.logPass("GoToSettingScreen");
-	nav.toSettings();
+	nav.toSettings(email, password, null, "Running", 10, true);
 }
 
 function VerifyRateButton()

@@ -15,7 +15,11 @@ GoalProgress function:
 - scrollToSettings()	: scroll left to settings view
 - tapMusic()			: tap the music button
 ================================================================================
-- start()				: press start button
+- start(confirm)		: press start button
+	+ 1	: GPS
+	+ 2 : Manual
+	+ 3	: Cancel
+	+ undefined : GPS
 - simulateARun()		: set location, press start and simulate a run
 - simulateARunDontStop():
 ================================================================================
@@ -278,7 +282,7 @@ function GoalProgress()
 	function simulateRunAndStop(miles, stop, error) 
 	{
 		log("Run " + miles);
-		setN(error);
+		setA(error);
 		start();
 		wait();
 		

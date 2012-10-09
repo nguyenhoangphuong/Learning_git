@@ -7,7 +7,7 @@ List of functions:
 - getAllDates()				: get the total days and date list, return:
 	{
 		total: 2,
-		dates: ["Wed Oct 02", "Wed Oct 03"]
+		dates: ["Wed Oct 02nd", "Wed Oct 03rd"]
 	}
 - getAllRecordsOfDate(date)	: get all the records of the specified date, return:
 	{
@@ -137,13 +137,14 @@ function History()
 			r.goal = texts.slice(3);
 			
 			info.records[i] = r;
-			
+			/*
 			log("Record: [" 
 					+ info.records[i].text + "], " 
 					+ info.records[i].no + ", " 
 					+ info.records[i].activity + ", "
 					+ info.records[i].startTime + ", ["
 					+ info.records[i].goal + "]");
+			*/
 		}
 		
 		return info;

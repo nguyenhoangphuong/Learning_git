@@ -1,5 +1,8 @@
 #import "PlanSuggest.js"
 
+start("PlanChooser: Normal");
+
 goToChoosePlan();
 choosePlan(2);
-exit();
+
+pass("PlanChooser: Normal");

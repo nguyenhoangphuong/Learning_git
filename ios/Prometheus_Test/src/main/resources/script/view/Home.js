@@ -72,6 +72,10 @@ function Home()
 	
 	function updateTitle()
 	{
+		if (mainView.buttons()["Signin"].isVisible())
+			titleSignin = "Signin";
+		if (mainView.buttons()["Sign in"].isVisible())
+			titleSignin = "Sign in";
 		if (mainView.buttons()["Signup"].isVisible())
 			titleSignup = "Signup";
 		if (mainView.buttons()["Sign up"].isVisible())

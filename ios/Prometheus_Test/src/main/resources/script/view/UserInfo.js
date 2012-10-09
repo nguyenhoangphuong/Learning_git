@@ -47,8 +47,8 @@ function UserInfo()
 		
 	var next = mainView.buttons()[3];
 	var sex = mainView.buttons()[2];
-	var done = mainView.buttons()[1];
 	var cancel = mainView.buttons()[0];
+	var done = mainView.buttons()[1];
 		
 	// Methods
 	this.isVisible = isVisible;
@@ -95,7 +95,7 @@ function UserInfo()
 	{
 		a = a.toString();
 		
-		wait();	
+		wait(0.5);
 		age.tap();
 		log("Tap [Age]");
 		
@@ -112,7 +112,7 @@ function UserInfo()
 	{
 		w1 = w1.toString(); w2 = w2.toString();
 		
-		wait();	
+		wait(0.5);	
 		weight.tap();
 		log("Tap [Weight]");
 		
@@ -131,7 +131,7 @@ function UserInfo()
 	{
 		h1 = h1.toString(); h2 = h2.toString();
 		
-		wait();
+		wait(0.5);
 		height.tap();
 		log("Tap [Height]");
 		
@@ -210,6 +210,6 @@ function UserInfo()
 	
 	function isUS()
 	{
-		return staticTextExist("lbs");
+		return staticTextExist("(lbs)");
 	}
 }

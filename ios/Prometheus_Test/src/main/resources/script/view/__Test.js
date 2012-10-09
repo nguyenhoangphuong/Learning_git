@@ -37,7 +37,7 @@ function testSettings()
 start("Demo");
 //testSettings();
 //#import "../testcases/feedback/feedback_tryout.js";
-#import "../testcases/feedback/feedback_non-troublemaker.js";
 //logTree();
+listControls(app.mainWindow());
 pass("Demo pass");
 

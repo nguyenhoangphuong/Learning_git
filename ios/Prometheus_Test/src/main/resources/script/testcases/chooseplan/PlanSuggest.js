@@ -3,7 +3,7 @@
 
 function goToChoosePlan()
 {
-	nav.toPlanChooser();
+	nav.toPlanChooser(null, null, null, "Running");
 	wait(1);
 }
 
@@ -12,6 +12,7 @@ function choosePlan(option)
 	var pc = new PlanChooser();
 	var info = pc.getPlanAmounts();
 	var weekgoal;
+	
 	if (option == 1)
 	{
 		pc.selectEasy();
@@ -31,50 +32,36 @@ function choosePlan(option)
 	{
 		pc.selectOther();
 		
-
 		pc.back();
-		 if (pc.isVisible())
-			pass("Back ok");
-		else
-			fail("fail Back button");
+		assertTrue(pc.isVisible(), "Back button in edit mode work OK");
 
 		pc.selectOther();			
-	
 		pc.setValue(15);
-		if (pc.getPickerValue()==15)
-			pass("picker good");
-		else
-			fail("picker ngu");
+		
+		assertEqual(pc.getPickerValue(), 15, "Picker in edit mode work OK");
+		
 		pc.done();
+		
 		weekgoal = 15;
-
 	}
-	if(pc.isLocationConfirmShown())
-		pass("location shown");
+	
+	assertTrue(pc.isLocationConfirmShown(), "Location Permission alert is shown");
+
 	verifyPlan(weekgoal);
 }
 
 function verifyPlan(WeekGoal)
 {
-	var gp = new GoalProgress();	
-	gp.scrollToGoalPlan();	
+	var gp = new GoalProgress();
+	tips.closeTips(1);
+	gp.scrollToTodaysGoal();
+	tips.closeTips(1);
+	gp.scrollToPlanner();
 	wait(1);
 
 	var goalplan = new GoalPlan();
-	var weekinfogoal = goalplan.getTotalPlanMiles();
+	var weekinfogoal = goalplan.getTotalPlanAmount();
 	weekinfogoal = Math.round(weekinfogoal);
 
-	if (weekinfogoal == WeekGoal)
-		pass("pass " + WeekGoal.toString());
-	else
-		fail("fail " + WeekGoal.toString());
-}
-
-function exit()
-{
-	var gp = new GoalProgress();
-	gp.scrollToDayGoal();
-	gp.scrollToSettings();
-	var ab = new Settings();
-	ab.resetPlan(true);
+	assertEqual(weekinfogoal, WeekGoal, "WeekGoal is consistent with PlanChooser");
 }

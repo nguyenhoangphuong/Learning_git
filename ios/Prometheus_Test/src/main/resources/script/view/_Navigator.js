@@ -1,5 +1,4 @@
 #import "_Tips.js"
-#import "MultiGoalChooser.js"
 #import "../core/testcaseBase.js"
 
 /*
