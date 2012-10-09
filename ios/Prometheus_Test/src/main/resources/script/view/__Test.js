@@ -35,9 +35,6 @@ function testSettings()
 }
 
 start("Demo");
-//testSettings();
-//#import "../testcases/feedback/feedback_tryout.js";
-//logTree();
-listControls(app.mainWindow());
+listControls(app.mainWindow().scrollViews()[0]);
 pass("Demo pass");
 

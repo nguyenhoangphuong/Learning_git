@@ -46,9 +46,6 @@ GoalPlan functions:
 	+ confirm == true || not defined	-	YES button
 	+ confirm == false					-	NO button
 =========================================================================================
-
-MAY BE CHANGES:
-- Yes/No index of TooHard alert
 */
 
 maxMPD = 2.95;

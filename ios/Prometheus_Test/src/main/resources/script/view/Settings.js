@@ -3,12 +3,16 @@
 
 /*
 Settings functions:
+=========================================================================================
 - assignControls()	: assign controls for both Settings and Support views
+- getResetButton()	: get Reset button since there are 2 cases
+=========================================================================================
 - isVisible()		: check if current view is Settings
 - isSupportView()	: check if current view is Support
+=========================================================================================
 - isTroublemaker()	: check if current user is a troublemaker
 - hasSignedIn()		: check if current user has signed in
-- getResetButton()	: get Reset button since there are 2 cases
+=========================================================================================
 - goToProfile		: tap "User Profile" button
 - rateApp()			: tap Rate button
 - tapSupport()		: tap Support button
@@ -17,6 +21,7 @@ Settings functions:
 	- goToWebsite()	: tap Website button
 	- backToSettings()	: tap Back button in Support screen
 - tapFeedback()		: tap "JIRA Feedback" button (w/ troublemaker)
+=========================================================================================
 - resetPlan(confirm)	: tap Reset button and choose Yes/No when alert shown up
 	+ resetPlan("yes")
 	+ resetPlan("no")
@@ -24,26 +29,33 @@ Settings functions:
 	+ signOut() or signOut(true)	: tap YES when being asked
 	+ signOut(false)				: tap NO when being asked
 - signUp()				: tap "Sign up" button (w/ user having not logged in)
+=========================================================================================
+- isSignOutBtnVisible()
+- isSignUpBtnVisible()
+- isNoMailAccountAlertShown()
+=========================================================================================
 */
 
 function Settings()
 {
 	// Private fields
 	var window = app.mainWindow();
-	var mainView = window.scrollViews()[0];
-	var supportView = mainView;
+	var mainView = window.scrollViews()[0].scrollViews()[0];
+	var supportView = window.scrollViews()[0];
 	
-	var btnProfile = mainView.scrollViews()[0].buttons()["User Profile"];
-	var btnRate = mainView.scrollViews()[0].buttons()["Rate our App"];
-	var btnSupport = mainView.scrollViews()[0].buttons()["Support"];
+	var btnProfile = mainView.buttons()["User Profile"];
+	var btnRate = mainView.buttons()["Rate our App"];
+	var btnSupport = mainView.buttons()["Support"];
+
+	var btnFeedback = mainView.buttons()["Behind the scenes"];
+	var btnReset = getResetButton();
+	var btnSignOut = mainView.buttons()["Sign out"];
+	var btnSignUp = mainView.buttons()["Sign up"];
+	
 	var btnEmail = supportView.buttons()["Email Support"];
 	var btnLike = supportView.buttons()["Like our Page"];
 	var btnWebsite = supportView.buttons()["Website"];
 	var btnBack = supportView.buttons()["Back"];
-	var btnFeedback = mainView.scrollViews()[0].buttons()["Behind the scenes"];
-	var btnReset = getResetButton();
-	var btnSignOut = mainView.scrollViews()[0].buttons()["Sign out"];
-	var btnSignUp = mainView.scrollViews()[0].buttons()["Sign up"];
 	
 	// Methods
 	this.assignControls = assignControls;
@@ -64,6 +76,10 @@ function Settings()
 	this.resetPlan = resetPlan;
 	this.signOut = signOut;
 	this.signUp = signUp;
+	
+	this.isSignOutBtnVisible = isSignOutBtnVisible;
+	this.isSignUpBtnVisible = isSignUpBtnVisible;
+	this.isNoMailAccountAlertShown = isNoMailAccountAlertShown;
 		
 	// Method definitions
 	function assignControls()
@@ -72,17 +88,17 @@ function Settings()
 		mainView = window.scrollViews()[0];
 		supportView = mainView;
 		
-		btnProfile = mainView.scrollViews()[0].buttons()["User Profile"];
-		btnRate = mainView.scrollViews()[0].buttons()["Rate our App"];
-		btnSupport = mainView.scrollViews()[0].buttons()["Support"];
+		btnProfile = mainView.buttons()["User Profile"];
+		btnRate = mainView.buttons()["Rate our App"];
+		btnSupport = mainView.buttons()["Support"];
 		btnEmail = supportView.buttons()["Email Support"];
 		btnLike = supportView.buttons()["Like our Page"];
 		btnWebsite = supportView.buttons()["Website"];
 		btnBack = supportView.buttons()["Back"];
-		btnFeedback = mainView.scrollViews()[0].buttons()["Behind the scenes"];
+		btnFeedback = mainView.buttons()["Behind the scenes"];
 		btnReset = getResetButton();
-		btnSignOut = mainView.scrollViews()[0].buttons()["Sign out"]; // CHECK
-		btnSignUp = mainView.scrollViews()[0].buttons()["Sign up"];	
+		btnSignOut = mainView.buttons()["Sign out"];
+		btnSignUp = mainView.buttons()["Sign up"];	
 	}
 	
 	function isVisible()
@@ -109,9 +125,9 @@ function Settings()
 	function getResetButton()
 	{
 		if (isTroublemaker())
-			return mainView.scrollViews()[0].buttons()[5];
+			return mainView.buttons()[5];
 		else
-			return mainView.scrollViews()[0].buttons()[3];
+			return mainView.buttons()[3];
 	}
 	
 	function goToProfile()
@@ -205,7 +221,7 @@ function Settings()
 		log("Tap Sign out");
 		btnSignOut.tap();
 		
-		if (yes == null)
+		if (typeof yes == "undefined")
 			yes = true;
 		
 		if (yes)
@@ -227,5 +243,22 @@ function Settings()
 			log("Tap Sign up");
 			btnSignUp.tap();
 		}
+	}
+	
+	function isSignUpBtnVisible()
+	{
+		btn = mainView.buttons()["Sign up"];
+		return btn.isValid() && btn.isVisible();
+	}
+	
+	function isSignOutBtnVisible()
+	{
+		btn = mainView.buttons()["Sign out"];
+		return btn.isValid() && btn.isVisible();
+	}
+	
+	function isNoMailAccountAlertShown()
+	{
+		return alert.alertTitle != null && alert.alertTitle == alert.NoEmailAccount;
 	}
 }
