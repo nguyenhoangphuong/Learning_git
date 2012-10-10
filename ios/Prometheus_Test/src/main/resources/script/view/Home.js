@@ -221,7 +221,7 @@ function Home()
 		log("Submiting form...");
 		
 		// wait for alert
-		wait(20);
+		wait(5);
 	}
 	
 	function isEmptyEmailAlertShown()

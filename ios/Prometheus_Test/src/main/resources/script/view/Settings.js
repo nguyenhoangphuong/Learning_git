@@ -146,12 +146,12 @@ function Settings()
 		if (yes)
 		{
 			log("Tap YES to sign out");
-			window.buttons()["YES"].tap();
+			app.mainWindow().buttons()[1].tap();
 		}
 		else
 		{
 			log("Tap NO to back to Settings");
-			window.buttons()["NO"].tap();
+			app.mainWindow().buttons()[0].tap();
 		}
 	}
 	

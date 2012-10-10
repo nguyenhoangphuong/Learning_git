@@ -6,9 +6,6 @@ start("StartHomeScreen: translation");
 // navigate
 toStartScreen();
 
-
-
-
 // verify
 verifyTranslition();
 

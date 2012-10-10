@@ -6,10 +6,8 @@
 //============================================================= //
 loginTD =
 	{
-		existedEmail: "existed@test.com",
-		nonexistedEmail: "nonexisted@test.com",
-		rightPwd: "123456",
-		wrongPwd: "asdaldjk"
+		existedEmail: "abc@test.com",
+		rightPwd: "qwerty1"
 	}
 
 //============================================================= //
@@ -19,11 +17,11 @@ function toSettingScreen(opt)
 {
 	if(typeof opt == "undefined")
 	{
-		nav.toSettings("tryout@test.com", null, null, "Running", 10);
+		nav.toSettings(null, null, null, null, null);
 		return;
 	}
 	
-	nav.toSettings("existed@test.com", "123456", null, "Running", 10);
+	nav.toSettings(loginTD.existedEmail, loginTD.rightPwd, null, null, null);
 }
 
 //============================================================= //
@@ -32,15 +30,25 @@ function toSettingScreen(opt)
 function verifyAnonymousLogout()
 {
 	s = new Settings();
-	assertTrue(s.hasSignedIn(), "No Logout button");
+	
+	assertTrue(s.isSignUpBtnVisible(), "SignUp button is visible");
+	assertFalse(s.isSignOutBtnVisible(), "SignOut button is not visible");
+	
+	s.signUp();
+	
+	h = new Home();
+	assertTrue(h.isSignUpVisible(), "Home screen show at SignUp after tap [Sign up]");
 }
 
 function verifyValidUserLogout()
 {
 	s = new Settings();
-	assertTrue(s.hasSignedIn(), "Logout button existed");
-	s.signOut();
+	
+	assertFalse(s.isSignUpBtnVisible(), "SignUp button is not visible");
+	assertTrue(s.isSignOutBtnVisible(), "SignOut button is visible");
+	
+	s.signOut(true);
 	
 	h = new Home();
-	assertTrue(h.isVisible(), "Home screen shown after log out");
+	assertTrue(h.isVisible(), "Home screen show at SignUp after [Sign out]");
 }
