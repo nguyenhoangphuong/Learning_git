@@ -50,7 +50,7 @@ function UserInfo(view)
 	
 	var next = mainView.buttons()["next"];
 	if(!next.isValid())
-		next = mainView.buttons()[1];
+		next = mainView.buttons()["Next"];
 	
 	var cancel = mainView.buttons()["cancel"];
 	var done = mainView.buttons()["done"];
