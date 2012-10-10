@@ -8,7 +8,7 @@ import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 //------------------class-------------------------------//
-public class LogInTest extends AutomationTest
+public class LoginTest extends AutomationTest
 {
 	 
 	 //--------------back end---------------------//
