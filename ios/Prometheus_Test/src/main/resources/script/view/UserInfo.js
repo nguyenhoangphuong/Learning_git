@@ -36,10 +36,13 @@ MAY BE CHANGES
 - isMale : since there will be no Unit switch
 */
 
-function UserInfo()
+function UserInfo(view)
 {
 	// Private fields
-	var mainView = app.mainWindow();
+	if(typeof view == "undefined")
+		var mainView = app.mainWindow();
+	else
+		var mainView = view;
 
 	var age = mainView.staticTexts()[1];
 	var weight = mainView.staticTexts()[3];
@@ -70,8 +73,8 @@ function UserInfo()
 	// Methods definition
 	function isVisible()
 	{
-		exist = (staticTextExist("(years)") && staticTextExist("(lbs)") && staticTextExist("(feet)")) ||
-				(staticTextExist("(years)") && staticTextExist("(kg)") && staticTextExist("(meters)")) ||
+		exist = (staticTextExist("(years)", mainView) && staticTextExist("(lbs)", mainView) && staticTextExist("(feet)", mainView)) ||
+				(staticTextExist("(years)", mainView) && staticTextExist("(kg)", mainView) && staticTextExist("(meters)", mainView)) ||
 				tips.isTipsDisplay("UserInfo");
 		
 		log("UserInfo visible: " + exist);

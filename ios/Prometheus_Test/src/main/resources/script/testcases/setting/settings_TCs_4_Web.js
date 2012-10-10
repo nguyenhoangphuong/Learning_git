@@ -6,4 +6,4 @@ start("Settings: Website button");
 GoToSettingScreen();
 VerifyWebsiteButton();
 //--------------------------------------------------------
-end("Settings: Website button");
+pass("Settings: Website button");

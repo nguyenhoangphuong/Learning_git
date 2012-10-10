@@ -5,7 +5,7 @@
 
 function GoToSettingScreen()
 {
-	nav.toSettings(null, null, null, "Running", 10, true);
+	nav.toSettings(null, null, null, "Running", 10);
 }
 
 function VerifyUserProfileButton()
@@ -15,12 +15,12 @@ function VerifyUserProfileButton()
 	s.goToProfile();
 	
 	// check current view is userinfo not setting
-	ui = new UserInfo();
+	ui = new UserInfo(app.mainWindow().scrollViews()[0]);
 	assertTrue(ui.isVisible(), "Current view is UserInfo");
 	assertFalse(s.isVisible(), "Current view is not Settings");
 	
 	// back to setting
-	ui.done();
+	ui.submit();
 	
 	// check current view is setting not userinfo
 	s = new Settings();
@@ -33,17 +33,18 @@ function VerifySupportButton()
 	// tap support
 	s = new Settings();
 	s.tapSupport();
+	sp = new Support();
 	
 	// check view is in support sub view
-	assertTrue(s.isSupportView(), "Settings is in support view");
+	assertTrue(sp.isVisible(), "Settings is in support view");
 	assertFalse(s.isVisible(), "Settings is not in default view");
 	
 	// back to settings
-	s.assignControls();
-	s.backToSettings();
+	sp.backToSettings();
+	s = new Settings();
 	
 	// check view is in its default view
-	assertFalse(s.isSupportView(), "Setting is not in support view");
+	assertFalse(sp.isVisible(), "Setting is not in support view");
 	assertTrue(s.isVisible(), "Settings is in default view");
 }
 
@@ -52,15 +53,16 @@ function VerifyEmailSupportWithoutAccount()
 	// tap support and then tap email in sub view
 	setting = new Settings();
 	setting.tapSupport();
-	setting.assignControls();
-	setting.emailSupport();
+	
+	sp = new Support();
+	sp.emailSupport();
 	
 	// check no email account alert is shown
-	assertTrue(setting.isNoMailAccountAlertShown(), "No mail account alert is shown");
+	assertTrue(sp.isNoMailAccountAlertShown(), "No mail account alert is shown");
 	alert.reset();
 	
 	// restore starting state
-	setting.backToSettings();
+	sp.backToSettings();
 }
 
 // =======================================================================
@@ -95,8 +97,9 @@ function VerifyLikeButton()
 	// tap support and then tap like page in sub view
 	setting = new Settings();
 	setting.tapSupport();
-	setting.assignControls();
-	setting.likePage();
+	
+	sp = new Support();
+	sp.likePage();
 	
 	// check app is inactive
 	assertFalse(prometheus.isActive(), "App is not active after tap Like our page");
@@ -107,8 +110,9 @@ function VerifyWebsiteButton()
 	// tap support and then tap like page in sub view
 	setting = new Settings();
 	setting.tapSupport();
-	setting.assignControls();
-	setting.goToWebsite();
+	
+	sp = new Support();
+	sp.goToWebsite();
 	
 	// check app is inactive
 	assertFalse(prometheus.isActive(), "App is not active after tap Website");

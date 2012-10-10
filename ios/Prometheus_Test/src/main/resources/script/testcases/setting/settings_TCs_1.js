@@ -9,4 +9,4 @@ VerifySupportButton();
 VerifyEmailSupportWithoutAccount();
 VerifyResetButton();
 //--------------------------------------------------------
-end("Settings: UserProfile, Rate, EmailSupport, ResetPlan");
+pass("Settings: UserProfile, Rate, EmailSupport, ResetPlan");

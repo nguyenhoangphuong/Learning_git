@@ -66,7 +66,7 @@ function start(text)
 {
 	if(typeof text == "undefined")
 		text = "Test started";
-	UIALogger.logStart("§ --- " + text + " --- §");
+	UIALogger.logStart("§ --------------------------- " + text + " ------------------------------- §");
 }
 
 function log(text)
@@ -90,14 +90,14 @@ function pass(text)
 {
 	if (typeof text == "undefined")
 		text = "Pass";
-	UIALogger.logPass("§ --- " + text + " --- §");
+	UIALogger.logPass("TEST PASSED: " + text);
 }
 
 function fail(text)
 {
 	if(typeof text == "undefined")
 		text = "Fail";
-	UIALogger.logFail("§ --- " + text + " --- §");
+	UIALogger.logFail("TEST FAILED: " + text);
 }
 
 function assertEqual(actual, expected, logs)
@@ -108,7 +108,7 @@ function assertEqual(actual, expected, logs)
 	if(actual == expected)
 		log(">>> " + logs + " pass: " + "[" + actual.toString() + "] == [" + expected.toString() + "]");
 	else
-		fail(">>> " + logs + " fail: " + "[" + actual.toString() + "] >< [" + expected.toString() + "]");
+		fail("<<< " + logs + " fail: " + "[" + actual.toString() + "] >< [" + expected.toString() + "]");
 }
 
 function assertTrue(expression, logs)

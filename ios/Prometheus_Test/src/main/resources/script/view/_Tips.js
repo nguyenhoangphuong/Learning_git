@@ -9,6 +9,7 @@
 #import "RunView.js"
 #import "GoalPlan.js"
 #import "Settings.js"
+#import "Support.js"
 #import "History.js"
 #import "../core/testcaseBase.js"
 

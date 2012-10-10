@@ -6,4 +6,4 @@ start("Settings: Like button");
 GoToSettingScreen();
 VerifyLikeButton();
 //--------------------------------------------------------
-end("Settings: Like button");
+pass("Settings: Like button");

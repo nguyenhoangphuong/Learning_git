@@ -6,4 +6,4 @@ start("Settings: Rate button");
 GoToSettingScreen();
 VerifyRateButton();
 //--------------------------------------------------------
-end("Settings: Rate button");
+pass("Settings: Rate button");
