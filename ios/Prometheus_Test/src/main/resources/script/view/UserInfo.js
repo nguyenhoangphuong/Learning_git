@@ -47,11 +47,13 @@ function UserInfo(view)
 	var age = mainView.staticTexts()[1];
 	var weight = mainView.staticTexts()[3];
 	var height = mainView.staticTexts()[5];
-		
-	var next = mainView.buttons()[3];
-	var sex = mainView.buttons()[2];
-	var cancel = mainView.buttons()[0];
-	var done = mainView.buttons()[1];
+	
+	var next = mainView.buttons()["next"];
+	if(!next.isValid())
+		next = mainView.buttons()[1];
+	
+	var cancel = mainView.buttons()["cancel"];
+	var done = mainView.buttons()["done"];
 		
 	// Methods
 	this.isVisible = isVisible;
@@ -73,8 +75,8 @@ function UserInfo(view)
 	// Methods definition
 	function isVisible()
 	{
-		exist = (staticTextExist("(years)", mainView) && staticTextExist("(lbs)", mainView) && staticTextExist("(feet)", mainView)) ||
-				(staticTextExist("(years)", mainView) && staticTextExist("(kg)", mainView) && staticTextExist("(meters)", mainView)) ||
+		exist = staticTextExist("(years)", mainView) ||
+				staticTextExist("(years)", mainView) ||
 				tips.isTipsDisplay("UserInfo");
 		
 		log("UserInfo visible: " + exist);
@@ -155,11 +157,13 @@ function UserInfo(view)
 		wait();
 		if(s == "male" && !isMale())
 		{
+			sex = mainView.buttons()["Male"];
 			sex.tap();
 			log("Set sex: Male");
 		}
 		if(s == "female" && isMale())
 		{
+			sex = mainView.buttons()["Female"];
 			sex.tap();
 			log("Set sex: Female");
 		}
@@ -208,7 +212,8 @@ function UserInfo(view)
 	// helpers
 	function isMale()
 	{
-		return sex.isVisible() && sex.name() == "Male";
+		male = mainView.buttons()["Male"];
+		return male.isValid() && male.isVisible();
 	}
 	
 	function isUS()

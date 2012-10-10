@@ -13,7 +13,6 @@ start("GoalPlan: Buttons, Sliders behaviour, Alert, Interruption and Data consis
 log("1 - Navigate to GoalPlan view");
 toGoalPlan();
 
-
 // --- buttons verify ---
 log("2 - Verify buttons");
 log("   2.1 - Auto suggest button");

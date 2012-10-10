@@ -302,7 +302,7 @@ function listAllStaticTexts(p)
 	n = texts.length;
 	
 	for(i = 0; i < n; i++)
-		print("StaticText " + i + ": " + texts[i].name());
+		print("StaticText " + i + ": " + texts[i].name() + " - " + texts[i].value());
 }
 
 function listAllButtons(p)
@@ -311,7 +311,7 @@ function listAllButtons(p)
 	n = btns.length;
 	
 	for(i = 0; i < n; i++)
-		print("Button " + i + ": " + btns[i].name());
+		print("Button " + i + ": " + btns[i].name() + " - " + btns[i].value());
 }
 
 function listControls(p)

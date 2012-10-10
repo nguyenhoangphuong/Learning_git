@@ -32,7 +32,8 @@ function testSettings()
 	//s.resetPlan();
 	//s.resetPlan(true);
 	s.signOut();
-}
+};
+
 
 start("Demo");
 listControls(app.mainWindow());//.scrollViews()[0]);
