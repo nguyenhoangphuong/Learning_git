@@ -21,7 +21,7 @@ function toSettingScreen(opt)
 		return;
 	}
 	
-	nav.toSettings(loginTD.existedEmail, loginTD.rightPwd, null, null, null);
+	nav.toSettings(loginTD.existedEmail, loginTD.rightPwd, null, null, null, true);
 }
 
 //============================================================= //
