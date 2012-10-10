@@ -35,6 +35,5 @@ function testSettings()
 }
 
 start("Demo");
-listControls(app.mainWindow().scrollViews()[0]);
+listControls(app.mainWindow());//.scrollViews()[0]);
 pass("Demo pass");
-

@@ -49,11 +49,11 @@ function Tips()
 			
 			"GoalPlan":
 			[
-			 	"Weekly Plan is where you can adjust the number of miles you want to run for each day",
-			 	"With smart goal Assistant, the app will auto-suggesting an appropriate plan for your profile within 7 days",
-			 	"Edit button will allow you to manually adjust the plan for each day",
-			 	"This bar indicates the goal for each day",
-			 	"The white bar indicates the progress"
+			 	"You can adjust how much you want to train each day in your seven day plan.",
+			 	"\"Shine\" automatically builds a personalized plan across the next 7 days for you.",
+			 	"Edit button allows you to build your own weekly plan",
+			 	"This bar indicates each day’s goal",
+			 	"The white bar shows that day’s progress."
 			],
 		};
 	

@@ -200,7 +200,7 @@ function PlanChooser()
 	function back()
 	{
 		wait(0.5);
-		backBtn = pickWindow.buttons()[0];
+		backBtn = app.windows()[1].buttons()[0];
 		if(backBtn.isValid())
 		{
 			backBtn.tap();

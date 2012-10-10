@@ -36,7 +36,7 @@ function Home()
 	var mainView = window;
 
 	var titleLogin = "Sign in";
-	var titleSignup = "Signup";
+	var titleSignup = "Sign up";
 	var titleTryout = "Tryout";
 	var titleLegal = "Legal";
 	
@@ -47,7 +47,6 @@ function Home()
 	this.isVisible = isVisible;
 	this.isLoginVisible = isLoginVisible;
 	this.isSignUpVisible = isSignUpVisible;
-	this.isTryoutVisible = isTryoutVisible;
 	
 	this.isEmailTextFieldVisible = isEmailTextFieldVisible;
 	this.isPasswordTextFieldVisible = isPasswordTextFieldVisible;
@@ -112,18 +111,6 @@ function Home()
 				
 		log("SignUp visible: " + exist);
 		return exist;
-	}
-	
-	
-	function isTryoutVisible()
-	{
-		updateTitle();
-		exist = !mainView.buttons()[titleLogin].isVisible() && !mainView.buttons()[titleSignup].isVisible() && mainView.buttons()[titleTryout].isVisible();
-				
-		log("Tryout visible: " + exist);
-		return exist;
-
-		
 	}
 	
 		

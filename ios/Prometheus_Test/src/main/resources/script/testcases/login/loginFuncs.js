@@ -19,7 +19,7 @@ loginTD =
 	{
 		existedEmail: "abc@test.com",
 		rightPwd: "qwerty1",
-		wrongPwd: "asdaldjk",
+		wrongPwd: "asdaldjk1",
 		
 		wrongPwd1: "123",
 		wrongPwd2: "123456",
@@ -39,7 +39,8 @@ function verifyTranslition()
 	h.tapLogin();
 	assertTrue(!h.isVisible() && h.isLoginVisible() && !h.isSignUpVisible(), "Only Login screen is visible");
 	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(), "Email and Password fields exist");
-	h.tapLogin();
+	h.tapLogin(); 
+	wait();
 	assertTrue(h.isVisible() && !h.isLoginVisible() && !h.isSignUpVisible(), "Only Start screen is visible");
 	
 	// tap sign up and then return to home
@@ -48,7 +49,8 @@ function verifyTranslition()
 	h.tapSignUp();
 	assertTrue(!h.isVisible() && !h.isLoginVisible() && h.isSignUpVisible(), "Only Signup screen is visible");
 	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(), "Email and Password fields exist");
-	h.tapSignUp();
+	h.tapSignUp(); 
+	wait();
 	assertTrue(h.isVisible() && !h.isLoginVisible() && !h.isSignUpVisible(), "Only Start screen is visible");
 }
 
