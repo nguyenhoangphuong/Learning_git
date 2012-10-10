@@ -21,7 +21,7 @@ This will go from nothing to the specify view, so kill the app first.
 - toWeekGoal(email, pwd, userinfo, activity, number, login)
 	+ number: number of unit / miles / ...
 		ex: 30
-- toTodayGoal(email, pwd, userinfo, activity, number, login)
+- toTodaysGoal(email, pwd, userinfo, activity, number, login)
 - toRunView(email, pwd, userinfo, activity, number, login)
 - toGoalPlan(email, pwd, userinfo, activity, number, login)
 - toHistory(email, pwd, userinfo, activity, number, login)

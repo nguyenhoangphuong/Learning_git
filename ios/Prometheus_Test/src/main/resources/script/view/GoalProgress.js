@@ -16,9 +16,9 @@ GoalProgress function:
 - tapMusic()			: tap the music button
 ================================================================================
 - start(confirm)		: press start button
-	+ 1	: GPS
-	+ 2 : Manual
-	+ 3	: Cancel
+	+ 0	: GPS
+	+ 1 : Manual
+	+ 2	: Cancel
 	+ undefined : GPS
 - simulateARun()		: set location, press start and simulate a run
 - simulateARunDontStop():
@@ -173,7 +173,7 @@ function GoalProgress()
 		if(isInputTypeAlertShown())
 		{
 			if(typeof confirm == "undefined")
-				confirm = 1;
+				confirm = 0;
 			confirmInputAlert(confirm);
 		}
 	}
@@ -343,17 +343,20 @@ function GoalProgress()
 		return newGoalBtn.isVisible();
 	}
 	
-	function setNewGoal(planType) 
+	function setNewGoal(activity, amount) 
 	{
 		newGoalBtn.tap();
-		var planChooser = new PlanChooser();
-		if (planType == "easy") {
-			planChooser.selectEasy();
-		} else if (planType == "normal") {
-			planChooser.selectNormal();
-		} else {
-			planChooser.selectActive();
-		}
+		wait(0.5);
+		
+		a = new MultiGoalChooser();
+		a.chooseActivityWithName(activity);
+		wait(0.5);
+		
+		pc = new PlanChooser();
+		pc.selectOther();
+		wait();
+		pc.setValue(amount);
+		pc.done();
 	}
 	
 	function isMusicBtnVisible()
@@ -372,11 +375,11 @@ function GoalProgress()
 	
 	function isInputTypeAlertShown()
 	{
-		dialog = app.mainWindow().scrollViews()[0];
+		dialog = app.mainWindow();
 		dGPS = dialog.buttons()[1];
 		dManual = dialog.buttons()[2];
 		
-		shown = dGPS.isValid() && dGPS.name() == "GPS" && dManual.isValid() && dManual.name() == "Manual Input";
+		shown = staticTextExist("Please choose an input type", dialog);
 		log("Input type dialog shown: " + shown);
 		
 		return shown;
@@ -384,14 +387,14 @@ function GoalProgress()
 	
 	function confirmInputAlert(opt)
 	{
-		if(typeof opt == "undefined") opt = 3;
-		if(opt != 1 && opt != 2) opt = 3;
+		if(typeof opt == "undefined") opt = 2;
+		if(opt != 0 && opt != 1) opt = 2;
 		
 		if(isInputTypeAlertShown())
 		{
-			dialog = app.mainWindow().scrollViews()[0];
-			dialog.buttons[opt].tap();
-			log("Confirm Input type alert by tapping [" + dialog.buttons[opt].name() + "]");
+			dialog = app.mainWindow();
+			dialog.buttons()[opt].tap();
+			log("Confirm Input type alert by tapping [" + dialog.buttons()[opt].name() + "]");
 		}
 	}
 }
