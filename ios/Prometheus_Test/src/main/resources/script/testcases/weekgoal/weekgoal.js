@@ -1,57 +1,50 @@
-#import "../../view/UserInfo.js"
-#import "../../view/_Tips.js"
-#import "../../view/SignUp.js"
 #import "../../view/_Navigator.js"
 #import "../../core/testcaseBase.js"
 
 /**
  * This test cover: - Weekgoal
  */
-var target = UIATarget.localTarget();
 
-gpsRunLittle();
+runTest();
 
 
-function gpsRunLittle() {
+function runTest() 
+{
 	start("Starting the weekgoal test");
-	log("Go to plan chooser");
-	goToPlanChooser();
-	log("Select active");
-	var planChooser = new PlanChooser();
-	planChooser.selectActive();
-//	wait(10);
-	var progress = new GoalProgress();
-
-	wait(2);
-
-	if (!progress.isWeekGoalVisible()) {
-		fail("Week goal is not visible");
-	}
+	// -------------------------------------------------------------------
 	
-	wait(2);
+	// to today view
+	nav.toTodayGoal(null, null, null, "Running", 20);
 
-	progress.scrollToToaysGoal();
-	wait();
+	// run by gps
+	progress = new GoalProgress();
+
 	var miles = 1;
 	progress.simulateARunDontStop(miles);
 	
+	// check view visible
 	var run = new RunView();
-	if (!run.isVisible() || !run.canPause()) {
+	if (!run.isVisible() || !run.canPause()) 
+	{
 		fail("Run view is not visible");
 	}
 	
+	// check duration is changed
 	var currentInfo1 = run.getCurrentInfo();
 	wait(2);
 	var currentInfo2 = run.getCurrentInfo();
-	if (currentInfo2.duration == currentInfo1.duration) {
+	if (currentInfo2.duration == currentInfo1.duration) 
+	{
 		fail("Duration doesnt change : 1: " + currentInfo1.duration + " 2: " + currentInfo2.duration);
 	}
+	
 	// check pause
 	run.pause();
 	currentInfo1 = run.getCurrentInfo();
 	wait(2);
 	currentInfo2 = run.getCurrentInfo();
-	if (currentInfo2.duration != currentInfo1.duration) {
+	if (currentInfo2.duration != currentInfo1.duration) 
+	{
 		fail("Duration is still changing when paused: 1: " + currentInfo1.duration + " 2: " + currentInfo2.duration);
 	}
 	
@@ -60,17 +53,23 @@ function gpsRunLittle() {
 	currentInfo1 = run.getCurrentInfo();
 	wait(2);
 	currentInfo2 = run.getCurrentInfo();
-	if (currentInfo2.duration == currentInfo1.duration) {
+	if (currentInfo2.duration == currentInfo1.duration) 
+	{
 		fail("Duration doesnt change after resume : 1: " + currentInfo1.duration + " 2: " + currentInfo2.duration);
 	}
+	
+	// check finish
 	run.finish();
-	if (!run.canDone()) {
+	if (!run.canDone()) 
+	{
 		fail("Finished run but cant be done");
 	}
-	var result = run.getResults();
 	
-	if ( miles < parseFloat(result.distance)) {
-		fail("Miles= " + miles + " - while distance= " + result.distance);
+	// check result consistent with run amount
+	var result = run.getResults();
+	if ( miles < parseFloat(result.distance)) 
+	{
+		fail("Miles = " + miles + " - while distance = " + result.distance);
 	}
 	
 	// done and run again
@@ -78,34 +77,31 @@ function gpsRunLittle() {
 	miles = 25;
 	progress.simulateARunDontStop(miles);
 	
-	
 	// make sure there is an alert
-	
-	if (!run.isCongratulationAlertVisible()) {
+	if (!run.isCongratulationAlertVisible()) 
+	{
 		fail("Congratulation alert should have been shown");
 	}
-	log("Finish the run");
-	wait(10);
+	
+	// close alert and finish run
+	log("Finish the run"); //wait(10);
 	run.finish();
 	log("finish ok");
+	
 	run.done();
 	log("done ok");
 
 	// verify set a new goal button is available
-	
+	wait();
 	progress.scrollToWeekGoal();
-	log("ok good");
-	wait(2);
-	if (!progress.isWeekGoalVisible() && !progress.isSetANewGoalBtnVisible()) {
+
+	if (!progress.isWeekGoalVisible() && !progress.isSetANewGoalBtnVisible())
+	{
 		fail("Weekgoal or the reset button is not visible");
 	}
-	progress.setANewGoal("active");
-	log("ok good");	
-	log("finish");
 	
-}
+	progress.setANewGoal("active");
 
-function goToPlanChooser() {
-	nav.toPlanChooser();
+	// -------------------------------------------------------------------
+	pass("WeekGoal testcases");
 }
-

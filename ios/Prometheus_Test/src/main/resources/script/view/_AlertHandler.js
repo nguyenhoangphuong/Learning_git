@@ -33,7 +33,7 @@ function Alert()
 	// All the alert title name
 	// ----- Home view
 	this.Error = "Error";
-	this.InvalidPasswordMsg = "Sorry, the password should have at least 6 characters, at least 1 digit and 1 letter";
+	this.InvalidPasswordMsg = "Sorry, the password should be at least 6 characters long, with at least 1 digit and 1 letter";
 	this.InvalidEmailMsg = "Sorry, this email is invalid";
 	this.ExistedUserMsg = "Sorry, someone else has used this before";
 	this.WrongLoginMsg = "Incorrect email or password";
@@ -166,6 +166,6 @@ function PrometheusAlertHandler(_alert)
 	}
 	
 	// for other alert, choose by default
-	app.alert().defaultButton().tap();
+	_alert().defaultButton().tap();
 	return false;
 }

@@ -23,7 +23,8 @@ checkInvalidEmail("em%^ail@domain.com");
 checkInvalidEmail("email@-domain.com");
 checkInvalidEmail("emaildomain.com");
 checkInvalidEmail("email@.com");
-checkInvalidEmail("$$$$$$"); 
+checkInvalidEmail("$$$$$$");
+ 
 checkPassword("");
 checkPassword("aaaaaa");
 checkPassword("111111");

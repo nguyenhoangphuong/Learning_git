@@ -9,8 +9,8 @@
  */
 var signupTD =
 	{
-		existedEmail: "testexisted@test.com",		
-		rightPwd: "a123456"
+		existedEmail: "abc@test.com",		
+		rightPwd: "qwerty1"
 	}
 
 
