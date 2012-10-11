@@ -8,7 +8,7 @@ List of functions:
 	ex: 
 	{
 		total: 3,
-		names: ["Start time", "Duration", "Distance"],
+		names: ["Start time", "Duration", "Distance (miles)"],
 		values: ["09:53:AM", "01:00:00", "82"]
 	}
 - tapField(fieldname)			: tap the field with name = fieldname
@@ -102,11 +102,24 @@ function ManualTracking()
 		return info;
 	}
 	
-	function tapField(id)
+	function tapField(id, useIndex)
 	{
 		field = mainView.staticTexts()[id];
 		if(field.isValid())
 		{
+			// use index
+			if(useIndex)
+			{
+				fieldBtn = mainView.buttons()[id];
+				
+				wait(0.5);
+				fieldBtn.tap();
+				log("Tap field [" + id + "]");
+				
+				return;
+			}
+			
+			// use field name
 			for(i = 0; ; i++)
 			{
 				if(mainView.staticTexts()[i].name() == id)
@@ -208,7 +221,12 @@ function ManualTracking()
 		wait(0.5);
 		doneBtn.tap();
 		
-		log("Tap [Done]");		
+		log("Tap [Done]");	
+		
+		// wait for alert
+		wait();
+		if(isWeekGoalFinishedAlertShown() || isTodayGoalFinishedAlertShown())
+			alert.confirmCustomAlert();
 	}
 	
 	

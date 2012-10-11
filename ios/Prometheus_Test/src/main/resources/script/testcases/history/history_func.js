@@ -8,12 +8,16 @@ function initStartView()
 	nav.toHistory(null, null, null, "Running", 10);
 }
 
-function goFromStartToHistory()
+function goFromStartToPlanner()
 {
-	// go to history
+	// go to planner
 	tg = new GoalProgress();
 	tg.scrollToPlanner();
-	
+}
+
+function goFromPlannerToHistory()
+{
+	// go to history
 	p = new GoalPlan();
 	p.scrollToHistory();
 }
@@ -26,16 +30,6 @@ function goFromHistoryToStart()
 	
 	p = new GoalPlan();
 	p.scrollToTodaysGoal();
-}
-
-function addRecordByGPS()
-{
-	tg = new GoalProgress();
-	
-}
-
-function addRecordByManual()
-{
 }
 
 function resetPlan(activity, amount)
@@ -65,7 +59,102 @@ function resetPlan(activity, amount)
 	wait();
 }
 
-// ==================== Verify ==========================================
+// ===================== Add records ====================================
+function addRecordByManual(e)
+{
+	/*
+	e.names = ["Start time", "Duration", "Distance (miles)"];
+	e.ranges =
+	{
+		mins: null, 20, 10
+		maxs: null, 70, 50
+	}
+	e.record = 
+	[
+		[10, 15, "AM"],
+		[0, 30, 00],
+		[1]
+	]
+	e.text =
+	[
+		"10:15 AM",
+		"00:30:00",
+		"1"
+	]
+	*/
+	
+	// to manual tracking view
+	tg = new GoalProgress();
+	tg.start(2);
+	
+	// do some verify
+	verifyManualFieldsName(e.names);
+	
+	// add record's fields and done
+	mt = new ManualTracking();
+	for(i = 0; i < e.record.length; i++)
+	{
+		// tap field
+		mt.tapField(e.names[i]);
+		wait(0.5);
+		
+		// check range
+		verifyManualFieldsRange(e.ranges[i]);
+		
+		// input values
+		if(e.record[i] != null)
+		{
+			mt.setField(e.record[i]);
+			mt.tapDone();
+			wait(0.5);
+		}
+	}
+	
+	// verify input work
+	verifyManualInputWork(e.text);
+	
+	// done
+	mt.done();
+	wait(0.5);
+}
+
+// ==================== Verify manual input =============================
+function verifyManualFieldsName(names)
+{
+	mt = new ManualTracking();
+	fields = mt.getFieldsInfo();
+	
+	assertEqual(fields.total, names.length, "Total field is correct");
+	for(i = 0; i < fields.total; i++)
+		assertEqual(fields.names[i], names[i], "Field " + names[i] + " is correct");
+}
+
+function verifyManualFieldsRange(range)
+{
+	mt = new ManualTracking();
+	fr = mt.getFieldRanges();
+	
+	assertEqual(fr.mins.length, range.length, "Total column is same for this field");
+	for(i = 0; i < range.total; i++)
+	{
+		if(range.mins[i] != null)
+			assertEqual(fr.mins[i], range.mins[i], "Min value is correct");
+		if(range.maxs[i] != null)
+			assertEqual(fr.maxs[i], range.maxs[i], "Max value is correct");
+	}
+}
+
+function verifyManualInputWork(text)
+{
+	mt = new ManualTracking();
+	info = mt.getFieldsInfo();
+	
+	for(i = 0; i < info.total; i++)
+		if(text[i] != null)
+			assertEqual(info.values[i], text[i], "Record is display correctly")
+}
+
+// ==================== Verify goal plan history ========================
 function verifyNoHistory()
 {
 	h = new History();
@@ -75,7 +164,7 @@ function verifyNoHistory()
 
 function verifyDateConsitent(e)
 {
-	// e = ["Oct 09th", "Oct 10th", "Oct 11th", ...]
+	// e = ["Oct 09", "Oct 10", "Oct 11", ...]
 	h = new History();
 	
 	dates = h.getAllDates();

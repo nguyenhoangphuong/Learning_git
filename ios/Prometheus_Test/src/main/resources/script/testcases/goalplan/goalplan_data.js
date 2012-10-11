@@ -9,13 +9,14 @@ function toDayString(dateObj, today)
 		s = d[1] + " " + d[2];
 	else
 		s = "Today " + d[1] + " " + d[2];
-			
+	
+	/*
 	t = parseInt(d[2], 10);
 	if(t == 1 || t == 21 || t == 31) s = s + "st";
 	else if(t == 2 || t == 22) s = s + "nd";
 	else if(t == 3 || t == 23) s = s + "rd";
 	else s = s + "th";
-	
+	*/
 	return s;
 }
 
