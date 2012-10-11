@@ -52,7 +52,7 @@ function runTest()
 	
 	// check result consistent with run amount
 	var result = run.getResults();
-	assertTrue(Math.abs(parseFloat(result.distance) - miles) <= 0.05, "Result is the same with run amount");
+	assertTrue(Math.abs(parseFloat(result.distance) - miles) <= 0.1, "Result is the same with run amount");
 	
 	// done and run again
 	run.done();
