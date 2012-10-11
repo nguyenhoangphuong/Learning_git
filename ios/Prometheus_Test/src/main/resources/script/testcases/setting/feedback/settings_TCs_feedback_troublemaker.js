@@ -1,5 +1,3 @@
-#import "../../core/testcaseBase.js"
-#import "../../view/_Navigator.js"
 #import "settings_feedback_funcs.js"
 
 /* This test case verifies that
@@ -28,4 +26,4 @@ log("   2.5. Send JIRA feedback");
 sendJIRAFeedback();
 
 //-----------------------------------------------------------------------
-end();
+pass("Settings: Feedback");	

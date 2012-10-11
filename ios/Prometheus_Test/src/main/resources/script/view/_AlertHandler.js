@@ -166,6 +166,6 @@ function PrometheusAlertHandler(_alert)
 	}
 	
 	// for other alert, choose by default
-	_alert().defaultButton().tap();
+	_alert.defaultButton().tap();
 	return false;
 }

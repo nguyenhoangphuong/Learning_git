@@ -10,12 +10,12 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class SettingsTest extends AutomationTest 
 {
 	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })
-	public void VerifyNonTroublemakerFeedback() throws InterruptedException, StopConditionException 
+	public void VerifyNonTroublemakerTryOutFeedback() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-					 "script/testcases/setting/feedback/settings_TCs_feedback_non-troublemaker.js");
+					 "script/testcases/setting/feedback/settings_TCs_feedback_non-troublemaker_tryout.js");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })
@@ -25,15 +25,6 @@ public class SettingsTest extends AutomationTest
 	 	ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
 					 "script/testcases/setting/feedback/settings_TCs_feedback_troublemaker.js");
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })
-	public void VerifyTryoutFeedback() throws InterruptedException, StopConditionException 
-	{
-		AppHelper.cleanCache();
-	 	ShortcutsTyper.delayTime(1000);
-		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
-					 "script/testcases/setting/feedback/settings_TCs_feedback_tryout.js");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVP1", "setting" })

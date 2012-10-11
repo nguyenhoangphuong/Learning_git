@@ -1,5 +1,5 @@
-#import "../../core/testcaseBase.js"
-#import "../../view/_Navigator.js"
+#import "../../../core/testcaseBase.js"
+#import "../../../view/_Navigator.js"
 
 function verifyTroublemakerShown()
 {
@@ -116,8 +116,8 @@ function verifySignOutBtn()
 function verifySignUpBtn()
 {
 	s = new Settings();
-	s.signOut();
+	s.signUp();
 	
 	h = new Home();
-	assertTrue(h.isSignUpVisible(), "At Home/SignUp view after sign up");
+	assertTrue(h.isSignUpVisible(), "At Home->SignUp view after sign up");
 }
