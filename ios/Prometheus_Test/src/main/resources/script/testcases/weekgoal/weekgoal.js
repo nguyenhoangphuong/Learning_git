@@ -14,7 +14,7 @@ function runTest()
 	// -------------------------------------------------------------------
 	
 	// to today view
-	//nav.toTodaysGoal(null, null, null, "Running", 20);
+	nav.toTodaysGoal(null, null, null, "Running", 20);
 
 	// run by gps
 	progress = new GoalProgress();

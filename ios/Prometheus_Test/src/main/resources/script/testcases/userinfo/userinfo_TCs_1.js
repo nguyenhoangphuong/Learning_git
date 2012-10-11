@@ -17,8 +17,9 @@ log("   2.3 - Input Weight");
 InputWeight();
 log("   2.4 - Input Height");
 InputHeight();
-log("   2.5 - Input Gender");
-InputGender();
+//error in accessibility for now disable
+//log("   2.5 - Input Gender");
+//InputGender();
 
 //--- next button verify ---
 log("3 - Verify next button");

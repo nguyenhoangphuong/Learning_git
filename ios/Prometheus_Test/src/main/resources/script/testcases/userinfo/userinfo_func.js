@@ -12,7 +12,7 @@ function CheckDefaultValue()
 	userinfo = new UserInfo();
 	
 	// check gender default
-	assertTrue(userinfo.isMale(), "Default sex is Male");
+	//assertTrue(userinfo.isMale(), "Default sex is Male");
 	
 	// check unit default
 	assertTrue(userinfo.isUS(), "Default unit is US");
@@ -24,11 +24,17 @@ function InputHeight()
 	
 	// check height in US
 	userinfo.setHeight("5'", "9\"", "feet");
-	assertTrue(staticTextExist("5'9\""), "Height is display correctly in US");
+	assertTrue(staticTextExist("5'9\"") && staticTextExist("(feet)"), "Height (plural) is display correctly in US");
+	
+	userinfo.setHeight("1'", "0\"", "feet");
+	assertTrue(staticTextExist("1'0\"") && staticTextExist("(foot)"), "Height (single) is display correctly in US");
 	
 	// check height in SI
-	userinfo.setHeight("1", ".70", "meter");
-	assertTrue(staticTextExist("1.70"), "Height is display correctly in SI");
+	userinfo.setHeight("1", ".70", "meters");
+	assertTrue(staticTextExist("1.70") && staticTextExist("(meters)"), "Height (plural) is display correctly in SI");
+	
+	userinfo.setHeight("1", ".00", "meters");
+	assertTrue(staticTextExist("1.00") && staticTextExist("(meter)"), "Height (single) is display correctly in SI");
 }
 
 function InputWeight()
@@ -113,7 +119,7 @@ function VerifySwipeToChangeWeight()
 function VerifySwipeToChangeHeight()
 {
 	ui = new UserInfo();
-	ui.setHeight(1, ".60", "meter");
+	ui.setHeight(1, ".60", "meters");
 	
 	a = ui.getInfo();
 	ui.changeHeight(50);

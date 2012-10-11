@@ -18,7 +18,7 @@ VerifySwipeToChangeHeight();
 log("5 - Verify old state and interruption");
 log("   5.1 - Verify interruption");
 VerifyInteruption();
-log("   5.2 - Verify old state");
-VerifyOldState();
+//log("   5.2 - Verify old state");
+//VerifyOldState();
 
 pass("UserInfo: Swiping, Oldstate and Interruption");
