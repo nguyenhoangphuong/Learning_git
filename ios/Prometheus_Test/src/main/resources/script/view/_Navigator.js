@@ -23,7 +23,7 @@ This will go from nothing to the specify view, so kill the app first.
 		ex: 30
 - toTodaysGoal(email, pwd, userinfo, activity, number, login)
 - toRunView(email, pwd, userinfo, activity, number, login)
-- toGoalPlan(email, pwd, userinfo, activity, number, login)
+- toPlanner(email, pwd, userinfo, activity, number, login)
 - toHistory(email, pwd, userinfo, activity, number, login)
 - toSettings(email, pwd, userinfo, activity, number, login)
 */
