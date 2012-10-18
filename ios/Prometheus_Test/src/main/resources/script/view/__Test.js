@@ -6,6 +6,8 @@
 #import "Home.js"
 #import "MusicSetting.js"
 #import "Settings.js"
+#import "_TabBar.js"
+
 
 function testSettings()
 {
@@ -37,4 +39,5 @@ function testSettings()
 
 start("Demo");
 listControls(app.mainWindow());//.scrollViews()[0]);
+//tabBar.tapStart();
 pass("Demo pass");
