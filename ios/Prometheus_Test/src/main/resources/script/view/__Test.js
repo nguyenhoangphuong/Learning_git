@@ -6,6 +6,8 @@
 #import "Home.js"
 #import "MusicSetting.js"
 #import "Settings.js"
+#import "_TabBar.js"
+
 
 function testSettings()
 {
@@ -36,12 +38,8 @@ function testSettings()
 
 
 start("Demo");
-//testSettings();
-//#import "../testcases/feedback/feedback_tryout.js";
-//#import "../testcases/feedback/feedback_non-troublemaker.js";
-//#import "../testcases/feedback/feedback_troublemaker.js";
-//logTree();
-log(target.frontMostApp().tabBar().buttons()[2].isValid());
-log(target.frontMostApp().tabBar().buttons()[2].isVisible());
-log(target.frontMostApp().tabBar().buttons()[2].rect();
+//listControls(app.mainWindow());//.scrollViews()[0]);
+tabBar.tapTracker();
+wait(5);
+tabBar.tapPlanner();
 pass("Demo pass");
