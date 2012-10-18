@@ -26,6 +26,7 @@ List of functions:
 */
 
 #import "../core/testcaseBase.js"
+#import "_NavigationBar.js"
 
 function History()
 {
@@ -46,9 +47,7 @@ function History()
 	// Method definitions
 	function isVisible()
 	{
-		exist = staticTextExist("No history") || (table.isVisible() && table.groups().length > 0);
-		log("History visible: " + exist);
-		return exist;
+		return navigationBar.historyIsVisible();
 	}
 	
 	function isNoHistory()

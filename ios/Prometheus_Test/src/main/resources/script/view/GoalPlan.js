@@ -1,5 +1,6 @@
 #import "../core/testcaseBase.js"
 #import "_AlertHandler.js"
+#import "_NavigationBar.js"
 
 /*
 GoalPlan functions:
@@ -102,12 +103,7 @@ function GoalPlan()
 	// Methods definition
 	function isVisible()
 	{
-		page = window.pageIndicators()[0].value();
-		exist = (page == "page 3 of 3" && recordsView.isValid() && recordsView.isVisible()) ||
-				tips.isTipsDisplay("GoalPlan", mainView);
-		
-		log("GoalPlan visible: " + exist);
-		return exist;
+		return navigationBar.plannerIsVisible();
 	}
 	
 	function isTipsVisible()

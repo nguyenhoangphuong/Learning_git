@@ -1,5 +1,6 @@
 #import "../core/testcaseBase.js"
 #import "_AlertHandler.js"
+#import "_NavigationBar.js"
 
 /*
 Settings functions:
@@ -67,7 +68,7 @@ function Settings()
 	
 	function isVisible()
 	{
-		return btnProfile.isValid() && btnProfile.isVisible();
+		return navigationBar.settingsIsVisible();
 	}
 	
 	function isTroublemaker()

@@ -2,10 +2,12 @@
 #import "_AlertHandler.js"
 #import "_Tips.js"
 #import "RunView.js"
+#import "_NavigationBar.js"
 
 /*
 GoalProgress function:
 ================================================================================
+- isVisible 			: check if Progress screen is visible;
 - isWeekGoalVisible()	: check if current view is WeekProgress view
 - isTodaysGoalVisible()	: check if current view is TodayProgress view
 ================================================================================
@@ -76,6 +78,7 @@ function GoalProgress()
 	var newGoalBtn = mainView.buttons()[0];
 	
 	// Methods
+	this.isVisible = isVisible;
 	this.isWeekGoalVisible = isWeekGoalVisible;
 	this.isTodaysGoalVisible = isTodaysGoalVisible;
 	
@@ -103,6 +106,11 @@ function GoalProgress()
 	this.confirmInputAlert = confirmInputAlert;
 	
 	// Methods definition
+	function isVisible()
+	{
+		return navigationBar.progressIsVisible();
+	}
+	
 	function isWeekGoalVisible()
 	{
 		page = window.pageIndicators()[0].value();
