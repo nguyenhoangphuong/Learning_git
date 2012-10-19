@@ -27,6 +27,14 @@ This section is the place where you list functions. Please list them as comments
 									(*Note: currently this is only work SOMETIMES due to XCode and Instrucment stability)
 
 - wheelPick(picker, index, value)	:	auto the picker progress (shouldn't use directly from test script)
+- dateWheelPick(picker, year, monthString, day, yearIndex = 2, monthIndex = 0, dayIndex = 1)
+	+ picker: the picker;
+	+ year: year value (number);
+	+ monthString: month value (string, case insensitive);
+	+ day: day value (number);
+	+ yearIndex: index of year wheel, default = 2;
+	+ monthIndex: index of month wheel, default = 0;
+	+ dayIndex: index of day wheel, default = 1;
 - getWheelRange(picker, wheelindex)	:	get the min item and max item of the wheel
 - isKeyboardVisible()			:	check if the system keyboard is currently shown on screen
 - swipeVertically(startX, startY, endY, duration)		:	swipe along Y-axis (duration default = 0.6)
@@ -219,6 +227,41 @@ function wheelPick(picker, wheelIndex, value)
 			steps--;
 		}
 	}  
+}
+
+function dateWheelPick(picker, year, monthString, day, yearIndex, monthIndex, dayIndex)
+{
+	// set default values for wheels of year, month and day
+	if (yearIndex == null)
+		yearIndex = 2;
+	
+	if (monthIndex == null)
+		monthIndex = 0;
+	
+	if (dayIndex == null)
+		dayIndex = 1;
+
+	if (year < 1900 || 2100 < year ||
+		day < 1 || 31 < day ||
+		yearIndex < 0 || 2 < yearIndex ||
+		monthIndex < 0 || 2 < monthIndex ||
+		dayIndex < 0 || 2 < dayIndex)
+		return null;
+		
+	var month = monthString.toLowerCase();
+	var yearW = picker.wheels()[yearIndex];
+	var monthW = picker.wheels()[monthIndex];
+	var dayW = picker.wheels()[dayIndex];
+	
+	yearW.selectValue(year);
+	
+	while (month != monthW.value().toLowerCase()) {
+		monthW.tapWithOptions({tapOffset:{x:0.5, y:0.25}});
+	}
+	
+	while (day != dayW.value()) {
+		dayW.tapWithOptions({tapOffset:{x:0.5, y:0.25}});
+	}
 }
 
 function getWheelRange(picker, wheelIndex)

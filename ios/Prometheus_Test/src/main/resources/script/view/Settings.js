@@ -4,19 +4,12 @@
 
 /*
 Settings functions:
-=========================================================================================
-- getResetButton()	: get Reset button since there are 2 cases
-=========================================================================================
 - isVisible()		: check if current view is Settings
-=========================================================================================
 - isTroublemaker()	: check if current user is a troublemaker
 - hasSignedIn()		: check if current user has signed in
-=========================================================================================
-- goToProfile		: tap "User Profile" button
 - rateApp()			: tap Rate button
 - tapSupport()		: tap Support button
 - tapFeedback()		: tap "JIRA Feedback" button (w/ troublemaker)
-=========================================================================================
 - resetPlan(confirm)	: tap Reset button and choose Yes/No when alert shown up
 	+ resetPlan("yes")
 	+ resetPlan("no")
@@ -24,10 +17,8 @@ Settings functions:
 	+ signOut() or signOut(true)	: tap YES when being asked
 	+ signOut(false)				: tap NO when being asked
 - signUp()				: tap "Sign up" button (w/ user having not logged in)
-=========================================================================================
 - isSignOutBtnVisible()
 - isSignUpBtnVisible()
-=========================================================================================
 */
 
 function Settings()
@@ -41,7 +32,7 @@ function Settings()
 	var btnSupport = mainView.buttons()["Support"];
 
 	var btnFeedback = mainView.buttons()["Behind the scenes"];
-	var btnReset = getResetButton();
+	var btnReset = btnFeedback; // TODO: change this
 	var btnSignOut = mainView.buttons()["Sign out"];
 	var btnSignUp = mainView.buttons()["Sign up"];
 	
@@ -50,7 +41,6 @@ function Settings()
 	
 	this.isTroublemaker = isTroublemaker;
 	this.hasSignedIn = hasSignedIn;
-	this.getResetButton = getResetButton;
 	
 	this.goToProfile = goToProfile; 
 	this.rateApp = rateApp;
@@ -79,14 +69,6 @@ function Settings()
 	function hasSignedIn()
 	{
 		return btnSignOut.isValid() && btnSignOut.isVisible();
-	}
-	
-	function getResetButton()
-	{
-		if (isTroublemaker())
-			return mainView.buttons()[5];
-		else
-			return mainView.buttons()[3];
 	}
 	
 	function goToProfile()
