@@ -5,15 +5,15 @@
 List of functions:
 ================================================================================
 - isVisible()					: check if current view is Home
-- isLoginVisible()				: check if current view is "Login"
+- isSignInVisible()				: check if current view is "SignIn"
 - isSignUpVisible()				: check if current view is "Sign up"
-
 - isEmailTextFieldVisible()		: check if email field is visible
 - isPasswordTextFieldVisible()	: check if password field is visible
 ================================================================================
-- tapLogin()					: tap Login button
-- tapSignUp()					: tap "Sign up" button
+- tapSignInTab()					: tap SignIn button
+- tapSignUpTab()					: tap "Sign up" button
 - tapTryOut()					: tap "Try out" button
+- tapLegal()					: tap "Legal" button
 - fillEmail(email)				: fill the email field with <email>
 - fillPassword(pwd)				: fill the password field with <pwd>
 - submit()						: submit the form
@@ -21,9 +21,9 @@ List of functions:
 - isInvalidPasswordAlertShown()	: checking empty password alert is shown
 - isInvalidEmailAlertShown()	: checking invalid email alert is shown
 - isExistedUserAlertShown()		: checking if "existed user" alert is shown
-- isWrongLoginAlertShown()		: checking if wrong password alert is shown
+- isWrongSignInAlertShown()		: checking if wrong password alert is shown
 ================================================================================
-- login(email, pwd)				: shortcut for click "Login", fill form and submit
+- signIn(email, pwd)				: shortcut for click "SignIn", fill form and submit
 - signUp(email, pwd)			: shortcut for click "Sign up", fill form and submit
 - tryOut()						: shortcut for click "Try out"
 ================================================================================
@@ -35,27 +35,31 @@ function Home()
 	var window = app.mainWindow();
 	var mainView = window;
 
-	var titleLogin = "Sign in";
-	var titleSignup = "Sign up";
-	var titleTryout = "Tryout";
-	var titleLegal = "Legal";
+
+		
+	var textExist ;
 	
-	var emailField = mainView.textFields()[0];
-	var pwdField = mainView.secureTextFields()[0];
+	var btnSignUpTab ;
+	var btnSignInTab ;
+	var btnConfirm ;
+	var btnTryout ;
+	var btnLegal ;
+	var emailField ;
+	var pwdField ;
+	
+	assignControls();
 	
 	// Methods
 	this.isVisible = isVisible;
-	this.isLoginVisible = isLoginVisible;
+	this.isSignInVisible = isSignInVisible;
 	this.isSignUpVisible = isSignUpVisible;
-	
 	this.isEmailTextFieldVisible = isEmailTextFieldVisible;
 	this.isPasswordTextFieldVisible = isPasswordTextFieldVisible;
 	
-	this.tapLogin = tapLogin;
-	this.tapSignUp = tapSignUp;
+	this.tapSignInTab = tapSignInTab;
+	this.tapSignUpTab = tapSignUpTab;
 	this.tapTryOut = tapTryOut;
 	this.tapLegal = tapLegal;
-	this.tapBack = tapBack;
 	this.fillEmail = fillEmail;
 	this.fillPassword = fillPassword;
 	this.submit = submit;
@@ -63,63 +67,63 @@ function Home()
 	this.isInvalidEmailAlertShown = isInvalidEmailAlertShown;
 	this.isInvalidPasswordAlertShown = isInvalidPasswordAlertShown;
 	this.isExistedUserAlertShown = isExistedUserAlertShown;
-	this.isWrongLoginAlertShown = isWrongLoginAlertShown;
+	this.isWrongSignInAlertShown = isWrongSignInAlertShown;
 	
-	this.login = login;
+	this.signIn = signIn;
 	this.signUp = signUp;
 	this.tryOut = tryOut;
 	
-	function updateTitle()
+	//---------------------------------------------
+	// Method definition
+	function assignControls()
 	{
-		if (mainView.buttons()["Signin"].isVisible())
-			titleSignin = "Signin";
-		if (mainView.buttons()["Sign in"].isVisible())
-			titleSignin = "Sign in";
-		if (mainView.buttons()["Signup"].isVisible())
-			titleSignup = "Signup";
-		if (mainView.buttons()["Sign up"].isVisible())
-			titleSignup = "Sign up";
-		if (mainView.buttons()["Tryout"].isVisible())
-			titleTryout = "Tryout";
-		if (mainView.buttons()["Try out first"].isVisible())
-			titleTryout = "Try out first";
+		 textExist = "Try out first";
+	
+		 btnSignUpTab = mainView.buttons()[0];
+		 btnSignInTab = mainView.buttons()[1];
+		 btnConfirm = mainView.buttons()[2];
+		 btnTryout = mainView.buttons()[4];
+		 btnLegal = mainView.buttons()["Legal"];
+		 emailField = mainView.textFields()[0];
+		 pwdField = mainView.secureTextFields()[0];
 	}
 	
-	// Method definition
+	// --------------- Visible method -------------
 	function isVisible()
-	{	
-		exist = staticTextExist("No data is saved if you just try out");
-		
+	{
+		// TODO	
+		exist = staticTextExist(textExist);
+		//
 		log("Home visible: " + exist);		
 		return exist;
 	}
 	
-	function isLoginVisible() 
+	function isSignInVisible() 
 	{
-		updateTitle();
-		exist = mainView.buttons()[titleLogin].isVisible() && !mainView.buttons()[titleSignup].isVisible() && !mainView.buttons()[titleTryout].isVisible();
-				
-
-		log("Login visible: " + exist);
+		
+		// TODO
+		btnSignInTab.isVisible();
+		//
+		log("SignIn visible: " + exist);
 		return exist;
 	}
 	
 	function isSignUpVisible()
 	{
-		updateTitle();
-		exist = !mainView.buttons()[titleLogin].isVisible() && mainView.buttons()[titleSignup].isVisible() && !mainView.buttons()[titleTryout].isVisible();
-				
+		
+		// TO DO
+		exist = btnSignUpTab.isVisible();
+		//		
 		log("SignUp visible: " + exist);
 		return exist;
 	}
-	
+		
 		
 	function isEmailTextFieldVisible()
 	{
 		exist = emailField.isValid() && emailField.isVisible();
 		
-		log("EmailField visible: " + exist);
-		
+		log("EmailField visible: " + exist);		
 		return exist;
 	}
 	
@@ -132,30 +136,32 @@ function Home()
 		return exist;
 	}
 	
+	// -----------------------------------------------------------------
 	
-	function tapLogin()
+	// ----------------------Method tap action -------------------------
+	function tapSignInTab()
 	{
-		log("Tap [Login] button");
-		updateTitle();
+		log("Tap [SignIn] button");
+		
 		wait(0.5);
-		mainView.buttons()[titleLogin].tap();
+		btnSignInTab.tap();
 
 	}
 	
-	function tapSignUp()
+	function tapSignUpTab()
 	{
 		log("Tap [Sign up] button");
-		updateTitle();
+		
 		wait(0.5);
-		mainView.buttons()[titleSignup].tap();
+		btnSignUpTab.tap();
 	}
 	
 	function tapTryOut()
 	{
 		log("Tap [Try out] button");
-		updateTitle();
+		
 		wait(0.5);
-		mainView.buttons()[titleTryout].tap();
+			btnTryout.tap();
 		wait(0.5);
 	}
 	
@@ -164,18 +170,12 @@ function Home()
 		log("Tap [Legal] button");
 		
 		wait(0.5);
-		mainView.buttons()[titleLegal].tap();
+		// TO DO --- Update later
+			//btnLegal.tap();
+		//
 		wait(0.5);
 	}
 	
-	function tapBack()
-	{
-		log("Tap [Back] button");
-		
-		wait(0.5);
-		app.mainWindow().buttons()[0].tap();
-		wait(0.5);
-	}
 	
 	function fillEmail(email)
 	{
@@ -199,18 +199,20 @@ function Home()
 	{
 		wait(0.5);
 		
+		// TO DO
 		if(isPasswordTextFieldVisible())
 			pwdField.tap();
 		else
-			emailField.tap();
-		
+			emailField.tap();	
 		app.keyboard().typeString("\n");
 		log("Submiting form...");
-		
+		//
 		// wait for alert
 		wait(10);
 	}
 	
+	// -------------------------------------------------------------------------
+	// ---------------------- Check alert --------------------------------------
 	function isEmptyEmailAlertShown()
 	{
 		shown = alert.alertTitle != null && 
@@ -276,7 +278,7 @@ function Home()
 		return shown;
 	}
 	
-	function isWrongLoginAlertShown()
+	function isWrongSignInAlertShown()
 	{
 		shown = alert.alertTitle != null && 
 			alert.alertTitle == alert.Error && 
@@ -289,14 +291,13 @@ function Home()
 	}
 	
 	
-	function login(email, pwd)
+	function signIn(email, pwd)
 	{
 		//skipWhatsNew();
-		tapLogin();
+		tapSignInTab();
 		fillEmail(email);
 		fillPassword(pwd);
 		submit();
-		
 		// wait additional time for sync
 		wait(3);	
 	}
@@ -304,11 +305,10 @@ function Home()
 	function signUp(email, pwd)
 	{
 		//skipWhatsNew();
-		tapSignUp();
+		tapSignUpTab();
 		fillEmail(email);
 		fillPassword(pwd);
-		submit();
-		
+		submit();	
 		// wait additional time for sync
 		wait(3);
 	}

@@ -44,7 +44,7 @@ function checkInvalidEmail(email)
 	var signup = new Home();
 	signup.signUp(email,signupTD.rightPwd);
 	assertTrue(signup.isInvalidEmailAlertShown(), "email: " + email + "-----.Expected: not valid. Actual:  valid");
-	signup.tapSignUp();
+	signup.tapSignUpTab();
 	hr();
 }
 
@@ -53,7 +53,7 @@ function checkEmptyEmail()
 	var signup = new Home();
 	signup.signUp("",signupTD.rightPwd);
 	assertTrue(signup.isInvalidEmailAlertShown(), "Empty email: -----.Expected: not valid. Actual: valid");
-	signup.tapSignUp();
+	signup.tapSignUpTab();
 	hr();
 }
 
@@ -64,7 +64,7 @@ function checkPassword(password)
 	var email = "nonexisted" + genstring + "@test.com";
 	signup.signUp(email,password);
 	assertTrue(signup.isInvalidPasswordAlertShown(), "Password validate format-----. expected : not valid . Actual : Valid");
-	signup.tapSignUp();
+	signup.tapSignUpTab();
 	hr();
 }
 
@@ -75,7 +75,7 @@ function checkDuplicatedUser()
 	var signup = new Home();
 	signup.signUp(signupTD.existedEmail,signupTD.rightPwd);
 	assertTrue(signup.isExistedUserAlertShown(),"Duplicated user sign up-----. expected : not valid . Actual : Valid");
-	signup.tapSignUp();
+	signup.tapSignUpTab();
 	hr();
 	
 }

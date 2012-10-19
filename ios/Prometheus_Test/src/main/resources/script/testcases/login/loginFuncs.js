@@ -2,7 +2,6 @@
 #import "../../view/Home.js"
 #import "../../core/testcaseBase.js"
 #import "../../core/common.js"
-
 //============================================================= //
 // NAVIGATION
 //============================================================= //
@@ -15,15 +14,11 @@ function toStartScreen()
 // DATA
 //============================================================= //
 
-loginTD =
+SignInTD =
 	{
-		existedEmail: "abc@test.com",
-		rightPwd: "qwerty1",
-		wrongPwd: "asdaldjk1",
-		
-		wrongPwd1: "123",
-		wrongPwd2: "123456",
-		wrongPwd3: "abcdef"
+		existedEmail: "testexisted@test.com",
+		rightPwd: "a123456",
+		wrongPwd: "asdaldjk"
 	}
 
 //============================================================= //
@@ -35,101 +30,101 @@ function verifyTranslition()
 	
 	// tap log in and then return to home
 	hr();
-	print("<Tap login and then return to home>");
-	h.tapLogin();
-	assertTrue(!h.isVisible() && h.isLoginVisible() && !h.isSignUpVisible(), "Only Login screen is visible");
+	print("<Tap SignIn and then return to home>");
+	h.tapSignInTab();
+	assertTrue(!h.isVisible() && h.isSignInVisible() && !h.isSignUpVisible() , "Only SignIn screen is visible");
 	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(), "Email and Password fields exist");
-	h.tapLogin(); 
+	h.tapSignInTab(); 
 	wait();
-	assertTrue(h.isVisible() && !h.isLoginVisible() && !h.isSignUpVisible(), "Only Start screen is visible");
+	assertTrue(h.isVisible() && !h.isSignInVisible() && !h.isSignUpVisible(), "Only Start screen is visible");
 	
 	// tap sign up and then return to home
 	hr();
 	print("<Tap signup and then return to home>");
 	h.tapSignUp();
-	assertTrue(!h.isVisible() && !h.isLoginVisible() && h.isSignUpVisible(), "Only Signup screen is visible");
+	assertTrue(!h.isVisible() && !h.isSignInVisible() && h.isSignUpVisible(), "Only Signup screen is visible");
 	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(), "Email and Password fields exist");
 	h.tapSignUp(); 
 	wait();
-	assertTrue(h.isVisible() && !h.isLoginVisible() && !h.isSignUpVisible(), "Only Start screen is visible");
+	assertTrue(h.isVisible() && !h.isSignInVisible() && !h.isSignUpVisible(), "Only Start screen is visible");
 }
 
 function verifyClientVerification()
 {
 	h = new Home();
 	
-	// login with invalid email
+	// SignIn with invalid email
 	hr();
-	print("<Login with empty email>");
-	h.login("", "");
+	print("<SignIn with empty email>");
+	h.signIn("", "");
+	assertTrue(h.isInvalidEmailAlertShown(), "Empty email alert shown");
+	h.tapSignInTab();
+	
+	// SignIn with empty password
+	hr();
+	print("<SignIn with empty password>");
+	h.signIn(SignInTD.existedEmail, "")
+	assertTrue(h.isInvalidPasswordAlertShown(), "Invalid password alert shown");
+	h.tapSignInTab();
+	
+	// SignIn with invalid email
+	hr();
+	print("<SignIn with invalid email>");
+	h.signIn("invalidEmail", SignInTD.rightPwd);
 	assertTrue(h.isInvalidEmailAlertShown(), "Invalid email alert shown");
-	h.tapLogin();
+	h.tapSignInTab();
 	
-	// login with empty password
+	// SignIn with invalid password [length < 6]
 	hr();
-	print("<Login with empty password>");
-	h.login(loginTD.existedEmail, "")
+	print("<SignIn with password: " + SignInTD.wrongPwd1 + ">");
+	h.signIn(SignInTD.existedEmail, SignInTD.wrongPwd1);
 	assertTrue(h.isInvalidPasswordAlertShown(), "Invalid password alert shown");
-	h.tapLogin();
+	h.tapSignInTab();
 	
-	// login with invalid email
+	// SignIn with invalid password [length == 6, all are letters]
 	hr();
-	print("<Login with invalid email>");
-	h.login("invalidEmail", loginTD.rightPwd);
-	assertTrue(h.isInvalidEmailAlertShown(), "Invalid email alert shown");
-	h.tapLogin();
-	
-	// login with invalid password [length < 6]
-	hr();
-	print("<Login with password: " + loginTD.wrongPwd1 + ">");
-	h.login(loginTD.existedEmail, loginTD.wrongPwd1);
+	print("<SignIn with password: " + SignInTD.wrongPwd2 + ">");
+	h.signIn(SignInTD.existedEmail, SignInTD.wrongPwd2);
 	assertTrue(h.isInvalidPasswordAlertShown(), "Invalid password alert shown");
-	h.tapLogin();
+	h.tapSignInTab();
 	
-	// login with invalid password [length == 6, all are letters]
+	// SignIn with invalid password [length == 6, all are digits]
 	hr();
-	print("<Login with password: " + loginTD.wrongPwd2 + ">");
-	h.login(loginTD.existedEmail, loginTD.wrongPwd2);
+	print("<SignIn with password: " + SignInTD.wrongPwd3 + ">");
+	h.signIn(SignInTD.existedEmail, SignInTD.wrongPwd3);
 	assertTrue(h.isInvalidPasswordAlertShown(), "Invalid password alert shown");
-	h.tapLogin();
-	
-	// login with invalid password [length == 6, all are digits]
-	hr();
-	print("<Login with password: " + loginTD.wrongPwd3 + ">");
-	h.login(loginTD.existedEmail, loginTD.wrongPwd3);
-	assertTrue(h.isInvalidPasswordAlertShown(), "Invalid password alert shown");
-	h.tapLogin();
+	h.tapSignInTab();
 }
 
 function verifyBackendVerification()
 {
 	h = new Home();
 	
-	// login with non-existed user
+	// SignIn with non-existed user
 	hr();
-	print("<Login with non-existed email>");
+	print("<SignIn with non-existed email>");
 	var genstring = generateRandomDigitString();
 	var nonexistedEmail = "nonexisted" + genstring + "@test.com"
-	h.login(nonexistedEmail, loginTD.rightPwd);
-	assertTrue(h.isWrongLoginAlertShown(), "User not exist alert shown");
-	h.tapLogin();
+	h.signIn(nonexistedEmail, SignInTD.rightPwd);
+	assertTrue(h.isWrongSignInAlertShown(), "User not exist alert shown");
+	h.tapSignInTab();
 
-	// login with wrong password
+	// SignIn with wrong password
 	hr();
-	print("<Login with wrong password>");
-	h.login(loginTD.existedEmail, loginTD.wrongPwd);
-	assertTrue(h.isWrongLoginAlertShown(), "Wrong password or email alert shown");
-	h.tapLogin();
+	print("<SignIn with wrong password>");
+	h.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
+	assertTrue(h.isWrongSignInAlertShown(), "Wrong password or email alert shown");
+	h.tapSignInTab();
 	
 }
 
-function verifyValidLogin()
+function verifyValidSignIn()
 {
 	h = new Home();
 	
-	// login with non-existed user
+	// SignIn with non-existed user
 	hr();
-	print("<Login with valid email and password>");
-	h.login(loginTD.existedEmail, loginTD.rightPwd);
-	assertTrue(!h.isLoginVisible(), "Login screen is no more");
+	print("<SignIn with valid email and password>");
+	h.signIn(SignInTD.existedEmail, SignInTD.rightPwd);
+	assertTrue(!h.isSignInVisible(), "SignIn screen is no more");
 }
