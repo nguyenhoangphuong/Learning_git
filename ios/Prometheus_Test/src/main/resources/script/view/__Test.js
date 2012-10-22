@@ -2,44 +2,42 @@
 #import "_AlertHandler.js"
 #import "_Prometheus.js"
 #import "../core/testcaseBase.js"
-#import "MultiGoalChooser.js"
-#import "Home.js"
-#import "MusicSetting.js"
-#import "Settings.js"
 #import "_TabBar.js"
 
-
-function testSettings()
+function testPlanPicker()
 {
-//	logTree();
-	var target = UIATarget.localTarget();
-	var app = target.frontMostApp();
-	var window = app.mainWindow();
-	var mainView = window.scrollViews()[0];
+	pp = new PlanPicker();
 	
-	var s = new Settings();
+	pp.isVisible();
+	pp.getCustomPlans();
+	pp.pickPlan("Normal", "Weight Loss");
 	
-	//log(s.isVisible());
-	//log(s.isSupportView());
-	//log(s.isTroublemaker());
-	//s.getResetButton().tap();
-	//s.goToProfile();
-	//s.rateApp();
-	//s.tapSupport();
-	//s.emailSupport();
-	//s.likePage();
-	//s.goToWebsite();
-	//s.backToSettings();
-	//s.tapFeedback();
-	//s.resetPlan();
-	//s.resetPlan(true);
-	s.signOut();
-};
+	target.frontMostApp().navigationBar().leftButton().tap();
+	
+	pp.tapCustomPlan();
+}
 
+function testPlanInfo()
+{
+	pi = new PlanInfo();
+	
+	pi.isVisible();
+	pi.isVisible("Personal #1");
+	pi.isVisible("Personal #2");
+	pi.groupByDate();
+	//pi.groupByActivity();
+	pi.getPlanInfoByActivity();
+	pi.getPlanInfoByDate();
+	
+	pi.isDeletePlanBtnVisible();
+	pi.isDeletePlanAlertShown();
+	
+}
 
 start("Demo");
-//listControls(app.mainWindow());//.scrollViews()[0]);
-tabBar.tapTracker();
-wait(5);
-tabBar.tapPlanner();
+//listControls(app.mainWindow().scrollViews()[0]);
+//logTree();
+//log(app.navigationBar().name());
+pi = new PlanInfo();
+pi.tapGo();
 pass("Demo pass");

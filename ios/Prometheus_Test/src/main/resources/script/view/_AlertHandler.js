@@ -11,6 +11,7 @@ will be store in 2 global vars named:
 You can also make choice dynamically when handler alert by bypassing
 the setting value for the var alertChoice, and this should do before
 trigger an alert.
+
 --- For example:
 	alert.alertChoice = "Add";
 	buttonThatTriggerAlert.tap();
@@ -33,6 +34,8 @@ function Alert()
 	// All the alert title name
 	// ----- Home view
 	this.Error = "Error";
+	this.Warning = "Warning";
+	
 	this.InvalidPasswordMsg = "Sorry, the password should be at least 6 characters long, with at least 1 digit and 1 letter";
 	this.InvalidEmailMsg = "Sorry, this email is invalid";
 	this.ExistedUserMsg = "Sorry, someone else has used this before";
@@ -48,6 +51,8 @@ function Alert()
 	this.ResetConfirm = "Are you sure?";
 	this.TooHard = "That might be tough";
 	
+	this.DeletePlanConfirm = "Are you sure?"
+	
 	// Methods
 	this.reset = reset;
 	this.isCustomAlertShown = isCustomAlertShown;
@@ -57,8 +62,8 @@ function Alert()
 	// Method definitions
 	function reset()
 	{
-		alertTitle = null;
-		alertMsg = null;
+		this.alertTitle = null;
+		this.alertMsg = null;
 	}
 	
 	function isCustomAlertShown()
@@ -142,12 +147,13 @@ function PrometheusAlertHandler(_alert)
 		(name == alert.Error && message == alert.InvalidEmailMsg)	||
 		(name == alert.Error && message == alert.ExistedUserMsg)	||
 		(name == alert.Error && message == alert.WrongLoginMsg)		||
+		(name == alert.Warning && message == alert.DeletePlanConfirm) ||
 		(name == alert.LocationConfirm)								||
 		(name == alert.NoEmailAccount))
 	{
 		// log
 		log("Interesting [" + name + "] encountered!");
-		log("Message [" + message + "].");
+		log("Message [" + message + "]");
 		
 		// track the alert
 		alert.alertTitle = name;

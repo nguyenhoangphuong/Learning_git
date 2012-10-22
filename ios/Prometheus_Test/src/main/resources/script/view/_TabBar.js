@@ -55,4 +55,5 @@ function TabBar()
 		app.mainWindow().buttons()["tracker button"].tap();
 	}
 }
+
 tabBar = new TabBar();

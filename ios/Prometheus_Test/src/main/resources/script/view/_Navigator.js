@@ -259,13 +259,15 @@ function Navigator()
 		return rv.isVisible() ? rv : null;
 	}
 	
-	function toPlanner(email, password, uinfo, activity, number, login) { // done
+	function toPlanner(email, password, uinfo, activity, number, login) 
+	{ // done
 		// go to TodayGoal first
 		toTodaysGoal(email, password, uinfo, activity, number, login);
 		tabBar.tapPlanner();
 	}
 	
-	function toHistory(email, password, uinfo, activity, number, login) {
+	function toHistory(email, password, uinfo, activity, number, login) 
+	{
 		// go to Planner first
 		toPlanner(email, password, uinfo, activity, number, login);
 		tabBar.tapHistory();
