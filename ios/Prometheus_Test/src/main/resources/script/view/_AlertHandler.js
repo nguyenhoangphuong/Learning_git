@@ -42,7 +42,7 @@ function Alert()
 	this.WrongLoginMsg = "Incorrect email or password";
 	
 	this.LocationConfirm = "\“Shine\” Would Like to Use Your Current Location";
-	this.NoEmailAccount = "Warning";
+	this.NoEmailAccount = "No Mail Accounts";
 	
 	this.Congratulation = "Congratulations!";
 	this.TodayGoalFinishMsg = "You hit today’s goal!";
