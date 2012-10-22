@@ -38,6 +38,5 @@ start("Demo");
 //listControls(app.mainWindow().scrollViews()[0]);
 //logTree();
 //log(app.navigationBar().name());
-pi = new PlanInfo();
-pi.tapGo();
+
 pass("Demo pass");
