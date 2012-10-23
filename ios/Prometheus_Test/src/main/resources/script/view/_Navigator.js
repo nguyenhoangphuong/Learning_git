@@ -2,25 +2,28 @@
 #import "_TabBar.js"
 #import "../core/testcaseBase.js"
 
-/**
- * This file provides methods to navigate to specify view. This will go from
- * nothing to the specify view, so kill the app first.
- * 
- * --- Functions: 
- * - toHome() : to Home screen 
- * - toUserInfo(email, pwd, login) : to UserInfo screen 
- * + null, null : go to UserInfo by choosing [Try out] without email + email, null : go to UserInfo by [Try out] with email + email,
- * pwd : go to UserInfo by [Log in] - toMultiGoalChooser(email, pwd, userinfo,
- * login) : go to ActivitiyChooser screen + userinfo = null : use default user
- * info + userinfo = {w1, w2, wu, h1, h2, hu, age, sex} ex: {100, 0.1, "kg", 1,
- * 0.75, "meter", 20, "male" ("female")} - toPlanChooser(email, pwd, userinfo,
- * activity, login) + activity : name (string) or index (int) ex: "Swimming" or
- * 3 - toWeekGoal(email, pwd, userinfo, activity, number, login) + number:
- * number of unit / miles / ... ex: 30 - toTodaysGoal(email, pwd, userinfo,
- * activity, number, login) - toRunView(email, pwd, userinfo, activity, number,
- * login) - toPlanner(email, pwd, userinfo, activity, number, login) -
- * toHistory(email, pwd, userinfo, activity, number, login) - toSettings(email,
- * pwd, userinfo, activity, number, login)
+/*
+  This file provides methods to navigate to specify view. This will go from
+  nothing to the specify view, so kill the app first.
+  
+  =============================================================================
+  
+  - toHome() : to Home screen 
+  - toUserInfo(email, pwd, login) : to UserInfo screen 
+  			+ null, null : go to UserInfo by choosing [Try out] without email 
+  			+ email, null : go to UserInfo by [Try out] with email 
+  			+ email, pwd : go to UserInfo by [Log in] 
+  - toMultiGoalChooser(email, pwd, userinfo, login) : go to ActivitiyChooser screen 
+  			+ userinfo = null : use default user info 
+  			+ userinfo = {w1, w2, wu, h1, h2, hu, age, sex} ex: {100, 0.1, "kg", 1, 0.75, "meter", 20, "male" ("female")} 
+  - toPlanChooser(email, pwd, userinfo, activity, login) 
+  			+ activity : name (string) or index (int) ex: "Swimming" or 3 
+  - toWeekGoal(email, pwd, userinfo, activity, number, login) + number: number of unit / miles / ... ex: 30 
+  - toTodaysGoal(email, pwd, userinfo, activity, number, login) 
+  - toRunView(email, pwd, userinfo, activity, number, login) 
+  - toPlanner(email, pwd, userinfo, activity, number, login) 
+  - toHistory(email, pwd, userinfo, activity, number, login) 
+  - toSettings(email, pwd, userinfo, activity, number, login)
  */
 
 function Navigator()
