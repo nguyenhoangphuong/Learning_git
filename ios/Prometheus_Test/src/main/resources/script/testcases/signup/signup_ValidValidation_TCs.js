@@ -9,7 +9,7 @@ start("SignUpScreen: Valid email validation");
 
 var genstring = generateRandomDigitString();
 
-nav.toHome();
+nav.toSignIn();
 //check
 checkValidEmail("email" + genstring+ "@one-two.com","DashDomain");
 wait();

@@ -1,4 +1,4 @@
-#import "../../view/Home.js"
+#import "../../view/SignIn.js"
 #import "../../view/UserInfo.js"
 #import "../../view/PlanChooser.js"
 #import "../../view/_Navigator.js"

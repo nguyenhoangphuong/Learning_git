@@ -1,4 +1,4 @@
-#import "../../view/Home.js"
+#import "../../view/SignIn.js"
 #import "../../view/UserInfo.js"
 #import "../../view/_Navigator.js"
 #import "../../core/testcaseBase.js"
@@ -17,7 +17,7 @@ var signupTD =
 
 function checkValidEmail(email, error)
 {
-	var signup = new Home();
+	var signup = new SignIn();
 	//fill email and correct password
 	log("begin");
 	signup.signUp(email,signupTD.rightPwd);
@@ -41,7 +41,7 @@ function signOutAfterSignUp()
 
 function checkInvalidEmail(email)
 {
-	var signup = new Home();
+	var signup = new SignIn();
 	signup.signUp(email,signupTD.rightPwd);
 	assertTrue(signup.isInvalidEmailAlertShown(), "email: " + email + "-----.Expected: not valid. Actual:  valid");
 	signup.tapSignUpTab();
@@ -50,7 +50,7 @@ function checkInvalidEmail(email)
 
 function checkEmptyEmail()
 {
-	var signup = new Home();
+	var signup = new SignIn();
 	signup.signUp("",signupTD.rightPwd);
 	assertTrue(signup.isInvalidEmailAlertShown(), "Empty email: -----.Expected: not valid. Actual: valid");
 	signup.tapSignUpTab();
@@ -59,7 +59,7 @@ function checkEmptyEmail()
 
 function checkPassword(password)
 {
-	var signup = new Home();
+	var signup = new SignIn();
 	var genstring = generateRandomDigitString();
 	var email = "nonexisted" + genstring + "@test.com";
 	signup.signUp(email,password);
@@ -72,7 +72,7 @@ function checkPassword(password)
 
 function checkDuplicatedUser()
 {
-	var signup = new Home();
+	var signup = new SignIn();
 	signup.signUp(signupTD.existedEmail,signupTD.rightPwd);
 	assertTrue(signup.isExistedUserAlertShown(),"Duplicated user sign up-----. expected : not valid . Actual : Valid");
 	signup.tapSignUpTab();

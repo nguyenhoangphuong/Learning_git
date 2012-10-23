@@ -32,7 +32,7 @@ function Alert()
 	this.alertChoice = null;
 	
 	// All the alert title name
-	// ----- Home view
+	// ----- SignIn view
 	this.Error = "Error";
 	this.Warning = "Warning";
 	

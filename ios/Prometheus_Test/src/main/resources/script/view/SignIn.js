@@ -4,7 +4,7 @@
 /*
 List of functions:
 ================================================================================
-- isVisible()					: check if current view is Home
+- isVisible()					: check if current view is Sign up or sign in
 - isSignInVisible()				: check if current view is "SignIn"
 - isSignUpVisible()				: check if current view is "Sign up"
 - isEmailTextFieldVisible()		: check if email field is visible
@@ -29,7 +29,7 @@ List of functions:
 ================================================================================
 */
 
-function Home()
+function SignIn()
 {
 	// Private fields
 	var window = app.mainWindow();
@@ -94,7 +94,7 @@ function Home()
 		// TODO	
 		exist = staticTextExist(textExist);
 		//
-		log("Home visible: " + exist);		
+		log("Sign in visible: " + exist);		
 		return exist;
 	}
 	

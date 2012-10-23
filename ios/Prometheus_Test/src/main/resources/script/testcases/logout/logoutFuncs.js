@@ -36,8 +36,8 @@ function verifyAnonymousLogout()
 	
 	s.signUp();
 	
-	h = new Home();
-	assertTrue(h.isSignUpVisible(), "Home screen show at SignUp after tap [Sign up]");
+	h = new SignIn();
+	assertTrue(h.isSignUpVisible(), "SignIn screen show at SignUp after tap [Sign up]");
 }
 
 function verifyValidUserLogout()
@@ -49,6 +49,6 @@ function verifyValidUserLogout()
 	
 	s.signOut(true);
 	
-	h = new Home();
-	assertTrue(h.isVisible(), "Home screen show at SignUp after [Sign out]");
+	h = new SignIn();
+	assertTrue(h.isVisible(), "SignIn screen show at SignUp after [Sign out]");
 }

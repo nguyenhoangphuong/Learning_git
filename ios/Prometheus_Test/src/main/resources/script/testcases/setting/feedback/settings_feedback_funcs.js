@@ -109,8 +109,8 @@ function verifySignOutBtn()
 	s = new Settings();
 	s.signOut();
 	
-	h = new Home();
-	assertTrue(h.isVisible(), "At Home view after sign out");
+	h = new SignIn();
+	assertTrue(h.isVisible(), "At SignIn view after sign out");
 }
 
 function verifySignUpBtn()
@@ -118,6 +118,6 @@ function verifySignUpBtn()
 	s = new Settings();
 	s.signUp();
 	
-	h = new Home();
-	assertTrue(h.isSignUpVisible(), "At Home->SignUp view after sign up");
+	h = new SignIn();
+	assertTrue(h.isSignUpVisible(), "At SignIn->SignUp view after sign up");
 }

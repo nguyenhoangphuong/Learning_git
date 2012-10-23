@@ -7,7 +7,7 @@ start("SignUpScreen: Validate invalid case");
 
 //navigate
 
-nav.toHome();
+nav.toSignIn();
 
 //check
 

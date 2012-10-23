@@ -8,7 +8,7 @@
   
   =============================================================================
   
-  - toHome() : to Home screen 
+  - toSignIn() : to Home screen 
   - toUserInfo(email, pwd, login) : to UserInfo screen 
   			+ null, null : go to UserInfo by choosing [Try out] without email 
   			+ email, null : go to UserInfo by [Try out] with email 
@@ -29,7 +29,7 @@
 function Navigator()
 {
 	// =========================== Methods =====================
-	this.toHome = toHome;	
+	this.toSignIn = toSignIn;	
 	this.toUserInfo = toUserInfo;
 	this.toMultiGoalChooser = toMultiGoalChooser;
 	this.toPlanChooser = toPlanChooser;	
@@ -42,7 +42,7 @@ function Navigator()
 	this.toSettings = toSettings;
 	
 	// ====================== Method definitions ================
-	function toHome()
+	function toSignIn()
 	{	
 		// skip the whats news if there is one
 		var wn = new WhatsNew();
@@ -51,11 +51,11 @@ function Navigator()
 			print("=> Skip the What news...");
 			wn.tapButton();
 			wait(1);
-			print("=> Go to Home screen...");
+			print("=> Go to SignIn screen...");
 		}
 		
 		// reached
-		var h = new Home();
+		var h = new SignIn();
 		return (h.isVisible()? h : null);
 	}
 	
@@ -65,8 +65,8 @@ function Navigator()
 			login = false;
 		
 		// go to Home first
-		toHome();
-		h = new Home();
+		toSignIn();
+		h = new SignIn();
 		
 		if(h.isVisible())
 		{

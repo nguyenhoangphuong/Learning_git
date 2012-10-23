@@ -1,5 +1,5 @@
 #import "../../view/_Navigator.js"
-#import "../../view/Home.js"
+#import "../../view/SignIn.js"
 #import "../../core/testcaseBase.js"
 #import "../../core/common.js"
 //============================================================= //
@@ -7,7 +7,7 @@
 //============================================================= //
 function toStartScreen()
 {
-	nav.toHome();
+	nav.toSignIn();
 }
 
 //============================================================= //
@@ -26,12 +26,12 @@ SignInTD =
 //============================================================= //
 function verifyTranslition()
 {
-	h = new Home();
+	h = new SignIn();
 	
 	/*
-	// tap log in and then return to home
+	// tap log in and then return to SignIn
 	hr();
-	print("<Tap SignIn and then return to home>");
+	print("<Tap SignIn and then return to SignIn>");
 	h.tapSignInTab();
 	assertTrue(!h.isVisible() && h.isSignInVisible() && !h.isSignUpVisible() , "Only SignIn screen is visible");
 	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(), "Email and Password fields exist");
@@ -39,9 +39,9 @@ function verifyTranslition()
 	wait();
 	assertTrue(h.isVisible() && !h.isSignInVisible() && !h.isSignUpVisible(), "Only Start screen is visible");
 	
-	// tap sign up and then return to home
+	// tap sign up and then return to SignIn
 	hr();
-	print("<Tap signup and then return to home>");
+	print("<Tap signup and then return to SignIn>");
 	h.tapSignUpTab();
 	assertTrue(!h.isVisible() && !h.isSignInVisible() && h.isSignUpVisible(), "Only Signup screen is visible");
 	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(), "Email and Password fields exist");
@@ -53,7 +53,7 @@ function verifyTranslition()
 
 function verifyClientVerification()
 {
-	h = new Home();
+	h = new SignIn();
 	
 	// SignIn with invalid email
 	hr();
@@ -100,7 +100,7 @@ function verifyClientVerification()
 
 function verifyBackendVerification()
 {
-	h = new Home();
+	h = new SignIn();
 	
 	// SignIn with non-existed user
 	hr();
@@ -122,7 +122,7 @@ function verifyBackendVerification()
 
 function verifyValidSignIn()
 {
-	h = new Home();
+	h = new SignIn();
 	
 	// SignIn with non-existed user
 	hr();
