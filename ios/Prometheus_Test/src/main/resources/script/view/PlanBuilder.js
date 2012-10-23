@@ -8,11 +8,15 @@ List of function:
 - assignControls()
 - isVisible()
 ================================================================================
-- pickPlan(type, name)		: pick a specified plan
-	+ type: [Custom/Easy/Normal/Active] or [0/1/2/3]
-	+ name: "Normal #1" or "Personal #1"
-- getPersonalPlans()		: return a list of all personal plan's names
-- tapCustomPlan()			: tap the custom plan button
+- setName(planName)							: set name of the plan
+- back										: press back button
+- save										: press save button
+- pickActivity(activityName)				: pick an activity
+- removeActivity(index)							: remove an activity
+- getNumberOfActivities						: check how many activities are currently in the plan
+- setActivityGoal(index, amount)			: set the goal for a certain activity
+		+ index: index of activity in the plan
+		+ amount: how much work out
 ================================================================================
 */
 
@@ -36,18 +40,17 @@ function PlanBuilder()
 	this.save = save;
 	this.pickActivity = pickActivity;
 	this.removeActivity = removeActivity;
+	this.getNumberOfActivities = getNumberOfActivities;
+	this.setActivityGoal = setActivityGoal;
 	
 	// Methods definition
 	function assignControls() {
 		window = app.mainWindow();
 		backBtn = app.navigationBar().leftButton();
 		saveBtn = app.navigationBar().rightButton();
-
-
 	}
 	
-	function isVisible()
-	{
+	function isVisible() {
 		assignControls();
 		visible = app.navigationBar().name == "Plan builder";
 		
@@ -83,7 +86,6 @@ function PlanBuilder()
 		button.scrollToVisible();
 		wait();
 		var rect = button.rect();
-//		log("x= " + rect.origin.x + " : y= " + rect.origin.y);
         UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x, y:rect.origin.y}, {x:160, y:380}, 2);
 	}
 	
@@ -97,18 +99,37 @@ function PlanBuilder()
 		button.scrollToVisible();
 		wait();
 		var rect = button.rect();
-        UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x, y:rect.origin.y}, {x:160, y:380}, 2);
+        UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x, y:rect.origin.y}, {x:160, y:380}, 1);
 	}
 	
-	function removeActivity() {
+	function removeActivity(index) {
 		log("removing");
 		
-		var button = window.buttons()[0];
+		if (index >= getNumberOfActivities()) {
+			return;
+		}
+		
+		var button = window.buttons()[index];
 		wait();
 		var rect = button.rect();
 		log("x= " + rect.origin.x + " : y= " + rect.origin.y);
-        UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x, y:rect.origin.y}, {x:10, y:10}, 6);
+        UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x, y:rect.origin.y}, {x:10, y:10}, 1);
 	}	
+	
+	function getNumberOfActivities() {
+		return window.buttons().length;
+	}
+	
+	function setActivityGoal(activityIndex, amount) {
+		if (activityIndex >= getNumberOfActivities()) {
+			return;
+		}
+		
+		var text = window.textFields()[activityIndex + 1]; // the first text field is for plan name
+		text.setValue(amount);
+		app.keyboard().typeString("\n");
+	}
+	
 }
 
 var planBuilder = new PlanBuilder();

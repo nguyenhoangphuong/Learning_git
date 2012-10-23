@@ -155,7 +155,7 @@ function GoalPlan()
 		for(i = 0; i < n; i++)
 			info[i] = groups[i].name();
 		
-	//	log("Date range: " JSON.stringify(info));
+		log("Date range: " + JSON.stringify(info));
 		return info;
 	}
 	
