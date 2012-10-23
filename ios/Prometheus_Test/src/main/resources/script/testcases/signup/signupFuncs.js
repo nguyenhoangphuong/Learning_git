@@ -23,7 +23,7 @@ function checkValidEmail(email, error)
 	signup.signUp(email,signupTD.rightPwd);
 	wait(1);
 	// validate in here
-	assertTrue(!signup.isSignUpVisible(), "Check valid signup:" + error);
+	assertTrue(!signup.isVisible(), "Check valid signup:" + error);
 	signOutAfterSignUp();
 	hr();
 	
