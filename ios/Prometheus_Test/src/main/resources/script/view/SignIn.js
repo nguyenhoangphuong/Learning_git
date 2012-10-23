@@ -71,7 +71,7 @@ function SignIn()
 	
 	this.signIn = signIn;
 	this.signUp = signUp;
-	this.tryOut = tryOut;
+	
 	
 	//---------------------------------------------
 	// Method definition
@@ -82,8 +82,8 @@ function SignIn()
 		 btnSignUpTab = mainView.buttons()[0];
 		 btnSignInTab = mainView.buttons()[1];
 		 btnConfirm = mainView.buttons()[2];
-		 btnTryout = mainView.buttons()[4];
-		 btnLegal = mainView.buttons()["Legal"];
+		 btnTryout = mainView.buttons()["tryout"];
+		 btnLegal = mainView.buttons()["legal"];
 		 emailField = mainView.textFields()[0];
 		 pwdField = mainView.secureTextFields()[0];
 	}
@@ -156,11 +156,8 @@ function SignIn()
 	function tapLegal()
 	{
 		log("Tap [Legal] button");
-		
 		wait(0.5);
-		// TO DO --- Update later
-			//btnLegal.tap();
-		//
+		btnLegal.tap();
 		wait(0.5);
 	}
 	
@@ -300,8 +297,4 @@ function SignIn()
 		wait(3);
 	}
 	
-	function tryOut()
-	{
-		tapTryOut();
-	}
 }
