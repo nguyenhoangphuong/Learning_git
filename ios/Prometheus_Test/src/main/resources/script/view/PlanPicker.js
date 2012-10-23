@@ -98,4 +98,8 @@ function PlanPicker()
 		cells[n - 1].tap();
 		log("Tap [CustomPlan]");
 	}
+	
+	
 }
+
+var planPicker = new PlanPicker();

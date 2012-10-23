@@ -1,48 +1,62 @@
 /*#import "_Navigator.js"
 #import "_AlertHandler.js"
 #import "_Prometheus.js"
-#import "../core/testcaseBase.js"*/
-#import "../core/common.js"
-/*#import "MultiGoalChooser.js"
-#import "Home.js"
-#import "MusicSetting.js"
-#import "_NavigationBar.js"
-#import "History.js"*/
-#import "Settings.js"
+#import "../core/testcaseBase.js"
+#import "_TabBar.js"
+#import "PlanPicker.js"
+#import "PlanBuilder.js"
 
-function testSettings()
+function testPlanPicker()
 {
-//	logTree();
-	var target = UIATarget.localTarget();
-	var app = target.frontMostApp();
-	var window = app.mainWindow();
-	var mainView = window.scrollViews()[0];
+	pp = new PlanPicker();
 	
-	var s = new Settings();
+	pp.isVisible();
+	pp.getCustomPlans();
+	pp.pickPlan("Normal", "Weight Loss");
 	
-/*	log("isVisible: " + s.isVisible());
-	log("isTroublemaker: " + s.isTroublemaker());
-	log("hasSignedIn: " + s.hasSignedIn());
-	s.setGender("Male"); wait();
-	s.setGender("Female"); wait();
-	s.setGender("Male"); wait();
-	s.setGender();*/
-//	s.setName("My name is Slim Shady");
-/*	s.setBirthday(1985, "may", 20);
-	s.setHeight("2", ".50");
-	s.setWeight("50", ".6");*/
-/*	s.setUnit("metrIc");
-	s.setUnit("US");*/
-//	s.tapSupport();
-//	s.tapLike();
-//	s.tapFeedback();
-//	s.tapRate();
-//	s.tapWebsite();
-//	s.resetPlan("yes");
-//	s.signOut();
-	s.sendJIRAFeedback();
+	target.frontMostApp().navigationBar().leftButton().tap();
+	
+	pp.tapCustomPlan();
+}
+
+function testPlanInfo()
+{
+	pi = new PlanInfo();
+	
+	pi.isVisible();
+	pi.isVisible("Personal #1");
+	pi.isVisible("Personal #2");
+	pi.groupByDate();
+	//pi.groupByActivity();
+	pi.getPlanInfoByActivity();
+	pi.getPlanInfoByDate();
+	
+	pi.isDeletePlanBtnVisible();
+	pi.isDeletePlanAlertShown();
+	
 }
 
 start("Demo");
-testSettings();
+//listControls(app.mainWindow().scrollViews()[0]);
+//logTree();
+
+
+planBuilder.assignControls();
+//planBuilder.setName("Some name");
+//log("pick activities");
+
+
+//planBuilder.pickActivity("running");
+//log("picked running");
+//planBuilder.pickActivity("leglift");
+
+log("wait a bit and remove");
+//wait(4);
+planBuilder.removeActivity();
+
+
+
+//planPicker.tapCustomPlan();
 pass("Demo pass");
+
+
