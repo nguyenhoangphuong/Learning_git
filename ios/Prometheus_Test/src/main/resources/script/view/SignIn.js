@@ -91,48 +91,36 @@ function SignIn()
 	// --------------- Visible method -------------
 	function isVisible()
 	{
-		// TODO	
-		exist = staticTextExist(textExist);
-		//
-		log("Sign in visible: " + exist);		
-		return exist;
+		assignControls();
+		return btnSignUpTab.isVisible();	
 	}
 	
-	function isSignInVisible() 
-	{
-		
-		// TODO
-		btnSignInTab.isVisible();
-		//
-		log("SignIn visible: " + exist);
-		return exist;
+	function isSignInVisible() {
+		return isVisible() && isLegalVisible();
 	}
 	
-	function isSignUpVisible()
-	{
-		
-		// TO DO
-		exist = btnSignUpTab.isVisible();
-		//		
-		log("SignUp visible: " + exist);
-		return exist;
+	
+	function isSignUpVisible() {
+		return isVisible() && isLegalVisible();
 	}
 		
+
+	function isLegalVisible() {
+		assignControls();
+		var legal = window.buttons()["legal"];
+		return (legal != null && legal.isEnabled() && legal.isValid() && legal.isVisible());
+	}
 		
 	function isEmailTextFieldVisible()
 	{
 		exist = emailField.isValid() && emailField.isVisible();
-		
 		log("EmailField visible: " + exist);		
 		return exist;
 	}
 	
-	function isPasswordTextFieldVisible()
-	{
+	function isPasswordTextFieldVisible() {
 		exist = pwdField.isValid() && pwdField.isVisible();
-		
 		log("PasswordField visible: " + exist);
-		
 		return exist;
 	}
 	
