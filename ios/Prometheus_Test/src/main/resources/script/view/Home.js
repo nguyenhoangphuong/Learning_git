@@ -190,8 +190,7 @@ function Home()
 	{
 		wait(0.5);
 		pwdField.tap();
-		pwdField.setValue(pwd);
-		
+		pwdField.setValue(pwd);		
 		log("Fill password: " + pwd);
 	}
 	

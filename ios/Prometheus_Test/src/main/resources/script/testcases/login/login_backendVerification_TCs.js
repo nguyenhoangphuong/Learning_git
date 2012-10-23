@@ -8,6 +8,6 @@ toStartScreen();
 
 // verify
 verifyBackendVerification();
-verifyValidLogin();
+verifyValidSignIn();
 
 pass("LoginScreen: Login backend verification");
