@@ -40,6 +40,7 @@ Settings functions:
 - signUp()				: tap "Sign up" button (w/ user having not logged in)
 - isSignOutBtnVisible()
 - isSignUpBtnVisible()
+- isNoMailAccountsAlertShown()
 */
 
 function Settings()
@@ -97,6 +98,7 @@ function Settings()
 	
 	this.isSignOutBtnVisible = isSignOutBtnVisible;
 	this.isSignUpBtnVisible = isSignUpBtnVisible;
+	this.isNoMailAccountsAlertShown = isNoMailAccountsAlertShown;
 	
 	// assign controls, this MUST be run
 	assignControls();
@@ -386,5 +388,11 @@ function Settings()
 		assignControls();
 		
 		return btnLogOut.checkIsValid() && btnLogOut.isVisible();
+	}
+	
+	function isNoMailAccountsAlertShown()
+	{
+		return alert.alertTitle != null &&
+				alert.alertTitle == alert.NoEmailAccount;
 	}
 }
