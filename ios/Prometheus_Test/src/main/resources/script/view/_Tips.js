@@ -13,7 +13,6 @@
 #import "RunView.js"
 #import "Planner.js"
 #import "Settings.js"
-#import "Support.js"
 #import "History.js"
 #import "../core/testcaseBase.js"
 
