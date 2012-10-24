@@ -1,8 +1,7 @@
-#import "../core/testcaseBase.js"
-#import "_AlertHandler.js"
+#import "../MVPLibs.js"
 
 /*
-RunView functions:
+List of functions:
 - isVisible()	: check if the current view is RunView
 
 - canPause()	: check if the progress is running
@@ -26,7 +25,7 @@ RunView functions:
 - isCongratulationAlertVisible	:
 */
 
-function RunView()
+function GPSTracking()
 {
 	// Private fields
 	var window = app.mainWindow();

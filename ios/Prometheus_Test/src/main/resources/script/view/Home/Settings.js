@@ -1,6 +1,4 @@
-#import "../core/testcaseBase.js"
-#import "_AlertHandler.js"
-#import "_NavigationBar.js"
+#import "../MVPLibs.js"
 
 /*
 Settings functions:

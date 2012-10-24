@@ -1,5 +1,4 @@
-#import "../core/testcaseBase.js"
-#import "_Tips.js"
+#import "../MVPLibs.js"
 
 /*
 List of functions:
@@ -7,13 +6,13 @@ List of functions:
 - isVisible()					: check if current view is Sign up or sign in
 - isSignInVisible()				: check if current view is "SignIn"
 - isSignUpVisible()				: check if current view is "Sign up"
-- isEmailTextFieldVisible()		: check if email field is visible
-- isPasswordTextFieldVisible()	: check if password field is visible
 ================================================================================
-- tapSignInTab()					: tap SignIn button
-- tapSignUpTab()					: tap "Sign up" button
+- tapSignInTab()				: tap SignIn button
+- tapSignUpTab()				: tap "Sign up" button
 - tapTryOut()					: tap "Try out" button
 - tapLegal()					: tap "Legal" button
+- tapCloseLegal()				: tap "Done" button to close Legal
+================================================================================
 - fillEmail(email)				: fill the email field with <email>
 - fillPassword(pwd)				: fill the password field with <pwd>
 - submit()						: submit the form
@@ -23,9 +22,8 @@ List of functions:
 - isExistedUserAlertShown()		: checking if "existed user" alert is shown
 - isWrongSignInAlertShown()		: checking if wrong password alert is shown
 ================================================================================
-- signIn(email, pwd)				: shortcut for click "SignIn", fill form and submit
+- signIn(email, pwd)			: shortcut for click "SignIn", fill form and submit
 - signUp(email, pwd)			: shortcut for click "Sign up", fill form and submit
-- tryOut()						: shortcut for click "Try out"
 ================================================================================
 */
 
@@ -35,31 +33,32 @@ function SignIn()
 	var window = app.mainWindow();
 	var mainView = window;
 
-
-		
 	var textExist ;
 	
 	var btnSignUpTab ;
 	var btnSignInTab ;
 	var btnConfirm ;
+	
 	var btnTryout ;
 	var btnLegal ;
+	
 	var emailField ;
 	var pwdField ;
 	
+	// Initalize
 	assignControls();
 	
 	// Methods
 	this.isVisible = isVisible;
 	this.isSignInVisible = isSignInVisible;
 	this.isSignUpVisible = isSignUpVisible;
-	this.isEmailTextFieldVisible = isEmailTextFieldVisible;
-	this.isPasswordTextFieldVisible = isPasswordTextFieldVisible;
 	
 	this.tapSignInTab = tapSignInTab;
 	this.tapSignUpTab = tapSignUpTab;
 	this.tapTryOut = tapTryOut;
 	this.tapLegal = tapLegal;
+	this.tapCloseLegal = tapCloseLegal;
+	
 	this.fillEmail = fillEmail;
 	this.fillPassword = fillPassword;
 	this.submit = submit;
@@ -71,19 +70,21 @@ function SignIn()
 	
 	this.signIn = signIn;
 	this.signUp = signUp;
-	
+	this.tryOut = tryOut;
 	
 	//---------------------------------------------
 	// Method definition
 	function assignControls()
 	{
-		 textExist = "Try out first";
+		 textExist = "Please Signup or Signin to continue";
 	
 		 btnSignUpTab = mainView.buttons()[0];
 		 btnSignInTab = mainView.buttons()[1];
 		 btnConfirm = mainView.buttons()[2];
+		 
 		 btnTryout = mainView.buttons()["tryout"];
 		 btnLegal = mainView.buttons()["legal"];
+		 
 		 emailField = mainView.textFields()[0];
 		 pwdField = mainView.secureTextFields()[0];
 	}
@@ -92,7 +93,7 @@ function SignIn()
 	function isVisible()
 	{
 		assignControls();
-		return btnSignUpTab.isVisible();	
+		return staticTextExist(textExist);	
 	}
 	
 	function isSignInVisible() {
@@ -110,21 +111,6 @@ function SignIn()
 		var legal = window.buttons()["legal"];
 		return (legal != null && legal.isEnabled() && legal.isValid() && legal.isVisible());
 	}
-		
-	function isEmailTextFieldVisible()
-	{
-		exist = emailField.isValid() && emailField.isVisible();
-		log("EmailField visible: " + exist);		
-		return exist;
-	}
-	
-	function isPasswordTextFieldVisible() {
-		exist = pwdField.isValid() && pwdField.isVisible();
-		log("PasswordField visible: " + exist);
-		return exist;
-	}
-	
-	// -----------------------------------------------------------------
 	
 	// ----------------------Method tap action -------------------------
 	function tapSignInTab()
@@ -161,6 +147,13 @@ function SignIn()
 		wait(0.5);
 	}
 	
+	function tapCloseLegal()
+	{
+		log("Tap [CloseLegal] button");
+		app.mainWindow.buttons()[0].tap();
+		wait(0.5);
+	}
+	
 	
 	function fillEmail(email)
 	{
@@ -182,47 +175,13 @@ function SignIn()
 	function submit()
 	{
 		wait(0.5);
+		submitBtn.tap();
 		
-		// TO DO
-		if(isPasswordTextFieldVisible())
-			pwdField.tap();
-		else
-			emailField.tap();	
-		app.keyboard().typeString("\n");
-		log("Submiting form...");
-		//
 		// wait for alert
-		wait(10);
+		wait();
 	}
 	
-	// -------------------------------------------------------------------------
 	// ---------------------- Check alert --------------------------------------
-	function isEmptyEmailAlertShown()
-	{
-		shown = alert.alertTitle != null && 
-				alert.alertTitle == alert.Error && 
-				alert.alertMsg == alert.EmptyEmailMsg;
-		
-		log("Checking alert: [" +
-				alert.alertTitle + "] - [" + alert.alertMsg + "]: " + shown);
-		alert.reset();
-		
-		return shown;
-	}
-	
-	function isEmptyPasswordAlertShown()
-	{
-		shown = alert.alertTitle != null && 
-				alert.alertTitle == alert.Error &&
-				alert.alertMsg == alert.EmptyPasswordMsg;
-		
-		log("Checking alert: [" +
-				alert.alertTitle + "] - [" + alert.alertMsg + "]: " + shown);
-		alert.reset();
-		
-		return shown;
-	}
-	
 	function isInvalidEmailAlertShown()
 	{
 		shown = alert.alertTitle != null && 
@@ -277,24 +236,23 @@ function SignIn()
 	
 	function signIn(email, pwd)
 	{
-		//skipWhatsNew();
 		tapSignInTab();
 		fillEmail(email);
 		fillPassword(pwd);
 		submit();
-		// wait additional time for sync
-		wait(3);	
 	}
 	
 	function signUp(email, pwd)
 	{
-		//skipWhatsNew();
 		tapSignUpTab();
 		fillEmail(email);
 		fillPassword(pwd);
-		submit();	
-		// wait additional time for sync
-		wait(3);
+		submit();
+	}
+	
+	function tryOut()
+	{
+		tapTryOut();
 	}
 	
 }

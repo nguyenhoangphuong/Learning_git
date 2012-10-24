@@ -1,3 +1,5 @@
+#import "../MVPLibs.js"
+
 /*
 List of functions:
 =========================================================================================
@@ -32,8 +34,6 @@ List of functions:
 - isTodayGoalFinishedAlertShown()	: check if the todays goal finish alert is shown
 =========================================================================================
 */
-
-#import "../core/testcaseBase.js"
 
 function ManualTracking()
 {

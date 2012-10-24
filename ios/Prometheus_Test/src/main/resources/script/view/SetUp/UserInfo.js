@@ -1,5 +1,4 @@
-#import "../core/testcaseBase.js"
-#import "_AlertHandler.js"
+#import "../MVPLibs.js"
 
 /*
 UserInfo view function:

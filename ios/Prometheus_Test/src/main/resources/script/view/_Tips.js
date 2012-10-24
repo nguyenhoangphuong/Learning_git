@@ -1,19 +1,20 @@
-#import "WhatsNew.js"
-#import "SignIn.js"
-#import "UserInfo.js"
-#import "PlanPicker.js"
-#import "PlanInfo.js"
+#import "SetUp/WhatsNew.js"
+#import "SetUp/SignIn.js"
+#import "SetUp/UserInfo.js"
 
-#import "MultiGoalChooser.js"
-#import "PlanChooser.js"
+#import "PlanBuilder/PlanPicker.js"
+#import "PlanBuilder/PlanInfo.js"
+#import "PlanBuilder/PlanBuilder.js"
 
-#import "Progress.js"
-#import "ManualTracking.js"
-#import "MusicSetting.js"
-#import "RunView.js"
-#import "Planner.js"
-#import "Settings.js"
-#import "History.js"
+#import "Home/Progress.js"
+#import "Home/Planner.js"
+#import "Home/Settings.js"
+#import "Home/History.js"
+
+#import "Tracker/ManualTracking.js"
+#import "Tracker/GPSTracking.js"
+#import "Tracker/MusicSetting.js"
+
 #import "../core/testcaseBase.js"
 
 /*

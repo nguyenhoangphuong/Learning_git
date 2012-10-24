@@ -1,3 +1,5 @@
+#import "../MVPLibs.js"
+
 /*
 List of functions:
 =========================================================================================
@@ -24,9 +26,6 @@ List of functions:
 - scrollToPlanner()			: scroll back to Planner view
 =========================================================================================
 */
-
-#import "../core/testcaseBase.js"
-#import "_NavigationBar.js"
 
 function History()
 {

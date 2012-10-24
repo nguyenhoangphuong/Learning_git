@@ -1,6 +1,4 @@
-#import "_Tips.js"
 #import "_TabBar.js"
-#import "../core/testcaseBase.js"
 
 /*
   This file provides methods to navigate to specify view. This will go from
@@ -9,16 +7,23 @@
   =============================================================================
   
   - toSignIn() : to Home screen 
+  
   - toUserInfo(email, pwd, login) : to UserInfo screen 
-  			+ null, null : go to UserInfo by choosing [Try out] without email 
-  			+ email, null : go to UserInfo by [Try out] with email 
-  			+ email, pwd : go to UserInfo by [Log in] 
-  - toMultiGoalChooser(email, pwd, userinfo, login) : go to ActivitiyChooser screen 
+  			+ email, pwd, true  : use login
+  			+ email, pwd, false : use signup
+  			+ null, null, null  : use tryout
+  			
+  - toPlanPicker(email, pwd, userinfo, login) : go to PlanPicker screen 
   			+ userinfo = null : use default user info 
   			+ userinfo = {w1, w2, wu, h1, h2, hu, age, sex} ex: {100, 0.1, "kg", 1, 0.75, "meter", 20, "male" ("female")} 
-  - toPlanChooser(email, pwd, userinfo, activity, login) 
-  			+ activity : name (string) or index (int) ex: "Swimming" or 3 
-  - toWeekGoal(email, pwd, userinfo, activity, number, login) + number: number of unit / miles / ... ex: 30 
+  			
+  - toPlanInfo(email, pwd, userinfo, planinfo, login) 
+  			+ planinfo.type = Easy/Normal/Active/Custom
+  			+ planinfo.name = Easy #1
+  			note: activities is used only for New mode
+  
+  - toPlanBuilder(email, pwd, userinfo, activity, number, login) + number: number of unit / miles / ... ex: 30 
+  
   - toTodaysGoal(email, pwd, userinfo, activity, number, login) 
   - toRunView(email, pwd, userinfo, activity, number, login) 
   - toPlanner(email, pwd, userinfo, activity, number, login) 
@@ -31,15 +36,20 @@ function Navigator()
 	// =========================== Methods =====================
 	this.toSignIn = toSignIn;	
 	this.toUserInfo = toUserInfo;
-	this.toMultiGoalChooser = toMultiGoalChooser;
-	this.toPlanChooser = toPlanChooser;	
-	this.to7DayGoal = to7DayGoal;
-	this.toTodaysGoal = toTodaysGoal;
-	this.toMusic = toMusic;
-	this.toRunView = toRunView;
+	
+	this.toPlanPicker = toPlanPicker;
+	this.toPlanInfo = toPlanInfo;
+	this.toPlanBuilder = toPlanBuilder;
+	
+	this.toProgress = toProgress;
 	this.toPlanner = toPlanner;
 	this.toHistory = toHistory;
 	this.toSettings = toSettings;
+	
+	this.toTracking = toTracking;
+	this.toManualTracking = toManualTracking;
+	this.toGPSTracking = toGPSTracking;
+	this.toMusic = toMusic;
 	
 	// ====================== Method definitions ================
 	function toSignIn()
@@ -64,6 +74,12 @@ function Navigator()
 		if(typeof login == "undefined")
 			login = false;
 		
+		if(typeof password == "undefined")
+			password = null;
+		
+		if(typeof email == "undefined")
+			email = null;
+		
 		// go to Home first
 		toSignIn();
 		h = new SignIn();
@@ -73,7 +89,7 @@ function Navigator()
 			if(login)
 			{
 				// log in
-				print("=> Go to MultiGoalChooser screen by logging in ...");
+				print("=> Go to PlanPicker screen by logging in ...");
 				h.login(email, password);
 				wait(2);
 			}
@@ -106,7 +122,8 @@ function Navigator()
 			return null;
 	}
 	
-	function toMultiGoalChooser(email, password, uinfo, login)
+	
+	function toPlanPicker(email, password, uinfo, login)
 	{
 		// go to UserInfo first
 		toUserInfo(email, password, login);
@@ -115,7 +132,7 @@ function Navigator()
 		// continue
 		if (ui.isVisible())
 		{
-			print("=> Go to MultiGoalChooser screen ...");
+			print("=> Go to PlanPicker screen ...");
 			
 			// pick value
 			if (uinfo != null)
@@ -129,159 +146,153 @@ function Navigator()
 		}
 		
 		// reached
-		a = new MultiGoalChooser();
-		return a.isVisible() ? a : null;
+		pp = new PlanPicker();
+		return pp.isVisible() ? pp : null;
 	}
 	
-	function toPlanChooser(email, password, uinfo, activity, login)
+	function toPlanInfo(email, password, uinfo, pinfo, login)
 	{
-		// go to Activity first
-		toMultiGoalChooser(email, password, uinfo, login);
-		a = new MultiGoalChooser();
+		// go to PlanPicker first
+		toPlanPicker(email, password, uinfo, login);
+		pp = new PlanPicker();
 		
-		if(a.isVisible())
+		if(pp.isVisible())
 		{
-			print("=> Go to PlanChooser screen...");
+			print("=> Go to PlanInfo screen...");
 			
-			if (activity!=null)
+			if (pinfo != null)
 			{
-				// pick activity type
-				a.chooseActivityWithIndex(activity);
+				// pick a plan
+				pp.pickPlan(pinfo.type, pinfo.name);
 			}
-			else 
-				a.chooseActivityWithIndex(0);
+			else
+				// pick default plan
+				pp.pickPlan("Easy", "Easy #1");
 		}
 		
 		// reached
-		pc = new PlanChooser();	
-		return (pc.isVisible() ? pc : null);
+		pi = new PlanInfo();	
+		return (pi.isVisible() ? pi : null);
 	}
 	
-	function to7DayGoal(email, password, uinfo, activity, number, login)
+	function toPlanBuilder(email, password, uinfo, login)
 	{
-		// to PlanChooser first
-		toPlanChooser(email, password, uinfo, activity, login);
-		pc = new PlanChooser();
+		// go to PlanPicker first
+		toPlanPicker(email, password, uinfo, login);
+		pp = new PlanPicker();
 		
-		// if current view is PlanChooser
-		if(pc.isVisible())
+		if(pp.isVisible())
 		{
-			print("=> Go to WeekGoal screen from UserInfo...");
+			print("=> Go to PlanBuilder...")
 			
-			// select plan
-			pc.selectOther();
-			wait();
-			if (number !=null)
-				pc.setValue(number);
-			
-			pc.done();
+			// tap custom button
+			pp.tapCustomPlan();
 		}
-		// else: then it must be TodayGoal
-		else
+	}
+	
+	
+	function toProgress(email, password, uinfo, pinfo, login)
+	{
+		// to PlanPicker first
+		toPlanPicker(email, password, uinfo, login);
+		pp = new PlanPicker();
+		
+		// if current view is PlanPicker
+		if(pp.isVisible())
 		{
-			goal = new GoalProgress();
-			
-			if(goal.isTodaysGoalVisible())
+			// pick existed plan
+			if(pinfo.type != "New")
 			{
-				print("=> Go to WeekGoal screen from TodayGoal...");
-				goal.scrollToWeekGoal();
+				print("=> Go to 7DaysGoal screen by picking existed plan...");
+				pp.pickPlan(pinfo.type, pinfo.name);
+				
+				pi = new PlanInfo();
+				pi.tapGo();
 			}
-		}	
-		
-		// reached
-		gp = new GoalProgress();
-		if(gp.isWeekGoalVisible())
-		{
-			if(tips.isTipsDisplay("WeekGoal", app.mainWindow().scrollViews()[0]))
-				tips.closeTips(1);
-			return gp;
-		}
-		else
-			return null;
-	}
-	
-	function toTodaysGoal(email, password, uinfo, activity, number, login)
-	{
-		// to WeekGoal first
-		to7DayGoal(email, password, uinfo, activity, number, login);
-		goal = new GoalProgress();
-		
-		if(goal.isWeekGoalVisible())
-		{
-			print("=> Go to TodayGoal screen...");
-			goal.scrollToTodaysGoal();
-		}
-		
-		// reached
-		if(goal.isTodaysGoalVisible())
-		{
-			if(tips.isTipsDisplay("TodayGoal", app.mainWindow().scrollViews()[0]))
-				tips.closeTips(1);
-			return goal;
-		}
-		else
-			return null;
-	}
-	
-	function toRunView(email, password, uinfo, activity, number, login)
-	{
-		// go to TodaysGoal first
-		toTodaysGoal(email, password, uinfo, activity, number, login);
-		goal = new GoalProgress();
-		
-		if(goal.isTodaysGoalVisible())
-		{
-			print("=> Go to RunView screen...");
+			// creacte new plan
+			else
+			{
+				pp.tapCustomPlan();
+				
+				pb = new PlanBuilder();
+				pb.setName(pinfo.name);
+				
+				for(i = 0; i < pinfo.activities.length; i++)
+					pb.pickActivity(pinfo.activities[i].name.toLowerCase());
+				
+				for(i = 0; i < pinfo.activities.length; i++)
+					pbActivityGoal(i, pinfo.activities[i].value);
+				
+				pb.save();
+			}
 			
-			// click Start
-			goal.start();
+			// wait for position alert
 			wait();
 		}
+		// current view is any view in Home control
+		else
+		{
+			if(tabBar.isVisible())
+				tabBar.tapProgress();
+		}
+
+		// reached
+		pg = new Progress();
+		return (pg.isVisible() ? pg : null);
+	}
+	
+	function toPlanner(email, password, uinfo, pinfo, login) 
+	{
+		// go to Progress first
+		toProgress(email, password, uinfo, pinfo, login);
+		tabBar.tapPlanner();
 		
-		// return RunView view object
-		rv = new RunView();
-		return rv.isVisible() ? rv : null;
+		// reach
+		p = new Planner();
+		return (p.isVisible() ? p : null);
+	}
+	
+	function toHistory(email, password, uinfo, pinfo, login) 
+	{
+		// go to Progress first
+		toProgress(email, password, uinfo, pinfo, login);
+		tabBar.tapHistory();
+		
+		// reach
+		h = new History();
+		return (h.isVisible() ? h : null);
+	}
+	
+	function toSettings(email, password, uinfo, pinfo, login)
+	{
+		// go to Progress first
+		toProgress(email, password, uinfo, pinfo, login);
+		tabBar.tapSettings();
+		
+		// reach
+		s = new Settings();
+		return (s.isVisible() ? s : null);
+	}
+	
+	
+	function toTracking(email, password, uinfo, activity, number, login)
+	{
+
+	}
+	
+	function toManualTracking()
+	{
+		
+	}
+	
+	function toGPSTracking()
+	{
+		
 	}
 	
 	function toMusic(email, password, uinfo, activity, number, login)
 	{
-		// go to TodaysGoal first
-		toTodaysGoal(email, password, uinfo, activity, number, login);
-		goal = new GoalProgress();
-		
-		if(goal.isTodaysGoalVisible())
-		{
-			print("=> Go to Music screen...");
-			
-			// tap music
-			goal.tapMusic();
-			wait();
-		}
-		
-		// return RunView view object
-		rv = new RunView();
-		return rv.isVisible() ? rv : null;
-	}
-	
-	function toPlanner(email, password, uinfo, activity, number, login) 
-	{ // done
-		// go to TodayGoal first
-		toTodaysGoal(email, password, uinfo, activity, number, login);
-		tabBar.tapPlanner();
-	}
-	
-	function toHistory(email, password, uinfo, activity, number, login) 
-	{
-		// go to Planner first
-		toPlanner(email, password, uinfo, activity, number, login);
-		tabBar.tapHistory();
-	}
-	
-	function toSettings(email, password, uinfo, activity, number, login)
-	{
-		// go to TodayGoal first
-		toTodaysGoal(email, password, uinfo, activity, number, login);
-		tabBar.tapSettings();
+
 	}
 }
 

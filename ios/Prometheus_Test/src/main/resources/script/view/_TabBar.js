@@ -1,5 +1,4 @@
 #import "_Tips.js"
-#import "../core/testcaseBase.js"
 
 /*
 This file provides methods to navigate to specify view.

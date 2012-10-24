@@ -1,5 +1,4 @@
 #import "_Tips.js"
-#import "../core/testcaseBase.js"
 
 /*
 	NavigationBar class represents the bar at the top of the screen
