@@ -17,6 +17,7 @@ List of function:
 function PlanPicker()
 {
 	// Private fields
+	
 	var window;
 	var mainView;
 	

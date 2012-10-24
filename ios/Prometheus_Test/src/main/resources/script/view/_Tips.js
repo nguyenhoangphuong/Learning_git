@@ -1,3 +1,4 @@
+#import "../core/testcaseBase.js"
 #import "SetUp/WhatsNew.js"
 #import "SetUp/SignIn.js"
 #import "SetUp/UserInfo.js"
@@ -15,7 +16,7 @@
 #import "Tracker/GPSTracking.js"
 #import "Tracker/MusicSetting.js"
 
-#import "../core/testcaseBase.js"
+
 
 /*
 This handles the tips

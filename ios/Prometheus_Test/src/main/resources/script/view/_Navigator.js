@@ -34,7 +34,8 @@
 function Navigator()
 {
 	// =========================== Methods =====================
-	this.toSignIn = toSignIn;	
+	this.toSignIn = toSignIn;
+	this.toSignUp = toSignUp;
 	this.toUserInfo = toUserInfo;
 	
 	this.toPlanPicker = toPlanPicker;
@@ -52,7 +53,7 @@ function Navigator()
 	this.toMusic = toMusic;
 	
 	// ====================== Method definitions ================
-	function toSignIn()
+	function toSignUp()
 	{	
 		// skip the whats news if there is one
 		var wn = new WhatsNew();
@@ -67,6 +68,13 @@ function Navigator()
 		// reached
 		var h = new SignIn();
 		return (h.isVisible()? h : null);
+	}
+	
+	function toSignIn() {
+		toSignUp();
+		log("About to press sign in tab now...");
+		var signIn = new SignIn();
+		signIn.tapSignInTab();
 	}
 	
 	function toUserInfo(email, password, login)

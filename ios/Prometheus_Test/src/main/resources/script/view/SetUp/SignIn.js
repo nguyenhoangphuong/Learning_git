@@ -175,7 +175,7 @@ function SignIn()
 	function submit()
 	{
 		wait(0.5);
-		submitBtn.tap();
+		btnConfirm.tap();
 		
 		// wait for alert
 		wait();
