@@ -9,7 +9,7 @@ List of function:
 - pickPlan(type, name)		: pick a specified plan
 	+ type: [Custom/Easy/Normal/Active] or [0/1/2/3]
 	+ name: "Normal #1" or "Personal #1"
-- getPersonalPlans()		: return a list of all personal plan's names
+- getCustomPlans()			: return a list of all personal plan's names
 - tapCustomPlan()			: tap the custom plan button
 ================================================================================
 */

@@ -1,5 +1,3 @@
-#import "_Tips.js"
-
 /*
 This file handler all the alert which relate to the tests.
 

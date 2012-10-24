@@ -11,8 +11,34 @@ List of function:
 	+ true/undefined			: tap [Yes] when alert is shown
 	+ false						: tap [No] when alert is shown
 ================================================================================
-- getPlanInfo()					: return [{name: Running, value:4.00 miles}, 
-										  {name: Treadmill, value: 7.00 miles}]
+- groupByActivity()				: tap the Activity tab
+- groupByDate()					: tap the Date tab
+- getPlanInfoByActivity()		: return plan information group by activity
+	[
+		{name: "Running", goal: "27 miles"}, 
+		{name: "Running", goal: "27 miles"}, 
+		{name: "Running", goal: "27 miles"}
+		
+		note: return obj is an array, each element is an object that contain
+		information of an activity: name and goal
+	]
+- getPlanInfoByDate()			: return plan information group by date
+	[
+		{
+			date: "Oct 23", 
+			activities: 
+			[
+				{name: "Running", goal: "27 miles"}, 
+				{name: "Running", goal: "27 miles"}, 
+				{name: "Running", goal: "27 miles"}
+			]
+		},
+		...
+		
+		note: return obj is an array, each element is an object that contain
+		information of a date: date name and date's activities
+	]
+================================================================================
 - tapGo()						: tap [Go for it]
 - tapCustom()					: tap [Custimize]
 ================================================================================
@@ -26,10 +52,14 @@ function PlanInfo()
 	// Private fields
 	var window;
 	var mainView;
-	var cells;
 
 	var backBtn;
 	var deleteBtn;
+	
+	var activityTab;
+	var dateTab;
+	var recordList;
+		
 	var goBtn;
 	var customBtn;
 	
@@ -43,7 +73,11 @@ function PlanInfo()
 	this.tapBack = tapBack;
 	this.tapDelete = tapDelete;
 	
-	this.getPlanInfo = getPlanInfo;
+	this.groupByActivity = groupByActivity;
+	this.groupByDate = groupByDate;
+	this.getPlanInfoByActivity = getPlanInfoByActivity;
+	this.getPlanInfoByDate = getPlanInfoByDate;
+	
 	this.tapGo = tapGo;
 	this.tapCustom = tapCustom;
 	
@@ -54,11 +88,15 @@ function PlanInfo()
 	function assignControls()
 	{
 		window = app.mainWindow();
-		mainView = window.tableViews()[0];
-		cells = mainView.cells();
+		mainView = window;
 		
 		backBtn = app.navigationBar().leftButton();
 		deleteBtn = app.navigationBar().rightButton();
+		
+		activityTab = mainView.segmentedControls()[0].buttons()[0];
+		dateTab = mainView.segmentedControls()[0].buttons()[1];
+		recordList = mainView.tableViews()[0];
+		
 		goBtn = mainView.buttons()[0];
 		customBtn = mainView.buttons()[1];
 	}
@@ -109,22 +147,69 @@ function PlanInfo()
 		wait();
 	}
 	
-	function getPlanInfo()
-	{	
+	function groupByActivity()
+	{
+		activityTab.tap();
+		log("Tap [Activity]");
+	}
+	
+	function groupByDate()
+	{
+		dateTab.tap();
+		log("Tap [Date]");
+	}
+	
+	function getPlanInfoByActivity()
+	{
+		// group by activity first
+		groupByActivity();
+		
 		// get info
 		var info = [];
+		cells = recordList.cells();
 		n = cells.length;
 		
 		for(i = 0; i < n; i++)
 		{
 			text = cells[i].name();
 			name = text.substring(0, text.indexOf(","));
-			value = text.substring(text.indexOf(", ") + 1);
+			goal = text.substring(text.indexOf(", ") + 1);
 			
-			info[i] = {name: name, value: value};
+			info[i] = {name: name, goal: goal};
 		}
 		
-		log("Plan info: " + JSON.stringify(info));
+		log("Plan info by activity: " + JSON.stringify(info));
+		return info;
+	}
+	
+	function getPlanInfoByDate()
+	{
+		// group by date first
+		groupByDate();
+		
+		// get info
+		var info = [];
+		cells = recordList.cells();
+		step = cells.length / 7;
+		
+		for(i = 0; i < 7; i++)
+		{
+			date = cells[i * step + 0].name();
+			activities = [];
+			
+			for(j = 1; j < step; j++)
+			{
+				text = cells[i * step + j].name();
+				name = text.substring(0, text.indexOf(","));
+				goal = text.substring(text.indexOf(", ") + 1);
+				
+				activities[j - 1] = {name: name, goal: goal};
+			}
+			
+			info[i] = {date: date, activities: activities};
+		}
+		
+		log("Plan info by date: " + JSON.stringify(info));
 		return info;
 	}
 	

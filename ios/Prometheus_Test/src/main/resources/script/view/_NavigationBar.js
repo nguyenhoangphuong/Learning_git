@@ -1,5 +1,3 @@
-#import "_Tips.js"
-
 /*
 	NavigationBar class represents the bar at the top of the screen
 
@@ -13,7 +11,6 @@
 
 function NavigationBar()
 {
-	var navigationBar = app.navigationBar();
 	var progressName = "Progress";
 	var plannerName = "Planner";
 	var historyName = "History";
@@ -33,7 +30,7 @@ function NavigationBar()
 	
 	function xScreenIsVisible(screenName) {
 		return isVisible() &&
-			navigationBar.name() == screenName;
+			UIATarget.localTarget().frontMostApp().navigationBar().name() == screenName;
 	}
 	
 	function progressIsVisible() {

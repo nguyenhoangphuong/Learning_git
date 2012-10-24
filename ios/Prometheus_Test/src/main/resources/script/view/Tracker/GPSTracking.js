@@ -2,42 +2,51 @@
 
 /*
 List of functions:
-- isVisible()	: check if the current view is RunView
-
+=========================================================================================
+- assignControls()
+- isVisible()
+=========================================================================================
 - canPause()	: check if the progress is running
 - canResume()	: check if the progress is being paused
 - canDone()		: check if the progress has finished and can be done
 - musicIsPlaying()	: check if music is playing
-
+=========================================================================================
 - pause()		: pause the progress
 - resume()		: resume the progress
 - finish()		: finish the progress
 - done()		: done after view the results
+=========================================================================================
 - pauseMusic()	: tap "pause music" button, do nothing when music is paused
 - playMusic()	: tap "play music" button, do nothing when music is playing
 - previousSong(): tap "previous song" button
 - nextSong()	: tap "next song" button
-
+=========================================================================================
 - getCurrentInfo()	: get the current (percent, duration, distance)
 - getResults()		: get the results (percent, duration, distance, pace)
+=========================================================================================
 
-- closeAlert()	:
-- isCongratulationAlertVisible	:
+to be update: GetResults
 */
 
 function GPSTracking()
 {
 	// Private fields
-	var window = app.mainWindow();
+	var window;
+	var mainView;
+	var infoView;
 	
-	var btnMusicToggle = window.buttons()[0];
-	var btnMusicPrevious = window.buttons()[1];
-	var btnMusicNext = window.buttons()[2];
-	var btnDone = window.buttons()["Done"];
-	var btnToggle = window.buttons()[4];
-	var btnFinish = window.buttons()[5];
+	var btnMusicToggle;
+	var btnMusicPrevious;
+	var btnMusicNext;
+	
+	var btnToggle;
+	var btnFinish;
+	
+	// Initalize
+	assignControls();
 	
 	// Methods
+	this.assignControls = assignControls;
 	this.isVisible = isVisible;
 	
 	this.canPause = canPause;
@@ -49,6 +58,7 @@ function GPSTracking()
 	this.resume = resume;
 	this.finish = finish;
 	this.done = done;
+	
 	this.pauseMusic = pauseMusic;
 	this.playMusic = playMusic;
 	this.previousSong = previousSong;
@@ -57,13 +67,27 @@ function GPSTracking()
 	this.getCurrentInfo = getCurrentInfo;
 	this.getResults = getResults;
 	
-	this.closeAlert= closeAlert;
-	this.isCongratulationAlertVisible = isCongratulationAlertVisible
-	
 	// Methods definition
+	function assignControls()
+	{
+		window = app.mainWindow();
+		mainView = window;
+		infoView = mainView.scrollViews()[0];
+		
+		btnMusicToggle = mainView.buttons()[0];
+		btnMusicPrevious = mainView.buttons()[1];
+		btnMusicNext = mainView.buttons()[2];
+		
+		btnToggle = mainView.buttons()[3];
+		btnFinish = mainView.buttons()[4];
+	}
+	
 	function isVisible()
 	{
-		return btnFinish.isValid() && btnFinish.isVisible();
+		visible = btnFinish.isVisible() && btnFinish.name() == "Finish";
+		
+		log("GPSTracking is visible: " + visible);
+		return visible;
 	}
 	
 	function canPause()
@@ -78,10 +102,12 @@ function GPSTracking()
 	
 	function canDone()
 	{
+		btnDone = app.mainWindow().buttons()["Done"];
 		return btnDone.isValid() && btnDone.isVisible();
 	}
 	
-	function musicIsPlaying() {
+	function musicIsPlaying() 
+	{
 		return btnMusicToggle.name() == "bt music pause";
 	}
 	
@@ -89,9 +115,9 @@ function GPSTracking()
 	{
 		if (canPause())
 		{
-			closeAlert();
-			wait();
+			wait(0.5);
 			btnToggle.tap();
+			log("Tap [Pause]");
 		}
 	}
 	
@@ -99,24 +125,27 @@ function GPSTracking()
 	{
 		if (canResume())
 		{
-			wait();
+			wait(0.5);
 			btnToggle.tap();
+			log("Tap [Resume]");
 		}
 	}
 	
 	function finish()
 	{
-		closeAlert(true);
-		wait(2);
+		wait(0.5);
 		btnFinish.tap();
+		log("Tap [Finish]");
 	}
 
 	function done()
 	{
 		if (canDone())
 		{
-			wait();
+			btnDone = app.mainWindow().buttons()["Done"];
+			wait(0.5);
 			btnDone.tap();
+			log("Tap [Done]");
 		}
 	}
 
@@ -124,36 +153,40 @@ function GPSTracking()
 	{
 		if (musicIsPlaying())
 			btnMusicToggle.tap();
+		
+		log("Tap [Pause Music]");
 	}
 	
 	function playMusic()
 	{
 		if (!musicIsPlaying())
 			btnMusicToggle.tap();
+		
+		log("Tap [Play Music]");
 	}
 	
 	function previousSong()
 	{
 		btnMusicPrevious.tap();
+		log("Tap [Previous]");
 	}
 	
 	function nextSong()
 	{
 		btnMusicNext.tap();
+		log("Tap [Next]");
 	}
 
 	function getCurrentInfo()
 	{
 		var info = {};
-		info.percent = window.staticTexts()[2].name();
+		info.distance = window.staticTexts()[1].name();
 		info.duration = window.staticTexts()[4].name();
-		info.distance = window.staticTexts()[6].name();
+		info.speed = window.staticTexts()[5].name();
+
+		log("Current tracking info: " + JSON.stringify(info));
 		
-		log("info.percent: " + info.percent);
-		log("info.duration: " + info.duration);
-		log("info.distance: " + info.distance);
-		
-		return info
+		return info;
 	}
 	
 	function getResults()
@@ -171,35 +204,4 @@ function GPSTracking()
 		
 		return info;
 	}
-	
-	function closeAlert(confirm) 
-	{
-		if (isCongratulationAlertVisible())
-		{
-			if (typeof confirm == "undefined")
-				confirm = 0;
-			if (confirm == true)
-				confirm = 0;
-			else
-				confirm = 1;
-				
-			log("User has achieved week goal");
-			alert.confirmCustomAlert(confirm);
-		}
-		else 
-		{
-			log("No alert");
-		}
-	}
-	
-	function isCongratulationAlertVisible() 
-	{
-		wait();
-		info = alert.getCustomAlertInfo();
-		
-		if (info == null)
-			return false;
-		
-		return info.title == alert.Congratulation;	
-	}	
 }

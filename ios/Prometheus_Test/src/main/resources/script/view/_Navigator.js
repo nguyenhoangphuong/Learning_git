@@ -15,20 +15,29 @@
   			
   - toPlanPicker(email, pwd, userinfo, login) : go to PlanPicker screen 
   			+ userinfo = null : use default user info 
-  			+ userinfo = {w1, w2, wu, h1, h2, hu, age, sex} ex: {100, 0.1, "kg", 1, 0.75, "meter", 20, "male" ("female")} 
+  			+ userinfo = {w1, w2, wu, h1, h2, hu, age, sex} 
+  			ex: {100, 0.1, "kg", 1, 0.75, "meter", 20, "male" ("female")} 
   			
   - toPlanInfo(email, pwd, userinfo, planinfo, login) 
   			+ planinfo.type = Easy/Normal/Active/Custom
   			+ planinfo.name = Easy #1
+  
+  - toPlanBuilder(email, pwd, userinfo, login)
+  
+  - toProgress(email, pwd, userinfo, pinfo, login)
+  			+ planinfo.type = Easy/Normal/Active/Custom/New
+  			+ planinfo.name = Easy #1
+  			+ planinfo.activities = 
+  				[{name: Running, value: 10}, {name: Push-up, value: 50}]
   			note: activities is used only for New mode
+  - toPlanner(email, pwd, userinfo, pinfo, login) 
+  - toHistory(email, pwd, userinfo, pinfo, login) 
+  - toSettings(email, pwd, userinfo, pinfo, login) 
   
-  - toPlanBuilder(email, pwd, userinfo, activity, number, login) + number: number of unit / miles / ... ex: 30 
-  
-  - toTodaysGoal(email, pwd, userinfo, activity, number, login) 
-  - toRunView(email, pwd, userinfo, activity, number, login) 
-  - toPlanner(email, pwd, userinfo, activity, number, login) 
-  - toHistory(email, pwd, userinfo, activity, number, login) 
-  - toSettings(email, pwd, userinfo, activity, number, login)
+  - toTracking()
+  - toManualTracking()
+  - toGPSTracking()
+  - toMusicSetting()
  */
 
 function Navigator()

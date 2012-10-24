@@ -27,10 +27,21 @@ function testPlanInfo()
 	
 	pi.isDeletePlanBtnVisible();
 	pi.isDeletePlanAlertShown();
-	
+}
+
+function testTracking()
+{
+	t = new Tracking();
+	t.tapGPS();
+	t.getActivitiesInfo();
+	t.tapManual();
+	t.getActivitiesInfo();
+	t.tapCancel();
+	t.tapActivity("Running");
 }
 
 start("Demo");
 listControls(app.mainWindow().scrollViews()[0]);
+listControls(app.mainWindow());
 logTree();
 pass("Demo pass");

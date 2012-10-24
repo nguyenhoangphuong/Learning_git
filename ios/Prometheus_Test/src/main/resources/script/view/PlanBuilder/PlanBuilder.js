@@ -9,12 +9,14 @@ List of function:
 - setName(planName)							: set name of the plan
 - back										: press back button
 - save										: press save button
-- pickActivity(activityName)				: pick an activity
-- removeActivity(index)							: remove an activity
-- getNumberOfActivities						: check how many activities are currently in the plan
-- setActivityGoal(index, amount)			: set the goal for a certain activity
-		+ index: index of activity in the plan
+
+- pickActivity(id, useIndex)				: pick an activity with name or index
+- removeActivity(id, useIndex)				: remove an activity with name or index
+- setActivityGoal(id, amount, useIndex)		: set the goal for a certain activity
+		+ id: name or index of activity in the plan
 		+ amount: how much work out
+		
+- getNumberOfActivities()					: check how many activities are currently in the plan
 ================================================================================
 */
 
@@ -23,6 +25,9 @@ function PlanBuilder()
 	// Private fields
 	var window;
 	var mainView;
+	var iconsList;
+	
+	var nameTxt;
 	var backBtn;
 	var saveBtn;
 	
@@ -36,19 +41,26 @@ function PlanBuilder()
 	this.setName = setName;
 	this.back = back;
 	this.save = save;
+	
 	this.pickActivity = pickActivity;
 	this.removeActivity = removeActivity;
 	this.getNumberOfActivities = getNumberOfActivities;
 	this.setActivityGoal = setActivityGoal;
 	
 	// Methods definition
-	function assignControls() {
+	function assignControls() 
+	{
 		window = app.mainWindow();
+		mainView = window.scrollViews()[0];
+		iconsList = mainView.scrollViews()[0].buttons();
+		
+		nameTxt = mainView.textFields()[0];
 		backBtn = app.navigationBar().leftButton();
 		saveBtn = app.navigationBar().rightButton();
 	}
 	
-	function isVisible() {
+	function isVisible() 
+	{
 		assignControls();
 		visible = app.navigationBar().name == "Plan builder";
 		
@@ -56,19 +68,21 @@ function PlanBuilder()
 		return visible;
 	}
 	
-	function setName(planName) {
+	function setName(planName) 
+	{
 		assignControls();
-		var text = window.textFields()[0];
-		text.setValue(planName);
+		nameTxt.setValue(planName);
 		app.keyboard().typeString("\n");
 		
 	}
 	
-	function back() {
+	function back() 
+	{
 		backBtn.tap();
 	}
 	
-	function save() {
+	function save() 
+	{
 		saveBtn.save();
 	}
 	
@@ -78,54 +92,78 @@ function PlanBuilder()
 	 *   
 	 * @returns
 	 */
-	function pickActivity(activityName) {
-		log("Picking activity: " + activityName);
-		var button = window.scrollViews()[0].buttons()["icon " + activityName];
-		button.scrollToVisible();
-		wait();
-		var rect = button.rect();
-        UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x, y:rect.origin.y}, {x:160, y:380}, 2);
-	}
-	
-	function pickActivityAtIndex(index) {
-		log("Picking activity at index: " + index);
-		var button = window.scrollViews()[0].buttons()[index];
-		dragActivity(button);
-	}
-	
-	function dragActivity(button) {
+	function pickActivity(id, useIndex)
+	{
+		log("Picking activity: " + id);
+		
+		if(typeof useIndex == "undefined")
+			useIndex = false;
+		
+		var	button = useIndex? iconsList[id] : iconsList["icon " + id];
+
+		// dragging
 		button.scrollToVisible();
 		wait();
 		var rect = button.rect();
         UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x, y:rect.origin.y}, {x:160, y:380}, 1);
 	}
 	
-	function removeActivity(index) {
-		log("removing");
+	function removeActivity(id, useIndex) 
+	{
+		log("Removing activity: " + index);
 		
-		if (index >= getNumberOfActivities()) {
+		if(typeof useIndex == "undefined")
+			useIndex = false;
+		
+		if (useIndex && id >= getNumberOfActivities()) 
 			return;
+		
+		// find index
+		if(!useIndex)
+		{
+			texts = mainView.staticTexts();
+			for(i = 0; i < texts.length; i++)
+				if(texts[i].name() == id)
+					id = i;
 		}
 		
-		var button = window.buttons()[index];
+		// double id because there are (i) buttons
+		var button = mainView.buttons()[id * 2];
+		
+		// dropping
 		wait();
 		var rect = button.rect();
 		log("x= " + rect.origin.x + " : y= " + rect.origin.y);
         UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x, y:rect.origin.y}, {x:10, y:10}, 1);
 	}	
 	
-	function getNumberOfActivities() {
-		return window.buttons().length;
+	function getNumberOfActivities() 
+	{
+		return mainView.staticTexts().length;
 	}
 	
-	function setActivityGoal(activityIndex, amount) {
-		if (activityIndex >= getNumberOfActivities()) {
+	function setActivityGoal(id, amount, useIndex) 
+	{
+		if(typeof useIndex == "undefined")
+			useIndex = false;
+		
+		if (useIndex && id >= getNumberOfActivities())
 			return;
+		
+		// find index
+		if(!useIndex)
+		{
+			texts = mainView.staticTexts();
+			for(i = 0; i < texts.length; i++)
+				if(texts[i].name() == id)
+					id = i;
 		}
 		
-		var text = window.textFields()[activityIndex + 1]; // the first text field is for plan name
-		text.setValue(amount);
+		var btn = mainView.buttons()[id * 2 + 1];
+		btn.tap()
+		app.keyboard().typeString(amount);
 		app.keyboard().typeString("\n");
+		app.toolbar().buttons()["Done"].tap();
 	}
 	
 }
