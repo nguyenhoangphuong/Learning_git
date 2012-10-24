@@ -1,10 +1,9 @@
 #import "settings_funcs.js"
 
 
-start("Settings: EmailSupport, ResetPlan");
+start("Settings: Rate button");
 // --------------------------------------------------------
 GoToSettingScreen();
-VerifyEmailSupportWithoutAccount();
-VerifyResetButton();
+VerifyRateButton();
 //--------------------------------------------------------
-pass("Settings: EmailSupport, ResetPlan");
+pass("Settings: Rate button");

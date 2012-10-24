@@ -46,11 +46,20 @@ public class SettingsTest extends AutomationTest
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVP3", "settings" })
-	public void VerifyResetButton() throws InterruptedException, StopConditionException 
+	public void VerifyWebsiteButton() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
 					 "script/testcases/setting/settings_TCs_3_Web.js");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVP3", "settings" })
+	public void VerifyRateButton() throws InterruptedException, StopConditionException 
+	{
+		AppHelper.cleanCache();
+	 	ShortcutsTyper.delayTime(1000);
+		AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), 
+					 "script/testcases/setting/settings_TCs_4_Rate.js");
 	}
 }
