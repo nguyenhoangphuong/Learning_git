@@ -1,6 +1,7 @@
 #import "../../../core/testcaseBase.js"
 #import "../../../view/_Navigator.js"
 
+
 function verifyTroublemakerShown()
 {
 	s = new Settings();
