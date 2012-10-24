@@ -36,14 +36,14 @@ function PlanPicker()
 	function assignControls()
 	{
 		window = app.mainWindow();
-		mainView = window.tableViews()[0];
+		mainView = window.scrollViews()[0].tableViews()[0];
 	}
 	
 	function isVisible()
 	{
-		visible = app.navigationBar().name == "Plan picker";
+		visible = app.navigationBar().name() == "Activity Plans";
 		
-		log("Progress is visible: " + visible);	
+		log("PlanPicker is visible: " + visible);	
 		return visible;
 	}
 	

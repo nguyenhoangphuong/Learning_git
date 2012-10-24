@@ -128,7 +128,7 @@ function Settings()
 		btnTroubleMaker = mainView.cells()["Trouble makers"];
 		
 		btnReset = mainView.cells()["Reset plan"];
-		btnSignUp = null; // TODO: change this
+		btnSignUp = mainView.cells()["Sign up"]; // TODO: check this
 		btnLogOut = mainView.cells()["Log out"];
 	}
 	
@@ -378,7 +378,7 @@ function Settings()
 	{
 		assignControls();
 		
-		return btnSignUp.chekcIsValid() && btnSignUp.isVisible();
+		return btnSignUp.checkIsValid() && btnSignUp.isVisible();
 	}
 	
 	function isSignOutBtnVisible()

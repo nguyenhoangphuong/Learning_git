@@ -11,7 +11,7 @@ start("Settings: Feedback")
 log("1. Non-troublemaker account");
 
 log("   1.1. Log in")
-nav.toSettings("t@t.t", "misfit1", null, null, null, true);
+nav.toSettings("t@t.t", "misfit1", null, null, true);
 
 log("   1.2. Check troublemaker is not shown")
 verifyTroublemakerNotShown();

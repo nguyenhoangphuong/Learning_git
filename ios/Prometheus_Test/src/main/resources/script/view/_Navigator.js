@@ -98,16 +98,17 @@ function Navigator()
 			email = null;
 		
 		// go to Home first
-		toSignIn();
+		toSignUp();
 		h = new SignIn();
 		
 		if(h.isVisible())
 		{
 			if(login)
 			{
+			
 				// log in
 				print("=> Go to PlanPicker screen by logging in ...");
-				h.login(email, password);
+				h.signIn(email, password);
 				wait(2);
 			}
 			else if(email == null || (typeof email == "undefined"))
@@ -217,9 +218,14 @@ function Navigator()
 		// if current view is PlanPicker
 		if(pp.isVisible())
 		{
-			// pick existed plan
-			if(pinfo.type != "New")
-			{
+			if (pinfo == null) {
+				pp.pickPlan("Easy", "Easy #1");
+				
+				pi = new PlanInfo();
+				pi.tapGo();
+			}
+			else if(pinfo.type != "New") {
+				// pick existed plan
 				print("=> Go to 7DaysGoal screen by picking existed plan...");
 				pp.pickPlan(pinfo.type, pinfo.name);
 				
