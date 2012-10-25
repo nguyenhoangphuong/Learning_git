@@ -1,4 +1,8 @@
+#import "MVPLibs.js"
+
+
 /*
+
 	NavigationBar class represents the bar at the top of the screen
 
 	+ isVisible			: check if navigation bar is visible;
@@ -42,7 +46,7 @@ function NavigationBar()
 	}
 	
 	function historyIsVisible() {
-		return xScreenIsVisible(historyName);
+		return app.navigationBar().segmentedControls()[0].buttons()["Date"].isVisible();
 	}
 	
 	function settingsIsVisible() {
