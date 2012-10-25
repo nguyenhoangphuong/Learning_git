@@ -84,12 +84,13 @@ function Tracking()
 	
 	function tapActivity(name)
 	{
-		id = "icon_" + name.toLowerCase() + ".png";
-		rect = mainView.images()[id].rect();
+		// look for the text and tap on the image with 100 offset
+		log("Tap on activity: " + name);
+		text = mainView.staticTexts()[name];
+		var rect = text.rect();
 		x = rect.origin.x + rect.size.width / 2;
 		y = rect.origin.y + rect.size.height / 2;
-		
-		target.tap({x:x, y:y});
+		target.tap({x:x, y:y - 100});
 	}
 	
 	function getActivitiesInfo()
