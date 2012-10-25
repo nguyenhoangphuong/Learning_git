@@ -1,9 +1,4 @@
-#import "../../view/SignIn.js"
-#import "../../view/UserInfo.js"
-#import "../../view/_Navigator.js"
-#import "../../core/testcaseBase.js"
-#import "../../core/common.js"
-#import "../../view/Settings.js"
+#import "../../view/MVPLibs.js"
 /**
  * This test cover: - Email validation - Email inputting
  */
@@ -74,6 +69,7 @@ function checkDuplicatedUser()
 {
 	var signup = new SignIn();
 	signup.signUp(signupTD.existedEmail,signupTD.rightPwd);
+	wait(10);
 	assertTrue(signup.isExistedUserAlertShown(),"Duplicated user sign up-----. expected : not valid . Actual : Valid");
 	signup.tapSignUpTab();
 	hr();

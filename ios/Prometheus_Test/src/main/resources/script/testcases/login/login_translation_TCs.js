@@ -4,7 +4,7 @@
 start("StartHomeScreen: translation");
 
 // navigate
-toStartScreen();
+toSignInScreen();
 
 // verify
 verifyTranslition();

@@ -4,9 +4,10 @@
 start("LoginScreen: Login client verification");
 
 // navigate
-toStartScreen();
+toSignInScreen();
 
 // verify
 verifyClientVerification();
 
 pass("LoginScreen: Login client verification");
+

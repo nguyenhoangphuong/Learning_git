@@ -5,8 +5,6 @@
 //======================== Test logic ======================== //
 start("SignUpScreen: Valid email validation");
 
-
-
 var genstring = generateRandomDigitString();
 
 nav.toSignIn();

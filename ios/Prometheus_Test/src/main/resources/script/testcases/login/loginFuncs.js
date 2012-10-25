@@ -1,11 +1,8 @@
-#import "../../view/_Navigator.js"
-#import "../../view/SignIn.js"
-#import "../../core/testcaseBase.js"
-#import "../../core/common.js"
+#import "../../view/MVPLibs.js"
 //============================================================= //
 // NAVIGATION
 //============================================================= //
-function toStartScreen()
+function toSignInScreen()
 {
 	nav.toSignIn();
 }
@@ -26,107 +23,106 @@ SignInTD =
 //============================================================= //
 function verifyTranslition()
 {
-	h = new SignIn();
+	signin = new SignIn();
 	
-	/*
-	// tap log in and then return to SignIn
+	// tap log in 
 	hr();
-	print("<Tap SignIn and then return to SignIn>");
-	h.tapSignInTab();
-	assertTrue(!h.isVisible() && h.isSignInVisible() && !h.isSignUpVisible() , "Only SignIn screen is visible");
-	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(), "Email and Password fields exist");
-	h.tapSignInTab(); 
-	wait();
-	assertTrue(h.isVisible() && !h.isSignInVisible() && !h.isSignUpVisible(), "Only Start screen is visible");
+	print("<Tap SignIn tab>");
+	signin.tapSignInTab();
+	//assertTrue(signin.isSignInVisible() , "Only SignIn screen is visible");
+		
+	// tap sign up 
+	hr();
+	print("<Tap signup tab>");
+	signin.tapSignUpTab();
+	assertTrue(signin.isSignUpVisible(), "Only Signup screen is visible");
 	
-	// tap sign up and then return to SignIn
+	//Tap legal and comeback
 	hr();
-	print("<Tap signup and then return to SignIn>");
-	h.tapSignUpTab();
-	assertTrue(!h.isVisible() && !h.isSignInVisible() && h.isSignUpVisible(), "Only Signup screen is visible");
-	assertTrue(h.isEmailTextFieldVisible() && h.isPasswordTextFieldVisible(), "Email and Password fields exist");
-	h.tapSignUpTab(); 
-	wait();
-	assertTrue(h.isVisible() && !h.isSignInVisible() && !h.isSignUpVisible(), "Only Start screen is visible");
-	*/
+	print("<Tap legal and verify>");
+	signin.tapLegal();
+	signin.tapCloseLegal();
+	assertTrue(signin.isSignUpVisible(), "Only Signup screen is visible");
+	
 }
 
 function verifyClientVerification()
 {
-	h = new SignIn();
+	signin = new SignIn();
 	
 	// SignIn with invalid email
 	hr();
 	print("<SignIn with empty email>");
-	h.signIn("", "");
-	assertTrue(h.isInvalidEmailAlertShown(), "Empty email alert shown");
+	signin.signIn("", "");
+	assertTrue(signin.isInvalidEmailAlertShown(), "Empty email alert shown");
 
 	
 	// SignIn with empty password
 	hr();
 	print("<SignIn with empty password>");
-	h.signIn(SignInTD.existedEmail, "")
-	assertTrue(h.isInvalidPasswordAlertShown(), "Invalid password alert shown");
+	signin.signIn(SignInTD.existedEmail, "")
+	wait(1);
+	assertTrue(signin.isInvalidPasswordAlertShown(), "Invalid password alert shown");
 	
 	
 	// SignIn with invalid email
 	hr();
 	print("<SignIn with invalid email>");
-	h.signIn("invalidEmail", SignInTD.rightPwd);
-	assertTrue(h.isInvalidEmailAlertShown(), "Invalid email alert shown");
+	signin.signIn("invalidEmail", SignInTD.rightPwd);
+	assertTrue(signin.isInvalidEmailAlertShown(), "Invalid email alert shown");
 	
 	
 	// SignIn with invalid password [length < 6]
 	hr();
 	print("<SignIn with password: " + SignInTD.wrongPwd + ">");
-	h.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
-	assertTrue(h.isInvalidPasswordAlertShown(), "Invalid password alert shown");
+	signin.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
+	assertTrue(signin.isInvalidPasswordAlertShown(), "Invalid password alert shown");
 
 	
 	// SignIn with invalid password [length == 6, all are letters]
 	hr();
 	print("<SignIn with password: " + SignInTD.wrongPwd + ">");
-	h.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
-	assertTrue(h.isInvalidPasswordAlertShown(), "Invalid password alert shown");
+	signin.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
+	assertTrue(signin.isInvalidPasswordAlertShown(), "Invalid password alert shown");
 
 	
 	// SignIn with invalid password [length == 6, all are digits]
 	hr();
 	print("<SignIn with password: " + SignInTD.wrongPwd + ">");
-	h.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
-	assertTrue(h.isInvalidPasswordAlertShown(), "Invalid password alert shown");
+	signin.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
+	assertTrue(signin.isInvalidPasswordAlertShown(), "Invalid password alert shown");
 
 }
 
 function verifyBackendVerification()
 {
-	h = new SignIn();
+	signin = new SignIn();
 	
 	// SignIn with non-existed user
 	hr();
 	print("<SignIn with non-existed email>");
 	var genstring = generateRandomDigitString();
 	var nonexistedEmail = "nonexisted" + genstring + "@test.com"
-	h.signIn(nonexistedEmail, SignInTD.rightPwd);
+	signin.signIn(nonexistedEmail, SignInTD.rightPwd);
 	wait(10);
-	assertTrue(h.isWrongSignInAlertShown(), "User not exist alert shown");
+	assertTrue(signin.isWrongSignInAlertShown(), "User not exist alert shown");
 
 	// SignIn with wrong password
 	hr();
 	print("<SignIn with wrong password>");
-	h.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
+	signin.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
 	wait(10);
-	assertTrue(h.isWrongSignInAlertShown(), "Wrong password or email alert shown");
+	assertTrue(signin.isWrongSignInAlertShown(), "Wrong password or email alert shown");
 	
 }
 
 function verifyValidSignIn()
 {
-	h = new SignIn();
+	signin = new SignIn();
 	
 	// SignIn with non-existed user
 	hr();
 	print("<SignIn with valid email and password>");
-	h.signIn(SignInTD.existedEmail, SignInTD.rightPwd);
-	assertTrue(!h.isVisible(), "SignIn screen is no more");
+	signin.signIn(SignInTD.existedEmail, SignInTD.rightPwd);
+	assertTrue(!signin.isVisible(), "SignIn screen is no more");
 }

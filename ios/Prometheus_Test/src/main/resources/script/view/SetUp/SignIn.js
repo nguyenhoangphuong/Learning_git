@@ -97,7 +97,7 @@ function SignIn()
 	}
 	
 	function isSignInVisible() {
-		return isVisible() && isLegalVisible();
+		return isVisible() && !isLegalVisible();
 	}
 	
 	
@@ -150,7 +150,7 @@ function SignIn()
 	function tapCloseLegal()
 	{
 		log("Tap [CloseLegal] button");
-		app.mainWindow.buttons()[0].tap();
+		app.mainWindow().buttons()[0].tap();
 		wait(0.5);
 	}
 	

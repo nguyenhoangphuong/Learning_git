@@ -4,7 +4,7 @@
 start("LoginScreen: Login backend verification");
 
 // navigate
-toStartScreen();
+toSignInScreen();
 
 // verify
 verifyBackendVerification();
