@@ -11,32 +11,26 @@ function initStartView()
 function goFromStartToPlanner()
 {
 	// go to planner
-	tg = new GoalProgress();
-	tg.scrollToPlanner();
+	tabBar.tapPlanner();
 }
 
 function goFromPlannerToHistory()
 {
 	// go to history
-	p = new GoalPlan();
-	p.scrollToHistory();
+	tabBar.tapHistory();
 }
 
 function goFromHistoryToStart()
 {
 	// go to start
-	h = new History();
-	h.scrollToPlanner();
-	
-	p = new GoalPlan();
-	p.scrollToTodaysGoal();
+	tabBar.tapProgress();
 }
 
 function resetPlan(activity, amount)
 {
 	// go to settings and press reset plan
-	h = new History();
-	h.scrollToPlanner();
+	tabBar.tapPlanner();
+	
 	
 	p = new GoalPlan();
 	p.scrollToTodaysGoal();
@@ -45,17 +39,11 @@ function resetPlan(activity, amount)
 	tg.scrollToSettings();
 	
 	s = new Settings();
-	s.resetPlan(true);
+	s.resetPlan("yes");
 	wait()
 	
 	// choose an activity and its amount
-	a = new MultiGoalChooser();
-	a.chooseActivityWithName(activity);
 	
-	pc = new PlanChooser();
-	pc.selectOther();
-	pc.setValue(amount);
-	pc.done();
 	wait();
 }
 
