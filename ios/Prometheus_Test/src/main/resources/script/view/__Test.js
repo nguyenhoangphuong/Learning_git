@@ -1,32 +1,91 @@
 #import "MVPLibs.js"
 
-function testPlanPicker()
+start("Demo");
+
+testProgress()
+
+pass("Demo pass");
+
+
+function testProgress()
 {
-	pp = new PlanPicker();
+	p = new Progress();
 	
-	pp.isVisible();
-	pp.getCustomPlans();
-	pp.pickPlan("Normal", "Weight Loss");
+	/*
+	p.isVisible();
+	p.getActivities();
 	
-	target.frontMostApp().navigationBar().leftButton().tap();
+	p.tapDate(0);
+	p.tapDate(1);
+	p.tapDate(2);
+	p.tapDate(3);
+	p.tapDate(4);
+	p.tapDate(5);
+	p.tapDate(6);
+	p.tapToday();
+	*/
 	
-	pp.tapCustomPlan();
+	p.tapActivity(0);
+	p.isHistoryRecordsShown();
+	p.isNoActivity();
+	p.getCurrentHistory();
+	p.tapOutside();
+	
+	p.tapActivity(1);
+	p.isHistoryRecordsShown();
+	p.getCurrentHistory();
+	p.isNoActivity();
+	p.tapOutside();
+	
+	p.tapActivity(2);
+	p.isHistoryRecordsShown();
+	p.getCurrentHistory();
+	p.isNoActivity();
+	p.tapOutside();
 }
 
-function testPlanInfo()
+function testPlanner()
 {
-	pi = new PlanInfo();
+	p = new Planner();
+	p.getActivities();
+	/*
+	p.isVisible();
+	p.groupByActivity();
+	p.groupByDate();
+	p.getDateRange();
+	p.getAllRecordsOfDate("Today");
+	p.getAllRecordsOfActivity("Running");
+	p.getAllRecordsOfDate("Oct 29");
+	p.getAllRecordsOfActivity("Treadmill");
+	p.getAllRecordsOfActivity("Running");
+	p.getAllRecordsOfActivity("Treadmill");
+	 
+	p.tapEdit();
+	p.tapEditRecord("Oct 29", "Push-up");
+	p.tapX();
+	p.tapEditRecord("Oct 30", "Running");
+	p.setPlanAmount(2.2);
+	p.tapV();
+	wait();
+	p.tapEditRecord("Oct 31", "Swimming");
+	p.setPlanAmount(150);
+	p.tapX();
 	
-	pi.isVisible();
-	pi.isVisible("Personal #1");
-	pi.isVisible("Personal #2");
-	pi.groupByDate();
-	//pi.groupByActivity();
-	pi.getPlanInfoByActivity();
-	pi.getPlanInfoByDate();
-	
-	pi.isDeletePlanBtnVisible();
-	pi.isDeletePlanAlertShown();
+	p.tapUndo();
+	p.tapSuggest();
+	p.tapDone();
+	 */
+}
+
+function debug()
+{
+	hr();
+	listControls(app.mainWindow().scrollViews()[0].scrollViews()[0]);
+	hr();
+	listControls(app.mainWindow().scrollViews()[0]);
+	hr();
+	listControls(app.mainWindow());
+	logTree();
 }
 
 function testTracking()
@@ -36,12 +95,26 @@ function testTracking()
 	t.getActivitiesInfo();
 	t.tapManual();
 	t.getActivitiesInfo();
-	t.tapCancel();
+	
+	t.tapGPS();
 	t.tapActivity("Running");
+	log(app.navigationBar().name());
+	app.navigationBar().leftButton().tap();
+	
+	t.tapManual();
+	t.tapActivity("Treadmill");
+	log(app.navigationBar().name());
+	app.navigationBar().leftButton().tap();
+	
+	t.tapManual();
+	t.tapActivity("Elliptical");
+	log(app.navigationBar().name());
+	app.navigationBar().leftButton().tap();
+	
+	t.tapManual();
+	t.tapActivity("Running");
+	log(app.navigationBar().name());
+	app.navigationBar().leftButton().tap();
 }
 
-start("Demo");
-listControls(app.mainWindow().scrollViews()[0]);
-listControls(app.mainWindow());
-logTree();
-pass("Demo pass");
+
