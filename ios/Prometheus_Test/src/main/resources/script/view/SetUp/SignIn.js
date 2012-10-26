@@ -76,7 +76,7 @@ function SignIn()
 	// Method definition
 	function assignControls()
 	{
-		 textExist = "Please Signup or Signin to continue";
+		 textExist = "Please Sign up or Sign in to continue";
 	
 		 btnSignUpTab = mainView.buttons()[0];
 		 btnSignInTab = mainView.buttons()[1];
@@ -93,7 +93,7 @@ function SignIn()
 	function isVisible()
 	{
 		assignControls();
-		return staticTextExist(textExist);	
+		return (btnSignInTab.isVisible());
 	}
 	
 	function isSignInVisible() {

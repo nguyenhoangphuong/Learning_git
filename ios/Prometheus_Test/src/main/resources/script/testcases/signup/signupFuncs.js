@@ -16,7 +16,7 @@ function checkValidEmail(email, error)
 	//fill email and correct password
 	log("begin");
 	signup.signUp(email,signupTD.rightPwd);
-	wait(1);
+	wait(10);
 	// validate in here
 	assertTrue(!signup.isVisible(), "Check valid signup:" + error);
 	signOutAfterSignUp();
@@ -27,7 +27,7 @@ function checkValidEmail(email, error)
 function signOutAfterSignUp()
 {
 	nav.toSettings();
-	wait();
+	wait(10);
 	var setting = new Settings();
 	setting.signOut();
 }
@@ -69,7 +69,7 @@ function checkDuplicatedUser()
 {
 	var signup = new SignIn();
 	signup.signUp(signupTD.existedEmail,signupTD.rightPwd);
-	wait(10);
+	wait();
 	assertTrue(signup.isExistedUserAlertShown(),"Duplicated user sign up-----. expected : not valid . Actual : Valid");
 	signup.tapSignUpTab();
 	hr();

@@ -72,15 +72,12 @@ function UserInfo(view)
 	this.isUS = isUS;
 	
 	// Methods definition
-	function isVisible()
-	{
-		exist = staticTextExist("(years)", mainView) ||
-				staticTextExist("(years)", mainView) ||
-				tips.isTipsDisplay("UserInfo");
-		
-		log("UserInfo visible: " + exist);
-		return exist;
-	}
+	 function isVisible()
+    {
+        exist = staticTextExist("User profile \n(weight, height, gender...)");
+        return exist;
+    }
+ 	
 	
 	
 	function setInfo(a, w1, w2, wu, h1, h2, hu)
@@ -169,13 +166,12 @@ function UserInfo(view)
 	}
 	
 	function submit()
-	{
-		wait(0.5);
-		next.tap();
-		
-		log("Tap [Next]");
-	}
-	
+    {
+        wait(0.5);
+        app.mainWindow().buttons()[0].tap();
+        
+        log("Tap [Next]");
+    }	
 
 	function changeWeight(dx) 
 	{

@@ -56,6 +56,7 @@ var target = UIATarget.localTarget();
 var app = target.frontMostApp();
 
 
+
 // ============== Test helpers
 function logTree() 
 {
@@ -362,3 +363,4 @@ function listControls(p)
 	listAllStaticTexts(p);
 	listAllButtons(p);
 }
+

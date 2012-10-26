@@ -101,6 +101,7 @@ function Navigator()
 		toSignUp();
 		h = new SignIn();
 		
+		
 		if(h.isVisible())
 		{
 			if(login)
@@ -126,6 +127,7 @@ function Navigator()
 				wait(2);
 			}
 		}
+
 		
 		// reached
 		var ui = new UserInfo();
@@ -251,6 +253,7 @@ function Navigator()
 			
 			// wait for position alert
 			wait();
+							log("----- 2");
 		}
 		// current view is any view in Home control
 		else
@@ -258,7 +261,7 @@ function Navigator()
 			if(tabBar.isVisible())
 				tabBar.tapProgress();
 		}
-
+						log("----- 3");
 		// reached
 		pg = new Progress();
 		return (pg.isVisible() ? pg : null);

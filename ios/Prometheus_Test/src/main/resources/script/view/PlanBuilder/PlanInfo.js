@@ -54,8 +54,9 @@ function PlanInfo()
 	function assignControls()
 	{
 		window = app.mainWindow();
-		mainView = window.tableViews()[0];
-		cells = mainView.cells();
+		//mainView = window.tableViews()[0];
+		mainView = window;
+/* 		cells = mainView.cells(); */
 		
 		backBtn = app.navigationBar().leftButton();
 		deleteBtn = app.navigationBar().rightButton();
@@ -130,6 +131,7 @@ function PlanInfo()
 	
 	function tapGo()
 	{
+		assignControls();
 		goBtn.tap();
 		log("Tap [GoForIt]");
 	}

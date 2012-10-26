@@ -1,205 +1,87 @@
-#import "../../view/_Navigator.js"
-#import "../../core/testcaseBase.js"
+#import "../../view/MVPLibs.js"
 
 // ===================== Navigate =======================================
 function initStartView()
 {
 	// to history
-	nav.toHistory(null, null, null, "Running", 10);
+	var pinfo = {
+		type: "Easy",
+		name: "Easy #1"
+	}
+	nav.toHistory(null, null, null, pinfo , null);
 }
 
-function goFromStartToPlanner()
-{
-	// go to planner
-	tabBar.tapPlanner();
-}
 
-function goFromPlannerToHistory()
+function resetPlan(type, name)
 {
-	// go to history
-	tabBar.tapHistory();
-}
-
-function goFromHistoryToStart()
-{
-	// go to start
-	tabBar.tapProgress();
-}
-
-function resetPlan(activity, amount)
-{
-	// go to settings and press reset plan
-	tabBar.tapPlanner();
-	
-	
-	p = new GoalPlan();
-	p.scrollToTodaysGoal();
-	
-	tg = new GoalProgress();
-	tg.scrollToSettings();
+	var tabbar = new TabBar();
+	tabbar.tapSettings();
 	
 	s = new Settings();
 	s.resetPlan("yes");
-	wait()
-	
-	// choose an activity and its amount
-	
 	wait();
+	
+	// choose an activity tyoe and name
+	var planpicker = new PlanPicker();
+	planpicker.pickPlan(type,name);
+	
+	//accept to go for it
+	var planinfo = new PlanInfo()
+	planinfo.tapGo();
+	wait();
+	tabbar.tapHistory();
 }
 
 // ===================== Add records ====================================
-function addRecordByManual(e)
+function addEntryByManualTracking()
 {
-	/*
-	e.names = ["Start time", "Duration", "Distance (miles)"];
-	e.ranges =
-	{
-		mins: null, 20, 10
-		maxs: null, 70, 50
-	}
-	e.record = 
-	[
-		[10, 15, "AM"],
-		[0, 30, 00],
-		[1]
-	]
-	e.text =
-	[
-		"10:15 AM",
-		"00:30:00",
-		"1"
-	]
-	*/
+	var tabbar = new TabBar();
+	tabbar.tapTracker();
 	
-	// to manual tracking view
-	tg = new GoalProgress();
-	tg.start(2);
+	var tracking = new Tracking();
+	tracking.tapManual();
+	tracking.tapActivity("Running");
 	
-	// do some verify
-	verifyManualFieldsName(e.names);
-	
-	// add record's fields and done
-	mt = new ManualTracking();
-	for(i = 0; i < e.record.length; i++)
-	{
-		// tap field
-		mt.tapField(e.names[i]);
-		wait(0.5);
-		
-		// check range
-		verifyManualFieldsRange(e.ranges[i]);
-		
-		// input values
-		if(e.record[i] != null)
-		{
-			mt.setField(e.record[i]);
-			mt.tapDone();
-			wait(0.5);
-		}
-	}
-	
-	// verify input work
-	verifyManualInputWork(e.text);
-	
-	// done
-	mt.done();
+	var manualtracking = new ManualTracking();
+	manualtracking.done();
 	wait(0.5);
+	tabbar.tapHistory();
 }
 
-// ==================== Verify manual input =============================
-function verifyManualFieldsName(names)
+function addNumberOfEntryByManualTracking(numofentry)
 {
-	mt = new ManualTracking();
-	fields = mt.getFieldsInfo();
-	
-	assertEqual(fields.total, names.length, "Total field is correct");
-	for(i = 0; i < fields.total; i++)
-		assertEqual(fields.names[i], names[i], "Field " + names[i] + " is correct");
-}
-
-function verifyManualFieldsRange(range)
-{
-	mt = new ManualTracking();
-	fr = mt.getFieldRanges();
-	
-	assertEqual(fr.mins.length, range.length, "Total column is same for this field");
-	for(i = 0; i < range.total; i++)
+	for (i=0; i < numofentry ; i++)
 	{
-		if(range.mins[i] != null)
-			assertEqual(fr.mins[i], range.mins[i], "Min value is correct");
-		if(range.maxs[i] != null)
-			assertEqual(fr.maxs[i], range.maxs[i], "Max value is correct");
+		addEntryByManualTracking();
 	}
 }
-
-function verifyManualInputWork(text)
+// ==================== Verify goal plan history ========================
+function verifyHistoryVisible()
 {
-	mt = new ManualTracking();
-	info = mt.getFieldsInfo();
-	
-	for(i = 0; i < info.total; i++)
-		if(text[i] != null)
-			assertEqual(info.values[i], text[i], "Record is display correctly")
+	var history = new History();
+	assertTrue(history.isVisible(), "History Visible");
 }
 
-// ==================== Verify goal plan history ========================
 function verifyNoHistory()
 {
-	h = new History();
-	
-	assertTrue(h.isNoHistory(), "No History");
+	var history = new History();
+	assertTrue(history.isNoHistory(), "No History");
 }
 
-function verifyDateConsitent(e)
+function verifyNumberOfHistory(num_expected)
 {
-	// e = ["Oct 09", "Oct 10", "Oct 11", ...]
-	h = new History();
-	
-	dates = h.getAllDates();
-	n = dates.length;
-	
-	for(i = 0; i < n; i++)
-	{
-		date = dates[i].substring(date[i].indexOf(" ") + 1);
-		assertTrue(e.indexOf(date) >= 0, "Date " + dates[i] + " is in date list");
-	}
+	var history = new History();
+	var num_actual = history.getNumberOfEntries();
+	assertEqual(num_expected,num_actual, "Number of Entry");
 }
 
-function verifyNoRecordInFutureDay(e)
-{
-	// e = {today: "Wed Oct 10th", tomorrow: "Thu Oct 11th"} 
-	h = new History();
-	
-	todayrecord = h.getAllRecordsOfDate(e.today);
-	assertTrue(todayrecord.total >= 0, "Today's total record is >= 0");
-	
-	tomorrowRecord = h.getAllRecordsOfDate(e.tomorrow);
-	assertTrue(tomorrowRecord == null, "No history for tomorrow");
-}
 
-function verifyTotalNumberOfRecords(e)
-{
-	// e = {date: "Wed Oct 09th", expectNumber: 3}
-	h = new History();
-	
-	rec = h.getAllRecordsOfDate(e.date);
-	assertEqual(rec.total, e, "Total record is correct");
-}
 
-function verifyRecordsOfDate(e)
-{
-	// e = {date: "Wed Oct 09th", expectRecords: [{no: 1, activity: "Running", startTime: "12:23 PM", goal: ["00:32:30", "1.00 miles"]}, ... ]}
-	h = new History();
-	
-	rec = h.getAllRecordsOfDate(e.date);
-	actual = rec.records;
-	expect = e.expectRecords;
-	
-	for(i = 0; i < rec.total; i++)
-	{
-		assertEqual(actual[i].no, expect[i].no, "Record number is correct");
-		assertEqual(actual[i].activity, expect[i].activity, "Record activity is correct");
-		assertEqual(actual[i].startTime, expect[i].startTime, "Record start time is correct");
-		assertEqual(actual[i].goal, expect[i].goal, "Record goal is correct");
-	}
-}
+// ===================== Test cases ====================================
+
+
+
+
+
+
+

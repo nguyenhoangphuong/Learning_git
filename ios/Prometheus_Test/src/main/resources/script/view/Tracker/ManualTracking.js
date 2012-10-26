@@ -41,7 +41,7 @@ function ManualTracking()
 	var mainWindow = app.mainWindow();
 	var mainView = mainWindow;
 	var cancelBtn = mainView.buttons()["Cancel"];
-	var doneBtn = mainView.buttons()["Done"];
+	var doneBtn = mainView.buttons()["Save activity"];
 	
 	// Public methods
 	this.isVisible = isVisible;
@@ -59,6 +59,20 @@ function ManualTracking()
 	
 	this.isWeekGoalFinishedAlertShown = isWeekGoalFinishedAlertShown;
 	this.isTodayGoalFinishedAlertShown = isTodayGoalFinishedAlertShown;
+	
+	//MVP3: done()
+	function done()
+	{
+		wait(0.5);
+		doneBtn.tap();
+		
+		log("Tap [Save activity]");	
+		
+		// wait for alert
+		wait();
+		if(isWeekGoalFinishedAlertShown() || isTodayGoalFinishedAlertShown())
+			alert.confirmCustomAlert();
+	}
 	
 	// Method definitions
 	function isVisible()
@@ -216,19 +230,7 @@ function ManualTracking()
 		log("Tap [Cancel]");
 	}
 	
-	function done()
-	{
-		wait(0.5);
-		doneBtn.tap();
 		
-		log("Tap [Done]");	
-		
-		// wait for alert
-		wait();
-		if(isWeekGoalFinishedAlertShown() || isTodayGoalFinishedAlertShown())
-			alert.confirmCustomAlert();
-	}
-	
 	
 	function isWeekGoalFinishedAlertShown()
 	{

@@ -29,7 +29,7 @@ function NavigationBar()
 	this.settingsIsVisible = settingsIsVisible;
 	
 	function isVisible() {
-		return navigationBar.isVisible();
+		return app.navigationBar().isVisible();
 	}
 	
 	function xScreenIsVisible(screenName) {
