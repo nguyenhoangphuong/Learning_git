@@ -11,7 +11,7 @@ verifyNoHistory();
 
 // ========== reset plan ===============
 print("<Verify Reset Plan>");
-resetPlan("Easy", "Easy #1");
+resetPlan("Easy", "The Starter's Plan");
 verifyNoHistory();
 // =====================================
 

@@ -8,8 +8,7 @@ function GoToPlanPicker()
 }
 
 //------------ Verify
-function VerifyPrepackagePlanInfo(type, name, expect)
-{
+function VerifyPrepackagePlanInfo(type, name, expect) {
 	// pick plan
 	pp = new PlanPicker();
 	pp.pickPlan(type, name);
@@ -19,8 +18,7 @@ function VerifyPrepackagePlanInfo(type, name, expect)
 	actual = pi.getPlanInfo();
 	
 	// check default value plan info
-	for(i = 0; i < actual.length; i++)
-	{
+	for(i = 0; i < actual.length; i++) {
 		assertEqual(actual[i].name, expect[i].name, "Activity name");
 		assertEqual(actual[i].value, expect[i].value, "Activity goal");
 	}

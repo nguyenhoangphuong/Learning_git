@@ -20,13 +20,13 @@
   			
   - toPlanInfo(email, pwd, userinfo, planinfo, login) 
   			+ planinfo.type = Easy/Normal/Active/Custom
-  			+ planinfo.name = Easy #1
+  			+ planinfo.name = The Starter's Plan
   
   - toPlanBuilder(email, pwd, userinfo, login)
   
   - toProgress(email, pwd, userinfo, pinfo, login)
   			+ planinfo.type = Easy/Normal/Active/Custom/New
-  			+ planinfo.name = Easy #1
+  			+ planinfo.name = The Starter's Plan
   			+ planinfo.activities = 
   				[{name: Running, value: 10}, {name: Push-up, value: 50}]
   			note: activities is used only for New mode
@@ -187,7 +187,7 @@ function Navigator()
 			}
 			else
 				// pick default plan
-				pp.pickPlan("Easy", "Easy #1");
+				pp.pickPlan("Easy", "The Starter's Plan");
 		}
 		
 		// reached
@@ -221,7 +221,7 @@ function Navigator()
 		if(pp.isVisible())
 		{
 			if (pinfo == null) {
-				pp.pickPlan("Easy", "Easy #1");
+				pp.pickPlan("Easy", "The Starter's Plan");
 				
 				pi = new PlanInfo();
 				pi.tapGo();
