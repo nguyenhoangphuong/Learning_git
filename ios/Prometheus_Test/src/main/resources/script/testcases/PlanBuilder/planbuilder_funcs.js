@@ -1,4 +1,5 @@
 #import "../../MVPLibs.js"
+#import "../../view/PlanBuilder/PlanBuilderData.js"
 
 // ------------ Navigate
 function GoToPlanPicker()
@@ -8,7 +9,7 @@ function GoToPlanPicker()
 }
 
 //------------ Verify
-function VerifyPrepackagePlanInfo(type, name, expect) {
+function VerifyPrepackagePlanInfo(type, name) {
 	// pick plan
 	pp = new PlanPicker();
 	pp.pickPlan(type, name);
@@ -19,8 +20,8 @@ function VerifyPrepackagePlanInfo(type, name, expect) {
 	
 	// check default value plan info
 	for(i = 0; i < actual.length; i++) {
-		assertEqual(actual[i].name, expect[i].name, "Activity name");
-		assertEqual(actual[i].value, expect[i].value, "Activity goal");
+		assertEqual(actual[i].name, expect[i].name, "Name Expected: " + expect[i].name + ", actual: " + actual[i].name );
+		assertEqual(actual[i].value, expect[i].value, "Goal Expected: " + expect[i].value + ", actual: " + actual[i].value);
 	}
 	
 	// tap custom plan
@@ -67,8 +68,7 @@ function VerifyCreatePlan()
 	// restore state
 }
 
-function VerifyDeletePlan()
-{
+function VerifyDeletePlan() {
 	// tap existed custom plan
 	
 	// check delete button exist
@@ -81,3 +81,6 @@ function VerifyDeletePlan()
 	
 	// check custom list is updated
 }
+
+
+GoToPlanPicker();

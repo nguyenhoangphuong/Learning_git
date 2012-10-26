@@ -187,7 +187,7 @@ function Navigator()
 			}
 			else
 				// pick default plan
-				pp.pickPlan(pinfodefault.type, pinfodefault.name);
+				pp.pickPlan("Easy", pp.easyStarter);
 		}
 		
 		// reached
@@ -221,8 +221,7 @@ function Navigator()
 		if(pp.isVisible())
 		{
 			if (pinfo == null) {
-				pp.pickPlan(pinfodefault.type, pinfodefault.name);
-				
+				pp.pickPlan("Easy", pp.easyStarter);
 				pi = new PlanInfo();
 				pi.tapGo();
 			}
@@ -253,7 +252,6 @@ function Navigator()
 			
 			// wait for position alert
 			wait();
-							
 		}
 		// current view is any view in Home control
 		else
