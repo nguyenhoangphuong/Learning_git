@@ -70,6 +70,7 @@ function PlanBuilder()
 	
 	function setName(planName) 
 	{
+		wait();
 		assignControls();
 		nameTxt.setValue(planName);
 		app.keyboard().typeString("\n");
@@ -96,21 +97,22 @@ function PlanBuilder()
 	{
 		log("Picking activity: " + id);
 		
-		if(typeof useIndex == "undefined")
+		if(typeof useIndex == "undefined") {
 			useIndex = false;
-		
+			log("1111");
+		}
 		var	button = useIndex? iconsList[id] : iconsList["icon " + id];
 
 		// dragging
 		button.scrollToVisible();
 		wait();
 		var rect = button.rect();
-        UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x, y:rect.origin.y}, {x:160, y:380}, 1);
+        UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x + rect.size.width/2, y:rect.origin.y + rect.size.height/2}, {x:160, y:380}, 2);
 	}
 	
 	function removeActivity(id, useIndex) 
 	{
-		log("Removing activity: " + index);
+		log("Removing activity: " + id);
 		
 		if(typeof useIndex == "undefined")
 			useIndex = false;
@@ -134,7 +136,7 @@ function PlanBuilder()
 		wait();
 		var rect = button.rect();
 		log("x= " + rect.origin.x + " : y= " + rect.origin.y);
-        UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x, y:rect.origin.y}, {x:10, y:10}, 1);
+        UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x + rect.size.width/2, y:rect.origin.y + rect.size.height/2}, {x:10, y:10}, 2);
 	}	
 	
 	function getNumberOfActivities() 
