@@ -72,10 +72,11 @@ function UserInfo(view)
 	this.isUS = isUS;
 	
 	// Methods definition
-	 function isVisible()
-    {
-        exist = staticTextExist("User profile \n(weight, height, gender...)");
-        return exist;
+	 function isVisible() {
+        var visible = ("Personal info" == app.navigationBar().name());
+ 		log("Personal Info is visible: " + visible);
+ 		log(app.navigationBar().name());
+ 		return visible;
     }
  	
 	
