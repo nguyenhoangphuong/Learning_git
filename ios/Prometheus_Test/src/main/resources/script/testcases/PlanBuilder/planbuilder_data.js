@@ -2,16 +2,10 @@ pbTD =
 {
 	prepackage:
 	{
-		easy1: [{name: "Running", value: "4.00 miles"}, {name: "Treadmill", value: "7.00 miles"}, {name: "Elliptical", value: "35.00 miles"}],
-		easy2: [{name: "Running", value: "4.00 miles"}, {name: "Treadmill", value: "7.00 miles"}, {name: "Elliptical", value: "35.00 miles"}],
-		easy3: [{name: "Running", value: "4.00 miles"}, {name: "Treadmill", value: "7.00 miles"}, {name: "Elliptical", value: "35.00 miles"}],
+		theStartersPlan: [{name: "Treadmill", value: "3.00 miles"}, {name: "Plank", value: "120 secs"}, {name: "Sit-up", value: "35 reps"}],
 		
-		norm1: [{name: "Running", value: "4.00 miles"}, {name: "Treadmill", value: "7.00 miles"}, {name: "Elliptical", value: "35.00 miles"}],
-		norm2: [{name: "Running", value: "4.00 miles"}, {name: "Treadmill", value: "7.00 miles"}, {name: "Elliptical", value: "35.00 miles"}],
-		norm3: [{name: "Running", value: "4.00 miles"}, {name: "Treadmill", value: "7.00 miles"}, {name: "Elliptical", value: "35.00 miles"}],
+		theMoversPlan: [{name: "Running", value: "5.00 miles"}, {name: "Push-up", value: "90 reps"}, {name: "Swimming", value: "1500.00 ft"}],
 		
-		active1: [{name: "Running", value: "4.00 miles"}, {name: "Treadmill", value: "7.00 miles"}, {name: "Elliptical", value: "35.00 miles"}],
-		active2: [{name: "Running", value: "4.00 miles"}, {name: "Treadmill", value: "7.00 miles"}, {name: "Elliptical", value: "35.00 miles"}],
-		active3: [{name: "Running", value: "4.00 miles"}, {name: "Treadmill", value: "7.00 miles"}, {name: "Elliptical", value: "35.00 miles"}],
+		theShakersPlan: [{name: "Swimming", value: "1800.00 miles"}, {name: "Push-up", value: "245 reps"}, {name: "Treadmill", value: "8.00 miles"}],
 	}
 }
