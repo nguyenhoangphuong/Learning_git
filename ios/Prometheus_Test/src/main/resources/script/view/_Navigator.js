@@ -1,9 +1,7 @@
 #import "_TabBar.js"
 #import "PlanBuilder/PlanBuilderData.js"
 /*
-  This file provides methods to navigate to specify view. This will go from
-  nothing to the specify view, so kill the app first.
-  
+  This file provides methods to navigate to specify view.
   =============================================================================
   
   - toSignIn() : to Home screen 

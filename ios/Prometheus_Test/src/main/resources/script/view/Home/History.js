@@ -3,45 +3,40 @@
 /*
 List of functions:
 =========================================================================================
-- isVisible()				: check if current view is History
+- assignControls()
+- isVisible()
+=========================================================================================
+- groupByDate()				: tap Date tab
+- groupByActivity()			: tap Activity tab
+=========================================================================================
 - isNoHistory()				: check if the history is currently empty
-=========================================================================================
-- getAllDates()				: get the total days and date list, return:
-	{
-		total: 2,
-		dates: ["Wed Oct 02nd", "Wed Oct 03rd"]
-	}
-- getAllRecordsOfDate(date)	: get all the records of the specified date, return:
-	{
-		total: 3,
-		records:
-		[
-			{no: 1, activity: "Running", startTime: "12:23 PM", goal: ["00:32:30", 	"1.00 miles"]},
-			{no: 1, activity: "Running", startTime: "12:23 PM", goal: ["00:32:30", 	"1.00 miles"]},
-			{no: 1, activity: "Running", startTime: "12:23 PM", goal: ["00:32:30", 	"1.00 miles"]},
-		]
-	}
-	note: records[i].goal is an array of multiple values based on each activity type
-=========================================================================================
-- scrollToPlanner()			: scroll back to Planner view
+- getDateRange()			: get all dates [Oct 24, Oct 25, ...]
+- getAllRecordsOfDate()		: get all records of a specified date
+- getAllRecordsOfActivity()	: get all records of a specified activity
 =========================================================================================
 */
 
 function History()
 {
 	// Private fields
-	var mainWindow = app.mainWindow();
-	var table = mainWindow.tableViews()[0];
+	var mainWindow;
+	var mainView;
+	
+	var dateTab;
+	var activityTab;
+	var recordList;
+	
+	// Initalize
+	assignControls();
 	
 	// Public methods
+	this.assignControls = assignControls;
 	this.isVisible = isVisible;
 	this.isNoHistory = isNoHistory;
-	this.getNumberOfEntries = getNumberOfEntries;
-	this.assignControls = assignControls;
+	this.getDateRange = getDateRange;
+	this.getAllRecordsOfDate = getAllRecordsOfDate;
+	this.getAllRecordsOfActivity = getAllRecordsOfActivity;
 	
-	function assignControls() {
-		table = mainWindow.tableViews()[0];
-	}
 	// Method definitions
 	function isVisible()
 	{

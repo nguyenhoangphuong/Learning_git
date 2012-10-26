@@ -3,42 +3,69 @@
 /*
 List of functions:
 =========================================================================================
-- isVisible()
 - assignControls()
+- isVisible()
 =========================================================================================
-
+- groupByDate()						: tap Date tab
+- groupByActivity()					: tap Activity tab
+=========================================================================================
+- getDateRange()					: get all dates [Oct 25, Oct 26, ...]
+- getActivities()					: get all activities [Running, Swimming, Push-up]
+- getAllRecordsOfDate(date)			: get all records of date 
+									  [{name: Running, value: 0.47 miles}, {}, ...]
+- getAllRecordsOfActivity(name)		: get all records of activity
+									  {activity: Running, total: 4.00 miles,
+									   dates: [{date: Oct 25, value: 0.47 miles}, {}, ...]}
+=========================================================================================
+- tapEdit()							: tap Edit button
+- tapEditRecord(date, activity)		: tap a record's edit button
+									  ex: tapEditRecord("Oct 25", "Running");
+- tapX()							: tap X to cancel edit a record
+- tapV()							: tap V to confirm a edit
+- tapCancel()						: tap Cancel
+- tapDone()							: tap Done
+- tapUndo()							: tap Undo
+- tapSuggest()						: tap Suggest
+=========================================================================================
+- isInEditMode()					: check if Planner is in edit mode
+- setPlanAmount(amount, epsilon)	: set amount for the current selected record
+	+ amount: the amount to set
+	+ epsilon: error range (0 is default) (because some activities like swimming have 
+		large scale, therefor a small drag will change value significantly)
 =========================================================================================
 */
 
-maxMPD = 2.95;
-function GoalPlan()
+function Planner()
 {
 	// Private fields
 	var window;
 	var mainView;
 	
 	var dateTab;
+	var dateTable;
 	var activityTab;
+	var activityTable;
 
+	var undoBtn;
+	var autoBtn;
+	
 	// Initalize
 	assignControls();
 	
 	// Methods
 	this.assignControls = assignControls;
 	this.isVisible = isVisible;
-	this.isInEditMode = isInEditMode;
 	
 	this.groupByDate = groupByDate;
 	this.groupByActivity = groupByActivity;
 	
-	this.getPlanInfoByDate = getPlanInfoByDate;
-	this.getPlanInfoByActivity = getPlanInfoByActivity;
 	this.getDateRange = getDateRange;
-	
-	this.getDetailPlanOfDate = getDetailPlanOfDate;
-	this.getDetailPlanOfActivity = getDetailPlanOfActivity;
+	this.getActivities = getActivities;
+	this.getAllRecordsOfDate = getAllRecordsOfDate;
+	this.getAllRecordsOfActivity = getAllRecordsOfActivity;
 	
 	this.tapEdit = tapEdit;
+	this.tapEditRecord = tapEditRecord;
 	this.tapX = tapX;
 	this.tapV = tapV;
 	this.tapCancel = tapCancel;
@@ -46,31 +73,32 @@ function GoalPlan()
 	this.tapSuggest = tapSuggest;
 	this.tapUndo = tapUndo;
 	
+	this.isInEditMode = isInEditMode;
 	this.setPlanAmount = setPlanAmount;
 
 	// Methods definition
 	function assignControls()
 	{
 		window = app.mainWindow();
-		mainView = window.tableViews()[0];
+		mainView = window;
 		
 		dateTab = app.navigationBar().segmentedControls()[0].buttons()[0];
+		dateTable = window.tableViews()[1];
 		activityTab = app.navigationBar().segmentedControls()[0].buttons()[1];
+		activityTable = window.tableViews()[0];
+		
+		undoBtn = window.buttons()[0];
+		autoBtn = window.buttons()[1];
 	}
 	
 	function isVisible()
 	{
-		visible = dateTab.isVisible() && dateTab.name() == "Date" &&
-				  activityTab.isVisible() && activityTab.name() == "Activity";
+		visible = navigationBar.historyIsVisible();
 		
 		log("Planner is visible: " + visible);
 		return visible;
 	}
 	
-	function isInEditMode()
-	{
-		// to be update
-	}
 	
 	function groupByDate()
 	{
@@ -84,147 +112,110 @@ function GoalPlan()
 		log("Tap [Activity]");
 	}
 	
-	function getPlanInfoByDate()
-	{
-		// group by date first
-		groupByDate();
-		
-		// get info
-		var info = [];
-		cells = recordList.cells();
-		groups = mainView.groups();
-		n = groups.length;
-		step = cells.length / n;
-		
-		for(i = 0; i < n; i++)
-		{
-			date = groups[i].name();
-			activities = [];
-			
-			for(j = 0; j < step; j++)
-			{
-				text = cells[i * step + j].name();
-				name = text.substring(0, text.indexOf(","));
-				goal = text.substring(text.indexOf(", ") + 1);
-				
-				activities[j] = {name: name, goal: goal};
-			}
-			
-			info[i] = {date: date, activities: activities};
-		}
-
-		log("Plan info by date: " + JSON.stringify(info));
-		return info;
-	}
-	
-	function getPlanInfoByActivity()
-	{
-		// group by activity first
-		groupByActivity();
-		
-		// get info
-		var info = [];
-		cells = mainView.cells();
-		n = cells.length;
-		
-		for(i = 0; i < n; i++)
-		{
-			text = cells[i].name();
-			name = text.substring(0, text.indexOf(","));
-			goal = text.substring(text.indexOf(", ") + 1);
-			
-			info[i] = {name: name, goal: goal};
-		}
-		
-		log("Plan info by activity: " + JSON.stringify(info));
-		return info;
-	}
 	
 	function getDateRange()
 	{
 		// group by date first
 		groupByDate();
 		
-		// get range
+		// get range;
+		groups = dateTable.groups();
 		var info = [];
-		groups = mainView.groups();
-		n = groups.length;
 		
-		for(i = 0; i < n; i++)
+		for(i = 0; i < groups.length; i++)
 			info[i] = groups[i].name();
 		
 		log("Date range: " + JSON.stringify(info));
 		return info;
 	}
 	
-	function getDetailPlanOfDate(date, useIndex)
+	function getActivities()
 	{
 		// group by date first
 		groupByDate();
-		cells = mainView.cells();
-		groups = mainView.groups();
+		
+		// get range;
+		cells = dateTable.cells();
+		groups = dateTable.groups();
+		step = cells.length / groups.length;
+		
+		var info = [];
+		for(i = 0; i < step; i++)
+		{
+			text = cells[i].name();
+			act = text.substring(0, text.indexOf(","));
+			info[i] = act;
+		}
+		
+		log("Activities: " + JSON.stringify(info));
+		return info;
+	}
+	
+	function getAllRecordsOfDate(date)
+	{
+		// group by date first
+		groupByDate();
+		
+		// var
+		i = 0;
+		cells = dateTable.cells();
+		groups = dateTable.groups();
 		n = groups.length;
 		step = cells.length / n;
 		
 		// find date index
-		if(typeof useIndex == "undefined")
-			useIndex = false;
+		for(i = 0; i < n; i++)
+			if(groups[i].name().indexOf(date) >= 0)
+			{
+				date = i;
+				break;
+			}
 		
-		if(!useIndex)
+		// find start and end index
+		start = date * step;
+		end = start + step;
+		
+		// get info
+		var info = [];
+		for(i = start; i < end; i++)
 		{
-			for(i = 0; i < n; i++)
-				if(groups[i].name() == date)
-				{
-					date = i;
-					break;
-				}
-		}
-		
-		// get detail plan of that date
-		var info = {};
-		info.date = groups[date].name();
-		info.activities = [];
-		
-		for(j = 0; j < step; j++)
-		{
-			text = cells[date * step + j].name();
+			text = cells[i].name();
 			name = text.substring(0, text.indexOf(","));
-			goal = text.substring(text.indexOf(", ") + 1);
-			
-			activities[j] = {name: name, goal: goal};
+			value = text.substring(text.indexOf(", ") + 1);
+				
+			info[i - start] = {name: name, value: value};
 		}
-		
-		log("Detail plan of date: " + JSON.stringify(info));
+
+		log("Plan info by date: " + JSON.stringify(info));
 		return info;
 	}
 	
-	function getDetailPlanOfActivity(activity, useIndex)
+	function getAllRecordsOfActivity(activity)
 	{
 		// group by activity first
 		groupByActivity();
-		cells = mainView.cells();
+		
+		// var
+		cells = activityTable.cells();
 		n = cells.length;
 		
 		// find activity index
-		if(typeof useIndex == "undefined")
-			useIndex = false;
-		
-		if(!useIndex)
-		{
-			for(i = 0; i < n; i++)
-				if(cells[i].name().indexOf(activity) >= 0)
-				{
-					activity = i;
-					break;
-				}
-		}
+		for(i = 0; i < n; i++)
+			if(cells[i].name().indexOf(activity) >= 0)
+			{
+				activity = i;
+				break;
+			}
 		
 		// find start and end index
-		cells[activity].tap();
-		cells = mainView.cells();
+		n = expandActivity(activity);
+		cells = activityTable.cells();
 		m = cells.length;
+		
 		var start = activity;
 		var end = (m - n) + start;
+		
+		log(m + "-" + n);
 		
 		// get information
 		str = cells[start].name();
@@ -238,55 +229,223 @@ function GoalPlan()
 		{
 			text = cells[i].name();
 			date = text.substring(0, text.indexOf(","));
-			goal = text.substring(text.indexOf(", ") + 1);
+			value = text.substring(text.indexOf(", ") + 1);
 			
-			info.dates[i - start - 1] = {date: date, goal: goal};
+			info.dates[i - start - 1] = {date: date, value: value};
 		}
-		
-		cells[start].tap();
 		
 		// return
 		log("Detail plan of activity: " + JSON.stringify(info));
 		return info;
 	}
 	
+	
 	function tapEdit()
 	{
+		if(!isInEditMode())
+			app.navigationBar().rightButton().tap();
 		
+		log("Tap [Edit]");
+	}
+	
+	function tapEditRecord(date, activity)
+	{
+		index = -1;
+		
+		if(app.navigationBar().name() == "Date")
+		{
+			// var
+			cells = dateTable.cells();
+			groups = dateTable.groups();
+			n = groups.length;
+			
+			// find date index
+			for(i = 0; i < n; i++)
+				if(groups[i].name().indexOf(date) >= 0)
+				{
+					date = i;
+					break;
+				}
+			
+			// find start and end index
+			step = cells.length / n;
+			start = date * step;
+			end = start + step;
+			
+			// get info
+			for(i = start; i < end; i++)
+				if(cells[i].name().indexOf(activity) >= 0)
+				{
+					index = i;
+					break;
+				}
+		}
+		else
+		{		
+			// var
+			cells = activityTable.cells();
+			n = cells.length;
+			
+			// find activity index
+			for(i = 0; i < n; i++)
+				if(cells[i].name().indexOf(activity) >= 0)
+				{
+					activity = i;
+					break;
+				}
+			
+			// find start and end index
+			n = expandActivity(activity);
+			cells = activityTable.cells();
+			m = cells.length;
+			
+			var start = activity;
+			var end = (m - n) + start;
+			
+			// get information			
+			for(i = start + 1; i <= end; i++)
+				if(cells[i].name().indexOf(date) >= 0)
+				{
+					index = i;
+					break;
+				}
+		}
+		
+		cells[index].scrollToVisible();
+		cells[index].buttons()[1].tap();
 	}
 	
 	function tapX()
 	{
+		if(!isInEditMode())
+			return;
 		
+		cells = (app.navigationBar().name() == "Date" ? dateTable.cells() : activityTable.cells());
+		for(i = 0; i < cells.length; i++)
+			if(cells[i].buttons().length > 1)
+			{
+				cells[i].scrollToVisible();
+				cells[i].buttons()[1].tap();
+				log("Tap [X]");
+				return;
+			}
+		
+		log("Error: TapX");
 	}
 	
 	function tapV()
 	{
+		if(!isInEditMode())
+			return;
 		
+		cells = (app.navigationBar().name() == "Date" ? dateTable.cells() : activityTable.cells());
+		for(i = 0; i < cells.length; i++)
+			if(cells[i].buttons().length > 1)
+			{
+				cells[i].scrollToVisible();
+				cells[i].buttons()[2].tap();
+				log("Tap [V]");
+				return;
+			}
+		
+		log("Error: TapV");
 	}
 	
 	function tapCancel()
 	{
-		
+		// ui missing
 	}
 	
 	function tapDone()
 	{
+		if(!isInEditMode())
+			return;
 		
+		done = app.navigationBar().rightButton();
+		done.tap();
+		log("Tap [Done]");
 	}
 	
 	function tapSuggest()
 	{
+		if(!isInEditMode())
+			return;
 		
+		autoBtn.tap();
+		log("Tap [Auto-suggest]");
 	}
 	
 	function tapUndo()
 	{
+		if(!isInEditMode())
+			return;
 		
+		undoBtn.tap();
+		log("Tap [Undo]");
 	}
 	
-	function setPlanAmount()
+	
+	function isInEditMode()
 	{
+		editmode = !dateTab.isVisible();
 		
+		log("In edit mode: " + editmode);
+		return editmode;
+	}
+	
+	function setPlanAmount(amount, epsilon)
+	{		
+		if(!isInEditMode())
+			return;
+		
+		if(typeof epsilon == "undefined")
+			epsilon = 0;
+		
+		index = -1;
+		cells = (app.navigationBar().name() == "Date" ? dateTable.cells() : activityTable.cells());
+		for(i = 0; i < cells.length; i++)
+			if(cells[i].buttons().length > 1)
+			{
+				index = i;
+				break;
+			}
+		
+		// drag until
+		cells[index].scrollToVisible();
+		current = parseFloat(cells[i].name());
+		if(current > amount)
+			end = 0.57;
+		else
+			end = 0.43;
+		
+		while(true)
+		{
+			current = parseFloat(cells[i].name());
+			if(Math.abs(current - amount) <= epsilon)
+				break;
+			
+			cells[index + 1].dragInsideWithOptions({startOffset:{x:0.5, y:0.5}, endOffset:{x:end, y:0.5}, duration:0.1});
+		}
+	}
+	
+	function expandActivity(start)
+	{
+		// original
+		cells = activityTable.cells();
+		n = cells.length;
+		
+		// after tap
+		cells[start].scrollToVisible();
+		cells[start].tap();
+		cells = activityTable.cells();
+		m = cells.length;
+	
+		if(m < n)
+		{
+			cells[start].scrollToVisible();
+			cells[start].tap();
+		}
+		
+		return m > n ? n : m;
 	}
 }

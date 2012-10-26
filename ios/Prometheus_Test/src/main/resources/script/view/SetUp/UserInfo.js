@@ -3,7 +3,8 @@
 /*
 UserInfo view function:
 =========================================================================================
-- isVisible()						:	check if the current view is visible
+- assignControls()
+- isVisible()
 =========================================================================================
 - setInfo(age, w1, w2, h1, h2)		:	set user information
 	+ setInfo(18, 83, 0.3, "8'", "5\"") for US
@@ -167,12 +168,13 @@ function UserInfo(view)
 	}
 	
 	function submit()
-    {
-        wait(0.5);
-        app.mainWindow().buttons()[0].tap();
-        
-        log("Tap [Next]");
-    }	
+	{
+		wait(0.5);
+		app.mainWindow().buttons()[0].tap();
+		
+		log("Tap [Next]");
+	}
+	
 
 	function changeWeight(dx) 
 	{

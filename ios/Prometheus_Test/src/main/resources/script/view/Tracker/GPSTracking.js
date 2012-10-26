@@ -21,11 +21,10 @@ List of functions:
 - previousSong(): tap "previous song" button
 - nextSong()	: tap "next song" button
 =========================================================================================
-- getCurrentInfo()	: get the current (percent, duration, distance)
-- getResults()		: get the results (percent, duration, distance, pace)
+- getCurrentInfo()	: get current {distance, speed, duration}
 =========================================================================================
 
-to be update: GetResults
+to be update: + GetResults
 */
 
 function GPSTracking()
@@ -65,7 +64,6 @@ function GPSTracking()
 	this.nextSong = nextSong;
 		
 	this.getCurrentInfo = getCurrentInfo;
-	this.getResults = getResults;
 	
 	// Methods definition
 	function assignControls()
@@ -108,7 +106,7 @@ function GPSTracking()
 	
 	function musicIsPlaying() 
 	{
-		return btnMusicToggle.name() == "bt music pause";
+		return btnMusicToggle.name() == "img pause";
 	}
 	
 	function pause()
@@ -185,22 +183,6 @@ function GPSTracking()
 		info.speed = window.staticTexts()[5].name();
 
 		log("Current tracking info: " + JSON.stringify(info));
-		
-		return info;
-	}
-	
-	function getResults()
-	{
-		var info = {};
-		info.percent = window.staticTexts()[2].name();
-		info.duration = window.staticTexts()[3].name();
-		info.distance = window.staticTexts()[5].name();
-		info.speed = window.staticTexts()[7].name();
-		
-		log("result.percent: " + info.percent);
-		log("result.duration: " + info.duration);
-		log("result.distance: " + info.distance);
-		log("result.speed: " + info.speed);
 		
 		return info;
 	}

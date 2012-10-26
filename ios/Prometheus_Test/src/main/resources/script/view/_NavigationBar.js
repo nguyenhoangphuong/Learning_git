@@ -16,8 +16,6 @@
 function NavigationBar()
 {
 	var progressName = "Progress";
-	var plannerName = "Planner";
-	var historyName = "History";
 	var settingsName = "Settings";
 	
 	// =========================== Methods =====================
@@ -42,7 +40,7 @@ function NavigationBar()
 	}
 	
 	function plannerIsVisible() {
-		return xScreenIsVisible(plannerName);
+		return app.mainWindow().buttons()["Auto-suggest"].isVisible();
 	}
 	
 	function historyIsVisible() {

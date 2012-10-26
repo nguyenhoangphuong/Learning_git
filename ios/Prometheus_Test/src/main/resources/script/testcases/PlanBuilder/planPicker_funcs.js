@@ -1,20 +1,22 @@
 #import "../../MVPLibs.js"
 
-// ------------ Navigate
-function GotoPlanPicker()
+// ============================= Navigate
+function GoToPlanPicker()
 {
+	// try out with default user info
 	nav.toPlanPicker(null, null, null);
 }
 
-
-//------------ Verify
-function VerifyPrepackagePlanInfo(type, name, expect) {
+// ============================= Verify
+function VerifyPrepackagePlanInfo(type, name, expect)
+{
 	// pick plan
 	pp = new PlanPicker();
 	pp.pickPlan(type, name);
 	
 	// get plan info
 	pi = new PlanInfo();
+	assertTrue(pi.isVisible(), "PlanInfo is visible");
 	actual = pi.getPlanInfo();
 	
 	// check default value plan info
@@ -49,8 +51,13 @@ function VerifyCustomPlanList(expect)
 function VerifyCreatePlan()
 {
 	// tap create
+	pp = new PlanPicker();
+	pp.create();
 	
-	// check drag drop default value
+	pb = new PlanBuilder();
+	assertTrue(pb.isVisible(), "PlanBuilder is visible");
+	
+	// check drag drop and default value
 	
 	// check null name
 	
@@ -67,19 +74,4 @@ function VerifyCreatePlan()
 	// check value is saved correctly
 	
 	// restore state
-}
-
-function VerifyDeletePlan()
-{
-	// tap existed custom plan
-	
-	// check delete button exist
-	
-	// press delete and tap no
-	
-	// check alert
-	
-	// press delete and tap yes
-	
-	// check custom list is updated
 }
