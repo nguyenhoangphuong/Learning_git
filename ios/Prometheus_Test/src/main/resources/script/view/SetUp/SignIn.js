@@ -40,7 +40,7 @@ function SignIn()
 	var btnConfirm ;
 	
 	var btnTryout ;
-	var btnLegal ;
+//	var btnLegal ;
 	
 	var emailField ;
 	var pwdField ;
@@ -83,7 +83,7 @@ function SignIn()
 		 btnConfirm = mainView.buttons()[2];
 		 
 		 btnTryout = mainView.buttons()["tryout"];
-		 btnLegal = mainView.buttons()["legal"];
+//		 btnLegal = mainView.buttons()["legal"];
 		 
 		 emailField = mainView.textFields()[0];
 		 pwdField = mainView.secureTextFields()[0];
@@ -143,7 +143,17 @@ function SignIn()
 	{
 		log("Tap [Legal] button");
 		wait(0.5);
-		btnLegal.tap();
+		
+		
+		var rect = btnConfirm.rect();
+		//.mainWindow().buttons()["finish"].tap();
+		x = rect.origin.x + rect.size.width / 2;
+		y = rect.origin.y;
+		target.tap({x:x, y:y + 100});
+		
+		log ("x= " + x + " - y=" + y);
+		
+		
 		wait(0.5);
 	}
 	
