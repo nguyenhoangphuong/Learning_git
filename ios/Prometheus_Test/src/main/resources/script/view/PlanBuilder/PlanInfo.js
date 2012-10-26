@@ -54,14 +54,14 @@ function PlanInfo()
 	function assignControls()
 	{
 		window = app.mainWindow();
-		//mainView = window.tableViews()[0];
-		mainView = window;
-/* 		cells = mainView.cells(); */
+		mainView = window.tableViews()[0];
+		
+		cells = mainView.cells(); 
 		
 		backBtn = app.navigationBar().leftButton();
 		deleteBtn = app.navigationBar().rightButton();
-		goBtn = mainView.buttons()[0];
-		customBtn = mainView.buttons()[1];
+		goBtn = window.buttons()[0];
+		customBtn = window.buttons()[1];
 	}
 	
 	function isVisible(name)
@@ -129,8 +129,7 @@ function PlanInfo()
 		return info;
 	}
 	
-	function tapGo()
-	{
+	function tapGo() {
 		assignControls();
 		goBtn.tap();
 		log("Tap [GoForIt]");
