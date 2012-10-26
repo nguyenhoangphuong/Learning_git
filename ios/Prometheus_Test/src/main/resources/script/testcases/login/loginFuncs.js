@@ -25,24 +25,22 @@ function verifyTranslition()
 {
 	signin = new SignIn();
 	
-	// tap log in 
+	// verify cannot tap legal in sign in
 	hr();
 	print("<Tap SignIn tab>");
 	signin.tapSignInTab();
-	//assertTrue(signin.isSignInVisible() , "Only SignIn screen is visible");
-		
-	// tap sign up 
-	hr();
-	print("<Tap signup tab>");
-	signin.tapSignUpTab();
-	assertTrue(signin.isSignUpVisible(), "Only Signup screen is visible");
-	
-	//Tap legal and comeback
-	hr();
-	print("<Tap legal and verify>");
 	signin.tapLegal();
+	assertTrue(signin.isVisible(), "Only Signup screen is visible");
+	
+	
+	//Tap legal and comeback in Signup
+	hr();
+	print("<Tap legal and verify in Sign up>");
+	signin.tapSignUpTab();
+	signin.tapLegal();
+	assertTrue(!signin.isVisible(), "Only Signup screen is visible");
 	signin.tapCloseLegal();
-	assertTrue(signin.isSignUpVisible(), "Only Signup screen is visible");
+	assertTrue(signin.isVisible(), "Only Signup screen is visible");
 	
 }
 
@@ -51,6 +49,7 @@ function verifyClientVerification()
 	signin = new SignIn();
 	
 	// SignIn with invalid email
+	
 	hr();
 	print("<SignIn with empty email>");
 	signin.signIn("", "");
@@ -70,27 +69,31 @@ function verifyClientVerification()
 	print("<SignIn with invalid email>");
 	signin.signIn("invalidEmail", SignInTD.rightPwd);
 	assertTrue(signin.isInvalidEmailAlertShown(), "Invalid email alert shown");
-	
+	wait(10);	
+
 	
 	// SignIn with invalid password [length < 6]
 	hr();
 	print("<SignIn with password: " + SignInTD.wrongPwd + ">");
 	signin.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
-	assertTrue(signin.isInvalidPasswordAlertShown(), "Invalid password alert shown");
-
+	wait(10);
+	assertTrue(signin.isWrongSignInAlertShown(), "Invalid password alert shown");
+	wait(10);
 	
 	// SignIn with invalid password [length == 6, all are letters]
 	hr();
 	print("<SignIn with password: " + SignInTD.wrongPwd + ">");
 	signin.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
-	assertTrue(signin.isInvalidPasswordAlertShown(), "Invalid password alert shown");
+	wait(10);
+	assertTrue(signin.isWrongSignInAlertShown(), "Invalid password alert shown");
 
 	
 	// SignIn with invalid password [length == 6, all are digits]
 	hr();
 	print("<SignIn with password: " + SignInTD.wrongPwd + ">");
 	signin.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
-	assertTrue(signin.isInvalidPasswordAlertShown(), "Invalid password alert shown");
+	wait(10);
+	assertTrue(signin.isWrongSignInAlertShown(), "Invalid password alert shown");
 
 }
 

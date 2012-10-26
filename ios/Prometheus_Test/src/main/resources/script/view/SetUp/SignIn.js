@@ -108,8 +108,7 @@ function SignIn()
 
 	function isLegalVisible() {
 		assignControls();
-		var legal = window.buttons()["legal"];
-		return (legal != null && legal.isEnabled() && legal.isValid() && legal.isVisible());
+		return staticTextExist("By Signing up you accept to this Term of use");
 	}
 	
 	// ----------------------Method tap action -------------------------

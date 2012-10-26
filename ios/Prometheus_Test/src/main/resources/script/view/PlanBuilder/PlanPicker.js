@@ -68,7 +68,7 @@ function PlanPicker()
 		if(type == 3 || type == "Active")
 			mainView.cells()["Active"].tap();
 		
-		wait(0.5);
+		wait(2);
 		
 		mainView.cells()[name].tap();
 		log("Tap [" + name + "]");

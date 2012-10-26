@@ -1,7 +1,6 @@
 #import "signupFuncs.js"
 #import "../../core/common.js"
 
-
 //======================== Test logic ======================== //
 start("SignUpScreen: Valid email validation");
 

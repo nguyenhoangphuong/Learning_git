@@ -1,5 +1,4 @@
-#import "../../view/_Navigator.js"
-#import "../../core/testcaseBase.js"
+#import "../../view/MVPLibs.js"
 
 //============================================================= //
 //DATA
@@ -15,13 +14,19 @@ loginTD =
 //============================================================= //
 function toSettingScreen(opt)
 {
+	
 	if(typeof opt == "undefined")
 	{
-		nav.toSettings(null, null, null, null, null);
+		// to setting
+		
+		nav.toSettings(null, null, null, pinfodefault , null);
+			
 		return;
 	}
 	
-	nav.toSettings(loginTD.existedEmail, loginTD.rightPwd, null, null, null, true);
+	var genstring = generateRandomDigitString();
+	
+	nav.toSettings(genstring + loginTD.existedEmail, loginTD.rightPwd, null, pinfodefault, false);
 }
 
 //============================================================= //

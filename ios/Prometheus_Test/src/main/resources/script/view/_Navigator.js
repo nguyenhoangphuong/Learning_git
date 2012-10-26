@@ -1,5 +1,5 @@
 #import "_TabBar.js"
-
+#import "PlanBuilder/PlanBuilderData.js"
 /*
   This file provides methods to navigate to specify view. This will go from
   nothing to the specify view, so kill the app first.
@@ -110,7 +110,7 @@ function Navigator()
 				// log in
 				print("=> Go to PlanPicker screen by logging in ...");
 				h.signIn(email, password);
-				wait(2);
+				wait(10);
 			}
 			else if(email == null || (typeof email == "undefined"))
 			{
@@ -124,7 +124,7 @@ function Navigator()
 				// sign up
 				print("=> Go to UserInfo screen by signing up ...");
 				h.signUp(email, password);
-				wait(2);
+				wait(10);
 			}
 		}
 
@@ -187,7 +187,7 @@ function Navigator()
 			}
 			else
 				// pick default plan
-				pp.pickPlan("Easy", "The Starter's Plan");
+				pp.pickPlan(pinfodefault.type, pinfodefault.name);
 		}
 		
 		// reached
@@ -221,7 +221,7 @@ function Navigator()
 		if(pp.isVisible())
 		{
 			if (pinfo == null) {
-				pp.pickPlan("Easy", "The Starter's Plan");
+				pp.pickPlan(pinfodefault.type, pinfodefault.name);
 				
 				pi = new PlanInfo();
 				pi.tapGo();
@@ -253,7 +253,7 @@ function Navigator()
 			
 			// wait for position alert
 			wait();
-							log("----- 2");
+							
 		}
 		// current view is any view in Home control
 		else
@@ -261,7 +261,6 @@ function Navigator()
 			if(tabBar.isVisible())
 				tabBar.tapProgress();
 		}
-						log("----- 3");
 		// reached
 		pg = new Progress();
 		return (pg.isVisible() ? pg : null);

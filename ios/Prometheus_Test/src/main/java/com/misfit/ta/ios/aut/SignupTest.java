@@ -11,7 +11,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class SignupTest extends AutomationTest{
 	 
 	 //--------------invalid---------------------//
-	@Test(groups = { "ios", "Prometheus", "MVP2", "signup" })
+	@Test(groups = { "ios", "Prometheus", "MVP3", "signup" })
 	public void SignupInvalidValidationTest() throws InterruptedException,
 			StopConditionException {
 		AppHelper.cleanCache();
@@ -22,7 +22,7 @@ public class SignupTest extends AutomationTest{
 	}
 	
 	 //--------------Valid---------------------//
-	@Test(groups = { "ios", "Prometheus", "MVP2", "signup" })
+	@Test(groups = { "ios", "Prometheus", "MVP3", "signup" })
 	public void SignupValidValidationTest() throws InterruptedException,
 			StopConditionException {
 		AppHelper.cleanCache();

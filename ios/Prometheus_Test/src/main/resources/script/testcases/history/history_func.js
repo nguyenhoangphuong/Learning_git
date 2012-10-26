@@ -4,10 +4,6 @@
 function initStartView()
 {
 	// to history
-	var pinfo = {
-		type: "Easy",
-		name: "The Starter's Plan"
-	}
 	nav.toHistory(null, null, null, pinfo , null);
 }
 

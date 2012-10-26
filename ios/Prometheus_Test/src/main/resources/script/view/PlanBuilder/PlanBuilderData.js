@@ -9,3 +9,10 @@ planBuilderData =
 		theShakersPlan: [{name: "Swimming", value: "1800.00 miles"}, {name: "Push-up", value: "245 reps"}, {name: "Treadmill", value: "8.00 miles"}],
 	}
 }
+
+//please update this when prepackage is changed
+
+pinfodefault = {
+		type: "Easy",
+		name: "The Starter’s Plan"
+}
