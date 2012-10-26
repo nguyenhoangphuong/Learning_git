@@ -8,7 +8,7 @@ List of function:
 ================================================================================
 - setName(planName)							: set name of the plan
 - back										: press back button
-- save										: press save button
+- start										: press start button
 
 - pickActivity(id, useIndex)				: pick an activity with name or index
 - removeActivity(id, useIndex)				: remove an activity with name or index
@@ -29,7 +29,7 @@ function PlanBuilder()
 	
 	var nameTxt;
 	var backBtn;
-	var saveBtn;
+	var startBtn;
 	
 	// Initalize controls
 	assignControls();
@@ -40,7 +40,7 @@ function PlanBuilder()
 	
 	this.setName = setName;
 	this.back = back;
-	this.save = save;
+	this.start = start;
 	
 	this.pickActivity = pickActivity;
 	this.removeActivity = removeActivity;
@@ -56,14 +56,16 @@ function PlanBuilder()
 		
 		nameTxt = mainView.textFields()[0];
 		backBtn = app.navigationBar().leftButton();
-		saveBtn = app.navigationBar().rightButton();
+		startBtn = app.navigationBar().rightButton();
 	}
 	
 	function isVisible() 
 	{
 		assignControls();
-		visible = app.navigationBar().name == "Plan builder";
+		visible = app.navigationBar().name() == "Custom Plan";
 		
+		log("AAbd: " + (app.navigationBar().name() == "Custom Plan"));
+		log(app.navigationBar().name());
 		log("PlanBuilder is visible: " + visible);	
 		return visible;
 	}
@@ -82,9 +84,9 @@ function PlanBuilder()
 		backBtn.tap();
 	}
 	
-	function save() 
+	function start() 
 	{
-		saveBtn.save();
+		startBtn.tap();
 	}
 	
 	/**
@@ -112,7 +114,7 @@ function PlanBuilder()
 	
 	function removeActivity(id, useIndex) 
 	{
-		log("Removing activity: " + id);
+		log("Removing activity: " + useIndex);
 		
 		if(typeof useIndex == "undefined")
 			useIndex = false;
