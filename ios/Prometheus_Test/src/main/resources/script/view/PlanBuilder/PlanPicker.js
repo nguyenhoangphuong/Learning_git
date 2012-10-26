@@ -33,6 +33,9 @@ function PlanPicker()
 	this.getCustomPlans = getCustomPlans;
 	this.tapCustomPlan = tapCustomPlan;
 	this.getPrepackagePlan = getPrepackagePlan;
+	this.easy = "Easy";
+	this.normal = "Normal";
+	this.active = "Active";
 	this.easyStarter = "The Starter’s Plan";
 	this.normalMover= "The Mover’s Plan";
 	this.activeShaker="The Shaker’s Plan";
@@ -42,6 +45,7 @@ function PlanPicker()
 	{
 		window = app.mainWindow();
 		mainView = window.scrollViews()[0].tableViews()[0];
+		customTable = window.scrollViews()[0].tableViews()[1];
 	}
 	
 	function isVisible()
@@ -56,9 +60,9 @@ function PlanPicker()
 	{
 		// for custom plan, or visible pre-plan
 		if(type == 0 || type == "Custom" || 
-		  (mainView.cells()[name].isValid() && mainView.cells()[name].isVisible()))
+		  (customTable.cells()[name].isValid() && customTable.cells()[name].isVisible()))
 		{
-			mainView.cells()[name].tap();
+			customTable.cells()[name].tap();
 			log("Tap [" + name + "]");
 			
 			return;
@@ -82,13 +86,13 @@ function PlanPicker()
 	function getCustomPlans()
 	{
 		// find start index of personal plans
-		start = 3;
+		//start = 3;
 		
 		// get all personal plan's names
-		var cells = mainView.cells();
+		var cells = customTable.cells();
 		var info = [];
-		for(i = start; i < cells.length - 1; i++)
-			info[i - start] = cells[i].name();
+		for(i = 0; i < cells.length - 1; i++)
+			info[i] = cells[i].name();
 		
 		log("Personal plans: " + JSON.stringify(info));
 		return info;
@@ -96,7 +100,8 @@ function PlanPicker()
 	
 	function tapCustomPlan()
 	{
-		var cells = mainView.cells();
+		assignControls();
+		var cells = customTable.cells();
 		
 		n = cells.length;
 		cells[n - 1].tap();

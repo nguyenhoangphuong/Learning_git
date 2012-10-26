@@ -187,7 +187,7 @@ function Navigator()
 			}
 			else
 				// pick default plan
-				pp.pickPlan("Easy", pp.easyStarter);
+				pp.pickPlan(pp.easy, pp.easyStarter);
 		}
 		
 		// reached
@@ -221,7 +221,7 @@ function Navigator()
 		if(pp.isVisible())
 		{
 			if (pinfo == null) {
-				pp.pickPlan("Easy", pp.easyStarter);
+				pp.pickPlan(pp.easy, pp.easyStarter);
 				pi = new PlanInfo();
 				pi.tapGo();
 			}
