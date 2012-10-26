@@ -332,9 +332,9 @@ function Settings()
 		wait();
 		
 		if (confirm.toLowerCase() == "yes")
-			window.buttons()[1].tap();
+			app.actionSheet().buttons()[0].tap();
 		else
-			window.buttons()[0].tap();
+			app.actionSheet().buttons()[1].tap();
 	}
 	
 	function signOut(yes)

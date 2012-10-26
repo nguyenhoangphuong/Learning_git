@@ -20,5 +20,5 @@ verifyNoHistory();
 // ========== When add Records =========
 print("<Verify Number Of Entries>");
 addNumberOfEntryByManualTracking(5);
-verifyNumberOfHistory();
+verifyNumberOfHistory(5);
 // =====================================

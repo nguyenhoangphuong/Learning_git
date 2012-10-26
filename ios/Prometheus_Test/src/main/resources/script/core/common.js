@@ -113,7 +113,7 @@ function assertEqual(actual, expected, logs)
 {
 	if(typeof logs == "undefined")
 		logs = "Assert equal";
-		
+
 	if(actual == expected)
 		log(">>> " + logs + " pass: " + "[" + actual.toString() + "] == [" + expected.toString() + "]");
 	else
