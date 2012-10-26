@@ -1,120 +1,115 @@
-#import "MVPLibs.js"
+//#import "_Navigator.js"
+//#import "_AlertHandler.js"
+//#import "_Prometheus.js"
+//#import "../core/testcaseBase.js"
+//#import "../core/common.js"
+//#import "MultiGoalChooser.js"
+//#import "Home.js"
+//#import "MusicSetting.js"
+//#import "_NavigationBar.js"
+//#import "History.js"
+//#import "Settings.js"
+//#import "../testcases/setting/feedback/settings_feedback_funcs.js"
+//#import "../testcases/setting/feedback/settings_TCs_feedback_non-troublemaker_tryout.js"
+#import "Tracker/GPSTracking.js"
+
+function testSettings()
+{
+//	logTree();
+	var target = UIATarget.localTarget();
+	var app = target.frontMostApp();
+	var window = app.mainWindow();
+	var mainView = window.scrollViews()[0];
+	
+	var s = new Settings();
+	
+/*	log("isVisible: " + s.isVisible());
+	log("isTroublemaker: " + s.isTroublemaker());
+	log("hasSignedIn: " + s.hasSignedIn());
+	s.setGender("Male"); wait();
+	s.setGender("Female"); wait();
+	s.setGender("Male"); wait();
+	s.setGender();*/
+//	s.setName("My name is Slim Shady");
+/*	s.setBirthday(1985, "may", 20);
+	s.setHeight("2", ".50");
+	s.setWeight("50", ".6");*/
+/*	s.setUnit("metrIc");
+	s.setUnit("US");*/
+//	s.tapSupport();
+//	s.tapLike();
+//	s.tapFeedback();
+//	s.tapRate();
+//	s.tapWebsite();
+//	s.resetPlan("yes");
+//	s.signOut();
+	s.sendJIRAFeedback();
+}
+
+function testGPSTracking() {
+	var g = new GPSTracking();
+	
+	log("isVisible: " + g.isVisible());
+	
+	if (g.canPlayMusic())
+	{
+		if (!g.musicIsPlaying()) {
+			log("playMusic");
+			g.playMusic();
+		}
+		
+		log("musicIsPlaying: " + g.musicIsPlaying());
+		wait(5);
+		log("nextSong")
+		g.nextSong();
+		wait(5);
+		log("previousSong");
+		g.previousSong();
+		wait(5);
+		log("pauseMusic");
+		g.pauseMusic();
+	}
+	
+	log("Current info: " + g.getCurrentInfo());
+	log("pause");
+	g.pause();
+	wait(5);
+	log("Current info: " + g.getCurrentInfo());
+	log("resume");
+	g.resume();
+	log("finish");
+	g.finish();
+	wait(1); 
+	log("tapMap");
+	g.tapMap();
+	wait(3);
+	log("mapIsFullscreen: " + g.mapIsFullscreen());
+	g.closeMap();
+	wait(1);
+	g.done();
+	//log("mapIsFullscreen: " + g.mapIsFullscreen());
+}
 
 start("Demo");
+//testSettings();
+//logTree();
 
-testProgress()
+// repeating tracking
+/*
+for (var x = 1; x <= 10; x++) {
+	start("Run: " + x);
+	target.frontMostApp().mainWindow().buttons()["tracker button"].tap();
+	wait(1);
+	target.tap({x:154.50, y:267.00});
+	wait(1);
+	target.frontMostApp().mainWindow().buttons()["Start"].tap();
+	wait(1);
+	testGPSTracking();
+	wait(1);
+}
+*/
+testGPSTracking();
+
+
 
 pass("Demo pass");
-
-
-function testProgress()
-{
-	p = new Progress();
-	
-	/*
-	p.isVisible();
-	p.getActivities();
-	
-	p.tapDate(0);
-	p.tapDate(1);
-	p.tapDate(2);
-	p.tapDate(3);
-	p.tapDate(4);
-	p.tapDate(5);
-	p.tapDate(6);
-	p.tapToday();
-	*/
-	
-	p.tapActivity(0);
-	p.isHistoryRecordsShown();
-	p.isNoActivity();
-	p.getCurrentHistory();
-	p.tapOutside();
-	
-	p.tapActivity(1);
-	p.isHistoryRecordsShown();
-	p.getCurrentHistory();
-	p.isNoActivity();
-	p.tapOutside();
-	
-	p.tapActivity(2);
-	p.isHistoryRecordsShown();
-	p.getCurrentHistory();
-	p.isNoActivity();
-	p.tapOutside();
-}
-
-function testPlanner()
-{
-	p = new Planner();
-	p.getActivities();
-	/*
-	p.isVisible();
-	p.groupByActivity();
-	p.groupByDate();
-	p.getDateRange();
-	p.getAllRecordsOfDate("Today");
-	p.getAllRecordsOfActivity("Running");
-	p.getAllRecordsOfDate("Oct 29");
-	p.getAllRecordsOfActivity("Treadmill");
-	p.getAllRecordsOfActivity("Running");
-	p.getAllRecordsOfActivity("Treadmill");
-	 
-	p.tapEdit();
-	p.tapEditRecord("Oct 29", "Push-up");
-	p.tapX();
-	p.tapEditRecord("Oct 30", "Running");
-	p.setPlanAmount(2.2);
-	p.tapV();
-	wait();
-	p.tapEditRecord("Oct 31", "Swimming");
-	p.setPlanAmount(150);
-	p.tapX();
-	
-	p.tapUndo();
-	p.tapSuggest();
-	p.tapDone();
-	 */
-}
-
-function debug()
-{
-	hr();
-	listControls(app.mainWindow().scrollViews()[0].scrollViews()[0]);
-	hr();
-	listControls(app.mainWindow().scrollViews()[0]);
-	hr();
-	listControls(app.mainWindow());
-	logTree();
-}
-
-function testTracking()
-{
-	t = new Tracking();
-	t.tapGPS();
-	t.getActivitiesInfo();
-	t.tapManual();
-	t.getActivitiesInfo();
-	
-	t.tapGPS();
-	t.tapActivity("Running");
-	log(app.navigationBar().name());
-	app.navigationBar().leftButton().tap();
-	
-	t.tapManual();
-	t.tapActivity("Treadmill");
-	log(app.navigationBar().name());
-	app.navigationBar().leftButton().tap();
-	
-	t.tapManual();
-	t.tapActivity("Elliptical");
-	log(app.navigationBar().name());
-	app.navigationBar().leftButton().tap();
-	
-	t.tapManual();
-	t.tapActivity("Running");
-	log(app.navigationBar().name());
-	app.navigationBar().leftButton().tap();
-}
-
-

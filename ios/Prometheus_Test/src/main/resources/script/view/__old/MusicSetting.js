@@ -26,28 +26,29 @@ function MusicSetting()
 {
 	// Private fields
 	var window = app.mainWindow();
-	var mainView = window;
+	var mainView = window.tableViews()["Empty list"];
 	
-	var shuffleOnBtn = mainView.staticTexts()[1];
-	var shuffleOffBtn = mainView.staticTexts()[2];
-	var smartOnBtn = mainView.staticTexts()[4];
-	var smartOffBtn = mainView.staticTexts()[5];
-	var musicList = mainView.tableViews()[1];
-	
-	var doneBtn = mainView.buttons()[1];
+	var btnMusic = mainView.cells()["Music"].switches()["Music"];
+	var btnSmartDJ = mainView.cells()["Smart DJ"].switches()["Smart DJ"];
+	var cellPlaylist = mainView.cells()[2];
+	var btnPreviousPlaylist = cellPlaylist.buttons()[0];
+	var btnNextPlaylist = cellPlaylist.buttons()[1];
+	var btnShuffle = mainView.cells()["Shuffle"].switches()["Shuffle"];
 	
 	// Methods
 	this.isVisible = isVisible;
 	
-	this.switchShuffle = switchShuffle;
+	this.switchMusic = switchMusic;
 	this.switchSmartDJ = switchSmartDJ;
-	this.selectPlaylists = selectPlaylists;
-	this.done = done;
-	
-	this.getNumberOfPlaylist = getNumberOfPlaylist;
-	this.getAllPlaylistInfo = getAllPlaylistInfo;
-	this.isShuffleOn = isShuffleOn;
+	this.selectPlaylist = selectPlaylist;
+	this.switchShuffle = switchShuffle;
+
+	this.getNumberOfPlaylists = getNumberOfPlaylists;
+	this.getAllPlaylistsInfo = getAllPlaylistInfo;
+	this.isMusicOn = isMusicOn;
 	this.isSmartDJOn = isSmartDJOn;
+	this.isShuffleOn = isShuffleOn;
+
 	this.areOtherPartsHidden = areOtherPartsHidden;
 	
 	// Methods definition
@@ -147,7 +148,7 @@ function MusicSetting()
 		return count;
 	}
 	
-	function getAllPlaylistInfo()
+	function getAllPlaylistsInfo()
 	{
 		count = 0;
 		ele = musicList.cells()[count];

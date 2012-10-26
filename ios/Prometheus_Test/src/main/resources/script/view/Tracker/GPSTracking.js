@@ -1,30 +1,35 @@
 #import "../MVPLibs.js"
 
 /*
-List of functions:
-=========================================================================================
+Function list:
+================================================================================
 - assignControls()
+- assignControlsForResultsScreen()
 - isVisible()
-=========================================================================================
-- canPause()	: check if the progress is running
-- canResume()	: check if the progress is being paused
-- canDone()		: check if the progress has finished and can be done
+================================================================================
+- canPause()		: check if the progress is running
+- canResume()		: check if the progress is being paused
+- canPlayMusic()	: check if music control is enabled for playing
 - musicIsPlaying()	: check if music is playing
-=========================================================================================
-- pause()		: pause the progress
-- resume()		: resume the progress
-- finish()		: finish the progress
-- done()		: done after view the results
-=========================================================================================
-- pauseMusic()	: tap "pause music" button, do nothing when music is paused
-- playMusic()	: tap "play music" button, do nothing when music is playing
-- previousSong(): tap "previous song" button
-- nextSong()	: tap "next song" button
-=========================================================================================
-- getCurrentInfo()	: get current {distance, speed, duration}
-=========================================================================================
-
-to be update: + GetResults
+================================================================================
+- pause()			: pause the progress
+- resume()			: resume the progress
+- finish()			: finish the progress
+- getCurrentInfo()	: get the current (distance, duration, pace)
+================================================================================
+- pauseMusic()		: tap "pause music" button, do nothing when music is paused
+- playMusic()		: tap "play music" button, do nothing when music is playing
+- previousSong()	: tap "previous song" button
+- nextSong()		: tap "next song" button
+================================================================================
+- isAtResultsScreen()
+- canDone()			: check if the progress has finished and can be done
+- tapMap()			: tap on map (to make it fullscreen)
+- closeMap()		: close map when it is fullscreen
+- mapIsFullscreen()
+- done()			: done after view the results
+- getResults()		: get the results (distance, duration, pace)
+================================================================================
 */
 
 function GPSTracking()
@@ -41,29 +46,40 @@ function GPSTracking()
 	var btnToggle;
 	var btnFinish;
 	
-	// Initalize
-	assignControls();
-	
+	var btnDone;
+	var map;
+	var btnCloseMap;
+		
 	// Methods
 	this.assignControls = assignControls;
+	this.assignControlsForResultsScreen = assignControlsForResultsScreen;
 	this.isVisible = isVisible;
 	
 	this.canPause = canPause;
 	this.canResume = canResume;
-	this.canDone = canDone;
+	this.canPlayMusic = canPlayMusic;
 	this.musicIsPlaying = musicIsPlaying;
 	
 	this.pause = pause;
 	this.resume = resume;
 	this.finish = finish;
-	this.done = done;
+	this.getCurrentInfo = getCurrentInfo;
 	
 	this.pauseMusic = pauseMusic;
 	this.playMusic = playMusic;
 	this.previousSong = previousSong;
 	this.nextSong = nextSong;
-		
-	this.getCurrentInfo = getCurrentInfo;
+	
+	this.isAtResultsScreen = isAtResultsScreen;
+	this.canDone = canDone;
+	this.tapMap = tapMap;
+	this.closeMap = closeMap;
+	this.mapIsFullscreen = mapIsFullscreen;
+	this.done = done;
+	this.getResults = getResults;
+	
+	// Initialize
+	assignControls();
 	
 	// Methods definition
 	function assignControls()
@@ -80,32 +96,53 @@ function GPSTracking()
 		btnFinish = mainView.buttons()[4];
 	}
 	
+	function assignControlsForResultsScreen()
+	{
+		if (app.mainWindow().buttons()["Done"].checkIsValid())
+			btnDone = app.mainWindow().buttons()["Done"];
+		else
+			btnDone = null;
+		
+		if (app.mainWindow().elements()[2].checkIsValid())
+			map = app.mainWindow().elements()[2];
+		else
+			map = null;
+		
+		if (app.mainWindow().buttons()["btn close"].checkIsValid())
+			btnCloseMap = app.mainWindow().buttons()["btn close"];
+		else
+			btnCloseMap = null;
+	}
+	
 	function isVisible()
 	{
-		visible = btnFinish.isVisible() && btnFinish.name() == "Finish";
+		visible = btnFinish.isVisible() && btnFinish.name() == "Finish" &&
+				btnToggle.isVisible();
 		
-		log("GPSTracking is visible: " + visible);
+		log("GPS Tracking visibility: " + visible);
 		return visible;
 	}
 	
 	function canPause()
 	{
-		return btnToggle.name() == "Pause";
+		return btnToggle.name().toLowerCase() == "pause";
 	}
 	
 	function canResume()
 	{
-		return btnToggle.name() == "Resume";
+		return btnToggle.name().toLowerCase() == "resume";
 	}
 	
-	function canDone()
+	function canPlayMusic()
 	{
-		btnDone = app.mainWindow().buttons()["Done"];
-		return btnDone.isValid() && btnDone.isVisible();
+		return btnMusicToggle.checkIsValid() &&
+				btnMusicToggle.isVisible();
 	}
 	
 	function musicIsPlaying() 
 	{
+		wait(0.5);
+		
 		return btnMusicToggle.name() == "img pause";
 	}
 	
@@ -134,33 +171,37 @@ function GPSTracking()
 		wait(0.5);
 		btnFinish.tap();
 		log("Tap [Finish]");
+		
+		// TODO: tap Resume and Finish at confirmation
 	}
-
-	function done()
+	
+	function getCurrentInfo()
 	{
-		if (canDone())
-		{
-			btnDone = app.mainWindow().buttons()["Done"];
-			wait(0.5);
-			btnDone.tap();
-			log("Tap [Done]");
-		}
+		var info = {};
+		
+		info.distance = infoView.staticTexts()[2].name();
+		info.duration = infoView.staticTexts()[5].name();
+		info.pace = infoView.staticTexts()[6].name();
+		
+		log("Current tracking info: " + JSON.stringify(info));
+		
+		return info;
 	}
 
 	function pauseMusic()
 	{
-		if (musicIsPlaying())
+		if (musicIsPlaying()) {
 			btnMusicToggle.tap();
-		
-		log("Tap [Pause Music]");
+			log("Tap [Pause Music]");
+		}
 	}
 	
 	function playMusic()
 	{
-		if (!musicIsPlaying())
+		if (!musicIsPlaying()) {
 			btnMusicToggle.tap();
-		
-		log("Tap [Play Music]");
+			log("Tap [Play Music]");
+		}
 	}
 	
 	function previousSong()
@@ -174,16 +215,69 @@ function GPSTracking()
 		btnMusicNext.tap();
 		log("Tap [Next]");
 	}
+	
+	function isAtResultsScreen()
+	{
+		assignControlsForResultsScreen();
+		
+		return btnDone != null ||
+				map != null ||
+				btnCloseMap != null;
+	}
 
-	function getCurrentInfo()
+	function canDone()
+	{
+		return (isAtResultsScreen() && btnDone != null);
+	}
+	
+	function tapMap()
+	{
+		if (isAtResultsScreen() && map != null) {
+			wait(0.5);
+			map.tap();
+			log("Tap map");
+		}
+	}
+	
+	function closeMap()
+	{
+		if (mapIsFullscreen()) {
+			wait(0.5);
+			btnCloseMap.tap();
+			log("Close map");
+		}
+	}
+	
+	function mapIsFullscreen() {
+		return (isAtResultsScreen() &&
+				btnCloseMap != null &&
+				btnCloseMap.checkIsValid() &&
+				btnCloseMap.isVisible());
+	}
+	
+	function done()
+	{
+		if (canDone())
+		{			
+			wait(0.5);
+			btnDone.tap();
+			log("Tap [Done]");
+		}
+	}
+	
+	function getResults()
 	{
 		var info = {};
-		info.distance = window.staticTexts()[1].name();
-		info.duration = window.staticTexts()[4].name();
-		info.speed = window.staticTexts()[5].name();
-
-		log("Current tracking info: " + JSON.stringify(info));
+		// TODO: update this when possible (currently it is impossible)
+		/*
+		info.distance = infoView.staticTexts()[2].name();
+		info.duration = infoView.staticTexts()[5].name();
+		info.pace = infoView.staticTexts()[6].name();
 		
+		log("result.distance: " + info.distance);
+		log("result.duration: " + info.duration);
+		log("result.pace: " + info.pace);
+		*/
 		return info;
 	}
 }
