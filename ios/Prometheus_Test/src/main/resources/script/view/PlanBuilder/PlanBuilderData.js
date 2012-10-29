@@ -17,3 +17,17 @@ pinfodefault =
 	type: pp.easy,
 	name: pp.easyStarter
 }
+
+pinfonormal =
+{
+	type: pp.normal,
+	name: pp.normalMover
+}
+
+pinfoactive =
+	{
+		type: pp.active,
+		name: pp.activeShaker
+	}
+
+

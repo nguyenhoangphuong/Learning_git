@@ -12,6 +12,8 @@ List of functions:
 - tapActivity(name)	: tap activity icon (ex: "Running")
 
 - getActivitiesInfo()	: return [{name: Running, percent: 0%}, ...]
+- hasGPSActivity()	: TODO: check if this plan has at least 1 GPS activity or not
+					GPS button is tapped after this function
 =========================================================================================
 */
 
@@ -38,6 +40,7 @@ function Tracking()
 	this.tapActivity = tapActivity;
 	
 	this.getActivitiesInfo = getActivitiesInfo;
+	this.hasGPSActivity = hasGPSActivity;
 	
 	// Method definitions
 	function assignControls()
@@ -109,5 +112,15 @@ function Tracking()
 		}
 		
 		log("Activities info: " + JSON.stringify(info));
+		
+		return info;
+	}
+	
+	function hasGPSActivity()
+	{
+//		gpsBtn.tap();
+//		assignControls();
+//		
+//		return gpsBtn.value() == 1;
 	}
 }

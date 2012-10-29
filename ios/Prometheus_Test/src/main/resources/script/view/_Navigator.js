@@ -296,9 +296,20 @@ function Navigator()
 	}
 	
 	
-	function toTracking(email, password, uinfo, activity, number, login)
+	function toTracking(email, pwd, userinfo, pinfo, login)
 	{
+		toProgress(email, pwd, userinfo, pinfo, login);
 
+		var tabBar = new TabBar();
+		
+		if (tabBar.isVisible()) {
+			tabBar.tapTracker();
+			wait(1);
+			
+			return new Tracking();
+		}
+		else
+			return null;
 	}
 	
 	function toManualTracking()
@@ -306,14 +317,31 @@ function Navigator()
 		
 	}
 	
-	function toGPSTracking()
+	function toGPSTracking(email, pwd, userinfo, pinfo, login)
 	{
+		var music = toMusic(email, pwd, userinfo, pinfo, login);
 		
+		music.start();
 	}
 	
-	function toMusic(email, password, uinfo, activity, number, login)
+	function toMusic(email, pwd, userinfo, pinfo, login)
 	{
-
+		toTracking(email, pwd, userinfo, pinfo, login);
+		
+		var tracking = new Tracking();
+		
+		if (tracking.isVisible()) {
+			tracking.tapGPS();
+			
+			var activities = tracking.getActivitiesInfo();
+			
+			tracking.tapActivity(activities[0].name);
+			wait(1);
+			
+			return new Music();
+		}
+		else
+			return null;
 	}
 }
 
