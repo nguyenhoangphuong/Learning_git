@@ -11,7 +11,7 @@ log("2. Troublemaker account");
 
 // log in with troublemaker account
 log("   2.1. Log in")
-nav.toSettings("tung@misfitwearables.com", "misfit1", null, null, null, true);
+nav.toSettings("tung@misfitwearables.com", "misfit1", null, null, true);
 
 log("   2.2. Check troublemaker is shown")
 verifyTroublemakerShown();

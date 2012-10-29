@@ -1,11 +1,8 @@
-#import "../../view/Settings.js"
-#import "../../view/_Navigator.js"
-#import "../../core/testcaseBase.js"
-#import "../../view/_Prometheus.js"
+#import "../../view/MVPLibs.js"
 
 function GoToSettingScreen()
 {
-	nav.toSettings(null, null, null, "Running", 10);
+	nav.toSettings(null, null, null, null);
 }
 
 function VerifyEmailSupportWithoutAccount()

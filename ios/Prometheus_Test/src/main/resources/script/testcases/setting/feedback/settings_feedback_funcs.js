@@ -1,5 +1,4 @@
-#import "../../../core/testcaseBase.js"
-#import "../../../view/_Navigator.js"
+#import "../../../view/MVPLibs.js"
 
 
 function verifyTroublemakerShown()
