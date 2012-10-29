@@ -4,7 +4,7 @@
 function initStartView()
 {
 	// to history
-	nav.toHistory(null, null, null, pinfo , null);
+	nav.toHistory(null, null, null, pinfodefault , null);
 }
 
 
@@ -36,7 +36,7 @@ function addEntryByManualTracking()
 	
 	var tracking = new Tracking();
 	tracking.tapManual();
-	tracking.tapActivity("Running");
+	tracking.tapActivity("Treadmill");
 	
 	var manualtracking = new ManualTracking();
 	manualtracking.done();

@@ -1,3 +1,5 @@
+#import "PlanPicker.js"
+
 planBuilderData = 
 {
 	prepackage:
@@ -8,4 +10,10 @@ planBuilderData =
 		
 		theShakersPlan: [{name: "Swimming", value: "1800.00 ft"}, {name: "Push-up", value: "245 reps"}, {name: "Treadmill", value: "8.00 miles"}],
 	}
+}
+var pp = new PlanPicker();
+pinfodefault =
+{
+	type: pp.easy,
+	name: pp.easyStarter
 }

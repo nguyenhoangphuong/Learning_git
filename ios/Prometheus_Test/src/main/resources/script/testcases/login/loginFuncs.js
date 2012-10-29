@@ -74,27 +74,24 @@ function verifyClientVerification()
 	
 	// SignIn with invalid password [length < 6]
 	hr();
-	print("<SignIn with password: " + SignInTD.wrongPwd + ">");
-	signin.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
-	wait(10);
-	assertTrue(signin.isWrongSignInAlertShown(), "Invalid password alert shown");
-	wait(10);
+	print("<SignIn with password: " + "ab12" + ">");
+	signin.signIn(SignInTD.existedEmail, "ab12");
+	assertTrue(signin.isInvalidPasswordAlertShown(), "Invalid password alert shown");
+	wait();
 	
 	// SignIn with invalid password [length == 6, all are letters]
 	hr();
-	print("<SignIn with password: " + SignInTD.wrongPwd + ">");
-	signin.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
-	wait(10);
-	assertTrue(signin.isWrongSignInAlertShown(), "Invalid password alert shown");
-
+	print("<SignIn with password: " + "aaaaaa" + ">");
+	signin.signIn(SignInTD.existedEmail, "aaaaaa");
+	assertTrue(signin.isInvalidPasswordAlertShown(), "Invalid password alert shown");
+	wait();
 	
 	// SignIn with invalid password [length == 6, all are digits]
 	hr();
-	print("<SignIn with password: " + SignInTD.wrongPwd + ">");
-	signin.signIn(SignInTD.existedEmail, SignInTD.wrongPwd);
-	wait(10);
-	assertTrue(signin.isWrongSignInAlertShown(), "Invalid password alert shown");
-
+	print("<SignIn with password: " + "123456" + ">");
+	signin.signIn(SignInTD.existedEmail, "123456");
+	assertTrue(signin.isInvalidPasswordAlertShown(), "Invalid password alert shown");
+	wait();
 }
 
 function verifyBackendVerification()

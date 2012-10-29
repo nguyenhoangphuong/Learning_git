@@ -16,7 +16,7 @@ function GoToPlanBuilder()
 
 function GotoCustomizePlanInfo()
 {
-	nav.toPlanInfo(null, null, null, pinfodefault, null)
+	nav.toPlanInfo(null,null,null,pinfodefault,null)
 	var planinfo = new PlanInfo();
 	planinfo.tapCustom();
 }
@@ -24,7 +24,7 @@ function GotoCustomizePlanInfo()
 
 // ==============================================
 
-// ===================== Test function =========================
+// ===================== Test function=========================
 
 
 function VerifyNameNotNull()

@@ -11,7 +11,7 @@ verifyNoHistory();
 
 // ========== reset plan ===============
 print("<Verify Reset Plan>");
-resetPlan("Easy", "The Starter's Plan");
+resetPlan(pinfodefault.type, pinfodefault.name);
 verifyNoHistory();
 // =====================================
 
@@ -22,3 +22,4 @@ print("<Verify Number Of Entries>");
 addNumberOfEntryByManualTracking(5);
 verifyNumberOfHistory(5);
 // =====================================
+
