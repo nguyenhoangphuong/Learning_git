@@ -39,9 +39,9 @@ function PlanPicker()
 	this.normal = "Normal";
 	this.active = "Active";
 	
-	this.easyStarter = "The Starter’s Plan";
-	this.normalMover= "The Mover’s Plan";
-	this.activeShaker="The Shaker’s Plan";
+	this.easyStarter = "The Starter's Plan";
+	this.normalMover= "The Mover's Plan";
+	this.activeShaker="The Shaker's Plan";
 	
 	// Methods definition
 	function assignControls()
