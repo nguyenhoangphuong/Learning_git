@@ -17,7 +17,7 @@ public class SettingsTest extends AutomationTest {
 				.launchInstrument(
 						AppHelper.getCurrentUdid(),
 						AppHelper.getAppPath(),
-						"script/testcases/setting/feedback/settings_TCs_feedback_non-troublemaker_tryout.js");
+						"script/testcases/Setting/feedback/settings_TCs_feedback_non-troublemaker_tryout.js");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVP3", "settings" })
@@ -28,7 +28,7 @@ public class SettingsTest extends AutomationTest {
 		AppHelper
 				.launchInstrument(AppHelper.getCurrentUdid(),
 						AppHelper.getAppPath(),
-						"script/testcases/setting/feedback/settings_TCs_feedback_troublemaker.js");
+						"script/testcases/Setting/feedback/settings_TCs_feedback_troublemaker.js");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVP3", "settings" })
@@ -38,7 +38,7 @@ public class SettingsTest extends AutomationTest {
 		ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
 				AppHelper.getAppPath(),
-				"script/testcases/setting/settings_TCs_1.js");
+				"script/testcases/Setting/settings_TCs_1.js");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVP3", "settings" })
@@ -48,7 +48,7 @@ public class SettingsTest extends AutomationTest {
 		ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
 				AppHelper.getAppPath(),
-				"script/testcases/setting/settings_TCs_2_Like.js");
+				"script/testcases/Setting/settings_TCs_2_Like.js");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVP3", "settings" })
@@ -58,7 +58,7 @@ public class SettingsTest extends AutomationTest {
 		ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
 				AppHelper.getAppPath(),
-				"script/testcases/setting/settings_TCs_3_Web.js");
+				"script/testcases/Setting/settings_TCs_3_Web.js");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVP3", "settings" })
@@ -68,6 +68,6 @@ public class SettingsTest extends AutomationTest {
 		ShortcutsTyper.delayTime(1000);
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
 				AppHelper.getAppPath(),
-				"script/testcases/setting/settings_TCs_4_Rate.js");
+				"script/testcases/Setting/settings_TCs_4_Rate.js");
 	}
 }

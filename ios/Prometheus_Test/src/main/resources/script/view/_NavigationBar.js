@@ -1,6 +1,3 @@
-#import "MVPLibs.js"
-
-
 /*
 
 	NavigationBar class represents the bar at the top of the screen
@@ -27,7 +24,7 @@ function NavigationBar()
 	this.settingsIsVisible = settingsIsVisible;
 	
 	function isVisible() {
-		return app.navigationBar().isVisible();
+		return UIATarget.localTarget().frontMostApp().navigationBar().isVisible();
 	}
 	
 	function xScreenIsVisible(screenName) {
@@ -40,11 +37,11 @@ function NavigationBar()
 	}
 	
 	function plannerIsVisible() {
-		return app.mainWindow().buttons()["Auto-suggest"].isVisible();
+		return UIATarget.localTarget().frontMostApp().mainWindow().buttons()["Auto-suggest"].isVisible();
 	}
 	
 	function historyIsVisible() {
-		return app.navigationBar().segmentedControls()[0].buttons()["Date"].isVisible();
+		return UIATarget.localTarget().frontMostApp().navigationBar().segmentedControls()[0].buttons()["Date"].isVisible();
 	}
 	
 	function settingsIsVisible() {

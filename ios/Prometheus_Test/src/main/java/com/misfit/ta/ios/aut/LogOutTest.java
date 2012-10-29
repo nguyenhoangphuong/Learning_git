@@ -10,12 +10,12 @@ import com.misfit.ta.utils.ShortcutsTyper;
 //------------------class-------------------------------//
 public class LogOutTest extends AutomationTest
 {
-	@Test(groups = { "ios", "Prometheus", "MVP2", "logout" })
+	@Test(groups = { "ios", "Prometheus", "MVP3", "logout" })
 	public void LogOutValidAnonymous() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-			AppHelper.getAppPath(), "script/testcases/logout/logout_TCs.js");
+			AppHelper.getAppPath(), "script/testcases/LogOut/logout_TCs.js");
 	}
 }

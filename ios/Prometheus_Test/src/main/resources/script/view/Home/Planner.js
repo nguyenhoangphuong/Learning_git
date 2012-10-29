@@ -14,7 +14,7 @@ List of functions:
 - getAllRecordsOfDate(date)			: get all records of date 
 									  [{name: Running, value: 0.47 miles}, {}, ...]
 - getAllRecordsOfActivity(name)		: get all records of activity
-									  {activity: Running, total: 4.00 miles,
+									  {name: Running, total: 4.00 miles,
 									   dates: [{date: Oct 25, value: 0.47 miles}, {}, ...]}
 =========================================================================================
 - tapEdit()							: tap Edit button
@@ -181,7 +181,7 @@ function Planner()
 		{
 			text = cells[i].name();
 			name = text.substring(0, text.indexOf(","));
-			value = text.substring(text.indexOf(", ") + 1);
+			value = text.substring(text.indexOf(", ") + 2);
 				
 			info[i - start] = {name: name, value: value};
 		}
@@ -221,15 +221,15 @@ function Planner()
 		str = cells[start].name();
 		
 		var info = {};
-		info.activity = str.substring(0, str.indexOf(","));
-		info.total = str.substring(str.indexOf(", ") + 1);
+		info.name = str.substring(0, str.indexOf(","));
+		info.total = str.substring(str.indexOf(", ") + 2);
 		info.dates = [];
 		
 		for(i = start + 1; i <= end; i++)
 		{
 			text = cells[i].name();
 			date = text.substring(0, text.indexOf(","));
-			value = text.substring(text.indexOf(", ") + 1);
+			value = text.substring(text.indexOf(", ") + 2);
 			
 			info.dates[i - start - 1] = {date: date, value: value};
 		}

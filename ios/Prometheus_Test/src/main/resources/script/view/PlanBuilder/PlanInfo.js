@@ -120,7 +120,7 @@ function PlanInfo()
 		{
 			text = cells[i].name();
 			name = text.substring(0, text.indexOf(","));
-			value = text.substring(text.indexOf(", ") + 1);
+			value = text.substring(text.indexOf(", ") + 2);
 			
 			info[i] = {name: name, value: value};
 		}

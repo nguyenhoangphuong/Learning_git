@@ -7,8 +7,8 @@ List of function:
 - isVisible()
 ================================================================================
 - setName(planName)							: set name of the plan
-- back										: press back button
-- start										: press start button
+- back()									: press back button
+- start()									: press start button
 
 - pickActivity(id, useIndex)				: pick an activity with name or index
 - removeActivity(id, useIndex)				: remove an activity with name or index
@@ -64,8 +64,6 @@ function PlanBuilder()
 		assignControls();
 		visible = app.navigationBar().name() == "Custom Plan";
 		
-		log("AAbd: " + (app.navigationBar().name() == "Custom Plan"));
-		log(app.navigationBar().name());
 		log("PlanBuilder is visible: " + visible);	
 		return visible;
 	}
@@ -101,9 +99,8 @@ function PlanBuilder()
 		
 		if(typeof useIndex == "undefined") {
 			useIndex = false;
-			log("1111");
 		}
-		var	button = useIndex? iconsList[id] : iconsList["icon " + id];
+		var	button = useIndex? iconsList[id] : iconsList["icon " + id.toLowerCase().replace("-", "")];
 
 		// dragging
 		button.scrollToVisible();
@@ -155,6 +152,7 @@ function PlanBuilder()
 			return;
 		
 		// find index
+		var i;
 		if(!useIndex)
 		{
 			texts = mainView.staticTexts();
@@ -166,7 +164,6 @@ function PlanBuilder()
 		var btn = mainView.buttons()[id * 2 + 1];
 		btn.tap()
 		app.keyboard().typeString(amount);
-		app.keyboard().typeString("\n");
 		app.toolbar().buttons()["Done"].tap();
 	}
 	

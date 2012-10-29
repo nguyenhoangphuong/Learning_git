@@ -12,32 +12,32 @@ public class LoginTest extends AutomationTest
 {
 	 
 	 //--------------back end---------------------//
-	@Test(groups = { "ios", "Prometheus", "MVP2", "login" })
+	@Test(groups = { "ios", "Prometheus", "MVP3", "login" })
 	public void LoginBackendTest() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-			AppHelper.getAppPath(), "script/testcases/login/login_backendVerification_TCs.js");
+			AppHelper.getAppPath(), "script/testcases/LogIn/login_backendVerification_TCs.js");
 	}
 	
 	 //--------------client---------------------//
-	@Test(groups = { "ios", "Prometheus", "MVP2", "login" })
+	@Test(groups = { "ios", "Prometheus", "MVP3", "login" })
 	public void LoginClientTest() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-			AppHelper.getAppPath(), "script/testcases/login/login_clientVerification_TCs.js");
+			AppHelper.getAppPath(), "script/testcases/LogIn/login_clientVerification_TCs.js");
 	}
 	
 	 //--------------translation---------------------//
-	@Test(groups = { "ios", "Prometheus", "MVP2", "login" })
+	@Test(groups = { "ios", "Prometheus", "MVP3", "login" })
 	public void LoginTranslationTest() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-			AppHelper.getAppPath(), "script/testcases/login/login_translation_TCs.js");		
+			AppHelper.getAppPath(), "script/testcases/LogIn/login_translation_TCs.js");		
 	}
 }

@@ -21,6 +21,7 @@ function PlanPicker()
 	
 	var window;
 	var mainView;
+	var customTable;
 	
 	// Initalize controls
 	assignControls();
@@ -33,9 +34,11 @@ function PlanPicker()
 	this.getCustomPlans = getCustomPlans;
 	this.tapCustomPlan = tapCustomPlan;
 	this.getPrepackagePlan = getPrepackagePlan;
+	
 	this.easy = "Easy";
 	this.normal = "Normal";
 	this.active = "Active";
+	
 	this.easyStarter = "The Starter’s Plan";
 	this.normalMover= "The Mover’s Plan";
 	this.activeShaker="The Shaker’s Plan";
@@ -58,9 +61,8 @@ function PlanPicker()
 	
 	function pickPlan(type, name)
 	{
-		// for custom plan, or visible pre-plan
-		if(type == 0 || type == "Custom" || 
-		  (customTable.cells()[name].isValid() && customTable.cells()[name].isVisible()))
+		// for custom plan
+		if(type == 0 || type == "Custom")
 		{
 			customTable.cells()[name].tap();
 			log("Tap [" + name + "]");
@@ -68,6 +70,16 @@ function PlanPicker()
 			return;
 		}
 		
+		// for prepackage plan which is visible now
+		if(mainView.cells()[name].isValid() && mainView.cells()[name].isVisible())
+		{
+			mainView.cells()[name].tap();
+			log("Tap [" + name + "]");
+			
+			return;
+		}
+		
+		// if not visible, expand the group
 		if(type == 1 || type == "Easy")
 			mainView.cells()["Easy"].tap();
 		
@@ -77,17 +89,14 @@ function PlanPicker()
 		if(type == 3 || type == "Active")
 			mainView.cells()["Active"].tap();
 		
-		wait(2);
+		wait(0.5);
 		
 		mainView.cells()[name].tap();
 		log("Tap [" + name + "]");
 	}
 	
 	function getCustomPlans()
-	{
-		// find start index of personal plans
-		//start = 3;
-		
+	{	
 		// get all personal plan's names
 		var cells = customTable.cells();
 		var info = [];
@@ -100,7 +109,6 @@ function PlanPicker()
 	
 	function tapCustomPlan()
 	{
-		assignControls();
 		var cells = customTable.cells();
 		
 		n = cells.length;
@@ -130,5 +138,3 @@ function PlanPicker()
 		return null;
 	}
 }
-
-var planPicker = new PlanPicker();

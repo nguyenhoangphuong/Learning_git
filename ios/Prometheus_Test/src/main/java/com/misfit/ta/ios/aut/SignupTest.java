@@ -17,7 +17,7 @@ public class SignupTest extends AutomationTest{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-									AppHelper.getAppPath(), "script/testcases/signup/signup_invalidValidation_TCs.js");
+									AppHelper.getAppPath(), "script/testcases/SignUp/signup_invalidValidation_TCs.js");
 	
 	}
 	
@@ -28,7 +28,7 @@ public class SignupTest extends AutomationTest{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-									AppHelper.getAppPath(), "script/testcases/signup/signup_ValidValidation_TCs.js");
+									AppHelper.getAppPath(), "script/testcases/SignUp/signup_ValidValidation_TCs.js");
 		
 	}
 	

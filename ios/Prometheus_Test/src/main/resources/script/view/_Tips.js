@@ -16,7 +16,7 @@
 #import "Tracker/Tracking.js"
 #import "Tracker/ManualTracking.js"
 #import "Tracker/GPSTracking.js"
-//#import "Tracker/MusicSetting.js"
+#import "Tracker/Music.js"
 
 /*
 This handles the tips
