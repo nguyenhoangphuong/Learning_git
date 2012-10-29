@@ -27,10 +27,10 @@ function History()
 	var recordList;
 	
 	// Initalize
-	assignControls();
+	//assignControls();
 	
 	// Public methods
-	this.assignControls = assignControls;
+	//this.assignControls = assignControls;
 	this.isVisible = isVisible;
 	this.isNoHistory = isNoHistory;
 	this.getDateRange = getDateRange;
