@@ -321,6 +321,7 @@ function Navigator()
 	{
 		var music = toMusic(email, pwd, userinfo, pinfo, login);
 		
+		wait(2);
 		music.start();
 	}
 	

@@ -55,7 +55,7 @@ function Tracking()
 	
 	function isVisible()
 	{
-		visible = app.navigationBar().name() == "New Activity";
+		visible = app.navigationBar().name() == "New Session";
 		
 		log("Tracking is visible: " + visible);
 		return visible;

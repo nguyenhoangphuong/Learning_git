@@ -104,7 +104,7 @@ function GPSTracking()
 			btnDone = null;
 		
 		if (app.mainWindow().elements()[2].checkIsValid())
-			map = app.mainWindow().elements()[2];
+			map = app.mainWindow().scrollViews()[0].elements()[0];
 		else
 			map = null;
 		
