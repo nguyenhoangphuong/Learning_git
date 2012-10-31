@@ -87,7 +87,7 @@ function Progress()
 		images = mainView.images();
 		count = -1;
 		
-		for(i = 0; i < images.length; i++)
+		for(var i = 0; i < images.length; i++)
 		{
 			size = images[i].rect().size;
 			if(size.width == 83 && size.height == 83)

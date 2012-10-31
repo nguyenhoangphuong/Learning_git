@@ -43,7 +43,11 @@ function ManualTracking()
 	var cancelBtn = mainView.buttons()["Cancel"];
 	var doneBtn = mainView.buttons()["Save activity"];
 	
+	// Initalize
+	assignControls();
+	
 	// Public methods
+	this.assignControls = assignControls;
 	this.isVisible = isVisible;
 	this.isInInputMode = isInInputMode;
 	
@@ -55,10 +59,7 @@ function ManualTracking()
 	this.tapBack = tapBack;
 	this.tapDone = tapDone;
 	this.cancel = cancel;
-	this.done = done;
-	
-	this.isWeekGoalFinishedAlertShown = isWeekGoalFinishedAlertShown;
-	this.isTodayGoalFinishedAlertShown = isTodayGoalFinishedAlertShown;
+	this.save = save;
 	
 	//MVP3: done()
 	function done()
@@ -230,7 +231,10 @@ function ManualTracking()
 		log("Tap [Cancel]");
 	}
 	
+	function save()
+	{
 		
+	}
 	
 	function isWeekGoalFinishedAlertShown()
 	{

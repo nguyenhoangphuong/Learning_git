@@ -243,7 +243,7 @@ function Navigator()
 					pb.pickActivity(pinfo.activities[i].name.toLowerCase());
 				
 				for(i = 0; i < pinfo.activities.length; i++)
-					pbActivityGoal(i, pinfo.activities[i].value);
+					pb.setActivityGoal(info.activities[i].name, pinfo.activities[i].value.toString());
 				
 				pb.save();
 			}
