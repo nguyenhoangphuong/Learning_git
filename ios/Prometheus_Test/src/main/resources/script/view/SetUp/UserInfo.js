@@ -6,216 +6,162 @@ UserInfo view function:
 - assignControls()
 - isVisible()
 =========================================================================================
-- setInfo(age, w1, w2, h1, h2)		:	set user information
-	+ setInfo(18, 83, 0.3, "8'", "5\"") for US
-	+ setInfo(18, 50, 0.4, 1 , 0.99) 	for SI
-- setAge(age)						:	|
-- setWeight(w1, w2)					:	| single function for setting values
-- setHeight(h1, h2)					:	|
+- setWeight(w1, w2)					:	setWeight(86, ".2")
+- setHeight(h1, h2)					:	setHeight("5'", "9\"") or setHeight(1, ".75")
 - setSex(sex)						:	set user sex ("male" / "female")
+- setUnit(unit)						:	set user unit ("us" / "si")
 - submit()							:	submit the form
 =========================================================================================
-- changeHeight(dy)					:	change user height by dragging onto image
-	+ dy > 0: make shorter
-	+ dy < 0: make taller
-- changeWeight(dx)					:	change user weight by dragging onto image
-	+ dx > 0: make fatter
-	+ dx < 0: make thinner
+- getWidth()						:	return string in width cell
+- getHeight()						:	return string in height cell
 =========================================================================================
-- isMale()							:	check if sex switch is Male
-- isUS()							:	check if unit switch is US
-- getInfo()							:	return the info {age, weight, height}
-	+ age		:	32 (int)
-	+ weight	:	163.0 (float)
-	+ height	:	"1.75" or "5'5"" (string)
-=========================================================================================
-
-MAY BE CHANGES
-- setInfo	: base on new design
-- isBackButtonExist: back button may exist in some case
-- isMale : since there will be no Unit switch
 */
 
 function UserInfo(view)
 {
 	// Private fields
-	if(typeof view == "undefined")
-		var mainView = app.mainWindow();
-	else
-		var mainView = view;
-
-	var age = mainView.staticTexts()[1];
-	var weight = mainView.staticTexts()[3];
-	var height = mainView.staticTexts()[5];
+	var window;
+	var mainView;
 	
-	var next = mainView.buttons()["next"];
-	if(!next.isValid())
-		next = mainView.buttons()["Next"];
+	var usBtn;
+	var siBtn;
+	var maleBtn;
+	var femaleBtn;
+	var weightBtn;
+	var heightBtn;
 	
-	var cancel = mainView.buttons()["cancel"];
-	var done = mainView.buttons()["done"];
-		
+	var submitBtn;
+	
+	// Initalize
+	assignControls();
+	
 	// Methods
+	this.assignControls = assignControls;
 	this.isVisible = isVisible;
 	
-	this.setInfo = setInfo;
-	this.setAge = setAge;
 	this.setHeight = setHeight;
 	this.setWeight = setWeight;
 	this.setSex = setSex;
+	this.setUnit = setUnit;
 	this.submit = submit;
 	
-	this.changeWeight = changeWeight;
-	this.changeHeight = changeHeight;
-	this.getInfo = getInfo;
-	
-	this.isMale = isMale;
-	this.isUS = isUS;
+	this.getWidth = getWidth;
+	this.getHeight = getHeight;
 	
 	// Methods definition
-	 function isVisible() {
-        var visible = ("Personal info" == app.navigationBar().name());
+	function assignControls()
+	{
+		window = app.mainWindow();
+		mainView = window.tableViews()[0];
+		cells = mainView.cells();
+		
+		usBtn = cells[0].buttons()[0];
+		siBtn = cells[0].buttons()[1];
+		maleBtn = cells[1].buttons()[0];
+		femaleBtn = cells[1].buttons()[1];
+		weightBtn = cells[2];
+		heightBtn = cells[3];
+		
+		submitBtn = window.buttons()[0];
+	}
+	
+	function isVisible() 
+	{
+        var visible = ("About me" == app.navigationBar().name());
  		log("Personal Info is visible: " + visible);
- 		log(app.navigationBar().name());
+
  		return visible;
     }
- 	
 	
-	
-	function setInfo(a, w1, w2, wu, h1, h2, hu)
-	{
-		// set age
-		setAge(a);
-		
-		// set weight
-		setWeight(w1, w2, wu);
-		
-		// set height
-		setHeight(h1, h2, hu);
-	}
-	
-	function setAge(a)
-	{
-		a = a.toString();
-		
-		wait(0.5);
-		age.tap();
-		log("Tap [Age]");
-		
-		wait(0.5);
-		picker = mainView.pickers()[0];
-		wheelPick(picker, 0, a);
-		log("Pick value: " + a);
-		
-		done = mainView.buttons()[1];
-		done.tap();
-	}
-	
-	function setWeight(w1, w2, wu)
+	function setWeight(w1, w2)
 	{
 		w1 = w1.toString(); w2 = w2.toString();
 		
 		wait(0.5);	
-		weight.tap();
+		weightBtn.tap();
 		log("Tap [Weight]");
 		
 		wait(0.5);
-		picker = mainView.pickers()[0];
-		wheelPick(picker, 2, wu);
+		pickWin = app.windows()[1];
+		picker = pickWin.pickers()[0];
+
 		wheelPick(picker, 0, w1);
 		wheelPick(picker, 1, w2);
 		log("Pick value: " + w1 + " - " + w2);
 		
-		done = mainView.buttons()[1];
+		done = pickWin.toolbar().buttons()[0];
 		done.tap();
 	}
 	
-	function setHeight(h1, h2, hu)
+	function setHeight(h1, h2)
 	{
 		h1 = h1.toString(); h2 = h2.toString();
 		
 		wait(0.5);
-		height.tap();
+		heightBtn.tap();
 		log("Tap [Height]");
 		
 		wait(0.5);
-		picker = mainView.pickers()[0];
-		wheelPick(picker, 2, hu);
+		pickWin = app.windows()[1];
+		picker = pickWin.pickers()[0];
+		
 		wheelPick(picker, 0, h1);
 		wheelPick(picker, 1, h2);
 		log("Pick value: " + h1 + " - " + h2);
 		
-		done = mainView.buttons()[1];
+		done = pickWin.toolbar().buttons()[0];
 		done.tap();
 	}
 	
-	
 	function setSex(s)
 	{
-		wait();
-		if(s == "male" && !isMale())
-		{
-			sex = mainView.buttons()["Male"];
-			sex.tap();
-			log("Set sex: Male");
-		}
-		if(s == "female" && isMale())
-		{
-			sex = mainView.buttons()["Female"];
-			sex.tap();
-			log("Set sex: Female");
-		}
+		wait(0.5);
+		
+		if(s == "male" || s == "m")
+			maleBtn.tap();
+		
+		if(s == "female"|| s == "f")
+			femaleBtn.tap();
+		
+		log("Set sex: " + s);
+	}
+	
+	function setUnit(u)
+	{
+		wait(0.5);
+		
+		if(u == "us")
+			usBtn.tap();
+		
+		if(u == "si")
+			siBtn.tap();
+		
+		log("Set sex: " + u);
 	}
 	
 	function submit()
 	{
 		wait(0.5);
-		app.mainWindow().buttons()[0].tap();
+		submitBtn.tap();
 		
 		log("Tap [Next]");
 	}
 	
-
-	function changeWeight(dx) 
+	function getWidth()
 	{
-		wait();
-		swipeHorizontally(160, 240, 160 + dx);
+		var text = widthBtn.name();
+		var w = text.substring(text.indexOf(",") + 2);
 		
-		log("Change weight by swiping: " + dx);
+		log("Width: " + w);
+		return w;
 	}
 	
-	function changeHeight(dy) 
+	function getHeight()
 	{
-		wait();
-		swipeVertically(160, 240, 240 + dy);
+		var text = heightBtn.name();
+		var h = text.substring(text.indexOf(",") + 2);
 		
-		log("Change height by swiping: " + dy);
-	}
-	
-	function getInfo()
-	{
-		var info = {};
-		info.age = parseInt(age.name());
-		info.weight = parseFloat(weight.name());
-		info.height = height.name();
-		
-		log("userinfo.age: " + info.age);
-		log("userinfo.weight: " + info.weight);
-		log("userinfo.height: " + info.height);
-		
-		return info;
-	}
-	
-	
-	// helpers
-	function isMale()
-	{
-		male = mainView.buttons()["Male"];
-		return male.isValid() && male.isVisible();
-	}
-	
-	function isUS()
-	{
-		return staticTextExist("(lbs)");
+		log("Height: " + h);
+		return h;
 	}
 }

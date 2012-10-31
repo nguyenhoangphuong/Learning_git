@@ -3,9 +3,9 @@
 /*
 List of functions:
 ================================================================================
+- assignControls()
 - isVisible()					: check if current view is Sign up or sign in
-- isSignInVisible()				: check if current view is "SignIn"
-- isSignUpVisible()				: check if current view is "Sign up"
+- isLegalShown()				: check if legal info is shown
 ================================================================================
 - tapSignInTab()				: tap SignIn button
 - tapSignUpTab()				: tap "Sign up" button
@@ -40,7 +40,6 @@ function SignIn()
 	var btnConfirm ;
 	
 	var btnTryout ;
-//	var btnLegal ;
 	
 	var emailField ;
 	var pwdField ;
@@ -49,9 +48,9 @@ function SignIn()
 	assignControls();
 	
 	// Methods
+	this.assignControls = assignControls;
 	this.isVisible = isVisible;
-	this.isSignInVisible = isSignInVisible;
-	this.isSignUpVisible = isSignUpVisible;
+	this.isLegalShown = isLegalShown;
 	
 	this.tapSignInTab = tapSignInTab;
 	this.tapSignUpTab = tapSignUpTab;
@@ -83,8 +82,7 @@ function SignIn()
 		 btnConfirm = mainView.buttons()[2];
 		 
 		 btnTryout = mainView.buttons()["tryout"];
-//		 btnLegal = mainView.buttons()["legal"];
-		 
+
 		 emailField = mainView.textFields()[0];
 		 pwdField = mainView.secureTextFields()[0];
 	}
@@ -93,22 +91,12 @@ function SignIn()
 	function isVisible()
 	{
 		assignControls();
-		return (btnSignInTab.isVisible());
+		return staticTextExist("without signing up");
 	}
 	
-	function isSignInVisible() {
-		return isVisible() && !isLegalVisible();
-	}
-	
-	
-	function isSignUpVisible() {
-		return isVisible() && isLegalVisible();
-	}
-		
-
-	function isLegalVisible() {
-		assignControls();
-		return staticTextExist("By Signing up you accept to this Term of use");
+	function isLegalShown()
+	{
+		return app.navigationBar().name() == "Terms of use"
 	}
 	
 	// ----------------------Method tap action -------------------------
@@ -142,10 +130,8 @@ function SignIn()
 	{
 		log("Tap [Legal] button");
 		wait(0.5);
-		
-		
+			
 		var rect = btnConfirm.rect();
-		//.mainWindow().buttons()["finish"].tap();
 		x = rect.origin.x + rect.size.width / 2;
 		y = rect.origin.y;
 		target.tap({x:x, y:y + 100});
@@ -158,8 +144,9 @@ function SignIn()
 	
 	function tapCloseLegal()
 	{
+		btnLegal = app.navigationBar().leftButton();
 		log("Tap [CloseLegal] button");
-		app.mainWindow().buttons()[0].tap();
+		btnLegal.tap();
 		wait(0.5);
 	}
 	

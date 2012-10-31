@@ -35,9 +35,9 @@ function Alert()
 	this.Warning = "Warning";
 	
 	this.InvalidPasswordMsg = "Sorry, the password should have at least 6 characters, at least 1 digit and 1 letter";
-	this.InvalidEmailMsg = "Sorry, this email is invalid";
+	this.InvalidEmailMsg = "Invalid email";
 	this.ExistedUserMsg = "Sorry, someone else has used this before";
-	this.WrongLoginMsg = "Incorrect email or password";
+	this.WrongLoginMsg = "Sorry, your email or password is not correct";
 	
 	this.LocationConfirm = "\“Shine\” Would Like to Use Your Current Location";
 	this.NoEmailAccount = "No Mail Accounts";

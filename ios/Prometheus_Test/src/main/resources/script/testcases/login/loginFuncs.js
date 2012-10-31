@@ -30,17 +30,20 @@ function verifyTranslition()
 	print("<Tap SignIn tab>");
 	signin.tapSignInTab();
 	signin.tapLegal();
+	assertTrue(!signin.isLegalShown(), "Legal info doesn't show");
 	assertTrue(signin.isVisible(), "Only Signup screen is visible");
 	
 	
-	//Tap legal and comeback in Signup
+	// tap legal and comeback in Signup
 	hr();
 	print("<Tap legal and verify in Sign up>");
 	signin.tapSignUpTab();
 	signin.tapLegal();
-	assertTrue(!signin.isVisible(), "Only Signup screen is visible");
+	assertTrue(!signin.isVisible(), "Current view isn't SignUp anymore");
+	assertTrue(signin.isLegalShown(), "Legal info shows up");
 	signin.tapCloseLegal();
 	assertTrue(signin.isVisible(), "Only Signup screen is visible");
+	assertTrue(!signin.isLegalShown(), "Legal info doesn't show");
 	
 }
 
