@@ -32,9 +32,9 @@ log("1. Go to plan picker");
 GoToPlanPicker();
 
 log("2. Verify prepackage plans");
-VerifyPlanInfo("Easy", "The Starter’s Plan", planBuilderData.prepackage.theStartersPlan);
-VerifyPlanInfo("Normal", "The Mover’s Plan", planBuilderData.prepackage.theMoversPlan);
-VerifyPlanInfo("Active", "The Shaker’s Plan", planBuilderData.prepackage.theShakersPlan);
+VerifyPlanInfo("Easy", "The Starter's Plan", planBuilderData.prepackage.theStartersPlan);
+VerifyPlanInfo("Normal", "The Mover's Plan", planBuilderData.prepackage.theMoversPlan);
+VerifyPlanInfo("Active", "The Shaker's Plan", planBuilderData.prepackage.theShakersPlan);
 
 log("3. Verify custom plan")
 list = [];

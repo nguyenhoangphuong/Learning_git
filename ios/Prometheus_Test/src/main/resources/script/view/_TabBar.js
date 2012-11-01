@@ -31,6 +31,7 @@ function TabBar()
 	function tapButton(name) {
 		log("Tap button name: " + name);
 		app.tabBar().buttons()[name].tap();
+		wait(0.5);
 	}
 	
 	function tapProgress() {
@@ -52,6 +53,7 @@ function TabBar()
 	function tapTracker() {
 		log("Tap tracker");
 		app.mainWindow().buttons()["tracker button"].tap();
+		wait(0.5);
 	}
 }
 

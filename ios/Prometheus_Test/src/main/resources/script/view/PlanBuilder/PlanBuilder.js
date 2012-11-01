@@ -62,9 +62,9 @@ function PlanBuilder()
 	function isVisible() 
 	{
 		assignControls();
-		visible = app.navigationBar().name() == "Custom Plan";
+		visible = app.navigationBar().name() == "Your plan";
 		
-		log("PlanBuilder is visible: " + visible);	
+		log("PlanBuilder is visible: " + visible + ", [" + app.navigationBar().name() + "]");	
 		return visible;
 	}
 	
@@ -107,6 +107,7 @@ function PlanBuilder()
 		wait();
 		var rect = button.rect();
         UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x + rect.size.width/2, y:rect.origin.y + rect.size.height/2}, {x:160, y:380}, 2);
+        wait();
 	}
 	
 	function removeActivity(id, useIndex) 
@@ -136,6 +137,7 @@ function PlanBuilder()
 		var rect = button.rect();
 		log("x= " + rect.origin.x + " : y= " + rect.origin.y);
         UIATarget.localTarget().dragFromToForDuration({x:rect.origin.x + rect.size.width/2, y:rect.origin.y + rect.size.height/2}, {x:10, y:10}, 2);
+        wait();
 	}	
 	
 	function getNumberOfActivities() 

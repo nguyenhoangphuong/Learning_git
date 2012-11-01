@@ -16,9 +16,6 @@ List of function:
 - tapGo()						: tap [Go for it]
 - tapCustom()					: tap [Custimize]
 ================================================================================
-- isDeletePlanBtnVisible()		: check if the delete plan button is visible
-- isDeletePlanAlertShown()		: check if the delete cofirmation is shown
-================================================================================
 */
 
 function PlanInfo()
@@ -46,9 +43,6 @@ function PlanInfo()
 	this.getPlanInfo = getPlanInfo;
 	this.tapGo = tapGo;
 	this.tapCustom = tapCustom;
-	
-	this.isDeletePlanBtnVisible = isDeletePlanBtnVisible;
-	this.isDeletePlanAlertShown = isDeletePlanAlertShown;
 	
 	// Methods definition
 	function assignControls()
@@ -119,8 +113,14 @@ function PlanInfo()
 		for(i = 0; i < n; i++)
 		{
 			text = cells[i].name();
+			
+			/*
 			name = text.substring(0, text.indexOf(","));
 			value = text.substring(text.indexOf(", ") + 2);
+			*/
+			
+			name = text;
+			value = "n/a";
 			
 			info[i] = {name: name, value: value};
 		}
@@ -139,22 +139,5 @@ function PlanInfo()
 	{
 		customBtn.tap();
 		log("Tap [Customize]");
-	}
-	
-	function isDeletePlanBtnVisible()
-	{
-		visible = deleteBtn.isValid() && deleteBtn.isVisible();
-		
-		log("[Delete Plan] is visible: " + visible);
-		return visible;
-	}
-	
-	function isDeletePlanAlertShown()
-	{
-		shown = alert.alertTitle != null && alert.alertTitle == alert.Warning && alert.alertMsg == alert.DeletePlanConfirm;
-		alert.reset();
-		
-		log("Alert [delete plan confirm] is shown: " + shown);
-		return shown;
 	}
 }

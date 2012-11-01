@@ -132,19 +132,17 @@ function Planner()
 	function getActivities()
 	{
 		// group by date first
-		groupByDate();
+		groupByActivity();
 		
 		// get range;
-		cells = dateTable.cells();
-		groups = dateTable.groups();
-		step = cells.length / groups.length;
+		var texts = mainView.scrollViews()[0].staticTexts();
+		var total = texts.length / 3;
 		
 		var info = [];
-		for(i = 0; i < step; i++)
+		for(var i = 0; i < total; i++)
 		{
-			text = cells[i].name();
-			act = text.substring(0, text.indexOf(","));
-			info[i] = act;
+			text = texts[i * 3 + 2].name();
+			info[i] = text;
 		}
 		
 		log("Activities: " + JSON.stringify(info));

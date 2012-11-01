@@ -22,10 +22,23 @@ function VerifyPlanInfo(type, name, expect)
 	actual = pi.getPlanInfo();
 	
 	// check default value plan info
+	var i = 0;
+	var j = 0;
+	
+	assertEqual(actual.length, expect.length, "Total plan is the same");
 	for(i = 0; i < actual.length; i++) 
 	{
-		assertEqual(actual[i].name, expect[i].name, "Activity name");
-		assertEqual(actual[i].value, expect[i].value, "Activity goal");
+		for(j = 0; j < expect.length; j++)
+			if(actual[i].name == expect[j].name)
+				break;
+		
+		if(j < expect.length)
+			assertEqual(actual[i].name, expect[j].name, "Activity name");
+		else
+			fail("Activity name not in list");
+		
+		// since we can't get the value anymore, this is droppped
+		//assertEqual(actual[i].value, expect[i].value, "Activity goal");
 	}
 	
 	// restore state
@@ -84,11 +97,15 @@ function VerifyCreatePlan(pinfo)
 	for(i = 0; i < n; i++)
 	{
 		expectName = pinfo.activities[i];
-		assertTrue(acts.indexOf(expectName) >= 0, "Activity name is correct");
+		assertTrue(acts.indexOf(expectName) >= 0, "Activity name is correct: " + expectName);
+		
+		/*
+		// sice we can't get the value anymore, this is dropped
 		
 		expectGoal = pinfo.goals[i];
 		actualGoal = p.getAllRecordsOfActivity(expectName).total;
 		assertEqual(actualGoal, expectGoal, "Total goal is correct");
+		*/
 	}
 	
 	// reset plan
@@ -109,15 +126,14 @@ function VerifyCreatePlan(pinfo)
 	// check value is saved correctly
 	pi = new PlanInfo();
 	actual = pi.getPlanInfo();
+	expect = pinfo.activities;
 	
 	// check default value plan info
+	assertEqual(actual.length, expect.length, "Total plan is the same");
 	for(i = 0; i < actual.length; i++) 
 	{
-		expectName = pinfo.activities[i];
-		expectGoal = pinfo.goals[i];
-		
-		assertEqual(actual[i].name, expectName, "Activity name");
-		assertEqual(actual[i].value, expectGoal, "Activity goal");
+		actualName = actual[i].name;
+		assertTrue(expect.indexOf(actualName) >= 0, "Activity name is correct: " + expectName);
 	}
 		
 	// restore state

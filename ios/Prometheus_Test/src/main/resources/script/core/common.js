@@ -233,13 +233,13 @@ function wheelPick(picker, wheelIndex, value)
 function dateWheelPick(picker, year, monthString, day, yearIndex, monthIndex, dayIndex)
 {
 	// set default values for wheels of year, month and day
-	if (yearIndex == null)
+	if (typeof yearIndex == "undefined")
 		yearIndex = 2;
 	
-	if (monthIndex == null)
+	if (typeof monthIndex == "undefined")
 		monthIndex = 0;
 	
-	if (dayIndex == null)
+	if (typeof dayIndex == "undefined")
 		dayIndex = 1;
 
 	if (year < 1900 || 2100 < year ||

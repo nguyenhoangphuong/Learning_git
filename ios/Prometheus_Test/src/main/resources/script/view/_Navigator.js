@@ -218,12 +218,14 @@ function Navigator()
 		// if current view is PlanPicker
 		if(pp.isVisible())
 		{
-			if (pinfo == null) {
+			if (pinfo == null) 
+			{
 				pp.pickPlan(pp.easy, pp.easyStarter);
 				pi = new PlanInfo();
 				pi.tapGo();
 			}
-			else if(pinfo.type != "New") {
+			else if(pinfo.type != "New") 
+			{
 				// pick existed plan
 				print("=> Go to 7DaysGoal screen by picking existed plan...");
 				pp.pickPlan(pinfo.type, pinfo.name);
@@ -243,9 +245,9 @@ function Navigator()
 					pb.pickActivity(pinfo.activities[i].name.toLowerCase());
 				
 				for(i = 0; i < pinfo.activities.length; i++)
-					pb.setActivityGoal(info.activities[i].name, pinfo.activities[i].value.toString());
+					pb.setActivityGoal(pinfo.activities[i].name, pinfo.activities[i].value.toString());
 				
-				pb.save();
+				pb.start();
 			}
 			
 			// wait for position alert

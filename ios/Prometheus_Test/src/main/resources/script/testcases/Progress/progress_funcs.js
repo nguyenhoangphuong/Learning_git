@@ -64,7 +64,7 @@ function VerifyNoActivityRecord(activitiesExpect)
 		
 		records = p.getCurrentHistory();
 		assertEqual(records.name, activitiesExpect[act], "Current records name is correct");
-		assertEqual(records.percent, "0.0%", "Current records percent is 0.0%");
+		assertEqual(records.percent, "0%", "Current records percent is 0%");
 		
 		p.tapOutside();
 		assertTrue(!p.isHistoryRecordsShown(), "Current records doesn't show up anymore");
@@ -98,7 +98,7 @@ function VerifyRecordsAreUpdated()
 		assertTrue(!p.isNoActivity(), "Current records isn't No activity anymore");
 		
 		records = p.getCurrentHistory();
-		assertTrue(records.percent != "0.0%", "Current records percent isn't 0.0% anymore");
+		assertTrue(records.percent != "0%", "Current records percent isn't 0% anymore");
 		
 		p.tapOutside();
 	}

@@ -111,25 +111,26 @@ function Settings()
 		window = app.mainWindow();
 		mainView = window.tableViews()["Empty list"];
 		
+		btnUS = mainView.cells()["Units"].buttons()["US"];
+		btnMetric = mainView.cells()["Units"].buttons()["Metric"];
+		
 		txtName = mainView.cells()["Name"];
 		btnMale = mainView.cells()["Gender"].buttons()["Male"];
 		btnFemale = mainView.cells()["Gender"].buttons()["Female"];
 		pckrBirthday = mainView.cells()[3];
 		pckrHeight = mainView.cells()[4];
 		pckrWeight = mainView.cells()[5];
-		btnUS = mainView.cells()["Unit"].buttons()["US"];
-		btnMetric = mainView.cells()["Unit"].buttons()["Metric"];
 		
 		btnEmail = mainView.cells()["Email support"];
 		btnLike = mainView.cells()["Like our page"];
 		btnWebsite = mainView.cells()["Website"];
 		
-		btnRate = mainView.cells()["Rate our App"];
+		btnRate = mainView.cells()["Rate our app"];
 		btnTroubleMaker = mainView.cells()["Trouble makers"];
 		
-		btnReset = mainView.cells()["Reset plan"];
+		btnReset = mainView.cells()["Reset Plan"];
 		btnSignUp = mainView.cells()["Sign up"]; // TODO: check this
-		btnLogOut = mainView.cells()["Log out"];
+		btnLogOut = mainView.cells()["Sign out"];
 	}
 	
 	function closeOtherWindow()
