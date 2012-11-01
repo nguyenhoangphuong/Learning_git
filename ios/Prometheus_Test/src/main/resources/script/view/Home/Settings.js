@@ -357,12 +357,12 @@ function Settings()
 		if (yes)
 		{
 			log("Tap YES to log out");
-			app.mainWindow().buttons()[1].tap();
+			app.actionSheet().buttons()[0].tap();
 		}
 		else
 		{
 			log("Tap NO to back to Settings");
-			app.mainWindow().buttons()[0].tap();
+			app.actionSheet().buttons()[1].tap();
 		}
 	}
 	

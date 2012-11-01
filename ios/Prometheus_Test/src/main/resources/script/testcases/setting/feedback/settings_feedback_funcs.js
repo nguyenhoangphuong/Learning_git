@@ -108,6 +108,7 @@ function verifySignOutBtn()
 {
 	s = new Settings();
 	s.signOut();
+	wait(2);
 	
 	h = new SignIn();
 	assertTrue(h.isVisible(), "At SignIn view after sign out");

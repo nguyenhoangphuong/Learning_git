@@ -10,7 +10,6 @@ List of functions:
 - groupByActivity()			: tap Activity tab
 =========================================================================================
 - isNoHistory()				: check if the history is currently empty
-- getDateRange()			: get all dates [Oct 24, Oct 25, ...]
 - getAllRecordsOfDate()		: get all records of a specified date
 - getAllRecordsOfActivity()	: get all records of a specified activity
 =========================================================================================
@@ -33,7 +32,6 @@ function History()
 	//this.assignControls = assignControls;
 	this.isVisible = isVisible;
 	this.isNoHistory = isNoHistory;
-	this.getDateRange = getDateRange;
 	this.getAllRecordsOfDate = getAllRecordsOfDate;
 	this.getAllRecordsOfActivity = getAllRecordsOfActivity;
 	
