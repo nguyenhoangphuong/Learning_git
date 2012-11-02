@@ -39,7 +39,7 @@ function addEntryByManualTracking()
 	tracking.tapActivity("Treadmill");
 	
 	var manualtracking = new ManualTracking();
-	manualtracking.done();
+	manualtracking.save();
 	wait(0.5);
 	tabbar.tapHistory();
 }
@@ -61,23 +61,19 @@ function verifyHistoryVisible()
 function verifyNoHistory()
 {
 	var history = new History();
+	history.groupByActivity();
+	assertTrue(history.isNoHistory(), "No History");
+	history.groupByDate();
 	assertTrue(history.isNoHistory(), "No History");
 }
 
 function verifyNumberOfHistory(numexpected)
 {
 	var history = new History();
+	history.groupByDate();
 	var numactual = history.getNumberOfEntries();
-	//assertEqual(numexpected, numactual, "Number of Entry");
-	assertEqual(1, 1, "Number of Entry");
+	assertEqual(numactual, numexpected, "Number of Entry");
 }
-
-
-
-// ===================== Test cases ====================================
-
-
-
 
 
 

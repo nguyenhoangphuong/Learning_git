@@ -3,6 +3,6 @@
 
 start("Demo");
 
-logTree();
+nav.toSettings(null, null, null, null);
 
 pass("Demo pass");

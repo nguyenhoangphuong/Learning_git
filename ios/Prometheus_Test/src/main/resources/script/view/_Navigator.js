@@ -62,6 +62,9 @@ function Navigator()
 	// ====================== Method definitions ================
 	function toSignUp()
 	{	
+		// wait the app to load
+		wait(3);
+		
 		// skip the whats news if there is one
 		var wn = new WhatsNew();
 		if(wn.isVisible())
@@ -77,8 +80,10 @@ function Navigator()
 		return (h.isVisible()? h : null);
 	}
 	
-	function toSignIn() {
+	function toSignIn() 
+	{
 		toSignUp();
+		
 		log("About to press sign in tab now...");
 		var signIn = new SignIn();
 		signIn.tapSignInTab();
@@ -333,7 +338,8 @@ function Navigator()
 		
 		var tracking = new Tracking();
 		
-		if (tracking.isVisible()) {
+		if (tracking.isVisible()) 
+		{
 			tracking.tapGPS();
 			
 			var activities = tracking.getActivitiesInfo();
