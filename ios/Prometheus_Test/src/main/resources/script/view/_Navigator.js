@@ -63,7 +63,7 @@ function Navigator()
 	function toSignUp()
 	{	
 		// wait the app to load
-		wait(3);
+		wait(5);
 		
 		// skip the whats news if there is one
 		var wn = new WhatsNew();
