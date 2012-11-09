@@ -40,7 +40,7 @@ function addEntryByManualTracking()
 	
 	var manualtracking = new ManualTracking();
 	manualtracking.save();
-	wait(0.5);
+	wait(2);
 	tabbar.tapHistory();
 }
 
