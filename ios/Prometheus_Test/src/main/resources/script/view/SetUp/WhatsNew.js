@@ -35,8 +35,7 @@ function WhatsNew()
 	function isVisible()
 	{
 		page = window.pageIndicators()[0];
-		exist = button.isVisible() && (button.name() == "Skip" || button.name() == "Done") && page.isValid();
-		
+		exist = button.isVisible() && (button.name() == "Skip" || button.name() == "Done");
 		log("What's New visible: " + exist);
 		return exist;
 	}

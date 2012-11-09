@@ -69,10 +69,12 @@ function Navigator()
 		var wn = new WhatsNew();
 		if(wn.isVisible())
 		{
-			print("=> Skip the What news...");
+			log("=> Skip the What news...");
 			wn.tapButton();
 			wait(1);
-			print("=> Go to SignIn screen...");
+			log("=> Go to SignIn screen...");
+		} else {
+			log("Whats new is not visible");
 		}
 		
 		// reached
@@ -111,21 +113,21 @@ function Navigator()
 			{
 			
 				// log in
-				print("=> Go to PlanPicker screen by logging in ...");
+				log("=> Go to PlanPicker screen by logging in ...");
 				h.signIn(email, password);
 				wait(10);
 			}
 			else if(email == null || (typeof email == "undefined"))
 			{
 				// try out
-				print("=> Go to UserInfo screen by trying out ...");
+				log("=> Go to UserInfo screen by trying out ...");
 				h.tryOut();
 				wait(2);
 			}
 			else
 			{
 				// sign up
-				print("=> Go to UserInfo screen by signing up ...");
+				log("=> Go to UserInfo screen by signing up ...");
 				h.signUp(email, password);
 				wait(10);
 			}
@@ -155,7 +157,7 @@ function Navigator()
 		// continue
 		if (ui.isVisible())
 		{
-			print("=> Go to PlanPicker screen ...");
+			log("=> Go to PlanPicker screen ...");
 			
 			// pick value
 			if (uinfo != null)
@@ -181,7 +183,7 @@ function Navigator()
 		
 		if(pp.isVisible())
 		{
-			print("=> Go to PlanInfo screen...");
+			log("=> Go to PlanInfo screen...");
 			
 			if (pinfo != null)
 			{
@@ -206,7 +208,7 @@ function Navigator()
 		
 		if(pp.isVisible())
 		{
-			print("=> Go to PlanBuilder...")
+			log("=> Go to PlanBuilder...")
 			
 			// tap custom button
 			pp.tapCustomPlan();
@@ -232,7 +234,7 @@ function Navigator()
 			else if(pinfo.type != "New") 
 			{
 				// pick existed plan
-				print("=> Go to 7DaysGoal screen by picking existed plan...");
+				log("=> Go to 7DaysGoal screen by picking existed plan...");
 				pp.pickPlan(pinfo.type, pinfo.name);
 				
 				pi = new PlanInfo();
