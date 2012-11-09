@@ -1,6 +1,7 @@
-package com.misfit.ta.backend;
+package com.misfit.ta.backend.rest;
 
-import com.misfit.ta.backend.data.UserData;
+import com.misfit.ta.backend.data.*;
+import net.sf.json.*;
 
 public class SignUpRest extends MVPRest
 {
@@ -24,7 +25,10 @@ public class SignUpRest extends MVPRest
 	@Override
 	void formatResponse()
 	{
-		
+		JSONObject json = (JSONObject) JSONSerializer.toJSON(contentData.toString());        
+        String token = json.getString("auth_token");
+        String type = json.getString( "type" );
+        
+        responseObj = new LoginToken(token, type);
 	}
-
 }

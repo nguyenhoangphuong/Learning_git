@@ -1,10 +1,18 @@
-package com.misfit.ta.backend;
+package com.misfit.ta.backend.rest;
+
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 
 import com.google.resting.Resting;
 import com.google.resting.component.RequestParams;
 import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.BasicRequestParams;
 import com.google.resting.component.impl.ServiceResponse;
+
+/* To be updated:
+ * - Ensure response != in check error methods and get response methods
+ * - Use object to send different request without construct new object
+ */
 
 public abstract class MVPRest 
 {
@@ -41,14 +49,12 @@ public abstract class MVPRest
 		String url = baseAddress + apiUrl + extendUrl;
 		
 		// send
+		formatRequest();
 		response = Resting.post(url, port, params);
 
 		// progress response
-		if(response.getStatusCode() == 200)
-		{
-			contentData = response.getContentData(); 
-			formatResponse();
-		}
+		contentData = response.getContentData(); 
+		formatResponse();
 	}
 
 	
@@ -66,7 +72,7 @@ public abstract class MVPRest
 	{
 		return  response.getStatusCode() != 200 && 
 				response.getStatusCode() != 404 && 
-				response.getStatusCode() == 500;
+				response.getStatusCode() != 500;
 	}
 	
 	public Object content()
@@ -77,8 +83,11 @@ public abstract class MVPRest
 	public String errorMessage()
 	{
 		if(response.getStatusCode() != 200)
-			;
-	
+		{
+			JSONObject json = (JSONObject) JSONSerializer.toJSON(contentData.toString());        
+	        return json.getString("error_message");
+		}
+		
 		return null;
 	}
 }
