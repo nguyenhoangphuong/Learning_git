@@ -32,40 +32,21 @@ function Tips()
 	// ========================= Constants =====================
 	this.Tips = 
 		{
-			"UserInfo":
-			[
-			 	//"To assist you with a good fitness plan, please input your age, weight and height",
-			 	"Please help \"Shine\" build your personalized plan by inputting your age, weight & height. ",
-			 	"Swipe up or down to adjust height",
-			 	"Swipe left or right to adjust weight",
-			 	"Tap here for manual input"
-			],
-			
-			"WeekGoal":
-			[
-			 	"Swipe up or down to switch view"
-			],
-	
-			"TodayGoal":
-			[
-			 	//"Swipe left to settings.\nSwipe right for weekly plan"
-			 	"Swipe right for settings.\nSwipe left for seven day plan."
-			],
-			
-			"GoalPlan":
-			[
-			 	"You can adjust how much you want to train each day in your seven day plan.",
-			 	"\"Shine\" automatically builds a personalized plan across the next 7 days for you.",
-			 	"Edit button allows you to build your own weekly plan",
-			 	"This bar indicates each day’s goal",
-			 	"The white bar shows that day’s progress."
-			],
+			"Planner":
+				[
+				 "Tap to change your goals",
+				 "Tap here to make changes.",
+				 "This will automatically adjust your goals based on your performance."
+				]
 		};
 	
 	// ====================== Method definition ================
 	function isTipsDisplay(view, win)
 	{
-		wait(2);
+		if(typeof win == "undefined")
+			win = app.mainWindow();
+		
+		wait();
 		thetips = this.Tips[view];
 		for(i = 0; i < thetips.length; i++)
 		{
@@ -82,13 +63,16 @@ function Tips()
 	
 	function closeTips(numberOfTips) 
 	{
+		if(typeof numberOfTips == "undefined")
+			numberOfTips = 1;
+		
 		log("Closing tips");
 		
 		wait();
 		for (i=0; i< numberOfTips; i++) 
 		{
 			target.tap({x:154.00, y:200.00});
-			wait(2);
+			wait();
 		}
 		wait();
 	}

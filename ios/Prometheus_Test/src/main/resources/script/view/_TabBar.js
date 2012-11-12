@@ -40,6 +40,10 @@ function TabBar()
 	
 	function tapPlanner() {
 		tapButton("Planner");
+		
+		// close tips
+		if(tips.isTipsDisplay("Planner"))
+			tips.closeTips();
 	}
 	
 	function tapHistory() {

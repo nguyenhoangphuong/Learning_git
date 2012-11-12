@@ -87,12 +87,6 @@ function PlanBuilder()
 		startBtn.tap();
 	}
 	
-	/**
-	 * Drag an activity to create a plan.
-	 * @param activityName for instance: leglift, running etc.
-	 *   
-	 * @returns
-	 */
 	function pickActivity(id, useIndex)
 	{
 		log("Picking activity: " + id);
@@ -100,7 +94,7 @@ function PlanBuilder()
 		if(typeof useIndex == "undefined") {
 			useIndex = false;
 		}
-		var	button = useIndex? iconsList[id] : iconsList["icon " + id.toLowerCase().replace("-", "")];
+		var	button = useIndex? iconsList[id] : iconsList["icon " + id.toLowerCase().replace("-", "") + " small"];
 
 		// dragging
 		button.scrollToVisible();

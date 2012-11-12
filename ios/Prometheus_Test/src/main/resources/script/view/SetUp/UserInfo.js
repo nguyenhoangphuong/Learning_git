@@ -12,8 +12,7 @@ UserInfo view function:
 - setUnit(unit)						:	set user unit ("us" / "metric")
 - submit()							:	submit the form
 =========================================================================================
-- getWidth()						:	return string in width cell
-- getHeight()						:	return string in height cell
+- getInfo()							:	return {weight, height, unit, gender}
 =========================================================================================
 */
 
@@ -45,8 +44,7 @@ function UserInfo(view)
 	this.setUnit = setUnit;
 	this.submit = submit;
 	
-	this.getWidth = getWidth;
-	this.getHeight = getHeight;
+	this.getInfo = getInfo;
 	
 	// Methods definition
 	function assignControls()
@@ -55,12 +53,12 @@ function UserInfo(view)
 		mainView = window.tableViews()[0];
 		cells = mainView.cells();
 		
-		usBtn = cells["Units"].buttons()["US"];
-		siBtn = cells["Units"].buttons()["Metric"];
-		maleBtn = cells["Gender"].buttons()["Male"];
-		femaleBtn = cells["Gender"].buttons()["Female"];
-		weightBtn = cells["Weight"];
-		heightBtn = cells["Height"];
+		usBtn = cells[0].buttons()[0];
+		siBtn = cells[0].buttons()[1];
+		maleBtn = cells[1].buttons()[0];
+		femaleBtn = cells[1].buttons()[1];
+		weightBtn = cells[2];
+		heightBtn = cells[3];
 		
 		submitBtn = window.buttons()[0];
 	}
@@ -75,6 +73,8 @@ function UserInfo(view)
 	
 	function setWeight(w1, w2)
 	{
+		assignControls();
+		
 		w1 = w1.toString(); w2 = w2.toString();
 		
 		wait(0.5);	
@@ -95,6 +95,8 @@ function UserInfo(view)
 	
 	function setHeight(h1, h2)
 	{
+		assignControls();
+		
 		h1 = h1.toString(); h2 = h2.toString();
 		
 		wait(0.5);
@@ -115,6 +117,8 @@ function UserInfo(view)
 	
 	function setGender(s)
 	{
+		assignControls();
+		
 		wait(0.5);
 		
 		if(s == "male" || s == "m")
@@ -128,6 +132,8 @@ function UserInfo(view)
 	
 	function setUnit(u)
 	{
+		assignControls();
+		
 		wait(0.5);
 		
 		if(u == "us")
@@ -140,27 +146,28 @@ function UserInfo(view)
 	
 	function submit()
 	{
+		assignControls();
+		
 		wait(0.5);
 		submitBtn.tap();
 		
 		log("Tap [Next]");
 	}
 	
-	function getWidth()
+	function getInfo()
 	{
-		var text = widthBtn.name();
-		var w = text.substring(text.indexOf(",") + 2);
+		assignControls();
 		
-		log("Width: " + w);
-		return w;
+		var info = {};
+		text = weightBtn.name();
+		info.weight = text.substring(text.indexOf(",") + 2);
+		text = heightBtn.name();
+		info.height = text.substring(text.indexOf(",") + 2);
+		info.unit = (usBtn.value() == 1 ? "us" : "metric");
+		info.sex = (maleBtn.value() == 1 ? "male" : "female");
+		
+		log("About me: " + JSON.stringify(info));
+		return info;
 	}
 	
-	function getHeight()
-	{
-		var text = heightBtn.name();
-		var h = text.substring(text.indexOf(",") + 2);
-		
-		log("Height: " + h);
-		return h;
-	}
 }

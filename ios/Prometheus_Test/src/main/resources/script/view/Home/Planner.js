@@ -244,6 +244,10 @@ function Planner()
 			app.navigationBar().rightButton().tap();
 		
 		log("Tap [Edit]");
+		
+		// close tips
+		if(tips.isTipsDisplay("Planner"))
+			tips.closeTips();
 	}
 	
 	function tapEditRecord(date, activity)
