@@ -85,6 +85,7 @@ function PlanBuilder()
 	function start() 
 	{
 		startBtn.tap();
+		wait();
 	}
 	
 	function pickActivity(id, useIndex)

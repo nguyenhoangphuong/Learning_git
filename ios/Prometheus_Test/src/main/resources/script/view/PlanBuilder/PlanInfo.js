@@ -133,6 +133,8 @@ function PlanInfo()
 		assignControls();
 		goBtn.tap();
 		log("Tap [GoForIt]");
+		
+		wait();
 	}
 	
 	function tapCustom()
