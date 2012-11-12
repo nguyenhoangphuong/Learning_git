@@ -173,6 +173,7 @@ function PlanBuilder()
 	
 	function getNumberOfActivities() 
 	{
+		wait(3); // wait for the animation to be done
 		return mainView.staticTexts().length;
 	}
 	
@@ -201,3 +202,5 @@ function PlanBuilder()
 	}
 	
 }
+
+var planBuilder = new PlanBuilder();
