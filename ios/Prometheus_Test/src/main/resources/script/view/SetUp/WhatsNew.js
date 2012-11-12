@@ -16,14 +16,19 @@ List of functions:
 function WhatsNew()
 {
 	// Private fields
-	var window = app.mainWindow();
-	var mainView = window;
-	var scrollView = mainView.scrollViews()[0];
+	var window;
+	var mainView;
+	var scrollView;
 	
-	var button = mainView.buttons()[0];
+	var button;
+	
+	// Initalize
+	assignControls();
 	
 	// Public methods
+	this.assignControls = assignControls;
 	this.isVisible = isVisible;
+	
 	this.isSkipButtonVisible = isSkipButtonVisible;
 	this.isDoneButtonVisible = isDoneButtonVisible;
 	
@@ -32,13 +37,23 @@ function WhatsNew()
 	this.previous = previous;
 	
 	// Method definition
+	function assignControls()
+	{
+		window = app.mainWindow();
+		mainView = window;
+		scrollView = mainView.scrollViews()[0];
+		
+		button = mainView.buttons()[0];
+	}
+	
 	function isVisible()
 	{
-		page = window.pageIndicators()[0];
 		exist = button.isVisible() && (button.name() == "Skip" || button.name() == "Done");
+		
 		log("What's New visible: " + exist);
 		return exist;
 	}
+	
 	
 	function isSkipButtonVisible()
 	{	

@@ -17,16 +17,25 @@ function toSettingScreen(opt)
 	
 	if(typeof opt == "undefined")
 	{
-		// to setting
-		
-		nav.toSettings(null, null, null, pinfodefault , null);
-			
-		return;
+		// to setting by try out
+		log("To Settings screen by check out");
+		nav.toSettings(null, null, null, pinfodefault);
 	}
 	
-	var genstring = generateRandomDigitString();
+	if(opt == 1)
+	{
+		// to setting by sign in
+		log("To Settings screen by sign in");
+		nav.toSettings(loginTD.existedEmail, loginTD.rightPwd, null, null, true);
+	}
 	
-	nav.toSettings(genstring + loginTD.existedEmail, loginTD.rightPwd, null, pinfodefault, false);
+	if(opt == 2)
+	{
+		// to setting by sign up
+		log("To Settings screen by sign up");
+		var genstring = generateRandomDigitString();
+		nav.toSettings("qaGeneratedEmail" + genstring + loginTD.existedEmail, loginTD.rightPwd, null, null, false);	
+	}
 }
 
 //============================================================= //
@@ -37,12 +46,12 @@ function verifyAnonymousLogout()
 	s = new Settings();
 	
 	assertTrue(s.isSignUpBtnVisible(), "SignUp button is visible");
-	assertFalse(s.isSignOutBtnVisible(), "SignOut button is not visible");
+	assertFalse(s.isSignOutBtnVisible(), "but SignOut button is not visible");
 	
-	s.signUp();
+	s.signUp(true);
 	
 	h = new SignIn();
-	assertTrue(h.isSignUpVisible(), "SignIn screen show at SignUp after tap [Sign up]");
+	assertTrue(h.isVisible(), "SignIn screen show at SignUp after tap [Sign up]");
 }
 
 function verifyValidUserLogout()
@@ -50,7 +59,7 @@ function verifyValidUserLogout()
 	s = new Settings();
 	
 	assertFalse(s.isSignUpBtnVisible(), "SignUp button is not visible");
-	assertTrue(s.isSignOutBtnVisible(), "SignOut button is visible");
+	assertTrue(s.isSignOutBtnVisible(), "but SignOut button is visible");
 	
 	s.signOut(true);
 	

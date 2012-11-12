@@ -62,9 +62,6 @@ function Navigator()
 	// ====================== Method definitions ================
 	function toSignUp()
 	{	
-		// wait the app to load
-		wait(5);
-		
 		// skip the whats news if there is one
 		var wn = new WhatsNew();
 		if(wn.isVisible())
@@ -111,11 +108,10 @@ function Navigator()
 		{
 			if(login)
 			{
-			
 				// log in
 				log("=> Go to PlanPicker screen by logging in ...");
 				h.signIn(email, password);
-				wait(10);
+				wait(15);
 			}
 			else if(email == null || (typeof email == "undefined"))
 			{
@@ -129,22 +125,14 @@ function Navigator()
 				// sign up
 				log("=> Go to UserInfo screen by signing up ...");
 				h.signUp(email, password);
-				wait(10);
+				wait(15);
 			}
 		}
 
 		
 		// reached
 		var ui = new UserInfo();
-		if(ui.isVisible())
-		{
-			// if there are any tips, close it
-			if(tips.isTipsDisplay("UserInfo"))
-				tips.closeTips(4);
-			return ui;
-		}
-		else
-			return null;
+		return ui.isVisible() ? ui : null;
 	}
 	
 	
@@ -213,6 +201,10 @@ function Navigator()
 			// tap custom button
 			pp.tapCustomPlan();
 		}
+		
+		// reached
+		pb = new PlanBuilder();	
+		return (pb.isVisible() ? pb : null);
 	}
 	
 	
@@ -240,7 +232,7 @@ function Navigator()
 				pi = new PlanInfo();
 				pi.tapGo();
 			}
-			// creacte new plan
+			// create new plan
 			else
 			{
 				pp.tapCustomPlan();
@@ -332,6 +324,10 @@ function Navigator()
 		
 		wait(2);
 		music.start();
+		
+		// reached
+		gt = new GPSTracking();	
+		return (gt.isVisible() ? gt : null);
 	}
 	
 	function toMusic(email, pwd, userinfo, pinfo, login)

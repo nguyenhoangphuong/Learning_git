@@ -2,11 +2,10 @@
 
 /*
 Settings functions:
-- isVisible()		: check if current view is Settings
+================================================================================
 - assignControls ()	: assign controls
-- closeOtherWindow(): close other window (e.g. picker)
-- isTroublemaker()	: check if current user is a troublemaker
-- hasSignedIn()		: check if current user has signed in
+- isVisible()		: check if current view is Settings
+================================================================================
 - setName(name)
 - setGender(gender = "Female")	: set gender ("Female" (default) or "Male")
 - setBirthday(year, monthString, day, yearIndex = 2, monthIndex = 0, dayIndex = 1)
@@ -23,12 +22,15 @@ Settings functions:
 	+ example:	setWeight("70", ".5");
 - setUnit(unit = "US")	: set unit (default = "US")
 	+ unit: "US" (default) or "Metric", case insensitive 
+================================================================================
 - tapSupport()		: tap Email Support button
 - tapLike()			: tap "Like our page" button
 - tapWebsite()		: tap Website button
+================================================================================
 - tapRate()			: tap "Rate our App" button
 - tapFeedback()		: tap "Trouble makers" (JIRA feedback) button
 - sendJIRAFeedback(): send a JIRA feedback (w/ troublemaker)
+================================================================================
 - resetPlan(confirm = "yes"): tap Reset button and choose Yes/No when alert shown up
 	+ resetPlan() or resetPlan("yes"): tap YES (case insensitive) when being asked
 	+ resetPlan("no"): tap NO (case insensitive) when being asked
@@ -36,9 +38,12 @@ Settings functions:
 	+ signOut() or signOut(true)	: tap YES when being asked
 	+ signOut(false)				: tap NO when being asked
 - signUp()				: tap "Sign up" button (w/ user having not logged in)
+================================================================================
 - isSignOutBtnVisible()
 - isSignUpBtnVisible()
+- isTroublemakerBtnVisisble()
 - isNoMailAccountsAlertShown()
+================================================================================
 */
 
 function Settings()
@@ -47,14 +52,15 @@ function Settings()
 	var window;
 	var mainView;
 	
+	var btnUS;
+	var btnMetric;
+	
 	var txtName;
 	var btnMale;
 	var btnFemale;
 	var pckrBirthday;
 	var pckrHeight;
 	var pckrWeight;
-	var btnUS;
-	var btnMetric;
 	
 	var btnEmail;
 	var btnLike;
@@ -67,20 +73,19 @@ function Settings()
 	var btnSignUp;
 	var btnLogOut;
 	
-	// Methods
-	this.isVisible = isVisible;
-	this.assignControls = assignControls;
-	this.closeOtherWindow = closeOtherWindow;
+	// Initalize
+	assignControls();
 	
-	this.isTroublemaker = isTroublemaker;
-	this.hasSignedIn = hasSignedIn;
+	// Methods
+	this.assignControls = assignControls;
+	this.isVisible = isVisible;
 				
+	this.setUnit = setUnit;
 	this.setName = setName;
 	this.setGender = setGender;
 	this.setBirthday = setBirthday;
 	this.setHeight = setHeight;
 	this.setWeight = setWeight;
-	this.setUnit = setUnit;
 	
 	this.tapSupport = tapSupport;
 	this.tapLike = tapLike;
@@ -96,6 +101,7 @@ function Settings()
 	
 	this.isSignOutBtnVisible = isSignOutBtnVisible;
 	this.isSignUpBtnVisible = isSignUpBtnVisible;
+	this.isTroublemakerBtnVisible = isTroublemakerBtnVisible;
 	this.isNoMailAccountsAlertShown = isNoMailAccountsAlertShown;
 	
 	// assign controls, this MUST be run
@@ -107,14 +113,15 @@ function Settings()
 		return navigationBar.settingsIsVisible();
 	}
 	
-	function assignControls() {
+	function assignControls() 
+	{
 		window = app.mainWindow();
-		mainView = window.tableViews()["Empty list"];
+		mainView = window.tableViews()[0];
 		
 		btnUS = mainView.cells()["Units"].buttons()["US"];
 		btnMetric = mainView.cells()["Units"].buttons()["Metric"];
 		
-		txtName = mainView.cells()["Name"];
+		txtName = mainView.cells()["Name"].textFields()[0];
 		btnMale = mainView.cells()["Gender"].buttons()["Male"];
 		btnFemale = mainView.cells()["Gender"].buttons()["Female"];
 		pckrBirthday = mainView.cells()[3];
@@ -129,56 +136,35 @@ function Settings()
 		btnTroubleMaker = mainView.cells()["Trouble makers"];
 		
 		btnReset = mainView.cells()["Reset Plan"];
-		btnSignUp = mainView.cells()["Sign up"]; // TODO: check this
+		btnSignUp = mainView.cells()["Sign up"];
 		btnLogOut = mainView.cells()["Sign out"];
 	}
 	
-	function closeOtherWindow()
-	{
-		mainView.dragInsideWithOptions({startOffset:{x:0.50, y:0.00},
-										endOffset:{x:0.50, y:0.05}});
-		wait();
-		assignControls();
-	}
-	
-	function isTroublemaker()
-	{
-		return btnTroubleMaker.checkIsValid();
-	}
-	
-	function hasSignedIn()
-	{
-		return btnLogOut.checkIsValid();
-	}
 	
 	function setName(name)
 	{		
 		if (name == null || name == "")
 			name = "Love is in the air";
 		
+		txtName.scrollToVisible();
 		txtName.tap();
-		wait();
+		txtName.setValue(name);
 		
-		// delete name if the field is not empty
-		if (txtName.textFields()[0].value() != "") {
-			txtName.textFields()[0].touchAndHold(2);
-			app.editingMenu().elements()["Select All"].tap();
-			app.keyboard().buttons()["Delete"].tap();
-		}
-		
-		app.keyboard().typeString(name + "\n");
+		app.windows()[1].toolbar().buttons()["Done"].tap();
 	}
 	
 	function setGender(gender)
 	{
-		if (gender == null)
+		if (typeof gender == "undefined")
 			gender = "Female";
 		
-		if (gender.toLowerCase() == "female") {
+		if (gender.toLowerCase() == "female") 
+		{
 			log("Set gender to Female");
 			btnFemale.tap();
 		}
-		else {
+		else 
+		{
 			log("Set gender to Male");
 			btnMale.tap();
 		}
@@ -193,7 +179,8 @@ function Settings()
 		
 		log("Set birthday");
 		dateWheelPick(picker, year, monthString, day, yearIndex, monthIndex, dayIndex);
-		closeOtherWindow();
+		
+		app.windows()[1].toolbar().buttons()["Done"].tap();
 	}
 	
 	function setHeight(v1, v2)
@@ -206,7 +193,8 @@ function Settings()
 		log("Set height");
 		wheelPick(picker, 0, v1);
 		wheelPick(picker, 1, v2);
-		closeOtherWindow();
+		
+		app.windows()[1].toolbar().buttons()["Done"].tap();
 	}
 	
 	function setWeight(v1, v2)
@@ -219,59 +207,76 @@ function Settings()
 		log("Set weight");
 		wheelPick(picker, 0, v1);
 		wheelPick(picker, 1, v2);
-		closeOtherWindow();
+		
+		app.windows()[1].toolbar().buttons()["Done"].tap();
 	}
 	
 	function setUnit(unit)
 	{
-		if (unit == null)
+		if (typeof unit == "undefined")
 			unit = "us";
 		
 		assignControls();
 		unit = unit.toLowerCase();
 		
-		if (unit == "us") {
+		if (unit == "us") 
+		{
 			log("Set unit to US");
 			btnUS.tap();
 		}
-		else {
+		else 
+		{
 			log("Set unit to Metric");
 			btnMetric.tap();
 		}
 	}
 
+	
 	function tapSupport()
 	{
 		btnEmail.tap();
-		wait();
+		wait(0.5);
+		log("Tap [Support]");
 	}
 	
 	function tapLike()
 	{
 		btnLike.tap();
+		wait(0.5);
+		log("Tap [Like]");
 	}
 	
 	function tapWebsite()
 	{
 		btnWebsite.tap();
+		wait(0.5);
+		log("Tap [Website]");
 	}
+	
 	
 	function tapRate()
 	{	
 		btnRate.tap();
+		wait(0.5);
+		log("Tap [Rate]");
 	}
 	
 	function tapFeedback()
 	{
-		if (isTroublemaker())
+		if (isTroublemakerBtnVisible())
+		{
 			btnTroubleMaker.tap();
+			wait(0.5);
+			log("Tap [Behind the scenes]");
+			return;
+		}
 	}
 	
 	function sendJIRAFeedback()
 	{
-		if (!isTroublemaker()) {
+		if (!isTroublemakerBtnVisible()) 
+		{
 			log("Oops... babe you are not a troublemaker");
-			
 			return;
 		}
 		
@@ -296,7 +301,6 @@ function Settings()
 		if (!btnSend.isValid() || !btnSend.isVisible())
 		{
 			fail("Feedback not sent");
-			
 			return;
 		}
 		
@@ -324,6 +328,7 @@ function Settings()
 		log("Feedback sent to JIRA");
 	}
 	
+	
 	function resetPlan(confirm)
 	{
 		if (confirm == null)
@@ -340,10 +345,9 @@ function Settings()
 	
 	function signOut(yes)
 	{
-		if (!hasSignedIn())
+		if (!isSignOutBtnVisible())
 		{
 			log("User has not logged in. No logging out at this time :P");
-			
 			return;
 		}
 		
@@ -366,27 +370,53 @@ function Settings()
 		}
 	}
 	
-	function signUp()
+	function signUp(yes)
 	{
-		if (!hasSignedIn())
+		if (!isSignUpBtnVisible())
 		{
-			log("Tap Sign up");
-			btnSignUp.tap();
+			log("User signed in, can only sign out");
+			return;
+		}
+		
+		log("Tap Sign up");
+		btnSignUp.tap();
+		wait();
+		
+		if (typeof yes == "undefined")
+			yes = true;
+		
+		if (yes)
+		{
+			log("Tap YES to log out");
+			app.actionSheet().buttons()[0].tap();
+		}
+		else
+		{
+			log("Tap NO to back to Settings");
+			app.actionSheet().buttons()[1].tap();
 		}
 	}
 	
+	
 	function isSignUpBtnVisible()
 	{
-		assignControls();
-		
-		return btnSignUp.checkIsValid() && btnSignUp.isVisible();
+		var visible = btnSignUp.checkIsValid();
+		log("[Sign up] visible: " + visible);
+		return visible;
 	}
 	
 	function isSignOutBtnVisible()
 	{
-		assignControls();
-		
-		return btnLogOut.checkIsValid() && btnLogOut.isVisible();
+		var visible = btnLogOut.checkIsValid();
+		log("[Sign out] visible: " + visible);
+		return visible;
+	}
+
+	function isTroublemakerBtnVisible()
+	{		
+		var visible = btnTroubleMaker.checkIsValid();
+		log("[Troublemaker] visible: " + visible);
+		return visible;
 	}
 	
 	function isNoMailAccountsAlertShown()
@@ -394,4 +424,5 @@ function Settings()
 		return alert.alertTitle != null &&
 				alert.alertTitle == alert.NoEmailAccount;
 	}
+
 }

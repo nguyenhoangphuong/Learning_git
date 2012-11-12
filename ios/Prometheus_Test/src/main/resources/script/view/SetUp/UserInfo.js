@@ -8,8 +8,8 @@ UserInfo view function:
 =========================================================================================
 - setWeight(w1, w2)					:	setWeight(86, ".2")
 - setHeight(h1, h2)					:	setHeight("5'", "9\"") or setHeight(1, ".75")
-- setSex(sex)						:	set user sex ("male" / "female")
-- setUnit(unit)						:	set user unit ("us" / "si")
+- setGender(gender)					:	set user gender ("male" / "female")
+- setUnit(unit)						:	set user unit ("us" / "metric")
 - submit()							:	submit the form
 =========================================================================================
 - getWidth()						:	return string in width cell
@@ -41,7 +41,7 @@ function UserInfo(view)
 	
 	this.setHeight = setHeight;
 	this.setWeight = setWeight;
-	this.setSex = setSex;
+	this.setGender = setGender;
 	this.setUnit = setUnit;
 	this.submit = submit;
 	
@@ -55,12 +55,12 @@ function UserInfo(view)
 		mainView = window.tableViews()[0];
 		cells = mainView.cells();
 		
-		usBtn = cells[0].buttons()[0];
-		siBtn = cells[0].buttons()[1];
-		maleBtn = cells[1].buttons()[0];
-		femaleBtn = cells[1].buttons()[1];
-		weightBtn = cells[2];
-		heightBtn = cells[3];
+		usBtn = cells["Units"].buttons()["US"];
+		siBtn = cells["Units"].buttons()["Metric"];
+		maleBtn = cells["Gender"].buttons()["Male"];
+		femaleBtn = cells["Gender"].buttons()["Female"];
+		weightBtn = cells["Weight"];
+		heightBtn = cells["Height"];
 		
 		submitBtn = window.buttons()[0];
 	}
@@ -113,7 +113,7 @@ function UserInfo(view)
 		done.tap();
 	}
 	
-	function setSex(s)
+	function setGender(s)
 	{
 		wait(0.5);
 		
@@ -123,7 +123,7 @@ function UserInfo(view)
 		if(s == "female"|| s == "f")
 			femaleBtn.tap();
 		
-		log("Set sex: " + s);
+		log("Set gender: " + s);
 	}
 	
 	function setUnit(u)
@@ -132,11 +132,10 @@ function UserInfo(view)
 		
 		if(u == "us")
 			usBtn.tap();
-		
-		if(u == "si")
+		else
 			siBtn.tap();
 		
-		log("Set sex: " + u);
+		log("Set unit: " + u);
 	}
 	
 	function submit()

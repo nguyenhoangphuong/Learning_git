@@ -81,7 +81,7 @@ function SignIn()
 		 btnSignInTab = mainView.buttons()[1];
 		 btnConfirm = mainView.buttons()[2];
 		 
-		 btnTryout = mainView.buttons()["tryout"];
+		 btnTryout = mainView.buttons()[3];
 
 		 emailField = mainView.textFields()[0];
 		 pwdField = mainView.secureTextFields()[0];
@@ -164,7 +164,8 @@ function SignIn()
 	{
 		wait(0.5);
 		pwdField.tap();
-		pwdField.setValue(pwd);		
+		pwdField.setValue(pwd);
+		//app.keyboard().typeString(pwd);
 		log("Fill password: " + pwd);
 	}
 	
