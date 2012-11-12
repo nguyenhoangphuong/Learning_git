@@ -164,7 +164,7 @@ function UserInfo(view)
 		text = heightBtn.name();
 		info.height = text.substring(text.indexOf(",") + 2);
 		info.unit = (usBtn.value() == 1 ? "us" : "metric");
-		info.sex = (maleBtn.value() == 1 ? "male" : "female");
+		info.gender = (maleBtn.value() == 1 ? "male" : "female");
 		
 		log("About me: " + JSON.stringify(info));
 		return info;

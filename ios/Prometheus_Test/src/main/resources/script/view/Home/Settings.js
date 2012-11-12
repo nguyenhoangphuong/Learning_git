@@ -22,6 +22,7 @@ Settings functions:
 	+ example:	setWeight("70", ".5");
 - setUnit(unit = "US")	: set unit (default = "US")
 	+ unit: "US" (default) or "Metric", case insensitive 
+- getUserInfo()		: get the current user info on Setting view
 ================================================================================
 - tapSupport()		: tap Email Support button
 - tapLike()			: tap "Like our page" button
@@ -86,6 +87,7 @@ function Settings()
 	this.setBirthday = setBirthday;
 	this.setHeight = setHeight;
 	this.setWeight = setWeight;
+	this.getUserInfo = getUserInfo;
 	
 	this.tapSupport = tapSupport;
 	this.tapLike = tapLike;
@@ -143,6 +145,8 @@ function Settings()
 	
 	function setName(name)
 	{		
+		assignControls();
+		
 		if (name == null || name == "")
 			name = "Love is in the air";
 		
@@ -155,6 +159,8 @@ function Settings()
 	
 	function setGender(gender)
 	{
+		assignControls();
+		
 		if (typeof gender == "undefined")
 			gender = "Female";
 		
@@ -172,6 +178,8 @@ function Settings()
 	
 	function setBirthday(year, monthString, day, yearIndex, monthIndex, dayIndex)
 	{
+		assignControls();
+		
 		pckrBirthday.tap(); // open up Birthday picker
 		wait();
 		
@@ -185,34 +193,40 @@ function Settings()
 	
 	function setHeight(v1, v2)
 	{
+		assignControls();
+		
 		pckrHeight.tap(); // open up Height picker
 		wait();
 		
 		var picker = app.windows()[1].pickers()[0];
 		
 		log("Set height");
-		wheelPick(picker, 0, v1);
-		wheelPick(picker, 1, v2);
+		wheelPick(picker, 0, v1.toString());
+		wheelPick(picker, 1, v2.toString());
 		
 		app.windows()[1].toolbar().buttons()["Done"].tap();
 	}
 	
 	function setWeight(v1, v2)
 	{
+		assignControls();
+		
 		pckrWeight.tap(); // open up Weight picker
 		wait();
 		
 		var picker = app.windows()[1].pickers()[0];
 		
 		log("Set weight");
-		wheelPick(picker, 0, v1);
-		wheelPick(picker, 1, v2);
+		wheelPick(picker, 0, v1.toString());
+		wheelPick(picker, 1, v2.toString());
 		
 		app.windows()[1].toolbar().buttons()["Done"].tap();
 	}
 	
 	function setUnit(unit)
 	{
+		assignControls();
+		
 		if (typeof unit == "undefined")
 			unit = "us";
 		
@@ -229,6 +243,23 @@ function Settings()
 			log("Set unit to Metric");
 			btnMetric.tap();
 		}
+	}
+	
+	function getUserInfo()
+	{
+		assignControls();
+		
+		var info = {};
+		text = pckrWeight.name();
+		info.weight = text.substring(text.indexOf(",") + 2);
+		text = pckrHeight.name();
+		info.height = text.substring(text.indexOf(",") + 2);
+		info.unit = (btnUS.value() == 1 ? "us" : "metric");
+		info.gender = (btnMale.value() == 1 ? "male" : "female");
+		info.name = txtName.value();
+		
+		log("About me: " + JSON.stringify(info));
+		return info;
 	}
 
 	
@@ -341,6 +372,8 @@ function Settings()
 			app.actionSheet().buttons()[0].tap();
 		else
 			app.actionSheet().buttons()[1].tap();
+		
+		wait(0.5);
 	}
 	
 	function signOut(yes)
@@ -368,6 +401,8 @@ function Settings()
 			log("Tap NO to back to Settings");
 			app.actionSheet().buttons()[1].tap();
 		}
+		
+		wait(0.5);
 	}
 	
 	function signUp(yes)
@@ -395,6 +430,8 @@ function Settings()
 			log("Tap NO to back to Settings");
 			app.actionSheet().buttons()[1].tap();
 		}
+		
+		wait(0.5);
 	}
 	
 	

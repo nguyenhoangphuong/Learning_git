@@ -13,8 +13,8 @@
   			
   - toPlanPicker(email, pwd, userinfo, login) : go to PlanPicker screen 
   			+ userinfo = null : use default user info 
-  			+ userinfo = {w1, w2, wu, h1, h2, hu, age, sex} 
-  			ex: {100, 0.1, "kg", 1, 0.75, "meter", 20, "male" ("female")} 
+  			+ userinfo = {w1, w2, h1, h2, unit, gender} 
+  			ex: {100, 0.1, 1, 0.75, "us" ("metric"), "male" ("female")} 
   			
   - toPlanInfo(email, pwd, userinfo, planinfo, login) 
   			+ planinfo.type = Easy/Normal/Active/Custom
@@ -150,8 +150,10 @@ function Navigator()
 			// pick value
 			if (uinfo != null)
 			{
-				ui.setSex(uinfo.sex);
-				ui.setInfo(uinfo.age, uinfo.w1, uinfo.w2, uinfo.wu, uinfo.h1, uinfo.h2, uinfo.hu);
+				ui.setUnit(uinfo.unit);
+				ui.setGender(uinfo.gender);
+				ui.setWeight(uinfo.w1, uinfo.w2);
+				ui.setHeight(uinfo.h1, uinfo.h2);
 			}
 			
 			ui.submit();
