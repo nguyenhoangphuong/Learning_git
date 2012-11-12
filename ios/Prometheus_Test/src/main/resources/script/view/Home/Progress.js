@@ -72,7 +72,8 @@ function Progress()
 	
 	function tapToday()
 	{
-		todayBtn.tap();
+		//todayBtn.tap();
+		tapDate(0);
 		log("Tap [Today]");
 	}
 	
@@ -109,7 +110,7 @@ function Progress()
 	
 	function tapOutside()
 	{
-		target.tapWithOptions({x: 240, y: 120});
+		target.tapWithOptions({x: 240, y: 140});
 		log("Tap outside");
 		wait();
 	}

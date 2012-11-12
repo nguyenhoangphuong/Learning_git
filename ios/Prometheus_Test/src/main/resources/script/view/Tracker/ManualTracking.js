@@ -23,6 +23,8 @@ List of functions:
 - cancel()						: cancel input
 - save()						: confirm input
 =========================================================================================
+- addDummyRecord()				: add a dummy record (=1 for keyboard input)
+=========================================================================================
 */
 
 function ManualTracking()
@@ -50,6 +52,8 @@ function ManualTracking()
 	
 	this.cancel = cancel;
 	this.save = save;
+	
+	this.addDummyRecord = addDummyRecord;
 	
 	//MVP3: done()
 	function done()
@@ -210,5 +214,23 @@ function ManualTracking()
 		saveBtn.tap();
 		
 		log("Tap [Save]");
+	}
+	
+	function addDummyRecord(value)
+	{
+		if(typeof value == "undefined")
+			value = 1;
+		
+		// tap last field
+		var texts = mainView.staticTexts();
+		tapField(texts.length - 1, true);
+		wait(0.5);
+		
+		// set keyboard value
+		if(isKeyboardVisible())
+			app.keyboard().typeString(value.toString());
+		
+		// done
+		tapDone();
 	}
 }

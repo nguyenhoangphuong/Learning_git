@@ -72,7 +72,7 @@ function Tracking()
 	function tapGPS()
 	{
 		gpsBtn.tap();
-		wait(0.5);
+		wait();
 		
 		log("Tap [GPS]");
 	}
@@ -80,7 +80,7 @@ function Tracking()
 	function tapManual()
 	{
 		manualBtn.tap();
-		wait(0.5);
+		wait();
 		
 		log("Tap [Manual]");
 	}
@@ -94,6 +94,8 @@ function Tracking()
 		x = rect.origin.x + rect.size.width / 2;
 		y = rect.origin.y + rect.size.height / 2;
 		target.tap({x:x, y:y - 100});
+		
+		wait();
 	}
 	
 	function getActivitiesInfo()

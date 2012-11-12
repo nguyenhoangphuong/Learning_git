@@ -3,6 +3,7 @@
 function GoToProgress(pinfo)
 {
 	nav.toProgress(null, null, null, pinfo);
+	wait();
 }
 
 function AddRecord(activity)
@@ -13,6 +14,7 @@ function AddRecord(activity)
 	t.tapActivity(activity);
 	
 	m = new ManualTracking();
+	m.addDummyRecord();
 	m.save();
 }
 
@@ -40,7 +42,7 @@ function VerifyActivityList(activitiesExpect)
 	}
 }
 
-function VerifyDefaultPercent(activitiesExpect)
+function VerifyDefaultPercent()
 {
 	// activitiesExpect = ["Swimming", "Running"];
 
@@ -59,7 +61,7 @@ function VerifyDefaultPercent(activitiesExpect)
 					", " + progress.activities[j]);
 	}
 	
-	p.tapDate(0);
+	p.tapToday();
 }
 
 function VerifyDefaultRecord(activitiesExpect)
@@ -94,8 +96,8 @@ function VerifyProgressIsUpdated()
 	// check percent is updated (!= 0%)
 	progress = p.getActivities();
 	for(var j = 0; j < progress.activities.length; j++)
-		assertTrue(progress.percent[i] != "0%", "Percent isn't 0%" +
-				", " + progress.activities[i]);
+		assertTrue(progress.percent[j] != "0%", "Percent isn't 0%" +
+				", " + progress.activities[j]);
 }
 
 function VerifyRecordsAreUpdated()
@@ -108,6 +110,7 @@ function VerifyRecordsAreUpdated()
 	progress = p.getActivities();
 	for(var i = 0; i < progress.activities.length; i++)
 	{
+		p.tapActivity(0);
 		p.tapActivity(i);
 		assertTrue(!p.isNoActivity(), "Current records isn't No activity anymore");
 		
