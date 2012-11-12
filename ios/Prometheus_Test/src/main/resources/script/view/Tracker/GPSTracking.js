@@ -168,8 +168,10 @@ function GPSTracking()
 	
 	function finish()
 	{
-		wait(0.5);
+		wait(1);
 		btnFinish.tap();
+		wait(0.5);
+		app.actionSheet().buttons()["Finish"].tap();
 		log("Tap [Finish]");
 		
 		// TODO: tap Resume and Finish at confirmation
