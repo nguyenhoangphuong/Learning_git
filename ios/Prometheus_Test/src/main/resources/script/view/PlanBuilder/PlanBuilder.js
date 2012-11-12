@@ -91,9 +91,29 @@ function PlanBuilder()
 	{
 		log("Picking activity: " + id);
 		
-		if(typeof useIndex == "undefined") {
+		if(typeof useIndex == "undefined")
 			useIndex = false;
+		
+		if(useIndex)
+		{
+			var count = -1;
+			if(useIndex)
+			{
+				var count = -1;
+				for(var i = 0; i < iconsList.length; i++)
+				{
+					if(iconsList[i].name() == "bg custom icondot")
+						count++;
+				
+					if(count == id)
+					{
+						id = i - 1;
+						break;
+					}
+				}
+			}
 		}
+		
 		var	button = useIndex? iconsList[id] : iconsList["icon " + id.toLowerCase().replace("-", "") + " small"];
 
 		// dragging
@@ -106,7 +126,7 @@ function PlanBuilder()
 	
 	function removeActivity(id, useIndex) 
 	{
-		log("Removing activity: " + useIndex);
+		log("Removing activity: " + id);
 		
 		if(typeof useIndex == "undefined")
 			useIndex = false;
@@ -119,12 +139,28 @@ function PlanBuilder()
 		{
 			texts = mainView.staticTexts();
 			for(i = 0; i < texts.length; i++)
-				if(texts[i].name() == id)
+				if(texts[i].name().toLowerCase() == id.toLowerCase())
+				{
 					id = i;
+					break;
+				}
 		}
 		
-		// double id because there are (i) buttons
-		var button = mainView.buttons()[id * 2];
+		// find the button
+		var count = -1;
+		for(var i = 0; i < mainView.buttons().length; i++)
+		{
+			if(mainView.buttons()[i].name() == "Edit Goal")
+				count++;
+		
+			if(count == id)
+			{
+				id = i - 1;
+				break;
+			}
+		}
+
+		var button = mainView.buttons()[id];
 		
 		// dropping
 		wait();
@@ -164,5 +200,3 @@ function PlanBuilder()
 	}
 	
 }
-
-var planBuilder = new PlanBuilder();

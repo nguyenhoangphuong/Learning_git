@@ -16,7 +16,13 @@ function AddRecord(activity)
 	m.save();
 }
 
-function VerifyNoActivityProgress(activitiesExpect)
+function VerifyDateRange()
+{
+	// check the date range in this plan
+	log("THIS TEST IS SKIP");
+}
+
+function VerifyActivityList(activitiesExpect)
 {
 	// activitiesExpect = ["Swimming", "Running"];
 
@@ -32,6 +38,14 @@ function VerifyNoActivityProgress(activitiesExpect)
 		expectAct = activitiesExpect[i];
 		assertTrue(actualAct.indexOf(expectAct) >= 0, "Activity is in list");
 	}
+}
+
+function VerifyDefaultPercent(activitiesExpect)
+{
+	// activitiesExpect = ["Swimming", "Running"];
+
+	// to progress and get activities list
+	p = new Progress();
 	
 	// check progress of each day
 	for(var i = 0; i < 7; i++)
@@ -45,10 +59,10 @@ function VerifyNoActivityProgress(activitiesExpect)
 					", " + progress.activities[j]);
 	}
 	
-	p.tapToday();
+	p.tapDate(0);
 }
 
-function VerifyNoActivityRecord(activitiesExpect)
+function VerifyDefaultRecord(activitiesExpect)
 {
 	// to progress
 	p = new Progress();

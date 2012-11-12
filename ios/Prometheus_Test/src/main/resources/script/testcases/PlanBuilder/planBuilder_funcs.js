@@ -44,22 +44,22 @@ function VerifyAddActivity()
 	var numofactivities;
 	
 	//add 1 activity
-	planbuilder.pickActivity(0,true);	
+	planbuilder.pickActivity(3,true);	
 	numofactivities = planbuilder.getNumberOfActivities();
 	assertEqual(numofactivities,1,"only one activity");
 	
 	//add one more activity
-	planbuilder.pickActivity(1,true);	
+	planbuilder.pickActivity(2,true);	
 	numofactivities = planbuilder.getNumberOfActivities();
 	assertEqual(numofactivities,2,"2 activity");
 	
 	//add one more activity
-	planbuilder.pickActivity(2,true);	
+	planbuilder.pickActivity(1,true);	
 	numofactivities = planbuilder.getNumberOfActivities();
 	assertEqual(numofactivities,3,"3 activity");
 	
 	//add one more activity
-	planbuilder.pickActivity(3,true);	
+	planbuilder.pickActivity(0,true);	
 	numofactivities = planbuilder.getNumberOfActivities();
 	assertEqual(numofactivities,3,"just 3 activity");
 	

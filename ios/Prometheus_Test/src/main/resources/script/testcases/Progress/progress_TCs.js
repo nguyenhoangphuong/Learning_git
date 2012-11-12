@@ -18,6 +18,7 @@ pactivities = ["Running", "Swimming"];
 
 start("Progress testcases");
 // ------------------------------------
+
 log("1. To Progress view");
 GoToProgress(pinfo);
 
