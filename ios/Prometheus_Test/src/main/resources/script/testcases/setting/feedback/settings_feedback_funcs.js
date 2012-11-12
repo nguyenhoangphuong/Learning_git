@@ -4,7 +4,7 @@
 function verifyTroublemakerShown()
 {
 	s = new Settings();
-	assertTrue(s.isTroublemaker(), "Settings JIRA feedback is shown");
+	assertTrue(s.isTroublemakerBtnVisisble(), "Settings JIRA feedback is shown");
 	
 	/*
 	if (s.isTroublemaker())
@@ -17,7 +17,7 @@ function verifyTroublemakerShown()
 function verifyTroublemakerNotShown()
 {
 	s = new Settings();
-	assertTrue(!s.isTroublemaker(), "Settings JIRA feedback is not shown");
+	assertTrue(!s.isTroublemakerBtnVisisble(), "Settings JIRA feedback is not shown");
 	
 	/*
 	if (!s.isTroublemaker())
