@@ -9,7 +9,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class GPSTrackingTest extends AutomationTest {
 	@Test(groups = { "ios", "Prometheus", "MVP3", "GPS" })
-	public void testGPSTracking()
+	public void TestGPSTracking()
 			throws InterruptedException, StopConditionException {
 		AppHelper.cleanCache();
 		ShortcutsTyper.delayTime(1000);
