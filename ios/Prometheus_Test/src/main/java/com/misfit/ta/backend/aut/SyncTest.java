@@ -106,7 +106,7 @@ public class SyncTest
 		 */
 		
 		SyncData oldData = logIn(user).syncData;
-		oldData.setLastUpdated(oldData.getLastUpdated() + 1);
+		oldData.setLastUpdated(oldData.getLastUpdated() + 100);
 		
 		double newW = Double.parseDouble(oldData.getValue("weight")) + 1;
 		double newH = Double.parseDouble(oldData.getValue("height")) + 1;
@@ -127,7 +127,6 @@ public class SyncTest
 	@Test
 	public void case3()
 	{
-		System.out.println("Adasdasdasdasd");
 		/* Scenerio:
 		 * ---------------------------------------
 		 * - Log in
@@ -140,21 +139,26 @@ public class SyncTest
 		 */
 		
 		SyncData oldData = logIn(user).syncData;
-		System.out.println("LOG CASE3:" + oldData.getString());
-		oldData.setLastUpdated(0);
-		System.out.println("LOG CASE3:" + oldData.getString());
+		oldData.setLastUpdated(oldData.getLastUpdated() - 1);
 		
 		double newW = Double.parseDouble(oldData.getValue("weight")) + 1;
 		double newH = Double.parseDouble(oldData.getValue("height")) + 1;
-		
+
 		oldData.setValue("weight", newW);
 		oldData.setValue("height", newH);
 		
 		sync(oldData);
 		SyncData newData = logIn(user).syncData;
 		
+		System.out.println("LOG CASE3:" + oldData.getValue("weight"));
+		System.out.println("LOG CASE3:" + newData.getValue("weight"));
+		System.out.println("LOG CASE3:" + oldData.getValue("height"));
+		System.out.println("LOG CASE3:" + newData.getValue("height"));	
+		
 		Assert.assertTrue(newData.getValue("weight").equals(oldData.getValue("weight")));
 		Assert.assertTrue(newData.getValue("height").equals(oldData.getValue("height")));
+		
+
 	}
 	
 }
