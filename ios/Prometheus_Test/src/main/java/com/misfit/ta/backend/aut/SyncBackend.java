@@ -8,21 +8,21 @@ import org.apache.http.message.BasicHeader;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ta.backend.data.AuthToken;
-import com.misfit.ta.backend.data.SignInData;
-import com.misfit.ta.backend.data.SyncData;
+import com.misfit.ta.backend.data.*;
 import com.misfit.ta.backend.rest.profile.SyncRest;
 import com.misfit.ta.backend.rest.signin.SignInRest;
 import com.misfit.ta.backend.rest.signin.SignUpRest;
 import com.misfit.ta.backend.rest.signin.TryoutRest;
 
+
 public class SyncBackend {
-    
+	
     private Logger logger = Util.setupLogger(SyncBackend.class);
+    
     public static void main(String[] args) {
         SyncBackend test = new SyncBackend();
-        test.sync();
-      //  test.signIn("a@a.a", "misfit1");
+        //test.sync();
+        test.signUp("qa2@test.test", "misfit1");
     }
     
     private static void testSignIn() {
@@ -69,14 +69,19 @@ public class SyncBackend {
     }
     
     public void sync() {
-        SyncData data = new SyncData();
+    	
+        SyncData data = SyncData.getDefault();
         SyncRest rest = new SyncRest(data);
  
         List<Header> headers = new Vector<Header>();
-        BasicHeader header = new BasicHeader("auth_token", "QaQBx4HYqms5QaaGjD4j");
+        BasicHeader header = new BasicHeader("auth_token", "BaFygpRsHFRDJDV45H7Q");
         headers.add(header);
         
         rest.postWithHeader(headers);
+        data = (SyncData)rest.content();
         
+        System.out.println(data.getValue("personalPlans"));
+        data.setValue("personalPlans", "this is profiles info");
+        System.out.println(data.getValue("personalPlans"));
     }
 }

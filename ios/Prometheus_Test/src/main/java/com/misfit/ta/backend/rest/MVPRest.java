@@ -22,6 +22,7 @@ import com.google.resting.method.post.PostHelper;
  */
 
 public abstract class MVPRest {
+	
     // static
     static public String baseAddress = "https://staging-api.misfitwearables.com/shine/v2/";
     static public int port = 443;
@@ -48,8 +49,9 @@ public abstract class MVPRest {
 
     public abstract void formatResponse();
 
-    // methods
+    // methods   
     public void post() {
+    	
         url = baseAddress + apiUrl + extendUrl;
         formatRequest();
         response = Resting.post(url, port, params);
@@ -60,6 +62,7 @@ public abstract class MVPRest {
     }
 
     public void postWithHeader(List<Header> headers) {
+    	
         url = baseAddress + apiUrl + extendUrl;
         formatRequest();
         
