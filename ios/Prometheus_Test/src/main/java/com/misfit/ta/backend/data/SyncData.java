@@ -59,6 +59,17 @@ public class SyncData
     	}
     }
     
+    public long getLastUpdated()
+    {
+    	String str = getValue("lastUpdated");
+    	return Long.parseLong(str);
+    }
+    
+    public void setLastUpdated(long value)
+    {
+    	setValue("lastUpdated", value);
+    }
+    
     public String getString()
     {
     	return objects.toString();

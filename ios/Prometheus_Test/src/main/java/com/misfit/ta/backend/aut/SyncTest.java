@@ -65,7 +65,7 @@ public class SyncTest
 	@BeforeMethod
 	public void beforeMethod()
 	{
-		System.out.println("=============================================");
+		System.out.println("=============================================================================================");
 	}
 	
 	// test methods
@@ -75,15 +75,13 @@ public class SyncTest
 		/* Scenerio:
 		 * ---------------------------------------
 		 * - Log in
-		 * - Increase timestamp
 		 * - Sync
 		 * - Log in
 		 * => Check: sync data doesnt change
 		 * ---------------------------------------
 		 */
 		
-		SyncData oldData = logIn(user).syncData;
-		oldData.timestamp++;		
+		SyncData oldData = logIn(user).syncData;		
 		sync(oldData);
 		SyncData newData = logIn(user).syncData;
 		
@@ -100,7 +98,7 @@ public class SyncTest
 		 * ---------------------------------------
 		 * - Log in
 		 * - Update sync data
-		 * - Increase timestamp
+		 * - Increase lastUpdated
 		 * - Sync
 		 * - Log in
 		 * => Check: sync data change
@@ -108,7 +106,7 @@ public class SyncTest
 		 */
 		
 		SyncData oldData = logIn(user).syncData;
-		oldData.timestamp++;
+		oldData.setLastUpdated(oldData.getLastUpdated() + 1);
 		
 		double newW = Double.parseDouble(oldData.getValue("weight")) + 1;
 		double newH = Double.parseDouble(oldData.getValue("height")) + 1;
@@ -129,11 +127,12 @@ public class SyncTest
 	@Test
 	public void case3()
 	{
+		System.out.println("Adasdasdasdasd");
 		/* Scenerio:
 		 * ---------------------------------------
 		 * - Log in
 		 * - Update sync data
-		 * - DESCREASE timestamp
+		 * - DESCREASE lastUpdated
 		 * - Sync
 		 * - Log in
 		 * => Check: sync data doesn't change
@@ -141,7 +140,9 @@ public class SyncTest
 		 */
 		
 		SyncData oldData = logIn(user).syncData;
-		oldData.timestamp--;
+		System.out.println("LOG CASE3:" + oldData.getString());
+		oldData.setLastUpdated(0);
+		System.out.println("LOG CASE3:" + oldData.getString());
 		
 		double newW = Double.parseDouble(oldData.getValue("weight")) + 1;
 		double newH = Double.parseDouble(oldData.getValue("height")) + 1;
