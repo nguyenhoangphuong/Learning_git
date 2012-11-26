@@ -13,26 +13,23 @@ public class SyncData
     	return new SyncData(0, profile);
     }
     
-    public void copy(SyncData obj) {
-        this.timestamp = obj.timestamp;
-        this.objects = (JSONObject) JSONSerializer.toJSON(obj.toString());
-    }
-    
     // fields
     public Long timestamp;
-    public JSONObject objects;
+    public String objects;
+    
+    public JSONObject json;
     
     // constructor
     public SyncData(long timestamp, String objects)
     {
     	this.timestamp = timestamp;
-    	this.objects = (JSONObject) JSONSerializer.toJSON(objects);
+    	this.objects = objects;
     }
     
     // methods
     public String getValue(String key)
     {
-    	String s = objects.toString();
+    	String s = objects;
     	key = "\"" + key + "\":";
     	
     	int index = s.indexOf(key);
@@ -52,7 +49,7 @@ public class SyncData
     
     public void setValue(String key, Object value)
     {
-    	String s = objects.toString();
+    	String s = objects;
     	key = "\"" + key + "\":";
     	
     	int index = s.indexOf(key);
@@ -65,7 +62,7 @@ public class SyncData
     		newStr += "\"" + value + "\"";
     		newStr += s.substring(end);
     		
-    		this.objects = (JSONObject) JSONSerializer.toJSON(newStr);
+    		objects = newStr;
     	}
     }
     
@@ -82,7 +79,7 @@ public class SyncData
     
     public String getString()
     {
-    	return objects.toString();
+    	return objects;
     }
 }
 

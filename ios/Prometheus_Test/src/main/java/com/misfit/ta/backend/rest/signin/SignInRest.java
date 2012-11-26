@@ -16,9 +16,8 @@ public class SignInRest extends MVPRest {
     private Logger logger = Util.setupLogger(MVPRest.class);
 
     public SignInRest(SignInData userData) {
-        // parent constructor
+
         super(userData);
-        // api root
         apiUrl = "login/";
     }
 

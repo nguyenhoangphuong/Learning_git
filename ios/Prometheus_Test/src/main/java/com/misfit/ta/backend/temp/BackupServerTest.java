@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.aut;
+package com.misfit.ta.backend.temp;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,12 +8,10 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.aut.connection.SyncConnection;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class BackupServerTest {
 
-    
     private Logger logger = Util.setupLogger(BackupServerTest.class);
     public static String url = "http://184.72.64.53/";
     
@@ -83,8 +81,7 @@ public class BackupServerTest {
     }
     
     public static void informSuccess() {
-        success++;
-        
+        success++;  
     }
    
     public static void informSuccess(long time) {
@@ -93,8 +90,5 @@ public class BackupServerTest {
         timeBuffer.append(a + "\n");
         totalTime += a;
     }
-   
-    
-
     
 }

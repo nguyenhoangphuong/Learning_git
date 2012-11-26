@@ -2,28 +2,41 @@ package com.misfit.ta.backend.aut.connection;
 
 import com.google.resting.Resting;
 import com.google.resting.component.impl.ServiceResponse;
-import com.misfit.ta.backend.aut.BackupServerTest;
+import com.misfit.ta.backend.temp.BackupServerTest;
 
 
-public class WebConnection extends Thread {
-    private int id;
+public class WebConnection extends CThread 
+{
+	// fields
     private String url;
-    public WebConnection(String url) {
+    
+    // constructor
+    public WebConnection(String url)
+    {
        this.url = url;
     }
     
-    public void run() {
-        
+    // must-be-implemented methods
+    public void run() 
+    {
+    	long t1 = System.currentTimeMillis();
         ServiceResponse response = Resting.get(url, 80);
-        int statusCode = response.getStatusCode();
-        if (statusCode != 200) {
-            System.out.println("------------------ ERROR : " + statusCode + " ----------------------");
+        long t2 = System.currentTimeMillis();
+               
+        isSuccess = (response.getStatusCode() == 200);
+        timeTaken = t2 - t1;
+        
+        if (!isSuccess) {
+            System.out.println("------------------ ERROR : " + response.getStatusCode() + " ----------------------");
             System.out.println("LOG [BackupServerTest.Connection.run]: " + response);
         } else {  
             System.out.println("LOG [BackupServerTest.Connection.run]: " + response);
-            BackupServerTest.informSuccess();
         }
-        BackupServerTest.informDone();
+    }
+    
+    public CThread duplicate()
+    {
+    	return new WebConnection(url);
     }
 }
 

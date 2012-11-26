@@ -53,7 +53,7 @@ public class SyncTest
 	@BeforeClass
 	public void setUp()
 	{
-		logger = Util.setupLogger(SyncBackend.class);
+		logger = Util.setupLogger(SyncTest.class);
 		
 		// create user
 		user = new SignInData(username, password);
@@ -106,8 +106,8 @@ public class SyncTest
 		 */
 		
 		SyncData oldData = logIn(user).syncData;
-		oldData.setLastUpdated(oldData.getLastUpdated() + 100);
-		
+		oldData.setLastUpdated(oldData.getLastUpdated() + 1);
+			
 		double newW = Double.parseDouble(oldData.getValue("weight")) + 1;
 		double newH = Double.parseDouble(oldData.getValue("height")) + 1;
 		
@@ -116,9 +116,6 @@ public class SyncTest
 		
 		sync(oldData);
 		SyncData newData = logIn(user).syncData;
-		
-		Assert.assertTrue(!newData.getValue("weight").equals(oldData.getValue("weight")));
-		Assert.assertTrue(!newData.getValue("height").equals(oldData.getValue("height")));
 		
 		Assert.assertTrue(Double.parseDouble(newData.getValue("weight")) == newW);
 		Assert.assertTrue(Double.parseDouble(newData.getValue("height")) == newH);
@@ -148,15 +145,7 @@ public class SyncTest
 		tmp.setValue("height", newH);
 		
 		sync(tmp);
-		SyncData newData = logIn(user).syncData;
-		
-		System.out.println("LOG CASE3: old " + oldData.getValue("weight"));
-		System.out.println("LOG CASE3: new " + newData.getValue("weight"));
-		System.out.println("LOG CASE3: tmp " + tmp.getValue("weight"));
-		System.out.println("LOG CASE3: old " + oldData.getValue("height"));
-		System.out.println("LOG CASE3: new " + newData.getValue("height"));
-		System.out.println("LOG CASE3: tmp " + tmp.getValue("height"));
-		
+		SyncData newData = logIn(user).syncData;	
 		
 		Assert.assertTrue(newData.getValue("weight").equals(oldData.getValue("weight")));
 		Assert.assertTrue(newData.getValue("height").equals(oldData.getValue("height")));

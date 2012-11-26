@@ -1,3 +1,0 @@
-UIQuery: https://github.com/jonathanpenn/UIQuery
-TuneUp_js: https://github.com/alexvollmer/tuneup_js
-
