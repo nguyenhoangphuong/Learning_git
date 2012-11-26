@@ -21,6 +21,9 @@ public class SyncTest
 	SignInData user;
 	List<Header> headers;
 	
+	private String username = "a@aq.a";
+	private String password = "misfit1";
+	
 	// base methods
 	public AuthToken logIn(SignInData u)
 	{
@@ -53,7 +56,7 @@ public class SyncTest
 		logger = Util.setupLogger(SyncBackend.class);
 		
 		// create user
-		user = new SignInData("qa@test.test", "misfit1");
+		user = new SignInData(username, password);
 		
 		// create authen token header
 		headers = new Vector<Header>();
@@ -80,13 +83,10 @@ public class SyncTest
 		 * => Check: sync data doesnt change
 		 * ---------------------------------------
 		 */
-		
-		SyncData oldData = logIn(user).syncData;		
+		SyncData oldData = logIn(user).syncData;	
 		sync(oldData);
 		SyncData newData = logIn(user).syncData;
 		
-		System.out.println(oldData.getString());
-		System.out.println(newData.getString());
 		Assert.assertTrue(oldData.getString().equals(newData.getString()));
 		Assert.assertTrue(oldData.timestamp != newData.timestamp);
 	}
@@ -137,23 +137,26 @@ public class SyncTest
 		 * => Check: sync data doesn't change
 		 * ---------------------------------------
 		 */
-		
-		SyncData oldData = logIn(user).syncData;
+	    SyncData tmp = logIn(user).syncData;
+		SyncData oldData = new SyncData(tmp.timestamp, tmp.objects.toString());
 		oldData.setLastUpdated(oldData.getLastUpdated() - 1);
 		
 		double newW = Double.parseDouble(oldData.getValue("weight")) + 1;
 		double newH = Double.parseDouble(oldData.getValue("height")) + 1;
 
-		oldData.setValue("weight", newW);
-		oldData.setValue("height", newH);
+		tmp.setValue("weight", newW);
+		tmp.setValue("height", newH);
 		
-		sync(oldData);
+		sync(tmp);
 		SyncData newData = logIn(user).syncData;
 		
-		System.out.println("LOG CASE3:" + oldData.getValue("weight"));
-		System.out.println("LOG CASE3:" + newData.getValue("weight"));
-		System.out.println("LOG CASE3:" + oldData.getValue("height"));
-		System.out.println("LOG CASE3:" + newData.getValue("height"));	
+		System.out.println("LOG CASE3: old " + oldData.getValue("weight"));
+		System.out.println("LOG CASE3: new " + newData.getValue("weight"));
+		System.out.println("LOG CASE3: tmp " + tmp.getValue("weight"));
+		System.out.println("LOG CASE3: old " + oldData.getValue("height"));
+		System.out.println("LOG CASE3: new " + newData.getValue("height"));
+		System.out.println("LOG CASE3: tmp " + tmp.getValue("height"));
+		
 		
 		Assert.assertTrue(newData.getValue("weight").equals(oldData.getValue("weight")));
 		Assert.assertTrue(newData.getValue("height").equals(oldData.getValue("height")));

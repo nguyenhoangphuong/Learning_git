@@ -8,6 +8,8 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
 import org.apache.http.Header;
+import org.apache.log4j.Logger;
+import org.graphwalker.Util;
 
 import com.google.resting.Resting;
 import com.google.resting.component.RequestParams;
@@ -37,6 +39,8 @@ public abstract class MVPRest {
     protected String extendUrl = "";
     protected Object responseObj = null;
     private String url;
+    
+    private Logger logger = Util.setupLogger(MVPRest.class);
 
     // constructor
     public MVPRest(Object requestObj) {
@@ -65,14 +69,7 @@ public abstract class MVPRest {
     	
         url = baseAddress + apiUrl + extendUrl;
         formatRequest();
-        
-        for (Header header : headers) {
-            System.out.println("LOG [MVPRest.postWithHeader]: " + header);
-        }
-        
-        System.out.println("LOG [MVPRest.postWithHeader]: " + url);
         response = PostHelper.post(url, port, UTF8, params, headers);
-
         // progress response
         contentData = response.getContentData();
         formatResponse();

@@ -8,7 +8,9 @@ import org.apache.http.message.BasicHeader;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ta.backend.data.*;
+import com.misfit.ta.backend.data.AuthToken;
+import com.misfit.ta.backend.data.SignInData;
+import com.misfit.ta.backend.data.SyncData;
 import com.misfit.ta.backend.rest.profile.SyncRest;
 import com.misfit.ta.backend.rest.signin.SignInRest;
 import com.misfit.ta.backend.rest.signin.SignUpRest;
@@ -21,8 +23,11 @@ public class SyncBackend {
     
     public static void main(String[] args) {
         SyncBackend test = new SyncBackend();
-        //test.sync();
-        test.signUp("qa2@test.test", "misfit1");
+//        test.sync();
+//        test.signIn("a@a.a", "misfit1");
+        AuthToken token = test.signIn("a@aq.a", "misfit1");
+        System.out.println("LOG [SyncBackend.main]: " + token.token);
+        
     }
     
     private static void testSignIn() {
@@ -52,7 +57,7 @@ public class SyncBackend {
        
         rest.post();
         AuthToken token = (AuthToken) rest.content();
-        logger.info("Token= " + token.token + ", type=" + token.type);
+        logger.debug("Token= " + token.token + ", type=" + token.type);
         return token;
     }
     

@@ -13,6 +13,11 @@ public class SyncData
     	return new SyncData(0, profile);
     }
     
+    public void copy(SyncData obj) {
+        this.timestamp = obj.timestamp;
+        this.objects = (JSONObject) JSONSerializer.toJSON(obj.toString());
+    }
+    
     // fields
     public Long timestamp;
     public JSONObject objects;
@@ -34,8 +39,13 @@ public class SyncData
     	int start = index + key.length();
     	int end = s.indexOf(",", start);
     	
-    	if(index >= 0)
-    		return s.substring(start, end);
+    	if(index >= 0) {
+    		String result = s.substring(start, end);
+    		if (result != null) {
+    		    result = result.replace("\"", "");
+    		}
+    		return result;
+    	}
     	
     	return null;
     }
