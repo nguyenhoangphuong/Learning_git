@@ -3,7 +3,7 @@ source "config.sh"
 
 
 TIMESTAMP=`date +%s`
-FOLDER_RESULT="$FOLDER_ROOT/Result-$TIMESTAMP"
+FOLDER_RESULT="Result-$TIMESTAMP"
 FILE_TEMP="$FOLDER_RESULT/temp.txt"
 FILE_SUMMARY="$FOLDER_RESULT/summary.csv"
 

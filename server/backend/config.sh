@@ -5,8 +5,8 @@ LINK_SIGNUP="http://192.168.1.102:3000/shine/v2/signup"
 LINK_LOGIN="http://192.168.1.102:3000/shine/v2/login"
 LINK_SYNC="http://192.168.1.102:3000/shine/v2/sync"
 
-FOLDER_ROOT="/Users/khoathai/Documents/testab"
 
-FILE_TEXT_SIGNUP="$FOLDER_ROOT/textsignup.txt"
-FILE_TEXT_LOGIN="$FOLDER_ROOT/textlogin.txt"
-FILE_TEXT_SYNC="$FOLDER_ROOT/textsync.txt"
+
+FILE_TEXT_SIGNUP="textsignup.txt"
+FILE_TEXT_LOGIN="textlogin.txt"
+FILE_TEXT_SYNC="textsync.txt"
