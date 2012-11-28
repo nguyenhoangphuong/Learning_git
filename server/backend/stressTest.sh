@@ -5,8 +5,8 @@ source "config.sh"
 TIMESTAMP=`date +%s`
 FOLDER_RESULT="Result-$TIMESTAMP"
 FILE_TEMP="$FOLDER_RESULT/temp.txt"
-FILE_SUMMARY="$FOLDER_RESULT/summary.csv"
-
+FILE_SUMMARY_SIGNUP="$FOLDER_RESULT/summarysignup.csv"
+FILE_SUMMARY_SIGNIN="$FOLDER_RESULT/summarysignin.csv"
 
 
 # Create result folder
@@ -16,13 +16,14 @@ mkdir -p "$FOLDER_RESULT"
 
 function runsignup
 {
+    echo "============run sign up stress test==================="
     # Variables
     TOTAL_C=${#PARAMS_C[@]}
     TOTAL_N=${#PARAMS_N[@]}
     echo $TOTAL_C
     echo $TOTAL_N
 
-    echo "Concurency,Total Requests,Total time (sec),failed requests,requests per sec,time per request (ms),time per request (ms) (across all concurrent requests)" > "$FILE_SUMMARY"
+    echo "Concurency,Total Requests,Total time (sec),failed requests,requests per sec,time per request (ms),time per request (ms) (across all concurrent requests)" > "$FILE_SUMMARY_SIGNUP"
     # Run with each concurrent
     for (( i=0;i<$TOTAL_C;i++)); do
         echo "Concurent=${PARAMS_C[$i]}"
@@ -50,7 +51,7 @@ function runsignup
             TIME_PER_REQ_CONCURRENT=`eval cat "$FILE_TEMP" | grep "Time per request:" | grep "(mean, across all concurrent requests)" | cut -d ' ' -f 10`
 
             #Write variables to file
-            echo "${PARAMS_C[$i]},${PARAMS_N[$j]},$TIME_TAKEN,$FAIL_REQUESTS,$REQS_PER_SEC,$TIME_PER_REQ,$TIME_PER_REQ_CONCURRENT" >> "$FILE_SUMMARY"
+            echo "${PARAMS_C[$i]},${PARAMS_N[$j]},$TIME_TAKEN,$FAIL_REQUESTS,$REQS_PER_SEC,$TIME_PER_REQ,$TIME_PER_REQ_CONCURRENT" >> "$FILE_SUMMARY_SIGNUP"
 
             # clear file temp
             rm -rf "$FILE_TEMP"
@@ -60,13 +61,14 @@ function runsignup
 
 function runlogin
 {
+    echo "============run log in stress test==================="
     # Variables
     TOTAL_C=${#PARAMS_C[@]}
     TOTAL_N=${#PARAMS_N[@]}
     echo $TOTAL_C
     echo $TOTAL_N
 
-    echo "Concurency,Total Requests,Total time (sec),failed requests,requests per sec,time per request (ms),time per request (ms) (across all concurrent requests)" > "$FILE_SUMMARY"
+    echo "Concurency,Total Requests,Total time (sec),failed requests,requests per sec,time per request (ms),time per request (ms) (across all concurrent requests)" > "$FILE_SUMMARY_SIGNIN"
     # Run with each concurrent
     for (( i=0;i<$TOTAL_C;i++)); do
         echo "Concurent=${PARAMS_C[$i]}"
@@ -94,12 +96,12 @@ function runlogin
             TIME_PER_REQ_CONCURRENT=`eval cat "$FILE_TEMP" | grep "Time per request:" | grep "(mean, across all concurrent requests)" | cut -d ' ' -f 10`
 
             #Write variables to file
-            echo "${PARAMS_C[$i]},${PARAMS_N[$j]},$TIME_TAKEN,$FAIL_REQUESTS,$REQS_PER_SEC,$TIME_PER_REQ,$TIME_PER_REQ_CONCURRENT" >> "$FILE_SUMMARY"
+            echo "${PARAMS_C[$i]},${PARAMS_N[$j]},$TIME_TAKEN,$FAIL_REQUESTS,$REQS_PER_SEC,$TIME_PER_REQ,$TIME_PER_REQ_CONCURRENT" >> "$FILE_SUMMARY_SIGNIN"
 
             # clear file temp
             rm -rf "$FILE_TEMP"
         done
     done 
 }
-
+runsignup
 runlogin
