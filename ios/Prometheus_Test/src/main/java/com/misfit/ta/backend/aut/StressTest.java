@@ -5,13 +5,14 @@ import junit.framework.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.misfit.ta.backend.aut.connection.LogInConnection;
+import com.misfit.ta.backend.aut.connection.WebConnection;
 import com.misfit.ta.base.LoadTest;
 
 
 public class StressTest 
 {
 	// fields
-	static private int total = 20;
+	static private int total = 100;
 	static private double maximumTime = 3000;
 	
 	// test setups
@@ -56,18 +57,18 @@ public class StressTest
     	
     	double aver = test.totalTime / test.numberOfThread;
     	Assert.assertTrue(aver <= maximumTime);
-    	Assert.assertTrue(test.failNumber != 0);
+    	Assert.assertTrue(test.failNumber == 0);
     }
 
     @Test
     public void ServerConcurrentStress()
     {
-    	LoadTest test = new LoadTest(new LogInConnection(), total);
+    	LoadTest test = new LoadTest(new WebConnection("http://192.168.1.102:3000/"), total);
     	test.RunTest();
     	test.PrintResults();
     	
     	double aver = test.totalTime / test.numberOfThread;
     	Assert.assertTrue(aver <= maximumTime);
-    	Assert.assertTrue(test.failNumber != 0);
+    	Assert.assertTrue(test.failNumber == 0);
     }
 }

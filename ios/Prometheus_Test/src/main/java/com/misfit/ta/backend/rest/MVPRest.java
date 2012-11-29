@@ -27,6 +27,7 @@ public abstract class MVPRest {
 	
     // static
     static public String baseAddress = "https://staging-api.misfitwearables.com/shine/v2/";
+	//static public String baseAddress = "http://192.168.1.102:3000/shine/v2/";
     static public int port = 443;
 
     // fields
@@ -40,7 +41,7 @@ public abstract class MVPRest {
     protected Object responseObj = null;
     private String url;
     
-    private Logger logger = Util.setupLogger(MVPRest.class);
+    protected Logger logger = Util.setupLogger(MVPRest.class);
 
     // constructor
     public MVPRest(Object requestObj) {
@@ -88,6 +89,10 @@ public abstract class MVPRest {
         return response.getStatusCode() != 200 && response.getStatusCode() != 404 && response.getStatusCode() != 500;
     }
 
+    public int statusCode() {
+    	return response.getStatusCode();
+    }
+    
     public Object content() {
         return responseObj;
     }

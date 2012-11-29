@@ -2,7 +2,6 @@ package com.misfit.ta.backend.aut.connection;
 
 import com.google.resting.Resting;
 import com.google.resting.component.impl.ServiceResponse;
-import com.misfit.ta.backend.temp.BackupServerTest;
 
 
 public class WebConnection extends CThread 

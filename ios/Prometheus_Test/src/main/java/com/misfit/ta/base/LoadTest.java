@@ -19,7 +19,9 @@ public class LoadTest
 	public int successNumber;
 	public int failNumber;
 	
-	static public long timeOut = 100000;
+	public long timeOut = 0;
+	static public long threadTimeOut = 3000;
+	
 	
 	// constructor
 	public LoadTest(CThread[] threads)
@@ -30,6 +32,8 @@ public class LoadTest
 		this.totalTime = 0;
 		this.successNumber = 0;
 		this.failNumber = 0;
+		
+		this.timeOut = threadTimeOut * numberOfThread;
 	}
 	
 	public LoadTest(CThread sample, int numberOfThread)
@@ -42,6 +46,8 @@ public class LoadTest
 		this.totalTime = 0;
 		this.successNumber = 0;
 		this.failNumber = 0;
+		
+		this.timeOut = threadTimeOut * numberOfThread;
 	}
 	
 	// methods
