@@ -17,6 +17,7 @@ import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.BasicRequestParams;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.method.post.PostHelper;
+import com.misfit.ta.Settings;
 
 /* To be updated:
  * - Ensure response != in check error methods and get response methods
@@ -26,9 +27,7 @@ import com.google.resting.method.post.PostHelper;
 public abstract class MVPRest {
 	
     // static
-    static public String baseAddress = "https://staging-api.misfitwearables.com/shine/v2/";
-    //static public String baseAddress = "https://api.misfitwearables.com/shine/v2/";
-	//static public String baseAddress = "https://192.168.1.102/shine/v2/";
+    static public String baseAddress = Settings.getValue("syncServerBaseAddress");
     static public int port = 443;
 
     // fields
@@ -42,7 +41,7 @@ public abstract class MVPRest {
     protected Object responseObj = null;
     private String url;
     
-    protected Logger logger = Util.setupLogger(MVPRest.class);
+    private Logger logger = Util.setupLogger(MVPRest.class);
 
     // constructor
     public MVPRest(Object requestObj) {
@@ -59,11 +58,13 @@ public abstract class MVPRest {
     public void post() {
     	
         url = baseAddress + apiUrl + extendUrl;
+        System.out.println("LOG [MVPRest.post]: url= " + url);
         formatRequest();
         response = Resting.post(url, port, params);
-
+        
         // progress response
         contentData = response.getContentData();
+        System.out.println("LOG [MVPRest.post]: " + contentData);
         formatResponse();
     }
 
