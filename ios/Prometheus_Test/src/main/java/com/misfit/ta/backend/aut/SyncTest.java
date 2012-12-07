@@ -17,12 +17,12 @@ import com.misfit.ta.backend.rest.signin.*;
 
 public class SyncTest 
 {
-	Logger logger;
+	private static Logger logger = Util.setupLogger(SyncTest.class);
 	SignInData user;
 	List<Header> headers;
 	
-	private String username = "a@aq.a";
-	private String password = "misfit1";
+	private String username = "qa-fullplan@a.a";
+	private String password = "qwerty1";
 	
 	// base methods
 	public AuthToken logIn(SignInData u)
@@ -52,9 +52,7 @@ public class SyncTest
 	// test setups
 	@BeforeClass
 	public void setUp()
-	{
-		logger = Util.setupLogger(SyncTest.class);
-		
+	{		
 		// create user
 		user = new SignInData(username, password);
 		
@@ -153,4 +151,38 @@ public class SyncTest
 
 	}
 	
+    public static void main(String[] args) 
+    {			
+		// create authen token header
+		List<Header> headers = new Vector<Header>();
+		AuthToken auth = SignInTest.signIn("stress@m.qa", "qwerty1");
+        BasicHeader header = new BasicHeader("auth_token", auth.token);
+        headers.add(header);
+        
+        long lastSuccess = auth.syncData.getLastUpdated();
+        SyncData oldData = auth.syncData;
+        
+        // get time
+ 		 StringBuffer buf = new StringBuffer();
+ 		 
+ 		 for (int i =1; i<=10; i++) 
+ 		 {	 		 
+ 			 lastSuccess++;
+ 			 oldData.setLastUpdated(lastSuccess);
+ 			 
+	 		 long start = System.currentTimeMillis();
+	 		 
+	 		 SyncRest rest = new SyncRest(oldData);
+			 rest.postWithHeader(headers);
+			 SyncData data = (SyncData)rest.content();
+			 
+			 long end = System.currentTimeMillis();
+	 		 
+			 logger.info(data.objects);
+			 buf.append(String.valueOf(end - start) + "\n");
+ 		 }
+ 		 
+ 		System.out.println("LOG [SignInTest.main]: Time: \n" + buf.toString());
+    }
+    
 }

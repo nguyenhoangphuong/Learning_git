@@ -59,6 +59,7 @@ public class SignInTest
         rest.post();
         AuthToken token = (AuthToken) rest.content();
         logger.info("Token = " + token.token + ", Type =" + token.type);
+        logger.info(token.syncData.objects);
         return token;
     }
     
@@ -69,5 +70,29 @@ public class SignInTest
     public static AuthToken signUp(String username, String password) {
         return register(username, password, 1);
     }
-
+    
+    
+    
+    public static void main(String[] args) 
+    {
+    	signIn("qa-fullplan@a.a", "qwerty1");
+    	
+    	/*
+ 		 StringBuffer buf = new StringBuffer();
+ 		 
+ 		 for (int i =1; i<=10; i++) 
+ 		 {
+	 		 String username = "stress@m.qa";
+	 		 //username = username + "_" + System.currentTimeMillis() + "@misfitwearables.com";
+	 		 System.out.println("LOG [SignInTest.main]: " + username);
+	 		 
+	 		 long start = System.currentTimeMillis();
+	 		 signIn(username, "qwerty1");
+	 		 long end = System.currentTimeMillis();
+	 		 buf.append(String.valueOf(end - start) + "\n");
+ 		 }
+ 		 
+ 		System.out.println("LOG [SignInTest.main]: Time: \n" + buf.toString());
+ 		*/
+    }
 }

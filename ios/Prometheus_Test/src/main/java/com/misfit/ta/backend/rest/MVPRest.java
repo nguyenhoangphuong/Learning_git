@@ -27,7 +27,8 @@ public abstract class MVPRest {
 	
     // static
     static public String baseAddress = "https://staging-api.misfitwearables.com/shine/v2/";
-	//static public String baseAddress = "http://192.168.1.102:3000/shine/v2/";
+    //static public String baseAddress = "https://api.misfitwearables.com/shine/v2/";
+	//static public String baseAddress = "https://192.168.1.102/shine/v2/";
     static public int port = 443;
 
     // fields

@@ -12,7 +12,7 @@ import com.misfit.ta.base.LoadTest;
 public class StressTest 
 {
 	// fields
-	static private int total = 100;
+	static private int total = 1000;
 	static private double maximumTime = 3000;
 	
 	// test setups
