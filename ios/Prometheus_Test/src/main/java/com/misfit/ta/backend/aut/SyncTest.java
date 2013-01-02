@@ -21,7 +21,8 @@ public class SyncTest
 	SignInData user;
 	List<Header> headers;
 	
-	private String username = "qa-fullplan@a.a";
+	private String username = "wsx@a.a";
+	private String emptyEmail = "signin_empty@qa.com";	
 	private String password = "qwerty1";
 	
 	// base methods
@@ -104,7 +105,7 @@ public class SyncTest
 		 */
 		
 		SyncData oldData = logIn(user).syncData;
-		oldData.setLastUpdated(oldData.getLastUpdated() + 1);
+		oldData.changeLastUpdated(true);
 			
 		double newW = Double.parseDouble(oldData.getValue("weight")) + 1;
 		double newH = Double.parseDouble(oldData.getValue("height")) + 1;
@@ -134,7 +135,7 @@ public class SyncTest
 		 */
 	    SyncData tmp = logIn(user).syncData;
 		SyncData oldData = new SyncData(tmp.timestamp, tmp.objects.toString());
-		oldData.setLastUpdated(oldData.getLastUpdated() - 1);
+		oldData.changeLastUpdated(false);
 		
 		double newW = Double.parseDouble(oldData.getValue("weight")) + 1;
 		double newH = Double.parseDouble(oldData.getValue("height")) + 1;

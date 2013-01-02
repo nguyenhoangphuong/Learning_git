@@ -18,8 +18,10 @@ public class LoadTest
 	public long totalTime;
 	public int successNumber;
 	public int failNumber;
+	public long totalTimeConcurrent;
 	
 	public long timeOut = 0;
+
 	static public long threadTimeOut = 3000;
 	
 	
@@ -32,6 +34,7 @@ public class LoadTest
 		this.totalTime = 0;
 		this.successNumber = 0;
 		this.failNumber = 0;
+		this.totalTimeConcurrent = 0;
 		
 		this.timeOut = threadTimeOut * numberOfThread;
 	}
@@ -46,6 +49,7 @@ public class LoadTest
 		this.totalTime = 0;
 		this.successNumber = 0;
 		this.failNumber = 0;
+		this.totalTimeConcurrent = 0;
 		
 		this.timeOut = threadTimeOut * numberOfThread;
 	}
@@ -100,7 +104,11 @@ public class LoadTest
 		long t2 = System.currentTimeMillis();
 		
 		// total time
-		this.totalTime = t2 - t1;
+		this.totalTime = 0;
+		for(int i = 0; i < numberOfThread; i++)
+			this.totalTime += threads[i].timeTaken;
+		
+		this.totalTimeConcurrent = t2 - t1;
 	}
 	
 	public void PrintResults()
