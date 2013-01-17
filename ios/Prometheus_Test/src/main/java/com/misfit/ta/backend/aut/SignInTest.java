@@ -8,8 +8,8 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.data.AuthToken;
 import com.misfit.ta.backend.data.SignInData;
-import com.misfit.ta.backend.rest.signin.SignInRest;
-import com.misfit.ta.backend.rest.signin.SignUpRest;
+import com.misfit.ta.backend.rest.SignInRest;
+import com.misfit.ta.backend.rest.SignUpRest;
 
 public class SignInTest 
 {
@@ -18,8 +18,7 @@ public class SignInTest
 
     private long id = System.currentTimeMillis();
     private String email = "generate-" + id + "@qa.com";
-    private String existedEmail = "a@a.a";
-    private String emptyEmail = "signin_empty@qa.com";
+    private String existedEmail = "5.5@1.1";
     private String password = "qwerty1";
 
     // test methods
@@ -38,9 +37,6 @@ public class SignInTest
     {
         // right info
         Assert.assertFalse(signIn(existedEmail, password).token.isEmpty());
-
-        // right info with empty plan
-        Assert.assertFalse(signIn(emptyEmail, password).token.isEmpty());
         
         // wrong info
         Assert.assertTrue(signIn(email, "asdasd12131").token.isEmpty());
@@ -75,12 +71,5 @@ public class SignInTest
     public static AuthToken signUp(String username, String password) 
     {
         return register(username, password, 1);
-    }
-
-
-    public static void main(String[] args)
-    {
-    	signUp("signin_empty1@qa.com", "qwerty1");
-    	signIn("signin_empty1@qa.com", "qwerty1");
     }
 }

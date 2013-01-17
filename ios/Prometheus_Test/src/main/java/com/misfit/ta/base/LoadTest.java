@@ -9,7 +9,7 @@ import com.misfit.ta.backend.temp.BackupServerTest;
 public class LoadTest 
 {
 	// logger
-	protected Logger logger = Util.setupLogger(BackupServerTest.class);
+	protected Logger logger = Util.setupLogger(LoadTest.class);
 	
 	// fields
 	public int numberOfThread;

@@ -17,9 +17,9 @@ import com.misfit.ta.backend.data.AuthToken;
 import com.misfit.ta.backend.data.SignInData;
 import com.misfit.ta.backend.data.SyncData;
 import com.misfit.ta.backend.rest.MVPRest;
-import com.misfit.ta.backend.rest.profile.SyncRest;
-import com.misfit.ta.backend.rest.signin.SignInRest;
-import com.misfit.ta.backend.rest.signin.SignUpRest;
+import com.misfit.ta.backend.rest.SignInRest;
+import com.misfit.ta.backend.rest.SignUpRest;
+import com.misfit.ta.backend.rest.SyncRest;
 
 public class AllAPI
 {

@@ -12,17 +12,17 @@ import org.graphwalker.Util;
 import org.testng.annotations.*;
 
 import com.misfit.ta.backend.data.*;
-import com.misfit.ta.backend.rest.profile.SyncRest;
-import com.misfit.ta.backend.rest.signin.*;
+import com.misfit.ta.backend.rest.SignInRest;
+import com.misfit.ta.backend.rest.SignUpRest;
+import com.misfit.ta.backend.rest.SyncRest;
 
 public class SyncTest 
 {
-	private static Logger logger = Util.setupLogger(SyncTest.class);
+	protected static Logger logger = Util.setupLogger(SyncTest.class);
 	SignInData user;
 	List<Header> headers;
 	
-	private String username = "wsx@a.a";
-	private String emptyEmail = "signin_empty@qa.com";	
+	private String username = "5.5@1.1";
 	private String password = "qwerty1";
 	
 	// base methods
@@ -148,42 +148,6 @@ public class SyncTest
 		
 		Assert.assertTrue(newData.getValue("weight").equals(oldData.getValue("weight")));
 		Assert.assertTrue(newData.getValue("height").equals(oldData.getValue("height")));
-		
-
 	}
-	
-    public static void main(String[] args) 
-    {			
-		// create authen token header
-		List<Header> headers = new Vector<Header>();
-		AuthToken auth = SignInTest.signIn("stress@m.qa", "qwerty1");
-        BasicHeader header = new BasicHeader("auth_token", auth.token);
-        headers.add(header);
-        
-        long lastSuccess = auth.syncData.getLastUpdated();
-        SyncData oldData = auth.syncData;
-        
-        // get time
- 		 StringBuffer buf = new StringBuffer();
- 		 
- 		 for (int i =1; i<=10; i++) 
- 		 {	 		 
- 			 lastSuccess++;
- 			 oldData.setLastUpdated(lastSuccess);
- 			 
-	 		 long start = System.currentTimeMillis();
-	 		 
-	 		 SyncRest rest = new SyncRest(oldData);
-			 rest.postWithHeader(headers);
-			 SyncData data = (SyncData)rest.content();
-			 
-			 long end = System.currentTimeMillis();
-	 		 
-			 logger.info(data.objects);
-			 buf.append(String.valueOf(end - start) + "\n");
- 		 }
- 		 
- 		System.out.println("LOG [SignInTest.main]: Time: \n" + buf.toString());
-    }
     
 }

@@ -12,7 +12,7 @@ import com.misfit.ta.base.LoadTest;
 public class StressTest 
 {
 	// fields
-	static private int total = 1000;
+	static private int total = 500;
 	static private double maximumTime = 3000;
 	
 	// test setups
@@ -24,33 +24,8 @@ public class StressTest
 	
 	// test methods
     @Test
-    public void SignInStress() 
-    {
-    	int count = total;
-    	long t1 = System.currentTimeMillis();
-    	
-    	while(count > 0)
-    	{
-    		SignInTest.signIn("qa-fullplan@a.a", "qwerty1");
-    		count--;
-    	}
-    	
-    	long t2 = System.currentTimeMillis();
-    	double aver = (t2 - t1) / total	;
-    	
-    	System.out.println("Average response time: " + aver);
-    	Assert.assertTrue(aver <= maximumTime);
-    }
-
-    @Test
     public void SignInConcurrentStress()
-    {
-    	/*
-    	LogInConnection[] cons = new LogInConnection[20];
-    	for(int i = 0; i < 20; i++)
-    		cons[i] = new LogInConnection();
-    	*/
-    	
+    {    	
     	LoadTest test = new LoadTest(new LogInConnection(), total);
     	test.RunTest();
     	test.PrintResults();

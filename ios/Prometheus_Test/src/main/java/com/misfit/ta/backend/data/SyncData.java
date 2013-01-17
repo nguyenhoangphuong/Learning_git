@@ -21,13 +21,13 @@ public class SyncData
     
     
     // fields
-    public Long timestamp;
+    public Double timestamp;
     public String objects;
     
     public JSONObject json;
     
     // constructor
-    public SyncData(long timestamp, String objects)
+    public SyncData(double timestamp, String objects)
     {
     	this.timestamp = timestamp;
     	this.objects = objects;
@@ -72,20 +72,7 @@ public class SyncData
     		objects = newStr;
     	}
     }
-    
-    public long getLastUpdated()
-    {
-    	String str = getValue("lastUpdated");
-    	if(str != null)
-    		return Long.parseLong(str);
-    	return -1;
-    }
-    
-    public void setLastUpdated(long value)
-    {
-    	setValue("lastUpdated", value);
-    }
-    
+       
     public String getString()
     {
     	return objects;
@@ -108,7 +95,8 @@ public class SyncData
 	    	if(index < 0)
 	    		break;
 
-	    	long num = Long.parseLong(s.substring(start, end).replace("\"", ""));
+	    	String sub = s.substring(start, end).replace("\"", "");
+	    	long num = Long.parseLong(sub);
 	    	num = increase ? ++num : --num;
 
     		String newStr = s.substring(0, start);

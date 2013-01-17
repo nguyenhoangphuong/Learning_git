@@ -6,8 +6,8 @@ import org.graphwalker.Util;
 import com.misfit.ta.backend.aut.SignInTest;
 import com.misfit.ta.backend.data.AuthToken;
 import com.misfit.ta.backend.data.SignInData;
-import com.misfit.ta.backend.rest.signin.SignInRest;
-import com.misfit.ta.backend.rest.signin.SignUpRest;
+import com.misfit.ta.backend.rest.SignInRest;
+import com.misfit.ta.backend.rest.SignUpRest;
 
 public class LogInConnection extends CThread
 {
@@ -21,7 +21,7 @@ public class LogInConnection extends CThread
 	// constructor
 	public LogInConnection()
 	{
-		username = "qa-fullplan@a.a";
+		username = "qq@a.a";
 		password = "qwerty1";
 	}
 	

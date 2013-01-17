@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.rest.signin;
+package com.misfit.ta.backend.rest;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -9,7 +9,6 @@ import net.sf.json.JSONSerializer;
 import com.misfit.ta.backend.data.AuthToken;
 import com.misfit.ta.backend.data.SignInData;
 import com.misfit.ta.backend.data.SyncData;
-import com.misfit.ta.backend.rest.MVPRest;
 
 public class SignInRest extends MVPRest {
 
@@ -33,17 +32,32 @@ public class SignInRest extends MVPRest {
     public void formatResponse() {
 
         logger.debug("Response content: " + contentData);
-        try {
+        try 
+        {
             JSONObject json = (JSONObject) JSONSerializer.toJSON(contentData.toString());
         	
+            // token and type 
             String token = json.getString("auth_token");
             String type = json.getString("type");
             
-            String objects = json.getString("objects");
-            Long timestamp = json.getLong("last_successfully_synced");
-            SyncData data = new SyncData(timestamp, objects);
-            
-            responseObj = new AuthToken(token, type, data);
+            if(apiUrl == "login/")
+            {
+            	// get objects
+                String s = contentData.toString();
+                int start = s.indexOf("{\"profile\":");
+                int end = s.indexOf("\"last_successfully_synced\":");
+                
+                String objects = s.substring(start, end - 1);
+	            Double timestamp = json.getDouble("last_successfully_synced");
+	            
+	            SyncData data = new SyncData(timestamp, objects);
+	            responseObj = new AuthToken(token, type, data);
+            }
+            else
+            {
+            	SyncData data = new SyncData(0, "");
+            	responseObj = new AuthToken(token, type, data);
+            }
             
             if (response.getStatusCode() !=200) {
                 System.out.println("\n\n\nLOG [SignInRest.formatResponse]: =========================== ERROR");

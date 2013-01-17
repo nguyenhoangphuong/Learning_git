@@ -1,9 +1,8 @@
-package com.misfit.ta.backend.rest.profile;
+package com.misfit.ta.backend.rest;
 
 import net.sf.json.*;
 
 import com.misfit.ta.backend.data.SyncData;
-import com.misfit.ta.backend.rest.MVPRest;
 
 public class SyncRest extends MVPRest {
 

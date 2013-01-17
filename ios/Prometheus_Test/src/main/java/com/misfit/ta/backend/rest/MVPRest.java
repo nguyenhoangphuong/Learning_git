@@ -28,7 +28,7 @@ public abstract class MVPRest {
 	
     // static
     static public String baseAddress = Settings.getValue("syncServerBaseAddress");
-    static public int port = 443;
+    static public int port = Integer.parseInt(Settings.getValue("syncServerPort"));
 
     // fields
     protected RequestParams params = new BasicRequestParams();
@@ -41,7 +41,7 @@ public abstract class MVPRest {
     protected Object responseObj = null;
     private String url;
     
-    private Logger logger = Util.setupLogger(MVPRest.class);
+    protected Logger logger = Util.setupLogger(MVPRest.class);
 
     // constructor
     public MVPRest(Object requestObj) {
@@ -73,6 +73,7 @@ public abstract class MVPRest {
         url = baseAddress + apiUrl + extendUrl;
         formatRequest();
         response = PostHelper.post(url, port, UTF8, params, headers);
+        
         // progress response
         contentData = response.getContentData();
         formatResponse();

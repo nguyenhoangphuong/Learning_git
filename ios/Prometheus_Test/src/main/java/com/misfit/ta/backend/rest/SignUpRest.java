@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.rest.signin;
+package com.misfit.ta.backend.rest;
 
 import com.misfit.ta.backend.data.SignInData;
 
