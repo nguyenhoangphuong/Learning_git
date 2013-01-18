@@ -1,11 +1,9 @@
-package com.misfit.ta.backend.aut;
+package com.misfit.ta.backend.old;
 
 import junit.framework.Assert;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.misfit.ta.backend.aut.connection.LogInConnection;
-import com.misfit.ta.backend.aut.connection.WebConnection;
 import com.misfit.ta.base.LoadTest;
 
 

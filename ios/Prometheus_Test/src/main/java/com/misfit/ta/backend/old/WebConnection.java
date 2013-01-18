@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.aut.connection;
+package com.misfit.ta.backend.old;
 
 import com.google.resting.Resting;
 import com.google.resting.component.impl.ServiceResponse;

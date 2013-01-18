@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.data;
+package com.misfit.ta.backend.old;
 
 public class AuthToken {
     public String token;

@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.rest;
+package com.misfit.ta.backend.old;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -6,9 +6,6 @@ import org.graphwalker.Util;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
-import com.misfit.ta.backend.data.AuthToken;
-import com.misfit.ta.backend.data.SignInData;
-import com.misfit.ta.backend.data.SyncData;
 
 public class SignInRest extends MVPRest {
 

@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.aut;
+package com.misfit.ta.backend.old;
 
 import java.util.List;
 import java.util.Vector;
@@ -12,9 +12,6 @@ import org.graphwalker.Util;
 import org.testng.annotations.*;
 
 import com.misfit.ta.backend.data.*;
-import com.misfit.ta.backend.rest.SignInRest;
-import com.misfit.ta.backend.rest.SignUpRest;
-import com.misfit.ta.backend.rest.SyncRest;
 
 public class SyncTest 
 {

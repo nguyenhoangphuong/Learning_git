@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.rest;
+package com.misfit.ta.backend.old;
 
 import static com.google.resting.component.EncodingTypes.UTF8;
 
@@ -29,13 +29,16 @@ public abstract class MVPRest {
     // static
     static public String baseAddress = Settings.getValue("syncServerBaseAddress");
     static public int port = Integer.parseInt(Settings.getValue("syncServerPort"));
-
+    protected String apiUrl;
+    
     // fields
     protected RequestParams params = new BasicRequestParams();
+    
+    
     protected ServiceResponse response = null;
     protected IContentData contentData = null;
 
-    protected String apiUrl;
+    
     protected Object requestObj;
     protected String extendUrl = "";
     protected Object responseObj = null;

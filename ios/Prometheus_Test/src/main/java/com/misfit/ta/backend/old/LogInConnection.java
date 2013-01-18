@@ -1,13 +1,8 @@
-package com.misfit.ta.backend.aut.connection;
+package com.misfit.ta.backend.old;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ta.backend.aut.SignInTest;
-import com.misfit.ta.backend.data.AuthToken;
-import com.misfit.ta.backend.data.SignInData;
-import com.misfit.ta.backend.rest.SignInRest;
-import com.misfit.ta.backend.rest.SignUpRest;
 
 public class LogInConnection extends CThread
 {

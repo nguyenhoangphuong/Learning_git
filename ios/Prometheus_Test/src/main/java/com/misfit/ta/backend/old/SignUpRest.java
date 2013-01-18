@@ -1,6 +1,5 @@
-package com.misfit.ta.backend.rest;
+package com.misfit.ta.backend.old;
 
-import com.misfit.ta.backend.data.SignInData;
 
 public class SignUpRest extends SignInRest {
     public SignUpRest(SignInData userData) {
