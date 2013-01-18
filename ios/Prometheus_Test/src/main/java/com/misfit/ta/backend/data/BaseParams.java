@@ -33,5 +33,10 @@ public class BaseParams
 	{
 		params.add(key, value);
 	}
+	
+	public void addObjectParam(String key, Object value)
+	{
+		params.add(key, (String) value);
+	}
     
 }

@@ -1,5 +1,6 @@
 package com.misfit.ta.backend.data;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,10 +57,16 @@ public class BaseResult
 	// utilities functions
 	public void printKeyPairsValue()
 	{
-		logger.info("-----------------------------------------------");
-		for (String key : this.pairResult.keySet()) 
-			logger.info(key + "\t\t: " + this.pairResult.get(key));
-		logger.info("-----------------------------------------------");
+
+		logger.info("-------------------------------------------------------------------------------------------------");
+		for (String key : this.pairResult.keySet())
+		{
+			if(this.pairResult.get(key).getClass().isArray())
+				logger.info(String.format("%30s", key) + ": " + Arrays.toString((Object[])this.pairResult.get(key)));
+			else
+				logger.info(String.format("%30s", key) + ": " + this.pairResult.get(key));
+		}
+		logger.info("-------------------------------------------------------------------------------------------------");
 	}
 
 }

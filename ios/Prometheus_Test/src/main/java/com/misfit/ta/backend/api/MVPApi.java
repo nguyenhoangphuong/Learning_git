@@ -10,9 +10,7 @@ import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.method.post.PostHelper;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.data.AccountResult;
-import com.misfit.ta.backend.data.BaseParams;
-import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.*;
 
 public class MVPApi 
 {
@@ -105,17 +103,37 @@ public class MVPApi
 	
 	
 	// profile apis
-	static public void createProfile()
+	static public ProfileResult createProfile(String token, String name, Double weight, Double height, Integer unit, 
+			Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDevice)
 	{
+    	// prepare
+		String url = baseAddress + "profile";
 		
+    	JSONBuilder json = new JSONBuilder();
+    	json.addValue("name", name);
+    	json.addValue("weight", weight);
+    	json.addValue("height", height);
+    	json.addValue("unit", unit);
+    	json.addValue("gender", gender);
+    	json.addValue("dateOfBirth", dateOfBirth);
+    	json.addValue("goalLevel", goalLevel);
+    	json.addValue("trackingDevice", trackingDevice);
+    	logger.info(json.toJSONString());
+    	
+    	BaseParams requestInf = new BaseParams();
+    	requestInf.addHeader("auth_token", token);
+    	requestInf.addParam("profile", json.toJSONString());
+    	
+    	// post and recieve raw data
+    	ServiceResponse response = MVPApi.post(url, port, requestInf);
+    	
+    	// format data
+    	ProfileResult result = new ProfileResult(response);
+    	return result;
 	}
 	
-	
-	// test
-	static public void test()
+	static public ProfileResult getProfile(String token)
 	{
-		String token = "nqqHMupEiCv8iS7UuoRp";
-		
     	// prepare
 		String url = baseAddress + "profile";
 		
@@ -126,14 +144,35 @@ public class MVPApi
     	ServiceResponse response = MVPApi.get(url, port, requestInf);
     	
     	// format data
-    	//BaseResult result = new BaseResult(response);
-    	//return result;
+    	ProfileResult result = new ProfileResult(response);
+    	return result;
+	}
+	
+	// test
+	static public void test()
+	{
+
 	}
 	
 	public static void main(String[] args)
-	{		
+	{	
+		// default fields
+		String name = "Tears";
+		Double weight = 68.2;
+		Double height = 1.71;
+		Integer unit = 1;
+		Integer gender = 0;
+		Long dateOfBirth = (long) 684954000;
+		Integer goalLevel = 1;
+		String trackingDevice = "f230d0c4e69f08cb31e8535f5b512ed7c140289b";
+		
 		//MVPApi.signIn("nga3@misfitwearables.com", "password1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
-		MVPApi.test();
+		AccountResult r = MVPApi.signIn("hn@yahoo.com", "qwerty1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
+		r.printKeyPairsValue();
+		MVPApi.getProfile(r.token).printKeyPairsValue();
+		
+		MVPApi.createProfile(r.token, name, weight, height, unit, gender, dateOfBirth, goalLevel, trackingDevice).printKeyPairsValue();
+		
 	}
 	
 }
