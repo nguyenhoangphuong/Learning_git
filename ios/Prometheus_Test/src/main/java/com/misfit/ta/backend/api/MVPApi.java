@@ -103,26 +103,38 @@ public class MVPApi
 	
 	
 	// profile apis
+	static private BaseParams createProfileParams(String token, String name, Double weight, Double height, 
+			Integer unit, Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDevice, 
+			String localId, String latestVersion)
+	{
+		// build json object string
+    	JSONBuilder json = new JSONBuilder();
+    	if(name != null) 			json.addValue("name", name);
+    	if(weight != null) 			json.addValue("weight", weight);
+    	if(height != null) 			json.addValue("height", height);
+    	if(unit != null)			json.addValue("unit", unit);
+    	if(gender != null) 			json.addValue("gender", gender);
+    	if(dateOfBirth != null) 	json.addValue("dateOfBirth", dateOfBirth);
+    	if(goalLevel != null) 		json.addValue("goalLevel", goalLevel);
+    	if(trackingDevice != null) 	json.addValue("trackingDevice", trackingDevice);
+    	if(localId != null) 		json.addValue("localId", localId);
+    	if(latestVersion != null) 	json.addValue("latestVersion", latestVersion);
+    	
+    	BaseParams requestInf = new BaseParams();
+    	requestInf.addHeader("auth_token", token);
+    	requestInf.addParam("profile", json.toJSONString());
+    	
+		return requestInf;
+	}
+	
 	static public ProfileResult createProfile(String token, String name, Double weight, Double height, Integer unit, 
 			Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDevice)
 	{
     	// prepare
 		String url = baseAddress + "profile";
 		
-    	JSONBuilder json = new JSONBuilder();
-    	json.addValue("name", name);
-    	json.addValue("weight", weight);
-    	json.addValue("height", height);
-    	json.addValue("unit", unit);
-    	json.addValue("gender", gender);
-    	json.addValue("dateOfBirth", dateOfBirth);
-    	json.addValue("goalLevel", goalLevel);
-    	json.addValue("trackingDevice", trackingDevice);
-    	logger.info(json.toJSONString());
-    	
-    	BaseParams requestInf = new BaseParams();
-    	requestInf.addHeader("auth_token", token);
-    	requestInf.addParam("profile", json.toJSONString());
+		BaseParams requestInf = createProfileParams(token, name, weight, height, unit, gender, dateOfBirth,
+				goalLevel, trackingDevice, null, null);
     	
     	// post and recieve raw data
     	ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -148,6 +160,44 @@ public class MVPApi
     	return result;
 	}
 	
+	static public ProfileResult updateProfile(String token, String name, Double weight, Double height, Integer unit, 
+			Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDevice)
+	{
+    	// prepare
+		String url = baseAddress + "profile";
+		
+    	JSONBuilder json = new JSONBuilder();
+    	json.addValue("name", name);
+    	json.addValue("weight", weight);
+    	json.addValue("height", height);
+    	json.addValue("unit", unit);
+    	json.addValue("gender", gender);
+    	json.addValue("dateOfBirth", dateOfBirth);
+    	json.addValue("goalLevel", goalLevel);
+    	json.addValue("trackingDevice", trackingDevice);
+    	logger.info(json.toJSONString());
+    	
+    	BaseParams requestInf = new BaseParams();
+    	requestInf.addHeader("auth_token", token);
+    	requestInf.addParam("profile", json.toJSONString());
+    	
+    	
+    	// post and recieve raw data
+    	ServiceResponse response = MVPApi.post(url, port, requestInf);
+    	
+    	// format data
+    	ProfileResult result = new ProfileResult(response);
+    	return result;
+	}
+	
+	static public ProfileResult updateProfile(String token, ProfileResult.ProfileData data)
+	{
+		
+		
+		return null;
+	}
+	
+	
 	// test
 	static public void test()
 	{
@@ -166,10 +216,11 @@ public class MVPApi
 		Integer goalLevel = 1;
 		String trackingDevice = "f230d0c4e69f08cb31e8535f5b512ed7c140289b";
 		
-		//MVPApi.signIn("nga3@misfitwearables.com", "password1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
-		AccountResult r = MVPApi.signIn("hn@yahoo.com", "qwerty1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
+		//AccountResult r = MVPApi.signUp("qa1.3@test.com", "password1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
+		//AccountResult r = MVPApi.signIn("hn@yahoo.com", "qwerty1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
+		AccountResult r = MVPApi.signIn("qa1.1@test.com", "password1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
 		r.printKeyPairsValue();
-		MVPApi.getProfile(r.token).printKeyPairsValue();
+		//MVPApi.getProfile(r.token).printKeyPairsValue();
 		
 		MVPApi.createProfile(r.token, name, weight, height, unit, gender, dateOfBirth, goalLevel, trackingDevice).printKeyPairsValue();
 		

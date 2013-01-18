@@ -10,22 +10,10 @@ public class ProfileResult extends BaseResult
 	// relavtive level data
 	public class RelativeLevelData
 	{
-		public String level;
-		public String absoluteLevel;
-		public String point;
-		
-		public RelativeLevelData()
-		{
-			
-		}
-		
-		public RelativeLevelData(Integer level, Integer absoluteLevel, Integer point)
-		{
-			this.level = level.toString();
-			this.absoluteLevel = absoluteLevel.toString();
-			this.point = point.toString();
-		}
-		
+		public String level = null;
+		public String absoluteLevel = null;
+		public String point = null;
+
 		public String toString()
 		{
 			return "{level:" + level + ",absoluteLevel:" + absoluteLevel + ",point:" + point + "}";
@@ -35,24 +23,19 @@ public class ProfileResult extends BaseResult
 	public class ProfileData
 	{
 		// fields
-		public String serverId;
-		public String localId;
-		public Long updatedAt;
-		public Double weight;
-		public Double height;
-		public String unit;
-		public Integer gender;
-		public Long dateOfBirth;
-		public String name;
-		public String latestVersion;
-		public Integer goalLevel;
-		public String trackingDeviceId;
-		public RelativeLevelData[] userRelativeLevelsNSData;
-		
-		public ProfileData()
-		{
-			userRelativeLevelsNSData = new RelativeLevelData[10]; 
-		}
+		public String serverId = null;
+		public String localId = null;
+		public Long updatedAt = null;
+		public Double weight = null;
+		public Double height = null;
+		public String unit = null;
+		public Integer gender = null;
+		public Long dateOfBirth = null;
+		public String name = null;
+		public String latestVersion = null;
+		public Integer goalLevel = null;
+		public String trackingDeviceId = null;
+		public RelativeLevelData[] userRelativeLevelsNSData = null;
 	}
 	
 	
@@ -80,13 +63,19 @@ public class ProfileResult extends BaseResult
 		// normal result
 		JSONObject proJSON = json.getJSONObject("profile");
 
-		profile.serverId = proJSON.getString("serverId");
-		profile.localId = proJSON.getString("localId");
-		profile.updatedAt = proJSON.getLong("updatedAt");
+		if(proJSON.containsKey("serverId"))
+		{
+			profile.serverId = proJSON.getString("serverId");
+			this.pairResult.put("serverId", profile.serverId);
+		}
 		
-		// add to base hashmap
-		this.pairResult.put("serverId", profile.serverId);
-		this.pairResult.put("localId", profile.localId);
+		if(proJSON.containsKey("localId"))
+		{
+			profile.localId = proJSON.getString("localId");
+			this.pairResult.put("localId", profile.localId);
+		}
+		
+		profile.updatedAt = proJSON.getLong("updatedAt");
 		this.pairResult.put("updatedAt", profile.updatedAt);
 		
 		// these result only avaiable with GET-200, PUT-210, POST-210
@@ -101,18 +90,7 @@ public class ProfileResult extends BaseResult
 			profile.latestVersion = proJSON.getString("latestVersion");
 			profile.goalLevel = proJSON.getInt("goalLevel");
 			profile.trackingDeviceId = proJSON.getString("trackingDeviceId");
-			
-			JSONArray relativeLevelsJSON = proJSON.getJSONArray("userRelativeLevelsNSData");
-			for(int i = 0; i < profile.userRelativeLevelsNSData.length; i++)
-			{
-				JSONObject relativeDataJSON = relativeLevelsJSON.getJSONObject(i);
-				
-				profile.userRelativeLevelsNSData[i] = new RelativeLevelData();
-				profile.userRelativeLevelsNSData[i].level = relativeDataJSON.getString("level");
-				profile.userRelativeLevelsNSData[i].absoluteLevel = relativeDataJSON.getString("absoluteLevel");
-				profile.userRelativeLevelsNSData[i].point = relativeDataJSON.getString("point");
-			}
-			
+					
 			this.pairResult.put("weight", profile.weight);
 			this.pairResult.put("height", profile.height);
 			this.pairResult.put("unit", profile.unit);
@@ -122,7 +100,33 @@ public class ProfileResult extends BaseResult
 			this.pairResult.put("lastestVersion", profile.latestVersion);
 			this.pairResult.put("goalLevel", profile.goalLevel);
 			this.pairResult.put("trackingDeviceId", profile.trackingDeviceId);
-			this.pairResult.put("userRelativeLevelsNSData", profile.userRelativeLevelsNSData);
+		}
+		
+		// direct result
+		if(proJSON.containsKey("userRelativeLevelsNSData"))
+		{
+			if(proJSON.getString("userRelativeLevelsNSData") != "null")
+			{
+				JSONArray relativeLevelsJSON = proJSON.getJSONArray("userRelativeLevelsNSData");
+				profile.userRelativeLevelsNSData = new RelativeLevelData[10];
+				for(int i = 0; i < profile.userRelativeLevelsNSData.length; i++)
+				{
+					JSONObject relativeDataJSON = relativeLevelsJSON.getJSONObject(i);
+					
+					profile.userRelativeLevelsNSData[i] = new RelativeLevelData();
+					profile.userRelativeLevelsNSData[i].level = relativeDataJSON.getString("level");
+					profile.userRelativeLevelsNSData[i].absoluteLevel = relativeDataJSON.getString("absoluteLevel");
+					profile.userRelativeLevelsNSData[i].point = relativeDataJSON.getString("point");
+				}
+					
+				// hash archive
+				this.pairResult.put("userRelativeLevelsNSData", profile.userRelativeLevelsNSData);
+			}
+			else
+			{
+				profile.userRelativeLevelsNSData = null;
+				this.pairResult.put("userRelativeLevelsNSData", "null");
+			}
 		}
 	}
 
