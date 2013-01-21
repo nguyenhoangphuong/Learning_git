@@ -2,15 +2,25 @@ package com.misfit.ta.backend.api;
 
 import static com.google.resting.component.EncodingTypes.UTF8;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.google.resting.Resting;
 import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONArray;
+import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
 import com.google.resting.method.post.PostHelper;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.data.*;
+import com.misfit.ta.backend.data.AccountResult;
+import com.misfit.ta.backend.data.ActivityResult;
+import com.misfit.ta.backend.data.BaseParams;
+import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.ProfileResult;
 
 public class MVPApi 
 {
@@ -67,7 +77,7 @@ public class MVPApi
     	requestInf.addParam("password", password);
     	requestInf.addParam("udid", udid);
     	
-    	// post and recieve raw data
+    	// post and receive raw data
     	ServiceResponse response = MVPApi.post(url, port, requestInf);
     	
     	// format data
@@ -93,7 +103,7 @@ public class MVPApi
     	BaseParams requestInf = new BaseParams();
     	requestInf.addHeader("auth_token", token);
     	
-    	// post and recieve raw data
+    	// post and receive raw data
     	ServiceResponse response = MVPApi.post(url, port, requestInf);
     	
     	// format data
@@ -108,6 +118,7 @@ public class MVPApi
 			String localId, String latestVersion)
 	{
 		// build json object string
+
     	JSONBuilder json = new JSONBuilder();
     	if(name != null) 			json.addValue("name", name);
     	if(weight != null) 			json.addValue("weight", weight);
@@ -136,7 +147,7 @@ public class MVPApi
 		BaseParams requestInf = createProfileParams(token, name, weight, height, unit, gender, dateOfBirth,
 				goalLevel, trackingDevice, null, null);
     	
-    	// post and recieve raw data
+    	// post and receive raw data
     	ServiceResponse response = MVPApi.post(url, port, requestInf);
     	
     	// format data
@@ -152,7 +163,7 @@ public class MVPApi
     	BaseParams requestInf = new BaseParams();
     	requestInf.addHeader("auth_token", token);
     	
-    	// post and recieve raw data
+    	// post and receive raw data
     	ServiceResponse response = MVPApi.get(url, port, requestInf);
     	
     	// format data
@@ -198,14 +209,85 @@ public class MVPApi
 	}
 	
 	
+	// Activity APIs
+	static public ActivityResult getActivity(String token, Object id)
+	{
+    	// prepare
+		String url = baseAddress + "activities/" + id.toString();
+    	BaseParams requestInf = new BaseParams();
+    	
+    	requestInf.addHeader("auth_token", token);
+    	
+    	// make GET request and receive raw data
+    	ServiceResponse response = MVPApi.get(url, port, requestInf);
+    	
+    	// format data
+    	ActivityResult result = new ActivityResult(response);
+    	
+    	return result;
+	}
+	
+	static public List<ActivityResult> searchActivity(
+			String token,
+			Object startTime,
+			Object endTime,
+			Object modifiedSince) throws JSONException
+	{
+    	// prepare
+		String url = baseAddress + "activities";
+    	BaseParams requestInf = new BaseParams();
+    	
+    	requestInf.addHeader("auth_token", token);
+    	requestInf.addParam("startTime", startTime.toString());
+    	requestInf.addParam("endTime", endTime.toString());
+    	requestInf.addParam("modifiedSince", modifiedSince.toString());
+    	
+    	// make GET request and receive raw data
+    	ServiceResponse response = MVPApi.get(url, port, requestInf);
+    	
+    	// format data
+    	ArrayList<ActivityResult> activities =
+    			ActivityResult.getActivityResults(response);
+    	
+    	return activities;
+	}
+	
+	static public List<ActivityResult> createActivities(
+			String token,
+			List<ActivityResult> activities,
+			Object serverId,
+			Object clientId,
+			Object updatedAt) throws JSONException
+	{
+    	// prepare
+		String url = baseAddress + "activities";
+    	BaseParams requestInf = new BaseParams();
+    	
+    	requestInf.addHeader("auth_token", token);
+    	requestInf.addParam("serverId", serverId.toString());
+    	requestInf.addParam("clientId", clientId.toString());
+    	requestInf.addParam("updatedAt", updatedAt.toString());
+    	
+    	// make POST request and receive raw data
+    	ServiceResponse response = MVPApi.post(url, port, requestInf);
+    	
+    	// format data
+    	activities = ActivityResult.getActivityResults(response);
+    	
+    	return activities;
+	}
+	
+	
 	// test
 	static public void test()
 	{
 
 	}
 	
-	public static void main(String[] args)
+	
+	public static void main(String[] args) throws Exception
 	{	
+		/*
 		// default fields
 		String name = "Tears";
 		Double weight = 68.2;
@@ -223,7 +305,12 @@ public class MVPApi
 		//MVPApi.getProfile(r.token).printKeyPairsValue();
 		
 		MVPApi.createProfile(r.token, name, weight, height, unit, gender, dateOfBirth, goalLevel, trackingDevice).printKeyPairsValue();
+		*/
 		
-	}
+		String token = "1751298666042827297-Gh5UfTerwyMxiLazksfT";
+		//MVPApi.signUp("tung2@misfitwearables.com", "misfit1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
+		//ArrayList<ActivityResult> activities = MVPApi.searchActivity(token, 631155661, 1420074061, 1420074061);
 	
+		//System.out.print("aaa" + activities.size());	
+	}
 }
