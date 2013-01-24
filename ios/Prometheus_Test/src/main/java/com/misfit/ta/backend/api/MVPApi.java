@@ -11,15 +11,14 @@ import org.graphwalker.Util;
 import com.google.resting.Resting;
 import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
-import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
-import com.google.resting.json.JSONObject;
 import com.google.resting.method.post.PostHelper;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.data.AccountResult;
 import com.misfit.ta.backend.data.ActivityResult;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.JSONBuilder;
 import com.misfit.ta.backend.data.ProfileResult;
 
 public class MVPApi 

@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.backend.old.CThread;
-import com.misfit.ta.backend.temp.BackupServerTest;
 
 public class LoadTest 
 {

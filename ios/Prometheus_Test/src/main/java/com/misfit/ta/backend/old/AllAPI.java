@@ -85,6 +85,7 @@ public class AllAPI
     	String url = "https://staging-api.misfitwearables.com/shine/admin/update_valid_versions";
     	int port = 443;
     	RequestParams params = new BasicRequestParams();
+    	String versions = "1.0";
     	params.add("versions", versions);
     	
     	// post
