@@ -3,6 +3,7 @@ package com.misfit.ta.backend.api;
 import static com.google.resting.component.EncodingTypes.UTF8;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -13,13 +14,9 @@ import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONException;
 import com.google.resting.method.post.PostHelper;
+import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.data.AccountResult;
-import com.misfit.ta.backend.data.ActivityResult;
-import com.misfit.ta.backend.data.BaseParams;
-import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.JSONBuilder;
-import com.misfit.ta.backend.data.ProfileResult;
+import com.misfit.ta.backend.data.*;
 
 public class MVPApi 
 {
@@ -37,7 +34,7 @@ public class MVPApi
     static private ServiceResponse request(String type, String url, int port, BaseParams requestInf)
     {
     	// log address
-    	logger.info(type.toUpperCase() + ": " + url + " - " + port);
+    	logger.info(type.toUpperCase() + ": " + url + " - port: " + port);
     	
     	// wrapper send request
     	ServiceResponse response = null;
@@ -45,7 +42,9 @@ public class MVPApi
     	if(type == "post")
     		response = PostHelper.post(url, port, UTF8, requestInf.params, requestInf.headers);
     	else if(type == "get")
-    		response = Resting.get(url, port, requestInf.params, UTF8, requestInf.headers);	
+    		response = Resting.get(url, port, requestInf.params, UTF8, requestInf.headers);
+    	else if(type == "put")
+    		response = PutHelper.put(url, UTF8, port, requestInf.params, requestInf.headers);
     	
     	// log result
     	IContentData rawData = response.getContentData();
@@ -62,6 +61,11 @@ public class MVPApi
     static private ServiceResponse get(String url, int port, BaseParams requestInf)
     {
     	return request("get", url, port, requestInf);
+    }
+    
+    static private ServiceResponse put(String url, int port, BaseParams requestInf)
+    {
+    	return request("put", url, port, requestInf);
     }
     
 		
@@ -113,8 +117,8 @@ public class MVPApi
 	
 	// profile apis
 	static private BaseParams createProfileParams(String token, String name, Double weight, Double height, 
-			Integer unit, Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDevice, 
-			String localId, String latestVersion)
+			Integer unit, Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDeviceId, 
+			String localId, String latestVersion, Long updatedAt)
 	{
 		// build json object string
 
@@ -126,9 +130,10 @@ public class MVPApi
     	if(gender != null) 			json.addValue("gender", gender);
     	if(dateOfBirth != null) 	json.addValue("dateOfBirth", dateOfBirth);
     	if(goalLevel != null) 		json.addValue("goalLevel", goalLevel);
-    	if(trackingDevice != null) 	json.addValue("trackingDevice", trackingDevice);
+    	if(trackingDeviceId != null)json.addValue("trackingDeviceId", trackingDeviceId);
     	if(localId != null) 		json.addValue("localId", localId);
     	if(latestVersion != null) 	json.addValue("latestVersion", latestVersion);
+    	if(updatedAt != null) 		json.addValue("updatedAt", updatedAt);
     	
     	BaseParams requestInf = new BaseParams();
     	requestInf.addHeader("auth_token", token);
@@ -137,14 +142,15 @@ public class MVPApi
 		return requestInf;
 	}
 	
-	static public ProfileResult createProfile(String token, String name, Double weight, Double height, Integer unit, 
-			Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDevice)
+	static public ProfileResult createProfile(String token, String name, Double weight, Double height, 
+			Integer unit, Integer gender, Long dateOfBirth, Integer goalLevel, 
+			String trackingDeviceId, String localId, String latestVersion)
 	{
     	// prepare
 		String url = baseAddress + "profile";
 		
 		BaseParams requestInf = createProfileParams(token, name, weight, height, unit, gender, dateOfBirth,
-				goalLevel, trackingDevice, null, null);
+				goalLevel, trackingDeviceId, localId, latestVersion, null);
     	
     	// post and receive raw data
     	ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -170,30 +176,18 @@ public class MVPApi
     	return result;
 	}
 	
-	static public ProfileResult updateProfile(String token, String name, Double weight, Double height, Integer unit, 
-			Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDevice)
+	static public ProfileResult updateProfile(String token, Long updatedAt, String name, Double weight, Double height, 
+			Integer unit, Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDeviceId,
+			String localId, String latestVersion)
 	{
     	// prepare
 		String url = baseAddress + "profile";
 		
-    	JSONBuilder json = new JSONBuilder();
-    	json.addValue("name", name);
-    	json.addValue("weight", weight);
-    	json.addValue("height", height);
-    	json.addValue("unit", unit);
-    	json.addValue("gender", gender);
-    	json.addValue("dateOfBirth", dateOfBirth);
-    	json.addValue("goalLevel", goalLevel);
-    	json.addValue("trackingDevice", trackingDevice);
-    	logger.info(json.toJSONString());
-    	
-    	BaseParams requestInf = new BaseParams();
-    	requestInf.addHeader("auth_token", token);
-    	requestInf.addParam("profile", json.toJSONString());
-    	
+		BaseParams requestInf = createProfileParams(token, name, weight, height, unit, gender, dateOfBirth,
+				goalLevel, trackingDeviceId, localId, latestVersion, updatedAt);
     	
     	// post and recieve raw data
-    	ServiceResponse response = MVPApi.post(url, port, requestInf);
+    	ServiceResponse response = MVPApi.put(url, port, requestInf);
     	
     	// format data
     	ProfileResult result = new ProfileResult(response);
@@ -202,10 +196,136 @@ public class MVPApi
 	
 	static public ProfileResult updateProfile(String token, ProfileResult.ProfileData data)
 	{
+    	// prepare
+		String url = baseAddress + "profile";
 		
-		
-		return null;
+		BaseParams requestInf = createProfileParams(token, data.name, data.weight, data.height, data.unit, 
+				data.gender, data.dateOfBirth, data.goalLevel, 
+				data.trackingDeviceId, data.localId, data.latestVersion, data.updatedAt);
+    	
+    	// post and recieve raw data
+    	ServiceResponse response = MVPApi.put(url, port, requestInf);
+    	
+    	// format data
+    	ProfileResult result = new ProfileResult(response);
+    	return result;
 	}
+	
+	
+	// goal apis
+	static private BaseParams createGoalParams(String token, Double goalValue, Long startTime, Long endTime, 
+			Integer absoluteLevel,Integer userRelativeLevel, Integer timeZoneOffsetInSeconds, 
+			String[] progressValuesInMinutesNSData, String localId, Long updatedAt)
+	{
+		// build json object string
+    	JSONBuilder json = new JSONBuilder();
+    	if(goalValue != null) 					json.addValue("goalValue", goalValue);
+    	if(startTime != null) 					json.addValue("startTime", startTime);
+    	if(endTime != null) 					json.addValue("endTime", endTime);
+    	if(absoluteLevel != null)				json.addValue("absoluteLevel", absoluteLevel);
+    	if(userRelativeLevel != null) 			json.addValue("userRelativeLevel", userRelativeLevel);
+    	if(timeZoneOffsetInSeconds != null) 	json.addValue("timeZoneOffsetInSeconds", timeZoneOffsetInSeconds);
+    	if(progressValuesInMinutesNSData != null)	json.addValue("progressValuesInMinutesNSData", Arrays.toString(progressValuesInMinutesNSData));
+    	if(localId != null) 					json.addValue("localId", localId);
+    	if(updatedAt != null) 					json.addValue("updatedAt", updatedAt);
+    	
+    	BaseParams requestInf = new BaseParams();
+    	requestInf.addHeader("auth_token", token);
+    	requestInf.addParam("goal", json.toJSONString());
+    	
+		return requestInf;
+	}
+
+	static public GoalsResult searchGoal(String token, Long startTime, Long endTime, Long modifiedSince)
+	{
+    	// prepare
+		String url = baseAddress + "goals";
+		
+    	BaseParams requestInf = new BaseParams();
+    	requestInf.addHeader("auth_token", token);
+    	requestInf.addParam("startTime", startTime.toString());
+    	requestInf.addParam("endTime", endTime.toString());
+    	requestInf.addParam("updatedAt", modifiedSince.toString());
+    	
+    	// post and recieve raw data
+    	ServiceResponse response = MVPApi.get(url, port, requestInf);
+    	
+    	// format data
+    	GoalsResult result = new GoalsResult(response);
+    	return result;
+	}
+	
+	static public GoalsResult getGoal(String token, String serverId)
+	{
+    	// prepare
+		String url = baseAddress + "goals/" + serverId;
+		
+    	BaseParams requestInf = new BaseParams();
+    	requestInf.addHeader("auth_token", token);
+    	
+    	// post and recieve raw data
+    	ServiceResponse response = MVPApi.get(url, port, requestInf);
+    	
+    	// format data
+    	GoalsResult result = new GoalsResult(response);
+    	return result;
+	}
+	
+	static public GoalsResult createGoal(String token, Double goalValue, Long startTime, Long endTime, 
+			Integer absoluteLevel,Integer userRelativeLevel, Integer timeZoneOffsetInSeconds, 
+			String[] progressValuesInMinutesNSData, String localId)
+	{
+    	// prepare
+		String url = baseAddress + "goals";
+		
+		BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel, 
+				userRelativeLevel, timeZoneOffsetInSeconds,
+				progressValuesInMinutesNSData, localId, null);
+    	
+    	// post and receive raw data
+    	ServiceResponse response = MVPApi.post(url, port, requestInf);
+    	
+    	// format data
+    	GoalsResult result = new GoalsResult(response);
+    	return result;
+	}
+	
+	static public GoalsResult updateGoal(String token, Long updatedAt, Double goalValue, Long startTime, Long endTime, 
+			Integer absoluteLevel, Integer userRelativeLevel, Integer timeZoneOffsetInSeconds, 
+			String[] progressValuesInMinutesNSData, String localId)
+	{
+    	// prepare
+		String url = baseAddress + "profile";
+		
+		BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel, 
+				userRelativeLevel, timeZoneOffsetInSeconds,
+				progressValuesInMinutesNSData, localId, updatedAt);
+		
+    	// post and recieve raw data
+    	ServiceResponse response = MVPApi.put(url, port, requestInf);
+    	
+    	// format data
+    	GoalsResult result = new GoalsResult(response);
+    	return result;
+	}
+	
+	static public GoalsResult updateGoal(String token, GoalsResult.Goal goal)
+	{
+    	// prepare
+		String url = baseAddress + "profile";
+		
+		BaseParams requestInf = createGoalParams(token, goal.goalValue, goal.startTime, goal.endTime, 
+				goal.absoluteLevel, goal.userRelativeLevel, goal.timeZoneOffsetInSeconds,
+				goal.progressValuesInMinutesNSData, goal.localId, goal.updatedAt);
+		
+    	// post and recieve raw data
+    	ServiceResponse response = MVPApi.put(url, port, requestInf);
+    	
+    	// format data
+    	GoalsResult result = new GoalsResult(response);
+    	return result;
+	}
+	
 	
 	
 	// Activity APIs
@@ -280,13 +400,6 @@ public class MVPApi
 	// test
 	static public void test()
 	{
-
-	}
-	
-	
-	public static void main(String[] args) throws Exception
-	{	
-		/*
 		// default fields
 		String name = "Tears";
 		Double weight = 68.2;
@@ -295,21 +408,45 @@ public class MVPApi
 		Integer gender = 0;
 		Long dateOfBirth = (long) 684954000;
 		Integer goalLevel = 1;
-		String trackingDevice = "f230d0c4e69f08cb31e8535f5b512ed7c140289b";
+		String trackingDeviceId = "f230d0c4e69f08cb31e8535f5b512ed7c140289b";
+		String localId = "asdqresrgdfsfZffyhdfgh";
+		String latestVersion = "6";
 		
-		//AccountResult r = MVPApi.signUp("qa1.3@test.com", "password1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
-		//AccountResult r = MVPApi.signIn("hn@yahoo.com", "qwerty1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
-		AccountResult r = MVPApi.signIn("qa1.1@test.com", "password1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
-		r.printKeyPairsValue();
-		//MVPApi.getProfile(r.token).printKeyPairsValue();
-		
-		MVPApi.createProfile(r.token, name, weight, height, unit, gender, dateOfBirth, goalLevel, trackingDevice).printKeyPairsValue();
-		*/
-		
-		String token = "1751298666042827297-Gh5UfTerwyMxiLazksfT";
-		//MVPApi.signUp("tung2@misfitwearables.com", "misfit1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
-		//ArrayList<ActivityResult> activities = MVPApi.searchActivity(token, 631155661, 1420074061, 1420074061);
+		String token = MVPApi.signUp("qa1.6@test.com", "password1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b").token;
+		MVPApi.createProfile(token, name, weight, height, unit, gender, dateOfBirth, goalLevel, trackingDeviceId, localId, latestVersion).printKeyPairsValue();
+		MVPApi.getProfile(token).printKeyPairsValue();
+		MVPApi.updateProfile(token, (long) 1558498352,"Dandelion", null, null, null, null, null, 3, "asdasfwqedsaserqsafqweASD", null, "6").printKeyPairsValue();
+	}
 	
-		//System.out.print("aaa" + activities.size());	
+	
+	public static void main(String[] args) throws Exception
+	{	
+		// default fields
+		String udid = "f230d0c4e69f08cb31e8535f5b512ed7c140289b";
+		String token = MVPApi.signUp(System.currentTimeMillis() + "a.a", "password1", udid).token;
+		String name = "Tears";
+		Double weight = 68.2;
+		Double height = 1.71;
+		Integer unit = 1;
+		Integer gender = 0;
+		Long dateOfBirth = (long) 684954000;
+		Integer goalLevel = 1;
+		String trackingDeviceId = "f230d0c4e69f08cb31e8535f5b512ed7c140289b";
+		Long startTime = (long) 0;
+		Long endTime = (long) 1558501225;
+		Long updatedAt = (long) 0;
+		String goalServerId = "51010a76caedd02bd10000f4";
+		
+		Double goalValue = 800.0;
+		Integer absoluteLevel = 10;
+		Integer userRelativeLevel = 5;
+		Integer timeZoneOffsetInSeconds = 25200;
+		String[] progressValuesInMinutesNSData = {"0", "0", "0", "0"};
+		
+//		MVPApi.searchGoal(token, startTime, endTime, startTime).printKeyPairsValue();
+MVPApi.getGoal("2231380780912884911-sMZySAH9s5cfD7byGDpT", "51010cb1caedd02bcb000086").printKeyPairsValue();
+//		MVPApi.createGoal(token, goalValue, System.currentTimeMillis(), 100000 + System.currentTimeMillis(), absoluteLevel, userRelativeLevel, 
+//				timeZoneOffsetInSeconds, progressValuesInMinutesNSData, "50f8f757caedd04d49000027").printKeyPairsValue();
 	}
 }
+

@@ -1,38 +1,52 @@
 package com.misfit.ta.ios.aut;
 
-//-----------------import-------------------------------//
 import org.graphwalker.exceptions.StopConditionException;
 import org.testng.annotations.Test;
 import com.misfit.ios.AppHelper;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-//------------------class-------------------------------//
-public class SignupTest extends AutomationTest{
-	 
-	 //--------------invalid---------------------//
-	@Test(groups = { "ios", "Prometheus", "MVP3", "signup" })
-	public void SignupInvalidValidationTest() throws InterruptedException,
-			StopConditionException {
+
+public class SignupTest extends AutomationTest
+{
+	// register view - input test
+	@Test(groups = { "ios", "Prometheus", "signup" })
+	public void Register_Input() throws InterruptedException, StopConditionException 
+	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-									AppHelper.getAppPath(), "script/testcases/SignUp/signup_invalidValidation_TCs.js");
-	
+			AppHelper.getAppPath(), "script/automation/signup/register-input.js");
 	}
 	
-	 //--------------Valid---------------------//
-	@Test(groups = { "ios", "Prometheus", "MVP3", "signup" })
-	public void SignupValidValidationTest() throws InterruptedException,
-			StopConditionException {
+	// register view - validation for password and email test
+	@Test(groups = { "ios", "Prometheus", "signup" })
+	public void Register_Validation() throws InterruptedException, StopConditionException 
+	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-									AppHelper.getAppPath(), "script/testcases/SignUp/signup_ValidValidation_TCs.js");
-		
+			AppHelper.getAppPath(), "script/automation/signup/register-validation.js");
 	}
 	
-	
-	
-	
+	// step 1 view - input test
+	@Test(groups = { "ios", "Prometheus", "signup" })
+	public void Step1_Input() throws InterruptedException, StopConditionException 
+	{
+		AppHelper.cleanCache();
+	 	ShortcutsTyper.delayTime(1000);	
+		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+			AppHelper.getAppPath(), "script/automation/signup/step1-input.js");
+	}
+
+	// sign up all views (register + step 1 - 4) integration test
+	@Test(groups = { "ios", "Prometheus", "signup" })
+	public void Signup_Integration() throws InterruptedException, StopConditionException 
+	{
+		AppHelper.cleanCache();
+	 	ShortcutsTyper.delayTime(1000);	
+		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+			AppHelper.getAppPath(), "script/automation/signup/signup-integration.js");
+	}
+
 }

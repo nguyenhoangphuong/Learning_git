@@ -28,7 +28,7 @@ public class ProfileResult extends BaseResult
 		public Long updatedAt = null;
 		public Double weight = null;
 		public Double height = null;
-		public String unit = null;
+		public Integer unit = null;
 		public Integer gender = null;
 		public Long dateOfBirth = null;
 		public String name = null;
@@ -40,7 +40,7 @@ public class ProfileResult extends BaseResult
 	
 	
 	// fields
-	ProfileData profile = new ProfileData();
+	public ProfileData profile = new ProfileData();
 	
 	
 	// constructor
@@ -49,16 +49,18 @@ public class ProfileResult extends BaseResult
 		super(response);
 		
 		// invalid token
-		if(this.statusCode == 401)
+		if(this.statusCode == 401 || json.getString("profile") == "null")
 		{
 			profile = null;
+			this.pairResult.put("profile","null");
+			
 			return;
 		}
 		
 		formatOK();
 	}
 
-	public void formatOK()
+	private void formatOK()
 	{
 		// normal result
 		JSONObject proJSON = json.getJSONObject("profile");
@@ -83,7 +85,7 @@ public class ProfileResult extends BaseResult
 		{
 			profile.weight = proJSON.getDouble("weight");
 			profile.height = proJSON.getDouble("height");
-			profile.unit = proJSON.getString("unit");
+			profile.unit = proJSON.getInt("unit");
 			profile.gender = proJSON.getInt("gender");
 			profile.dateOfBirth = proJSON.getLong("dateOfBirth");
 			profile.name = proJSON.getString("name");
