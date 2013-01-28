@@ -37,7 +37,7 @@ start();
 // input name, email, password
 log("INTERACTION"); hr();
 
-//target.frontMostApp().mainWindow().buttons()["I DON'T HAVE AN ACCOUNT"].tap();
+target.frontMostApp().mainWindow().buttons()["I DON'T HAVE AN ACCOUNT"].tap();
 wait();
 
 
