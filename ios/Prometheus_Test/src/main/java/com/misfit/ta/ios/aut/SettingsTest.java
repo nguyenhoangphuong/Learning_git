@@ -11,7 +11,7 @@ public class SettingsTest extends AutomationTest
 {
 	// settings: navigation between views
 	@Test(groups = { "ios", "Prometheus", "settings" })
-	public void Register_Input() throws InterruptedException, StopConditionException 
+	public void Settings_Navigation() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
@@ -21,7 +21,7 @@ public class SettingsTest extends AutomationTest
 	
 	// settings: check profile is saved
 	@Test(groups = { "ios", "Prometheus", "settings" })
-	public void Register_Validation() throws InterruptedException, StopConditionException 
+	public void Settings_Profile() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	

@@ -11,7 +11,7 @@ public class SigninTest extends AutomationTest
 {
 	// sign in view: input, client validation, integration
 	@Test(groups = { "ios", "Prometheus", "signin" })
-	public void Register_Input() throws InterruptedException, StopConditionException 
+	public void Signin_Input_ClientValidation_Integration() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
@@ -21,7 +21,7 @@ public class SigninTest extends AutomationTest
 	
 	// sign in view: server validation
 	@Test(groups = { "ios", "Prometheus", "signin" })
-	public void Register_Validation() throws InterruptedException, StopConditionException 
+	public void Signin_ServerValidation() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
@@ -31,7 +31,7 @@ public class SigninTest extends AutomationTest
 	
 	// forgot password view: input and validation
 	@Test(groups = { "ios", "Prometheus", "signin" })
-	public void Step1_Input() throws InterruptedException, StopConditionException 
+	public void ForgotPassword_Input_Validation() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
