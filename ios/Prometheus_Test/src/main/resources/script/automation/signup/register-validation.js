@@ -1,9 +1,10 @@
 /*
  Cover:
- 2805, 2806, 2807, 2808, 2809 
+ Signup > Register:		2805, 2806, 2807, 2808, 2809 
  */
 
 #import "../../libs/libs.js"
+#import "../helpers.js"
 #import "../alerthandler.js"
 
 // TEST DATA

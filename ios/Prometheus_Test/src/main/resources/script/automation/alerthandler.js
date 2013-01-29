@@ -32,11 +32,15 @@ function Alert()
 	// All the alert title name
 	this.Error = "Error";
 	this.Warning = "Warning";
+	this.IncorrectEmail = "Incorrect email";
+	this.EmailSent = "Email Sent";
 	
 	this.InvalidPasswordMsg = "Sorry, the password should have at least 6 characters, at least 1 digit and 1 letter";
 	this.InvalidEmailMsg = "Invalid email";
 	this.DuplicatedEmailMsg = "Sorry, someone else has used this before";
 	this.WrongAccountMsg = "Sorry, your email or password is not correct";
+	this.IncorrectEmailMsg = "The email you entered is not associated with a Shine account";
+	this.EmailSentMsg = "Check your email for the password reset link";
 	
 	// Methods
 	this.reset = reset;

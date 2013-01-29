@@ -1,10 +1,11 @@
 /*
  Cover:
- 2803, 2804 
+ Signup > Register: 	2803, 2804 
  */
 
 #import "../../libs/libs.js"
 #import "../helpers.js"
+#import "../alerthandler.js"
 
 var unit = "US";
 var name = "Tears";

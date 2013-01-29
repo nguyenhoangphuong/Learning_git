@@ -444,9 +444,11 @@ public class MVPApi
 		String[] progressValuesInMinutesNSData = {"0", "0", "0", "0"};
 		
 //		MVPApi.searchGoal(token, startTime, endTime, startTime).printKeyPairsValue();
-MVPApi.getGoal("2231380780912884911-sMZySAH9s5cfD7byGDpT", "51010cb1caedd02bcb000086").printKeyPairsValue();
+//MVPApi.getGoal("2231380780912884911-sMZySAH9s5cfD7byGDpT", "51010cb1caedd02bcb000086").printKeyPairsValue();
 //		MVPApi.createGoal(token, goalValue, System.currentTimeMillis(), 100000 + System.currentTimeMillis(), absoluteLevel, userRelativeLevel, 
 //				timeZoneOffsetInSeconds, progressValuesInMinutesNSData, "50f8f757caedd04d49000027").printKeyPairsValue();
+		
+		MVPApi.createProfile("921036426055077353-SfBwsTPFy2gPcxXrJygs", name, weight, height, unit, gender, dateOfBirth, goalLevel, trackingDeviceId, "asd2314asdasr3w25qasdasrqw3rda3123", "7");
 	}
 }
 

@@ -1,6 +1,6 @@
 
 
-function fillRegisterForm(name, email, password, sex, birthYear, birthDate, birthMonth, unit, w1, w2, h1, h2)
+function fillRegisterForm(name, email, password, sex, year, day, month, unit, w1, w2, h1, h2)
 {
 	log("Input name");
 	target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Name"].textFields()[0].tap();
@@ -50,7 +50,7 @@ function fillRegisterForm(name, email, password, sex, birthYear, birthDate, birt
 	target.frontMostApp().windows()[1].toolbar().buttons()["Done"].tap();
 }
 
-function fillStep1Form(name, sex, birthYear, birthDate, birthMonth, unit, w1, w2, h1, h2)
+function fillStep1Form(name, sex, year, day, month, unit, w1, w2, h1, h2)
 {
 	log("Input name");
 	target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Name"].textFields()[0].tap();
@@ -90,3 +90,37 @@ function fillStep1Form(name, sex, birthYear, birthDate, birthMonth, unit, w1, w2
 	target.frontMostApp().windows()[1].toolbar().buttons()["Done"].tap();
 }
 
+function fillProfileInSettingsForm(name, sex, year, day, month, w1, w2, h1, h2)
+{
+	log("Input name");
+	target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Name"].textFields()[0].setValue("");
+	target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Name"].textFields()[0].tap();
+	target.frontMostApp().keyboard().typeString(name);
+	target.frontMostApp().windows()[1].toolbar().buttons()["Done"].tap();
+
+	log("Input Birthday");
+	target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[1].tap();
+	var picker = target.frontMostApp().windows()[1].pickers()[0];
+	dateWheelPick(picker, year, month, day);
+	target.frontMostApp().windows()[1].toolbar().buttons()["Done"].tap();
+
+	log("Input Gender");
+	if(sex == "female" || sex == "FEMALE")
+		target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Sex"].buttons()["FEMALE"].tap();
+	else 
+		target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Sex"].buttons()["MALE"].tap();
+
+	log("Input Height");
+	target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[3].tap();
+	picker = target.frontMostApp().windows()[1].pickers()[0];
+	wheelPick(picker, 0, h1);
+	wheelPick(picker, 1, h2);
+	target.frontMostApp().windows()[1].toolbar().buttons()["Done"].tap();
+
+	log("Input Weight");
+	target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[4].tap();
+	picker = target.frontMostApp().windows()[1].pickers()[0];
+	wheelPick(picker, 0, w1);
+	wheelPick(picker, 1, w2);
+	target.frontMostApp().windows()[1].toolbar().buttons()["Done"].tap();
+}

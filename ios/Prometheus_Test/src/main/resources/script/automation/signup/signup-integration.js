@@ -1,14 +1,15 @@
 /*
  Cover:
- 2810, 2811
- 2813, 2814, 2817
- 2822, 2823
- 2829, 2830
- 2831, 2832, 2833
+ Signup > Register:		2810, 2811
+ Signup > Step1:		2813, 2814, 2817, 2916
+ Signup > Step2:		2822, 2823
+ Signup > Step3:		2829, 2830
+ Signup > Step4:		2831, 2832, 2833
  */
 
 #import "../../libs/libs.js"
 #import "../helpers.js"
+#import "../alerthandler.js"
 
 // DATA
 // -------------------------------------------------------------------------------------------------------
@@ -52,7 +53,8 @@ log("Back to Step 1");
 target.frontMostApp().mainWindow().buttons()["btn back"].tap();
 wait();
 assertTrue(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Name"].textFields()[0].isValid(), "Name field is valid");
-assertFalse(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Email"].textFields()[0].isValid(), "Email field is not valid");
+assertFalse(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Email"].isValid(), "Email field is not valid");
+assertFalse(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Password"].isValid(), "Password field is not valid");
 
 // data from register is saved
 var aunit = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Units"].buttons().firstWithPredicate("value == 1").name();
@@ -128,7 +130,7 @@ assertTrue(target.frontMostApp().mainWindow().buttons()[3].isValid(), "Next butt
 
 // next to home screen
 target.frontMostApp().mainWindow().buttons()[3].tap();
-wait();
+wait(3);
 assertTrue(target.frontMostApp().mainWindow().buttons()["btn settings"].isVisible(), "Settings button is avaiable");
 
 
