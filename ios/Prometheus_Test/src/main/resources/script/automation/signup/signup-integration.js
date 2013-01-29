@@ -10,6 +10,8 @@
 #import "../../libs/libs.js"
 #import "../helpers.js"
 
+// DATA
+// -------------------------------------------------------------------------------------------------------
 var unit = "US";
 var name = "Tears";
 var email = generateSignupAccount();
@@ -22,10 +24,11 @@ var w1 = '144', w2 = '.4', weight = w1 + w2 + " lbs";
 var birthday = "Sep 16, 1991";
 var sex = "MALE";
 
-start();
 
 // INTERACTION
 // -------------------------------------------------------------------------------------------------------
+start();
+
 log("INTERACTION"); hr();
 target.frontMostApp().mainWindow().buttons()["I DON'T HAVE AN ACCOUNT"].tap();
 wait();
@@ -49,7 +52,7 @@ log("Back to Step 1");
 target.frontMostApp().mainWindow().buttons()["btn back"].tap();
 wait();
 assertTrue(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Name"].textFields()[0].isValid(), "Name field is valid");
-assertTrue(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Email"].textFields()[0].isValid(), "Email field is not valid");
+assertFalse(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Email"].textFields()[0].isValid(), "Email field is not valid");
 
 // data from register is saved
 var aunit = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Units"].buttons().firstWithPredicate("value == 1").name();
@@ -101,8 +104,8 @@ wait(8);
 assertTrue(staticTextExist("PLACE SHINE HERE"), "Next to Step 4");
 
 // at the beginning, no back or next buttons, but have get yours now button
-assertFalse(target.frontMostApp().mainWindow().buttons()["btn back"].isValid(), "Back button is not valid");
-assertFalse(target.frontMostApp().mainWindow().buttons()["btn next"].isValid(), "Next button is not valid");
+assertFalse(target.frontMostApp().mainWindow().buttons()["btn back"].isVisible(), "Back button is not valid");
+assertFalse(target.frontMostApp().mainWindow().buttons()["btn next"].isVisible(), "Next button is not valid");
 assertTrue(target.frontMostApp().mainWindow().buttons()["GET YOURS NOW"].isVisible(), "Get Yours Now button is visible");
 
 // detection fail
@@ -120,13 +123,13 @@ target.frontMostApp().mainWindow().buttons()["logo small"].touchAndHold(7.5);
 assertTrue(staticTextExist("GO.\nALWAYS WEAR YOUR SHINE."), "Detected message shown");
 assertTrue(staticTextExist("To sync just place Shine on the logo below"), "Instruction message shown");
 assertFalse(staticTextExist("PLACE SHINE HERE"), "Place Shine here message is hidden");
-assertFalse(target.frontMostApp().mainWindow().buttons()["GET YOURS NOW"]. isVisible(), "Get Yours Now button is hidden");
+assertFalse(target.frontMostApp().mainWindow().buttons()["GET YOURS NOW"].isVisible(), "Get Yours Now button is hidden");
 assertTrue(target.frontMostApp().mainWindow().buttons()[3].isValid(), "Next button is valid");
 
 // next to home screen
 target.frontMostApp().mainWindow().buttons()[3].tap();
 wait();
-assertTrue(target.frontMostApp().mainWindow().buttons()["btn settings"]. isVisible(), "Settings button is avaiable");
+assertTrue(target.frontMostApp().mainWindow().buttons()["btn settings"].isVisible(), "Settings button is avaiable");
 
 
 pass();

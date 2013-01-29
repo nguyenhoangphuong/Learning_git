@@ -20,7 +20,7 @@ public class UpgradeTest_MVP5_MVP6 extends AutomationTest{
 //									AppHelper.getAppPath(), "script/testcases/SignUp/signup_invalidValidation_TCs.js");
 //	
 //	}
-
+/*
 	 //--------------Valid---------------------//
 	@Test(groups = { "ios", "Prometheus", "MVP5", "MVP6", "signup" })
 	public void upgradeFromMVP5ToMVP6() throws InterruptedException,
@@ -36,4 +36,5 @@ public class UpgradeTest_MVP5_MVP6 extends AutomationTest{
 				AppHelper.getAppPath(), "script/upgrade/MVP6_checkuserinfo.js");
 		
 	}
+*/
 }
