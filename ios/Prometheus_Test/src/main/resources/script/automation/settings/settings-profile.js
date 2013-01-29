@@ -117,7 +117,7 @@ target.frontMostApp().mainWindow().secureTextFields()["password"].setValue(passw
 target.frontMostApp().keyboard().typeString("\n");
 wait();
 target.frontMostApp().mainWindow().buttons()["btn next"].tap();
-wait(5);
+wait(10);
 
 log("To User Profile");
 target.frontMostApp().mainWindow().buttons()["btn settings"].tap();

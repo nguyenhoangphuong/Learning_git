@@ -29,7 +29,9 @@ function inputPassword(password)
 {
 	log("Input Password");
 	target.frontMostApp().mainWindow().secureTextFields()["password"].tap();
-	target.frontMostApp().keyboard().typeString(password + "\n");
+	target.frontMostApp().keyboard().typeString(password);
+	target.frontMostApp().keyboard().typeString("\n");
+	wait();
 }
 
 function submit(time)
@@ -62,14 +64,14 @@ wait();
 log("Right email, wrong password");
 inputEmail(validEmail);
 inputPassword("asdasdasdasd12");
-submit(3);
+submit(5);
 verifyAlert(alert.Error, alert.WrongAccountMsg);
 
 
 log("Wrong email, right password");
 inputEmail(generateSignupAccount());
 inputPassword(validPassword);
-submit(3);
+submit(5);
 verifyAlert(alert.Error, alert.WrongAccountMsg);
 
 
@@ -83,7 +85,7 @@ assertTrue(target.frontMostApp().mainWindow().buttons()["btn settings"].isValid(
 
 log("Sign out");
 target.frontMostApp().mainWindow().buttons()["btn settings"].tap();
-wait(2);
+wait(5);
 target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Sign out"].tap();
 wait();
 
