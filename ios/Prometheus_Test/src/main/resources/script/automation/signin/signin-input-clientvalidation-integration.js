@@ -50,6 +50,7 @@ function inputPassword(password)
 	log("Input Password");
 	target.frontMostApp().mainWindow().secureTextFields()["password"].tap();
 	target.frontMostApp().keyboard().typeString(password + "\n");
+	target.frontMostApp().keyboard().typeString("\n");
 }
 
 function submit(time)
