@@ -105,7 +105,11 @@ log("Right email, wrong password, no plans");
 inputEmail(validEmailNoPlan);
 inputPassword(validPassword);
 submit(5);
-assertTrue(staticTextExist("WHAT DOES YOUR AVERAGE DAY OF ACTIVITY LOOK LIKE?"), "User is directed to Step 2 to complete plan");
+//assertTrue(staticTextExist("WHAT DOES YOUR AVERAGE DAY OF ACTIVITY LOOK LIKE?"), "User is directed to Step 2 to complete plan");
+assertTrue(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Units"].isValid(), "Cell Units is valid");
+assertTrue(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Name"].isValid(), "Cell Name is valid");
+assertFalse(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Email"].isValid(), "Cell Email is not valid");
+assertFalse(target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Password"].isValid(), "Cell Password is not valid");
 
 
 pass();

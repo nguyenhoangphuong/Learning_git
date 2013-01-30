@@ -109,6 +109,7 @@ assertTrue(target.frontMostApp().actionSheet().buttons()["Upload"].isValid(), "U
 
 log("Verify cancel button works");
 target.frontMostApp().actionSheet().cancelButton().tap();
+wait();
 assertTrue(staticTextExist("SETTINGS"), "Back to Settings after tapping cancel");
 
 log("Verify upload button works");
