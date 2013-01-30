@@ -9,7 +9,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SettingsTest extends AutomationTest
 {
-	/*
+	
 	// settings: navigation between views
 	@Test(groups = { "ios", "Prometheus", "settings" })
 	public void Settings_Navigation() throws InterruptedException, StopConditionException 
@@ -19,7 +19,7 @@ public class SettingsTest extends AutomationTest
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
 			AppHelper.getAppPath(), "script/automation/settings/settings-navigation.js");
 	}
-	*/
+	
 	
 	// settings: check profile is saved
 	@Test(groups = { "ios", "Prometheus", "settings" })
