@@ -64,12 +64,17 @@ function submit(time)
 
 function verifyAlert(title, message)
 {
+	/*
 	var info = {};
-	info.title = target.frontMostApp().mainWindow().staticTexts()[4].name();
-	info.message = target.frontMostApp().mainWindow().staticTexts()[5].name();
+	info.title = target.frontMostApp().mainWindow().staticTexts()[0].name();
+	info.message = target.frontMostApp().mainWindow().staticTexts()[1].name();
 	
 	assertEqual(info.title, title, "Alert title");
 	assertEqual(info.message, message, "Alert message");
+	 */
+	
+	assertTrue(staticTextExist(title), "Message title");
+	assertTrue(staticTextExist(message), "Message content");
 }
 
 

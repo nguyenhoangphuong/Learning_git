@@ -105,6 +105,8 @@ function Alert()
 				btn = win.buttons()[0];
 				
 			btn.tap();
+			
+			reset();
 		}
 	}
 }

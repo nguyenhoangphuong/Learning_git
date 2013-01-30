@@ -110,15 +110,15 @@ assertFalse(target.frontMostApp().mainWindow().buttons()["btn back"].isVisible()
 assertFalse(target.frontMostApp().mainWindow().buttons()["btn next"].isVisible(), "Next button is not valid");
 assertTrue(target.frontMostApp().mainWindow().buttons()["GET YOURS NOW"].isVisible(), "Get Yours Now button is visible");
 
-// detection fail
+// detection f_ail
 target.frontMostApp().mainWindow().buttons()["logo small"].touchAndHold(4);
 assertTrue(staticTextExist("UNDETECTED!\nPLEASE TRY AGAIN"), "Undetected message shown");
 assertFalse(staticTextExist("PLACE SHINE HERE"), "Place Shine here message is hidden");
 assertFalse(target.frontMostApp().mainWindow().buttons()["GET YOURS NOW"].isVisible(), "Get Yours Now button is hidden");
 
-// after fail, get yours now is avaiable again
+// after that, get yours now is avaiable again
 wait(5);
-assertTrue(target.frontMostApp().mainWindow().buttons()["GET YOURS NOW"].isVisible(), "Get Yours Now button is avaiable again after fail detection");
+assertTrue(target.frontMostApp().mainWindow().buttons()["GET YOURS NOW"].isVisible(), "Get Yours Now button is avaiable again after f_ail detection");
 
 // detection success
 target.frontMostApp().mainWindow().buttons()["logo small"].touchAndHold(7.5);

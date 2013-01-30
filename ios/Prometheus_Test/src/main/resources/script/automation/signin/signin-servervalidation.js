@@ -10,7 +10,7 @@
 // test data
 // -------------------------------------------------------------------------------------------------------
 var validEmail = "qa@a.a";
-var validEmailNoPlan = "automation_signin_noplan@qa.com";
+var validEmailNoPlan = "automation_signin_withoutplan@qa.com";
 var validEmailHavePlan = "automation_signin_haveplan@qa.com";
 var validPassword = "qwerty1";
 
@@ -44,12 +44,17 @@ function submit(time)
 
 function verifyAlert(title, message)
 {
+	/*
 	var info = {};
-	info.title = target.frontMostApp().mainWindow().staticTexts()[4].name();
-	info.message = target.frontMostApp().mainWindow().staticTexts()[5].name();
+	info.title = target.frontMostApp().mainWindow().staticTexts()[0].name();
+	info.message = target.frontMostApp().mainWindow().staticTexts()[1].name();
 	
 	assertEqual(info.title, title, "Alert title");
 	assertEqual(info.message, message, "Alert message");
+	 */
+	
+	assertTrue(staticTextExist(title), "Message title");
+	assertTrue(staticTextExist(message), "Message content");
 }
 
 // navigate

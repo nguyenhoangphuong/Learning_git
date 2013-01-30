@@ -38,9 +38,9 @@ start();
 log("To Settings view");
 target.frontMostApp().mainWindow().buttons()["I DON'T HAVE AN ACCOUNT"].tap();
 
-fillRegisterForm(name, "", password, sex, year, day, month, unit, w1, w2, h1, h2);
+fillRegisterForm(name, email, password, sex, year, day, month, unit, w1, w2, h1, h2);
 target.frontMostApp().mainWindow().buttons()["btn next"].tap();
-wait(5);
+wait(10);
 target.frontMostApp().mainWindow().buttons()["btn next"].tap();
 target.frontMostApp().mainWindow().buttons()["btn next"].tap();
 target.frontMostApp().mainWindow().buttons()["logo small"].touchAndHold(6.8);
@@ -69,6 +69,7 @@ assertEqual(aname, name, "Name");
 assertEqual(abirthday, birthday, "Birthday");
 assertEqual(aheight, height, "Height");
 assertEqual(aweight, weight, "Weight");
+assertTrue(staticTextExist(email), "Email is existed");
 
 
 // verify profile is saved correctly after editting in settings view
@@ -91,7 +92,7 @@ abirthday = abirthday.substring(abirthday.indexOf(',') + 2);
 
 assertEqual(aname, newName, "Name");
 assertEqual(abirthday, newBirthday, "Birthday");
-
+assertTrue(staticTextExist(email), "Email is existed");
 
 
 // verify Upload button is avaiable when user sign out
@@ -102,7 +103,18 @@ wait();
 
 log("Click sign out button");
 target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Sign out"].tap();
-// verify upload button in future
+
+log("Verify upload button is visible");
+assertTrue(target.frontMostApp().actionSheet().buttons()["Upload"].isValid(), "Upload button is valid");
+
+log("Verify cancel button works");
+target.frontMostApp().actionSheet().cancelButton().tap();
+assertTrue(staticTextExist("SETTINGS"), "Back to Settings after tapping cancel");
+
+log("Verify upload button works");
+target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Sign out"].tap();
+target.frontMostApp().actionSheet().buttons()["Upload"].tap();
+wait(10);
 
 
 // verify sign out lead to Start up view
@@ -138,6 +150,7 @@ assertEqual(aname, newName, "Name");
 assertEqual(abirthday, newBirthday, "Birthday");
 assertEqual(aheight, height, "Height");
 assertEqual(aweight, weight, "Weight");
+assertTrue(staticTextExist(email), "Email is existed");
 
 
 pass();

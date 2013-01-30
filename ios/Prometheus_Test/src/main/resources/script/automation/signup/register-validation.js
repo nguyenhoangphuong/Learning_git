@@ -100,9 +100,9 @@ for(var i = 0; i < invalidEmails.length; i++)
 log("Input Duplicated Email");
 inputEmail(existedEmail);
 inputPassword(validPassword);
-submit(5);
+submit(10);
 
-verifyAlert(alert.Error, alert. DuplicatedEmailMsg);
+verifyAlert(alert.Error, alert.DuplicatedEmailMsg);
 
 
 
@@ -123,7 +123,7 @@ for(var i = 0; i < invalidPasswords.length; i++)
 // valid password (and email)
 inputEmail(validEmail);
 inputPassword(validPassword);
-submit(5);
+submit(10);
 
 assertTrue(staticTextExist("WHAT DOES YOUR AVERAGE DAY OF ACTIVITY LOOK LIKE?"), "Navigated to Step 2");
 

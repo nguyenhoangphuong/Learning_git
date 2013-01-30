@@ -44,6 +44,7 @@ function submit(time)
 
 function verifyAlert(title, message, index1, index2)
 {
+	/*
 	if(index1 === undefined) index1 = 1;
 	if(index2 === undefined) index2 = 2;
 	
@@ -53,6 +54,10 @@ function verifyAlert(title, message, index1, index2)
 	
 	assertEqual(info.title, title, "Alert title");
 	assertEqual(info.message, message, "Alert message");
+	*/
+	
+	assertTrue(staticTextExist(title), "Message title");
+	assertTrue(staticTextExist(message), "Message content");
 }
 
 
