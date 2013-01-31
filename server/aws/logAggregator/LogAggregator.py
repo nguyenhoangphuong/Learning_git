@@ -1,9 +1,20 @@
 import json
 import os
+import sys
+import getopt
 from pprint import pprint
 from datetime import datetime
 
-with open('config.json') as data_file:    
+defaultFile = "config.json"
+configFile = defaultFile
+options = sys.argv
+if len(options) >= 1:
+	configFile = options[1]
+
+print "Options: ", options
+print "Getting the logs, config file= " + configFile 
+
+with open(configFile) as data_file:    
 	data = json.load(data_file)
 
 date = str(datetime.now()).replace(" ", "_").replace(":", "-")[:19]
