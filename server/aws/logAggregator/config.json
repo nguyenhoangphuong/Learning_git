@@ -1,0 +1,18 @@
+{
+	"destination":"/Users/QA/Desktop",
+	"sources":
+	[
+		{
+			"host":"staging-api.misfitwearable.com",
+			"user":"ubuntu",
+			"key":"key1",
+			"logs":
+			[
+				{"path":"/Users/misfit/Desktop/temp.a","type":"database"},
+				{"path":"/Users/misfit/Desktop/temp.b","type":"website"},
+				{"path":"/Users/misfit/Documents/","type":"document"}
+			]
+		}
+		
+	]
+}
