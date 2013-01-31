@@ -27,13 +27,9 @@ for source in sources:
 		print source["key"]
 		
 		cmd2 = "scp "
-		if (source["key"] == ""):
-			
-			print "No keys"
-		else:
+		if (source["key"] != ""):
 			cmd2 = cmd2 + " -i %s " %(source["key"])
 
-			print "Some keys"
 		cmd2 = cmd2 + "-r %s@%s:%s %s" % (source["user"], source["host"], log["path"], dest + "/" + log["type"])
 		print cmd2
 		os.system(cmd1)

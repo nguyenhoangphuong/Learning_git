@@ -1,5 +1,5 @@
 {
-	"destination":".",
+	"destination":"logs",
 	"sources":
 	[
 		{

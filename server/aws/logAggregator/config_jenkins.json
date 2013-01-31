@@ -1,5 +1,5 @@
 {
-	"destination":".",
+	"destination":"/Volumes/MisfitFileServer/com/misfit/qa/logAggregator/logs",
 	"sources":
 	[
 		{
