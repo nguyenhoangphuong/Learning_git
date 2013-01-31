@@ -340,6 +340,10 @@ function generateRandomDigitString()
 	return ms.toString();
 }
 
+function generateRandomNumber(seed) {
+	return Math.floor((Math.random()*seed)+1);
+}
+
 function listAllStaticTexts(p)
 {
 	texts = p.staticTexts();
