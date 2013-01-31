@@ -1,16 +1,15 @@
 {
-	"destination":"/Users/QA/Desktop",
+	"destination":".",
 	"sources":
 	[
 		{
-			"host":"staging-api.misfitwearable.com",
-			"user":"ubuntu",
-			"key":"key1",
+			"host": "staging-api.misfitwearables.com",
+			"user": "ubuntu",
+			"key": "~/.ssh/mp_webserver_0.pem",
 			"logs":
 			[
-				{"path":"/Users/misfit/Desktop/temp.a","type":"database"},
-				{"path":"/Users/misfit/Desktop/temp.b","type":"website"},
-				{"path":"/Users/misfit/Documents/","type":"document"}
+				{"path":"/home/ubuntu/mp/shine/web/log/staging.log","type":"database"}
+				
 			]
 		}
 		
