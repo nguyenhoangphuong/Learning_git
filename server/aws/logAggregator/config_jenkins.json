@@ -5,7 +5,7 @@
 		{
 			"host": "staging-api.misfitwearables.com",
 			"user": "ubuntu",
-			"key": "~/.ssh/mp_webserver_0.pem",
+			"key": "",
 			"logs":
 			[
 				{"path":"/home/ubuntu/mp/shine/web/log/staging.log","type":"database"}
