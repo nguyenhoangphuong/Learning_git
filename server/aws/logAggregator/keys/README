@@ -1,0 +1,11 @@
+Machines and corresponding keys
+===============================
+
+www-v2.misfitwearables.com (IP: 54.243.139.47)
+mp_webserver_0.pem
+
+staging-api.misfitwearables.com
+mp_webserver_0.pem
+
+AWS boxes
+ssh.pem

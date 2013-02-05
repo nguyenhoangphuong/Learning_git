@@ -8,7 +8,7 @@ from datetime import datetime
 defaultFile = "config.json"
 configFile = defaultFile
 options = sys.argv
-if len(options) >= 1:
+if len(options) > 1:
 	configFile = options[1]
 
 print "Options: ", options
