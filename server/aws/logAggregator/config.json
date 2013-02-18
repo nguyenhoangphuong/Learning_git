@@ -6,10 +6,11 @@
 			"host": "staging-api.misfitwearables.com",
 			"user": "ubuntu",
 			"key": "keys/mp_webserver_0.pem",
+			"active": true,
 			"logs":
 			[
-				{"path":"~/mp/shine/web/log/staging.log","type":"database/shine"},
-				{"path":"~/mp/shine_pre_mvp7/web/log/staging.log","type":"database/shine_pre_mvp7"}
+				{"path":"~/mp/shine/web/log/staging.log","type":"database/shine","active":true},
+				{"path":"~/mp/shine_pre_mvp7/web/log/staging.log","type":"database/shine_pre_mvp7","active":false}
 
 			]
 		}
