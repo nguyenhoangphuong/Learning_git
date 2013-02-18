@@ -37,7 +37,7 @@
 
 				{"path":"/var/log/mongodb/mongodb.log","type":"staging/mongodb","active":false},
 
-				{"path":"/opt/nginx/logs/access.log","type":"staging/nginx","active":true},
+				{"path":"/opt/nginx/logs/access.log","type":"staging/nginx","active":false},
 				{"path":"/opt/nginx/logs/error.log","type":"staging/nginx","active":false},
 				{"path":"/var/log/nginx/main_error.log","type":"staging/nginx","active":false},
 				{"path":"/var/log/nginx/*","type":"staging/nginx","active":false}
@@ -59,7 +59,7 @@
 
 				{"path":"/var/log/mongodb/mongodb.log","type":"webproduction/mongodb","active":false},
 
-				{"path":"/var/log/apache2/access.log","type":"webproduction/apache","active":true},
+				{"path":"/var/log/apache2/access.log","type":"webproduction/apache","active":false},
 				{"path":"/var/log/apache2/error.log","type":"webproduction/apache","active":false},
 				{"path":"/var/log/apache2/*.log","type":"webproduction/apache","active":false},
 				{"path":"/var/log/apache2/*","type":"webproduction/apache","active":false}
@@ -91,7 +91,7 @@
 
 				{"path":"/var/log/mongodb/mongodb.log","type":"mvpproduction/mongodb","active":false},
 
-				{"path":"/opt/nginx/logs/access.log","type":"mvpproduction/nginx","active":true},
+				{"path":"/opt/nginx/logs/access.log","type":"mvpproduction/nginx","active":false},
 				{"path":"/opt/nginx/logs/error.log","type":"mvpproduction/nginx","active":false},
 				{"path":"/var/log/nginx/main_error.log","type":"mvpproduction/nginx","active":false},
 				{"path":"/var/log/nginx/*","type":"mvpproduction/nginx","active":false}
