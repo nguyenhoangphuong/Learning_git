@@ -1,4 +1,5 @@
 #import "UserInfo.js"
+#import "../../core/common.js"
 
 var target = UIATarget.localTarget();
 

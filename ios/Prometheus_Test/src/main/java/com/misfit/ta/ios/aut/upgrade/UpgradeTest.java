@@ -25,7 +25,7 @@ public class UpgradeTest extends AutomationTest
 		ShortcutsTyper.delayTime(2000);
 
 		logger.info("Installing latest app");
-		AppHelper.install();
+		AppHelper.install("MVP7");
 		ShortcutsTyper.delayTime(3000);
 		
 		logger.info("Check valid user info");
@@ -47,7 +47,7 @@ public class UpgradeTest extends AutomationTest
 		ShortcutsTyper.delayTime(2000);
 		
 		logger.info("Installing latest app");
-		AppHelper.install();
+		AppHelper.install("MVP7");
 		ShortcutsTyper.delayTime(3000);
 		
 		logger.info("Check valid user info");
