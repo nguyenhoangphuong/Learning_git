@@ -12,7 +12,8 @@ public class UpgradeMVP6ToMVP7 extends AutomationTest{
 	public void upgradeFromMVP6ToMVP7() throws InterruptedException,
 			StopConditionException {
 		AppHelper.cleanCache("MVP6");
-	 	ShortcutsTyper.delayTime(3000);	
+	 	ShortcutsTyper.delayTime(3000);
+	 	AppHelper.install("MVP7");
 //		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
 //									AppHelper.getAppPath(), "script/upgrade/FromMVP6.js");
 //		ShortcutsTyper.delayTime(2000);
