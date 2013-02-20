@@ -34,10 +34,11 @@ var validPassword = "qwerty1";
 
 // HELPERS
 // -------------------------------------------------------------------------------------------------------
-function verifyAlert(title, message)
+function verifyAlert(title, message, temp)
 {
 	// check alert
-	assertTrue(alert.isCustomAlertShown(), "Alert shown");
+	if(temp !== undefined)
+		assertTrue(alert.isCustomAlertShown(), "Alert shown");
 	var info = alert.getCustomAlertInfo();
 	assertEqual(info.title, title, "Alert title");
 	assertEqual(info.message, message, "Alert message");
@@ -102,7 +103,7 @@ inputEmail(existedEmail);
 inputPassword(validPassword);
 submit(10);
 
-verifyAlert(alert.Error, alert.DuplicatedEmailMsg);
+verifyAlert(alert.Error, alert.DuplicatedEmailMsg, "dummy");
 
 
 

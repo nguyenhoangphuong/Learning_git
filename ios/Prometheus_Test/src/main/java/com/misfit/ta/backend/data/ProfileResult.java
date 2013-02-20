@@ -1,6 +1,7 @@
 package com.misfit.ta.backend.data;
 
 import com.google.resting.component.impl.ServiceResponse;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -8,24 +9,37 @@ public class ProfileResult extends BaseResult
 {
 	
 	// relavtive level data
-	public class RelativeLevelData
+	public static class RelativeLevelData
 	{
 		public String level = null;
 		public String absoluteLevel = null;
 		public String point = null;
 
+		public RelativeLevelData()
+		{
+			
+		}
+		
+		public RelativeLevelData(Integer level, Integer absoluteLevel, Integer point)
+		{
+			this.level = level.toString();
+			this.absoluteLevel = absoluteLevel.toString();
+			this.point = point.toString();
+		}
+		
 		public String toString()
 		{
 			return "{level:" + level + ",absoluteLevel:" + absoluteLevel + ",point:" + point + "}";
 		}
+
 	}
 	
-	public class ProfileData
-	{
+	public static class ProfileData
+	{		
 		// fields
 		public String serverId = null;
-		public String localId = null;
 		public Long updatedAt = null;
+		public String localId = null;
 		public Double weight = null;
 		public Double height = null;
 		public Integer unit = null;
@@ -36,6 +50,7 @@ public class ProfileResult extends BaseResult
 		public Integer goalLevel = null;
 		public String trackingDeviceId = null;
 		public RelativeLevelData[] userRelativeLevelsNSData = null;
+
 	}
 	
 	
@@ -49,7 +64,7 @@ public class ProfileResult extends BaseResult
 		super(response);
 		
 		// invalid token
-		if(this.statusCode == 401 || json.getString("profile") == "null")
+		if(json.getString("profile") == "null")
 		{
 			profile = null;
 			this.pairResult.put("profile","null");

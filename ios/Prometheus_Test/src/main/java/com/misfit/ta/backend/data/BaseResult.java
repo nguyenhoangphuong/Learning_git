@@ -68,5 +68,42 @@ public class BaseResult
 		}
 		logger.info("-------------------------------------------------------------------------------------------------");
 	}
+	
+	
+	// helpers functions
+	public boolean isOK()
+	{
+		return this.statusCode == 200;
+	}
+	
+	public boolean isExisted()
+	{
+		return this.statusCode == 210;
+	}
+	
+	public boolean isAuthInvalid()
+	{
+		return this.statusCode == 401;
+	}
+	
+	public boolean isNotFound()
+	{
+		return this.statusCode == 404;
+	}
+	
+	public boolean isNotSupported()
+	{
+		return this.statusCode == 403;
+	}
+	
+	public boolean isServerErr()
+	{
+		return this.statusCode == 500;
+	}
 
+	public boolean isEmptyErrMsg()
+	{
+		return this.errorMessage.isEmpty() || this.errorMessage == "null";
+	}
+	
 }

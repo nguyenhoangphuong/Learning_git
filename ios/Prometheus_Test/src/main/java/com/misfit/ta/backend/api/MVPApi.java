@@ -48,7 +48,7 @@ public class MVPApi
     	
     	// log result
     	IContentData rawData = response.getContentData();
-    	logger.info("Raw Data: " + rawData);
+    	logger.info("Raw Data: " + rawData + "\n");
     	
     	return response;	
     }
@@ -68,10 +68,18 @@ public class MVPApi
     	return request("put", url, port, requestInf);
     }
     
+    static public String generateUniqueEmail()
+    {
+    	return "auto_generated_" + System.currentTimeMillis() + "@qa.com";
+    }
+    
 		
     // account apis
     static private AccountResult sign(String email, String password, String udid, String shortUrl)
 	{
+    	// trace
+    	logger.info("Email: " + email + ", Password: " + password + ", Udid: " + udid);
+    	
     	// prepare
 		String url = baseAddress + shortUrl;
 		
@@ -100,6 +108,9 @@ public class MVPApi
 	
 	static public BaseResult signOut(String token)
 	{
+		// trace
+		logger.info("Token: " + token);
+		
     	// prepare
 		String url = baseAddress + "logout";
 		
@@ -141,16 +152,15 @@ public class MVPApi
     	
 		return requestInf;
 	}
-	
-	static public ProfileResult createProfile(String token, String name, Double weight, Double height, 
-			Integer unit, Integer gender, Long dateOfBirth, Integer goalLevel, 
-			String trackingDeviceId, String localId, String latestVersion)
+
+	static public ProfileResult createProfile(String token, ProfileResult.ProfileData data)
 	{
     	// prepare
 		String url = baseAddress + "profile";
 		
-		BaseParams requestInf = createProfileParams(token, name, weight, height, unit, gender, dateOfBirth,
-				goalLevel, trackingDeviceId, localId, latestVersion, null);
+		BaseParams requestInf = createProfileParams(token, data.name, data.weight, data.height, data.unit,
+				data.gender, data.dateOfBirth, data.goalLevel, data.trackingDeviceId, data.localId, 
+				data.latestVersion, null);
     	
     	// post and receive raw data
     	ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -159,7 +169,7 @@ public class MVPApi
     	ProfileResult result = new ProfileResult(response);
     	return result;
 	}
-	
+
 	static public ProfileResult getProfile(String token)
 	{
     	// prepare
@@ -176,32 +186,17 @@ public class MVPApi
     	return result;
 	}
 	
-	static public ProfileResult updateProfile(String token, Long updatedAt, String name, Double weight, Double height, 
-			Integer unit, Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDeviceId,
-			String localId, String latestVersion)
+	static public ProfileResult updateProfile(String token, ProfileResult.ProfileData data, String id)
 	{
-    	// prepare
-		String url = baseAddress + "profile";
-		
-		BaseParams requestInf = createProfileParams(token, name, weight, height, unit, gender, dateOfBirth,
-				goalLevel, trackingDeviceId, localId, latestVersion, updatedAt);
-    	
-    	// post and recieve raw data
-    	ServiceResponse response = MVPApi.put(url, port, requestInf);
-    	
-    	// format data
-    	ProfileResult result = new ProfileResult(response);
-    	return result;
-	}
-	
-	static public ProfileResult updateProfile(String token, ProfileResult.ProfileData data)
-	{
+		logger.info("Id: " + id + ", Updated at: " + data.updatedAt);
     	// prepare
 		String url = baseAddress + "profile";
 		
 		BaseParams requestInf = createProfileParams(token, data.name, data.weight, data.height, data.unit, 
 				data.gender, data.dateOfBirth, data.goalLevel, 
 				data.trackingDeviceId, data.localId, data.latestVersion, data.updatedAt);
+    	
+		requestInf.addParam("id", id);
     	
     	// post and recieve raw data
     	ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -397,28 +392,6 @@ public class MVPApi
 	}
 	
 	
-	// test
-	static public void test()
-	{
-		// default fields
-		String name = "Tears";
-		Double weight = 68.2;
-		Double height = 1.71;
-		Integer unit = 1;
-		Integer gender = 0;
-		Long dateOfBirth = (long) 684954000;
-		Integer goalLevel = 1;
-		String trackingDeviceId = "f230d0c4e69f08cb31e8535f5b512ed7c140289b";
-		String localId = "asdqresrgdfsfZffyhdfgh";
-		String latestVersion = "6";
-		
-		String token = MVPApi.signUp("qa1.6@test.com", "password1", "f230d0c4e69f08cb31e8535f5b512ed7c140289b").token;
-		MVPApi.createProfile(token, name, weight, height, unit, gender, dateOfBirth, goalLevel, trackingDeviceId, localId, latestVersion).printKeyPairsValue();
-		MVPApi.getProfile(token).printKeyPairsValue();
-		MVPApi.updateProfile(token, (long) 1558498352,"Dandelion", null, null, null, null, null, 3, "asdasfwqedsaserqsafqweASD", null, "6").printKeyPairsValue();
-	}
-	
-	
 	public static void main(String[] args) throws Exception
 	{	
 		// default fields
@@ -443,12 +416,7 @@ public class MVPApi
 		Integer timeZoneOffsetInSeconds = 25200;
 		String[] progressValuesInMinutesNSData = {"0", "0", "0", "0"};
 		
-//		MVPApi.searchGoal(token, startTime, endTime, startTime).printKeyPairsValue();
-//MVPApi.getGoal("2231380780912884911-sMZySAH9s5cfD7byGDpT", "51010cb1caedd02bcb000086").printKeyPairsValue();
-//		MVPApi.createGoal(token, goalValue, System.currentTimeMillis(), 100000 + System.currentTimeMillis(), absoluteLevel, userRelativeLevel, 
-//				timeZoneOffsetInSeconds, progressValuesInMinutesNSData, "50f8f757caedd04d49000027").printKeyPairsValue();
-		
-		MVPApi.createProfile("921036426055077353-SfBwsTPFy2gPcxXrJygs", name, weight, height, unit, gender, dateOfBirth, goalLevel, trackingDeviceId, "asd2314asdasr3w25qasdasrqw3rda3123", "7");
+
 	}
 }
 

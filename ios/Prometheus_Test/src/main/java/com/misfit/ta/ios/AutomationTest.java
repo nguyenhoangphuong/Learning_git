@@ -26,7 +26,8 @@ import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.Logging;
 import com.misfit.ta.utils.ScreenShooter;
 
-public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
+public class AutomationTest extends com.misfit.ta.aut.AutomationTest
+{
 
 	private static final Logger logger = Util.setupLogger(AutomationTest.class);
 	private static final String target = Settings.getValue("target");
@@ -36,12 +37,15 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 	private static int failCount = 0;
 	private static int unknownCount = 0;
 
+	
 	private static StringBuffer details= new StringBuffer();
+	
 	@BeforeMethod(alwaysRun = true)
-	public void setUpTest(Method method) {
-		logger.info("*****************************************************");
-		logger.info("***** Start of test case: " + method.getName());
-		logger.info("*****************************************************");
+	public void setUpTest(Method method) 
+	{
+		logger.info("==================================================================================================================");
+		logger.info("|  Start of test case: " + method.getName());
+		logger.info("==================================================================================================================");
 
 		logger.debug("Start the TRS");
 
@@ -54,10 +58,11 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void cleanUpTest(Method method, ITestResult tr) {
-
+	public void cleanUpTest(Method method, ITestResult tr)
+	{
 		String result;
-		switch (tr.getStatus()) {
+		switch (tr.getStatus()) 
+		{
 		case 1:
 			result = "PASSED";
 			break;
@@ -68,10 +73,12 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 			result = "UNKNOWN";
 			break;
 		}
-		logger.info("*****************************************************");
-		logger.info("***** End of test case: " + method.getName());
-		logger.info("***** Result: " + result);
-		logger.info("*****************************************************");
+		
+		logger.info("==================================================================================================================");
+		logger.info("|  End of test case: " + method.getName());
+		logger.info("|  Result: " + result);
+		logger.info("==================================================================================================================");
+		logger.info("\n\n");
 		
 		// report IOS test results
 		
@@ -89,7 +96,8 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 	}
 
 	@BeforeSuite(alwaysRun = true)
-	public void beforeSuite() throws FileNotFoundException {
+	public void beforeSuite() throws FileNotFoundException
+	{
 		// extracts scripts folder
 		try {
 			Files.extractJar("script", true);
@@ -98,12 +106,11 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 			e.printStackTrace();
 		}
 		Files.delete(detailReport);
-
-	}
-
+	}	
 	
 	@AfterSuite(alwaysRun = true)
-    public void afterSuite() throws FileNotFoundException {
+    public void afterSuite() throws FileNotFoundException 
+    {
 //	    Files.write(detailReport, "\n===================================" +
 //	    		"\n" + "Summary report:\n");
 //	    Files.write(detailReport, "TOTAL: " + (passCount + failCount + unknownCount));

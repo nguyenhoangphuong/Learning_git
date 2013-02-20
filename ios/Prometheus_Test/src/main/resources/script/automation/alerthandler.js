@@ -36,7 +36,7 @@ function Alert()
 	this.EmailSent = "Email Sent";
 	
 	this.InvalidPasswordMsg = "Sorry, the password should have at least 6 characters, at least 1 digit and 1 letter";
-	this.InvalidEmailMsg = "Invalid email";
+	this.InvalidEmailMsg = "Invalid Email";
 	this.DuplicatedEmailMsg = "Sorry, someone else has used this before";
 	this.WrongAccountMsg = "Sorry, your email or password is not correct";
 	this.IncorrectEmailMsg = "The email you entered is not associated with a Shine account";
