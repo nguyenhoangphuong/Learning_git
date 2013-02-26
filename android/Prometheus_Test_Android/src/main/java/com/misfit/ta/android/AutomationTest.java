@@ -62,6 +62,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     // Gui.pressHome();
     ScreenShooter.resetShotQueue();
     Gui.cleanCache();
+    Gui.start("com.misfitwearables.prometheus/.MainActivity");
   }
  
 //  @BeforeSuite(alwaysRun = true)

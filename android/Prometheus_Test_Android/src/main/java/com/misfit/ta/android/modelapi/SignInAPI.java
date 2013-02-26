@@ -8,6 +8,7 @@ import org.testng.Assert;
 import com.misfit.ta.android.AutomationTest;
 import com.misfit.ta.android.gui.SignIn;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SignInAPI extends ModelAPI {
     public SignInAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
@@ -37,13 +38,15 @@ public class SignInAPI extends ModelAPI {
      */
     public void e_PressBack() {
         SignIn.pressBack();
+        ShortcutsTyper.delayTime(500);
+        SignIn.pressBack();
     }
 
     /**
      * This method implements the Vertex 'v_InitView'
      * 
      */
-    public void v_InitView() {
+    public void v_InitialView() {
         Assert.assertTrue(SignIn.isInitViewVisible(), "Init view is not visible");
     }
 

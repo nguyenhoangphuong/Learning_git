@@ -41,6 +41,8 @@ public class Gui extends com.misfit.ta.android.Gui {
 	 */
 	public static void main(String[] args) {
 		Gui.init();
+//		Gui.printView();
+		Gui.pressHome();
 		Gui.shutdown();
 	}
 }
