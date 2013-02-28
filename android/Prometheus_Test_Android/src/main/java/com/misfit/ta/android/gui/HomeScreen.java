@@ -2,8 +2,15 @@ package com.misfit.ta.android.gui;
 
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.chimpchat.core.TouchPressType;
+import com.misfit.ta.android.gui.Helper.Helper;
 
 public class HomeScreen {
+	
+	// These values are used in test with device Galaxy Nexus, other devices may need adaption.
+	private static final int TIME_CONTEXT_WIDTH = 70;
+	private static final int TIME_CONTEXT_HEIGHT = 210;
+	private static final int TIME_CONTEXT_INC = 90;
+	
 	public static void tapManual() {
 		Gui.touchAView("ActionMenuItemView", "mID", "id/manual_input");
 	}
@@ -18,23 +25,35 @@ public class HomeScreen {
 	}
 	
 	public static void tapLevelMild() {
-		Gui.touchAView("ImageButton", "mID", "id/buttonLevelMild");
+		Helper.tapLevelMild();
 	}
 	
 	public static void tapLevelDormant() {
-		Gui.touchAView("ImageButton", "mID", "id/buttonLevelDormant");
+		Helper.tapLevelDormant();
 	}
 	
 	public static void tapLevelModerate() {
-		Gui.touchAView("ImageButton", "mID", "id/buttonLevelModerate");
+		Helper.tapLevelModerate();
 	}
 	
 	public static void tapLevelActive() {
-		Gui.touchAView("ImageButton", "mID", "id/buttonLevelActive");
+		Helper.tapLevelActive();
 	}
 	
 	public static void changeTimeContext() {
 		Gui.touchAView("CheckedTextView", "mID", "id/text1");
+	}
+	
+	public static void chooseToday() {
+		Gui.touch(TIME_CONTEXT_WIDTH, TIME_CONTEXT_HEIGHT);
+	}
+	
+	public static void chooseWeek() {
+		Gui.touch(TIME_CONTEXT_WIDTH, TIME_CONTEXT_HEIGHT + TIME_CONTEXT_INC);
+	}
+	
+	public static void chooseMonth() {
+		Gui.touch(TIME_CONTEXT_WIDTH, TIME_CONTEXT_HEIGHT + TIME_CONTEXT_INC * 2);
 	}
 
 }

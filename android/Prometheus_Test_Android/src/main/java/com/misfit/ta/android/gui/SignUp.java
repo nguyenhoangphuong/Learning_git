@@ -2,6 +2,8 @@ package com.misfit.ta.android.gui;
 
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
+import com.misfit.ta.android.chimpchat.core.TouchPressType;
+import com.misfit.ta.android.gui.Helper.Helper;
 import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 
 public class SignUp {
@@ -13,6 +15,15 @@ public class SignUp {
 		Gui.touchAView("ImageButton", "mID", "id/buttonPrevious");
 	}
 
+	/**
+	 * Step 1: fill register profile
+	 * 
+	 * @param name
+	 * @param email
+	 * @param password
+	 * @param isMale
+	 * @param isMetric
+	 */
 	public static void fillRegisterProfile(String name, String email,
 			String password, boolean isMale, boolean isMetric) {
 		Gui.touchAView("EditText", "mID", "id/userinfo_nameEdit");
@@ -44,4 +55,59 @@ public class SignUp {
 				"id/userinfo_passwordEdit", 0) != null;
 	}
 
+	/**
+	 * TODO Step 2: set average activities
+	 */
+
+	/**
+	 * Step 3: set goal
+	 * 
+	 * @param steps
+	 */
+	public static void setGoalUp(int steps) {
+		for (int i = 0; i < steps; i++) {
+			Gui.touchAView("Button", 1);
+		}
+	}
+
+	public static void setGoalDown(int steps) {
+		for (int i = 0; i < steps; i++) {
+			Gui.touchAView("Button", 0);
+		}
+	}
+
+	public static void tapLevelMild() {
+		Helper.tapLevelMild();
+	}
+
+	public static void tapLevelDormant() {
+		Helper.tapLevelDormant();
+	}
+
+	public static void tapLevelModerate() {
+		Helper.tapLevelModerate();
+	}
+
+	public static void tapLevelActive() {
+		Helper.tapLevelActive();
+	}
+
+	/**
+	 * Step 4: set up device
+	 */
+	public void setupDevice() {
+		Gui.touch(Gui.getCoordinators("ImageButton", "mID", "id/buttonSetup"),
+				TouchPressType.DOWN);
+	}
+
+	public void tapToBuyShine() {
+		Gui.touchAView("Button", "mID", "id/buttonDeviceSetupAskForBuyingShine");
+	}
+
+	public boolean hasBuyingInstruction() {
+		return ViewUtils.findView("Button", "mID",
+				"id/buttonDeviceSetupAskForBuyingShine", 0) != null
+				&& ViewUtils.findView("TextView", "mID",
+						"id/textViewDeviceSetupAskForBuyingShine", 0) != null;
+	}
 }

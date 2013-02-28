@@ -6,26 +6,26 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class Settings {
 	// TODO need to adapt when there are more context menu options
 	// These values are used in test with device Galaxy Nexus, other devices may need adaption.
-	private static final int WIDTH = 540;
-	private static final int HEIGHT = 195;
-	private static final int INC = 75;
+	private static final int SETTINGS_CONTEXT_WIDTH = 540;
+	private static final int SETTINGS_CONTEXT_HEIGHT = 195;
+	private static final int SETTINGS_CONTEXT_INC = 75;
 
 	/**
 	 * Settings Menu
 	 */
 	public static void tapAdjustGoal() {
 		ShortcutsTyper.delayTime(300);
-		Gui.touch(WIDTH, HEIGHT);
+		Gui.touch(SETTINGS_CONTEXT_WIDTH, SETTINGS_CONTEXT_HEIGHT);
 	}
 
 	public static void tapSettings() {
 		ShortcutsTyper.delayTime(300);
-		Gui.touch(WIDTH, HEIGHT + INC);
+		Gui.touch(SETTINGS_CONTEXT_WIDTH, SETTINGS_CONTEXT_HEIGHT + SETTINGS_CONTEXT_INC);
 	}
 
 	public static void tapAbout() {
 		ShortcutsTyper.delayTime(300);
-		Gui.touch(WIDTH, HEIGHT + INC * 2);
+		Gui.touch(SETTINGS_CONTEXT_WIDTH, SETTINGS_CONTEXT_HEIGHT + SETTINGS_CONTEXT_INC * 2);
 	}
 
 	public static void backToDayView() {
