@@ -95,19 +95,46 @@ public class SignUp {
 	/**
 	 * Step 4: set up device
 	 */
-	public void setupDevice() {
+	public static void setupDevice() {
 		Gui.touch(Gui.getCoordinators("ImageButton", "mID", "id/buttonSetup"),
 				TouchPressType.DOWN);
 	}
 
-	public void tapToBuyShine() {
+	public static void tapToBuyShine() {
 		Gui.touchAView("Button", "mID", "id/buttonDeviceSetupAskForBuyingShine");
 	}
 
-	public boolean hasBuyingInstruction() {
+	/**
+	 * Don't have a shine
+	 * GET YOURS NOW
+	 */
+	public static boolean hasBuyingInstruction() {
 		return ViewUtils.findView("Button", "mID",
 				"id/buttonDeviceSetupAskForBuyingShine", 0) != null
 				&& ViewUtils.findView("TextView", "mID",
 						"id/textViewDeviceSetupAskForBuyingShine", 0) != null;
+	}
+	
+	/**
+	 * GO. ALWAYS WEAR YOUR SHINE
+	 * To sync just place Shine on the logo below
+	 */
+	public static boolean hasSyncInstruction() {
+		return ViewUtils.findView("Button", "mID",
+				"id/textViewDeviceSetupTitle", 0) != null
+				&& ViewUtils.findView("TextView", "mID",
+						"id/textViewDeviceSetupSyncInstruction", 0) != null;
+	}
+	
+	public static boolean hasMagicHappening() {
+		return ViewUtils.findView("Button", "mText",
+				"MAGIC HAPPENING NOW", 0) != null;
+	}
+	
+	/**
+	 * Sign up complete
+	 */
+	public static void goToHomeScreen() {
+		Gui.touchAView("ImageButton", "mID", "id/buttonNext");
 	}
 }
