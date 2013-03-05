@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.android.AutomationTest;
+import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.modelapi.InvalidSignInAPI;
 import com.misfit.ta.android.modelapi.SuccessfulSignInAPI;
 import com.misfit.ta.utils.Files;
@@ -34,6 +35,12 @@ public class SigninTest extends AutomationTest {
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
+    }
+
+    @Test
+    public void test()
+    {
+    	Gui.printView();
     }
 
 }
