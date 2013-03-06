@@ -8,12 +8,6 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class Helper {
 	
-	public static void main(String[] args)
-	{
-		Gui.printView(Gui.getCurrentViews());
-	}
-	
-	
 	
 	public static void wait(int miliseconds){
 		ShortcutsTyper.delayTime(miliseconds);
