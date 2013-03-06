@@ -16,7 +16,7 @@ import com.misfit.ta.utils.Files;
 
 public class SigninTest extends AutomationTest {
 
-   // @Test(groups = { "android", "Prometheus", "signin" })
+	@Test(groups = { "android", "Prometheus", "signin" })
     public void invalidSignInTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("invalidSignin", new InvalidSignInAPI(this, Files.getFile("model/signin/InvalidSignIn.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));

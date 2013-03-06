@@ -1,6 +1,7 @@
 package com.misfit.ta.android.gui;
 
 import com.misfit.ta.android.Gui;
+import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class Settings {
@@ -33,6 +34,11 @@ public class Settings {
 		ShortcutsTyper.delayTime(500);
 		Gui.touchAView("TextView", "mID", "id/action_bar_subtitle");
 	}
+	
+	public static boolean isGoalSettings() {
+		ShortcutsTyper.delayTime(1000);
+		return ViewUtils.findView("TextView", "mID", "id/action_bar_subtitle", 0) != null;
+	}
 
 	/**
 	 * Settings Screen TODO edit value using picker
@@ -53,8 +59,8 @@ public class Settings {
 		Gui.touchAView("TextView", "mID", "id/heightTextView");
 	}
 
-	public static void editWidth(String weigth) {
-		Gui.touchAView("TextView", "mID", "id/weigthTextView");
+	public static void editWeight(String weigth) {
+		Gui.touchAView("TextView", "mID", "id/weightTextView");
 	}
 
 	public static void editPreferredUnits(boolean isMetric) {
@@ -64,6 +70,31 @@ public class Settings {
 	public static void tapSignOut() {
 		Gui.touchAView("TextView", "mID", "id/signoutTextView");
 	}
+	
+	public static boolean hasNameField() {
+		return ViewUtils.findView("TextView", "mID", "id/nameTextView", 0) != null;
+	}
+
+	public static boolean hasBirthDateField() {
+		return ViewUtils.findView("TextView", "mID", "id/dateOfBirthTextView", 0) != null;
+	}
+
+	public static boolean hasGenderField() {
+		return ViewUtils.findView("TextView", "mID", "id/sexTextView", 0) != null;
+	}
+
+	public static boolean hasHeightField() {
+		return ViewUtils.findView("TextView", "mID", "id/heightTextView", 0) != null;
+	}
+
+	public static boolean hasWeightField() {
+		return ViewUtils.findView("TextView", "mID", "id/weightTextView", 0) != null;
+	}
+
+	public static boolean hasPreferredUnitsField() {
+		return ViewUtils.findView("TextView", "mID", "id/preferredUnitsTextView", 0) != null;
+	}
+
 
 	/**
 	 * About Screen
@@ -89,5 +120,20 @@ public class Settings {
 	 */
 	public static void checkToConfirmGoal() {
 		Gui.touchAView("ActionMenuItemView", "mID", "id/check");
+	}
+	
+	public static Integer getCurrentLevel() {
+		return Integer.valueOf(ViewUtils.findView("TextView", "mID", "id/textCurrentLevel", 0).text)  ;
+	}
+	public static void setGoalUp(int steps) {
+		for (int i = 0; i < steps; i++) {
+			Gui.touchAView("Button", 1);
+		}
+	}
+
+	public static void setGoalDown(int steps) {
+		for (int i = 0; i < steps; i++) {
+			Gui.touchAView("Button", 0);
+		}
 	}
 }
