@@ -17,7 +17,7 @@
     <node id="n0">
       <data key="d6">
         <y:GenericNode configuration="BevelNode2">
-          <y:Geometry height="30.0" width="198.0" x="399.6950396825397" y="113.13281250000003"/>
+          <y:Geometry height="30.0" width="198.0" x="560.319246031746" y="113.1328125"/>
           <y:Fill color="#FF9900" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="75.8828125" x="61.05859375" y="5.93359375">v_InitialView<y:LabelModel>
@@ -33,7 +33,7 @@
     <node id="n1">
       <data key="d6">
         <y:GenericNode configuration="BevelNode2">
-          <y:Geometry height="30.0" width="198.0" x="399.6950396825397" y="221.26562500000006"/>
+          <y:Geometry height="30.0" width="198.0" x="560.319246031746" y="221.26562500000003"/>
           <y:Fill color="#FF9900" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="89.716796875" x="54.1416015625" y="5.93359375">v_SignUpStep1<y:LabelModel>
@@ -49,7 +49,7 @@
     <node id="n2">
       <data key="d6">
         <y:GenericNode configuration="BevelNode2">
-          <y:Geometry height="30.0" width="45.0" x="476.1950396825397" y="0.0"/>
+          <y:Geometry height="30.0" width="45.0" x="636.819246031746" y="0.0"/>
           <y:Fill color="#00FF00" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="30.9765625" x="7.01171875" y="5.93359375">Start<y:LabelModel>
@@ -65,7 +65,7 @@
     <node id="n3">
       <data key="d6">
         <y:GenericNode configuration="BevelNode2">
-          <y:Geometry height="30.0" width="198.0" x="106.69583333333333" y="449.59267733134936"/>
+          <y:Geometry height="30.0" width="198.0" x="98.82083333333333" y="480.7004309275794"/>
           <y:Fill color="#FF9900" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="159.220703125" x="19.3896484375" y="5.93359375">v_SignUpStep1InvalidEmail<y:LabelModel>
@@ -81,7 +81,7 @@
     <node id="n4">
       <data key="d6">
         <y:GenericNode configuration="BevelNode2">
-          <y:Geometry height="30.0" width="198.0" x="399.6950396825397" y="449.59267733134936"/>
+          <y:Geometry height="30.0" width="198.0" x="386.5700396825397" y="480.7004309275794"/>
           <y:Fill color="#FF9900" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="182.5234375" x="7.73828125" y="5.93359375">v_SignUpStep1InvalidPassword<y:LabelModel>
@@ -97,10 +97,26 @@
     <node id="n5">
       <data key="d6">
         <y:GenericNode configuration="BevelNode2">
-          <y:Geometry height="30.0" width="198.0" x="692.694246031746" y="449.59267733134936"/>
+          <y:Geometry height="30.0" width="198.0" x="674.319246031746" y="480.7004309275794"/>
           <y:Fill color="#FF9900" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="183.4140625" x="7.29296875" y="5.93359375">v_SignUpStep1DuplicatedEmail<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+        </y:GenericNode>
+      </data>
+    </node>
+    <node id="n6">
+      <data key="d6">
+        <y:GenericNode configuration="BevelNode2">
+          <y:Geometry height="30.0" width="198.0" x="1096.1714285714286" y="480.7004309275794"/>
+          <y:Fill color="#FF9900" transparent="false"/>
+          <y:BorderStyle hasColor="false" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="89.716796875" x="54.1416015625" y="5.93359375">v_SignUpStep2<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -116,7 +132,7 @@
           <y:Path sx="0.0" sy="15.0" tx="0.0" ty="-15.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="158.5" x="1.840742811509699E-6" y="30.00000000000003">e_tapIDontHaveAnAccount<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="158.5" x="-2.8870597702734813E-5" y="30.0">e_tapIDontHaveAnAccount<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -128,7 +144,7 @@
           <y:Path sx="0.0" sy="15.0" tx="0.0" ty="-15.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="66.244140625" x="1.537504650741539E-4" y="30.0">e_init/i=0;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="62.447265625" x="1.478407118611358E-4" y="30.0">e_init/i=0<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -137,15 +153,15 @@
     <edge id="e2" source="n1" target="n3">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="-82.5" sy="15.0" tx="-49.5" ty="-15.0">
-            <y:Point x="416.1950396825397" y="266.26562500000006"/>
-            <y:Point x="1.4880952380735835E-4" y="376.3626457093254"/>
-            <y:Point x="1.4880952380735835E-4" y="394.49545820932553"/>
-            <y:Point x="156.19583333333333" y="434.59267733134936"/>
+          <y:Path sx="-86.625" sy="15.0" tx="-49.5" ty="-15.0">
+            <y:Point x="572.694246031746" y="266.265625"/>
+            <y:Point x="1.4880952380735835E-4" y="409.4391493055556"/>
+            <y:Point x="1.4880952380735835E-4" y="427.5719618055556"/>
+            <y:Point x="148.32083333333333" y="465.7004309275794"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="185.21875" x="-416.19488903227307" y="125.09702070932553">e_inputInvalidEmail[i==0]/i=1;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="185.21875" x="-572.6941260928199" y="158.1735243055557">e_inputInvalidEmail[i==0]/i=1;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -154,15 +170,15 @@
     <edge id="e3" source="n3" target="n1">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="49.5" sy="-15.0" tx="-49.5" ty="15.0">
-            <y:Point x="255.19583333333333" y="439.59267733134936"/>
-            <y:Point x="304.6958209325397" y="394.4954582093255"/>
-            <y:Point x="304.6958209325397" y="376.3626457093254"/>
-            <y:Point x="449.1950396825397" y="266.26562500000006"/>
+          <y:Path sx="49.5" sy="-15.0" tx="-61.875" ty="15.0">
+            <y:Point x="247.32083333333333" y="470.7004309275794"/>
+            <y:Point x="299.4458209325397" y="427.57196180555553"/>
+            <y:Point x="299.4458209325397" y="409.4391493055556"/>
+            <y:Point x="597.444246031746" y="266.265625"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="89.4765625" x="-39.97657286628845" y="-73.19097367544015">e_confirmAlert<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="89.4765625" x="-37.35157286628845" y="-71.22222764756947">e_confirmAlert<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -171,15 +187,15 @@
     <edge id="e4" source="n1" target="n4">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="-16.5" sy="15.0" tx="-49.5" ty="-15.0">
-            <y:Point x="482.1950396825397" y="266.26562500000006"/>
-            <y:Point x="334.69600384424604" y="376.3626457093254"/>
-            <y:Point x="334.69600384424604" y="394.49545820932553"/>
-            <y:Point x="449.1950396825397" y="434.59267733134936"/>
+          <y:Path sx="-37.125" sy="15.0" tx="-49.5" ty="-15.0">
+            <y:Point x="622.194246031746" y="266.265625"/>
+            <y:Point x="324.19600384424604" y="409.4391493055556"/>
+            <y:Point x="324.19600384424604" y="427.5719618055556"/>
+            <y:Point x="436.0700396825397" y="465.7004309275794"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="208.521484375" x="-147.49903399755095" y="125.09702070932553">e_inputInvalidPassword[i==1]/i=2;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="208.521484375" x="-297.99827105809777" y="158.1735243055556">e_inputInvalidPassword[i==1]/i=2;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -188,15 +204,13 @@
     <edge id="e5" source="n4" target="n1">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="49.5" sy="-15.0" tx="16.5" ty="15.0">
-            <y:Point x="548.1950396825397" y="439.59267733134936"/>
-            <y:Point x="662.6942336309523" y="394.49545820932553"/>
-            <y:Point x="662.6942336309523" y="376.3626457093254"/>
-            <y:Point x="515.1950396825397" y="266.26562500000006"/>
+          <y:Path sx="49.5" sy="-15.0" tx="-12.375" ty="15.0">
+            <y:Point x="535.0700396825397" y="470.7004309275794"/>
+            <y:Point x="646.9442336309523" y="427.5719618055556"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="89.4765625" x="25.02260277157734" y="-73.19097367544015">e_confirmAlert<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="89.4765625" x="22.39760277157734" y="-71.22222764756947">e_confirmAlert<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -205,15 +219,13 @@
     <edge id="e6" source="n1" target="n5">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="49.5" sy="15.0" tx="-49.5" ty="-15.0">
-            <y:Point x="548.1950396825397" y="266.26562500000006"/>
-            <y:Point x="692.6943421378968" y="376.3626457093254"/>
-            <y:Point x="692.6943421378968" y="394.49545820932553"/>
-            <y:Point x="742.194246031746" y="434.59267733134936"/>
+          <y:Path sx="12.375" sy="15.0" tx="-49.5" ty="-15.0">
+            <y:Point x="671.6943421378968" y="427.5719618055556"/>
+            <y:Point x="723.819246031746" y="465.7004309275794"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="209.412109375" x="144.4992737785218" y="125.09702070932553">e_inputDuplicatedEmail[i==2]/i=3;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="209.412109375" x="6.723555304688489E-5" y="158.1735243055556">e_inputDuplicatedEmail[i==2]/i=3;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -222,15 +234,32 @@
     <edge id="e7" source="n5" target="n1">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="49.5" sy="-15.0" tx="82.5" ty="15.0">
-            <y:Point x="841.194246031746" y="439.59267733134936"/>
-            <y:Point x="1021.5831225198413" y="394.49545820932553"/>
-            <y:Point x="1021.5831225198413" y="376.3626457093254"/>
-            <y:Point x="581.1950396825397" y="266.26562500000006"/>
+          <y:Path sx="49.5" sy="-15.0" tx="37.125" ty="15.0">
+            <y:Point x="822.819246031746" y="470.7004309275794"/>
+            <y:Point x="995.3331225198413" y="427.5719618055556"/>
+            <y:Point x="995.3331225198413" y="409.4391493055556"/>
+            <y:Point x="696.444246031746" y="266.265625"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="89.4765625" x="90.9122851174975" y="-73.19097367544015">e_confirmAlert<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="89.4765625" x="83.0372851174975" y="-71.22222764756947">e_confirmAlert<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          </y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e8" source="n1" target="n6">
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="61.875" sy="15.0" tx="-49.5" ty="-15.0">
+            <y:Point x="721.194246031746" y="266.265625"/>
+            <y:Point x="1020.0834356398809" y="409.4391493055556"/>
+            <y:Point x="1020.0834356398809" y="427.5719618055556"/>
+            <y:Point x="1145.6714285714286" y="465.7004309275794"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="199.837890625" x="298.88916073753717" y="158.17352430555565">e_inputValidEmailPassword[i==3]<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>

@@ -35,6 +35,10 @@ public class Settings {
 		Gui.touchAView("TextView", "mID", "id/action_bar_subtitle");
 	}
 	
+	public static boolean isProfileSettings() {
+		return ViewUtils.findView("TextView", "mID", "id/dateOfBirthTextView", 0) != null;
+	}
+	
 	public static boolean isGoalSettings() {
 		ShortcutsTyper.delayTime(1000);
 		return ViewUtils.findView("TextView", "mID", "id/action_bar_subtitle", 0) != null;

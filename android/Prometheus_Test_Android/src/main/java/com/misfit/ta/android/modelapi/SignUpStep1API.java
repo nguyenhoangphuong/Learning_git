@@ -83,6 +83,20 @@ public class SignUpStep1API extends ModelAPI {
 		SignUp.pressNext();
 		Helper.wait1();
 	}
+	
+	/**
+	 * This method implements the Edge 'e_inputValidEmailPassword'
+	 * 
+	 */
+	public void e_inputValidEmailPassword() {
+		email = System.currentTimeMillis() + "@qa.com";
+		password = "qwerty1";
+
+		SignUp.inputEmail(email);
+		SignUp.inputPassword(password);
+		SignUp.pressNext();
+		Helper.wait1();
+	}
 
 	/**
 	 * This method implements the Edge 'e_tapIDontHaveAnAccount'
@@ -140,9 +154,12 @@ public class SignUpStep1API extends ModelAPI {
 		Assert.assertTrue(msg.equals(DefaultStrings.SignUpDuplicatedEmailMessage));
 	}
 
-	public static void main(String[] args)
-	{
-		Gui.init();
-		Gui.printView();
+	/**
+	 * This method implements the Vertex 'v_SignUpStep1DuplicatedEmail'
+	 * 
+	 */
+	public void v_SignUpStep2() {
+		Assert.assertTrue(SignUp.isAtStep2());
 	}
+	
 }

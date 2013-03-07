@@ -1,6 +1,7 @@
 package com.misfit.ta.android.gui;
 
 import com.misfit.ta.android.Gui;
+import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.chimpchat.core.TouchPressType;
 import com.misfit.ta.android.gui.Helper.Helper;
 
@@ -12,6 +13,12 @@ public class HomeScreen {
 	private static final int TIME_CONTEXT_HEIGHT = 210;
 	private static final int TIME_CONTEXT_INC = 90;
 
+	
+	public static boolean isHomeScreenVisible()
+	{
+		return ViewUtils.findView("ImageButton", "mID", "id/overflow", 0) != null;
+	}
+	
 	/**
 	 * Manual Goal
 	 */
