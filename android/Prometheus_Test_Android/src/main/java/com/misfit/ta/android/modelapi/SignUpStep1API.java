@@ -15,9 +15,9 @@ public class SignUpStep1API extends ModelAPI {
    public SignUpStep1API(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
     super(automation, model, efsm, generator, weight);
   }
-
-   String existedEmail = "a@a.a";
    
+   
+   String existedEmail = "a@a.a";
    String email = "";
    String password = "";
 
@@ -40,6 +40,7 @@ public class SignUpStep1API extends ModelAPI {
    */
   public void e_confirmAlert() {
 	// --- blocked
+	  System.out.print("----------" + SignUp.isInvalidEmailMessageShown());
   }
 
 
@@ -104,8 +105,30 @@ public class SignUpStep1API extends ModelAPI {
 	  Helper.wait1();
   }
 
+  
+  
+
+  /**
+   * This method implements the Edge 'e_inputValidEmail'
+   * 
+   */
+  public void e_inputValidEmail() {
+   //TODO: 
+  }
 
 
+
+
+  /**
+   * This method implements the Edge 'e_inputValidPassword'
+   * 
+   */
+  public void e_inputValidPassword() {
+   //TODO: 
+  }
+
+  
+  
 
   /**
    * This method implements the Edge 'e_tapIDontHaveAnAccount'
@@ -171,6 +194,26 @@ public class SignUpStep1API extends ModelAPI {
   public void v_SignUpStep1DuplicatedEmail() {
 	// --- blocked 
   }
+  
+  
+  
 
+  /**
+   * This method implements the Vertex 'v_SignUpStep1EmptyEmail'
+   * 
+   */
+  public void v_SignUpStep1EmptyEmail() {
+   //TODO: 
+  }
+
+
+
+
+  /**
+   * This method implements the Vertex 'v_SignUpStep1EmptyPassword'
+   * 
+   */
+  public void v_SignUpStep1EmptyPassword() {
+   //TODO: 
+  }
 }
-
