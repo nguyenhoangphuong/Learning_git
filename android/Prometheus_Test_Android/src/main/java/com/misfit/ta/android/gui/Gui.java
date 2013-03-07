@@ -42,7 +42,10 @@ public class Gui extends com.misfit.ta.android.Gui {
 	public static void main(String[] args) {
 		Gui.init();
 //		Gui.printView();
-		Gui.pressHome();
+//		Gui.pressHome();
+//		Gui.getHeight()
+//		int p[] =Gui.getCoordinators("Button", "mID", "id/button1");
+//		System.out.println(p[0]+":" + p[1]);
 		Gui.shutdown();
 	}
 }

@@ -2,6 +2,7 @@ package com.misfit.ta.android.gui.Helper;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Random;
 import java.util.Vector;
 
 import com.misfit.ta.android.Gui;
@@ -23,6 +24,13 @@ public class Helper {
 		SecureRandom random = new SecureRandom();
 		return new BigInteger(130, random).toString(32).substring(0, 10);
 	}
+	
+	public static int randomInt(int includeFrom, int excludeTo)
+	{
+		Random rand = new Random();
+		return rand.nextInt(excludeTo - includeFrom) + includeFrom;
+	}
+	
 
 	public static void tapLevelMild() {
 		Gui.touchAView("ImageButton", "mID", "id/buttonLevelMild");
@@ -49,14 +57,14 @@ public class Helper {
 	 * @return
 	 */
 	public static int[] getScreenSizeBeforePopUp() {
-		Vector<ViewNode> views = Gui.getCurrentViews();
-		ShortcutsTyper.delayTime(10000);
 		return new int[] { Gui.getScreenWidth(), Gui.getScreenHeight() };
 	}
+	
 	public static int[] getTouchPointOnPopup(ViewNode viewNode, int deltaX, int deltaY) {
 		int s[] = Helper.getScreenSizeBeforePopUp() ;
 		int h = Gui.getHeight(); 
     	int w = Gui.getWidth();
+    	System.out.println("LOG [Gui.main]: view" + s[0] + ":" + s[1]);
     	System.out.println("LOG [Gui.main]: view" + h + ":" + w);
     	int p[] = Gui.getCoordinators(viewNode);
     	int newP[] = {0,0};
@@ -64,4 +72,5 @@ public class Helper {
 		newP[1] = (s[1]- h) / 2 + p[1] + deltaY;
 		return newP;
 	}
+
 }

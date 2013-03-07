@@ -63,13 +63,11 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     ScreenShooter.resetShotQueue();
     Gui.cleanCache();
     Gui.start("com.misfitwearables.prometheus/.MainActivity");
+    
+    System.out.print(Gui.getScreenWidth());
+    System.out.print(Gui.getScreenHeight());
   }
- 
-//  @BeforeSuite(alwaysRun = true)
-//  public void beforeSuite() {
-//      System.out.println("LOG [AutomationTest.setupSuite]: ===================================================");
-//      Gui.cleanCache();
-//  }
+
 
 
 }

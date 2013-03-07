@@ -1,6 +1,6 @@
 package com.misfit.ta.android.gui;
 
-import org.testng.annotations.Test;
+import java.util.HashMap;
 
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
@@ -9,6 +9,12 @@ import com.misfit.ta.android.gui.Helper.Helper;
 import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 
 public class SignUp {
+	
+	/*
+	 * navigation and visible checking methods
+	 * TODO: add visible checking method for step 2 3 4
+	 */
+	
 	public static void chooseSignUp() {
 		Gui.touchAView("Button", "mID", "id/buttonNotHaveAccount");
 	}
@@ -20,151 +26,215 @@ public class SignUp {
 	public static void pressNext() {
 		Gui.touchAView("ImageButton", "mID", "id/buttonNext");
 	}
-
-	public static boolean isSignUpVisible() {
-		return ViewUtils.findView("EditText", "mID",
-				"id/userinfo_passwordEdit", 0) != null;
+	
+	public static String getAlertMessage()
+	{
+		ViewNode node =  ViewUtils.findView("TextView", "mID", "id/message", 0);
+		return node == null ? null : node.text;
 	}
-
+	
+	public static void closeAlert()
+	{
+		ViewNode btn =  ViewUtils.findView("Button", "mID", "id/button1", 0);
+		ViewNode msg =  ViewUtils.findView("TextView", "mID", "id/message", 0);
+		if(btn != null)
+		{
+			int[] p = Helper.getTouchPointOnPopup(btn, msg.width / 2, btn.height / 2);
+			Gui.touch(p[0], p[1]);
+			Helper.wait1();
+			Gui.getCurrentViews();
+		}
+		else
+			Gui.makeToast("Error: alert should be shown");
+		
+	}
+	
 	public static boolean isAtStep1() {
-		return ViewUtils.findView("EditText", "mID",
-				"id/userinfo_passwordEdit", 0) != null;
+		return ViewUtils.findView("EditText", "mID", "id/userinfo_passwordEdit", 0) != null;
 	}
 
 	public static boolean isAtStep2() {
+		// to do: add logic code here
 		return true;
 	}
-
-	/**
-	 * Step 1: fill register profile
-	 * 
-	 * @param name
-	 * @param email
-	 * @param password
-	 * @param isMale
-	 * @param isMetric
-	 */
-
-	public static boolean isInvalidEmailMessageShown() {
-		System.out.print("2222");
-		
-		 return ViewUtils.isVisible(
-				 ViewUtils.findView("TextView", "mID", "id/messageaaa", 0));
+	
+	public static boolean isAtStep3() {
+		// to do: add logic code here
+		return true;
 	}
+	
+	public static boolean isAtStep4() {
+		// to do: add logic code here
+		return true;
+	}
+	
+	
 
-	public static void fillRegisterProfile(String name, String email,
-			String password, Boolean isMale, Boolean isMetric) {
-		if (name != null) {
-			Gui.touchAView("EditText", "mID", "id/userinfo_nameEdit");
-			Gui.type(name);
-		}
-
+	/*
+	 * Step 1: fill email and password
+	 */
+	private static void fillSignUpForm(String email, String password)
+	{
 		if (email != null) {
+			ViewNode emailNode = ViewUtils.findView("EditText", "mID", "id/userinfo_emailEdit", 0);
+			emailNode.text = "";
+			
 			Gui.touchAView("EditText", "mID", "id/userinfo_emailEdit");
+			Gui.clearTextbox(emailNode);
 			Gui.type(email);
+			Gui.pressBack();
 		}
 
 		if (password != null) {
+			ViewNode passwordNode = ViewUtils.findView("EditText", "mID", "id/userinfo_passwordEdit", 0);
+			passwordNode.text = "";
+			
 			Gui.touchAView("EditText", "mID", "id/userinfo_passwordEdit");
+			Gui.clearTextbox(passwordNode);
 			Gui.type(password);
+			Gui.pressBack();
 		}
-
-		if (isMale != null) {
-			ViewNode maleRadioButton = ViewUtils.findView("RadioButton", "mID",
-					"id/userinfo_maleButton", 0);
-			if (isMale && !maleRadioButton.isChecked) {
-				Gui.touchAView("RadioButton", "mID", "id/userinfo_maleButton");
-			} else if (maleRadioButton.isChecked) {
-				Gui.touchAView("RadioButton", "mID", "id/userinfo_femaleButton");
-			}
-		}
-
-		if (isMetric != null) {
-			ViewNode metricRadioButton = ViewUtils.findView("RadioButton",
-					"mID", "id/userinfo_metricButton", 0);
-			if (isMetric && !metricRadioButton.isChecked) {
-				Gui.touchAView("RadioButton", "mID", "id/userinfo_metricButton");
-			} else if (metricRadioButton.isChecked) {
-				Gui.touchAView("RadioButton", "mID", "id/userinfo_usButton");
-			}
-		}
-
-		// TODO fill info for birthdate, weight, height
-
-	}
-
-	public static String getName() {
-		return ViewUtils.findView("EditText", "mID", "id/userinfo_nameEdit", 0).text;
-	}
-
-	public static String getEmail() {
-		return ViewUtils
-				.findView("EditText", "mID", "id/userinfo_emailEdit", 0).text;
-	}
-
-	public static boolean getSex() {
-		return ViewUtils.findView("RadioButton", "mID",
-				"id/userinfo_maleButton", 0).isChecked;
-	}
-
-	public static boolean getUnit() {
-		return ViewUtils.findView("RadioButton", "mID", "id/userinfo_usButton",
-				0).isChecked;
-	}
-
-	public static String getBirthday() {
-		return null;
-	}
-
-	public static String getWeight() {
-		return null;
-	}
-
-	public static String getHeight() {
-		return null;
-	}
-
-	public static void inputName(String name) {
-		SignUp.fillRegisterProfile(name, null, null, null, null);
 	}
 
 	public static void inputEmail(String email) {
-		SignUp.fillRegisterProfile(null, email, null, null, null);
+		SignUp.fillSignUpForm(email, null);
 	}
 
 	public static void inputPassword(String password) {
-		SignUp.fillRegisterProfile(null, null, password, null, null);
+		SignUp.fillSignUpForm(null, password);
 	}
 
-	public static void inputSex(Boolean sex) {
-		SignUp.fillRegisterProfile(null, null, null, sex, null);
-	}
+	
 
-	public static void inputUnit(Boolean unit) {
-		SignUp.fillRegisterProfile(null, null, null, null, unit);
-	}
-
-	public static void inputBirthday(int date, int month, int year) {
-
-	}
-
-	public static void inputWeight(String weight) {
-
-	}
-
-	public static void inputHeight(String height) {
-
-	}
-
-	/**
-	 * TODO Step 2: set average activities
+	/*
+	 * Step 2: input profile
+	 * TODO: edit fillProfileForm and getProfileForm methods to edit fields and get fields' values
 	 */
+	private static void fillProfileForm(String sex, String weight, String height, Integer[] birthday)
+	{
+		if (sex != null) 
+		{
+			if (sex.equalsIgnoreCase("male"))
+				Gui.touchAView("RadioButton", "mID", "id/userinfo_maleButton");
+			else
+				Gui.touchAView("RadioButton", "mID", "id/userinfo_femaleButton");
+		}
+		
+		// TODO: add logic code here
+	}
+	
+	private static String getProfileForm(String what)
+	{
+		// to do: add logic code here
+		
+		if(what == "sex")
+			return null;
+		
+		if(what == "birthday")
+			return null;
+		
+		if(what == "weight")
+			return null;
+		
+		if(what == "height")
+			return null;
+		
+		return null;
+	}
+	
+	
+	public static String formatDateString(int date, int month, int year)
+	{
+		String[] monthStrings = {"dummy", "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+										  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+		
+		return monthStrings[month] + " " + String.format("%02d", date) + ", " + year;
+	}
+	
+	public static String formatWeightString(float weight, boolean isUS)
+	{
+		return String.format("%.1f", weight) + (isUS ? " lbs" : " kg");
+	}
+	
+	public static String formatHeightString(float height, boolean isUS)
+	{		
+		if(isUS)
+			return String.format("%d", height / 12) + "'" + String.format("%d", height % 12) + "\"";
+		
+		return String.format("%.2f", height) + " m";
+	}
+	
 
+	public static void inputSex(String sex) {
+		fillProfileForm(sex, null, null, null);
+	}
+	
+	public static void inputBirthday(int date, int month, int year) {
+		Integer[] birthday = {date, month, year};
+		fillProfileForm(null, null, null, birthday);
+	}
+
+	public static void inputWeight(float weight, boolean isUS) {
+		String formatedWeight = formatWeightString(weight, isUS);
+		fillProfileForm(null, formatedWeight, null, null);
+	}
+
+	public static void inputHeight(float height, boolean isUS) {
+		String formatedHeight = formatHeightString(height, isUS);
+		fillProfileForm(null, formatedHeight, null, null);
+	}
+	
+	
+	public static String getSex() {
+		return getProfileForm("sex");
+	}
+
+	public static String getBirthday() {
+		return getProfileForm("birthday");
+	}
+
+	public static String getWeight() {
+		return getProfileForm("weight");
+	}
+
+	public static String getHeight() {
+		return getProfileForm("height");
+	}
+
+	
 	/**
 	 * Step 3: set goal
-	 * 
-	 * @param steps
+	 * @param type: 0 = Active, 1 = Very Active, 2 = Highly Active
 	 */
+	public static void setGoal(int type)
+	{
+		// to do: add logic code here
+		
+		if(type == 0)
+		{}
+		
+		if(type == 1)
+		{}
+		
+		if(type == 2)
+		{}
+	}
+	
+	public static HashMap<String, Object> getCurrentGoalInfo()
+	{
+		// to do: add logic code here
+		
+		HashMap<String, Object> info = new HashMap<String, Object>();
+		info.put("title", null);
+		info.put("activity", null);
+		info.put("point", null);
+		info.put("step", null);
+		
+		return info;
+	}
+	
+	
+	/* ----- OLD LOGIC CODE
 	public static void setGoalUp(int steps) {
 		for (int i = 0; i < steps; i++) {
 			Gui.touchAView("Button", 1);
@@ -192,22 +262,47 @@ public class SignUp {
 	public static void tapLevelActive() {
 		Helper.tapLevelActive();
 	}
+	*/
 
 	/**
 	 * Step 4: set up device
 	 */
-	public static void setupDevice() {
+	public static void startSyncing() 
+	{
 		Gui.touch(Gui.getCoordinators("ImageButton", "mID", "id/buttonSetup"),
 				TouchPressType.DOWN);
 	}
+	
+	public static void stopSyncing() 
+	{
+		Gui.touch(Gui.getCoordinators("ImageButton", "mID", "id/buttonSetup"),
+				TouchPressType.UP);
+	}
 
-	public static void tapToBuyShine() {
+	public static boolean hasGetYoursNowButton()
+	{
+		return true;
+	}
+	
+	public static boolean hasMagicHappening() {
+		return ViewUtils.findView("Button", "mText", "MAGIC HAPPENING NOW", 0) != null;
+	}
+	
+	public static boolean hasDetectedFailMessage() {
+		return false;
+	}
+	
+	public static boolean hasDectectedPassMessage(){
+		return false;
+	}
+
+	
+	/* OLD LOGIC
+	public static void tapBuyYourShine() 
+	{
 		Gui.touchAView("Button", "mID", "id/buttonDeviceSetupAskForBuyingShine");
 	}
 
-	/**
-	 * Don't have a shine GET YOURS NOW
-	 */
 	public static boolean hasBuyingInstruction() {
 		return ViewUtils.findView("Button", "mID",
 				"id/buttonDeviceSetupAskForBuyingShine", 0) != null
@@ -215,25 +310,12 @@ public class SignUp {
 						"id/textViewDeviceSetupAskForBuyingShine", 0) != null;
 	}
 
-	/**
-	 * GO. ALWAYS WEAR YOUR SHINE To sync just place Shine on the logo below
-	 */
 	public static boolean hasSyncInstruction() {
 		return ViewUtils.findView("Button", "mID",
 				"id/textViewDeviceSetupTitle", 0) != null
 				&& ViewUtils.findView("TextView", "mID",
 						"id/textViewDeviceSetupSyncInstruction", 0) != null;
 	}
-
-	public static boolean hasMagicHappening() {
-		return ViewUtils.findView("Button", "mText", "MAGIC HAPPENING NOW", 0) != null;
-	}
-
-	/**
-	 * Sign up complete
-	 */
-	public static void goToHomeScreen() {
-		Gui.touchAView("ImageButton", "mID", "id/buttonNext");
-	}
-
+	*/
+	
 }
