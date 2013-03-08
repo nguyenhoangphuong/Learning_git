@@ -13,15 +13,15 @@ import com.misfit.ta.android.AutomationTest;
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.gui.HomeScreen;
 import com.misfit.ta.android.gui.Settings;
-import com.misfit.ta.android.modelapi.GoalSettingsAPI;
-import com.misfit.ta.android.modelapi.ProfileSettingsAPI;
-import com.misfit.ta.android.modelapi.SuccessfulSignInAPI;
+import com.misfit.ta.android.modelapi.settings.GoalSettingsAPI;
+import com.misfit.ta.android.modelapi.settings.ProfileSettingsAPI;
+import com.misfit.ta.android.modelapi.signin.SuccessfulSignInAPI;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SettingsTest extends AutomationTest {
 
-	@Test(groups = { "android", "Prometheus", "signin" })
+	@Test(groups = { "android", "Prometheus", "settings" })
     public void profileSettingsTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
        
@@ -35,7 +35,7 @@ public class SettingsTest extends AutomationTest {
     }
 	
 	
-	@Test(groups = { "android", "Prometheus", "signin" })
+	@Test(groups = { "android", "Prometheus", "settings" })
     public void goalSettingsTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("successfulSignin", new SuccessfulSignInAPI(this, Files.getFile("model/signin/SuccessfulSignIn.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));

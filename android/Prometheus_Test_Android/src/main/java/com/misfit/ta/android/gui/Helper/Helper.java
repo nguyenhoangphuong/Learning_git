@@ -64,8 +64,8 @@ public class Helper {
 		int s[] = Helper.getScreenSizeBeforePopUp() ;
 		int h = Gui.getHeight(); 
     	int w = Gui.getWidth();
-    	System.out.println("LOG [Gui.main]: view" + s[0] + ":" + s[1]);
-    	System.out.println("LOG [Gui.main]: view" + h + ":" + w);
+    	System.out.println("LOG [Gui.main]: view" + w + ":" + h);
+	System.out.println("LOG [Gui.main]: view" + s[0] + ":" + s[1]);
     	int p[] = Gui.getCoordinators(viewNode);
     	int newP[] = {0,0};
 		newP[0] = (s[0]- w) / 2 + p[0] + deltaX;

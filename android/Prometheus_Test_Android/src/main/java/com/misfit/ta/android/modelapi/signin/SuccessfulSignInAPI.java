@@ -1,4 +1,4 @@
-package com.misfit.ta.android.modelapi;
+package com.misfit.ta.android.modelapi.signin;
 
 import java.io.File;
 
