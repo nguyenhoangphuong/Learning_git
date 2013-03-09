@@ -5,6 +5,7 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.android.AutomationTest;
+import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.gui.HomeScreen;
 import com.misfit.ta.android.gui.Settings;
 import com.misfit.ta.modelAPI.ModelAPI;
@@ -22,9 +23,9 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 */
 	public void e_ChooseSettings() {
 		HomeScreen.tapSettingsMenu();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(1000);
 		Settings.tapSettings();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -32,7 +33,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditBirthDate() {
-		Assert.assertTrue(Settings.hasBirthDateField());
+		Settings.editBirthDate("04", "05", "1989");
 	}
 
 	/**
@@ -40,7 +41,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditGender() {
-		Assert.assertTrue(Settings.hasGenderField());
+		Settings.editGender(false);
 	}
 
 	/**
@@ -48,7 +49,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditHeight() {
-		Assert.assertTrue(Settings.hasHeightField());
+		Settings.editHeight(7,9);
 	}
 
 	/**
@@ -56,7 +57,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditName() {
-		Assert.assertTrue(Settings.hasNameField());
+		Settings.editName("thy vo");
 	}
 
 	/**
@@ -72,7 +73,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditWeight() {
-		Assert.assertTrue(Settings.hasWeightField());
+		Settings.editWeight(120, 8);
 	}
 
 	/**
@@ -88,7 +89,12 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_Keep() {
-		// TODO:
+		ShortcutsTyper.delayTime(1000);
+		Gui.pressBack();
+		HomeScreen.tapSettingsMenu();
+		ShortcutsTyper.delayTime(1000);
+		Settings.tapSettings();
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**

@@ -21,7 +21,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SigninTest extends AutomationTest {
 
-	//@Test(groups = { "android", "Prometheus", "signin" })
+	@Test(groups = { "android", "Prometheus", "signin" })
     public void invalidSignInTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("invalidSignin", new InvalidSignInAPI(this, Files.getFile("model/signin/InvalidSignIn.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
@@ -31,7 +31,7 @@ public class SigninTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    //@Test(groups = { "android", "Prometheus", "signin" })
+    @Test(groups = { "android", "Prometheus", "signin" })
     public void successfulSignInTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("successfulSignin", new SuccessfulSignInAPI(this, Files.getFile("model/signin/SuccessfulSignIn.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
@@ -39,17 +39,6 @@ public class SigninTest extends AutomationTest {
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
-    }
-
-    @Test
-    public void test()
-    {
-   	HomeScreen.tapSettingsMenu();
-    	ShortcutsTyper.delayTime(500);
-    	Settings.tapSettings();
-   	ShortcutsTyper.delayTime(500);
-    	Settings.editName("abc");
-    	Gui.printView();
     }
 
 }
