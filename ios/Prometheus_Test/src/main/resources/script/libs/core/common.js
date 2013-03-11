@@ -191,7 +191,8 @@ function wheelPick(picker, wheelIndex, value)
 
 	// get current value
 	current = wheel.value();
-	if (current == null) {
+	if (current == null) 
+	{
 		log("Current is null");
 		wait(5);
 		current = wheel.value();
@@ -258,10 +259,12 @@ function dateWheelPick(picker, year, monthString, day, yearIndex, monthIndex, da
 	
 	while (month != monthW.value().toLowerCase()) {
 		monthW.tapWithOptions({tapOffset:{x:0.5, y:0.25}});
+		target.delay(0.1);
 	}
 	
 	while (day != dayW.value()) {
 		dayW.tapWithOptions({tapOffset:{x:0.5, y:0.25}});
+		target.delay(0.1);
 	}
 }
 

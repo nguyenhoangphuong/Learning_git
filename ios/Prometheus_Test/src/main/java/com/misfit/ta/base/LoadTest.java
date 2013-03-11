@@ -3,7 +3,6 @@ package com.misfit.ta.base;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ta.backend.old.CThread;
 
 public class LoadTest 
 {

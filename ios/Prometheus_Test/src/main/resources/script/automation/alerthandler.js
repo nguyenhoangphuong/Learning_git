@@ -128,7 +128,9 @@ function PrometheusAlertHandler(_alert)
 	var message = _alert.staticTexts()[1].name();
    
 	// check for test-related alert
-	if(false)
+	if( message == alert.InvalidEmailMsg ||
+		message == alert.InvalidPasswordMsg ||
+		message == alert.DuplicatedEmailMsg)
 	{
 		// log
 		log("Expected Alert [" + name + "] [" + message + "] encountered!");
@@ -146,6 +148,7 @@ function PrometheusAlertHandler(_alert)
 		// reset the alertChoice and acknowledge the alert
 		alert.alertChoice = null;
 		
+		target.delay(1);
 		return true;
 	}
 	else
@@ -156,5 +159,7 @@ function PrometheusAlertHandler(_alert)
 	
 	// for other alert, choose by default
 	_alert.defaultButton().tap();
+	
+	target.delay(1);
 	return true;
 }

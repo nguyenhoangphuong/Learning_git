@@ -9,44 +9,54 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SignupTest extends AutomationTest
 {
-	// register view - input test
+	// sign up step 1
 	@Test(groups = { "ios", "Prometheus", "signup" })
-	public void Register_Input() throws InterruptedException, StopConditionException 
+	public void SignUpStep1() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-			AppHelper.getAppPath(), "script/automation/signup/register-input.js");
+			AppHelper.getAppPath(), "script/automation/signup/signup-step1.js");
 	}
 	
-	// register view - validation for password and email test
+	// sign up step 2
 	@Test(groups = { "ios", "Prometheus", "signup" })
-	public void Register_Validation() throws InterruptedException, StopConditionException 
+	public void SignUpStep2() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-			AppHelper.getAppPath(), "script/automation/signup/register-validation.js");
+			AppHelper.getAppPath(), "script/automation/signup/signup-step2.js");
 	}
 	
-	// step 1 view - input test
+	// sign up step 3
 	@Test(groups = { "ios", "Prometheus", "signup" })
-	public void Step1_Input() throws InterruptedException, StopConditionException 
+	public void SignUpStep3() throws InterruptedException, StopConditionException 
 	{
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-			AppHelper.getAppPath(), "script/automation/signup/step1-input.js");
+			AppHelper.getAppPath(), "script/automation/signup/signup-step3.js");
 	}
-
-	// sign up all views (register + step 1 - 4) integration test
-	@Test(groups = { "ios", "Prometheus", "signup" })
-	public void Signup_Integration() throws InterruptedException, StopConditionException 
-	{
-		AppHelper.cleanCache();
-	 	ShortcutsTyper.delayTime(1000);	
-		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-			AppHelper.getAppPath(), "script/automation/signup/signup-integration.js");
-	}
+	
+//	// sign up step 4
+//	@Test(groups = { "ios", "Prometheus", "signup" })
+//	public void SignUpStep4() throws InterruptedException, StopConditionException 
+//	{
+//		AppHelper.cleanCache();
+//	 	ShortcutsTyper.delayTime(1000);	
+//		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+//			AppHelper.getAppPath(), "script/automation/signup/signup-step4.js");
+//	}
+//
+//	// sign up integration
+//	@Test(groups = { "ios", "Prometheus", "signup" })
+//	public void SignupIntegration() throws InterruptedException, StopConditionException 
+//	{
+//		AppHelper.cleanCache();
+//	 	ShortcutsTyper.delayTime(1000);	
+//		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+//			AppHelper.getAppPath(), "script/automation/signup/signup-integration.js");
+//	}
 
 }
