@@ -16,7 +16,10 @@ public class ProfileSettingsAPI extends ModelAPI {
 			boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
-
+	private Field latestUpdatedField;
+	private enum Field {
+		 NAME, BIRTHDATE, HEIGHT, WEIGHT, GENDER, UNITS;  //; is optional
+	}
 	/**
 	 * This method implements the Edge 'e_ChooseSettings'
 	 * 
@@ -34,7 +37,8 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditBirthDate() {
-		Settings.editBirthDate("04", "05", "1989");
+		Settings.editBirthDate("04", "Mar", "1979");
+		latestUpdatedField = Field.BIRTHDATE;
 	}
 
 	/**
@@ -42,7 +46,8 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditGender() {
-		Settings.editGender(false);
+		Settings.editGender(true);
+		latestUpdatedField = Field.GENDER;
 	}
 
 	/**
@@ -50,7 +55,8 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditHeight() {
-		Settings.editHeight(7,9);
+		Settings.editHeight(7,5);
+		latestUpdatedField = Field.HEIGHT;
 	}
 
 	/**
@@ -59,6 +65,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 */
 	public void e_EditName() {
 		Settings.editName("thy vo");
+		latestUpdatedField = Field.NAME;
 	}
 
 	/**
@@ -66,7 +73,8 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditPreferedUnits() {
-		Assert.assertTrue(Settings.hasPreferredUnitsField());
+		Settings.editPreferredUnits();
+		latestUpdatedField = Field.UNITS;
 	}
 
 	/**
@@ -74,7 +82,8 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditWeight() {
-		Settings.editWeight(120, 8);
+		Settings.editWeight(119, 8);
+		latestUpdatedField = Field.WEIGHT;
 	}
 
 	/**
@@ -96,6 +105,34 @@ public class ProfileSettingsAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(3000);
 		Settings.tapSettings();
 		ShortcutsTyper.delayTime(3000);
+		//check the updated value
+		check();
+		
+	}
+	private void check() {
+		switch (latestUpdatedField) {
+			case BIRTHDATE:
+				Assert.assertEquals("03/04/1979", Settings.getCurrentBirthDate());
+				break;
+			case NAME:
+				Assert.assertEquals("thy vo", Settings.getCurrentName());
+				break;
+			case HEIGHT:
+				Assert.assertEquals("7\' 5\"", Settings.getCurrentHeight());
+				break;
+			case WEIGHT:
+				Assert.assertEquals("119.8 lbs", Settings.getCurrentWeight());
+				break;
+			case UNITS:
+				Assert.assertEquals("U.S.", Settings.getCurrentUnit());
+				break;
+			case GENDER:
+				Assert.assertEquals("Male", Settings.getCurrentGender());
+				break;
+			default:
+				System.out.println("Nothing to check");
+				break;
+		}
 	}
 
 	/**
@@ -127,7 +164,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_UpdateProfile() {
-		// TODO:
+		// TODO: there should be another check here, but at this moment, the current views isn't re-loaded 
 	}
 
 }

@@ -12,7 +12,8 @@ public class Settings {
 	private static final int SETTINGS_CONTEXT_WIDTH = 540;
 	private static final int SETTINGS_CONTEXT_HEIGHT = 195;
 	private static final int SETTINGS_CONTEXT_INC = 75;
-
+	
+	
 	/**
 	 * Settings Menu
 	 */
@@ -96,11 +97,10 @@ public class Settings {
 		Gui.touchAView("TextView", "mID", "id/sexTextView");
 		ShortcutsTyper.delayTime(500);
 		if (isMale){
-				//&& ViewUtils.findView("CheckedTextView", "mID", "id/text1", 1).isChecked) { 
 			Gui.touch(Helper.getTouchPointOnPopup(
 					ViewUtils.findView("CheckedTextView", "mID", "id/text1", 0),
 					0, 60));
-		} else {//if (!ViewUtils.findView("CheckedTextView", "mID", "id/text1", 1).isChecked) {
+		} else {
 			Gui.touch(Helper.getTouchPointOnPopup(
 					ViewUtils.findView("CheckedTextView", "mID", "id/text1", 1),
 					0, 40));
@@ -114,17 +114,18 @@ public class Settings {
 				Gui.getScreenHeight() / 2 + 35 };
 		int[] fractionPoint = new int[] { digitPoint[0] + 100, digitPoint[1] };
 		Gui.touchAView("TextView", "mID", "id/heightTextView");
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(1000);
 		Gui.touch(digitPoint);
 		Gui.type(String.valueOf(digit));
 		Gui.pressBack();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(1000);
 
 		Gui.touch(fractionPoint);
 		Gui.type(String.valueOf(fraction));
 		Gui.pressBack();
 		Gui.touch(Helper.getTouchPointOnPopup(
 				ViewUtils.findView("Button", "mID", "id/button1", 0), 0, 20));
+		ShortcutsTyper.delayTime(1000);
 
 	}
 
@@ -133,21 +134,52 @@ public class Settings {
 				Gui.getScreenHeight() / 2 + 35 };
 		int[] fractionPoint = new int[] { digitPoint[0] + 100, digitPoint[1] };
 		Gui.touchAView("TextView", "mID", "id/weightTextView");
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(1000);
 		Gui.touch(digitPoint);
 		Gui.type(String.valueOf(digit));
 		Gui.pressBack();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(1000);
 
 		Gui.touch(fractionPoint);
 		Gui.type(String.valueOf(fraction));
 		Gui.pressBack();
 		Gui.touch(Helper.getTouchPointOnPopup(
 				ViewUtils.findView("Button", "mID", "id/button1", 0), 0, 20));
+		ShortcutsTyper.delayTime(1000);
 	}
 
-	public static void editPreferredUnits(boolean isMetric) {
+	public static void editPreferredUnits() {
+		// always choose U.S
 		Gui.touchAView("TextView", "mID", "id/preferredUnitsTextView");
+		ShortcutsTyper.delayTime(500);
+		Gui.touch(Helper.getTouchPointOnPopup(
+					ViewUtils.findView("CheckedTextView", "mID", "id/text1", 0),
+					0, 60));
+		ShortcutsTyper.delayTime(1000);
+	}
+	
+	public static String getCurrentName() {
+		return ViewUtils.findView("TextView", "mID", "id/nameTextView", 0).text;
+	}
+	
+	public static String getCurrentBirthDate() {
+		return ViewUtils.findView("TextView", "mID", "id/dateOfBirthTextView", 0).text;
+	}
+	
+	public static String getCurrentHeight() {
+		return ViewUtils.findView("TextView", "mID", "id/heightTextView", 0).text;
+	}
+	
+	public static String getCurrentWeight() {
+		return ViewUtils.findView("TextView", "mID", "id/weightTextView", 0).text;
+	}
+	
+	public static String getCurrentGender() {
+		return ViewUtils.findView("TextView", "mID", "id/sexTextView", 0).text;
+	}
+	
+	public static String getCurrentUnit() {
+		return ViewUtils.findView("TextView", "mID", "id/preferredUnitsTextView", 0).text;
 	}
 
 	public static void tapSignOut() {

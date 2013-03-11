@@ -26,8 +26,9 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void e_AdjustGoal() {
 		HomeScreen.tapSettingsMenu();
+		ShortcutsTyper.delayTime(3000);
 		Settings.tapAdjustGoal();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(3000);
 		currentLevel = Settings.getCurrentLevel();
 	}
 
@@ -47,9 +48,9 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_IncreaseGoal() {
-		int steps = currentLevel < 6 ? 6 - currentLevel : 0;
+		int steps = currentLevel < 10 ? 10 - currentLevel : 0;
 		Settings.setGoalUp(steps);
-		currentLevel = 6;
+		currentLevel = 10;
 		Settings.checkToConfirmGoal();
 	}
 
@@ -66,10 +67,10 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_Check() {
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(3000);
 		HomeScreen.tapSettingsMenu();
 		Settings.tapAdjustGoal();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(3000);
 		Assert.assertEquals(currentLevel, Settings.getCurrentLevel());
 	}
 

@@ -19,7 +19,7 @@ public class SettingsTest extends AutomationTest {
 
 	@Test(groups = { "android", "Prometheus", "settings" })
     public void profileSettingsTest() throws InterruptedException, StopConditionException, IOException {
-        ModelHandler model = getModelhandler();
+		ModelHandler model = getModelhandler();
        
         model.add("successfulSignin", new SuccessfulSignInAPI(this, Files.getFile("model/signin/SuccessfulSignIn.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.add("profileSettings", new ProfileSettingsAPI(this, Files.getFile("model/settings/ProfileSettings.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
