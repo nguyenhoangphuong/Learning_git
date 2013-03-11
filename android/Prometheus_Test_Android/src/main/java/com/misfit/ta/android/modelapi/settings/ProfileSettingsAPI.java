@@ -22,10 +22,11 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ChooseSettings() {
+		ShortcutsTyper.delayTime(3000);
 		HomeScreen.tapSettingsMenu();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(3000);
 		Settings.tapSettings();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(3000);
 	}
 
 	/**
@@ -89,12 +90,12 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_Keep() {
-		ShortcutsTyper.delayTime(1000);
 		Gui.pressBack();
+		ShortcutsTyper.delayTime(3000);
 		HomeScreen.tapSettingsMenu();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(3000);
 		Settings.tapSettings();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(3000);
 	}
 
 	/**
