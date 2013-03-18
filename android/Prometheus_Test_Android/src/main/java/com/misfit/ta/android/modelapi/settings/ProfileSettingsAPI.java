@@ -105,9 +105,6 @@ public class ProfileSettingsAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(3000);
 		Settings.tapSettings();
 		ShortcutsTyper.delayTime(3000);
-		//check the updated value
-		check();
-		
 	}
 	private void check() {
 		switch (latestUpdatedField) {
