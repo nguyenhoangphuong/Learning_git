@@ -41,6 +41,7 @@ function Alert()
 	this.WrongAccountMsg = "Sorry, your email or password is not correct";
 	this.IncorrectEmailMsg = "The email you entered is not associated with a Shine account";
 	this.EmailSentMsg = "Check your email for the password reset link";
+	this.AllowLocationMsg = "\"Prometheus\" Would Like to Use Your Current Location";
 	
 	// Methods
 	this.reset = reset;
@@ -130,7 +131,11 @@ function PrometheusAlertHandler(_alert)
 	// check for test-related alert
 	if( message == alert.InvalidEmailMsg ||
 		message == alert.InvalidPasswordMsg ||
-		message == alert.DuplicatedEmailMsg)
+		message == alert.DuplicatedEmailMsg ||
+		name == alert.AllowLocationMsg ||
+		message == alert.WrongAccountMsg ||
+		message == alert.IncorrectEmailMsg ||
+		message == alert.EmailSentMsg)
 	{
 		// log
 		log("Expected Alert [" + name + "] [" + message + "] encountered!");

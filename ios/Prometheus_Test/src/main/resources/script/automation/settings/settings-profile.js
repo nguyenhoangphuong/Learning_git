@@ -1,157 +1,131 @@
-/*
- Cover:
- 
- */
-
 #import "../../libs/libs.js"
 #import "../helpers.js"
 #import "../alerthandler.js"
+#import "../views.js"
 
 
-
-// data
-// -------------------------------------------------------------------------------------------------------
-var unit = "US";
-var name = "Tears";
+//test data
+//---------------------------------------------------------------------------------------
+var actual, expect;
 var email = generateSignupAccount();
 var password = "qwerty1";
-var year = 1991;
-var month = "September";
-var day = 16;
-var h1 = "5'", h2 = '6"', height = h1 + h2;
-var w1 = '144', w2 = '.4', weight = w1 + w2 + " lbs";
-var birthday = "Sep 16, 1991";
-var sex = "MALE";
 
-var newName = "Dandelion";
-var newMonth = "December";
-var newDay = 24;
-var newYear = 1990;
-var newBirthday = "Dec 24, 1990";
+var profile1 = 
+{
+	sex: "Male",
+	birthday: [16, 9, 1991],
+	height: [1, 70, "m"],
+	weight: [68, 5, "kg"]
+};
+
+var profile2 = 
+{
+	sex: "Female",
+	birthday: [18, 5, 1991],
+	height: [5, 0, "ft in"],
+	weight: [97, 0, "lbs"]
+};
 
 
-
-// navigation
-// -------------------------------------------------------------------------------------------------------
+//test logic
+//---------------------------------------------------------------------------------------
 start();
 
+// navigate to settings view
 log("To Settings view");
-target.frontMostApp().mainWindow().buttons()["I DON'T HAVE AN ACCOUNT"].tap();
 
-fillRegisterForm(name, email, password, sex, year, day, month, unit, w1, w2, h1, h2);
-target.frontMostApp().mainWindow().buttons()["btn next"].tap();
-wait(10);
-target.frontMostApp().mainWindow().buttons()["btn next"].tap();
-target.frontMostApp().mainWindow().buttons()["btn next"].tap();
-target.frontMostApp().mainWindow().buttons()["logo small"].touchAndHold(6.8);
-target.frontMostApp().mainWindow().buttons()["btn next"].tap();
-target.frontMostApp().mainWindow().buttons()["btn settings"].tap();
-wait();
+signup.chooseSignUp();		
+signup.submitSignUpForm(email, password, 4);
+signup.fillProfileForm(profile1.sex, profile1.birthday, profile1.height, profile1.weight);
+signup.next();
+signup.setGoal(0);
+signup.next();
+signup.syncDevice(4);
+wait(8);
+signup.next();
 
+wait(5);
+home.closeTips();
+home.tapSettings();
+assertTrue(settings.isAtOverviewSettings(), "At Settings view");
 
 
 // verify profile is saved correctly after signing up
-// -------------------------------------------------------------------------------------------------------
-log("Settings > User Profile");
-target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Your profile"].tap();
-wait(2);
+log(" ---- Check overview profile ----");
+actual = settings.getProfileOverviewInfo();
+expect = helper.formatProfileOverviewInfo(profile1.sex, 
+		profile1.height[0], profile1.height[1],
+		profile1.weight[0], profile1.weight[1], false);
 
-log("Verify user profile is saved");
-var aname = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Name"].textFields()[0].value();
-var abirthday = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[1].name();
-	abirthday = abirthday.substring(abirthday.indexOf(',') + 2);
-var aheight = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[3].name();
-	aheight = aheight.substring(aheight.indexOf(',') + 2);								
-var aweight = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[4].name();
-	aweight = aweight.substring(aweight.indexOf(',') + 2);
+assertEqual(actual, expect, "Overview profile displays correctly");
 
-assertEqual(aname, name, "Name");
-assertEqual(abirthday, birthday, "Birthday");
-assertEqual(aheight, height, "Height");
-assertEqual(aweight, weight, "Weight");
-assertTrue(staticTextExist(email), "Email is existed");
+log(" ---- Check detail profile ----");
+settings.tapProfile();
+assertTrue(settings.isAtProfileSettings(), "At Profile settings view");
+
+actual = settings.getProfileForm();
+expect = profile1;
+
+assertEqual(actual.email, email, "Email displays correctly");
+assertEqual(actual.birthday, helper.formatBirthday(profile1.birthday), "Birthday displays correctly");
+assertEqual(actual.height, helper.formatHeight(profile1.height[0], profile1.height[1], false), "Height displays correctly");
+assertEqual(actual.weight, helper.formatWeight(profile1.weight[0], profile1.weight[1], false), "Weight displays correctly");
 
 
 // verify profile is saved correctly after editting in settings view
-// -------------------------------------------------------------------------------------------------------
-log("Input new user profile");
-fillProfileInSettingsForm(newName, sex, newYear, newDay, newMonth, w1, w2, h1, h2);
+log(" ---- Input new profile ----");
+settings.fillProfileForm(profile2.sex, profile2.birthday, profile2.height, profile2.weight);
+settings.back(); wait();
 
-log("Back to Settings view");
-target.frontMostApp().mainWindow().buttons()[0].tap();
+log(" ---- Check overview profile ----");
+actual = settings.getProfileOverviewInfo();
+expect = helper.formatProfileOverviewInfo(profile2.sex, 
+		profile2.height[0], profile2.height[1],
+		profile2.weight[0], profile2.weight[1], true);
+
+assertEqual(actual, expect, "Overview profile displays correctly");
+
+log(" ---- Check detail profile ----");
+settings.tapProfile();
+actual = settings.getProfileForm();
+expect = profile2;
+
+assertEqual(actual.email, email, "Email displays correctly");
+assertEqual(actual.birthday, helper.formatBirthday(profile2.birthday), "Birthday displays correctly");
+assertEqual(actual.height, helper.formatHeight(profile2.height[0], profile2.height[1], true), "Height displays correctly");
+assertEqual(actual.weight, helper.formatWeight(profile2.weight[0], profile2.weight[1], true), "Weight displays correctly");
+
+
+// verify profile is saved correctly after signing out and signing in again
+log(" ---- Signing out ----");
+settings.back();
+settings.tapSignOut();
 wait();
 
-log("To User Profile again");
-target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Your profile"].tap();
-wait(2);
+assertTrue(signup.isAtInitView(), "Afer log out, app lead users to init view");
 
-log("Check if User Profile is saved correctly");
-aname = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Name"].textFields()[0].value();
-abirthday = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[1].name();
-abirthday = abirthday.substring(abirthday.indexOf(',') + 2);
+log(" ---- Signing in again ----");
+signin.chooseSignIn();
+signin.submitSignInForm(email, password, 4);
 
-assertEqual(aname, newName, "Name");
-assertEqual(abirthday, newBirthday, "Birthday");
-assertTrue(staticTextExist(email), "Email is existed");
+log(" ---- Check overview profile ----");
+home.tapSettings();
+actual = settings.getProfileOverviewInfo();
+expect = helper.formatProfileOverviewInfo(profile2.sex, 
+		profile2.height[0], profile2.height[1],
+		profile2.weight[0], profile2.weight[1], false);
 
+assertEqual(actual, expect, "Overview profile displays correctly");
 
-// verify Upload button is avaiable when user sign out
-// ------------------------------------------------------------------------------------------------------
-log("Back to Settings view");
-target.frontMostApp().mainWindow().buttons()[0].tap();
-wait();
+log(" ---- Check detail profile ----");
+settings.tapProfile();
+actual = settings.getProfileForm();
+expect = profile1;
 
-log("Click sign out button");
-target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Sign out"].tap();
-
-log("Verify upload button is visible");
-assertTrue(target.frontMostApp().actionSheet().buttons()["Upload"].isValid(), "Upload button is valid");
-
-log("Verify cancel button works");
-target.frontMostApp().actionSheet().cancelButton().tap();
-wait();
-assertTrue(staticTextExist("SETTINGS"), "Back to Settings after tapping cancel");
-
-log("Verify upload button works");
-target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Sign out"].tap();
-target.frontMostApp().actionSheet().buttons()["Upload"].tap();
-wait(10);
-
-
-// verify sign out lead to Start up view
-// ------------------------------------------------------------------------------------------------------
-log("Verify sign out lead to Start up view");
-assertTrue(target.frontMostApp().mainWindow().buttons()["I HAVE AN ACCOUNT"].isValid(), "I Have An Account button is visible");
-
-log("Sign in again");
-target.frontMostApp().mainWindow().buttons()["I HAVE AN ACCOUNT"].tap();
-target.frontMostApp().mainWindow().textFields()["email"].setValue(email + "\n");
-target.frontMostApp().mainWindow().secureTextFields()["password"].setValue(password);
-target.frontMostApp().keyboard().typeString("\n");
-wait();
-target.frontMostApp().mainWindow().buttons()["btn next"].tap();
-wait(10);
-
-log("To User Profile");
-target.frontMostApp().mainWindow().buttons()["btn settings"].tap();
-wait();
-target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Your profile"].tap();
-wait(2);
-
-log("Verify user profile is saved");
-aname = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["Name"].textFields()[0].value();
-abirthday = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[1].name();
-abirthday = abirthday.substring(abirthday.indexOf(',') + 2);
-aheight = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[3].name();
-aheight = aheight.substring(aheight.indexOf(',') + 2);								
-aweight = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[4].name();
-aweight = aweight.substring(aweight.indexOf(',') + 2);
-
-assertEqual(aname, newName, "Name");
-assertEqual(abirthday, newBirthday, "Birthday");
-assertEqual(aheight, height, "Height");
-assertEqual(aweight, weight, "Weight");
-assertTrue(staticTextExist(email), "Email is existed");
+assertEqual(actual.email, email, "Email displays correctly");
+assertEqual(actual.birthday, helper.formatBirthday(profile2.birthday), "Birthday displays correctly");
+assertEqual(actual.height, helper.formatHeight(profile2.height[0], profile2.height[1], true), "Height displays correctly");
+assertEqual(actual.weight, helper.formatWeight(profile2.weight[0], profile2.weight[1], true), "Weight displays correctly");
 
 
 pass();

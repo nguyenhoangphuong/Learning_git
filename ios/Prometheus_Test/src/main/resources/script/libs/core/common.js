@@ -46,7 +46,13 @@ This section is the place where you list functions. Please list them as comments
 
 - listAllStaticTexts(parent)	:	list all the static texts content (name) of current parent
 - listAllButtons(parent)		:	list all the buttons content (name) of current parent
+
+- generateSignupAccount()
+- generateRandomDigitString()
+- generateRandomNumber()
+- randInt(includeFrom, excludeTo)
 --------------------------------------------------------------------------------
+
 IMPLEMENTATION
 This section is the place where you implement functions declared above
 --------------------------------------------------------------------------------
@@ -293,20 +299,20 @@ function isKeyboardVisible()
 	return app.keyboard().isVisible();
 }
 
-function swipeVertically(startX, startY, endY, duration)
+function swipeVertically(X, startY, endY, duration)
 {
 	if(typeof duration == "undefined")
 		duration = 0.6;
 		
-	target.dragFromToForDuration({x:startX, y:startY}, {x:startX, y:endY}, duration);
+	target.dragFromToForDuration({x:X, y:startY}, {x:X, y:endY}, duration);
 }
 
-function swipeHorizontally(startX, startY, endX, duration)
+function swipeHorizontally(startX, endX, Y, duration)
 {
 	if(typeof duration == "undefined")
 		duration = 0.6;	
 
-    target.dragFromToForDuration({x:startX, y:startY}, {x:endX, y:startY}, duration);
+    target.dragFromToForDuration({x:startX, y:Y}, {x:endX, y:Y}, duration);
 }
 
 function tap(x, y)
@@ -330,21 +336,26 @@ function lockApp(type, atime)
 
 function generateSignupAccount()
 {
-	today = new Date();
-	ms = today.getTime();
+	var today = new Date();
+	var ms = today.getTime();
   
 	return "test" + ms.toString() + "@test.com";
 }
 
 function generateRandomDigitString()
 {
-	today = new Date();
-	ms = today.getTime();
+	var today = new Date();
+	var ms = today.getTime();
 	return ms.toString();
 }
 
 function generateRandomNumber(seed) {
 	return Math.floor((Math.random()*seed)+1);
+}
+
+function randInt(includeFrom, excludeTo)
+{
+	return Math.floor(Math.random() * (excludeTo - includeFrom) + includeFrom); 
 }
 
 function listAllStaticTexts(p)

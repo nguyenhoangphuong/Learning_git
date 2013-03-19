@@ -1,4 +1,5 @@
 #import "../../libs/libs.js"
+#import "../helpers.js"
 #import "../alerthandler.js"
 #import "../views.js"
 
@@ -6,13 +7,13 @@
 // test data
 // ---------------------------------------------------------------------------------------
 var birthday = [16, 9, 1991];
-var heightM = [1, 70, "cm"];
+var heightM = [1, 70, "m"];
 var heightU = [5, 6, "ft in"];
 var weightM = [68, 5, "kg"];
 var weightU = [151, 0, "lbs"];
 
 var usUnit = [null, null, "ft in"];
-var metricUnit = [null, null, "cm"];
+var metricUnit = [null, null, "m"];
 var actual = null;
 
 // test logic
@@ -46,8 +47,8 @@ signup.back();
 assertTrue(signup.isAtStep2(), "Navigated to the Sign up - step 2");
 
 actual = signup.getProfileForm();
-assertEqual(actual.birthday, signup.formatBirthday(birthday), "Birthday saves correctly");
-assertEqual(actual.height, signup.formatHeight(heightM[0], heightM[1], false), "Height saves correctly");
-assertEqual(actual.weight, signup.formatWeight(weightM[0], weightM[1], false), "Weight saves correctly");
+assertEqual(actual.birthday, helper.formatBirthday(birthday), "Birthday saves correctly");
+assertEqual(actual.height, helper.formatHeight(heightM[0], heightM[1], false), "Height saves correctly");
+assertEqual(actual.weight, helper.formatWeight(weightM[0], weightM[1], false), "Weight saves correctly");
 
 pass();

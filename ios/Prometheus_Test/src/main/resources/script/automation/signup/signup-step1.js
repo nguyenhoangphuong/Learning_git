@@ -1,4 +1,5 @@
 #import "../../libs/libs.js"
+#import "../helpers.js"
 #import "../alerthandler.js"
 #import "../views.js"
 
@@ -28,11 +29,11 @@ signup.submitSignUpForm(generateSignupAccount(), invalidPassword);
 assertTrue(signup.isInvalidPasswordAlertShown(), "Invalid password alert shown");
 
 // duplicated email
-signup.submitSignUpForm(duplicatedEmail, validPassword);
+signup.submitSignUpForm(duplicatedEmail, validPassword, 5);
 assertTrue(signup.isInvalidPasswordAlertShown(), "Duplicated email alert shown");
 
 // sign up successfully
-signup.submitSignUpForm(generateSignupAccount(), validPassword);
+signup.submitSignUpForm(generateSignupAccount(), validPassword, 5);
 assertTrue(signup.isInvalidPasswordAlertShown(), "Invalid password shown");
 
 pass();

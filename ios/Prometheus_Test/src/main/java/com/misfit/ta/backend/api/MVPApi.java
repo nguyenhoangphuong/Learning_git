@@ -392,31 +392,16 @@ public class MVPApi
 	}
 	
 	
-	public static void main(String[] args) throws Exception
+	static public void removeUser(String id)
+	{
+		BaseParams requestInf = new BaseParams();
+		requestInf.addParam("authenticity_token", "ki5608apM0mqEpFwvNW6i8Czu6tktVT0+UlWWVhu0Mg");
+		MVPApi.post("https://staging-api.misfitwearables.com/shine/v6/admin/delete_user?id=" + id, 443, requestInf);
+	}
+	
+	public static void main(String[] args)
 	{	
-		// default fields
-		String udid = "f230d0c4e69f08cb31e8535f5b512ed7c140289b";
-		String token = MVPApi.signUp(System.currentTimeMillis() + "a.a", "password1", udid).token;
-		String name = "Tears";
-		Double weight = 68.2;
-		Double height = 1.71;
-		Integer unit = 1;
-		Integer gender = 0;
-		Long dateOfBirth = (long) 684954000;
-		Integer goalLevel = 1;
-		String trackingDeviceId = "f230d0c4e69f08cb31e8535f5b512ed7c140289b";
-		Long startTime = (long) 0;
-		Long endTime = (long) 1558501225;
-		Long updatedAt = (long) 0;
-		String goalServerId = "51010a76caedd02bd10000f4";
-		
-		Double goalValue = 800.0;
-		Integer absoluteLevel = 10;
-		Integer userRelativeLevel = 5;
-		Integer timeZoneOffsetInSeconds = 25200;
-		String[] progressValuesInMinutesNSData = {"0", "0", "0", "0"};
-		
-
+		MVPApi.removeUser("5142d9a6caedd02bee000062");
 	}
 }
 

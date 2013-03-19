@@ -39,24 +39,24 @@ public class SignupTest extends AutomationTest
 			AppHelper.getAppPath(), "script/automation/signup/signup-step3.js");
 	}
 	
-//	// sign up step 4
-//	@Test(groups = { "ios", "Prometheus", "signup" })
-//	public void SignUpStep4() throws InterruptedException, StopConditionException 
-//	{
-//		AppHelper.cleanCache();
-//	 	ShortcutsTyper.delayTime(1000);	
-//		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-//			AppHelper.getAppPath(), "script/automation/signup/signup-step4.js");
-//	}
-//
-//	// sign up integration
-//	@Test(groups = { "ios", "Prometheus", "signup" })
-//	public void SignupIntegration() throws InterruptedException, StopConditionException 
-//	{
-//		AppHelper.cleanCache();
-//	 	ShortcutsTyper.delayTime(1000);	
-//		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-//			AppHelper.getAppPath(), "script/automation/signup/signup-integration.js");
-//	}
+	// sign up step 4
+	@Test(groups = { "ios", "Prometheus", "signup" })
+	public void SignUpStep4() throws InterruptedException, StopConditionException 
+	{
+		AppHelper.cleanCache();
+	 	ShortcutsTyper.delayTime(1000);	
+		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+			AppHelper.getAppPath(), "script/automation/signup/signup-step4.js");
+	}
+
+	// sign up integration
+	@Test(groups = { "ios", "Prometheus", "signup" })
+	public void SignupIntegration() throws InterruptedException, StopConditionException 
+	{
+		AppHelper.cleanCache();
+	 	ShortcutsTyper.delayTime(1000);	
+		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+			AppHelper.getAppPath(), "script/automation/signup/signup-integration.js");
+	}
 
 }
