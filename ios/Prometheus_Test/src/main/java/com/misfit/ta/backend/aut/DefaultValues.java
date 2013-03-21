@@ -1,8 +1,7 @@
 package com.misfit.ta.backend.aut;
 
-import com.misfit.ta.backend.data.ProfileResult;
-import com.misfit.ta.backend.data.ProfileResult.ProfileData;
-import com.misfit.ta.backend.data.ProfileResult.RelativeLevelData;
+import com.misfit.ta.backend.data.*;
+
 
 public class DefaultValues 
 {
@@ -19,7 +18,7 @@ public class DefaultValues
 	
 	static public ProfileData DefaultProfile()
 	{	
-		ProfileData p = new ProfileResult.ProfileData();
+		ProfileData p = new ProfileData();
 		
 		p.localId = System.currentTimeMillis() + "-" + System.nanoTime();
 		p.weight = 144.4;
@@ -33,16 +32,16 @@ public class DefaultValues
 		p.trackingDeviceId = DefaultValues.UDID;
 		
 		p.userRelativeLevelsNSData = new RelativeLevelData[10];
-		p.userRelativeLevelsNSData[0] = new ProfileResult.RelativeLevelData(1, 2, 240);
-		p.userRelativeLevelsNSData[1] = new ProfileResult.RelativeLevelData(2, 3, 280);
-		p.userRelativeLevelsNSData[2] = new ProfileResult.RelativeLevelData(3, 4, 320);
-		p.userRelativeLevelsNSData[3] = new ProfileResult.RelativeLevelData(4, 5, 360);
-		p.userRelativeLevelsNSData[4] = new ProfileResult.RelativeLevelData(5, 6, 400);
-		p.userRelativeLevelsNSData[5] = new ProfileResult.RelativeLevelData(6, 7, 440);
-		p.userRelativeLevelsNSData[6] = new ProfileResult.RelativeLevelData(7, 8, 480);
-		p.userRelativeLevelsNSData[7] = new ProfileResult.RelativeLevelData(8, 9, 520);
-		p.userRelativeLevelsNSData[8] = new ProfileResult.RelativeLevelData(9, 10, 560);
-		p.userRelativeLevelsNSData[9] = new ProfileResult.RelativeLevelData(10, 11, 600);
+		p.userRelativeLevelsNSData[0] = new RelativeLevelData(1, 2, 240);
+		p.userRelativeLevelsNSData[1] = new RelativeLevelData(2, 3, 280);
+		p.userRelativeLevelsNSData[2] = new RelativeLevelData(3, 4, 320);
+		p.userRelativeLevelsNSData[3] = new RelativeLevelData(4, 5, 360);
+		p.userRelativeLevelsNSData[4] = new RelativeLevelData(5, 6, 400);
+		p.userRelativeLevelsNSData[5] = new RelativeLevelData(6, 7, 440);
+		p.userRelativeLevelsNSData[6] = new RelativeLevelData(7, 8, 480);
+		p.userRelativeLevelsNSData[7] = new RelativeLevelData(8, 9, 520);
+		p.userRelativeLevelsNSData[8] = new RelativeLevelData(9, 10, 560);
+		p.userRelativeLevelsNSData[9] = new RelativeLevelData(10, 11, 600);
 		
 		return p;
 	}

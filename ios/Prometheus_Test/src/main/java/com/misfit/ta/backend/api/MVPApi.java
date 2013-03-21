@@ -153,7 +153,7 @@ public class MVPApi
 		return requestInf;
 	}
 
-	static public ProfileResult createProfile(String token, ProfileResult.ProfileData data)
+	static public ProfileResult createProfile(String token, ProfileData data)
 	{
     	// prepare
 		String url = baseAddress + "profile";
@@ -186,7 +186,7 @@ public class MVPApi
     	return result;
 	}
 	
-	static public ProfileResult updateProfile(String token, ProfileResult.ProfileData data, String id)
+	static public ProfileResult updateProfile(String token, ProfileData data, String id)
 	{
 		logger.info("Id: " + id + ", Updated at: " + data.updatedAt);
     	// prepare

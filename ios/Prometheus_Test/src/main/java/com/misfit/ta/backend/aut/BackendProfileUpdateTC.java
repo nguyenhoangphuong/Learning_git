@@ -14,7 +14,7 @@ public class BackendProfileUpdateTC extends AutomationTest
 	String email = MVPApi.generateUniqueEmail();
 	String password = "qwerty1";
 	String udid = DefaultValues.UDID;
-	ProfileResult.ProfileData defaultProfile = DefaultValues.DefaultProfile();
+	ProfileData defaultProfile = DefaultValues.DefaultProfile();
 	
 	@BeforeClass
 	public void setUp()
@@ -29,7 +29,7 @@ public class BackendProfileUpdateTC extends AutomationTest
 		// sign in and use valid token to update profile
 		String token = MVPApi.signIn(email, password, udid).token;
 		defaultProfile = MVPApi.getProfile(token).profile;
-		ProfileResult.ProfileData data = new ProfileResult.ProfileData();
+		ProfileData data = new ProfileData();
 		
 		data.updatedAt = defaultProfile.updatedAt + 10;
 		data.name = "Dandelion" + System.nanoTime();
@@ -55,7 +55,7 @@ public class BackendProfileUpdateTC extends AutomationTest
 		defaultProfile = MVPApi.getProfile(token).profile;
 		MVPApi.signOut(token);
 		
-		ProfileResult.ProfileData data = new ProfileResult.ProfileData();
+		ProfileData data = new ProfileData();
 		
 		data.updatedAt = defaultProfile.updatedAt + 10;
 		data.name = "Dandelion" + System.nanoTime();
@@ -77,7 +77,7 @@ public class BackendProfileUpdateTC extends AutomationTest
 		defaultProfile = MVPApi.getProfile(token).profile;
 		MVPApi.signOut(token);
 		
-		ProfileResult.ProfileData data = new ProfileResult.ProfileData();
+		ProfileData data = new ProfileData();
 		
 		data.updatedAt = defaultProfile.updatedAt + 10;
 		data.name = "Dandelion" + System.nanoTime();
@@ -97,7 +97,7 @@ public class BackendProfileUpdateTC extends AutomationTest
 		
 		String token = MVPApi.signIn(email, password, udid).token;
 		defaultProfile = MVPApi.getProfile(token).profile;
-		ProfileResult.ProfileData data = new ProfileResult.ProfileData();
+		ProfileData data = new ProfileData();
 		
 		data.updatedAt = defaultProfile.updatedAt - 10;
 		data.name = "Dandelion" + System.nanoTime();

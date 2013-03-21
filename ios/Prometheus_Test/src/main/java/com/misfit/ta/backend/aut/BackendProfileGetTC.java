@@ -14,7 +14,7 @@ public class BackendProfileGetTC extends AutomationTest
 	String email = MVPApi.generateUniqueEmail();
 	String password = "qwerty1";
 	String udid = DefaultValues.UDID;
-	ProfileResult.ProfileData defaultProfile = DefaultValues.DefaultProfile();
+	ProfileData defaultProfile = DefaultValues.DefaultProfile();
 	
 	@BeforeClass
 	public void setUp()

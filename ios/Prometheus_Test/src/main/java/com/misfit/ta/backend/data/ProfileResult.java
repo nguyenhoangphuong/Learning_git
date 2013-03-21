@@ -8,52 +8,6 @@ import net.sf.json.JSONObject;
 public class ProfileResult extends BaseResult 
 {
 	
-	// relavtive level data
-	public static class RelativeLevelData
-	{
-		public String level = null;
-		public String absoluteLevel = null;
-		public String point = null;
-
-		public RelativeLevelData()
-		{
-			
-		}
-		
-		public RelativeLevelData(Integer level, Integer absoluteLevel, Integer point)
-		{
-			this.level = level.toString();
-			this.absoluteLevel = absoluteLevel.toString();
-			this.point = point.toString();
-		}
-		
-		public String toString()
-		{
-			return "{level:" + level + ",absoluteLevel:" + absoluteLevel + ",point:" + point + "}";
-		}
-
-	}
-	
-	public class ProfileData
-	{		
-		// fields
-		public String serverId = null;
-		public Long updatedAt = null;
-		public String localId = null;
-		public Double weight = null;
-		public Double height = null;
-		public Integer unit = null;
-		public Integer gender = null;
-		public Long dateOfBirth = null;
-		public String name = null;
-		public String latestVersion = null;
-		public Integer goalLevel = null;
-		public String trackingDeviceId = null;
-		public RelativeLevelData[] userRelativeLevelsNSData = null;
-
-	}
-	
-	
 	// fields
 	public ProfileData profile = new ProfileData();
 	
