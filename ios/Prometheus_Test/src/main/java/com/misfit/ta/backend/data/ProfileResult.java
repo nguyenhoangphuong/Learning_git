@@ -34,7 +34,7 @@ public class ProfileResult extends BaseResult
 
 	}
 	
-	public static class ProfileData
+	public class ProfileData
 	{		
 		// fields
 		public String serverId = null;
