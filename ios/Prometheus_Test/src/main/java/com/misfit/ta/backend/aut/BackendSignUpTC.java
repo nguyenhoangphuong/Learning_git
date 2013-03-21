@@ -13,13 +13,18 @@ public class BackendSignUpTC extends AutomationTest
 	String[] wrongFormatEmails = {"", "wrong1", "wrong2@", "wrong3 @a.b", " wrong4@a.a"};
 	String wellFormatEmail = "wellformat@qa.com";
 	String duplicatedEmail = "";
-	String notregisteredEmail = MVPApi.generateUniqueEmail();
+	String notregisteredEmail;
 	
 	String[] wrongFormatPasswords = {"", "allletters", "11413312", "tiny1"};
 	String wellFormatPassword = "qwerty1";
 	
-	String udid = DefaultValues.UDID;
+	String udid;
 	
+	@BeforeClass
+	public void setup() {
+	    notregisteredEmail = MVPApi.generateUniqueEmail();
+	    udid = DefaultValues.UDID;
+	}
 	
 	@Test(groups = { "ios", "Prometheus", "api", "signup" })
 	public void SignUpWrongFormatEmails()

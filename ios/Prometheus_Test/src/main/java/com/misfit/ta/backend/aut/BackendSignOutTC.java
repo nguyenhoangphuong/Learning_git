@@ -10,13 +10,15 @@ import com.misfit.ta.ios.AutomationTest;
 
 public class BackendSignOutTC extends AutomationTest
 {
-	String email = MVPApi.generateUniqueEmail();
+	String email;
 	String password = "qwerty1";
-	String udid = DefaultValues.UDID;
+	String udid;
 	
 	@BeforeClass
 	public void beforeClass()
 	{
+	    String email = MVPApi.generateUniqueEmail();
+	    udid = DefaultValues.UDID;
 		MVPApi.signUp(email, password, udid);
 	}
 	

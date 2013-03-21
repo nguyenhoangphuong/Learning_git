@@ -12,8 +12,15 @@ public class BackendProfileCreateTC extends AutomationTest
 {
 
 	String password = "qwerty1";
-	String udid = DefaultValues.UDID;
-	ProfileData defaultProfile = DefaultValues.DefaultProfile();
+	String udid;
+	ProfileData defaultProfile;
+	
+	@BeforeClass
+    public void setUp()
+    {
+	    udid = DefaultValues.UDID;
+	    defaultProfile = DefaultValues.DefaultProfile();
+    }
 	
 	
 	@Test(groups = { "ios", "ABC", "api", "profile" })

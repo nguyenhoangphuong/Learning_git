@@ -10,17 +10,21 @@ import com.misfit.ta.ios.AutomationTest;
 
 public class BackendSignInTC extends AutomationTest
 {
-	String validEmail = MVPApi.generateUniqueEmail();
-	String invalidEmail = MVPApi.generateUniqueEmail() + ".invalid";
+	String validEmail;
+	String invalidEmail;
 	String validPassword = "qwerty1";
 	String invalidPassword = "wrong123";
 	
-	String udid = DefaultValues.UDID;
+	String udid;
 	
 	@BeforeClass
 	public void setUp()
 	{
+	    validEmail = MVPApi.generateUniqueEmail();
+	    invalidEmail = MVPApi.generateUniqueEmail() + ".invalid";
+	    udid = DefaultValues.UDID;
 		MVPApi.signUp(validEmail, validPassword, udid);
+		
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "api", "signin" })
