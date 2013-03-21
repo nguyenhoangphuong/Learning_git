@@ -45,12 +45,13 @@ settings.back();
 
 
 // input some records
-for(var i = 0; i < 5; i++)
+for(var i = 0; i < 3; i++)
 {
 	// input
 	var duration = randInt(5, 10);
 	var steps = duration * randInt(100, 180);
-	var rec = home.inputRecord(duration, steps); wait();
+	var rec = home.inputRecord(duration, steps); 
+	wait(5);
 	
 	// assert the record is saved
 	var parent = target.frontMostApp().mainWindow().scrollViews()[2];
@@ -62,15 +63,15 @@ for(var i = 0; i < 5; i++)
 	// assert the summarize info is correct
 	total.steps += steps;
 	total.duration += duration;
-	total.points += point;
-	total.percent = parseInt(total.points / goal.points);
+	total.points += parseInt(rec.points);
+	total.percent = (100 * total.points / goal.points).toFixed(0);
 	
 	var sum = home.getProgressSummary();
 	assertEqual(sum.goal, goal.points, "Goal's total points");
 	assertEqual(sum.steps, total.steps, "Total steps");
-	assertEqual(sum.duration, (total.duration / 60).toFixed(2), "Total duration");
+	assertEqual(sum.duration, (total.duration / 60.0).toFixed(2), "Total duration");
 	assertEqual(sum.points, total.points, "Total points");
-	assertEqual(sum.percent, toal.percent, "Total percent");
+	assertEqual(sum.percent, total.percent, "Total percent");
 	
 	records.push(rec);
 }
@@ -80,6 +81,7 @@ log("Sign out and sign in again");
 wait(5);
 home.tapSettings();
 settings.tapSignOut();
+wait();
 signin.chooseSignIn();
 signin.submitSignInForm(email, password, 10);
 
@@ -92,19 +94,13 @@ for(var i = 0; i < records.length; i++)
 	assertTrue(parent.staticTexts()[records[i].duration].isValid(), "Duration saves correctly");
 	assertTrue(parent.staticTexts()[records[i].steps].isValid(), "Steps saves correctly");
 	assertTrue(parent.staticTexts()[records[i].points].isValid(), "Points displays correctly");
-	
-	// assert the summarize info is correct
-	total.steps += steps;
-	total.duration += duration;
-	total.points += point;
-	total.percent = parseInt(total.points / goal.points);
 }
 
 var sum = home.getProgressSummary();
 assertEqual(sum.goal, goal.points, "Goal's total points");
 assertEqual(sum.steps, total.steps, "Total steps");
-assertEqual(sum.duration, (total.duration / 60).toFixed(2), "Total duration");
+assertEqual(sum.duration, (total.duration / 60.0).toFixed(2), "Total duration");
 assertEqual(sum.points, total.points, "Total points");
-assertEqual(sum.percent, toal.percent, "Total percent");
+assertEqual(sum.percent, total.percent, "Total percent");
 
 pass();

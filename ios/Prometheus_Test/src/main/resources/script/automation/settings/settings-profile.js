@@ -46,6 +46,7 @@ signup.next();
 
 wait(5);
 home.closeTips();
+wait(5);
 home.tapSettings();
 assertTrue(settings.isAtOverviewSettings(), "At Settings view");
 
@@ -75,7 +76,7 @@ assertEqual(actual.weight, helper.formatWeight(profile1.weight[0], profile1.weig
 // verify profile is saved correctly after editting in settings view
 log(" ---- Input new profile ----");
 settings.fillProfileForm(profile2.sex, profile2.birthday, profile2.height, profile2.weight);
-settings.back(); wait();
+settings.back(); wait(5);
 
 log(" ---- Check overview profile ----");
 actual = settings.getProfileOverviewInfo();
@@ -106,14 +107,14 @@ assertTrue(signup.isAtInitView(), "Afer log out, app lead users to init view");
 
 log(" ---- Signing in again ----");
 signin.chooseSignIn();
-signin.submitSignInForm(email, password, 4);
+signin.submitSignInForm(email, password, 8);
 
 log(" ---- Check overview profile ----");
 home.tapSettings();
 actual = settings.getProfileOverviewInfo();
 expect = helper.formatProfileOverviewInfo(profile2.sex, 
 		profile2.height[0], profile2.height[1],
-		profile2.weight[0], profile2.weight[1], false);
+		profile2.weight[0], profile2.weight[1], true);
 
 assertEqual(actual, expect, "Overview profile displays correctly");
 

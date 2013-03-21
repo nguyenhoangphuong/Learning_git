@@ -133,6 +133,7 @@ function PrometheusAlertHandler(_alert)
 		message == alert.InvalidPasswordMsg ||
 		message == alert.DuplicatedEmailMsg ||
 		name == alert.AllowLocationMsg ||
+		message == alert.AllowLocationMsg ||
 		message == alert.WrongAccountMsg ||
 		message == alert.IncorrectEmailMsg ||
 		message == alert.EmailSentMsg)

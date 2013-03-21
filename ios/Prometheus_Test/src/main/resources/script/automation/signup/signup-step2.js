@@ -30,15 +30,15 @@ signup.fillProfileForm(null, birthday, heightM, weightM);
 
 signup.fillProfileForm(null, null, usUnit, null);
 actual = signup.getProfileForm();
-assertEqual(actual.birthday, signup.formatBirthday(birthday), "Birthday displays correctly");
-assertEqual(actual.height, signup.formatHeight(heightU[0], heightU[1], true), "Height displays correctly");
-assertEqual(actual.weight, signup.formatWeight(weightU[0], weightU[1], true), "Weight displays correctly");
+assertEqual(actual.birthday, helper.formatBirthday(birthday), "Birthday displays correctly");
+assertEqual(actual.height, helper.formatHeight(heightU[0], heightU[1], true), "Height displays correctly");
+assertEqual(actual.weight, helper.formatWeight(weightU[0], weightU[1], true), "Weight displays correctly");
 
 signup.fillProfileForm(null, null, metricUnit, null);
 actual = signup.getProfileForm();
-assertEqual(actual.birthday, signup.formatBirthday(birthday), "Birthday displays correctly");
-assertEqual(actual.height, signup.formatHeight(heightM[0], heightM[1], false), "Height displays correctly");
-assertEqual(actual.weight, signup.formatWeight(weightM[0], weightM[1], false), "Weight displays correctly");
+assertEqual(actual.birthday, helper.formatBirthday(birthday), "Birthday displays correctly");
+assertEqual(actual.height, helper.formatHeight(heightM[0], heightM[1], false), "Height displays correctly");
+assertEqual(actual.weight, helper.formatWeight(weightM[0], weightM[1], false), "Weight displays correctly");
 
 // check profile is saved when back from step 3
 signup.next();

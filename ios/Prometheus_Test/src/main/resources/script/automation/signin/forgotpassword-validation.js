@@ -53,14 +53,14 @@ for(var i = 0; i < invalidEmails.length; i++)
 // not registered email
 signin.fillForgotPasswordEmail(notRegisteredEmail);
 signin.submitForgotPassword();
-wait(3);
+wait(5);
 
 assertTrue(signin.isIncorrectEmailAlertShown(), "Not existed email alert shown");
 
 // registered email
 signin.fillForgotPasswordEmail(registeredEmail);
 signin.submitForgotPassword();
-wait(3);
+wait(5);
 
 assertTrue(signin.isEmailSentAlertShown(), "Email sent alert shown");
 assertTrue(signin.isAtSignIn(), "Users is redirected to sign in");

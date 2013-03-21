@@ -71,7 +71,7 @@ for(var i = 0; i < wear.on.length; i++)
 log(" ---- Set new wearing position ----");
 settings.tapWearOn(wear.on[3]);
 settings.back();
-wait(2);
+wait(5);
 
 log(" ---- Check new wearing position ----");
 actual = settings.getCurrentWearingPosition();
@@ -86,7 +86,7 @@ wait();
 
 log(" ---- Signing in again ----");
 signin.chooseSignIn();
-signin.submitSignInForm(email, password, 4);
+signin.submitSignInForm(email, password, 8);
 
 log(" ---- Check new wearing position ----");
 home.tapSettings();

@@ -11,18 +11,18 @@ var expect =
 	[
 		{
 	 		title: "ACTIVE", activities: "1-2 activities per week",
-	 		points: "2,000 points per day or",
-	 		steps: "10,000 steps per day"
+	 		points: "1,500 points per day or",
+	 		steps: "6,000 steps per day"
 	 	},
 		{
 	 		title: "VERY ACTIVE", activities: "2-4 activities per week",
-	 		points: "3,000 points per day or",
-	 		steps: "15,000 steps per day"
+	 		points: "2,500 points per day or",
+	 		steps: "10,000 steps per day"
 	 	},
 		{
 	 		title: "SUPER ACTIVE", activities: "4+ activities per week",
-	 		points: "5,000 points per day or",
-	 		steps: "30,000 steps per day"
+	 		points: "4,000 points per day or",
+	 		steps: "16,000 steps per day"
 	 	}
 	]
 

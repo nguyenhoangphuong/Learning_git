@@ -26,7 +26,7 @@ public class Progress extends AutomationTest
 		AppHelper.cleanCache();
 	 	ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-			AppHelper.getAppPath(), "script/automation/progress/progress-integration.js");
+			AppHelper.getAppPath(), "script/automation/progress/progress-facebook.js");
 	}
 	
 }

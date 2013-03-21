@@ -31,7 +31,7 @@ public class SigninTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "android", "Prometheus", "signin" })
+   // @Test(groups = { "android", "Prometheus", "signin" })
     public void successfulSignInTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("successfulSignin", new SuccessfulSignInAPI(this, Files.getFile("model/signin/SuccessfulSignIn.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));

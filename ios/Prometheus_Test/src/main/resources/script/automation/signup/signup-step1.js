@@ -6,7 +6,7 @@
 
 // test data
 // ---------------------------------------------------------------------------------------
-var duplicatedEmail = "a@a.a";
+var duplicatedEmail = "qa@a.a";
 var invalidEmail = "invalidEmail";
 var invalidPassword = "invalidPassword";
 var validPassword = "qwerty1";
@@ -30,10 +30,10 @@ assertTrue(signup.isInvalidPasswordAlertShown(), "Invalid password alert shown")
 
 // duplicated email
 signup.submitSignUpForm(duplicatedEmail, validPassword, 5);
-assertTrue(signup.isInvalidPasswordAlertShown(), "Duplicated email alert shown");
+assertTrue(signup.isDuplicatedEmailAlertShown(), "Duplicated email alert shown");
 
 // sign up successfully
 signup.submitSignUpForm(generateSignupAccount(), validPassword, 5);
-assertTrue(signup.isInvalidPasswordAlertShown(), "Invalid password shown");
+assertTrue(signup.isAtStep2(), "Register successfully, is at step 2");
 
 pass();

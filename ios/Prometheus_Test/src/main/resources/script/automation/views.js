@@ -63,8 +63,8 @@ function Home()
 		var timeString = target.frontMostApp().mainWindow().textFields()[1].value();
 		var duration = parseInt(target.frontMostApp().mainWindow().textFields()[2].value());
 		var steps = parseInt(target.frontMostApp().mainWindow().textFields()[3].value());
-		var v = steps / duration;
-		var points = (0.25 + (v > 115.0 ? 0 : (v - 115.0) * 0.01)) * steps;
+		var v = parseFloat(steps / duration - 115);
+		var points = (0.25 + (v <= 00 ? 0 : (v * 0.01))) * steps;
 		
 		info.time = helper.formatStartTime(timeString);
 		info.duration = helper.formatDuration(duration);
@@ -72,6 +72,7 @@ function Home()
 		info.points = helper.formatPoint(points.toFixed(0));
 		
 		target.frontMostApp().mainWindow().buttons()["Save"].tap();
+		log(JSON.stringify(info) + ", " + v.toString());
 		return info;
 	};
 	
@@ -86,7 +87,8 @@ function Home()
 		var duration = parseInt(target.frontMostApp().mainWindow().textFields()[2].value());
 		var steps = parseInt(target.frontMostApp().mainWindow().textFields()[3].value());
 		var v = steps / duration;
-		var points = (0.25 + (v > 115.0 ? 0 : (v - 115.0) * 0.01)) * steps;
+		var points = (0.25 + (v <= 115.0 ? 0 : ((v - 115.0) * 0.01)) ) * steps;
+		log(v + ", " + points);
 		
 		info.time = helper.formatStartTime(timeString);
 		info.duration = helper.formatDuration(duration);
@@ -267,7 +269,8 @@ function SignUp()
 	
 	this.isAtStep4 = function()
 	{
-		return staticTextExist("LINK YOUR SHINE") && staticTextExist("Place Shine below to get started");;
+		return (staticTextExist("LINK YOUR SHINE") && staticTextExist("Place Shine below to get started")) ||
+				target.frontMostApp().mainWindow().buttons()["progresscircle"].isValid();
 	}
 	
 	// navigation methods
@@ -357,6 +360,7 @@ function SignUp()
 				wheelPick(picker, 1, height[2] == "m" ? "." + height[1] : height[1] + "\"");
 			}
 			
+			wait(0.5);
 			target.frontMostApp().windows()[1].toolbar().buttons()["Done"].tap();
 		}
 
@@ -373,6 +377,7 @@ function SignUp()
 				wheelPick(picker, 1, "." + weight[1]);
 			}
 			
+			wait(0.5);
 			target.frontMostApp().windows()[1].toolbar().buttons()["Done"].tap();
 		}		
 	};
@@ -605,6 +610,7 @@ function Settings()
 				wheelPick(picker, 1, height[2] == "m" ? "." + height[1] : height[1] + "\"");
 			}
 			
+			wait(0.5);
 			target.frontMostApp().windows()[1].toolbar().buttons()["Done"].tap();
 		}
 
@@ -621,6 +627,7 @@ function Settings()
 				wheelPick(picker, 1, "." + weight[1]);
 			}
 			
+			wait(0.5);
 			target.frontMostApp().windows()[1].toolbar().buttons()["Done"].tap();
 		}
 	};
@@ -647,7 +654,7 @@ function Settings()
 	this.getCurrentWearingPosition = function()
 	{
 		var text = target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[1].name();
-		if(text.indexOf("," < 0))
+		if(text.indexOf(",") < 0)
 			return "";
 		
 		return text.substring(text.indexOf(",") + 2);
