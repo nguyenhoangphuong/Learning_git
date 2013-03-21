@@ -11,16 +11,19 @@ import com.misfit.ta.ios.AutomationTest;
 public class BackendProfileUpdateTC extends AutomationTest
 {
 
-	String email = MVPApi.generateUniqueEmail();
+	String email;
 	String password = "qwerty1";
-	String udid = DefaultValues.UDID;
-	ProfileData defaultProfile = DefaultValues.DefaultProfile();
+	String udid;
+	ProfileData defaultProfile;
 	
 	@BeforeClass
 	public void setUp()
 	{
+	    udid = DefaultValues.UDID;
+	    email = MVPApi.generateUniqueEmail();
 		String token = MVPApi.signUp(email, password, udid).token;
 		MVPApi.createProfile(token, defaultProfile);
+		defaultProfile = DefaultValues.DefaultProfile();
 	}
 	
 	@Test(groups = { "ios", "ABC", "api", "profile" })
