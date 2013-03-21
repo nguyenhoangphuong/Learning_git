@@ -23,7 +23,7 @@ public class BackendProfileGetTC extends AutomationTest
 		MVPApi.createProfile(token, defaultProfile);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void GetProfileUseValidToken()
 	{
 		// sign in then use the token to get profile
@@ -39,7 +39,7 @@ public class BackendProfileGetTC extends AutomationTest
 		Assert.assertEquals("Profile weight", r.profile.weight, defaultProfile.weight);
 	}
 
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void GetProfileUseExpiredToken()
 	{
 		// sign in then sign out then use the old token to get profile
@@ -55,7 +55,7 @@ public class BackendProfileGetTC extends AutomationTest
 		Assert.assertTrue("Profile is null", r.profile == null);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void GetProfileWithoutToken()
 	{
 		// sign in then use arbitrary token to get profile
@@ -69,7 +69,7 @@ public class BackendProfileGetTC extends AutomationTest
 		Assert.assertTrue("Profile is null", r.profile == null);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void GetEmptyProfile()
 	{
 		// sign up then get profile without creating it

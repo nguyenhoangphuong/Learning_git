@@ -16,7 +16,7 @@ public class BackendProfileCreateTC extends AutomationTest
 	ProfileResult.ProfileData defaultProfile = DefaultValues.DefaultProfile();
 	
 	
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void CreateNewProfile()
 	{
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password, udid).token;
@@ -34,7 +34,7 @@ public class BackendProfileCreateTC extends AutomationTest
 		Assert.assertEquals("Get birthday is the same", g.profile.dateOfBirth, defaultProfile.dateOfBirth);
 	}
 
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void CreateDuplicateProfile()
 	{
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password, udid).token;
@@ -51,7 +51,7 @@ public class BackendProfileCreateTC extends AutomationTest
 
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void CreateProfileWithoutToken()
 	{
 		ProfileResult r = MVPApi.createProfile("", defaultProfile);

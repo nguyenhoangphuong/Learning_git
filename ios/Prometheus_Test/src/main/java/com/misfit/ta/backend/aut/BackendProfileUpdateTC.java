@@ -23,7 +23,7 @@ public class BackendProfileUpdateTC extends AutomationTest
 		MVPApi.createProfile(token, defaultProfile);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void UpdateProfileUsingValidToken()
 	{
 		// sign in and use valid token to update profile
@@ -46,7 +46,7 @@ public class BackendProfileUpdateTC extends AutomationTest
 		
 	}
 
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void UpdateProfileUsingExpiredToken()
 	{
 		// sign in and sign out then and use old token to update profile
@@ -68,7 +68,7 @@ public class BackendProfileUpdateTC extends AutomationTest
 		Assert.assertTrue("Profile is null", r.profile == null);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void UpdateProfileWithoutToken()
 	{
 		// sign in and use arbitrary token to update profile
@@ -90,7 +90,7 @@ public class BackendProfileUpdateTC extends AutomationTest
 		Assert.assertTrue("Profile is null", r.profile == null);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "api", "profile" })
+	@Test(groups = { "ios", "ABC", "api", "profile" })
 	public void UpdateProfileHadBeenUpdated()
 	{
 		// sign in and decrease updatedAt of profile then use that to update profile
