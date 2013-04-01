@@ -648,8 +648,8 @@ public class Gui {
         logger.info("Will start the app");
         // String target = Settings.getTarget();
         // String appPath = Settings.getAppPath();
-        
-        Processes.stopApp();
+
+        stopApp();
         int noOfTries = 0;
         boolean connected = false;
         while (!connected && noOfTries < 1) {
@@ -662,11 +662,13 @@ public class Gui {
             // runCmd(cmd);
             // ShortcutsTyper.delayTime(2000);
             // } else {
-//            System.out.println("LOG [Gui.start]: current uuid=" + Gui.getCurrentUdid());
-//            System.out.println("LOG [Gui.start]: " + Gui.getAppPath());
-//            String[] cmd = { "instruments", "-w", Gui.getCurrentUdid(), "-t", template, Gui.getAppPath() };
-//            Processes.runCmd(cmd);
-            
+            // System.out.println("LOG [Gui.start]: current uuid=" +
+            // Gui.getCurrentUdid());
+            // System.out.println("LOG [Gui.start]: " + Gui.getAppPath());
+            // String[] cmd = { "instruments", "-w", Gui.getCurrentUdid(), "-t",
+            // template, Gui.getAppPath() };
+            // Processes.runCmd(cmd);
+
             // }
 
             // ----
@@ -686,18 +688,27 @@ public class Gui {
             noOfTries++;
         }
     }
-    
+
     public static void stopApp() {
         String deviceId = Gui.getCurrentUdid();
         ProcessFinder.kill(deviceId);
         Processes.killHard(deviceId);
-      }
+    }
+    
+    public static void captureScreen(String name) {
+        NuRemoteClient.captureScreen();
+    }
 
     public static void main(String[] args) throws IOException {
+        
+        Gui.init();
+        Gui.captureScreen("dad");
+        Gui.shutdown();
+        
         // Gui.uninstall(getCurrentUdid());
         // Gui.install();
-        Gui.start();
-        
+//        Gui.start();
+
         // Gui.getUdids();
         // System.out.println("LOG [Gui.main]: " + getCurrentUdid());
 

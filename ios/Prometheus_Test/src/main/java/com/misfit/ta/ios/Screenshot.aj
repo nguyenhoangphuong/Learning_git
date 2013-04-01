@@ -6,16 +6,14 @@ public aspect Screenshot {
   
   before():  execution(* com.misfit.ta.*..*.v_*(..)) {
     String name = thisJoinPoint.getSignature().getName();
-    Gui.makeToast(name);
   }
 
   before(): execution(* com.misfit.ta.*..*.e_*(..)) {
     String name = thisJoinPoint.getSignature().getName();
-    Gui.makeToast(name);
   }
   
   after() returning: androidVertexScreenshot() {
-    Gui.captureScreen( thisJoinPoint.getSignature().getName());
+    Gui.captureScreen(thisJoinPoint.getSignature().getName());
   }
   
   after() returning: androidEdgeScreenshot() {
