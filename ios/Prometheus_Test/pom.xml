@@ -4,7 +4,7 @@
 
 	<groupId>com.misfit.qa</groupId>
 	<artifactId>prometheus-test</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 
 
 	<packaging>jar</packaging>
@@ -118,7 +118,7 @@
 		<dependency>
 			<groupId>com.misfit.ta</groupId>
 			<artifactId>tools</artifactId>
-			<version>0.0.17</version>
+			<version>0.0.23</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
