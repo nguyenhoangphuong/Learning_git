@@ -320,8 +320,8 @@ public class Gui {
         install(getCurrentUdid(), getAppPath(appPathParamName));
     }
 
-    public static void init() {
-        NuRemoteClient.init();
+    public static void init(String ip) {
+        NuRemoteClient.init(ip);
     }
 
     public static void shutdown() {
@@ -644,7 +644,7 @@ public class Gui {
         return NuRemoteClient.getLastMessage();
     }
 
-    public static void start() {
+    public static void start(String ip) {
         logger.info("Will start the app");
         // String target = Settings.getTarget();
         // String appPath = Settings.getAppPath();
@@ -684,7 +684,7 @@ public class Gui {
             ShortcutsTyper.delayTime(10000);
             // ---
 
-            connected = NuRemoteClient.init();
+            connected = NuRemoteClient.init(ip);
             noOfTries++;
         }
     }
@@ -701,7 +701,7 @@ public class Gui {
 
     public static void main(String[] args) throws IOException {
         
-        Gui.init();
+        Gui.init("localhost");
         Gui.captureScreen("dad");
         Gui.shutdown();
         
