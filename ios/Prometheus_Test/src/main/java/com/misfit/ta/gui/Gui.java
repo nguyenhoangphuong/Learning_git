@@ -15,6 +15,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.Processes;
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.Settings;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ProcessFinder;
@@ -336,6 +337,17 @@ public class Gui {
         views = views.replaceAll("    \\|", "  ");
         System.out.println("LOG [Gui.printView]: views: \n" + views);
     }
+    
+    public static void printViewWithViewName(String viewName) {
+    	String message = "(Gui printViewWithViewName: @\"%viewName\")";
+    	message = message.replace("%viewName", viewName);
+    	NuRemoteClient.sendToServer(message);
+        String views = NuRemoteClient.getLastMessage();
+        
+        views = views.replaceAll(">>    \\|", ">>\n");
+        views = views.replaceAll("    \\|", "  ");
+        System.out.println("LOG [Gui.printViewWithViewName]: views: \n" + views);
+    }
 
     /**
      * (Gui touchAViewWithViewName: @"UIButtonLabel" andTitle: @"SIGN UP") (Gui
@@ -438,6 +450,12 @@ public class Gui {
     public static void dismissPicker() {
         NuRemoteClient.sendToServer("(Gui dismissPicker)");
     }
+    
+    public static void selectPickerForCurrentUITextViewWithTitle(String title) {
+    	String message = "(Gui selectPickerForCurrentUITextViewWithTitle: @\"%title\")";
+    	message = message.replace("%title", title);
+    	NuRemoteClient.sendToServer(message);
+    }
 
     public static void touch(int x, int y) {
         String message = "(Gui touchAtX: %x andY: %y)";
@@ -538,7 +556,7 @@ public class Gui {
         message = message.replace("%y", String.valueOf(y));
         NuRemoteClient.sendToServer(message);
     }
-
+    
     public static void drag(int x1, int y1, int x2, int y2) {
         String message = "(Gui dragFromX: %x1 fromY: %y1 toX: %x2 andToY: %y2";
         message = message.replace("%x1", String.valueOf(x1));
@@ -547,6 +565,27 @@ public class Gui {
         message = message.replace("%y2", String.valueOf(y2));
         NuRemoteClient.sendToServer(message);
     }
+    
+    public static void dragAViewWithViewName(String viewName, int index, int distanceX, int distanceY) {
+    	String message = "(Gui dragAViewWithViewName: @\"%viewName\" andIndex: %index withXPixels: %distanceX andYPixels: %distanceY)";
+    	message = message.replace("%viewName", viewName);
+    	message = message.replace("%index", String.valueOf(index));
+        message = message.replace("%distanceX", String.valueOf(distanceX));
+        message = message.replace("%distanceY", String.valueOf(distanceY));
+        NuRemoteClient.sendToServer(message);
+    	
+    }
+    
+    public static void dragAViewWithViewName(String viewName, String title, int distanceX, int distanceY) {
+    	String message = "(Gui dragAViewWithViewName: @\"%viewName\" andTitle: @\"%title\" withXPixels: %distanceX andYPixels: %distanceY)";
+    	message = message.replace("%viewName", viewName);
+    	message = message.replace("%title", title);
+        message = message.replace("%distanceX", String.valueOf(distanceX));
+        message = message.replace("%distanceY", String.valueOf(distanceY));
+        NuRemoteClient.sendToServer(message);
+    	
+    }
+    
 
     // ---- pop up ----
     public static void touchPopupButton(int index) {
@@ -700,54 +739,10 @@ public class Gui {
     }
 
     public static void main(String[] args) throws IOException {
-        
-        Gui.init("localhost");
-        Gui.captureScreen("dad");
-        Gui.shutdown();
-        
-        // Gui.uninstall(getCurrentUdid());
-        // Gui.install();
-//        Gui.start();
 
-        // Gui.getUdids();
-        // System.out.println("LOG [Gui.main]: " + getCurrentUdid());
-
-        // Gui.init();
-
-        // touchButton("LOG IN WITH FACEBOOK");
-        // Gui.touchAVIew("UIButtonLabel", "SIGN UP" );
-        // printView();
-        // setDefaultKeyboard();
-        // touch(200, 300, 2000);
-        // System.out.println("LOG [Gui.main]: " + getPopupTitle());
-        // System.out.println("LOG [Gui.main]: " + getPopupContent());
-
-        // swipeUp(300);
-        // ShortcutsTyper.delayTime(500);
-        // pressNext();
-        // ShortcutsTyper.delayTime(500);
-        // type("Something else");
-        // ShortcutsTyper.delayTime(500);
-        // pressDone();
-        // ViewUtils.findView("UITextField", 0);
-        // NuRemoteClient.sendToServer("(set a (ViewUtils findViewWithViewName: @\"UITextField\" andIndex: 0))");
-        // NuRemoteClient.sendToServer("(Gui enterTextForView: a withText: @\"something\")");
-        // setText("a", "abcdef");
-        //
-        // String name = ViewUtils.findView("UILabel", 0);
-        // System.out.println("LOG [Gui.main]: " + getProperty(name, "text"));
-
-        // getProperty(viewObject, property)
-        // System.out.println("LOG [Gui.main]: " + name);
-        // setText(name, "something");
-        // /type("some email@address.com");
-        // pressNext();
-        // pressDone();
-        // setPicker(0, "February");
-        // dismissPicker();
-
-        // System.out.println("LOG [Gui.main]: " + getText("UIButton", 0));
-        // Gui.shutdown();
+		Gui.init("192.168.1.123");
+		printView();
+		Gui.shutdown();
     }
 
 }
