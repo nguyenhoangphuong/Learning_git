@@ -15,7 +15,6 @@ import org.testng.Assert;
 
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.Processes;
-import com.misfit.ios.ViewUtils;
 import com.misfit.ta.Settings;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ProcessFinder;
@@ -26,6 +25,10 @@ public class Gui {
     private static String fruitStrapPath = "";
     private static String template = "";
     private static Logger logger = Util.setupLogger(Gui.class);
+    
+    private static boolean flightMode = false;
+    private static boolean bluetooth = false;
+    private static boolean locationService = false;
 
     static {
         try {
@@ -337,17 +340,6 @@ public class Gui {
         views = views.replaceAll("    \\|", "  ");
         System.out.println("LOG [Gui.printView]: views: \n" + views);
     }
-    
-    public static void printViewWithViewName(String viewName) {
-    	String message = "(Gui printViewWithViewName: @\"%viewName\")";
-    	message = message.replace("%viewName", viewName);
-    	NuRemoteClient.sendToServer(message);
-        String views = NuRemoteClient.getLastMessage();
-        
-        views = views.replaceAll(">>    \\|", ">>\n");
-        views = views.replaceAll("    \\|", "  ");
-        System.out.println("LOG [Gui.printViewWithViewName]: views: \n" + views);
-    }
 
     /**
      * (Gui touchAViewWithViewName: @"UIButtonLabel" andTitle: @"SIGN UP") (Gui
@@ -380,13 +372,27 @@ public class Gui {
         touchAVIew("UIButton", text);
     }
 
-    // TODO
-    public static void longTouchAView(String type, String text) {
-        String message = "(Gui longTouchAViewWithViewName: @\"%type\" andTitle: @\"%text\")";
+    public static void longTouchAView(String type, String text, long duration) {
+        String message = "(Gui longTouchAViewWithViewName: @\"%type\" andTitle: @\"%text\" inDuration: %duration)";
         message = message.replace("%type", type);
         message = message.replace("%text", text);
-        System.out.println("LOG [Gui.touchAVIew]: " + message);
-
+        message = message.replace("%duration", String.valueOf(duration));
+        NuRemoteClient.sendToServer(message);
+    }
+    
+    public static void longTouchAView(String type, int index, long duration) {
+        String message = "(Gui longTouchAViewWithViewName: @\"%type\" andIndex: %index inDuration: %duration)";
+        message = message.replace("%type", type);
+        message = message.replace("%index", String.valueOf(index));
+        message = message.replace("%duration", String.valueOf(duration));
+        NuRemoteClient.sendToServer(message);
+    }
+    
+    public static void longTouch(int x, int y, long duration) {
+        String message = "(Gui longTouchWithX: %x andY:%y inDuration: %duration)";
+        message = message.replace("%x", String.valueOf(x));
+        message = message.replace("%y", String.valueOf(y));
+        message = message.replace("%duration", String.valueOf(duration));
         NuRemoteClient.sendToServer(message);
     }
 
@@ -396,12 +402,19 @@ public class Gui {
     }
 
     public static void type(String text) {
-        setDefaultKeyboard();
         String message = "(Gui typeString: @\"%text\")";
         message = message.replace("%text", text);
         NuRemoteClient.sendToServer(message);
     }
-
+    
+    public static void enterTextForView(int index, String text) {
+        String message = "(Gui enterTextForViewAtIndex: %index withText: @\"%text\")";
+        message = message.replace("%index", String.valueOf(index));
+        message = message.replace("%text", text);
+        NuRemoteClient.sendToServer(message);
+    }
+    
+    
     /**
      * Set the text for a text field at a certain index.
      * 
@@ -449,12 +462,6 @@ public class Gui {
 
     public static void dismissPicker() {
         NuRemoteClient.sendToServer("(Gui dismissPicker)");
-    }
-    
-    public static void selectPickerForCurrentUITextViewWithTitle(String title) {
-    	String message = "(Gui selectPickerForCurrentUITextViewWithTitle: @\"%title\")";
-    	message = message.replace("%title", title);
-    	NuRemoteClient.sendToServer(message);
     }
 
     public static void touch(int x, int y) {
@@ -556,7 +563,7 @@ public class Gui {
         message = message.replace("%y", String.valueOf(y));
         NuRemoteClient.sendToServer(message);
     }
-    
+
     public static void drag(int x1, int y1, int x2, int y2) {
         String message = "(Gui dragFromX: %x1 fromY: %y1 toX: %x2 andToY: %y2";
         message = message.replace("%x1", String.valueOf(x1));
@@ -566,31 +573,44 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
     
-    public static void dragAViewWithViewName(String viewName, int index, int distanceX, int distanceY) {
-    	String message = "(Gui dragAViewWithViewName: @\"%viewName\" andIndex: %index withXPixels: %distanceX andYPixels: %distanceY)";
-    	message = message.replace("%viewName", viewName);
-    	message = message.replace("%index", String.valueOf(index));
-        message = message.replace("%distanceX", String.valueOf(distanceX));
-        message = message.replace("%distanceY", String.valueOf(distanceY));
+    public static void drag(String viewType, int index, int dx, int dy) {
+        String message = "(Gui dragAViewWithViewName: %viewType andIndex: %index withXPixels: %dx andYPixels: %dy)";
+        message = message.replace("%viewType", viewType);
+        message = message.replace("%index", String.valueOf(index));
+        message = message.replace("%dx", String.valueOf(dx));
+        message = message.replace("%dy", String.valueOf(dy));
         NuRemoteClient.sendToServer(message);
-    	
     }
     
-    public static void dragAViewWithViewName(String viewName, String title, int distanceX, int distanceY) {
-    	String message = "(Gui dragAViewWithViewName: @\"%viewName\" andTitle: @\"%title\" withXPixels: %distanceX andYPixels: %distanceY)";
-    	message = message.replace("%viewName", viewName);
-    	message = message.replace("%title", title);
-        message = message.replace("%distanceX", String.valueOf(distanceX));
-        message = message.replace("%distanceY", String.valueOf(distanceY));
+    public static void drag(String viewType, String title, int dx, int dy) {
+        String message = "(Gui dragAViewWithViewName: %viewType andTitle: @\"%title\" withXPixels: %dx andYPixels: %dy)";
+        message = message.replace("%viewType", viewType);
+        message = message.replace("%title", title);
+        message = message.replace("%dx", String.valueOf(dx));
+        message = message.replace("%dy", String.valueOf(dy));
         NuRemoteClient.sendToServer(message);
-    	
     }
+    
     
 
     // ---- pop up ----
     public static void touchPopupButton(int index) {
         String message = "(Gui touchUIButtonInPopUpWithIndex: %index)";
         message = message.replace("%index", String.valueOf(index));
+        NuRemoteClient.sendToServer(message);
+
+    }
+    
+    public static void touchPopupButton(String text) {
+        String message = "(Gui touchUIButtonInPopUpWithTitle: @\"%text\")";
+        message = message.replace("%text", String.valueOf(text));
+        NuRemoteClient.sendToServer(message);
+
+    }
+
+    
+    public static void touchPopupDefaultButton() {
+        String message = "(Gui touchDefaultUIButtonInPopUp)";
         NuRemoteClient.sendToServer(message);
 
     }
@@ -614,27 +634,17 @@ public class Gui {
     }
 
     public static void touchActionSheetButton(String title) {
-        String message = "(Gui touchAUIButtonInNavigationBarWithTitle: @\"%title\")";
+        String message = "(Gui touchUIButtonInActionSheetWithINdex: @\"%title\")";
         message = message.replace("%title", title);
         NuRemoteClient.sendToServer(message);
     }
-
-    // ---- text of control ----
-    /**
-     * (Gui getTextOfViewName: @"UILabel" andIndex: 0)
-     * 
-     * @param type
-     * @param index
-     * @return
-     */
-    public static String getText(String type, int index) {
-        String message = "(Gui getTextOfViewName: @\"%type\" andIndex: %index)";
-        message = message.replace("%type", type);
-        message = message.replace("%index", String.valueOf(index));
+    
+    public static void touchDestructiveActionSheetButton(String title) {
+        String message = "(Gui touchDestructiveButtonInActionSheet)";
         NuRemoteClient.sendToServer(message);
-        return NuRemoteClient.getLastMessage();
     }
-
+    
+    
     // ---- tabbar ----
     public static void touchTabbar(int index) {
         String message = "(Gui touchATabBarButtonWithIndex: %index)";
@@ -665,6 +675,8 @@ public class Gui {
         NuRemoteClient.sendToServer("(Gui screenHeight)");
         return Integer.parseInt(NuRemoteClient.getLastMessage());
     }
+    
+    // ---- get value ----
 
     /**
      * Get value of a certain property on a view.
@@ -682,6 +694,74 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
         return NuRemoteClient.getLastMessage();
     }
+    
+    public static String getProperty(String viewType, int index, String property) {
+        String message = "(Gui getValueWithViewName: @\"%viewType\" withPropertyName: @\"%property\" andIndex: %index)";
+        message = message.replace("%viewType", viewType);
+        message = message.replace("%property", property);
+        message = message.replace("%index", String.valueOf(index));
+        NuRemoteClient.sendToServer(message);
+        return NuRemoteClient.getLastMessage();
+    }
+    
+    public static String getProperty(String viewType, String title, String property) {
+        String message = "(Gui getValueWithViewName: @\"%viewType\" withPropertyName: @\"%property\" andTitle: :  @\"%title\")";
+        message = message.replace("%viewType", viewType);
+        message = message.replace("%property", property);
+        message = message.replace("%title", title);
+        NuRemoteClient.sendToServer(message);
+        return NuRemoteClient.getLastMessage();
+    }
+    
+    /**
+     * (Gui getTextOfViewName: @"UILabel" andIndex: 0)
+     * 
+     * @param type
+     * @param index
+     * @return
+     */
+    public static String getText(String type, int index) {
+        String message = "(Gui getTextOfViewName: @\"%type\" andIndex: %index)";
+        message = message.replace("%type", type);
+        message = message.replace("%index", String.valueOf(index));
+        NuRemoteClient.sendToServer(message);
+        return NuRemoteClient.getLastMessage();
+    }
+    
+    // ---- bluetooth and location service functions ---------
+    public static boolean toggleFlightMode() {
+        NuRemoteClient.sendToServer("(Gui toggleFlightMode)");
+        flightMode = !flightMode;
+        return flightMode;
+    }
+    
+    public static boolean isFlightModeOn() {
+        return flightMode;
+    }
+
+    
+    public static boolean toggleBluetooth() {
+        NuRemoteClient.sendToServer("(Gui toggleBluetooth)");
+        bluetooth = !bluetooth;
+        return bluetooth;
+    }
+    
+    public static boolean isBluetoothOn() {
+        return bluetooth;
+    }
+    
+    public static boolean toggleLocationService() {
+        NuRemoteClient.sendToServer("(Gui toggleLocationService)");
+        locationService = !locationService;
+        return locationService;
+    }
+    
+    public static boolean isLocationServiceOn() {
+        return locationService;
+    }
+    
+    
+
 
     public static void start(String ip) {
         logger.info("Will start the app");
@@ -735,14 +815,24 @@ public class Gui {
     }
     
     public static void captureScreen(String name) {
-        NuRemoteClient.captureScreen();
+        NuRemoteClient.sendToServer("");
+    }
+    
+    public static String printViewHierarchy() {
+        NuRemoteClient.sendToServer("(Gui printView)");
+        String views = NuRemoteClient.getLastMessage();
+        System.out.println("LOG [Gui.printViewHierarchy]: view hierarchy: \n" + views);
+        return views;
     }
 
     public static void main(String[] args) throws IOException {
-
-		Gui.init("192.168.1.123");
-		printView();
-		Gui.shutdown();
+        
+        Gui.init("localhost");
+//        Gui.captureScreen("dad");
+        Gui.type("something@somewhere.com");
+        Gui.shutdown();
+        
+       
     }
 
 }
