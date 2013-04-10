@@ -9,12 +9,14 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.testng.Assert;
 
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.Processes;
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.Settings;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ProcessFinder;
@@ -340,6 +342,25 @@ public class Gui {
         views = views.replaceAll("    \\|", "  ");
         System.out.println("LOG [Gui.printView]: views: \n" + views);
     }
+    
+	public static void printViewWithViewName(String viewName) {
+		String message = "(Gui printViewWithViewName: @\"%viewName\")";
+		message = message.replace("%viewName", viewName);
+		NuRemoteClient.sendToServer(message);
+		String views = NuRemoteClient.getLastMessage();
+
+		views = views.replaceAll(">>    \\|", ">>\n");
+		views = views.replaceAll("    \\|", "  ");
+		System.out
+				.println("LOG [Gui.printViewWithViewName]: views: \n" + views);
+	}
+
+	public static void selectPickerForCurrentUITextViewWithTitle(String title) {
+		String message = "(Gui selectPickerForCurrentUITextViewWithTitle: @\"%title\")";
+		message = message.replace("%title", title);
+		NuRemoteClient.sendToServer(message);
+	}
+    	 
 
     /**
      * (Gui touchAViewWithViewName: @"UIButtonLabel" andTitle: @"SIGN UP") (Gui
@@ -827,9 +848,8 @@ public class Gui {
 
     public static void main(String[] args) throws IOException {
         
-        Gui.init("localhost");
-//        Gui.captureScreen("dad");
-        Gui.type("something@somewhere.com");
+        Gui.init("192.168.1.123");
+        Gui.printView();
         Gui.shutdown();
         
        

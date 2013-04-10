@@ -112,4 +112,8 @@ public class SignUp {
 	public static boolean isSignUpStep5View() {
 		return true;
 	}
+	
+	public static boolean hasInvalidEmailMessage() {
+		return Helper.hasInvalidEmailMessage();
+	}
 }

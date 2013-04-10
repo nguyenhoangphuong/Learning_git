@@ -57,4 +57,15 @@ public class Helper {
 		ShortcutsTyper.delayTime(1000);
 		Gui.dismissPicker();
 	}
+	
+	public static boolean hasInvalidEmailMessage() {
+		return Gui.getPopupTitle().equals("Error")
+				&& Gui.getPopupContent().equals(DefaultStrings.InvalidEmailMessage);
+	}
+	
+	public static boolean hasInvalidPasswordMessage() {
+		return Gui.getPopupTitle().equals("Error")
+				&& Gui.getPopupContent()
+						.equals(DefaultStrings.InvalidPasswordMessage);
+	}
 }

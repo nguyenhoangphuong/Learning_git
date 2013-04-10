@@ -34,20 +34,17 @@ public class SignIn {
 	}
 
 	public static boolean hasInvalidEmailMessage() {
-		return Gui.getPopupTitle().equals("Error")
-				&& Gui.getPopupContent().equals("Invalid Email");
+		return Helper.hasInvalidEmailMessage();
 	}
 
 	public static boolean hasInvalidPasswordMessage() {
-		return Gui.getPopupTitle().equals("Error")
-				&& Gui.getPopupContent()
-						.equals("Sorry, the password should have at least 6 characters, at least 1 digit and 1 letter");
+		return Helper.hasInvalidPasswordMessage();
 	}
 
 	public static boolean hasIncorrectLoginMessage() {
 		return Gui.getPopupTitle().equals("Error")
 				&& Gui.getPopupContent().equals(
-						"Sorry, your email or password is not correct");
+						DefaultStrings.SignInWrongAccountMessage);
 	}
 
 	public static void tapIForgot() {
@@ -74,11 +71,10 @@ public class SignIn {
 	}
 
 	public static boolean isLoginView() {
-		return "Email".equals(Gui.getProperty(
-				ViewUtils.findView("UITextFieldCenteredLabel", 0), "text"))
+		return "Email".equals(Gui.getProperty("UITextFieldCenteredLabel", 0,
+				"text"))
 				&& "Password".equals(Gui.getProperty(
-						ViewUtils.findView("UITextFieldCenteredLabel", 1),
-						"text"));
+						"UITextFieldCenteredLabel", 1, "text"));
 	}
 
 	/**
@@ -90,7 +86,9 @@ public class SignIn {
 
 	public static boolean isForgotPasswordView() {
 		return "Enter your email".equals(Gui.getProperty(
-				ViewUtils.findView("UITextFieldCenteredLabel", 0), "text"));
+				"UITextFieldCenteredLabel", 0, "text"))
+				&& "SUBMIT".equals(Gui.getProperty("UIButtonLabel", 0, "text"))
+				&& "CANCEL".equals(Gui.getProperty("UIButtonLabel", 1, "text"));
 	}
 
 	public static void tapCancel() {
@@ -104,7 +102,7 @@ public class SignIn {
 	public static boolean hasEmailSentPassword() {
 		return Gui.getPopupTitle().equals("Email Sent")
 				&& Gui.getPopupContent().equals(
-						"Check your email for the password reset link");
+						DefaultStrings.ForgotPasswordEmailSentMessage);
 	}
 
 	public static void changePassword(String newPassword) {
@@ -122,13 +120,19 @@ public class SignIn {
 	public static boolean hasSuccessNewPasswordMessage() {
 		return Gui.getPopupTitle().equals("Success!")
 				&& Gui.getPopupContent().equals(
-						"You may now log in with your new password");
+						DefaultStrings.ForgotPasswordNewPasswordMessage);
 	}
 
 	public static boolean hasNoMatchPasswordMessage() {
 		return Gui.getPopupTitle().equals("Error")
 				&& Gui.getPopupContent().equals(
-						"Confirm password must match new password.");
+						DefaultStrings.ForgotPasswordWrongConfirmMessage);
+	}
+
+	public static boolean hasNotAssociatedEmailMessage() {
+		return Gui.getPopupTitle().equals("Incorrect Email")
+				&& Gui.getPopupContent().equals(
+						DefaultStrings.ForgotPasswordEmailNotExistMessage);
 	}
 
 }
