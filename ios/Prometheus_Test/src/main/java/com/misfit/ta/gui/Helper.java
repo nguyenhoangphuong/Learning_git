@@ -68,4 +68,8 @@ public class Helper {
 				&& Gui.getPopupContent()
 						.equals(DefaultStrings.InvalidPasswordMessage);
 	}
+	
+	public static void sync() {
+		Gui.drag("UIButton", DefaultStrings.SyncPlaceShineHere, 300, 0);
+	}
 }

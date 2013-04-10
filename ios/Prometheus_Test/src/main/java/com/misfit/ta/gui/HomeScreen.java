@@ -86,4 +86,13 @@ public class HomeScreen {
 		return !StringUtils.isEmpty(Gui.getProperty(
 				ViewUtils.findView("UILabel", "CALORIES"), "isHidden"));
 	}
+	
+	public static boolean viewNoDataYet() {
+		return !StringUtils.isEmpty(Gui.getProperty(
+				ViewUtils.findView("UILabel", "NO DATA YET!"), "isHidden"));
+	}
+	
+	public static void sync() {
+		Helper.sync();
+	}
 }

@@ -78,11 +78,7 @@ public class SignUp {
 	}
 
 	public static void sync() {
-		// touch on button
-		Gui.touchAVIew("UIButtonLabel", "Place SHINE here");
-		// drag button
-		// TODO calculate the coordinates for dragging
-		Gui.drag(ViewUtils.findView("UIButtonLabel", "Place SHINE here"), 0, 0);
+		Helper.sync();
 	}
 
 	public static void tapAllowUseCurrentLocation() {

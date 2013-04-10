@@ -10,5 +10,6 @@ public class DefaultStrings {
 	public static String ForgotPasswordWrongConfirmMessage = "Confirm password must match new password.";
 	public static String InvalidPasswordMessage = "Sorry, the password should have at least 6 characters, at least 1 digit and 1 letter";
 	public static String SignInWrongAccountMessage = "Sorry, your email or password is not correct";
+	public static String SyncPlaceShineHere = "Place\\nSHINE here";
 
 }
