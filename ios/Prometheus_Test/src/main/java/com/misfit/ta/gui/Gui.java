@@ -362,7 +362,11 @@ public class Gui {
 		NuRemoteClient.sendToServer(message);
 	}
     	 
-
+	public static void touchAVIew(String viewName) {
+		String message = "(Gui touchAView:  %viewName)";
+		message = message.replace("%viewName", viewName);
+		NuRemoteClient.sendToServer(message);
+	}
     /**
      * (Gui touchAViewWithViewName: @"UIButtonLabel" andTitle: @"SIGN UP") (Gui
      * touchAViewWithViewName: @"UITextField" andTitle: @"Email")
@@ -386,14 +390,29 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
     
+    /**
+     * Tap Next
+     * This method is used in Log In screen or Sign Up screens
+     */
 	public static void tapNext() {
-		String message = "(Gui touchAView: (ViewUtils findViewWithViewName: @\"UIButton\" andIndex: 1 inView: (ViewUtils findViewWithViewName: @\"UIView\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"PTTopNavigationView\" andIndex: 0))))";
+		String message = "(Gui touchAView: ";
+		message += ViewUtils.generateFindViewStatement("UIButton", 1, ViewUtils
+				.generateFindViewStatement("UIView", 0, ViewUtils
+						.generateFindViewStatement("PTTopNavigationView", 0)));
+		message += ")";
 		NuRemoteClient.sendToServer(message);
 	}
-
+	
+	/**
+	 * Tap Back
+	 * This method is used in Log In screen or Sign Up screens
+	 */
 	public static void tapPrevious() {
-		String message = "(Gui touchAView: (ViewUtils findViewWithViewName: @\"UIButton\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"UIView\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"PTTopNavigationView\" andIndex: 0))))";
-		NuRemoteClient.sendToServer(message);
+		String message = "(Gui touchAView: ";
+		message += ViewUtils.generateFindViewStatement("UIButton", 0, ViewUtils
+				.generateFindViewStatement("UIView", 0, ViewUtils
+						.generateFindViewStatement("PTTopNavigationView", 0)));
+		message += ")";		NuRemoteClient.sendToServer(message);
 	}
 
     public static void touchButton(int index) {
@@ -791,8 +810,6 @@ public class Gui {
     public static boolean isLocationServiceOn() {
         return locationService;
     }
-    
-    
 
 
     public static void start(String ip) {
