@@ -1,6 +1,9 @@
 package com.misfit.ta.ios.modelapi.signup;
 
 import java.io.File;
+import java.security.Timestamp;
+import java.util.Date;
+import java.util.Random;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
@@ -10,12 +13,28 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.gui.Gui;
+import com.misfit.ta.gui.HomeScreen;
+import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.SignUp;
+
 public class SignUpAPI extends ModelAPI {
 	public SignUpAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
+
+	private static String year;
+	private static String month;
+	private static String day;
+	private static String hFraction;
+	private static String hDigit;
+	private static String wDigit;
+	private static String wFraction;
+	private static boolean isMale;
+	private static boolean isUSMetric;
+	private static String[] months = { "January", "February", "March", "April", "May",
+			"June", "July", "August", "September", "October", "November",
+			"December" };
 
 	/**
 	 * This method implements the Edge 'e_Back'
@@ -25,16 +44,6 @@ public class SignUpAPI extends ModelAPI {
 		SignUp.tapPrevious();
 		ShortcutsTyper.delayTime(500);
 	}
-	
-	
-	/**
-	 * This method implements the Edge 'e_BackToStep4'
-	 * 
-	 */
-	public void e_BackToStep4() {
-		Gui.touchAVIew("UIButton", 2);
-		ShortcutsTyper.delayTime(500);
-	}
 
 	/**
 	 * This method implements the Edge 'e_ChooseSignUp'
@@ -42,6 +51,7 @@ public class SignUpAPI extends ModelAPI {
 	 */
 	public void e_ChooseSignUp() {
 		SignUp.tapSignUp();
+		ShortcutsTyper.delayTime(5000);
 	}
 
 	/**
@@ -60,15 +70,6 @@ public class SignUpAPI extends ModelAPI {
 		SignUp.tapNext();
 		ShortcutsTyper.delayTime(500);
 	}
-	
-	/**
-	 * This method implements the Edge 'e_NextToStep3'
-	 * 
-	 */
-	public void e_NextToStep3() {
-		Gui.touchAVIew("UIButton", 3);
-		ShortcutsTyper.delayTime(500);
-	}
 
 	/**
 	 * This method implements the Edge 'e_SetGoal'
@@ -76,7 +77,7 @@ public class SignUpAPI extends ModelAPI {
 	 */
 	public void e_SetGoal() {
 		SignUp.setGoal(2);
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -84,7 +85,10 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SignOut() {
-		// TODO:
+		HomeScreen.tapSettings();
+		Gui.swipeUp(1000);
+		HomeSettings.tapSignOut();
+		ShortcutsTyper.delayTime(3000);
 	}
 
 	/**
@@ -92,8 +96,8 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SubmitValidEmailPassword() {
-		SignUp.enterEmailPassword("test165@thy.com", "test12");
-		ShortcutsTyper.delayTime(5000);
+		SignUp.enterEmailPassword(generateEmail(), "test12");
+		ShortcutsTyper.delayTime(8000);
 	}
 
 	/**
@@ -102,6 +106,7 @@ public class SignUpAPI extends ModelAPI {
 	 */
 	public void e_Sync() {
 		SignUp.sync();
+		ShortcutsTyper.delayTime(30000);
 	}
 
 	/**
@@ -109,7 +114,8 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_inputBirthDay() {
-		SignUp.enterBirthDay("1990", "May", "20");
+		generateBirthDay();
+		SignUp.enterBirthDay(year, month, day);
 		ShortcutsTyper.delayTime(500);
 	}
 
@@ -118,8 +124,9 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_inputHeight() {
-		SignUp.enterHeight("6'", "3\\\"", true);
-		ShortcutsTyper.delayTime(500);
+		generateHeight(true);
+		SignUp.enterHeight(hDigit, hFraction, true);
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -127,8 +134,9 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_inputSex() {
-		SignUp.enterGender(false);
-		ShortcutsTyper.delayTime(500);
+		isMale = new Random().nextBoolean();
+		SignUp.enterGender(isMale);
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -136,7 +144,9 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_inputWeight() {
-		
+		generateWeight(true);
+		SignUp.enterWeight(wDigit, wFraction, true);
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -160,7 +170,9 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpStep1() {
-		Assert.assertTrue(SignUp.isSignUpStep1View(), "This is not sign up step1 view.");
+		Assert.assertTrue(SignUp.isSignUpStep1View(),
+				"This is not sign up step1 view.");
+		ShortcutsTyper.delayTime(500);
 	}
 
 	/**
@@ -168,7 +180,9 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpStep2() {
-		Assert.assertTrue(SignUp.isSignUpStep2View(), "This is not sign up step2 view.");
+		Assert.assertTrue(SignUp.isSignUpStep2View(),
+				"This is not sign up step2 view.");
+		ShortcutsTyper.delayTime(500);
 	}
 
 	/**
@@ -184,7 +198,9 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpStep3() {
-		Assert.assertTrue(SignUp.isSignUpStep3View(), "This is not sign up step3 view.");
+		Assert.assertTrue(SignUp.isSignUpStep3View(),
+				"This is not sign up step3 view.");
+		ShortcutsTyper.delayTime(500);
 	}
 
 	/**
@@ -192,7 +208,9 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpStep4() {
-		Assert.assertTrue(SignUp.isSignUpStep4View(), "This is not sign up step4 view.");
+		Assert.assertTrue(SignUp.isSignUpStep4View(),
+				"This is not sign up step4 view.");
+		ShortcutsTyper.delayTime(500);
 	}
 
 	/**
@@ -208,6 +226,48 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpStep5() {
-		Assert.assertTrue(SignUp.isSignUpStep5View(), "This is not sign up step5 view.");
+		Assert.assertTrue(SignUp.isSignUpStep5View(),
+				"This is not sign up step5 view.");
+		ShortcutsTyper.delayTime(500);
+	}
+
+	private String generateEmail() {
+		Date today = new Date();
+		return "qatest" + String.valueOf(today.getTime()) + "@test.com";
+	}
+
+	private void generateBirthDay() {
+		Random generator = new Random();
+		year = String.valueOf(1930 + generator.nextInt(71));
+		month = months[generator.nextInt(12)];
+		day = String.valueOf(generator.nextInt(28) + 1);
+	}
+	
+	private void generateHeight(boolean USMetric) {
+		Random generator = new Random();
+		isUSMetric = USMetric;
+		if (isUSMetric) {
+			hDigit = String.valueOf(3 + generator.nextInt(6)) + "'";
+			hFraction = String.valueOf(generator.nextInt(12)) + "\\\"";
+		} else {
+			hDigit = String.valueOf(generator.nextInt(2) + 1);
+			int fraction = generator.nextInt(51);
+			if (fraction < 10) {
+				hFraction = ".0" + String.valueOf(fraction);
+			} else {
+				hFraction = "." + String.valueOf(fraction);
+			}
+		}
+	}
+	
+	private void generateWeight(boolean USMetric) {
+		Random generator = new Random();
+		isUSMetric = USMetric;
+		if (isUSMetric) {
+			wDigit = String.valueOf(77 + generator.nextInt(295));
+		} else {
+			wDigit = String.valueOf(35 + generator.nextInt(115));
+		}
+		wFraction = "." + String.valueOf(generator.nextInt(10));
 	}
 }

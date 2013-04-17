@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -385,14 +386,15 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
     
-    public static void tapNext() {
-    	String message = "(Gui touchAView: (ViewUtils findViewWithViewName: @\"UIButton\" andIndex: 1 inView: (ViewUtils findViewWithViewName: @\"UIView\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"PTTopNavigationView\" andIndex: 0))))";
-    	NuRemoteClient.sendToServer(message);
-    }
-    public static void tapPrevious() {
-    	String message = "(Gui touchAView: (ViewUtils findViewWithViewName: @\"UIButton\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"UIView\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"PTTopNavigationView\" andIndex: 0))))";
-    	NuRemoteClient.sendToServer(message);
-    }
+	public static void tapNext() {
+		String message = "(Gui touchAView: (ViewUtils findViewWithViewName: @\"UIButton\" andIndex: 1 inView: (ViewUtils findViewWithViewName: @\"UIView\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"PTTopNavigationView\" andIndex: 0))))";
+		NuRemoteClient.sendToServer(message);
+	}
+
+	public static void tapPrevious() {
+		String message = "(Gui touchAView: (ViewUtils findViewWithViewName: @\"UIButton\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"UIView\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"PTTopNavigationView\" andIndex: 0))))";
+		NuRemoteClient.sendToServer(message);
+	}
 
     public static void touchButton(int index) {
         touchAVIew("UIButton", index);
@@ -604,7 +606,7 @@ public class Gui {
     }
     
     public static void drag(String viewType, int index, int dx, int dy) {
-        String message = "(Gui dragAViewWithViewName: %viewType andIndex: %index withXPixels: %dx andYPixels: %dy)";
+        String message = "(Gui dragAViewWithViewName: @\"%viewType\" andIndex: %index withXPixels: %dx andYPixels: %dy)";
         message = message.replace("%viewType", viewType);
         message = message.replace("%index", String.valueOf(index));
         message = message.replace("%dx", String.valueOf(dx));
@@ -613,7 +615,7 @@ public class Gui {
     }
     
     public static void drag(String viewType, String title, int dx, int dy) {
-        String message = "(Gui dragAViewWithViewName: %viewType andTitle: @\"%title\" withXPixels: %dx andYPixels: %dy)";
+        String message = "(Gui dragAViewWithViewName: @\"%viewType\" andTitle: @\"%title\" withXPixels: %dx andYPixels: %dy)";
         message = message.replace("%viewType", viewType);
         message = message.replace("%title", title);
         message = message.replace("%dx", String.valueOf(dx));
