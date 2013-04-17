@@ -5,7 +5,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SignUp {
 	public static void tapSignUp() {
-		Gui.touchAVIew("UIButtonLabel", "SIGN UP");
+		Gui.touchAVIew("UIButton", "SIGN UP");
 	}
 
 	/* STEP 1: ENTER EMAIL AND PASSWORD */
@@ -40,11 +40,11 @@ public class SignUp {
 	/* STEP 4: SET YOUR GOAL */
 
 	public static void tapNext() {
-		Gui.touchAVIew("UIButton", 0);
+		Gui.tapNext();
 	}
 
 	public static void tapPrevious() {
-		Gui.touchAVIew("UIButton", 1);
+		Gui.tapPrevious();
 	}
 
 	public static int getCurrentGoal() {
@@ -82,31 +82,23 @@ public class SignUp {
 	}
 
 	public static boolean isSignUpStep1View() {
-		return "Email".equals(Gui.getProperty(
-				ViewUtils.findView("UITextFieldCenteredLabel", 0), "text"))
-				&& "Password".equals(Gui.getProperty(
-						ViewUtils.findView("UITextFieldCenteredLabel", 1),
-						"text"));
+		return ViewUtils.isExistedView("UILabel", "SIGN UP");
 	}
 
 	public static boolean isSignUpStep2View() {
-		return "PROFILE".equals(Gui.getProperty(
-				ViewUtils.findView("UILabel", 8), "text"));
+		return ViewUtils.isExistedView("UILabel", "PROFILE");
 	}
 
 	public static boolean isSignUpStep3View() {
-		return "WHAT ARE POINTS?".equals(Gui.getProperty(
-				ViewUtils.findView("UILabel", 0), "text"));
+		return ViewUtils.isExistedView("UILabel", "WHAT ARE POINTS?");
 	}
 
 	public static boolean isSignUpStep4View() {
-		return "SET YOUR GOAL".equals(Gui.getProperty(
-				ViewUtils.findView("UILabel", 4), "text"));
+		return ViewUtils.isExistedView("UILabel", "SET YOUR GOAL");
 	}
 
 	public static boolean isSignUpStep5View() {
-		return "PAIRING".equals(Gui.getProperty(
-				ViewUtils.findView("UILabel", 16), "text"));
+		return ViewUtils.isExistedView("UILabel", "PAIRING");
 	}
 	
 	public static boolean hasInvalidEmailMessage() {
