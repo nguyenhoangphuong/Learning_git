@@ -26,6 +26,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
 	 */
 	public void e_ChooseSignIn() {
 		SignIn.tapLogIn();
+		ShortcutsTyper.delayTime(500);
 	}
 
 	/**
@@ -34,6 +35,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
 	 */
 	public void e_FillCorrectEmailPassword() {
 		SignIn.enterEmailPassword("thy@misfitwearables.com", "test12");
+		ShortcutsTyper.delayTime(30000);
 	}
 
 	/**
@@ -51,6 +53,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
 		HomeScreen.tapSettings();
 		Gui.swipeUp(1000);
 		HomeSettings.tapSignOut();
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -74,7 +77,8 @@ public class SuccessfulSignInAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignInVisible() {
-		// TODO:
+		Assert.assertTrue(SignIn.isLoginView(), "This is not sign in view.");
+		ShortcutsTyper.delayTime(500);
 	}
 
 }

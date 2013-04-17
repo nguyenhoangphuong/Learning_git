@@ -90,8 +90,6 @@ public class SignIn {
 	public static boolean isForgotPasswordView() {
 		return "SUBMIT".equals(Gui.getProperty("UIButtonLabel", 0, "text"))
 				&& "CANCEL".equals(Gui.getProperty("UIButtonLabel", 1, "text"));
-//		"Enter your email".equals(Gui.getProperty(
-//				"UITextFieldCenteredLabel", 0, "text"))
 				
 	}
 
