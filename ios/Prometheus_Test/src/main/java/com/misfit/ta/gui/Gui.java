@@ -384,6 +384,15 @@ public class Gui {
 
         NuRemoteClient.sendToServer(message);
     }
+    
+    public static void tapNext() {
+    	String message = "(Gui touchAView: (ViewUtils findViewWithViewName: @\"UIButton\" andIndex: 1 inView: (ViewUtils findViewWithViewName: @\"UIView\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"PTTopNavigationView\" andIndex: 0))))";
+    	NuRemoteClient.sendToServer(message);
+    }
+    public static void tapPrevious() {
+    	String message = "(Gui touchAView: (ViewUtils findViewWithViewName: @\"UIButton\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"UIView\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"PTTopNavigationView\" andIndex: 0))))";
+    	NuRemoteClient.sendToServer(message);
+    }
 
     public static void touchButton(int index) {
         touchAVIew("UIButton", index);
@@ -442,7 +451,7 @@ public class Gui {
      * @param index
      */
     public static void setText(int index, String text) {
-        String message = "(Gui enterTextForViewAtIndex %index withText:  @\"%text\")";
+    	String message = "(Gui enterTextForViewAtIndex %index withText:  @\"%text\")";
         message = message.replace("%index", String.valueOf(index));
         message = message.replace("%text", text);
         NuRemoteClient.sendToServer(message);
@@ -665,7 +674,6 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
     
-    
     // ---- tabbar ----
     public static void touchTabbar(int index) {
         String message = "(Gui touchATabBarButtonWithIndex: %index)";
@@ -734,6 +742,7 @@ public class Gui {
         return NuRemoteClient.getLastMessage();
     }
     
+    
     /**
      * (Gui getTextOfViewName: @"UILabel" andIndex: 0)
      * 
@@ -742,7 +751,7 @@ public class Gui {
      * @return
      */
     public static String getText(String type, int index) {
-        String message = "(Gui getTextOfViewName: @\"%type\" andIndex: %index)";
+    	String message = "(Gui getTextOfViewName: @\"%type\" andIndex: %index)";
         message = message.replace("%type", type);
         message = message.replace("%index", String.valueOf(index));
         NuRemoteClient.sendToServer(message);
@@ -845,14 +854,12 @@ public class Gui {
         System.out.println("LOG [Gui.printViewHierarchy]: view hierarchy: \n" + views);
         return views;
     }
-
+    
     public static void main(String[] args) throws IOException {
         
         Gui.init("192.168.1.123");
         Gui.printView();
         Gui.shutdown();
-        
-       
     }
 
 }

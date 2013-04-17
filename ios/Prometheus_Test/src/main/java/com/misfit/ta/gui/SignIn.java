@@ -15,13 +15,19 @@ public class SignIn {
 
 	public static void enterEmailPassword(String email, String password) {
 		Gui.touchAVIew("UITextField", 0);
-		ShortcutsTyper.delayTime(10000);
+		String txtEmail = Gui.getProperty(
+				ViewUtils.findView("UITextField", 0), "text");
+		for (int i = 0; i < txtEmail.length(); i++) {
+			Gui.pressDelete();
+		}
+		ShortcutsTyper.delayTime(300);
 		Gui.type(email);
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(300);
 		Gui.pressNext();
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(300);
+		Gui.pressDelete();
 		Gui.type(password);
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(300);
 		Gui.pressDone();
 	}
 
@@ -63,18 +69,15 @@ public class SignIn {
 	}
 
 	public static void tapNext() {
-		Gui.touchAVIew("UIButton", 0);
+		Gui.tapNext();
 	}
 
 	public static void tapPrevious() {
-		Gui.touchAVIew("UIButton", 1);
+		Gui.tapPrevious();
 	}
 
 	public static boolean isLoginView() {
-		return "Email".equals(Gui.getProperty("UITextFieldCenteredLabel", 0,
-				"text"))
-				&& "Password".equals(Gui.getProperty(
-						"UITextFieldCenteredLabel", 1, "text"));
+		return ViewUtils.isExistedView("UILabel", "LOG IN");
 	}
 
 	/**
@@ -85,10 +88,11 @@ public class SignIn {
 	}
 
 	public static boolean isForgotPasswordView() {
-		return "Enter your email".equals(Gui.getProperty(
-				"UITextFieldCenteredLabel", 0, "text"))
-				&& "SUBMIT".equals(Gui.getProperty("UIButtonLabel", 0, "text"))
+		return "SUBMIT".equals(Gui.getProperty("UIButtonLabel", 0, "text"))
 				&& "CANCEL".equals(Gui.getProperty("UIButtonLabel", 1, "text"));
+//		"Enter your email".equals(Gui.getProperty(
+//				"UITextFieldCenteredLabel", 0, "text"))
+				
 	}
 
 	public static void tapCancel() {

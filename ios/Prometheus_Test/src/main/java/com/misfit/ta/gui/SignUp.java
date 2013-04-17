@@ -10,14 +10,10 @@ public class SignUp {
 
 	/* STEP 1: ENTER EMAIL AND PASSWORD */
 	public static void enterEmailPassword(String email, String password) {
-		Gui.touchAVIew("PTBlackTextField", 0);
-		ShortcutsTyper.delayTime(10000);
+		Gui.touchAVIew("UITextField", 0);
 		Gui.type(email);
-		ShortcutsTyper.delayTime(10000);
 		Gui.pressNext();
-		ShortcutsTyper.delayTime(10000);
 		Gui.type(password);
-		ShortcutsTyper.delayTime(10000);
 		Gui.pressDone();
 	}
 
@@ -94,22 +90,36 @@ public class SignUp {
 	}
 
 	public static boolean isSignUpStep2View() {
-		return true;
+		return "PROFILE".equals(Gui.getProperty(
+				ViewUtils.findView("UILabel", 8), "text"));
 	}
 
 	public static boolean isSignUpStep3View() {
-		return true;
+		return "WHAT ARE POINTS?".equals(Gui.getProperty(
+				ViewUtils.findView("UILabel", 0), "text"));
 	}
 
 	public static boolean isSignUpStep4View() {
-		return true;
+		return "SET YOUR GOAL".equals(Gui.getProperty(
+				ViewUtils.findView("UILabel", 4), "text"));
 	}
 
 	public static boolean isSignUpStep5View() {
-		return true;
+		return "PAIRING".equals(Gui.getProperty(
+				ViewUtils.findView("UILabel", 16), "text"));
 	}
 	
 	public static boolean hasInvalidEmailMessage() {
 		return Helper.hasInvalidEmailMessage();
+	}
+	
+	public static boolean hasInvalidPasswordMessage() {
+		return Helper.hasInvalidPasswordMessage();
+	}
+	
+	public static boolean hasExistedEmailMessage() {
+		return Gui.getPopupTitle().equals("Error")
+				&& Gui.getPopupContent()
+				.equals(DefaultStrings.SignUpDuplicatedEmailMessage);
 	}
 }

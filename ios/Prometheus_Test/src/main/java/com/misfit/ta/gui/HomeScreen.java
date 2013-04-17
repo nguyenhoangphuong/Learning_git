@@ -7,11 +7,11 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeScreen {
 	public static void tapSettings() {
-		 Gui.touchAVIew("UIButton", 29);
+		 Gui.touchAVIew("UIButton", 6);
 	}
 	
 	public static void tapSyncTray() {
-		 Gui.touchAVIew("UIButton", 28);
+		 Gui.touchAVIew("UIButton", 5);
 	}
 	
 	public static void tapOpenManualInput() {
