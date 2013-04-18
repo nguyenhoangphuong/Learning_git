@@ -29,6 +29,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest
 		logger.info("==================================================================================================================");
 		
 		if(!debug) start();
+		else Gui.init(Settings.getParameter("DeviceIP"));
 	}
 	
 	@AfterMethod(alwaysRun = true)
