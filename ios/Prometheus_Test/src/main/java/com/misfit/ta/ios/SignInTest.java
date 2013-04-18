@@ -11,10 +11,15 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.ios.modelapi.signin.InvalidSignInAPI;
 import com.misfit.ta.ios.modelapi.signin.SuccessfulSignInAPI;
-import com.misfit.ta.ios.modelapi.signup.SignUpAPI;
 import com.misfit.ta.utils.Files;
 
-public class SignInTest extends AutomationTest  {
+public class SignInTest extends AutomationTest 
+{
+	public SignInTest()
+	{
+		this.debug = true;
+	}
+	
 	@Test(groups = { "iOS", "Prometheus", "signin"})
     public void InvalidSignIn() throws InterruptedException, StopConditionException, IOException 
     {

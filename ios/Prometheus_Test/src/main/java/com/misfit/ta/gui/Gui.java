@@ -13,8 +13,10 @@ import java.util.Vector;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
+import org.openqa.selenium.internal.Killable;
 import org.testng.Assert;
 
+import com.misfit.ios.AppHelper;
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.Processes;
 import com.misfit.ios.ViewUtils;
@@ -333,6 +335,7 @@ public class Gui {
 
     public static void shutdown() {
         NuRemoteClient.close();
+        Gui.stopApp();
         logger.info("Closing down. BYE!");
     }
 
@@ -812,46 +815,28 @@ public class Gui {
     }
 
 
-    public static void start(String ip) {
+    public static void start(String ip) 
+    {
         logger.info("Will start the app");
-        // String target = Settings.getTarget();
-        // String appPath = Settings.getAppPath();
 
         stopApp();
         int noOfTries = 0;
         boolean connected = false;
-        while (!connected && noOfTries < 1) {
+        while (!connected && noOfTries < 1) 
+        {
             logger.info("Startup attempt: " + noOfTries + 1);
-            // if (target.contains("Sim")) {
-            // String clientLog = "logs/client.log";
-            // String family = target.contains("iPhone") ? "iphone" : "ipad";
-            // String[] cmd = {"/usr/local/bin/ios-sim", "launch", appPath,
-            // "--family", family, "--stderr", clientLog, "--exit"};
-            // runCmd(cmd);
-            // ShortcutsTyper.delayTime(2000);
-            // } else {
-            // System.out.println("LOG [Gui.start]: current uuid=" +
-            // Gui.getCurrentUdid());
-            // System.out.println("LOG [Gui.start]: " + Gui.getAppPath());
-            // String[] cmd = { "instruments", "-w", Gui.getCurrentUdid(), "-t",
-            // template, Gui.getAppPath() };
-            // Processes.runCmd(cmd);
-
-            // }
-
-            // ----
-
-            ProcessBuilder pb = new ProcessBuilder();
-            String command = "instruments -w " + Gui.getCurrentUdid() + " -t " + template + " " + Gui.getAppPath()
-                    + " -e UIARESULTSPATH logs";
-            logger.info("Command: " + command);
-            System.out.println("LOG [AppHelper.launchInstrument]: command= \n" + command);
-            pb.command("instruments", "-w", Gui.getCurrentUdid(), "-t", template, Gui.getAppPath(), "-e",
-                    "UIARESULTSPATH", "logs");
-            String result = runProcess(pb, true, true);
-            ShortcutsTyper.delayTime(10000);
-            // ---
-
+	        String command = "instruments -w " + Gui.getCurrentUdid() + " -t " + template + " " + Gui.getAppPath() + " -e UIARESULTSPATH logs";
+	        logger.info("Command: " + command);
+	        
+	        try 
+	        {
+				Runtime.getRuntime().exec(command);
+			}
+	        catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+	        
             connected = NuRemoteClient.init(ip);
             noOfTries++;
         }
