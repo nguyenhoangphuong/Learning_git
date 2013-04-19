@@ -18,6 +18,7 @@ function Alert()
 	this.IncorrectEmailMsg = "The email you entered is not associated with a Shine account";
 	this.EmailSentMsg = "Check your email for the password reset link";
 	this.AllowLocationMsg = "\"Prometheus\" Would Like to Use Your Current Location";
+	this.AllowBluetoothMsg = "Turn On Bluetooth to Allow \"Prometheus\" to Connect to Accessories";
 	this.AgreeNDA = "Do you agree to the NDA?"
 
 }
@@ -38,21 +39,10 @@ function PrometheusAlertHandler(_alert)
 	var message = _alert.staticTexts()[1].name();
    
 	// check for test-related alert
-	if( message == alert.InvalidEmailMsg ||
-		message == alert.InvalidPasswordMsg ||
-		message == alert.DuplicatedEmailMsg ||
-		message == alert.AllowLocationMsg ||
-		message == alert.WrongAccountMsg ||
-		message == alert.IncorrectEmailMsg ||
-		message == alert.EmailSentMsg)
-	{
-		// log
-		UIALogger.logDebug("Expected Alert [" + name + "] [" + message + "] encountered!");
-		target.delay(1);
-		return false;
-	}
-	// location alert
-	else if(name == alert.AllowLocationMsg || message == alert.AllowLocationMsg)
+	if( name == alert.AllowLocationMsg ||
+		name == alert.AllowLocationMsg || 
+		message == alert.AllowBluetoothMsg ||
+		message == alert.AllowBluetoothMsg)
 	{
 		// log the alert
 		UIALogger.logDebug("Expected Alert [" + name + "] [" + message + "] encountered!");
@@ -61,11 +51,7 @@ function PrometheusAlertHandler(_alert)
 		return true;
 	}
 	
-	// for other alert, choose by default
-	UIALogger.logDebug("Unexpected Alert [" + name + "] [" + message + "] encountered!");
-	_alert.defaultButton().tap();
-	target.delay(1);
-	return true;
+	return false;
 }
 
 target.delay(1000);
