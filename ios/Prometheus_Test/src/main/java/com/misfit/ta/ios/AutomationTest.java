@@ -41,6 +41,8 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
         if (!debug) {
             Gui.cleanCache();
             Gui.start(Settings.getParameter("DeviceIP"));
+        } else {
+        	Gui.init(Settings.getParameter("DeviceIP"));
         }
     }
 
