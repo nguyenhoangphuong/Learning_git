@@ -1,5 +1,6 @@
 package com.misfit.ta.gui;
 
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class Helper {
@@ -70,6 +71,24 @@ public class Helper {
 	}
 	
 	public static void sync() {
+		Gui.touchAVIew("UIButton", DefaultStrings.SyncPlaceShineHere);
 		Gui.drag("UIButton", DefaultStrings.SyncPlaceShineHere, 300, 0);
+	}
+	
+	public static void enterEmailPassword(String email, String password) {
+		Gui.touchAVIew("UITextField", 0);
+		String txtEmail = Gui.getProperty("UITextField", 0, "text");
+		for (int i = 0; i < txtEmail.length(); i++) {
+			Gui.pressDelete();
+		}
+		ShortcutsTyper.delayTime(800);
+		Gui.type(email);
+		ShortcutsTyper.delayTime(300);
+		Gui.pressNext();
+		ShortcutsTyper.delayTime(300);
+		Gui.pressDelete();
+		Gui.type(password);
+		ShortcutsTyper.delayTime(300);
+		Gui.pressDone();
 	}
 }

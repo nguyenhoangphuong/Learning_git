@@ -8,6 +8,7 @@ import java.util.Random;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
@@ -35,6 +36,7 @@ public class SignUpAPI extends ModelAPI {
 	private static String[] months = { "January", "February", "March", "April", "May",
 			"June", "July", "August", "September", "October", "November",
 			"December" };
+	private static int goal = 0;
 
 	/**
 	 * This method implements the Edge 'e_Back'
@@ -76,7 +78,8 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SetGoal() {
-		SignUp.setGoal(2);
+		goal = new Random().nextInt(3);
+		SignUp.setGoal(goal);
 		ShortcutsTyper.delayTime(1000);
 	}
 
@@ -186,11 +189,11 @@ public class SignUpAPI extends ModelAPI {
 	}
 
 	/**
-	 * This method implements the Vertex 'v_SignUpStep2Updated'
+	 * This method implements the Vertex 'v_SignUpStep4Updated'
 	 * 
 	 */
-	public void v_SignUpStep2Updated() {
-		// TODO:
+	public void v_SignUpStep4Updated() {
+		Assert.assertTrue(SignUp.getCurrentGoal() == goal, "Goal is not updated");
 	}
 
 	/**
@@ -214,12 +217,46 @@ public class SignUpAPI extends ModelAPI {
 	}
 
 	/**
-	 * This method implements the Vertex 'v_SignUpStep4Updated'
+	 * This method implements the Vertex 'v_SignUpStep4UpdatedBirthday'
 	 * 
 	 */
-	public void v_SignUpStep4Updated() {
-		// TODO:
+	public void v_SignUpStep2UpdatedBirthday() {
+		Assert.assertTrue(SignUp.isSignUpStep2View() && isUpdatedBirthday(),
+				"This is not sign up step2 updated birthday view.");
+		ShortcutsTyper.delayTime(500);
 	}
+	
+	/**
+	 * This method implements the Vertex 'v_SignUpStep4UpdatedSex'
+	 * 
+	 */
+	public void v_SignUpStep2UpdatedSex() {
+		Assert.assertTrue(SignUp.isSignUpStep2View() && isUpdatedGender(),
+				"This is not sign up step2 updated gender view.");
+		ShortcutsTyper.delayTime(500);
+	}
+	
+	/**
+	 * This method implements the Vertex 'v_SignUpStep4UpdatedHeight'
+	 * 
+	 */
+	public void v_SignUpStep2UpdatedHeight() {
+		Assert.assertTrue(SignUp.isSignUpStep2View() && isUpdatedHeight(),
+				"This is not sign up step2 updated height view.");
+		ShortcutsTyper.delayTime(500);
+	}
+	
+	/**
+	 * This method implements the Vertex 'v_SignUpStep4UpdatedWeight'
+	 * 
+	 */
+	public void v_SignUpStep2UpdatedWeight() {
+		Assert.assertTrue(SignUp.isSignUpStep2View() && isUpdatedWeight(),
+				"This is not sign up step2 updated weight view.");
+		ShortcutsTyper.delayTime(500);
+	}
+	
+	
 
 	/**
 	 * This method implements the Vertex 'v_SignUpStep5'
@@ -269,5 +306,45 @@ public class SignUpAPI extends ModelAPI {
 			wDigit = String.valueOf(35 + generator.nextInt(115));
 		}
 		wFraction = "." + String.valueOf(generator.nextInt(10));
+	}
+	
+	private boolean isUpdatedGender() {
+		return true;
+	}
+	
+	private boolean isUpdatedBirthday() {
+		String birthday = Gui.getProperty(ViewUtils.findView("UILabel", 0, ViewUtils.generateFindViewStatement("PTDatePickerControl", 0)), "text");
+		String expectedBirthday = month.substring(0, 3);
+		if (Integer.valueOf(day) < 10) {
+			expectedBirthday += " 0" + day;
+		} else {
+			expectedBirthday += " " + day;
+		}
+		expectedBirthday += ", " + year;
+		return expectedBirthday.equals(birthday);
+	}
+	
+	private boolean isUpdatedHeight() {
+		String height = Gui.getProperty(ViewUtils.findView("UILabel", 0, ViewUtils.generateFindViewStatement("PTHeightPickerControl", 0)), "text");
+		boolean USMetric = !height.contains("m");
+		String expectedHeight = hDigit; 
+		if (!USMetric) {
+			expectedHeight += hFraction + " m";
+		} else {
+			expectedHeight += hFraction.substring(0, hFraction.length() - 2) + "\"";
+		}
+		return USMetric == isUSMetric && expectedHeight.equals(height);
+	}
+	
+	private boolean isUpdatedWeight() {
+		String weight = Gui.getProperty(ViewUtils.findView("UILabel", 0, ViewUtils.generateFindViewStatement("PTWeightPickerControl", 0)), "text");
+		boolean USMetric = weight.contains("lbs");
+		String expectedWeight = wDigit + wFraction;
+		if (USMetric) {
+			expectedWeight += " lbs";
+		} else {
+			expectedWeight += " kg";
+		}
+		return USMetric == isUSMetric && expectedWeight.equals(weight);
 	}
 }

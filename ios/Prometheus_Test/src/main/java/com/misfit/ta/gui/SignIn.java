@@ -6,32 +6,24 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class SignIn {
 
 	public static void tapLogIn() {
-		Gui.touchAVIew("UIButtonLabel", "LOG IN");
+		Gui.touchAVIew("UIButtonLabel", "SIGN IN");
 	}
 
 	public static void tapLogInWithFacebook() {
-		Gui.touchAVIew("UIButtonLabel", "LOG IN WITH FACEBOOK");
+		Gui.touchAVIew("UIButtonLabel", "SIGN IN WITH FACEBOOK");
 	}
 
 	public static void enterEmailPassword(String email, String password) {
-		Gui.touchAVIew("UITextField", 0);
-		String txtEmail = Gui.getProperty(
-				ViewUtils.findView("UITextField", 0), "text");
-		for (int i = 0; i < txtEmail.length(); i++) {
-			Gui.pressDelete();
-		}
-		ShortcutsTyper.delayTime(300);
-		Gui.type(email);
-		ShortcutsTyper.delayTime(300);
-		Gui.pressNext();
-		ShortcutsTyper.delayTime(300);
-		Gui.pressDelete();
-		Gui.type(password);
-		ShortcutsTyper.delayTime(300);
-		Gui.pressDone();
+		Helper.enterEmailPassword(email, password);
 	}
 
 	public static void enterEmail(String email) {
+		Gui.touchAVIew("UITextField", 0);
+		String txtEmail = Gui.getProperty("UITextField", 0, "text");
+		for (int i = 0; i < txtEmail.length(); i++) {
+			Gui.pressDelete();
+		}
+		ShortcutsTyper.delayTime(800);
 		Gui.type(email);
 	}
 
@@ -84,7 +76,7 @@ public class SignIn {
 	 * Forgot Password
 	 */
 	public static void tapForgotPassword() {
-		Gui.touchAVIew("UIButtonLabel", "Forgot password");
+		Gui.touchAVIew("UIButtonLabel", "I've forgotten my password");
 	}
 
 	public static boolean isForgotPasswordView() {

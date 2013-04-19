@@ -10,11 +10,7 @@ public class SignUp {
 
 	/* STEP 1: ENTER EMAIL AND PASSWORD */
 	public static void enterEmailPassword(String email, String password) {
-		Gui.touchAVIew("UITextField", 0);
-		Gui.type(email);
-		Gui.pressNext();
-		Gui.type(password);
-		Gui.pressDone();
+		Helper.enterEmailPassword(email, password);
 	}
 
 	/* STEP 2: PROFILE */
@@ -113,5 +109,10 @@ public class SignUp {
 		return Gui.getPopupTitle().equals("Error")
 				&& Gui.getPopupContent()
 				.equals(DefaultStrings.SignUpDuplicatedEmailMessage);
+	}
+	
+	public static void tapOK() {
+		// popup error message
+		Gui.touchPopupButton(0);
 	}
 }
