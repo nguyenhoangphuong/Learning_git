@@ -825,7 +825,8 @@ public class Gui {
         while (!connected && noOfTries < 1) 
         {
             logger.info("Startup attempt: " + noOfTries + 1);
-	        String command = "instruments -w " + Gui.getCurrentUdid() + " -t " + template + " " + Gui.getAppPath() + " -e UIARESULTSPATH logs";
+	        String command = "instruments -w " + Gui.getCurrentUdid() + " -t " + template + " " + Gui.getAppPath() + " -e UIARESULTSPATH logs -e UIASCRIPT script/automation/alertsupport.js";
+	        //String command = "instruments -w " + Gui.getCurrentUdid() + " -t " + template + " " + Gui.getAppPath() + " -e UIARESULTSPATH logs";
 	        logger.info("Command: " + command);
 	        
 	        try 

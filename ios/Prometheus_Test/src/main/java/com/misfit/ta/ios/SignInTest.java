@@ -16,10 +16,6 @@ import com.misfit.ta.utils.Files;
 
 public class SignInTest extends AutomationTest 
 {
-	public SignInTest()
-	{
-		this.debug = true;
-	}
 	
 	@Test(groups = { "iOS", "Prometheus", "signin"})
     public void InvalidSignIn() throws InterruptedException, StopConditionException, IOException 

@@ -12,13 +12,14 @@ import org.testng.annotations.*;
 
 import com.misfit.ta.Settings;
 import com.misfit.ta.gui.Gui;
+import com.misfit.ta.utils.Files;
 
 public class AutomationTest extends com.misfit.ta.aut.AutomationTest
 {
 
 	private static final String[] results = {"PASSED", "FAILED", "UNKNOW"};
 	private static final Logger logger = Util.setupLogger(AutomationTest.class);
-	protected boolean debug = false;
+	protected boolean debug = Settings.getParameter("MVPDebug").equalsIgnoreCase("true") ? true : false;
 	
 	
 	@BeforeMethod(alwaysRun = true)
@@ -28,8 +29,10 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest
 		logger.info("|  Start of test case: " + method.getName());
 		logger.info("==================================================================================================================");
 		
+		Files.delete("instrumentscli0.trace");
+		
 		if(!debug) start();
-		else Gui.init(Settings.getParameter("DeviceIP"));
+		else Gui.start(Settings.getParameter("DeviceIP"));
 	}
 	
 	@AfterMethod(alwaysRun = true)
