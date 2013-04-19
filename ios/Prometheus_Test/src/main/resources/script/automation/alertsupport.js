@@ -1,25 +1,4 @@
-/*
-This file handler all the alert which relate to the tests
-
-When an action cause an alert to popup, the alert title and message
-will be store in 2 global vars named:
-	+ alert.alertTitle
-	+ alert.alertMsg
-
-You can also make choice dynamically when handler alert by bypassing
-the setting value for the var alertChoice, and this should do before
-trigger an alert.
-
---- For example:
-	alert.alertChoice = "Add";
-	buttonThatTriggerAlert.tap();
-	wait(2);
-	
-When working with Alert, please make sure to reset alert's properties
-after use by calling
-	alert.reset();
-*/
-
+var target = UIATarget.localTarget();
 
 // ======================== global vars for alert =============================
 function Alert()
@@ -39,10 +18,10 @@ function Alert()
 	this.IncorrectEmailMsg = "The email you entered is not associated with a Shine account";
 	this.EmailSentMsg = "Check your email for the password reset link";
 	this.AllowLocationMsg = "\"Prometheus\" Would Like to Use Your Current Location";
+	this.AgreeNDA = "Do you agree to the NDA?"
 
 }
 
-// global var
 alert = new Alert();
 
 
@@ -68,22 +47,25 @@ function PrometheusAlertHandler(_alert)
 		message == alert.EmailSentMsg)
 	{
 		// log
-		log("Expected Alert [" + name + "] [" + message + "] encountered!");
+		UIALogger.logDebug("Expected Alert [" + name + "] [" + message + "] encountered!");
 		target.delay(1);
 		return false;
 	}
 	// location alert
-	else if(name == alert.AllowLocationMsg)
+	else if(name == alert.AllowLocationMsg || message == alert.AllowLocationMsg)
 	{
 		// log the alert
-		log("Expected Alert [" + name + "] [" + message + "] encountered!");
+		UIALogger.logDebug("Expected Alert [" + name + "] [" + message + "] encountered!");
 		_alert.defaultButton().tap();
 		target.delay(1);
 		return true;
 	}
 	
 	// for other alert, choose by default
+	UIALogger.logDebug("Unexpected Alert [" + name + "] [" + message + "] encountered!");
 	_alert.defaultButton().tap();
 	target.delay(1);
 	return true;
 }
+
+target.delay(1000);

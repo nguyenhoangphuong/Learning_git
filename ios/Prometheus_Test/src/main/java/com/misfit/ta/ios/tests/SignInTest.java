@@ -9,6 +9,8 @@ import org.graphwalker.multipleModels.ModelHandler;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.misfit.ta.Settings;
+import com.misfit.ta.gui.Gui;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.signin.ForgotPasswordAPI;
 import com.misfit.ta.ios.modelapi.signin.InvalidSignInAPI;
@@ -29,9 +31,10 @@ public class SignInTest extends AutomationTest {
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
     }
-
-    // @Test(groups = { "iOS", "Prometheus", "signin"})
-    public void SuccessfulSignIn() throws InterruptedException, StopConditionException, IOException {
+	
+	@Test(groups = { "iOS", "Prometheus", "signin"})
+    public void SuccessfulSignIn() throws InterruptedException, StopConditionException, IOException 
+    {
         ModelHandler model = getModelhandler();
         model.add("SuccessfulSignIn", new SuccessfulSignInAPI(this, Files
                 .getFile("model/signin/SuccessfulSignIn.graphml"), false, new NonOptimizedShortestPath(
