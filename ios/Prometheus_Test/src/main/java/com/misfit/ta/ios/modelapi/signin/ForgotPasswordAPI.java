@@ -23,7 +23,7 @@ public class ForgotPasswordAPI extends ModelAPI {
      */
     public void e_ConfirmAlert() {
         SignIn.tapTryAgain();
-        ShortcutsTyper.delayTime(300);
+        ShortcutsTyper.delayTime(00);
     }
 
     /**
@@ -32,7 +32,8 @@ public class ForgotPasswordAPI extends ModelAPI {
      */
     public void e_InputInvalidEmail() {
         SignIn.enterEmail("test.t.c");
-        ShortcutsTyper.delayTime(500);
+        SignIn.tapSubmit();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -41,17 +42,18 @@ public class ForgotPasswordAPI extends ModelAPI {
      */
     public void e_InputNotExistedEmail() {
         SignIn.enterEmail("abc@thy.comabc");
+        SignIn.tapSubmit();
         ShortcutsTyper.delayTime(1000);
     }
 
-    /**
-     * This method implements the Edge 'e_Submit'
-     * 
-     */
-    public void e_Submit() {
-        SignIn.tapSubmit();
-        ShortcutsTyper.delayTime(300);
-    }
+	/**
+	 * This method implements the Edge 'e_Submit'
+	 * 
+	 */
+	public void e_Submit() {
+		SignIn.tapSubmit();
+		ShortcutsTyper.delayTime(1000);
+	}
 
     /**
      * This method implements the Edge 'e_gotoForgotPassword'
@@ -79,31 +81,34 @@ public class ForgotPasswordAPI extends ModelAPI {
         ShortcutsTyper.delayTime(300);
     }
 
-    /**
-     * This method implements the Vertex 'v_InvalidEmailView'
-     * 
-     */
-    public void v_InvalidEmailView() {
-        Assert.assertTrue(SignIn.hasInvalidEmailMessage(), "This is not forgot password invalid email view.");
-        ShortcutsTyper.delayTime(300);
-    }
+	/**
+	 * This method implements the Vertex 'v_InvalidEmailView'
+	 * 
+	 */
+	public void v_InvalidEmailView() {
+		Assert.assertTrue(SignIn.hasInvalidEmailMessage(),
+				"This is not forgot password invalid email view.");
+		ShortcutsTyper.delayTime(300);
+	}
 
-    /**
-     * This method implements the Vertex 'v_NotExistedEmailView'
-     * 
-     */
-    public void v_NotExistedEmailView() {
-        Assert.assertTrue(SignIn.hasNotAssociatedEmailMessage(), "This is not forgot password not existed email view.");
-        ShortcutsTyper.delayTime(300);
-    }
+	/**
+	 * This method implements the Vertex 'v_NotExistedEmailView'
+	 * 
+	 */
+	public void v_NotExistedEmailView() {
+//		Assert.assertTrue(SignIn.hasNotAssociatedEmailMessage(),
+//				"This is not forgot password not existed email view.");
+//		ShortcutsTyper.delayTime(300);
+	}
 
-    /**
-     * This method implements the Vertex 'v_SignInView'
-     * 
-     */
-    public void v_SignInView() {
-        Assert.assertTrue(SignIn.isLoginView(), "This is not forgot password log in view.");
-        ShortcutsTyper.delayTime(300);
-    }
+	/**
+	 * This method implements the Vertex 'v_SignInView'
+	 * 
+	 */
+	public void v_SignInView() {
+		Assert.assertTrue(SignIn.isLoginView(),
+				"This is not forgot password log in view.");
+		ShortcutsTyper.delayTime(300);
+	}
 
 }
