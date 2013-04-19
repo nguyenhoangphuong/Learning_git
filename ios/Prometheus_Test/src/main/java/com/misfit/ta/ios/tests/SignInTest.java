@@ -1,4 +1,4 @@
-package com.misfit.ta.ios;
+package com.misfit.ta.ios.tests;
 
 import java.io.IOException;
 
@@ -9,6 +9,7 @@ import org.graphwalker.multipleModels.ModelHandler;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.signin.ForgotPasswordAPI;
 import com.misfit.ta.ios.modelapi.signin.InvalidSignInAPI;
 import com.misfit.ta.ios.modelapi.signin.SuccessfulSignInAPI;

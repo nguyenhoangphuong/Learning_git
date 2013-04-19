@@ -1,4 +1,4 @@
-package com.misfit.ta.ios;
+package com.misfit.ta.ios.tests;
 
 import java.io.IOException;
 
@@ -9,6 +9,7 @@ import org.graphwalker.multipleModels.ModelHandler;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.signup.InvalidSignUpStep1API;
 import com.misfit.ta.ios.modelapi.signup.SignUpAPI;
 import com.misfit.ta.utils.Files;
