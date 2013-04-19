@@ -820,6 +820,7 @@ public class Gui {
         logger.info("Will start the app");
 
         stopApp();
+        logger.info("---------- 444");
         int noOfTries = 0;
         boolean connected = false;
         while (!connected && noOfTries < 1) 
@@ -878,9 +879,13 @@ public class Gui {
     }
 
     public static void stopApp() {
+        logger.info("----------- 111");
         String deviceId = Gui.getCurrentUdid();
-        ProcessFinder.kill(deviceId);
+        logger.info("----------- 222");
+//        ProcessFinder.kill(deviceId);
+        logger.info("----------- 333");
         Processes.killHard(deviceId);
+        logger.info("----------- 444");
     }
     
     public static void captureScreen(String name) {
