@@ -882,9 +882,9 @@ public class Gui {
         logger.info("----------- 111");
         String deviceId = Gui.getCurrentUdid();
         logger.info("----------- 222");
-//        ProcessFinder.kill(deviceId);
+        ProcessFinder.kill(deviceId);
         logger.info("----------- 333");
-        Processes.killHard(deviceId);
+      //  Processes.killHard(deviceId);
         logger.info("----------- 444");
     }
     
