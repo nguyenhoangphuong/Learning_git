@@ -29,6 +29,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
         }
     }
 
+    @Override
     @BeforeMethod(alwaysRun = true)
     public void setUpTest(Method method) {
         logger.info("==================================================================================================================");
@@ -43,6 +44,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
         }
     }
 
+    @Override
     @AfterMethod(alwaysRun = true)
     public void cleanUpTest(Method method, ITestResult tr) {
         logger.info("==================================================================================================================");

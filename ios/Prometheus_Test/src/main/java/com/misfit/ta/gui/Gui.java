@@ -6,17 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
-import org.openqa.selenium.internal.Killable;
 import org.testng.Assert;
 
-import com.misfit.ios.AppHelper;
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.Processes;
 import com.misfit.ios.ViewUtils;
@@ -826,7 +822,7 @@ public class Gui {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            
+
             ShortcutsTyper.delayTime(4000);
             connected = NuRemoteClient.init(ip);
             noOfTries++;
@@ -854,7 +850,7 @@ public class Gui {
 
         String ip = Settings.getParameter("DeviceIP");
         Gui.start(ip);
-//        Gui.init(ip);
+        // Gui.init(ip);
         Gui.printView();
 
         Gui.shutdown();
