@@ -836,7 +836,7 @@ public class Gui {
     }
 
     public static void captureScreen(String name) {
-        NuRemoteClient.sendToServer("");
+        NuRemoteClient.captureScreen(name);
     }
 
     public static String printViewHierarchy() {
@@ -849,12 +849,13 @@ public class Gui {
     public static void main(String[] args) throws IOException {
 
         String ip = Settings.getParameter("DeviceIP");
-        Gui.start(ip);
-        // Gui.init(ip);
+//        Gui.start(ip);
+         Gui.init(ip);
         Gui.printView();
+        Gui.captureScreen("something");
 
         Gui.shutdown();
-        Gui.stopApp();
+//        Gui.stopApp();
 
     }
 
