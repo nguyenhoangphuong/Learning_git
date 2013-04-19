@@ -93,6 +93,6 @@ public class HomeScreen {
 	}
 	
 	public static void sync() {
-		Helper.sync();
+		PrometheusHelper.sync();
 	}
 }

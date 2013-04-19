@@ -48,21 +48,21 @@ public class HomeSettings {
 	/* Update profile */
 	
 	public static void updateGender(boolean isMale) {
-		Helper.enterGender(isMale);
+		PrometheusHelper.enterGender(isMale);
 	}
 	
 	public static void updateBirthDay(String year, String month, String day) {
-		Helper.enterBirthDay(year, month, day);
+		PrometheusHelper.enterBirthDay(year, month, day);
 	}
 
 	public static void updateHeight(String digit, String fraction,
 			boolean isUSUnit) {
-		Helper.enterHeight(digit, fraction, isUSUnit);
+		PrometheusHelper.enterHeight(digit, fraction, isUSUnit);
 	}
 
 	public static void updateWeight(String digit, String fraction,
 			boolean isUSUnit) {
-		Helper.enterWeight(digit, fraction, isUSUnit);
+		PrometheusHelper.enterWeight(digit, fraction, isUSUnit);
 	}
 	
 	/* Set Daily Goal */

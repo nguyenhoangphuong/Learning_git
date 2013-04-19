@@ -3,7 +3,7 @@ package com.misfit.ta.gui;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class Helper {
+public class PrometheusHelper {
 	public static void enterGender(boolean isMale) {
 		if (isMale) {
 			Gui.touchAVIew("UIButtonLabel", "Male");

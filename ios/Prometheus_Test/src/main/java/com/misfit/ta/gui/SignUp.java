@@ -10,26 +10,26 @@ public class SignUp {
 
 	/* STEP 1: ENTER EMAIL AND PASSWORD */
 	public static void enterEmailPassword(String email, String password) {
-		Helper.enterEmailPassword(email, password);
+		PrometheusHelper.enterEmailPassword(email, password);
 	}
 
 	/* STEP 2: PROFILE */
 	public static void enterGender(boolean isMale) {
-		Helper.enterGender(isMale);
+		PrometheusHelper.enterGender(isMale);
 	}
 
 	public static void enterBirthDay(String year, String month, String day) {
-		Helper.enterBirthDay(year, month, day);
+		PrometheusHelper.enterBirthDay(year, month, day);
 	}
 
 	public static void enterHeight(String digit, String fraction,
 			boolean isUSUnit) {
-		Helper.enterHeight(digit, fraction, isUSUnit);
+		PrometheusHelper.enterHeight(digit, fraction, isUSUnit);
 	}
 
 	public static void enterWeight(String digit, String fraction,
 			boolean isUSUnit) {
-		Helper.enterWeight(digit, fraction, isUSUnit);
+		PrometheusHelper.enterWeight(digit, fraction, isUSUnit);
 	}
 
 	/* STEP 3: WHAT ARE POINTS? */
@@ -70,7 +70,7 @@ public class SignUp {
 	}
 
 	public static void sync() {
-		Helper.sync();
+		PrometheusHelper.sync();
 	}
 
 	public static void tapAllowUseCurrentLocation() {
@@ -98,11 +98,11 @@ public class SignUp {
 	}
 	
 	public static boolean hasInvalidEmailMessage() {
-		return Helper.hasInvalidEmailMessage();
+		return PrometheusHelper.hasInvalidEmailMessage();
 	}
 	
 	public static boolean hasInvalidPasswordMessage() {
-		return Helper.hasInvalidPasswordMessage();
+		return PrometheusHelper.hasInvalidPasswordMessage();
 	}
 	
 	public static boolean hasExistedEmailMessage() {

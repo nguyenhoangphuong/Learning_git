@@ -14,7 +14,7 @@ public class SignIn {
 	}
 
 	public static void enterEmailPassword(String email, String password) {
-		Helper.enterEmailPassword(email, password);
+		PrometheusHelper.enterEmailPassword(email, password);
 	}
 
 	public static void enterEmail(String email) {
@@ -32,11 +32,11 @@ public class SignIn {
 	}
 
 	public static boolean hasInvalidEmailMessage() {
-		return Helper.hasInvalidEmailMessage();
+		return PrometheusHelper.hasInvalidEmailMessage();
 	}
 
 	public static boolean hasInvalidPasswordMessage() {
-		return Helper.hasInvalidPasswordMessage();
+		return PrometheusHelper.hasInvalidPasswordMessage();
 	}
 
 	public static boolean hasIncorrectLoginMessage() {
