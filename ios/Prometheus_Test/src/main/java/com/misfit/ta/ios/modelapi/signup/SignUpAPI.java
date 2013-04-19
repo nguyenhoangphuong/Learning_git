@@ -106,7 +106,11 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_Sync() {
         SignUp.sync();
-        ShortcutsTyper.delayTime(30000);
+        ShortcutsTyper.delayTime(5000);
+        for (int i = 0; i < 4; i++) {
+        	Gui.touch(Gui.getScreenWidth()/2, Gui.getScreenHeight()/2 );
+        	ShortcutsTyper.delayTime(1100);
+        }
     }
 
     /**
