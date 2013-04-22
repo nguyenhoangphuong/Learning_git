@@ -364,12 +364,18 @@ public class Gui {
 		message = message.replace("%title", title);
 		NuRemoteClient.sendToServer(message);
 	}
+	
+	public static void sync() {
+		String message = "(Gui dragFromX: 0 fromY: 200 toX: 480 andToY: 200)";
+		NuRemoteClient.sendToServer(message);
+	}
     	 
 	public static void touchAVIew(String viewName) {
 		String message = "(Gui touchAView:  %viewName)";
 		message = message.replace("%viewName", viewName);
 		NuRemoteClient.sendToServer(message);
 	}
+
     /**
      * (Gui touchAViewWithViewName: @"UIButtonLabel" andTitle: @"SIGN UP") (Gui
      * touchAViewWithViewName: @"UITextField" andTitle: @"Email")
@@ -903,7 +909,6 @@ public class Gui {
         
         Gui.init("192.168.1.123");
         Gui.printView();
-
         Gui.shutdown();
         Gui.stopApp();
 

@@ -73,8 +73,7 @@ public class PrometheusHelper {
 	}
 
 	public static void sync() {
-		Gui.touchAVIew("UIButton", DefaultStrings.SyncPlaceShineHere);
-		Gui.drag("UIButton", DefaultStrings.SyncPlaceShineHere, 300, 0);
+		Gui.sync();
 	}
 
 	public static void enterEmailPassword(String email, String password) {
@@ -93,4 +92,5 @@ public class PrometheusHelper {
 		ShortcutsTyper.delayTime(300);
 		Gui.pressDone();
 	}
+
 }

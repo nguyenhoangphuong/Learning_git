@@ -75,7 +75,7 @@ public class SignIn {
      * Forgot Password
      */
     public static void tapForgotPassword() {
-        Gui.touchAVIew("UIButtonLabel", "I've forgotten my password");
+        Gui.touchAVIew("UIButtonLabel", "Umm... What's my password again?");
     }
 
     public static boolean isForgotPasswordView() {
@@ -92,7 +92,7 @@ public class SignIn {
         Gui.touchAVIew("UIButtonLabel", "SUBMIT");
     }
 
-    public static boolean hasEmailSentPassword() {
+    public static boolean hasEmailSentMessage() {
         return Gui.getPopupTitle().equals("Email Sent")
                 && Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordEmailSentMessage);
     }

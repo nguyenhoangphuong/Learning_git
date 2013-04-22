@@ -15,6 +15,7 @@ import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
+import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignUp;
 
 public class SignUpAPI extends ModelAPI {
@@ -58,7 +59,7 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_Init() {
-        // TODO:
+        LaunchScreen.launch();
     }
 
     /**
@@ -108,8 +109,8 @@ public class SignUpAPI extends ModelAPI {
         SignUp.sync();
         ShortcutsTyper.delayTime(5000);
         for (int i = 0; i < 4; i++) {
-        	Gui.touch(Gui.getScreenWidth()/2, Gui.getScreenHeight()/2 );
-        	ShortcutsTyper.delayTime(1100);
+        	Gui.touchAVIew("PTGoalCircleView", 0);
+        	ShortcutsTyper.delayTime(300);
         }
     }
 

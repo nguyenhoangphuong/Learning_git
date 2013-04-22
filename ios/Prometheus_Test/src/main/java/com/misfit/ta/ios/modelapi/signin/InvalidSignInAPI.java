@@ -8,6 +8,7 @@ import org.testng.Assert;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
+import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
 
@@ -76,7 +77,8 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_FillIncorrectPassword() {
         SignIn.enterEmailPassword("test147@thy.com", "test11");
-        ShortcutsTyper.delayTime(3000);
+//        SignIn.tapNext();
+        ShortcutsTyper.delayTime(5000);
     }
 
     /**
@@ -85,7 +87,8 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_FillInvalidEmail() {
         SignIn.enterEmailPassword("test@a", "abc");
-        ShortcutsTyper.delayTime(3000);
+//        SignIn.tapNext();
+        ShortcutsTyper.delayTime(5000);
     }
 
     /**
@@ -94,7 +97,8 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_FillInvalidPassword() {
         SignIn.enterEmailPassword("test147@thy.com", "abc");
-        ShortcutsTyper.delayTime(3000);
+//        SignIn.tapNext();
+        ShortcutsTyper.delayTime(5000);
     }
 
     /**
@@ -103,7 +107,8 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_FillNotExistedEmail() {
         SignIn.enterEmailPassword("test147@thyabc.com", "abc1333");
-        ShortcutsTyper.delayTime(3000);
+//        SignIn.tapNext();
+        ShortcutsTyper.delayTime(5000);
     }
 
     /**
@@ -111,7 +116,7 @@ public class InvalidSignInAPI extends ModelAPI {
      * 
      */
     public void e_Init() {
-        // TODO:
+    	LaunchScreen.launch(); 
     }
 
     /**

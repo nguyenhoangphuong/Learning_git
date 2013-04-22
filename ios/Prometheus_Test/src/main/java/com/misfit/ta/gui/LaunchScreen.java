@@ -1,9 +1,10 @@
 package com.misfit.ta.gui;
 
+import com.misfit.ta.utils.ShortcutsTyper;
+
 public class LaunchScreen {
     public static void tapIHaveAShine() {
         Gui.touchAVIew("UIButtonLabel", "I HAVE A SHINE");
-        // Gui.touchAVIew("UIButtonLabel", "I DON'T HAVE A SHINE" );
     }
 
     public static void tapIDontHaveAShine() {
@@ -21,5 +22,14 @@ public class LaunchScreen {
 
     public static void tapViewNDA() {
         Gui.touchPopupButton(0);
+    }
+    
+    public static void launch() {
+    	tapAgree();
+    	ShortcutsTyper.delayTime(300);
+    	tapIHaveAShine();
+    	ShortcutsTyper.delayTime(300);
+    	tapSkip();
+    	ShortcutsTyper.delayTime(5000);
     }
 }

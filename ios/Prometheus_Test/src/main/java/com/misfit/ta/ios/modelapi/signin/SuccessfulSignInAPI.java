@@ -11,6 +11,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
+import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
 
@@ -43,6 +44,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
      * 
      */
     public void e_Init() {
+    	LaunchScreen.launch();
     }
 
     /**
