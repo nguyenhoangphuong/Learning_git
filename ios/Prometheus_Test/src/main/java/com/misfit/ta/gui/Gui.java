@@ -764,7 +764,7 @@ public class Gui {
     }
     
     public static String getProperty(String viewType, String title, String property) {
-        String message = "(Gui getValueWithViewName: @\"%viewType\" withPropertyName: @\"%property\" andTitle: :  @\"%title\")";
+        String message = "(Gui getValueWithViewName: @\"%viewType\" withPropertyName: @\"%property\" andTitle: @\"%title\")";
         message = message.replace("%viewType", viewType);
         message = message.replace("%property", property);
         message = message.replace("%title", title);
@@ -786,6 +786,13 @@ public class Gui {
         message = message.replace("%index", String.valueOf(index));
         NuRemoteClient.sendToServer(message);
         return NuRemoteClient.getLastMessage();
+    }
+    
+    public static void setGoalSlider(int level) {
+		String message = "((ViewUtils findViewWithViewName: @\"UISlider\" andIndex: 0) setValue: %level)\n";
+    	message += "(((((UIApplication sharedApplication) keyWindow) rootViewController) topViewController) updateValue: (ViewUtils findViewWithViewName: @\"UISlider\" andIndex: 0))";
+    	message = message.replace("%level", String.valueOf(level));
+    	NuRemoteClient.sendToServer(message);
     }
     
     // ---- bluetooth and location service functions ---------

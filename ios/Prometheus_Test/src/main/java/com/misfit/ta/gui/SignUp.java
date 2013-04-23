@@ -54,16 +54,7 @@ public class SignUp {
     }
 
     public static void setGoal(int level) {
-        int currentLevel = getCurrentGoal();
-        if (level >= currentLevel) {
-            for (int i = 0; i < level - currentLevel; i++) {
-                Gui.swipeUp(300);
-            }
-        } else {
-            for (int i = 0; i < currentLevel - level; i++) {
-                Gui.swipeDown(300);
-            }
-        }
+        Gui.setGoalSlider(level);
     }
 
     public static void sync() {
@@ -74,24 +65,24 @@ public class SignUp {
 
     }
 
-    public static boolean isSignUpStep1View() {
+    public static boolean isSignUpAccountView() {
         return ViewUtils.isExistedView("UILabel", "SIGN UP");
     }
 
-    public static boolean isSignUpStep2View() {
+    public static boolean isSignUpProfileView() {
         return ViewUtils.isExistedView("UILabel", "PROFILE");
     }
 
-    public static boolean isSignUpStep3View() {
+    public static boolean isSignUpTutorialView() {
         return ViewUtils.isExistedView("UILabel", "WHAT ARE POINTS?");
     }
 
-    public static boolean isSignUpStep4View() {
-        return ViewUtils.isExistedView("UILabel", "SET YOUR GOAL");
+    public static boolean isSignUpGoalView() {
+        return ViewUtils.isExistedView("UILabel", "MY GOAL IS...");
     }
 
-    public static boolean isSignUpStep5View() {
-        return ViewUtils.isExistedView("UILabel", "PAIRING");
+    public static boolean isSignUpPairingView() {
+        return ViewUtils.isExistedView("UILabel", "SYNC SHINE");
     }
 
     public static boolean hasInvalidEmailMessage() {

@@ -174,8 +174,8 @@ public class SignUpAPI extends ModelAPI {
      * This method implements the Vertex 'v_SignUpStep1'
      * 
      */
-    public void v_SignUpStep1() {
-        Assert.assertTrue(SignUp.isSignUpStep1View(), "This is not sign up step1 view.");
+    public void v_SignUpAccount() {
+        Assert.assertTrue(SignUp.isSignUpAccountView(), "This is not sign up account view.");
         ShortcutsTyper.delayTime(500);
     }
 
@@ -183,8 +183,8 @@ public class SignUpAPI extends ModelAPI {
      * This method implements the Vertex 'v_SignUpStep2'
      * 
      */
-    public void v_SignUpStep2() {
-        Assert.assertTrue(SignUp.isSignUpStep2View(), "This is not sign up step2 view.");
+    public void v_SignUpProfile() {
+        Assert.assertTrue(SignUp.isSignUpProfileView(), "This is not sign up profile view.");
         ShortcutsTyper.delayTime(500);
     }
 
@@ -192,25 +192,17 @@ public class SignUpAPI extends ModelAPI {
      * This method implements the Vertex 'v_SignUpStep4Updated'
      * 
      */
-    public void v_SignUpStep4Updated() {
-        Assert.assertTrue(SignUp.getCurrentGoal() == goal, "Goal is not updated");
+    public void v_SignUpGoalUpdated() {
+//        Assert.assertTrue(SignUp.getCurrentGoal() == goal, "Goal is not updated");
     }
 
-    /**
-     * This method implements the Vertex 'v_SignUpStep3'
-     * 
-     */
-    public void v_SignUpStep3() {
-        Assert.assertTrue(SignUp.isSignUpStep3View(), "This is not sign up step3 view.");
-        ShortcutsTyper.delayTime(500);
-    }
 
     /**
      * This method implements the Vertex 'v_SignUpStep4'
      * 
      */
-    public void v_SignUpStep4() {
-        Assert.assertTrue(SignUp.isSignUpStep4View(), "This is not sign up step4 view.");
+    public void v_SignUpGoal() {
+        Assert.assertTrue(SignUp.isSignUpGoalView(), "This is not sign up goal view.");
         ShortcutsTyper.delayTime(500);
     }
 
@@ -218,8 +210,8 @@ public class SignUpAPI extends ModelAPI {
      * This method implements the Vertex 'v_SignUpStep4UpdatedBirthday'
      * 
      */
-    public void v_SignUpStep2UpdatedBirthday() {
-        Assert.assertTrue(SignUp.isSignUpStep2View() && isUpdatedBirthday(),
+    public void v_SignUpProfileUpdatedBirthday() {
+        Assert.assertTrue(SignUp.isSignUpProfileView() && isUpdatedBirthday(),
                 "This is not sign up step2 updated birthday view.");
         ShortcutsTyper.delayTime(500);
     }
@@ -228,8 +220,8 @@ public class SignUpAPI extends ModelAPI {
      * This method implements the Vertex 'v_SignUpStep4UpdatedSex'
      * 
      */
-    public void v_SignUpStep2UpdatedSex() {
-        Assert.assertTrue(SignUp.isSignUpStep2View() && isUpdatedGender(),
+    public void v_SignUpProfileUpdatedSex() {
+        Assert.assertTrue(SignUp.isSignUpProfileView() && isUpdatedGender(),
                 "This is not sign up step2 updated gender view.");
         ShortcutsTyper.delayTime(500);
     }
@@ -238,8 +230,8 @@ public class SignUpAPI extends ModelAPI {
      * This method implements the Vertex 'v_SignUpStep4UpdatedHeight'
      * 
      */
-    public void v_SignUpStep2UpdatedHeight() {
-        Assert.assertTrue(SignUp.isSignUpStep2View() && isUpdatedHeight(),
+    public void v_SignUpProfileUpdatedHeight() {
+        Assert.assertTrue(SignUp.isSignUpProfileView() && isUpdatedHeight(),
                 "This is not sign up step2 updated height view.");
         ShortcutsTyper.delayTime(500);
     }
@@ -248,8 +240,8 @@ public class SignUpAPI extends ModelAPI {
      * This method implements the Vertex 'v_SignUpStep4UpdatedWeight'
      * 
      */
-    public void v_SignUpStep2UpdatedWeight() {
-        Assert.assertTrue(SignUp.isSignUpStep2View() && isUpdatedWeight(),
+    public void v_SignUpProfileUpdatedWeight() {
+        Assert.assertTrue(SignUp.isSignUpProfileView() && isUpdatedWeight(),
                 "This is not sign up step2 updated weight view.");
         ShortcutsTyper.delayTime(500);
     }
@@ -258,8 +250,8 @@ public class SignUpAPI extends ModelAPI {
      * This method implements the Vertex 'v_SignUpStep5'
      * 
      */
-    public void v_SignUpStep5() {
-        Assert.assertTrue(SignUp.isSignUpStep5View(), "This is not sign up step5 view.");
+    public void v_SignUpPairing() {
+        Assert.assertTrue(SignUp.isSignUpPairingView(), "This is not sign up pairing view.");
         ShortcutsTyper.delayTime(500);
     }
 
@@ -304,7 +296,8 @@ public class SignUpAPI extends ModelAPI {
     }
 
     private boolean isUpdatedGender() {
-        return true;
+    	boolean male = Gui.getProperty("UIButton", "Male", "isSelected").equals("1") ? true : false;
+        return male == isMale;
     }
 
     private boolean isUpdatedBirthday() {

@@ -94,7 +94,7 @@ public class InvalidSignUpStep1API extends ModelAPI {
      * 
      */
     public void v_SignUpStep1() {
-        Assert.assertTrue(SignUp.isSignUpStep1View(), "This is not sign up step1 view.");
+        Assert.assertTrue(SignUp.isSignUpAccountView(), "This is not sign up step1 view.");
         ShortcutsTyper.delayTime(500);
     }
 
