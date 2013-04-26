@@ -843,38 +843,46 @@ public class Gui {
         logger.info("Will start the app");
 
         stopApp();
-        logger.info("---------- 444");
+        logger.info("---------- 4");
         int noOfTries = 0;
         boolean connected = false;
         while (!connected && noOfTries < 1) 
         {
+        	logger.info("---------- 5");
+        	
         	// get absolute path of script file
         	String script = "script/automation/alertsupport.js";
             File aCase;
             try 
             {
+            	logger.info("---------- 6");
                 Files.emptyDir(new File("script/"), null);
                 try 
                 {
+                	logger.info("---------- 7");
                     Files.getFile("script/");
                 } 
                 catch (Exception e) 
                 {
+                	logger.info("---------- 8");
                 	logger.info("Error: " + e);
                 	e.printStackTrace();
                 	
-                    try 
+                    try
                     {
+                    	logger.info("---------- 9");
                         logger.info("Extracting scripts...");
                         Files.extractJar("script/", true);
                     } 
                     catch (IOException e1)
                     {
+                    	logger.info("---------- 10");
                     	logger.info("Error: " + e1);
                         e1.printStackTrace();
                     }
                 }
-
+                
+                logger.info("---------- 11");
                 aCase = Files.getFile(script);
                 if (aCase != null) 
                 {
@@ -887,7 +895,7 @@ public class Gui {
                 logger.info("Failed to start a case: " + script + " because: " + e.toString());
                 Assert.assertTrue(false, "Testcase FAILED: failed to load the test case");
             }
-        	
+            logger.info("---------- 12");
             
         	// lauch instrument
         	logger.info("Startup attempt: " + noOfTries + 1);
