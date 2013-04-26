@@ -883,8 +883,8 @@ public class Gui {
 
     public static void stopApp() {
         String deviceId = Gui.getCurrentUdid();
-        //ProcessFinder.kill(deviceId);
-        Processes.killHard(deviceId);
+        ProcessFinder.kill(deviceId);
+        //Processes.killHard(deviceId);
     }
     
     public static void captureScreen(String name) {
