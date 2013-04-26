@@ -857,15 +857,20 @@ public class Gui {
                 try 
                 {
                     Files.getFile("script/");
-                } catch (Exception e) 
+                } 
+                catch (Exception e) 
                 {
+                	logger.info("Error: " + e);
+                	e.printStackTrace();
+                	
                     try 
                     {
                         logger.info("Extracting scripts...");
                         Files.extractJar("script/", true);
-                    } catch (IOException e1)
+                    } 
+                    catch (IOException e1)
                     {
-                        logger.info("Error: " + e);
+                    	logger.info("Error: " + e1);
                         e1.printStackTrace();
                     }
                 }
@@ -876,7 +881,8 @@ public class Gui {
                 	script = aCase.getAbsolutePath();
                     logger.info(script);
                 }
-            } catch (FileNotFoundException e) 
+            } 
+            catch (FileNotFoundException e) 
             {
                 logger.info("Failed to start a case: " + script + " because: " + e.toString());
                 Assert.assertTrue(false, "Testcase FAILED: failed to load the test case");
@@ -902,13 +908,13 @@ public class Gui {
     }
 
     public static void stopApp() {
-        logger.info("----------- 111");
+//        logger.info("----------- 111");
         String deviceId = Gui.getCurrentUdid();
-        logger.info("----------- 222");
+//        logger.info("----------- 222");
         ProcessFinder.kill(deviceId);
-        logger.info("----------- 333");
-      //  Processes.killHard(deviceId);
-        logger.info("----------- 444");
+//        logger.info("----------- 333");
+//        Processes.killHard(deviceId);
+//        logger.info("----------- 444");
     }
     
     public static void captureScreen(String name) {
