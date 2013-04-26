@@ -23,11 +23,11 @@ public class SignUp {
 		for (int i = 0; i < 3; i++) 
 		{
 			Gui.touchAVIew("PTGoalCircleView", 0);
-			ShortcutsTyper.delayOne();
+			ShortcutsTyper.delayTime(1000);
 		}
 		
 		Gui.touchAVIew("UIButton", "DISMISS IT");
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(1000);
 	}
     
     

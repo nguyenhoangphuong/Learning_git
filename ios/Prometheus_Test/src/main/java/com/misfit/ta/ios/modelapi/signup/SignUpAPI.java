@@ -53,7 +53,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_ChooseSignUp() {
         SignUp.tapSignUp();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
     
     /**
@@ -62,7 +62,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_Back() {
         SignUp.tapPrevious();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -71,7 +71,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_Next() {
         SignUp.tapNext();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -81,7 +81,7 @@ public class SignUpAPI extends ModelAPI {
     public void e_SetGoal() {
         goal = new Random().nextInt(3);
         SignUp.setGoal(goal);
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -90,10 +90,10 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_SignOut() {
         HomeScreen.tapSettings();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
         Gui.swipeUp(1000);
         HomeSettings.tapSignOut();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
