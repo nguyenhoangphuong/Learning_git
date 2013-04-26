@@ -9,7 +9,6 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
@@ -37,7 +36,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_CancelResetPassword() {
         SignIn.tapCancelResetPassword();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -46,7 +45,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_ChooseTryAgain() {
         SignIn.tapTryAgain();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -55,7 +54,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_ChooseForgotPassword() {
         SignIn.tapForgotPassword();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -64,7 +63,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_ChooseSignIn() {
         SignIn.tapLogIn();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -73,7 +72,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_ConfirmAlert() {
         SignIn.tapOK();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -82,7 +81,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_ConfirmForgotPassword() {
         SignIn.tapIForgot();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -101,7 +100,7 @@ public class InvalidSignInAPI extends ModelAPI {
     public void e_FillInvalidEmail() {
     	String email = invalidEmails[PrometheusHelper.randInt(0, invalidEmails.length)];
         SignIn.enterEmailPassword(email, "qwerty1");
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -111,7 +110,7 @@ public class InvalidSignInAPI extends ModelAPI {
     public void e_FillInvalidPassword() {
     	String password = invalidPasswords[PrometheusHelper.randInt(0, invalidPasswords.length)];
         SignIn.enterEmailPassword("valid@email.com", password);
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -129,7 +128,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_PressBack() {
         SignIn.tapPrevious();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     

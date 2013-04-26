@@ -36,12 +36,12 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 */
 	public void e_ConfirmAlert() {
 		SignIn.tapCancel();
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	public void e_TapOK() {
 		SignIn.tapOK();
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	public void e_InputInvalidEmail() {
 		SignIn.enterEmailForResetPassword(invalidEmails[PrometheusHelper.randInt(0, invalidEmails.length)]);
 		SignIn.tapSubmitResetPassword();
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	public void e_InputNotExistedEmail() {
 		SignIn.enterEmailForResetPassword(MVPApi.generateUniqueEmail());
 		SignIn.tapSubmitResetPassword();
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 */
 	public void e_tapForgotPassword() {
 		SignIn.tapForgotPassword();
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	

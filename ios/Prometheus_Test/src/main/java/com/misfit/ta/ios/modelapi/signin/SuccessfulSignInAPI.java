@@ -37,7 +37,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
      */
     public void e_ChooseSignIn() {
         SignIn.tapLogIn();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -58,7 +58,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
      */
     public void e_SignOut() {
         HomeScreen.tapSettings();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(1000);
         Gui.swipeUp(1000);
         HomeSettings.tapSignOut();
         ShortcutsTyper.delayTime(1000);
