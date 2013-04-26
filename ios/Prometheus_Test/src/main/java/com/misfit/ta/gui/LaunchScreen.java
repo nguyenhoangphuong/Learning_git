@@ -27,8 +27,8 @@ public class LaunchScreen {
     public static void launch() {
     	tapAgree();
     	ShortcutsTyper.delayTime(1000);
-//    	tapIHaveAShine();
-//    	ShortcutsTyper.delayTime(300);
+    	tapIHaveAShine();
+    	ShortcutsTyper.delayTime(1000);
 //    	tapSkip();
 //    	ShortcutsTyper.delayTime(5000);
     }

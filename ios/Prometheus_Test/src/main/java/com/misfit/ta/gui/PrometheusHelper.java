@@ -163,15 +163,13 @@ public class PrometheusHelper {
 	@Test
 	public void test()
 	{
-//		Gui.init("192.168.1.247");
-//		Gui.printView();
+		Gui.init("192.168.1.247");
+		Gui.printView();
 		//HomeScreen.tapSyncTray();
 		//HomeScreen.tapSettings();
 		
 		//Gui.tapNext();
 		
 		//PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
-		File f = new File("script/automation/alertupport.js");
-		System.out.print(f.getAbsolutePath());
 	}
 }
