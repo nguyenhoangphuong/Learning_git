@@ -12,7 +12,7 @@ function PrometheusAlertHandler(_alert)
 	var name = _alert.name();
 	var message = _alert.staticTexts()[1].name();
 	
-   if (name.indexOf("Current Location") != -1 || message.indexOf("Current Location" != -1) {
+   if (name.indexOf("Current Location") != -1 || message.indexOf("Current Location" != -1)) {
 	   UIALogger.logDebug("Tap OK");
 	   _alert.buttons()["OK"].tap();
 	   return true;
