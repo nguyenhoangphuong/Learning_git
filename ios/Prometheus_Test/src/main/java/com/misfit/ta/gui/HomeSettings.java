@@ -1,6 +1,11 @@
 package com.misfit.ta.gui;
 
 public class HomeSettings {
+	
+	public static void tapBackAtSettings() {
+        Gui.touchAVIew("UIButton", "Back");
+    }
+	
     public static void tapAdjustGoal() {
         Gui.touchAVIew("UILabel", "ADJUST GOAL");
     }
@@ -11,6 +16,10 @@ public class HomeSettings {
 
     public static void tapWearingShine() {
         Gui.touchAVIew("UILabel", "WEARING SHINE");
+    }
+    
+    public static void tapUnlink() {
+        Gui.touchAVIew("UILabel", "UNLINK");
     }
 
     public static void tapSupport() {
@@ -62,20 +71,30 @@ public class HomeSettings {
     public static void updateWeight(String digit, String fraction, boolean isUSUnit) {
         PrometheusHelper.enterWeight(digit, fraction, isUSUnit);
     }
+    
+    public static void tapBackAtEditProfile() {
+    	Gui.touchAVIew("UIButton", "Back");
+    }
 
     /* Set Daily Goal */
-    public static void tapOKNewGoal() {
-        // TODO to complete
-        Gui.touchAVIew("UIButton", 1);
+    public static void tapDoneAtNewGoal() {
+    	Gui.touchAVIew("UIButton", "Done");
     }
 
-    public static void tapCancelNewGoal() {
-        // TODO to complete
-        Gui.touchAVIew("UIButton", 0);
+    public static void tapBackAtNewGoal() {
+    	Gui.touchAVIew("UIButton", "Back");
     }
-
-    public static void editNewGoal() {
-        Gui.touchAVIew("PTNumberSpinner", 0);
+    
+    public static void increaseGoalBy(int delta) {
+    	// TODO: swipe up delta time
+    	while(delta-- > 0)
+    		Gui.touchAVIew("PTNumberSpinner", 0);
+    }
+    
+    public static void decreaseGoalBy(int delta) {
+    	// TODO: swipe down delta time
+    	while(delta-- > 0)
+    		Gui.touchAVIew("PTNumberSpinner", 0);
     }
 
     /* Mode Debug */
@@ -86,4 +105,5 @@ public class HomeSettings {
     public static void chooseAccelerometer() {
         Gui.touchAVIew("UITextField", 0);
     }
+    
 }

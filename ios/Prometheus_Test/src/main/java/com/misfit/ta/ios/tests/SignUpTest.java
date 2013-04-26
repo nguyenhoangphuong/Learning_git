@@ -15,7 +15,8 @@ import com.misfit.ta.ios.modelapi.signup.SignUpAPI;
 import com.misfit.ta.utils.Files;
 
 public class SignUpTest extends AutomationTest {
-    @Test(groups = { "iOS", "Prometheus", "signup" })
+    
+	//@Test(groups = { "iOS", "Prometheus", "signup" })
     public void SignUp() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("SignUp", new SignUpAPI(this, Files.getFile("model/signup/SignUp.graphml"), false,

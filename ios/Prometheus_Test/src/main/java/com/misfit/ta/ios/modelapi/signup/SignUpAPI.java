@@ -37,6 +37,14 @@ public class SignUpAPI extends ModelAPI {
     private static int goal = 0;
 
     /**
+     * This method implements the Edge 'e_Init'
+     * 
+     */
+    public void e_Init() {
+        //LaunchScreen.launch();
+    }
+    
+    /**
      * This method implements the Edge 'e_Back'
      * 
      */
@@ -51,15 +59,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_ChooseSignUp() {
         SignUp.tapSignUp();
-        ShortcutsTyper.delayTime(5000);
-    }
-
-    /**
-     * This method implements the Edge 'e_Init'
-     * 
-     */
-    public void e_Init() {
-        LaunchScreen.launch();
+        ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -107,11 +107,14 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_Sync() {
         SignUp.sync();
-        ShortcutsTyper.delayTime(5000);
-        for (int i = 0; i < 4; i++) {
-        	Gui.touchAVIew("PTGoalCircleView", 0);
-        	ShortcutsTyper.delayTime(300);
-        }
+        ShortcutsTyper.delayTime(10000);
+        SignUp.tapFinishSetup();
+        ShortcutsTyper.delayTime(3000);
+        
+//        for (int i = 0; i < 4; i++) {
+//        	Gui.touchAVIew("PTGoalCircleView", 0);
+//        	ShortcutsTyper.delayTime(300);
+//        }
     }
 
     /**
@@ -159,7 +162,8 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void v_HomeScreen() {
-        // TODO:
+        // check if current view is HomeScreen
+    	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");
     }
 
     /**
@@ -167,7 +171,7 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void v_InitialView() {
-        // TODO:
+        // nothing to do here
     }
 
     /**
@@ -193,7 +197,7 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void v_SignUpGoalUpdated() {
-//        Assert.assertTrue(SignUp.getCurrentGoal() == goal, "Goal is not updated");
+        Assert.assertTrue(SignUp.getCurrentGoal() == goal, "Goal is not updated");
     }
 
 

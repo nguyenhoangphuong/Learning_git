@@ -51,7 +51,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     public void cleanUpTest(Method method, ITestResult tr) {
         logger.info("==================================================================================================================");
         logger.info("|  End of test case: " + method.getName());
-        logger.info("|  Result: " + results[tr.getStatus()]);
+        logger.info("|  Result: " + results[tr.getStatus() - 1]);
         logger.info("==================================================================================================================\n\n");
         Gui.shutdown();
     }

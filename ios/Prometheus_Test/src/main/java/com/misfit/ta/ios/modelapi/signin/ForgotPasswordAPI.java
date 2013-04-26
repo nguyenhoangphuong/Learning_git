@@ -8,6 +8,8 @@ import org.testng.Assert;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
+import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
 
@@ -17,18 +19,29 @@ public class ForgotPasswordAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 
+	String[] invalidEmails = {"aa", "aaa@", ".aaa@a.a", "aa@@a.a", "aaa@a..a", "aaa@a.a."};
+	
+	/**
+	 * This method implements the Edge 'e_gotoForgotPassword'
+	 * 
+	 */
+	public void e_gotoForgotPassword() {
+		// THIS MODEL REQUIRE
+		// SWITCH MODEL AT FORGOT PASSWORD
+	}
+	
 	/**
 	 * This method implements the Edge 'e_ConfirmAlert'
 	 * 
 	 */
 	public void e_ConfirmAlert() {
-		SignIn.tapTryAgain();
-		ShortcutsTyper.delayTime(300);
+		SignIn.tapCancel();
+		ShortcutsTyper.delayOne();
 	}
 
 	public void e_TapOK() {
 		SignIn.tapOK();
-		ShortcutsTyper.delayTime(300);
+		ShortcutsTyper.delayOne();
 	}
 
 	/**
@@ -36,9 +49,9 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_InputInvalidEmail() {
-		SignIn.enterEmail("test.t.c");
-		SignIn.tapSubmit();
-		ShortcutsTyper.delayTime(1000);
+		SignIn.enterEmailForResetPassword(invalidEmails[PrometheusHelper.randInt(0, invalidEmails.length)]);
+		SignIn.tapSubmitResetPassword();
+		ShortcutsTyper.delayOne();
 	}
 
 	/**
@@ -46,9 +59,9 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_InputNotExistedEmail() {
-		SignIn.enterEmail("abc@thy.comabc");
-		SignIn.tapSubmit();
-		ShortcutsTyper.delayTime(1000);
+		SignIn.enterEmailForResetPassword(MVPApi.generateUniqueEmail());
+		SignIn.tapSubmitResetPassword();
+		ShortcutsTyper.delayOne();
 	}
 
 	/**
@@ -56,19 +69,9 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_Submit() {
-		SignIn.enterEmail("thy@misfitwearables.com");
-		ShortcutsTyper.delayTime(300);
-		SignIn.tapSubmit();
-		ShortcutsTyper.delayTime(1000);
-
-	}
-
-	/**
-	 * This method implements the Edge 'e_gotoForgotPassword'
-	 * 
-	 */
-	public void e_gotoForgotPassword() {
-		// TODO:
+		SignIn.enterEmailForResetPassword("thy@misfitwearables.com");
+		SignIn.tapSubmitResetPassword();
+		ShortcutsTyper.delayTime(5000);
 	}
 
 	/**
@@ -77,17 +80,18 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 */
 	public void e_tapForgotPassword() {
 		SignIn.tapForgotPassword();
-		ShortcutsTyper.delayTime(300);
+		ShortcutsTyper.delayOne();
 	}
 
+	
+	
+	
 	/**
 	 * This method implements the Vertex 'v_ForgotPassword'
 	 * 
 	 */
 	public void v_ForgotPassword() {
-		Assert.assertTrue(SignIn.isForgotPasswordView(),
-				"This is not forgot password view.");
-		ShortcutsTyper.delayTime(300);
+		Assert.assertTrue(SignIn.isForgotPasswordView(), "This is not forgot password view.");
 	}
 
 	/**
@@ -95,15 +99,15 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_InvalidEmailView() {
-		Assert.assertTrue(SignIn.hasInvalidEmailMessage(),
-				"This is not forgot password invalid email view.");
-		ShortcutsTyper.delayTime(300);
+		Assert.assertTrue(SignIn.hasInvalidEmailMessage(), "This is not forgot password invalid email view.");
 	}
 
+	/**
+	 * This method implements the Vertex 'v_EmailSentView'
+	 * 
+	 */
 	public void v_EmailSentView() {
-		Assert.assertTrue(SignIn.hasEmailSentMessage(),
-				"This is not forgot password email sent view.");
-		ShortcutsTyper.delayTime(300);
+		Assert.assertTrue(SignIn.hasEmailSentMessage(), "This is not forgot password email sent view.");
 	}
 
 	/**
@@ -111,9 +115,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_NotExistedEmailView() {
-		Assert.assertTrue(SignIn.hasNotAssociatedEmailMessage(),
-				"This is not forgot password not existed email view.");
-		ShortcutsTyper.delayTime(300);
+		Assert.assertTrue(SignIn.hasNotAssociatedEmailMessage(), "This is not forgot password not existed email view.");
 	}
 
 	/**
@@ -121,9 +123,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignInView() {
-		Assert.assertTrue(SignIn.isLoginView(),
-				"This is not forgot password log in view.");
-		ShortcutsTyper.delayTime(300);
+		Assert.assertTrue(SignIn.isLoginView(), "This is not forgot password log in view.");
 	}
 
 }

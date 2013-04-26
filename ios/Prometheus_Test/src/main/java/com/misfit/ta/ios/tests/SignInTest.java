@@ -30,7 +30,7 @@ public class SignInTest extends AutomationTest {
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "signin"})
+	//@Test(groups = { "iOS", "Prometheus", "signin"})
     public void SuccessfulSignIn() throws InterruptedException, StopConditionException, IOException 
     {
         ModelHandler model = getModelhandler();

@@ -8,7 +8,9 @@ import org.testng.Assert;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.LaunchScreen;
+import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
 
@@ -17,13 +19,25 @@ public class InvalidSignInAPI extends ModelAPI {
         super(automation, model, efsm, generator, weight);
     }
 
+    String[] invalidEmails = {"aa", "aaa@", ".aaa@a.a", "aa@@a.a", "aaa@a..a", "aaa@a.a."};
+    String[] invalidPasswords = {"qwerty", "123456", "qwert.", "12345."};
+    
+    /**
+     * This method implements the Edge 'e_Init'
+     * 
+     */
+    public void e_Init() {
+    	// there is no lauchscreen anymore
+    	//LaunchScreen.launch(); 
+    }
+    
     /**
      * This method implements the Edge 'e_CancelResetPassword'
      * 
      */
     public void e_CancelResetPassword() {
-        SignIn.tapCancel();
-        ShortcutsTyper.delayTime(5000);
+        SignIn.tapCancelResetPassword();
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -32,7 +46,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_ChooseTryAgain() {
         SignIn.tapTryAgain();
-        ShortcutsTyper.delayTime(5000);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -41,7 +55,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_ChooseForgotPassword() {
         SignIn.tapForgotPassword();
-        ShortcutsTyper.delayTime(5000);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -50,7 +64,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_ChooseSignIn() {
         SignIn.tapLogIn();
-        ShortcutsTyper.delayTime(500);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -59,7 +73,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_ConfirmAlert() {
         SignIn.tapOK();
-        ShortcutsTyper.delayTime(2000);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -68,7 +82,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_ConfirmForgotPassword() {
         SignIn.tapIForgot();
-        ShortcutsTyper.delayTime(1000);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -77,7 +91,6 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_FillIncorrectPassword() {
         SignIn.enterEmailPassword("test147@thy.com", "test11");
-//        SignIn.tapNext();
         ShortcutsTyper.delayTime(5000);
     }
 
@@ -86,9 +99,9 @@ public class InvalidSignInAPI extends ModelAPI {
      * 
      */
     public void e_FillInvalidEmail() {
-        SignIn.enterEmailPassword("test@a", "abc");
-//        SignIn.tapNext();
-        ShortcutsTyper.delayTime(5000);
+    	String email = invalidEmails[PrometheusHelper.randInt(0, invalidEmails.length)];
+        SignIn.enterEmailPassword(email, "qwerty1");
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -96,9 +109,9 @@ public class InvalidSignInAPI extends ModelAPI {
      * 
      */
     public void e_FillInvalidPassword() {
-        SignIn.enterEmailPassword("test147@thy.com", "abc");
-//        SignIn.tapNext();
-        ShortcutsTyper.delayTime(5000);
+    	String password = invalidPasswords[PrometheusHelper.randInt(0, invalidPasswords.length)];
+        SignIn.enterEmailPassword("valid@email.com", password);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -106,17 +119,8 @@ public class InvalidSignInAPI extends ModelAPI {
      * 
      */
     public void e_FillNotExistedEmail() {
-        SignIn.enterEmailPassword("test147@thyabc.com", "abc1333");
-//        SignIn.tapNext();
+        SignIn.enterEmailPassword(MVPApi.generateUniqueEmail(), "abc1333");
         ShortcutsTyper.delayTime(5000);
-    }
-
-    /**
-     * This method implements the Edge 'e_Init'
-     * 
-     */
-    public void e_Init() {
-    	LaunchScreen.launch(); 
     }
 
     /**
@@ -125,16 +129,24 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_PressBack() {
         SignIn.tapPrevious();
-        ShortcutsTyper.delayTime(3000);
+        ShortcutsTyper.delayOne();
     }
 
+    
+    
+    /**
+     * This method implements the Vertex 'v_InitialView'
+     * 
+     */
+    public void v_InitialView() {
+    }
+    
     /**
      * This method implements the Vertex 'v_ForgotPassword'
      * 
      */
     public void v_ForgotPassword() {
         Assert.assertTrue(SignIn.isForgotPasswordView(), "This is not forgot password view.");
-        ShortcutsTyper.delayTime(3000);
     }
 
     /**
@@ -143,15 +155,6 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void v_IncorrectPassword() {
         Assert.assertTrue(SignIn.hasIncorrectLoginMessage(), "This is not incorrect password view.");
-        ShortcutsTyper.delayTime(3000);
-    }
-
-    /**
-     * This method implements the Vertex 'v_InitialView'
-     * 
-     */
-    public void v_InitialView() {
-        // TODO:
     }
 
     /**
@@ -160,7 +163,6 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void v_InvalidEmail() {
         Assert.assertTrue(SignIn.hasInvalidEmailMessage(), "This is not invalid email view.");
-        ShortcutsTyper.delayTime(500);
     }
 
     /**
@@ -169,7 +171,6 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void v_InvalidPassword() {
         Assert.assertTrue(SignIn.hasInvalidPasswordMessage(), "This is not invalid password view.");
-        ShortcutsTyper.delayTime(500);
     }
 
     /**
@@ -178,7 +179,6 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void v_NotExistedEmail() {
         Assert.assertTrue(SignIn.hasIncorrectLoginMessage(), "This is not incorrect email view.");
-        ShortcutsTyper.delayTime(500);
     }
 
     /**
@@ -187,7 +187,6 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void v_SignInVisible() {
         Assert.assertTrue(SignIn.isLoginView(), "This is not sign in view.");
-        ShortcutsTyper.delayTime(500);
     }
 
 }

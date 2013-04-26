@@ -4,14 +4,25 @@ import com.misfit.ios.ViewUtils;
 
 public class SignUp {
     public static void tapSignUp() {
-        Gui.touchAVIew("UIButton", "SIGN UP");
+        Gui.touchAVIew("UIButtonLabel", " SIGN UP");
     }
 
+    /* NAVIGATION */
+    public static void tapNext() {
+        Gui.tapNext();
+    }
+
+    public static void tapPrevious() {
+        Gui.tapPrevious();
+    }
+    
+    
     /* STEP 1: ENTER EMAIL AND PASSWORD */
     public static void enterEmailPassword(String email, String password) {
         PrometheusHelper.enterEmailPassword(email, password);
     }
 
+    
     /* STEP 2: PROFILE */
     public static void enterGender(boolean isMale) {
         PrometheusHelper.enterGender(isMale);
@@ -29,38 +40,49 @@ public class SignUp {
         PrometheusHelper.enterWeight(digit, fraction, isUSUnit);
     }
 
-    /* STEP 3: WHAT ARE POINTS? */
-    /* STEP 4: SET YOUR GOAL */
-
-    public static void tapNext() {
-        Gui.tapNext();
-    }
-
-    public static void tapPrevious() {
-        Gui.tapPrevious();
-    }
-
+    /* STEP 3: SET YOUR GOAL */
     public static int getCurrentGoal() {
-        int level = 0;
         String text = Gui.getText("UILabel", 0);
-        if ("ACTIVE".equals(text)) {
-            level = 0;
-        } else if ("VERY ACTIVE".equals(text)) {
-            level = 1;
-        } else {
-            level = 2;
-        }
-        return level;
+        
+        if(text.equals("1500"))
+        	return 0;
+        if(text.equals("2500"))
+        	return 1;
+        if(text.equals("4000"))
+        	return 2;
+        
+        return -1;
     }
 
     public static void setGoal(int level) {
         Gui.setGoalSlider(level);
     }
+    
+    public static void tapOpenTutorial()
+    {
+    	// TODO:
+    	// tap the question mark (?) button
+    }
+    
+    public static void tapCloseTutorial()
+    {
+    	// TODO:
+    	// tap close (x) button
+    }
+    
 
+    /* STEP 4: PARING */
     public static void sync() {
         PrometheusHelper.sync();
     }
+    
+    public static void tapFinishSetup()
+    {
+    	Gui.touchAVIew("UIButton", "FINISH SETUP");
+    }
 
+    
+    /* UTILITIES */
     public static void tapAllowUseCurrentLocation() {
 
     }

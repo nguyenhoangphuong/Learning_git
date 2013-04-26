@@ -2,22 +2,37 @@ package com.misfit.ta.gui;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeScreen {
     public static void tapSettings() {
-        Gui.touchAVIew("UIButton", 6);
+    	// TODO:
+    	// Currently index of Settings button change after manually
+    	// input a record, must find a better way to tap it
+        Gui.touchAVIew("UIButton", 4);
+    	
+//    	String message = "(Gui touchAView: ";
+//		message += ViewUtils
+//				.generateFindViewStatement("UIButton", 0, ViewUtils
+//				.generateFindViewStatement("UIView", 0, ViewUtils
+//				.generateFindViewStatement("PTSyncTrayView", 0)));
+//		message += ")";
+//		NuRemoteClient.sendToServer(message);
     }
 
     public static void tapSyncTray() {
-        Gui.touchAVIew("UIButton", 5);
+    	// TODO:
+    	// Currently index of SyncTray button change after manually
+    	// input a record, must find a better way to tap it
+        Gui.touchAVIew("UIButton", 3);
     }
 
     public static void tapOpenManualInput() {
-        Gui.touchAVIew("UIButton", 1);
+        Gui.touchAVIew("UIButton", "Manual");
     }
-
+    
     public static void tapRandom() {
         Gui.touchAVIew("UIButtonLabel", "Random");
     }
@@ -26,18 +41,34 @@ public class HomeScreen {
         Gui.touchAVIew("UIButtonLabel", "Dormant");
     }
 
-    public static void enterManualActivity(String time, int duration, int steps) {
-        // TODO: enter time
+    public static void enterManualActivity(String[] times, int duration, int steps) {
+        // enter activity
+    	Gui.touchAVIew("UITextField", 0);
+    	ShortcutsTyper.delayTime(500);
+    	Gui.setPicker(0, "Running");
+    	Gui.dismissPicker();
+    	ShortcutsTyper.delayTime(500);
+    	
+    	// enter time    	
+    	Gui.touchAVIew("UITextField", 1);
+    	ShortcutsTyper.delayTime(500);
+    	Gui.setPicker(0, times[0]);
+    	Gui.setPicker(1, times[1]);
+    	Gui.setPicker(2, times[2]);
+    	Gui.dismissPicker();
+    	ShortcutsTyper.delayTime(500);
 
         // enter duration
         Gui.touchAVIew("UITextField", 2);
         Gui.type(String.valueOf(duration));
         ShortcutsTyper.delayTime(500);
+        Gui.dismissPicker();
 
         // enter steps
         Gui.touchAVIew("UITextField", 3);
         Gui.type(String.valueOf(steps));
         ShortcutsTyper.delayTime(500);
+        Gui.dismissPicker();
     }
 
     public static void tapSave() {
@@ -57,11 +88,13 @@ public class HomeScreen {
     }
 
     public static boolean isToday() {
-        return "TODAY".equals(Gui.getProperty("UILabel", 1, "text"));
+        //return "TODAY".equals(Gui.getProperty("UILabel", 0, "text"));
+    	return ViewUtils.isExistedView("UILabel", "TODAY");
     }
 
     public static boolean isYesterday() {
-        return "YESTERDAY".equals(Gui.getProperty("UILabel", 1, "text"));
+        //return "YESTERDAY".equals(Gui.getProperty("UILabel", 0, "text"));
+    	return ViewUtils.isExistedView("UILabel", "YESTERDAY");
     }
 
     /**
@@ -86,9 +119,14 @@ public class HomeScreen {
     }
 
     public static boolean viewNoDataYet() {
-        return !StringUtils.isEmpty(Gui.getProperty(ViewUtils.findView("UILabel", "NO DATA YET!"), "isHidden"));
+        return !StringUtils.isEmpty(Gui.getProperty("UILabel", "NO DATA YET!", "isHidden"));
     }
 
+    public static boolean syncTrayIsClosed()
+    {
+    	return !ViewUtils.isExistedView("UILabel", "DETECTING SHINE");
+    }
+    
     public static void sync() {
         PrometheusHelper.sync();
     }
