@@ -840,12 +840,16 @@ public class Gui {
 
     public static void start(String ip) 
     {
-        logger.info("Will start the app");
+        logger.info("Kill the app");
         stopApp();
+        
+        logger.info("Starting app again");
         int noOfTries = 0;
         boolean connected = false;
         while (!connected && noOfTries < 1) 
         {
+        	logger.info("Startup attempt: " + noOfTries + 1);
+        	
         	// get absolute path of script file
         	String script = "script/automation/alertsupport.js";
             File aCase;
@@ -873,29 +877,30 @@ public class Gui {
 //                    }
 //                }
             	
-            	logger.info("Getting alertsupport.js file... ");
+            	logger.info("   - Getting alertsupport.js file... ");
                 aCase = Files.getFile(script);
                 
                 if (aCase != null) 
                 {
                 	script = aCase.getAbsolutePath();
-                    logger.info(script);
+                    logger.info("   - File location: " + script);
                 }
                 else
-                	logger.info("Can not find alertsupport.js");
+                	logger.info("   - Can not find alertsupport.js");
             } 
             catch (FileNotFoundException e) 
             {
                 logger.info("Failed to start a case: " + script + " because: " + e.toString());
                 Assert.assertTrue(false, "Testcase FAILED: failed to load the test case");
             }
+            
         	// lauch instrument
-        	logger.info("Startup attempt: " + noOfTries + 1);
             String command = "instruments -w " + Gui.getCurrentUdid() + " -t " + template + " " + Gui.getAppPath()
                     + " -e UIARESULTSPATH logs -e UIASCRIPT " + script;
-            logger.info("Command: " + command);
 
-            try 
+            logger.info("   - Launching instrucments...");
+            logger.info("   - Command: " + command);
+            try
             {
                 Runtime.getRuntime().exec(command);
             } 
@@ -904,7 +909,7 @@ public class Gui {
                 e.printStackTrace();
             }
 
-            logger.info("Init NuRemoteClinet ... ");
+            logger.info("   - Init NuRemoteClinet... ");
             ShortcutsTyper.delayTime(20000);
             connected = NuRemoteClient.init(ip);
             noOfTries++;
