@@ -25,7 +25,7 @@ public class BackendSignInTC extends AutomationTest {
 
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signin" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signin" })
     public void SignInWrongEmail() {
         AccountResult r = MVPApi.signIn(invalidEmail, validPassword, udid);
         r.printKeyPairsValue();
@@ -36,7 +36,7 @@ public class BackendSignInTC extends AutomationTest {
         Assert.assertTrue("Empty authenticate token", r.token.isEmpty());
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signin" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signin" })
     public void SignInWrongPassword() {
         AccountResult r = MVPApi.signIn(validEmail, invalidPassword, udid);
         r.printKeyPairsValue();
@@ -47,7 +47,7 @@ public class BackendSignInTC extends AutomationTest {
         Assert.assertTrue("Empty authenticate token", r.token.isEmpty());
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signin" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signin" })
     public void SignInValidAccount() {
         AccountResult r = MVPApi.signIn(validEmail, validPassword, udid);
         r.printKeyPairsValue();
@@ -57,7 +57,7 @@ public class BackendSignInTC extends AutomationTest {
         Assert.assertTrue("Authenticate token is not empty", !r.token.isEmpty());
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signin" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signin" })
     public void SignInWithTwoDevices() {
         AccountResult r1 = MVPApi.signIn(validEmail, validPassword, udid);
         r1.printKeyPairsValue();
@@ -68,7 +68,7 @@ public class BackendSignInTC extends AutomationTest {
         Assert.assertTrue("Different token between two devices", !r1.token.equals(r2.token));
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signin" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signin" })
     public void SignBackInDifferentToken() {
         // check if token changed after sign out and sign back in again
         AccountResult r1 = MVPApi.signIn(validEmail, validPassword, udid);

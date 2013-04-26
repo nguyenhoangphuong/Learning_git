@@ -25,7 +25,7 @@ public class BackendSignUpTC extends AutomationTest {
         udid = DefaultValues.UDID;
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signup" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signup" })
     public void SignUpWrongFormatEmails() {
         for (int i = 0; i < wrongFormatEmails.length; i++) {
             AccountResult r = MVPApi.signUp(wrongFormatEmails[i], wellFormatPassword, udid);
@@ -37,7 +37,7 @@ public class BackendSignUpTC extends AutomationTest {
         }
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signup" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signup" })
     public void SignUpWrongFormatPasswords() {
         for (int i = 0; i < wrongFormatPasswords.length; i++) {
             AccountResult r = MVPApi.signUp(wellFormatEmail, wrongFormatPasswords[i], udid);
@@ -49,7 +49,7 @@ public class BackendSignUpTC extends AutomationTest {
         }
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signup" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signup" })
     public void SignUpDuplicateEmail() {
         duplicatedEmail = MVPApi.generateUniqueEmail();
         MVPApi.signUp(duplicatedEmail, wellFormatPassword, udid);
@@ -62,7 +62,7 @@ public class BackendSignUpTC extends AutomationTest {
         Assert.assertTrue("Empty authenticate token", r.token.isEmpty());
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signup" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signup" })
     public void SignUpNotRegisteredEmail() {
         AccountResult r = MVPApi.signUp(notregisteredEmail, wellFormatPassword, udid);
         r.printKeyPairsValue();

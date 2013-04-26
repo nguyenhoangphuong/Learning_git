@@ -20,7 +20,7 @@ public class BackendSignOutTC extends AutomationTest {
         MVPApi.signUp(email, password, udid);
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signout" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signout" })
     public void SignOutValidToken() {
         // sign in then use the token to sign out
 
@@ -31,7 +31,7 @@ public class BackendSignOutTC extends AutomationTest {
         Assert.assertTrue("Status code is 200", r.isOK());
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signout" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signout" })
     public void SignOutExpiredToken() {
         // sign in then sign out
         // sign in again and use old token from 1st sign in to sign out
@@ -47,7 +47,7 @@ public class BackendSignOutTC extends AutomationTest {
         Assert.assertEquals("Invalid auth token error message", r.errorMessage, DefaultValues.InvalidAuthToken);
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signout" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signout" })
     public void SignOutInvalidToken() {
         // sign out with arbitrary / wrong format token
 
@@ -59,7 +59,7 @@ public class BackendSignOutTC extends AutomationTest {
         Assert.assertEquals("Invalid auth token error message", r.errorMessage, DefaultValues.InvalidAuthToken);
     }
 
-    @Test(groups = { "ios", "Prometheus", "api", "signout" })
+    @Test(groups = { "ios", "MVPBackend", "api", "signout" })
     public void SignOutOnTwoDevices() {
         // sign in on two devices (two udid) then sign out each devices
         // two sign out must be success
