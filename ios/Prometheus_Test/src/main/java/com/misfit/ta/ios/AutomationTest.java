@@ -39,7 +39,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
         Files.delete("instrumentscli0.trace");
 
         if (!debug) {
-            //Gui.cleanCache();
+            Gui.cleanCache();
             Gui.start(Settings.getParameter("DeviceIP"));
         } else {
         	Gui.init(Settings.getParameter("DeviceIP"));
