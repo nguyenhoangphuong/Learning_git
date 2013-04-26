@@ -873,9 +873,8 @@ public class Gui {
 //                    }
 //                }
             	
-            	logger.info("Getting alertsupport file... ");
+            	logger.info("Getting alertsupport.js file... ");
                 aCase = Files.getFile(script);
-                logger.info("Done");
                 
                 if (aCase != null) 
                 {
@@ -883,7 +882,7 @@ public class Gui {
                     logger.info(script);
                 }
                 else
-                	logger.info("Can not find alertsupport");
+                	logger.info("Can not find alertsupport.js");
             } 
             catch (FileNotFoundException e) 
             {
@@ -905,6 +904,7 @@ public class Gui {
                 e.printStackTrace();
             }
 
+            logger.info("Init NuRemoteClinet ... ");
             ShortcutsTyper.delayTime(20000);
             connected = NuRemoteClient.init(ip);
             noOfTries++;
