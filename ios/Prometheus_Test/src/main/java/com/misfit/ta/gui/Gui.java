@@ -841,14 +841,11 @@ public class Gui {
     public static void start(String ip) 
     {
         logger.info("Will start the app");
-
         stopApp();
-        logger.info("1");
         int noOfTries = 0;
         boolean connected = false;
         while (!connected && noOfTries < 1) 
         {
-        	logger.info("2");
         	// get absolute path of script file
         	String script = "script/automation/alertsupport.js";
             File aCase;
@@ -875,14 +872,6 @@ public class Gui {
 //                    	logger.info("Error on extracting scripts: " + e1);
 //                    }
 //                }
-            	logger.info("3");
-				try {
-					Files.extractJar("script/", true);
-				} catch (IOException e) {
-					logger.info("4");
-					e.printStackTrace();
-				}
-				logger.info("5");
             	
             	logger.info("Getting alertsupport file... ");
                 aCase = Files.getFile(script);
