@@ -857,30 +857,25 @@ public class Gui {
                 logger.info("---------- 6.2");
                 try 
                 {
-                	logger.info("---------- 7");
+                	logger.info("Getting files...");
                     Files.getFile("script/");
                 } 
                 catch (Exception e) 
                 {
-                	logger.info("---------- 8");
-                	logger.info("Error: " + e);
-                	e.printStackTrace();
+                	logger.info("Error on getting files: " + e);
                 	
                     try
                     {
-                    	logger.info("---------- 9");
                         logger.info("Extracting scripts...");
                         Files.extractJar("script/", true);
                     } 
                     catch (IOException e1)
                     {
-                    	logger.info("---------- 10");
-                    	logger.info("Error: " + e1);
-                        e1.printStackTrace();
+                    	logger.info("Error on extracting scripts: " + e1);
                     }
                 }
                 
-                logger.info("---------- 11");
+                logger.info("---------- 7");
                 aCase = Files.getFile(script);
                 if (aCase != null) 
                 {
@@ -890,21 +885,20 @@ public class Gui {
             } 
             catch (FileNotFoundException e) 
             {
-            	logger.info("---------- 6-catched");
                 logger.info("Failed to start a case: " + script + " because: " + e.toString());
                 Assert.assertTrue(false, "Testcase FAILED: failed to load the test case");
             }
-            logger.info("---------- 12");
-            
         	// lauch instrument
         	logger.info("Startup attempt: " + noOfTries + 1);
             String command = "instruments -w " + Gui.getCurrentUdid() + " -t " + template + " " + Gui.getAppPath()
                     + " -e UIARESULTSPATH logs -e UIASCRIPT " + script;
             logger.info("Command: " + command);
 
-            try {
+            try 
+            {
                 Runtime.getRuntime().exec(command);
-            } catch (IOException e) {
+            } 
+            catch (IOException e) {
                 e.printStackTrace();
             }
 
