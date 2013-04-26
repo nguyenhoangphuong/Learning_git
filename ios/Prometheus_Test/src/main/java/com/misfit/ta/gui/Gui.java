@@ -906,6 +906,7 @@ public class Gui {
             } 
             catch (IOException e)
             {
+            	logger.error(e);
                 e.printStackTrace();
             }
 
