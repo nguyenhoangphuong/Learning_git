@@ -852,30 +852,27 @@ public class Gui {
             File aCase;
             try 
             {
-            	logger.info("---------- 6.1");
-                Files.emptyDir(new File("script/"), null);
-                logger.info("---------- 6.2");
-                try 
-                {
-                	logger.info("Getting files...");
-                    Files.getFile("script/");
-                } 
-                catch (Exception e) 
-                {
-                	logger.info("Error on getting files: " + e);
-                	
-                    try
-                    {
-                        logger.info("Extracting scripts...");
-                        Files.extractJar("script/", true);
-                    } 
-                    catch (IOException e1)
-                    {
-                    	logger.info("Error on extracting scripts: " + e1);
-                    }
-                }
-                
-                logger.info("---------- 7");
+//                Files.emptyDir(new File("script/"), null);
+//                try 
+//                {
+//                	logger.info("Getting files...");
+//                    Files.getFile("script/");
+//                } 
+//                catch (Exception e) 
+//                {
+//                	logger.info("Error on getting files: " + e);
+//                	
+//                    try
+//                    {
+//                        logger.info("Extracting scripts...");
+//                        Files.extractJar("script/", true);
+//                    } 
+//                    catch (IOException e1)
+//                    {
+//                    	logger.info("Error on extracting scripts: " + e1);
+//                    }
+//                }
+//				Files.extractJar("script/", true);
                 aCase = Files.getFile(script);
                 if (aCase != null) 
                 {
@@ -898,7 +895,8 @@ public class Gui {
             {
                 Runtime.getRuntime().exec(command);
             } 
-            catch (IOException e) {
+            catch (IOException e)
+            {
                 e.printStackTrace();
             }
 
@@ -910,8 +908,6 @@ public class Gui {
 
     public static void stopApp() {
         String deviceId = Gui.getCurrentUdid();
-        logger.info("Device UDID: " + deviceId);
-        
         ProcessFinder.kill(deviceId);
 //        Processes.killHard(deviceId);
     }
