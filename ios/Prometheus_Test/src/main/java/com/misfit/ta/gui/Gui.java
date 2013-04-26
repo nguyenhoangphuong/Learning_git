@@ -851,48 +851,12 @@ public class Gui {
         	logger.info("Startup attempt: " + noOfTries + 1);
         	
         	// get absolute path of script file
-        	String script = "script/automation/alertsupport.js";
-            File aCase;
-            try 
-            {
-            	
-//                Files.emptyDir(new File("script/"), null);
-//                try 
-//                {
-//                	logger.info("Getting files...");
-//                    Files.getFile("script/");
-//                } 
-//                catch (Exception e) 
-//                {
-//                	logger.info("Error on getting files: " + e);
-//                	
-//                    try
-//                    {
-//                        logger.info("Extracting scripts...");
-//                        Files.extractJar("script/", true);
-//                    } 
-//                    catch (IOException e1)
-//                    {
-//                    	logger.info("Error on extracting scripts: " + e1);
-//                    }
-//                }
-            	
-            	logger.info("   - Getting alertsupport.js file... ");
-                aCase = Files.getFile(script);
-                
-                if (aCase != null) 
-                {
-                	script = aCase.getAbsolutePath();
-                    logger.info("   - File location: " + script);
-                }
-                else
-                	logger.info("   - Can not find alertsupport.js");
-            } 
-            catch (FileNotFoundException e) 
-            {
-                logger.info("Failed to start a case: " + script + " because: " + e.toString());
-                Assert.assertTrue(false, "Testcase FAILED: failed to load the test case");
-            }
+        	String script = new File("script/automation/alertsupport.js").getAbsolutePath();
+        	if(!new File(script).exists())
+        	{
+        		logger.info("Cannot find: " + script);
+        		return;
+        	}
             
         	// lauch instrument
             String command = "instruments -w " + Gui.getCurrentUdid() + " -t " + template + " " + Gui.getAppPath()
@@ -919,8 +883,8 @@ public class Gui {
 
     public static void stopApp() {
         String deviceId = Gui.getCurrentUdid();
-        ProcessFinder.kill(deviceId);
-//        Processes.killHard(deviceId);
+        //ProcessFinder.kill(deviceId);
+        Processes.killHard(deviceId);
     }
     
     public static void captureScreen(String name) {
