@@ -843,20 +843,18 @@ public class Gui {
         logger.info("Will start the app");
 
         stopApp();
-        logger.info("---------- 4");
         int noOfTries = 0;
         boolean connected = false;
         while (!connected && noOfTries < 1) 
         {
-        	logger.info("---------- 5");
-        	
         	// get absolute path of script file
         	String script = "script/automation/alertsupport.js";
             File aCase;
             try 
             {
-            	logger.info("---------- 6");
+            	logger.info("---------- 6.1");
                 Files.emptyDir(new File("script/"), null);
+                logger.info("---------- 6.2");
                 try 
                 {
                 	logger.info("---------- 7");
@@ -892,6 +890,7 @@ public class Gui {
             } 
             catch (FileNotFoundException e) 
             {
+            	logger.info("---------- 6-catched");
                 logger.info("Failed to start a case: " + script + " because: " + e.toString());
                 Assert.assertTrue(false, "Testcase FAILED: failed to load the test case");
             }
@@ -916,13 +915,11 @@ public class Gui {
     }
 
     public static void stopApp() {
-//        logger.info("----------- 111");
         String deviceId = Gui.getCurrentUdid();
-//        logger.info("----------- 222");
+        logger.info("Device UDID: " + deviceId);
+        
         ProcessFinder.kill(deviceId);
-//        logger.info("----------- 333");
 //        Processes.killHard(deviceId);
-//        logger.info("----------- 444");
     }
     
     public static void captureScreen(String name) {
