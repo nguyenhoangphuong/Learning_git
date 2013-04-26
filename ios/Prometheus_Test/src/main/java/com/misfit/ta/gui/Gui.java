@@ -850,29 +850,47 @@ public class Gui {
         {
         	logger.info("Startup attempt: " + noOfTries + 1);
         	
-        	// get absolute path of script file
-        	String script = new File("script/automation/alertsupport.js").getAbsolutePath();
-        	if(!new File(script).exists())
-        	{
-        		logger.info("Cannot find: " + script);
-        		return;
-        	}
+
             
         	// lauch instrument
-            String command = "instruments -w " + Gui.getCurrentUdid() + " -t " + template + " " + Gui.getAppPath()
-                    + " -e UIARESULTSPATH logs -e UIASCRIPT " + script;
+        	logger.info("   - Launching instrucments...");
+			(new Thread() 
+			{
+				public void run() 
+				{
+		        	String script = new File("script/automation/alertsupport.js").getAbsolutePath();
+		        	if(!new File(script).exists())
+		        	{
+		        		logger.info("Cannot find: " + script);
+		        		return;
+		        	}
+					AppHelper.launchInstrument(Gui.getCurrentUdid(), Gui.getAppPath(), script);
+				}
+			}).start();
 
-            logger.info("   - Launching instrucments...");
-            logger.info("   - Command: " + command);
-            try
-            {
-                Runtime.getRuntime().exec(command);
-            } 
-            catch (IOException e)
-            {
-            	logger.error(e);
-                e.printStackTrace();
-            }
+			// OLD VERSION OF LAUNCHING INSTRUMENTS
+//        	// get absolute path of script file
+//        	String script = new File("script/automation/alertsupport.js").getAbsolutePath();
+//        	if(!new File(script).exists())
+//        	{
+//        		logger.info("Cannot find: " + script);
+//        		return;
+//        	}
+        	
+//            String command = "instruments -w " + Gui.getCurrentUdid() + " -t " + template + " " + Gui.getAppPath()
+//                    + " -e UIARESULTSPATH logs -e UIASCRIPT " + script;
+//
+//            logger.info("   - Launching instrucments...");
+//            logger.info("   - Command: " + command);
+//            try
+//            {
+//                Runtime.getRuntime().exec(command);
+//            } 
+//            catch (IOException e)
+//            {
+//            	logger.error(e);
+//                e.printStackTrace();
+//            }
 
             logger.info("   - Init NuRemoteClinet... ");
             ShortcutsTyper.delayTime(20000);

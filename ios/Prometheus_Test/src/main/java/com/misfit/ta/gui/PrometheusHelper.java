@@ -163,8 +163,11 @@ public class PrometheusHelper {
 	@Test
 	public void test()
 	{
-		Gui.init("192.168.1.247");
+		//Gui.init("192.168.1.247");
+		Gui.start("192.168.1.247");
 		Gui.printView();
+		LaunchScreen.launch();
+		
 		//HomeScreen.tapSyncTray();
 		//HomeScreen.tapSettings();
 		
