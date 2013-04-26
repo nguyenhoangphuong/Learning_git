@@ -5,6 +5,7 @@ import java.io.File;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
@@ -22,12 +23,21 @@ public class SuccessfulSignInAPI extends ModelAPI {
     }
 
     /**
+     * This method implements the Edge 'e_Init'
+     * 
+     */
+    public void e_Init() {
+    	// there is no launch screen anymoar
+    	//LaunchScreen.launch();
+    }
+    
+    /**
      * This method implements the Edge 'e_ChooseSignIn'
      * 
      */
     public void e_ChooseSignIn() {
         SignIn.tapLogIn();
-        ShortcutsTyper.delayTime(500);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -36,15 +46,10 @@ public class SuccessfulSignInAPI extends ModelAPI {
      */
     public void e_FillCorrectEmailPassword() {
         SignIn.enterEmailPassword("thy@misfitwearables.com", "test12");
-        ShortcutsTyper.delayTime(30000);
-    }
-
-    /**
-     * This method implements the Edge 'e_Init'
-     * 
-     */
-    public void e_Init() {
-    	LaunchScreen.launch();
+        ShortcutsTyper.delayTime(5000);
+        
+        // wait for sync data
+        ShortcutsTyper.delayTime(25000);
     }
 
     /**
@@ -53,25 +58,31 @@ public class SuccessfulSignInAPI extends ModelAPI {
      */
     public void e_SignOut() {
         HomeScreen.tapSettings();
+        ShortcutsTyper.delayOne();
         Gui.swipeUp(1000);
         HomeSettings.tapSignOut();
         ShortcutsTyper.delayTime(1000);
     }
 
-    /**
-     * This method implements the Vertex 'v_HomeScreen'
-     * 
-     */
-    public void v_HomeScreen() {
-        // TODO:
-    }
-
+    
+    
     /**
      * This method implements the Vertex 'v_InitialView'
      * 
      */
     public void v_InitialView() {
-        // TODO:
+        // check if this is starting screen
+    	Assert.assertTrue(ViewUtils.isExistedView("UIButtonLabel", " SIGN UP"), "Button Sign Up is available");
+    	Assert.assertTrue(ViewUtils.isExistedView("UIButtonLabel", " SIGN IN"), "Button Sign In is available");
+    }
+    
+    /**
+     * This method implements the Vertex 'v_HomeScreen'
+     * 
+     */
+    public void v_HomeScreen() {
+        // check if this screen is home screen
+    	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen - Today");
     }
 
     /**
@@ -80,7 +91,6 @@ public class SuccessfulSignInAPI extends ModelAPI {
      */
     public void v_SignInVisible() {
         Assert.assertTrue(SignIn.isLoginView(), "This is not sign in view.");
-        ShortcutsTyper.delayTime(500);
     }
 
 }

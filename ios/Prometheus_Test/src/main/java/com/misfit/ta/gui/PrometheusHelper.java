@@ -1,17 +1,13 @@
 package com.misfit.ta.gui;
 
 import java.util.Random;
-
 import org.testng.annotations.Test;
-
-import junit.framework.Assert;
-
-import com.misfit.ios.ViewUtils;
-import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class PrometheusHelper {
 	
+	
+	/* Views Helper */
 	public static void enterGender(boolean isMale) {
 		Gui.touchAVIew("UIButtonLabel", isMale ? "Male" : "Female");
 	}
@@ -68,8 +64,9 @@ public class PrometheusHelper {
 	}
 
 	public static void enterEmailPassword(String email, String password) {
-		Gui.touchAVIew("UITextField", 0);
-		String txtEmail = Gui.getProperty("UITextField", 0, "text");
+		Gui.touchAVIew("PTEmailVerifyingTextField", 0);
+		String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
+		System.out.println("Deleting: " + txtEmail);
 		for (int i = 0; i < txtEmail.length(); i++) {
 			Gui.pressDelete();
 		}
@@ -167,6 +164,7 @@ public class PrometheusHelper {
 	{
 		Gui.init("192.168.1.247");
 		Gui.printView();
+		//HomeScreen.tapSyncTray();
 		//HomeScreen.tapSettings();
 		
 		//Gui.tapNext();

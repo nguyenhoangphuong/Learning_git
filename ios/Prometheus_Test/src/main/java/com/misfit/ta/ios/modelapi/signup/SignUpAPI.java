@@ -1,9 +1,10 @@
 package com.misfit.ta.ios.modelapi.signup;
 
 import java.io.File;
-import java.util.Date;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
@@ -12,36 +13,47 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.ios.AutomationTest;
+import com.misfit.ta.ios.modelapi.settings.ProfileSettingsAPI;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
-import com.misfit.ta.gui.LaunchScreen;
+import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 
 public class SignUpAPI extends ModelAPI {
+	private static final Logger logger = Util.setupLogger(SignUpAPI.class);
     public SignUpAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
         super(automation, model, efsm, generator, weight);
     }
 
-    private static String year;
-    private static String month;
-    private static String day;
-    private static String hFraction;
-    private static String hDigit;
-    private static String wDigit;
-    private static String wFraction;
-    private static boolean isMale;
-    private static boolean isUSMetric;
-    private static String[] months = { "January", "February", "March", "April", "May", "June", "July", "August",
-            "September", "October", "November", "December" };
+	boolean isMale = true;
+	boolean isUSUnit = true;
+	String h1 = "", h2 = "";
+	String w1 = "", w2 = "";
+	String year = "", month = "", day = "";
     private static int goal = 0;
+    
+//    private static String[] goalPoints = {"1500", "2500", "4000" };
+//    private static String[] goalEqualRunnings = {"60", "100", "160"};
+//    private static String[] goalEqualCyclings = {"21", "35", "57"};
+//    private static String[] goalEqualWalkings = {"6,000", "10,000", "16,000"};
+//    private static String[] goalEqualBurnings = {"0.2", "0.3", "0.5"};
 
     /**
      * This method implements the Edge 'e_Init'
      * 
      */
     public void e_Init() {
-        //LaunchScreen.launch();
+    }
+    
+    /**
+     * This method implements the Edge 'e_ChooseSignUp'
+     * 
+     */
+    public void e_ChooseSignUp() {
+        SignUp.tapSignUp();
+        ShortcutsTyper.delayOne();
     }
     
     /**
@@ -50,16 +62,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_Back() {
         SignUp.tapPrevious();
-        ShortcutsTyper.delayTime(500);
-    }
-
-    /**
-     * This method implements the Edge 'e_ChooseSignUp'
-     * 
-     */
-    public void e_ChooseSignUp() {
-        SignUp.tapSignUp();
-        ShortcutsTyper.delayTime(1000);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -68,7 +71,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_Next() {
         SignUp.tapNext();
-        ShortcutsTyper.delayTime(500);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -78,7 +81,7 @@ public class SignUpAPI extends ModelAPI {
     public void e_SetGoal() {
         goal = new Random().nextInt(3);
         SignUp.setGoal(goal);
-        ShortcutsTyper.delayTime(1000);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -87,9 +90,10 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_SignOut() {
         HomeScreen.tapSettings();
+        ShortcutsTyper.delayOne();
         Gui.swipeUp(1000);
         HomeSettings.tapSignOut();
-        ShortcutsTyper.delayTime(3000);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -97,8 +101,8 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_SubmitValidEmailPassword() {
-        SignUp.enterEmailPassword(generateEmail(), "test12");
-        ShortcutsTyper.delayTime(8000);
+        SignUp.enterEmailPassword(MVPApi.generateUniqueEmail(), "test12");
+        ShortcutsTyper.delayTime(5000);
     }
 
     /**
@@ -109,12 +113,7 @@ public class SignUpAPI extends ModelAPI {
         SignUp.sync();
         ShortcutsTyper.delayTime(10000);
         SignUp.tapFinishSetup();
-        ShortcutsTyper.delayTime(3000);
-        
-//        for (int i = 0; i < 4; i++) {
-//        	Gui.touchAVIew("PTGoalCircleView", 0);
-//        	ShortcutsTyper.delayTime(300);
-//        }
+        ShortcutsTyper.delayTime(5000);
     }
 
     /**
@@ -122,9 +121,13 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_inputBirthDay() {
-        generateBirthDay();
-        SignUp.enterBirthDay(year, month, day);
-        ShortcutsTyper.delayTime(500);
+    	this.year = PrometheusHelper.randInt(1970, 2000) + "";
+		this.month = PrometheusHelper.getMonthString(PrometheusHelper.randInt(1, 13), true);
+		this.day = PrometheusHelper.randInt(1, 29) + "";
+		HomeSettings.updateBirthDay(year, month, day);
+		
+		logger.info("Change birthday to: " + PrometheusHelper.formatBirthday(year, month, day));
+		ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -132,9 +135,13 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_inputHeight() {
-        generateHeight(true);
-        SignUp.enterHeight(hDigit, hFraction, true);
-        ShortcutsTyper.delayTime(1000);
+		this.isUSUnit = PrometheusHelper.coin();
+		this.h1 = this.isUSUnit ? PrometheusHelper.randInt(4, 8) + "'": PrometheusHelper.randInt(1, 3) + "";
+		this.h2 = this.isUSUnit ? PrometheusHelper.randInt(0, 12) + "\\\"": "." + String.format("%2d", PrometheusHelper.randInt(50, 100));
+		SignUp.enterHeight(h1, h2, isUSUnit);
+		
+		logger.info("Change height to: " + h1 + h2 + (isUSUnit? "" : " m"));
+		ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -142,9 +149,11 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_inputSex() {
-        isMale = new Random().nextBoolean();
-        SignUp.enterGender(isMale);
-        ShortcutsTyper.delayTime(1000);
+		this.isMale = PrometheusHelper.coin();
+		SignUp.enterGender(isMale);
+		
+		logger.info("Change male to: " + (isMale ? "Male" : "Female"));
+		ShortcutsTyper.delayTime(1000);
     }
 
     /**
@@ -152,11 +161,26 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_inputWeight() {
-        generateWeight(true);
-        SignUp.enterWeight(wDigit, wFraction, true);
-        ShortcutsTyper.delayTime(1000);
+		this.isUSUnit = PrometheusHelper.coin();
+		this.w1 = this.isUSUnit ? PrometheusHelper.randInt(80, 260) + "": PrometheusHelper.randInt(40, 120) + "";
+		this.w2 = "." + PrometheusHelper.randInt(0, 10);
+		SignUp.enterWeight(w1, w2, isUSUnit);
+		
+		logger.info("Change weight to: " + w1 + w2 + (isUSUnit? " lbs" : " kg"));
+		ShortcutsTyper.delayTime(1000);
     }
+    
 
+    
+    
+    /**
+     * This method implements the Vertex 'v_InitialView'
+     * 
+     */
+    public void v_InitialView() {
+        // nothing to do here
+    }
+    
     /**
      * This method implements the Vertex 'v_HomeScreen'
      * 
@@ -167,33 +191,23 @@ public class SignUpAPI extends ModelAPI {
     }
 
     /**
-     * This method implements the Vertex 'v_InitialView'
-     * 
-     */
-    public void v_InitialView() {
-        // nothing to do here
-    }
-
-    /**
-     * This method implements the Vertex 'v_SignUpStep1'
+     * This method implements the Vertex 'v_SignUpAccount'
      * 
      */
     public void v_SignUpAccount() {
         Assert.assertTrue(SignUp.isSignUpAccountView(), "This is not sign up account view.");
-        ShortcutsTyper.delayTime(500);
     }
 
     /**
-     * This method implements the Vertex 'v_SignUpStep2'
+     * This method implements the Vertex 'v_SignUpProfile'
      * 
      */
     public void v_SignUpProfile() {
         Assert.assertTrue(SignUp.isSignUpProfileView(), "This is not sign up profile view.");
-        ShortcutsTyper.delayTime(500);
     }
 
     /**
-     * This method implements the Vertex 'v_SignUpStep4Updated'
+     * This method implements the Vertex 'v_SignUpGoalUpdated'
      * 
      */
     public void v_SignUpGoalUpdated() {
@@ -207,17 +221,15 @@ public class SignUpAPI extends ModelAPI {
      */
     public void v_SignUpGoal() {
         Assert.assertTrue(SignUp.isSignUpGoalView(), "This is not sign up goal view.");
-        ShortcutsTyper.delayTime(500);
     }
 
     /**
      * This method implements the Vertex 'v_SignUpStep4UpdatedBirthday'
      * 
      */
-    public void v_SignUpProfileUpdatedBirthday() {
-        Assert.assertTrue(SignUp.isSignUpProfileView() && isUpdatedBirthday(),
-                "This is not sign up step2 updated birthday view.");
-        ShortcutsTyper.delayTime(500);
+    public void v_SignUpProfileUpdatedBirthday() {      
+		String birthday = PrometheusHelper.formatBirthday(year, month, day);
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", birthday), "Birthday should be " + birthday);
     }
 
     /**
@@ -225,9 +237,8 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void v_SignUpProfileUpdatedSex() {
-        Assert.assertTrue(SignUp.isSignUpProfileView() && isUpdatedGender(),
-                "This is not sign up step2 updated gender view.");
-        ShortcutsTyper.delayTime(500);
+        boolean male = Gui.getProperty("UIButton", "Male", "isSelected").equals("1") ? true : false;
+        Assert.assertTrue(isMale == male, "Gender should be " + (isMale ? "Male" : "Female"));
     }
 
     /**
@@ -235,9 +246,8 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void v_SignUpProfileUpdatedHeight() {
-        Assert.assertTrue(SignUp.isSignUpProfileView() && isUpdatedHeight(),
-                "This is not sign up step2 updated height view.");
-        ShortcutsTyper.delayTime(500);
+		String height = h1 + h2 + (isUSUnit ? "" : " m");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", height), "Height should be " + height);
     }
 
     /**
@@ -245,9 +255,8 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void v_SignUpProfileUpdatedWeight() {
-        Assert.assertTrue(SignUp.isSignUpProfileView() && isUpdatedWeight(),
-                "This is not sign up step2 updated weight view.");
-        ShortcutsTyper.delayTime(500);
+		String weight = w1 + w2 + (isUSUnit ? " lbs" : " kg");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", weight), "Weight should be " + weight);
     }
 
     /**
@@ -256,90 +265,8 @@ public class SignUpAPI extends ModelAPI {
      */
     public void v_SignUpPairing() {
         Assert.assertTrue(SignUp.isSignUpPairingView(), "This is not sign up pairing view.");
-        ShortcutsTyper.delayTime(500);
     }
 
-    private String generateEmail() {
-        Date today = new Date();
-        return "qatest" + String.valueOf(today.getTime()) + "@test.com";
-    }
 
-    private void generateBirthDay() {
-        Random generator = new Random();
-        year = String.valueOf(1930 + generator.nextInt(71));
-        month = months[generator.nextInt(12)];
-        day = String.valueOf(generator.nextInt(28) + 1);
-    }
 
-    private void generateHeight(boolean USMetric) {
-        Random generator = new Random();
-        isUSMetric = USMetric;
-        if (isUSMetric) {
-            hDigit = String.valueOf(3 + generator.nextInt(6)) + "'";
-            hFraction = String.valueOf(generator.nextInt(12)) + "\\\"";
-        } else {
-            hDigit = String.valueOf(generator.nextInt(2) + 1);
-            int fraction = generator.nextInt(51);
-            if (fraction < 10) {
-                hFraction = ".0" + String.valueOf(fraction);
-            } else {
-                hFraction = "." + String.valueOf(fraction);
-            }
-        }
-    }
-
-    private void generateWeight(boolean USMetric) {
-        Random generator = new Random();
-        isUSMetric = USMetric;
-        if (isUSMetric) {
-            wDigit = String.valueOf(77 + generator.nextInt(295));
-        } else {
-            wDigit = String.valueOf(35 + generator.nextInt(115));
-        }
-        wFraction = "." + String.valueOf(generator.nextInt(10));
-    }
-
-    private boolean isUpdatedGender() {
-    	boolean male = Gui.getProperty("UIButton", "Male", "isSelected").equals("1") ? true : false;
-        return male == isMale;
-    }
-
-    private boolean isUpdatedBirthday() {
-        String birthday = Gui.getProperty(ViewUtils.findView("UILabel", 0, ViewUtils.generateFindViewStatement(
-                "PTDatePickerControl", 0)), "text");
-        String expectedBirthday = month.substring(0, 3);
-        if (Integer.valueOf(day) < 10) {
-            expectedBirthday += " 0" + day;
-        } else {
-            expectedBirthday += " " + day;
-        }
-        expectedBirthday += ", " + year;
-        return expectedBirthday.equals(birthday);
-    }
-
-    private boolean isUpdatedHeight() {
-        String height = Gui.getProperty(ViewUtils.findView("UILabel", 0, ViewUtils.generateFindViewStatement(
-                "PTHeightPickerControl", 0)), "text");
-        boolean USMetric = !height.contains("m");
-        String expectedHeight = hDigit;
-        if (!USMetric) {
-            expectedHeight += hFraction + " m";
-        } else {
-            expectedHeight += hFraction.substring(0, hFraction.length() - 2) + "\"";
-        }
-        return USMetric == isUSMetric && expectedHeight.equals(height);
-    }
-
-    private boolean isUpdatedWeight() {
-        String weight = Gui.getProperty(ViewUtils.findView("UILabel", 0, ViewUtils.generateFindViewStatement(
-                "PTWeightPickerControl", 0)), "text");
-        boolean USMetric = weight.contains("lbs");
-        String expectedWeight = wDigit + wFraction;
-        if (USMetric) {
-            expectedWeight += " lbs";
-        } else {
-            expectedWeight += " kg";
-        }
-        return USMetric == isUSMetric && expectedWeight.equals(weight);
-    }
 }

@@ -347,6 +347,16 @@ public class Gui {
         System.out.println("LOG [Gui.printView]: views: \n" + views);
     }
     
+    public static int countViewWithName(String viewName)
+    {
+        NuRemoteClient.sendToServer("(((UIApplication sharedApplication) keyWindow) recursiveDescription)");
+        String views = NuRemoteClient.getLastMessage();
+        views = views.replaceAll(">>    \\|", ">>\n");
+        views = views.replaceAll("    \\|", "  ");
+        
+        return StringUtils.countMatches(views, viewName + ":");
+    }
+    
 	public static void printViewWithViewName(String viewName) {
 		String message = "(Gui printViewWithViewName: @\"%viewName\")";
 		message = message.replace("%viewName", viewName);

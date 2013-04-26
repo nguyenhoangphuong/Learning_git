@@ -9,16 +9,24 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.gui.Gui;
-import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.ios.AutomationTest;
 
-public class InvalidSignUpStep1API extends ModelAPI {
-    public InvalidSignUpStep1API(AutomationTest automation, File model, boolean efsm, PathGenerator generator,
+public class InvalidSignUpAPI extends ModelAPI {
+    public InvalidSignUpAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator,
             boolean weight) {
         super(automation, model, efsm, generator, weight);
     }
 
+    
+    /**
+     * This method implements the Edge 'e_Init'
+     * 
+     */
+    public void e_Init() {
+        //LaunchScreen.launch();
+    }
+    
     /**
      * This method implements the Edge 'e_Back'
      * 
@@ -60,7 +68,7 @@ public class InvalidSignUpStep1API extends ModelAPI {
      * 
      */
     public void e_FillInvalidEmail() {
-        SignUp.enterEmailPassword("test@com", "test12");
+        SignUp.enterEmailPassword("test@com.", "test12");
         ShortcutsTyper.delayTime(500);
     }
 
@@ -73,14 +81,9 @@ public class InvalidSignUpStep1API extends ModelAPI {
         ShortcutsTyper.delayTime(500);
     }
 
-    /**
-     * This method implements the Edge 'e_Init'
-     * 
-     */
-    public void e_Init() {
-        LaunchScreen.launch();
-    }
-
+    
+    
+    
     /**
      * This method implements the Vertex 'v_InitialView'
      * 

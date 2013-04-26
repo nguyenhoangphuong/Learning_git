@@ -1,13 +1,15 @@
 package com.misfit.ta.gui;
 
 import com.misfit.ios.ViewUtils;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SignUp {
+
+    /* NAVIGATION */
     public static void tapSignUp() {
         Gui.touchAVIew("UIButtonLabel", " SIGN UP");
     }
-
-    /* NAVIGATION */
+    
     public static void tapNext() {
         Gui.tapNext();
     }
@@ -15,6 +17,18 @@ public class SignUp {
     public static void tapPrevious() {
         Gui.tapPrevious();
     }
+    
+	public static void tapCloseAllTips() 
+	{
+		for (int i = 0; i < 3; i++) 
+		{
+			Gui.touchAVIew("PTGoalCircleView", 0);
+			ShortcutsTyper.delayOne();
+		}
+		
+		Gui.touchAVIew("UIButton", "DISMISS IT");
+		ShortcutsTyper.delayOne();
+	}
     
     
     /* STEP 1: ENTER EMAIL AND PASSWORD */
@@ -40,6 +54,7 @@ public class SignUp {
         PrometheusHelper.enterWeight(digit, fraction, isUSUnit);
     }
 
+    
     /* STEP 3: SET YOUR GOAL */
     public static int getCurrentGoal() {
         String text = Gui.getText("UILabel", 0);
@@ -53,21 +68,19 @@ public class SignUp {
         
         return -1;
     }
-
+    
     public static void setGoal(int level) {
         Gui.setGoalSlider(level);
     }
     
     public static void tapOpenTutorial()
     {
-    	// TODO:
-    	// tap the question mark (?) button
+    	Gui.touchAVIew("UIButton", 0);
     }
     
     public static void tapCloseTutorial()
     {
-    	// TODO:
-    	// tap close (x) button
+    	Gui.touchAVIew("UIButton", 6);
     }
     
 
@@ -96,7 +109,9 @@ public class SignUp {
     }
 
     public static boolean isSignUpTutorialView() {
-        return ViewUtils.isExistedView("UILabel", "WHAT ARE POINTS?");
+        return  ViewUtils.isExistedView("UILabel", "_walking_") &&
+        		ViewUtils.isExistedView("UILabel", "_swimming_") &&
+        		ViewUtils.isExistedView("UILabel", "and even _cooking!_");
     }
 
     public static boolean isSignUpGoalView() {
@@ -124,4 +139,5 @@ public class SignUp {
         // popup error message
         Gui.touchPopupButton(0);
     }
+
 }

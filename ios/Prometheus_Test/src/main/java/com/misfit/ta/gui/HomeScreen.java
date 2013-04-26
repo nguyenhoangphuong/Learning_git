@@ -8,25 +8,13 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeScreen {
     public static void tapSettings() {
-    	// TODO:
-    	// Currently index of Settings button change after manually
-    	// input a record, must find a better way to tap it
-        Gui.touchAVIew("UIButton", 4);
-    	
-//    	String message = "(Gui touchAView: ";
-//		message += ViewUtils
-//				.generateFindViewStatement("UIButton", 0, ViewUtils
-//				.generateFindViewStatement("UIView", 0, ViewUtils
-//				.generateFindViewStatement("PTSyncTrayView", 0)));
-//		message += ")";
-//		NuRemoteClient.sendToServer(message);
+		int num = Gui.countViewWithName("UIButton");
+		Gui.touchAVIew("UIButton", num - 6);
     }
 
     public static void tapSyncTray() {
-    	// TODO:
-    	// Currently index of SyncTray button change after manually
-    	// input a record, must find a better way to tap it
-        Gui.touchAVIew("UIButton", 3);
+    	int num = Gui.countViewWithName("UIButton");
+		Gui.touchAVIew("UIButton", num - 8);
     }
 
     public static void tapOpenManualInput() {

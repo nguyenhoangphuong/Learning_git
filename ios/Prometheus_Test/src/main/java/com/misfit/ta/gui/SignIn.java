@@ -80,8 +80,8 @@ public class SignIn {
     }
 
     public static void enterEmailForResetPassword(String email) {
-        Gui.touchAVIew("UITextField", 0);
-        String txtEmail = Gui.getProperty("UITextField", 0, "text");
+        Gui.touchAVIew("PTEmailVerifyingTextField", 0);
+        String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
         for (int i = 0; i < txtEmail.length(); i++) {
             Gui.pressDelete();
         }
