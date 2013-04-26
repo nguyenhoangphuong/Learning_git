@@ -9,6 +9,7 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
@@ -26,8 +27,7 @@ public class InvalidSignInAPI extends ModelAPI {
      * 
      */
     public void e_Init() {
-    	// there is no lauchscreen anymore
-    	//LaunchScreen.launch(); 
+    	LaunchScreen.launch(); 
     }
     
     /**

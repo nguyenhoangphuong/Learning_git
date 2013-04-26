@@ -27,8 +27,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
      * 
      */
     public void e_Init() {
-    	// there is no launch screen anymoar
-    	//LaunchScreen.launch();
+    	LaunchScreen.launch();
     }
     
     /**

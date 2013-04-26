@@ -9,6 +9,7 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.gui.Gui;
+import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.ios.AutomationTest;
 
@@ -24,7 +25,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      * 
      */
     public void e_Init() {
-        //LaunchScreen.launch();
+        LaunchScreen.launch();
     }
     
     /**

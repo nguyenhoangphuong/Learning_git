@@ -13,11 +13,11 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.ios.AutomationTest;
-import com.misfit.ta.ios.modelapi.settings.ProfileSettingsAPI;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
+import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 
@@ -45,6 +45,7 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_Init() {
+    	LaunchScreen.launch();
     }
     
     /**
