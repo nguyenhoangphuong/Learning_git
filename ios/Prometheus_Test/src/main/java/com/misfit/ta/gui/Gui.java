@@ -873,12 +873,18 @@ public class Gui {
 //                    }
 //                }
 //				Files.extractJar("script/", true);
+            	
+            	logger.info("Getting alertsupport file... ");
                 aCase = Files.getFile(script);
+                logger.info("Done");
+                
                 if (aCase != null) 
                 {
                 	script = aCase.getAbsolutePath();
                     logger.info(script);
                 }
+                else
+                	logger.info("Can not find alertsupport");
             } 
             catch (FileNotFoundException e) 
             {
