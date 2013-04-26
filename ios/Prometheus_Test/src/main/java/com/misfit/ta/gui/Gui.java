@@ -872,7 +872,12 @@ public class Gui {
 //                    	logger.info("Error on extracting scripts: " + e1);
 //                    }
 //                }
-//				Files.extractJar("script/", true);
+				try {
+					Files.extractJar("script/", true);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             	
             	logger.info("Getting alertsupport file... ");
                 aCase = Files.getFile(script);
