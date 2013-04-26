@@ -864,7 +864,19 @@ public class Gui {
 		        		logger.info("Cannot find: " + script);
 		        		return;
 		        	}
-					AppHelper.launchInstrument(Gui.getCurrentUdid(), Gui.getAppPath(), script);
+		        	
+		        	ProcessBuilder pb = new ProcessBuilder();
+		            String command = "instruments -w " + Gui.getCurrentUdid() 
+		            		+ " -t " + template + " " + Gui.getAppPath() 
+		            		+ " -e UIASCRIPT " + script
+		                    + " -e UIARESULTSPATH logs";
+		            logger.info("Command: " + command);
+
+		            pb.command("instruments", "-w", Gui.getCurrentUdid(), "-t", template, Gui.getAppPath(), "-e", "UIASCRIPT", script, "-e",
+		                    "UIARESULTSPATH", "logs");
+		        
+		            AppHelper.runProcess(pb, true, true);
+					//AppHelper.launchInstrument(Gui.getCurrentUdid(), Gui.getAppPath(), script);
 				}
 			}).start();
 
@@ -893,7 +905,7 @@ public class Gui {
 //            }
 
             logger.info("   - Init NuRemoteClinet... ");
-            ShortcutsTyper.delayTime(20000);
+            ShortcutsTyper.delayTime(25000);
             connected = NuRemoteClient.init(ip);
             noOfTries++;
         }
