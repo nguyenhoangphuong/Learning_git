@@ -2,9 +2,8 @@ package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
 
-import junit.framework.Assert;
-
 import org.graphwalker.generators.PathGenerator;
+import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
@@ -12,7 +11,6 @@ import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.ios.AutomationTest;
 
 public class DayProgressAPI extends ModelAPI {
@@ -114,8 +112,8 @@ public class DayProgressAPI extends ModelAPI {
 	 */
 	public void v_Today() {
 		// check initial data: on progress circle, sync tray closed, today
-		Assert.assertTrue("Today is displayed by default", HomeScreen.isToday());
-		Assert.assertTrue("Sync tray is closed by default", HomeScreen.syncTrayIsClosed());
+		Assert.assertTrue(HomeScreen.isToday(), "Today is displayed by default");
+		Assert.assertTrue(HomeScreen.syncTrayIsClosed(), "Sync tray is closed by default");
 	}
 
 	/**
@@ -124,7 +122,7 @@ public class DayProgressAPI extends ModelAPI {
 	 */
 	public void v_TrayDisplayed() {
 		// check sync tray is opened
-		Assert.assertTrue("Sync tray is displyed", !HomeScreen.syncTrayIsClosed());
+		Assert.assertTrue(!HomeScreen.syncTrayIsClosed(), "Sync tray is displyed");
 	}
 
 	/**
@@ -133,19 +131,19 @@ public class DayProgressAPI extends ModelAPI {
 	 */
 	public void v_UpdatedToday() {
 		// check activity record is saved
-		Assert.assertTrue("Start time displayed correctly", ViewUtils.isExistedView("UILabel", this.lastStartTime));
-		//Assert.assertTrue("Duration displayed correctly", ViewUtils.isExistedView("UILabel", String.format("%d", this.lastDuration)));	// there's something wrong with the framework
-		Assert.assertTrue("Steps displayed correctly", ViewUtils.isExistedView("UILabel", String.format("%d", this.lastSteps)));
-		Assert.assertTrue("Points displayed correctly", ViewUtils.isExistedView("UILabel", String.format("%d", (int)this.lastPoints)));
-		Assert.assertTrue("Miles displayed correctly", ViewUtils.isExistedView("UILabel", String.format("%.1f", this.lastMiles).replace(".0", "")));
-		//Assert.assertTrue("Calories displayed correctly", ViewUtils.isExistedView("UILabel", String.format("%.1f", this.lastCalories).replace(".0", "")));
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", this.lastStartTime), "Start time displayed correctly");
+		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.lastDuration)), "Duration displayed correctly");	// there's something wrong with the framework
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.lastSteps)), "Steps displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", (int)this.lastPoints)), "Points displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.lastMiles).replace(".0", "")), "Miles displayed correctly");
+		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.lastCalories).replace(".0", "")), "Calories displayed correctly");
 		
 		// check summary is updated
-		Assert.assertTrue("Total hours displayed correctly", ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMinutes / 60f).replace(".0", "")));
-		Assert.assertTrue("Total steps displayed correctly", ViewUtils.isExistedView("UILabel", String.format("%d", this.totalSteps)));
-		Assert.assertTrue("Total points displayed correctly", ViewUtils.isExistedView("UILabel", String.format("%d", (int)this.totalPoints)));
-		Assert.assertTrue("Total miles displayed correctly", ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMiles).replace(".0", "")));
-		//Assert.assertTrue("Total calories displayed correctly", ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalCalories).replace(".0", "")));
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMinutes / 60f).replace(".0", "")), "Total hours displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.totalSteps)), "Total steps displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", (int)this.totalPoints)), "Total points displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMiles).replace(".0", "")), "Total miles displayed correctly");
+		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalCalories).replace(".0", "")), "Total calories displayed correctly");
 		
 		// TODO: can improve summary check by specify the control for summary's value
 		// (currently it just look for labels that have the corresponding text, 

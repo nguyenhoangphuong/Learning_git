@@ -2,11 +2,10 @@ package com.misfit.ta.ios.modelapi.settings;
 
 import java.io.File;
 
-import junit.framework.Assert;
-
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
+import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
@@ -111,12 +110,12 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void v_GoalSettings() {
 		// check if current view is goal settings
-		Assert.assertTrue("Current view is GoalSettings", ViewUtils.isExistedView("UILabel", "MY GOAL IS..."));
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "MY GOAL IS..."), "Current view is GoalSettings");
 		
 		// check if default value is correct
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
 		String expect = this.goal * 100 + "";
-		Assert.assertTrue("Default goal value is correct", actual.indexOf(expect) >= 0);
+		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
 	}
 	
 	/**
@@ -145,7 +144,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void v_HomeScreen() {
 		// check if current screen is home screen
-		Assert.assertTrue("Current screen is HomeScreen", HomeScreen.isToday());
+		Assert.assertTrue(HomeScreen.isToday(), "Current screen is HomeScreen");
 	}
 
 	/**
@@ -156,7 +155,7 @@ public class GoalSettingsAPI extends ModelAPI {
 		// check if new goal value had been updated
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
 		String expect = this.goal * 100 + "";
-		Assert.assertTrue("Default goal value is correct", actual.indexOf(expect) >= 0);
+		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
 		
 	}
 

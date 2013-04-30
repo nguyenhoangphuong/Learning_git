@@ -63,6 +63,7 @@ public class PrometheusHelper {
 	public static void enterEmailPassword(String email, String password) {
 		//PTPaddingTextField
 		//PTEmailVerifyingTextField
+		Gui.longTouch(150, 100, 200);
 		Gui.touchAVIew("PTPaddingTextField", 0);
 		String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
 		System.out.println("Deleting: " + txtEmail);
@@ -178,11 +179,12 @@ public class PrometheusHelper {
 	{
 		//startApp();
 		Gui.init("192.168.1.247");
-		Gui.printView();
+		
+//		Gui.printView();
 		//HomeScreen.tapSyncTray();
 		//HomeScreen.tapSettings();
 		
-		//Gui.tapNext();
+		
 		
 		//PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
 	}

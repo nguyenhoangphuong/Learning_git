@@ -2,11 +2,12 @@ package com.misfit.ta.ios.modelapi.settings;
 
 import java.io.File;
 
-import junit.framework.Assert;
+
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
+import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
@@ -149,7 +150,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 */
 	public void v_HomeScreen() {
 		// check if this is Homescreen
-		Assert.assertTrue("Current screen is Homescreen", HomeScreen.isToday());
+		Assert.assertTrue(HomeScreen.isToday(), "Current screen is Homescreen");
 	}
 
 	/**
@@ -158,7 +159,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 */
 	public void v_ProfileView() {
 		// check if this is EditProfile screen
-		Assert.assertTrue("Current screen is EditProfile", HomeSettings.isAtEditProfile());
+		Assert.assertTrue(HomeSettings.isAtEditProfile(), "Current screen is EditProfile");
 	}
 
 	/**
@@ -167,11 +168,11 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 */
 	public void v_Settings() {
 		// check if this is EditProfile screen
-		Assert.assertTrue("Current screen is Settings", HomeSettings.isAtSettings());
+		Assert.assertTrue(HomeSettings.isAtSettings(), "Current screen is Settings");
 		
 		// check the string under your profile cell
 		String profilePreview = PrometheusHelper.formatProfile(isMale, isUSUnit, h1, h2, w1, w2);
-		Assert.assertTrue("The sort preview of profile is " + profilePreview, ViewUtils.isExistedView("UILabel", profilePreview));
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", profilePreview), "The sort preview of profile is " + profilePreview);
 	}
 
 	/**
@@ -186,10 +187,10 @@ public class ProfileSettingsAPI extends ModelAPI {
 		String weight = w1 + w2 + (isUSUnit ? " lbs" : " kg");
 		String height = h1 + h2 + (isUSUnit ? "" : " m");
 		
-		Assert.assertTrue("Gender should be " + (isMale ? "Male" : "Female"), isMale == male);
-		Assert.assertTrue("Birthday should be " + birthday, ViewUtils.isExistedView("UILabel", birthday));
-		Assert.assertTrue("Weight should be " + weight, ViewUtils.isExistedView("UILabel", weight));
-		Assert.assertTrue("Height should be " + height, ViewUtils.isExistedView("UILabel", height));
+		Assert.assertTrue(isMale == male, "Gender should be " + (isMale ? "Male" : "Female"));
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", birthday), "Birthday should be " + birthday);
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", weight), "Weight should be " + weight);
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", height), "Height should be " + height);
 		
 	}
 
