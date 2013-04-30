@@ -6,6 +6,8 @@ UIATarget.onAlert = PrometheusAlertHandler;
 
 
 // ======================== the alert hander ==================================
+UIADebug.logDebug("Alert Support loaded");
+
 function PrometheusAlertHandler(_alert)
 {
 	// get alert title and message
@@ -23,3 +25,5 @@ function PrometheusAlertHandler(_alert)
 }
 
 target.delay(1000);
+
+UIADebug.logDebug("If you see this log, maybe something went wrong");

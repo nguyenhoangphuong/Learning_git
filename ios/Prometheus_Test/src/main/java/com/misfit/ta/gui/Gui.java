@@ -854,38 +854,37 @@ public class Gui {
             
         	// lauch instrument
         	logger.info("   - Launching instrucments...");
-			(new Thread() 
-			{
-				public void run() 
-				{
-		        	String script = new File("script/automation/alertsupport.js").getAbsolutePath();
-		        	if(!new File(script).exists())
-		        	{
-		        		logger.info("Cannot find: " + script);
-		        		return;
-		        	}
-		        	
-		        	ProcessBuilder pb = new ProcessBuilder();
-		            String command = "instruments -w " + Gui.getCurrentUdid() 
-		            		+ " -t " + template + " " + Gui.getAppPath() 
-		            		+ " -e UIASCRIPT " + script
-		                    + " -e UIARESULTSPATH logs";
-		            logger.info("Command: " + command);
+    		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+    				AppHelper.getAppPath(), "script/automation/alertsupport.js");
+        	
+//			(new Thread() 
+//			{
+//				public void run() 
+//				{
+//		        	String script = new File("script/automation/alertsupport.js").getAbsolutePath();
+//		        	if(!new File(script).exists())
+//		        	{
+//		        		logger.info("Cannot find: " + script);
+//		        		return;
+//		        	}
+//		        	
+//		        	ProcessBuilder pb = new ProcessBuilder();
+//		            String command = "instruments -w " + Gui.getCurrentUdid() 
+//		            		+ " -t " + template + " " + Gui.getAppPath() 
+//		            		+ " -e UIASCRIPT " + script
+//		                    + " -e UIARESULTSPATH logs";
+//		            logger.info("Command: " + command);
+//
+//		            pb.command("instruments", "-w", Gui.getCurrentUdid(), "-t", template, Gui.getAppPath(), "-e", "UIASCRIPT", script, "-e",
+//		                    "UIARESULTSPATH", "logs");
+//		        
+//		            AppHelper.runProcess(pb, true, true);
+//					//AppHelper.launchInstrument(Gui.getCurrentUdid(), Gui.getAppPath(), script);
+//				}
+//			}).start();
 
-		            pb.command("instruments", "-w", Gui.getCurrentUdid(), "-t", template, Gui.getAppPath(), "-e", "UIASCRIPT", script, "-e",
-		                    "UIARESULTSPATH", "logs");
-		        
-		            try {
-						pb.start();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		            //AppHelper.runProcess(pb, true, true);
-					//AppHelper.launchInstrument(Gui.getCurrentUdid(), Gui.getAppPath(), script);
-				}
-			}).start();
-
+        	
+        	
 			// OLD VERSION OF LAUNCHING INSTRUMENTS
 //        	// get absolute path of script file
 //        	String script = new File("script/automation/alertsupport.js").getAbsolutePath();
