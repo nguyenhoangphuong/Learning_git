@@ -875,7 +875,8 @@ public class Gui {
 		            pb.command("instruments", "-w", Gui.getCurrentUdid(), "-t", template, Gui.getAppPath(), "-e", "UIASCRIPT", script, "-e",
 		                    "UIARESULTSPATH", "logs");
 		        
-		            AppHelper.runProcess(pb, true, true);
+		            p = pb.start();
+		            //AppHelper.runProcess(pb, true, true);
 					//AppHelper.launchInstrument(Gui.getCurrentUdid(), Gui.getAppPath(), script);
 				}
 			}).start();
