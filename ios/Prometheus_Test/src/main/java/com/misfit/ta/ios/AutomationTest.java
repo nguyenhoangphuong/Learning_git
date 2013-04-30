@@ -10,9 +10,11 @@ import org.graphwalker.Util;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import com.misfit.ios.AppHelper;
 import com.misfit.ta.Settings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.utils.Files;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 
@@ -38,10 +40,18 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 
         Files.delete("instrumentscli0.trace");
 
-        if (!debug) {
-            Gui.cleanCache();
-            Gui.start(Settings.getParameter("DeviceIP"));
-        } else {
+        if (!debug)
+        {
+//            Gui.cleanCache();
+//            Gui.start(Settings.getParameter("DeviceIP"));
+    		AppHelper.cleanCache();
+    		ShortcutsTyper.delayTime(1000);	
+    		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+    				AppHelper.getAppPath(), "script/automation/alertsupport.js");
+    		Gui.init(Settings.getParameter("DeviceIP"));
+        } 
+        else
+        {
         	Gui.init(Settings.getParameter("DeviceIP"));
         }
     }
