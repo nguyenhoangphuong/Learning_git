@@ -15,16 +15,7 @@ public class OldVersionTest
 		AppHelper.cleanCache();
 		ShortcutsTyper.delayTime(1000);	
 		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-				AppHelper.getAppPath(), "script/automation/signup/signin-validation.js");
+				AppHelper.getAppPath(), "script/automation/smoketest.js");
 	}
 	
-	// sign in - forgot password validation
-	@Test(groups = { "ios", "OldInstrument", "signin", "forgotpassword" })
-	public void ForgotPasswordValidation() throws InterruptedException, StopConditionException
-	{
-		AppHelper.cleanCache();
-		ShortcutsTyper.delayTime(1000);	
-		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-				AppHelper.getAppPath(), "script/automation/signup/forgotpassword-validation.js");
-	}
 }
