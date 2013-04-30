@@ -875,7 +875,12 @@ public class Gui {
 		            pb.command("instruments", "-w", Gui.getCurrentUdid(), "-t", template, Gui.getAppPath(), "-e", "UIASCRIPT", script, "-e",
 		                    "UIARESULTSPATH", "logs");
 		        
-		            p = pb.start();
+		            try {
+						pb.start();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 		            //AppHelper.runProcess(pb, true, true);
 					//AppHelper.launchInstrument(Gui.getCurrentUdid(), Gui.getAppPath(), script);
 				}
