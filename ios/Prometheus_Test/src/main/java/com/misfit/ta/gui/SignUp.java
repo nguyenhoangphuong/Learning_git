@@ -131,8 +131,7 @@ public class SignUp {
     }
 
     public static boolean hasExistedEmailMessage() {
-        return Gui.getPopupTitle().equals("Error")
-                && Gui.getPopupContent().equals(DefaultStrings.SignUpDuplicatedEmailMessage);
+        return Gui.getPopupContent().equals(DefaultStrings.SignUpDuplicatedEmailMessage);
     }
 
     public static void tapOK() {

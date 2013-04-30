@@ -1,4 +1,5 @@
 var target = UIATarget.localTarget();
+var AllowLocationMsg = "\"Shine\" Would Like to Use Your Current Location";
 
 // ======================== handler for Prometheus app ========================
 UIATarget.onAlert = PrometheusAlertHandler;
@@ -14,12 +15,27 @@ function PrometheusAlertHandler(_alert)
 	var name = _alert.name();
 	var message = _alert.staticTexts()[1].name();
 	
-   if (name.indexOf("Current Location") != -1 || message.indexOf("Current Location" != -1)) {
-	   UIALogger.logDebug("Tap OK");
-	   _alert.buttons()["OK"].tap();
-	   return true;
-   }
+	if(name === null)
+		name = "";
+	
+	if(message === null)
+		message = "";
+	
+	if ( name == AllowLocationMsg ||
+		 message == AllowLocationMsg ||
+		 name.indexOf("Current Location") >= 0 || 
+		 message.indexOf("Current Location") >= 0 )
+	{
+		UIALogger.logDebug("Alert title: " + name);
+		UIALogger.logDebug("Alert message: " + message);
+	    UIALogger.logDebug("Tap OK");
+	    _alert.buttons()["OK"].tap();
+	    return true;
+    }
+   
+   
    	UIALogger.logDebug("Do not do anything");
+   	target.delay(5);
 	return true;
 	
 }

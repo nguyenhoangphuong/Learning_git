@@ -22,18 +22,35 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     private static final Logger logger = Util.setupLogger(AutomationTest.class);
     protected static boolean debug = false;
 
-    static {
+    static
+    {
         String isDebug = Settings.getParameter("MVPDebug");
-        if (isDebug != null && isDebug.equalsIgnoreCase("true")) {
+        if (isDebug != null && isDebug.equalsIgnoreCase("true")) 
+        {
             debug = true;
-        } else {
+        }
+        else 
+        {
             debug = false;
         }
+    }
+    
+    public void startInstrument()
+    {
+		(new Thread() 
+		{
+			public void run() 
+			{
+				AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+	    				AppHelper.getAppPath(), "script/automation/alertsupport.js");
+			}
+		}).start();
     }
 
     @Override
     @BeforeMethod(alwaysRun = true)
-    public void setUpTest(Method method) {
+    public void setUpTest(Method method) 
+    {
         logger.info("==================================================================================================================");
         logger.info("|  Start of test case: " + method.getName());
         logger.info("==================================================================================================================");
@@ -42,32 +59,26 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 
         if (!debug)
         {
-//            Gui.cleanCache();
-//            Gui.start(Settings.getParameter("DeviceIP"));
     		AppHelper.cleanCache();
     		ShortcutsTyper.delayTime(1000);
+    		startInstrument();
     		
-			(new Thread() 
-			{
-				public void run() 
-				{
-					AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-		    				AppHelper.getAppPath(), "script/automation/alertsupport.js");
-				}
-			}).start();
-    		
-			ShortcutsTyper.delayTime(25000);
+			ShortcutsTyper.delayTime(20000);
     		Gui.init(Settings.getParameter("DeviceIP"));
         } 
         else
         {
+        	startInstrument();
+    		
+			ShortcutsTyper.delayTime(20000);
         	Gui.init(Settings.getParameter("DeviceIP"));
         }
     }
 
     @Override
     @AfterMethod(alwaysRun = true)
-    public void cleanUpTest(Method method, ITestResult tr) {
+    public void cleanUpTest(Method method, ITestResult tr)
+    {
         logger.info("==================================================================================================================");
         logger.info("|  End of test case: " + method.getName());
         logger.info("|  Result: " + results[tr.getStatus() - 1]);

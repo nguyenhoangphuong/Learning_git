@@ -1,8 +1,10 @@
 package com.misfit.ta.gui;
 
-import java.io.File;
 import java.util.Random;
 import org.testng.annotations.Test;
+
+import com.misfit.ios.AppHelper;
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class PrometheusHelper {
@@ -47,17 +49,11 @@ public class PrometheusHelper {
 	}
 
 	public static boolean hasInvalidEmailMessage() {
-		return Gui.getPopupTitle().equals("Error")
-				&& (Gui.getPopupContent().equals(
-						DefaultStrings.InvalidEmailMessage) || Gui
-						.getPopupContent().equals(
-								DefaultStrings.ForgotInvalidEmailMessage));
+		return Gui.getPopupContent().equals(DefaultStrings.InvalidEmailMessage);
 	}
 
 	public static boolean hasInvalidPasswordMessage() {
-		return Gui.getPopupTitle().equals("Error")
-				&& Gui.getPopupContent().equals(
-						DefaultStrings.InvalidPasswordMessage);
+		return Gui.getPopupContent().equals(DefaultStrings.InvalidPasswordMessage);
 	}
 
 	public static void sync() {
@@ -65,8 +61,8 @@ public class PrometheusHelper {
 	}
 
 	public static void enterEmailPassword(String email, String password) {
-		Gui.touchAVIew("PTEmailVerifyingTextField", 0);
-		String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
+		Gui.touchAVIew("PTPaddingTextField", 0);
+		String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
 		System.out.println("Deleting: " + txtEmail);
 		for (int i = 0; i < txtEmail.length(); i++) {
 			Gui.pressDelete();
@@ -160,13 +156,26 @@ public class PrometheusHelper {
 	
 	
 	//public static void main(String[] args)
+	public void startApp()
+	{
+		(new Thread() 
+		{
+			public void run() 
+			{
+				AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+	    				AppHelper.getAppPath(), "script/automation/alertsupport.js");
+			}
+		}).start();
+		ShortcutsTyper.delayTime(20000);
+	}
+	
 	@Test
 	public void test()
 	{
-		//Gui.init("192.168.1.247");
-		Gui.start("192.168.1.247");
-		Gui.printView();
-		LaunchScreen.launch();
+		//startApp();
+		Gui.init("192.168.1.247");
+		//Gui.setText("PTPaddingTextField", 0, "hainguyen@a.a");
+		
 		
 		//HomeScreen.tapSyncTray();
 		//HomeScreen.tapSettings();
@@ -175,4 +184,5 @@ public class PrometheusHelper {
 		
 		//PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
 	}
+
 }

@@ -503,6 +503,13 @@ public class Gui {
         message = message.replace("%text", text);
         NuRemoteClient.sendToServer(message);
     }
+    
+    public static void setText(String viewName, int index, String text) {
+        String message = "(Gui enterTextForView: %textView withText: @\"%text\")";
+        message = message.replace("%textView", ViewUtils.generateFindViewStatement(viewName, index));
+        message = message.replace("%text", text);
+        NuRemoteClient.sendToServer(message);
+    }
 
     public static void pressNext() {
         NuRemoteClient.sendToServer("(Gui pressNext)");
@@ -816,7 +823,6 @@ public class Gui {
         return flightMode;
     }
 
-    
     public static boolean toggleBluetooth() {
         NuRemoteClient.sendToServer("(Gui toggleBluetooth)");
         bluetooth = !bluetooth;
@@ -840,6 +846,11 @@ public class Gui {
 
     public static void start(String ip) 
     {
+    	// DEPRECATED
+    	// USE APPHELPER.CLEANCACHE
+    	// APPHELPER.LAUCHINSTRUMENT
+    	// GUI.INIT INSTEAD
+    	
         logger.info("Kill the app");
         stopApp();
         
@@ -850,8 +861,6 @@ public class Gui {
         {
         	logger.info("Startup attempt: " + noOfTries + 1);
         	
-
-            
         	// lauch instrument
         	logger.info("   - Launching instrucments...");
     		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
@@ -931,15 +940,6 @@ public class Gui {
         String views = NuRemoteClient.getLastMessage();
         System.out.println("LOG [Gui.printViewHierarchy]: view hierarchy: \n" + views);
         return views;
-    }
-    
-    public static void main(String[] args) throws IOException {
-        
-        Gui.init("192.168.1.123");
-        Gui.printView();
-        Gui.shutdown();
-        Gui.stopApp();
-
     }
 
 }

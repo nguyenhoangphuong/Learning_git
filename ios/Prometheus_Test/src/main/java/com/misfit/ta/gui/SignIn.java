@@ -47,8 +47,7 @@ public class SignIn {
     }
 
     public static boolean hasIncorrectLoginMessage() {
-        return Gui.getPopupTitle().equals("Error")
-                && Gui.getPopupContent().equals(DefaultStrings.SignInWrongAccountMessage);
+        return Gui.getPopupContent().equals(DefaultStrings.SignInWrongAccountMessage);
     }
 
     public static void tapIForgot() {
@@ -80,8 +79,8 @@ public class SignIn {
     }
 
     public static void enterEmailForResetPassword(String email) {
-        Gui.touchAVIew("PTEmailVerifyingTextField", 0);
-        String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
+        Gui.touchAVIew("PTPaddingTextField", 0);
+        String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
         for (int i = 0; i < txtEmail.length(); i++) {
             Gui.pressDelete();
         }
@@ -110,23 +109,19 @@ public class SignIn {
     }
     
     public static boolean hasEmailSentMessage() {
-        return Gui.getPopupTitle().equals("Email Sent")
-                && Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordEmailSentMessage);
+        return Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordEmailSentMessage);
     }
     
     public static boolean hasSuccessNewPasswordMessage() {
-        return Gui.getPopupTitle().equals("Success!")
-                && Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordNewPasswordMessage);
+        return Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordNewPasswordMessage);
     }
 
     public static boolean hasNoMatchPasswordMessage() {
-        return Gui.getPopupTitle().equals("Error")
-                && Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordWrongConfirmMessage);
+        return Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordWrongConfirmMessage);
     }
 
     public static boolean hasNotAssociatedEmailMessage() {
-        return Gui.getPopupTitle().equals("Incorrect Email")
-                && Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordEmailNotExistMessage);
+        return Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordEmailNotExistMessage);
     }
 
 }
