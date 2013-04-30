@@ -61,8 +61,10 @@ public class PrometheusHelper {
 	}
 
 	public static void enterEmailPassword(String email, String password) {
-		Gui.touchAVIew("PTPaddingTextField", 0);
-		String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
+		//PTPaddingTextField
+		
+		Gui.touchAVIew("PTEmailVerifyingTextField", 0);
+		String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
 		System.out.println("Deleting: " + txtEmail);
 		for (int i = 0; i < txtEmail.length(); i++) {
 			Gui.pressDelete();
@@ -134,6 +136,8 @@ public class PrometheusHelper {
 	public static void signUp(String email, String password, boolean isMale, int date, int month, int year, 
 			boolean isUSUnit, String h1, String h2, String w1, String w2, int goalLevel)
 	{
+		LaunchScreen.launch();
+		
 		SignUp.tapSignUp();
 		ShortcutsTyper.delayTime(1000);
 		SignUp.enterEmailPassword(email, password);
@@ -174,11 +178,9 @@ public class PrometheusHelper {
 	{
 		//startApp();
 		Gui.init("192.168.1.247");
-		//Gui.setText("PTPaddingTextField", 0, "hainguyen@a.a");
-		
-		
+		Gui.printView();
 		//HomeScreen.tapSyncTray();
-		//HomeScreen.tapSettings();
+		HomeScreen.tapSettings();
 		
 		//Gui.tapNext();
 		

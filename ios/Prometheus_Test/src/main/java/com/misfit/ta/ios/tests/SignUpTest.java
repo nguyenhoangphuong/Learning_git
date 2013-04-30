@@ -16,7 +16,7 @@ import com.misfit.ta.utils.Files;
 
 public class SignUpTest extends AutomationTest {
     
-	//@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpFlow" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpFlow" })
     public void SignUp() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("SignUp", new SignUpAPI(this, Files.getFile("model/signup/SignUp.graphml"), false,
@@ -27,7 +27,7 @@ public class SignUpTest extends AutomationTest {
         System.out.println(actualResult);
     }
 
-    //@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpInvalid" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpInvalid" })
     public void InvalidSignUp() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("InvalidSignUp", new InvalidSignUpAPI(this, Files

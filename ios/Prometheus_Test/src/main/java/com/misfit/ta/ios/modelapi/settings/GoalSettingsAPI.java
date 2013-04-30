@@ -11,6 +11,7 @@ import org.graphwalker.generators.PathGenerator;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.*;
 import com.misfit.ta.ios.AutomationTest;
 
@@ -33,6 +34,10 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_Init() {
 		// TODO: THIS MODEL REQUIRES:
 		// Goal: 2500
+		
+		// sign up account with require information
+		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 
+				16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
 		
 		// change input mode to manual
 		

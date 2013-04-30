@@ -11,6 +11,7 @@ import org.graphwalker.generators.PathGenerator;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.*;
 import com.misfit.ta.ios.AutomationTest;
 
@@ -46,6 +47,10 @@ public class ProfileSettingsAPI extends ModelAPI {
 		this.year = "1991";
 		this.month = PrometheusHelper.getMonthString(9, true);
 		this.day = "16";
+		
+		// sign up account with require information
+		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", isMale, 
+				16, 9, 1991, isUSUnit, h1, h2, w1, w2, 1);
 	}
 	
 	/**
@@ -144,7 +149,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 */
 	public void v_HomeScreen() {
 		// check if this is Homescreen
-		Assert.assertTrue("Current screen is Homescreen", ViewUtils.isExistedView("UILabel", "TODAY"));
+		Assert.assertTrue("Current screen is Homescreen", HomeScreen.isToday());
 	}
 
 	/**
@@ -153,7 +158,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 */
 	public void v_ProfileView() {
 		// check if this is EditProfile screen
-		Assert.assertTrue("Current screen is EditProfile", ViewUtils.isExistedView("UILabel", "USER INFO"));
+		Assert.assertTrue("Current screen is EditProfile", HomeSettings.isAtEditProfile());
 	}
 
 	/**
@@ -162,7 +167,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 */
 	public void v_Settings() {
 		// check if this is EditProfile screen
-		Assert.assertTrue("Current screen is Settings", ViewUtils.isExistedView("UILabel", "SETTINGS"));
+		Assert.assertTrue("Current screen is Settings", HomeSettings.isAtSettings());
 		
 		// check the string under your profile cell
 		String profilePreview = PrometheusHelper.formatProfile(isMale, isUSUnit, h1, h2, w1, w2);
@@ -174,17 +179,17 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_UpdatedProfile() {
-		// check birthday / height / weight / gender is updated
+		
+		// check gender / birthday / height / weight / gender is updated
+		boolean male = Gui.getProperty("UIButton", "Male", "isSelected").equals("1") ? true : false;
 		String birthday = PrometheusHelper.formatBirthday(year, month, day);
 		String weight = w1 + w2 + (isUSUnit ? " lbs" : " kg");
 		String height = h1 + h2 + (isUSUnit ? "" : " m");
 		
+		Assert.assertTrue("Gender should be " + (isMale ? "Male" : "Female"), isMale == male);
 		Assert.assertTrue("Birthday should be " + birthday, ViewUtils.isExistedView("UILabel", birthday));
 		Assert.assertTrue("Weight should be " + weight, ViewUtils.isExistedView("UILabel", weight));
 		Assert.assertTrue("Height should be " + height, ViewUtils.isExistedView("UILabel", height));
-		
-		// Note: we cannot check gender because
-		// there's nothing that tell us which button is actived
 		
 	}
 

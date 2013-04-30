@@ -1,5 +1,7 @@
 package com.misfit.ta.gui;
 
+import com.misfit.ios.ViewUtils;
+
 public class HomeSettings {
 	
 	public static void tapBackAtSettings() {
@@ -104,6 +106,27 @@ public class HomeSettings {
 
     public static void chooseAccelerometer() {
         Gui.touchAVIew("UITextField", 0);
+    }
+    
+    /* Visible Check */
+    public static boolean isAtSettings()
+    {
+    	return ViewUtils.isExistedView("UILabel", "SETTINGS");
+    }
+
+    public static boolean isAtEditProfile()
+    {
+    	return ViewUtils.isExistedView("UILabel", "EDIT PROFILE");
+    }
+    
+    public static boolean isAtEditGoal()
+    {
+    	return ViewUtils.isExistedView("UILabel", "MY GOAL IS...");
+    }
+    
+    public static boolean isAtWearingShine()
+    {
+    	return ViewUtils.isExistedView("UILabel", "WEARING SHINE");
     }
     
 }
