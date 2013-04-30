@@ -45,9 +45,18 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 //            Gui.cleanCache();
 //            Gui.start(Settings.getParameter("DeviceIP"));
     		AppHelper.cleanCache();
-    		ShortcutsTyper.delayTime(1000);	
-    		AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-    				AppHelper.getAppPath(), "script/automation/alertsupport.js");
+    		ShortcutsTyper.delayTime(1000);
+    		
+			(new Thread() 
+			{
+				public void run() 
+				{
+					AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+		    				AppHelper.getAppPath(), "script/automation/alertsupport.js");
+				}
+			}).start();
+    		
+			ShortcutsTyper.delayTime(25000);
     		Gui.init(Settings.getParameter("DeviceIP"));
         } 
         else
