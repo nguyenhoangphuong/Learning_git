@@ -9,9 +9,7 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
-import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
@@ -49,21 +47,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
         
         // wait for sync data
         ShortcutsTyper.delayTime(25000);
-    }
-
-    /**
-     * This method implements the Edge 'e_SignOut'
-     * 
-     */
-    public void e_SignOut() {
-        HomeScreen.tapSettings();
-        ShortcutsTyper.delayTime(1000);
-        Gui.swipeUp(1000);
-        HomeSettings.tapSignOut();
-        ShortcutsTyper.delayTime(1000);
-    }
-
-    
+    }  
     
     /**
      * This method implements the Vertex 'v_InitialView'

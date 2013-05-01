@@ -15,5 +15,6 @@ public class DefaultStrings {
     
     // others
     public static String SyncPlaceShineHere = "Place\\nSHINE here";
+    public static String NewGoalInstruction = "Sync to update your new goal on your Shine.";
     
 }

@@ -79,12 +79,25 @@ public class SignIn {
     }
 
     public static void enterEmailForResetPassword(String email) {
+    	
     	Gui.longTouch(150, 100, 200);
-        Gui.touchAVIew("PTPaddingTextField", 0);
-        String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
-        for (int i = 0; i < txtEmail.length(); i++) {
-            Gui.pressDelete();
-        }
+		if(ViewUtils.isExistedView("PTEmailVerifyingTextField", 0))
+		{
+			Gui.touchAVIew("PTEmailVerifyingTextField", 0);
+			String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
+			System.out.println("Deleting: " + txtEmail);
+			for (int i = 0; i < txtEmail.length(); i++)
+				Gui.pressDelete();
+		}
+		else if(ViewUtils.isExistedView("PTPaddingTextField", 0));
+		{
+			Gui.touchAVIew("PTPaddingTextField", 0);
+			String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
+			System.out.println("Deleting: " + txtEmail);
+			for (int i = 0; i < txtEmail.length(); i++)
+				Gui.pressDelete();
+		}
+		
         ShortcutsTyper.delayTime(800);
         Gui.type(email);
     }

@@ -85,6 +85,18 @@ public class HomeScreen {
     	return ViewUtils.isExistedView("UILabel", "YESTERDAY");
     }
 
+    public static void closeIntructions()
+    {
+		Gui.swipeLeft(500);
+		ShortcutsTyper.delayTime(1000);
+		Gui.swipeLeft(500);
+		ShortcutsTyper.delayTime(1000);
+		Gui.swipeLeft(500);
+		ShortcutsTyper.delayTime(1000);
+		Gui.touchAVIew("UIButtonLabel", "OK, I GOT IT");
+		ShortcutsTyper.delayTime(1000);
+    }
+    
     /**
      * Open/Close to tag an activity on timeline
      * 

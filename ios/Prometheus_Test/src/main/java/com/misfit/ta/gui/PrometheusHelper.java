@@ -64,11 +64,22 @@ public class PrometheusHelper {
 		//PTPaddingTextField
 		//PTEmailVerifyingTextField
 		Gui.longTouch(150, 100, 200);
-		Gui.touchAVIew("PTPaddingTextField", 0);
-		String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
-		System.out.println("Deleting: " + txtEmail);
-		for (int i = 0; i < txtEmail.length(); i++) {
-			Gui.pressDelete();
+		
+		if(ViewUtils.isExistedView("PTEmailVerifyingTextField", 0))
+		{
+			Gui.touchAVIew("PTEmailVerifyingTextField", 0);
+			String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
+			System.out.println("Deleting: " + txtEmail);
+			for (int i = 0; i < txtEmail.length(); i++)
+				Gui.pressDelete();
+		}
+		else if(ViewUtils.isExistedView("PTPaddingTextField", 0));
+		{
+			Gui.touchAVIew("PTPaddingTextField", 0);
+			String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
+			System.out.println("Deleting: " + txtEmail);
+			for (int i = 0; i < txtEmail.length(); i++)
+				Gui.pressDelete();
 		}
 		ShortcutsTyper.delayTime(800);
 		Gui.type(email);
@@ -101,7 +112,7 @@ public class PrometheusHelper {
 	
 	public static float calculatePoint(int steps, int minutes)
 	{
-		return steps * (0.25f + 0.01f * (Math.max(115f, steps * 1f/ minutes) - 115));
+		return steps * (0.25f + 0.01f * (Math.max(115f, steps * 1f/ minutes) - 115)) + 0.0001f;
 	}
 	
 	public static float calculateMiles(int steps, int heightInInches)
@@ -109,8 +120,10 @@ public class PrometheusHelper {
 		return steps * 0.414f * heightInInches / 63360;
 	}
 	
-	public static float calculateCalories(float points, float weightInKg)
+	public static float calculateCalories(float points, float weightInLbs)
 	{
+		float weightInKg = (float) (weightInLbs * 0.453592);
+		weightInKg = Math.round(weightInKg * 10) / 10;
 		return points * weightInKg / 600f;
 	}
 	
@@ -158,9 +171,39 @@ public class PrometheusHelper {
 		ShortcutsTyper.delayTime(3000);
 	}
 	
+	public static void setInputModeToManual()
+	{
+		// require current view is HomeScreen
+		HomeScreen.tapSettings();
+		ShortcutsTyper.delayTime(1000);
+		
+		Gui.swipeUp(1000);
+		ShortcutsTyper.delayTime(1000);
+		
+		HomeSettings.tapDebug();
+		ShortcutsTyper.delayTime(1000);
+		
+		HomeSettings.chooseManual();
+		HomeSettings.tapDoneAtDebug();
+		ShortcutsTyper.delayTime(1000);
+		
+		HomeSettings.tapBackAtSettings();
+		ShortcutsTyper.delayTime(1000);
+	}
+	
+	public static void inputRandomRecord()
+	{
+		// require current screen is HomeScreen
+		HomeScreen.tapOpenManualInput();
+		ShortcutsTyper.delayTime(1000);
+		HomeScreen.tapRandom();
+		HomeScreen.tapSave();
+		ShortcutsTyper.delayTime(1000);
+	}
 	
 	
 	//public static void main(String[] args)
+
 	public void startApp()
 	{
 		(new Thread() 
@@ -179,8 +222,14 @@ public class PrometheusHelper {
 	{
 		//startApp();
 		Gui.init("192.168.1.247");
+		HomeSettings.tapDoneAtNewGoal();
+		//Gui.moveCursorInCurrentTextViewTo(-1);
 		
+		
+//		Gui.swipeUp(1000);
 //		Gui.printView();
+//		PrometheusHelper.setInputModeToManual();
+		
 		//HomeScreen.tapSyncTray();
 		//HomeScreen.tapSettings();
 		

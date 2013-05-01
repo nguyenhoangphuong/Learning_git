@@ -87,26 +87,44 @@ public class HomeSettings {
     	Gui.touchAVIew("UIButton", "Back");
     }
     
-    public static void increaseGoalBy(int delta) {
-    	// TODO: swipe up delta time
-    	while(delta-- > 0)
-    		Gui.touchAVIew("PTNumberSpinner", 0);
+    public static void setSpinnerGoal(int value) {
+    	Gui.setSpinnerValue("PTNumberSpinner", 0, value);
     }
     
-    public static void decreaseGoalBy(int delta) {
-    	// TODO: swipe down delta time
-    	while(delta-- > 0)
-    		Gui.touchAVIew("PTNumberSpinner", 0);
+    public static int getSpinnerGoal()
+    {
+    	return Gui.getSpinnerValue("PTNumberSpinner", 0);
+    }
+    
+    public static void tapOKAtNewGoalPopup()
+    {
+    	Gui.touchPopupButton(0);
     }
 
+    public static boolean hasDontForgetMessage()
+    {
+    	return Gui.getPopupContent().equals(DefaultStrings.NewGoalInstruction);
+    }
+    
+    
     /* Mode Debug */
+    public static void tapDoneAtDebug()
+    {
+    	Gui.touchAVIew("UIButtonLabel", "Done");
+    }
+    
     public static void chooseManual() {
         Gui.touchAVIew("UITextField", 0);
+        Gui.setPicker(0, "Input form");
+        Gui.dismissPicker();
     }
 
     public static void chooseAccelerometer() {
         Gui.touchAVIew("UITextField", 0);
+        Gui.setPicker(0, "Accelerometer");
+        Gui.dismissPicker();
     }
+    
     
     /* Visible Check */
     public static boolean isAtSettings()

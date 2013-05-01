@@ -34,7 +34,7 @@ public class DayProgressAPI extends ModelAPI {
 	
 	int hour = 5;						// for ease of keeping tracks
 	int height = 68;					// 68 inches is default height for men
-	float weight = 0.453592f * 120f;	// 120 lbs is default weight for men
+	float weight = 120f;				// 120 lbs is default weight for men
 	
 	/**
 	 * This method implements the Edge 'e_Init'
@@ -52,15 +52,13 @@ public class DayProgressAPI extends ModelAPI {
 		// DEVICE SETTINGS:
 		// Time: 12 hours
 		
+		// APP SETTINGS:
+		// Manual Input
+		
+		// Initalize
 		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1981, true, "5'", "8\\\"", "120", ".0", 1);
-	}
-
-	/**
-	 * This method implements the Edge 'e_closeTray'
-	 * 
-	 */
-	public void e_closeTray() {
-		HomeScreen.tapSyncTray();
+		ShortcutsTyper.delayTime(5000);
+		PrometheusHelper.setInputModeToManual();
 		ShortcutsTyper.delayTime(1000);
 	}
 
@@ -74,12 +72,12 @@ public class DayProgressAPI extends ModelAPI {
 		
 		// input record
 		String[] time = { String.format("%d", hour > 12 ? 12 - hour : hour), "00", hour < 12 ? "AM" : "PM" };
-		this.lastDuration = PrometheusHelper.randInt(5, 11);
+		this.lastDuration = PrometheusHelper.randInt(5, 9);
 		this.lastSteps = this.lastDuration * PrometheusHelper.randInt(100, 180);
 		HomeScreen.enterManualActivity(time, this.lastDuration, this.lastSteps);
 		ShortcutsTyper.delayTime(1000);
 		HomeScreen.tapSave();
-		ShortcutsTyper.delayTime(6000);
+		ShortcutsTyper.delayTime(1000);
 		
 		// save last record info
 		this.lastStartTime = String.format("%d", hour > 12 ? 12 - hour : hour) + ":00" + (hour < 12 ? " am": " pm");
@@ -98,14 +96,16 @@ public class DayProgressAPI extends ModelAPI {
 	}
 
 	/**
-	 * This method implements the Edge 'e_openTray'
+	 * This method implements the Edge 'e_checkEnd'
 	 * 
 	 */
-	public void e_openTray() {
-		HomeScreen.tapSyncTray();
-		ShortcutsTyper.delayTime(1000);
+	public void e_checkEnd() {
+		// graph walker to handle
 	}
-
+	
+	
+	
+	
 	/**
 	 * This method implements the Vertex 'v_Today'
 	 * 
@@ -113,16 +113,6 @@ public class DayProgressAPI extends ModelAPI {
 	public void v_Today() {
 		// check initial data: on progress circle, sync tray closed, today
 		Assert.assertTrue(HomeScreen.isToday(), "Today is displayed by default");
-		Assert.assertTrue(HomeScreen.syncTrayIsClosed(), "Sync tray is closed by default");
-	}
-
-	/**
-	 * This method implements the Vertex 'v_TrayDisplayed'
-	 * 
-	 */
-	public void v_TrayDisplayed() {
-		// check sync tray is opened
-		Assert.assertTrue(!HomeScreen.syncTrayIsClosed(), "Sync tray is displyed");
 	}
 
 	/**
@@ -134,20 +124,24 @@ public class DayProgressAPI extends ModelAPI {
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", this.lastStartTime), "Start time displayed correctly");
 		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.lastDuration)), "Duration displayed correctly");	// there's something wrong with the framework
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.lastSteps)), "Steps displayed correctly");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", (int)this.lastPoints)), "Points displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.lastPoints))), "Points displayed correctly");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.lastMiles).replace(".0", "")), "Miles displayed correctly");
-		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.lastCalories).replace(".0", "")), "Calories displayed correctly");
+		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.lastCalories)).replace(".0", "")), "Calories displayed correctly");
 		
 		// check summary is updated
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMinutes / 60f).replace(".0", "")), "Total hours displayed correctly");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.totalSteps)), "Total steps displayed correctly");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", (int)this.totalPoints)), "Total points displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalPoints))), "Total points displayed correctly");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMiles).replace(".0", "")), "Total miles displayed correctly");
-		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalCalories).replace(".0", "")), "Total calories displayed correctly");
-		
-		// TODO: can improve summary check by specify the control for summary's value
-		// (currently it just look for labels that have the corresponding text, 
-		// but acctually we have to take the control, get its value and compare)
+		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalCalories)).replace(".0", "")), "Total calories displayed correctly");
+	}	
+	
+	/**
+	 * This method implements the Vertex 'v_EndInput'
+	 * 
+	 */
+	public void v_EndInput() {
+		// nothing to do here
 	}
 
 }

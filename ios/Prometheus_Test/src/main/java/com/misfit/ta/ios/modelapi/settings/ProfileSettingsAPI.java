@@ -50,8 +50,8 @@ public class ProfileSettingsAPI extends ModelAPI {
 		this.day = "16";
 		
 		// sign up account with require information
-		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", isMale, 
-				16, 9, 1991, isUSUnit, h1, h2, w1, w2, 1);
+		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", isMale, 16, 9, 1991, isUSUnit, h1, h2, w1, w2, 1);
+		ShortcutsTyper.delayTime(5000);
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditHeight() {
-		this.isUSUnit = PrometheusHelper.coin();
+		//this.isUSUnit = PrometheusHelper.coin();
 		this.h1 = this.isUSUnit ? PrometheusHelper.randInt(4, 8) + "'": PrometheusHelper.randInt(1, 3) + "";
 		this.h2 = this.isUSUnit ? PrometheusHelper.randInt(0, 12) + "\\\"": "." + String.format("%2d", PrometheusHelper.randInt(50, 100));
 		HomeSettings.updateHeight(h1, h2, isUSUnit);
@@ -126,7 +126,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditWeight() {
-		this.isUSUnit = PrometheusHelper.coin();
+		//this.isUSUnit = PrometheusHelper.coin();
 		this.w1 = this.isUSUnit ? PrometheusHelper.randInt(80, 260) + "": PrometheusHelper.randInt(40, 120) + "";
 		this.w2 = "." + PrometheusHelper.randInt(0, 10);
 		HomeSettings.updateWeight(w1, w2, isUSUnit);

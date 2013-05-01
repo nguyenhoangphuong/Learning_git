@@ -15,16 +15,15 @@ import com.misfit.ta.gui.*;
 import com.misfit.ta.ios.AutomationTest;
 
 public class GoalSettingsAPI extends ModelAPI {
-	private static final Logger logger = Util
-			.setupLogger(GoalSettingsAPI.class);
+	private static final Logger logger = Util.setupLogger(GoalSettingsAPI.class);
 
 	public GoalSettingsAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
 
-	int goal = 25;
-	int delta = 0;
+	int goal = 2500;
+	int tempGoal = 2500;
 	
 	/**
 	 * This method implements the Edge 'e_Init'
@@ -35,17 +34,11 @@ public class GoalSettingsAPI extends ModelAPI {
 		// Goal: 2500
 		
 		// sign up account with require information
-		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 
-				16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
-		
-		// change input mode to manual
-		
-		// insert a dummy record to close no data yet screne
-		HomeScreen.tapOpenManualInput();
+		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
+		ShortcutsTyper.delayTime(5000);
+		PrometheusHelper.setInputModeToManual();
 		ShortcutsTyper.delayTime(1000);
-		String[] times = {"7", "00", "AM"};
-		HomeScreen.enterManualActivity(times, 1, 100);
-		HomeScreen.tapSave();
+		PrometheusHelper.inputRandomRecord();
 		ShortcutsTyper.delayTime(1000);
 	}
 
@@ -61,25 +54,17 @@ public class GoalSettingsAPI extends ModelAPI {
 	}
 	
 	/**
-	 * This method implements the Edge 'e_DecreaseGoal'
+	 * This method implements the Edge 'e_ChangeGoal'
 	 * 
 	 */
-	public void e_DecreaseGoal() {
-		delta = -PrometheusHelper.randInt(1, 5);
-		HomeSettings.decreaseGoalBy(-delta);
+	public void e_ChangeGoal() {
+		tempGoal = PrometheusHelper.randInt(15, 45) * 100;
+		HomeSettings.setSpinnerGoal(tempGoal);
 		ShortcutsTyper.delayTime(1000);
+		
+		logger.info("Set goal to: " + tempGoal);
 	}
 
-	/**
-	 * This method implements the Edge 'e_IncreaseGoal'
-	 * 
-	 */
-	public void e_IncreaseGoal() {
-		delta = PrometheusHelper.randInt(1, 5);
-		HomeSettings.increaseGoalBy(delta);
-		ShortcutsTyper.delayTime(1000);
-	}
-	
 	/**
 	 * This method implements the Edge 'e_CancelEdit'
 	 * 
@@ -89,6 +74,8 @@ public class GoalSettingsAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(1000);
 		HomeSettings.tapBackAtSettings();
 		ShortcutsTyper.delayTime(1000);
+		
+		logger.info("Cancel new goal");
 	}
 
 	/**
@@ -96,14 +83,29 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_DoneEdit() {
+		ShortcutsTyper.delayTime(1000);
 		HomeSettings.tapDoneAtNewGoal();
+		ShortcutsTyper.delayTime(1000);
+		
+		// TODO: when setSpinnerNumber works correctly, remove the comment below
+		//goal = tempGoal;
+		logger.info("Confirm new goal");
+	}
+
+	/**
+	 * This method implements the Edge 'e_ConfirmNewGoal'
+	 * 
+	 */
+	public void e_ConfirmNewGoal() {
+		HomeSettings.tapOKAtNewGoalPopup();
 		ShortcutsTyper.delayTime(1000);
 		HomeSettings.tapBackAtSettings();
 		ShortcutsTyper.delayTime(1000);
-		
-		this.goal += delta;
 	}
-
+	
+	
+	
+	
 	/**
 	 * This method implements the Vertex 'v_GoalSettings'
 	 * 
@@ -114,30 +116,34 @@ public class GoalSettingsAPI extends ModelAPI {
 		
 		// check if default value is correct
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
-		String expect = this.goal * 100 + "";
+		String expect = this.goal + "";
 		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
 	}
 	
 	/**
-	 * This method implements the Vertex 'v_GoalDecreased'
+	 * This method implements the Vertex 'v_GoalUpdated'
 	 * 
 	 */
-	public void v_GoalDecreased() {
-		// TODO:
-		// check if goal has been updated (use goal + delta for new goal value)
-		// check how to hit your goal values
+	public void v_GoalUpdated() {
+		// check new spinner value
+		int newGoal = HomeSettings.getSpinnerGoal();
+		Assert.assertTrue(newGoal == tempGoal, "Spinner's value is correct");
+		
+		// and how to hit your goal contains only dummy texts
 	}
 
 	/**
-	 * This method implements the Vertex 'v_GoalIncreased'
+	 * This method implements the Vertex 'v_NewGoalConfirmation'
 	 * 
 	 */
-	public void v_GoalIncreased() {
-		// TODO:
-		// check if goal has been updated (use goal + delta for new goal value)
-		// check how to hit your goal values
+	public void v_NewGoalConfirmation() {
+		// check alert content
+		
+		// note: currently setSpinnerValue only change client value,
+		// therefore, it doesn't trigger goal value changed alert
+		//Assert.assertTrue(HomeSettings.hasDontForgetMessage(), "Alert message is correct");
 	}
-
+	
 	/**
 	 * This method implements the Vertex 'v_HomeScreen'
 	 * 
@@ -154,8 +160,12 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void v_HomeScreenUpdated() {
 		// check if new goal value had been updated
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
-		String expect = this.goal * 100 + "";
-		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
+		String expect = this.goal + "";
+		logger.info("Actual goal is: " + actual + " - Expect goal is: " + expect);
+		
+		// note: currently setSpinnerValue only change the client value, not the server one
+		// therefore the value just changes in GoalSettings view
+		//Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
 		
 	}
 

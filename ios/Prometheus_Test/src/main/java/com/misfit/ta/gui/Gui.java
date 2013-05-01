@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -467,6 +468,13 @@ public class Gui {
     }
 
     // ----- keyboard -----
+    public static void moveCursorInCurrentTextViewTo(int index)
+    {
+    	String message = "(Gui moveCursorInCurrentTextViewTo: %index)";
+    	message = message.replace("%index", String.valueOf(index));
+    	NuRemoteClient.sendToServer(message);
+    }
+    
     public static void setDefaultKeyboard() {
         NuRemoteClient.sendToServer("(Gui setDefaultKeyboard)");
     }
@@ -556,6 +564,12 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
 
+    public static void swipe(int x1, int y1, int x2, int y2)
+    {
+    	String message = String.format("(Gui dragFromX: %d fromY: %d toX: %d andToY: %d)", x1, y1, x2, y2);
+		NuRemoteClient.sendToServer(message);
+    }
+    
     public static void swipeUp(int distance) {
         swipe(0, distance);
     }
@@ -669,6 +683,26 @@ public class Gui {
     }
     
     
+    // ---- spinner ----
+    public static void setSpinnerValue(String spinnerViewName, int index, int value)
+    {
+    	String message = String.format(
+    					"(set spinner (ViewUtils findViewWithViewName: @\"%s\" andIndex: %d))" +
+    					"(spinner startAnimatingTo: %d in: 1)", spinnerViewName, index, value);
+    	
+    	NuRemoteClient.sendToServer(message);
+    }
+    
+    public static int getSpinnerValue(String spinnerViewName, int index)
+    {
+    	String message = String.format(
+    			"(Gui getValueWithViewName: @\"%s\" withPropertyName: @\"endValue\" andIndex: %d)", spinnerViewName, index);
+    	NuRemoteClient.sendToServer(message);
+        String value = NuRemoteClient.getLastMessage();
+        
+        return Integer.parseInt(value);
+    }
+    
 
     // ---- pop up ----
     public static void touchPopupButton(int index) {
@@ -702,8 +736,8 @@ public class Gui {
         return NuRemoteClient.getLastMessage();
     }
 
+    
     // --- action sheet ---
-
     public static void touchActionSheetButton(int index) {
         String message = "(Gui touchUIButtonInActionSheetWithINdex: %index)";
         message = message.replace("%index", String.valueOf(index));
@@ -721,6 +755,7 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
     
+    
     // ---- tabbar ----
     public static void touchTabbar(int index) {
         String message = "(Gui touchATabBarButtonWithIndex: %index)";
@@ -728,6 +763,7 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
 
+    
     // ---- navigation bar ----
     public static void touchNavigationButton(int index) {
         String message = "(Gui touchAUIButtonInNavigationBarAtIndex: %index)";
@@ -741,6 +777,7 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
 
+    
     // ----- screen size -----
     public static int getScreenWidth() {
         NuRemoteClient.sendToServer("(Gui screenWidth)");
@@ -753,7 +790,6 @@ public class Gui {
     }
     
     // ---- get value ----
-
     /**
      * Get value of a certain property on a view.
      * 
