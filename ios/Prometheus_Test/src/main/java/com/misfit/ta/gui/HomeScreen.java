@@ -29,34 +29,9 @@ public class HomeScreen {
         Gui.touchAVIew("UIButtonLabel", "Dormant");
     }
 
-    public static void enterManualActivity(String[] times, int duration, int steps) {
-        // enter activity
-    	Gui.touchAVIew("UITextField", 0);
-    	ShortcutsTyper.delayTime(500);
-    	Gui.setPicker(0, "Running");
-    	Gui.dismissPicker();
-    	ShortcutsTyper.delayTime(500);
-    	
-    	// enter time    	
-    	Gui.touchAVIew("UITextField", 1);
-    	ShortcutsTyper.delayTime(500);
-    	Gui.setPicker(0, times[0]);
-    	Gui.setPicker(1, times[1]);
-    	Gui.setPicker(2, times[2]);
-    	Gui.dismissPicker();
-    	ShortcutsTyper.delayTime(500);
-
-        // enter duration
-        Gui.touchAVIew("UITextField", 2);
-        Gui.type(String.valueOf(duration));
-        ShortcutsTyper.delayTime(500);
-        Gui.dismissPicker();
-
-        // enter steps
-        Gui.touchAVIew("UITextField", 3);
-        Gui.type(String.valueOf(steps));
-        ShortcutsTyper.delayTime(500);
-        Gui.dismissPicker();
+    public static void enterManualActivity(String[] times, int duration, int steps) 
+    {
+        PrometheusHelper.inputManualRecord(times, duration, steps);
     }
 
     public static void tapSave() {

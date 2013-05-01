@@ -202,6 +202,39 @@ public class PrometheusHelper {
 		ShortcutsTyper.delayTime(1000);
 	}
 	
+	public static void inputManualRecord(String[] times, int duration, int steps) 
+	{
+        // enter activity
+    	Gui.touchAVIew("UITextField", 0);
+    	ShortcutsTyper.delayTime(500);
+    	Gui.setPicker(0, "Running");
+    	Gui.dismissPicker();
+    	ShortcutsTyper.delayTime(500);
+    	
+    	// enter time    	
+    	Gui.touchAVIew("UITextField", 1);
+    	ShortcutsTyper.delayTime(500);
+    	Gui.setPicker(0, times[0]);
+    	Gui.setPicker(1, times[1]);
+    	Gui.setPicker(2, times[2]);
+    	Gui.dismissPicker();
+    	ShortcutsTyper.delayTime(500);
+
+        // enter duration
+        Gui.touchAVIew("UITextField", 2);
+        Gui.type(String.valueOf(duration));
+        ShortcutsTyper.delayTime(500);
+        Gui.dismissPicker();
+
+        // enter steps
+        Gui.touchAVIew("UITextField", 3);
+        Gui.type(String.valueOf(steps));
+        ShortcutsTyper.delayTime(500);
+        Gui.dismissPicker();
+	}
+
+	
+	
 	
 	//public static void main(String[] args)
 
@@ -223,12 +256,10 @@ public class PrometheusHelper {
 	{
 		//startApp();
 		Gui.init("192.168.1.247");
-		Gui.moveCursorInCurrentTextViewTo(-1);
-		//Gui.moveCursorInCurrentTextViewTo(-1);
-		
+
 		
 //		Gui.swipeUp(1000);
-//		Gui.printView();
+		Gui.printView();
 //		PrometheusHelper.setInputModeToManual();
 		
 		//HomeScreen.tapSyncTray();

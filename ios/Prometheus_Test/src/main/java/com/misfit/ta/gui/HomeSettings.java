@@ -56,8 +56,8 @@ public class HomeSettings {
         Gui.touchAVIew("UILabel", "SIGN OUT");
     }
 
+    
     /* Update profile */
-
     public static void updateGender(boolean isMale) {
         PrometheusHelper.enterGender(isMale);
     }
@@ -78,6 +78,7 @@ public class HomeSettings {
     	Gui.touchAVIew("UIButton", "Back");
     }
 
+    
     /* Set Daily Goal */
     public static void tapDoneAtNewGoal() {
     	Gui.touchAVIew("UIButton", "Done");
@@ -104,6 +105,18 @@ public class HomeSettings {
     public static boolean hasDontForgetMessage()
     {
     	return Gui.getPopupContent().equals(DefaultStrings.NewGoalInstruction);
+    }
+    
+    
+    /* Wearing Shine */
+    public static void tapBackAtWearingShine()
+    {
+    	Gui.touchAVIew("UIButton", "Back");
+    }
+    
+    public static void setWearingShineAt(String location)
+    {
+    	// TODO: complete this
     }
     
     
