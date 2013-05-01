@@ -21,6 +21,14 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     private static final String[] results = { "PASSED", "FAILED", "UNKNOW" };
     private static final Logger logger = Util.setupLogger(AutomationTest.class);
     protected static boolean debug = false;
+    private Thread instrument = new Thread() 
+	{
+		public void run() 
+		{
+			AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
+    				AppHelper.getAppPath(), "script/automation/alertsupport.js");
+		}
+	};
 
     static
     {
@@ -33,18 +41,6 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
         {
             debug = false;
         }
-    }
-    
-    public void startInstrument()
-    {
-		(new Thread() 
-		{
-			public void run() 
-			{
-				AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-	    				AppHelper.getAppPath(), "script/automation/alertsupport.js");
-			}
-		}).start();
     }
 
     @Override
@@ -61,18 +57,11 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
         {
     		AppHelper.cleanCache();
     		ShortcutsTyper.delayTime(1000);
-    		startInstrument();
-    		
-			ShortcutsTyper.delayTime(20000);
-    		Gui.init(Settings.getParameter("DeviceIP"));
-        } 
-        else
-        {
-        	startInstrument();
-    		
-			ShortcutsTyper.delayTime(20000);
-        	Gui.init(Settings.getParameter("DeviceIP"));
         }
+        
+        instrument.start();
+		ShortcutsTyper.delayTime(20000);
+    	Gui.init(Settings.getParameter("DeviceIP"));
     }
 
     @Override
@@ -80,6 +69,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     public void cleanUpTest(Method method, ITestResult tr)
     {
     	Gui.shutdown();
+    	    	
         logger.info("==================================================================================================================");
         logger.info("|  End of test case: " + method.getName());
         logger.info("|  Result: " + results[tr.getStatus() - 1]);

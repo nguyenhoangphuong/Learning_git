@@ -336,7 +336,7 @@ public class Gui {
 
     public static void shutdown() {
         NuRemoteClient.close();
-        Gui.stopApp();
+        //Gui.stopApp();
         logger.info("Closing down. BYE!");
     }
 

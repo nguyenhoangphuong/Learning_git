@@ -116,7 +116,31 @@ public class HomeSettings {
     
     public static void setWearingShineAt(String location)
     {
-    	// TODO: complete this
+    	if(location == DefaultStrings.WearingLocations[0])
+    	{
+    		// head
+    	}
+    	else if(location == DefaultStrings.WearingLocations[0])
+    	{
+    		// head
+    	}
+    	else if(location == DefaultStrings.WearingLocations[0])
+    	{
+    		// head
+    	}
+    	else if(location == DefaultStrings.WearingLocations[0])
+    	{
+    		// head
+    	}
+    	else if(location == DefaultStrings.WearingLocations[0])
+    	{
+    		// head
+    	}
+    	else if(location == DefaultStrings.WearingLocations[0])
+    	{
+    		// head
+    	}
+    	
     }
     
     
