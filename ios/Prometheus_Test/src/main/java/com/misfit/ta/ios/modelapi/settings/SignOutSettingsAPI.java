@@ -35,29 +35,22 @@ public class SignOutSettingsAPI extends ModelAPI {
 	String w1 = "69";
 	String w2 = ".5";
 	int goalLevel = 1;
+	int goalValue = 2500;
 	
 	
-	/**
-	 * This method implements the Edge 'e_Init'
-	 * 
-	 */
 	public void e_Init() {
 		// This model require none
 	}
-	
-	/**
-	 * This method implements the Edge 'e_SignUp'
-	 * 
-	 */
+
 	public void e_SignUp() {
 		// sign up an account
 		PrometheusHelper.signUp(email, password, isMale, date, month, year, isUSUnit, h1, h2, w1, w2, goalLevel);
 	}
 	
-	/**
-	 * This method implements the Edge 'e_BackFromSettings'
-	 * 
-	 */
+	public void e_ToProfileSettings() {
+		// TODO:
+	}
+	
 	public void e_BackFromSettings() {
 		HomeSettings.tapBackAtSettings();
 		ShortcutsTyper.delayOne();
@@ -116,14 +109,6 @@ public class SignOutSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SignOut() {
-		// TODO:
-	}
-
-	/**
-	 * This method implements the Edge 'e_ToProfileSettings'
-	 * 
-	 */
-	public void e_ToProfileSettings() {
 		// TODO:
 	}
 
