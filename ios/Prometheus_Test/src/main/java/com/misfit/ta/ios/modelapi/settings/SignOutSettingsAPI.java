@@ -2,8 +2,6 @@ package com.misfit.ta.ios.modelapi.settings;
 
 import java.io.File;
 
-import org.apache.log4j.Logger;
-import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
@@ -11,17 +9,17 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.gui.*;
+import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.Gui;
+import com.misfit.ta.gui.HomeScreen;
+import com.misfit.ta.gui.HomeSettings;
+import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
 
 public class SignOutSettingsAPI extends ModelAPI {
-	@SuppressWarnings("unused")
-	private static final Logger 
- = Util
-			.setupLogger(SignOutSettingsAPI.class);
-
-	public SignOutSettingsAPI(AutomationTest automation, File model,
-			boolean efsm, PathGenerator generator, boolean weight) {
+	public SignOutSettingsAPI(AutomationTest automation, File model, boolean efsm,
+			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
 	
