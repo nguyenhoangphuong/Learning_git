@@ -19,6 +19,7 @@ public class SignInTest extends AutomationTest {
 
     @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignIn", "InvalidSignIn" })
     public void InvalidSignIn() throws InterruptedException, StopConditionException, IOException {
+    	Assert.assertTrue(false, "Debug");
         ModelHandler model = getModelhandler();
         model.add("InvalidSignIn", new InvalidSignInAPI(this, Files.getFile("model/signin/InvalidSignIn.graphml"),
                 false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));

@@ -8,7 +8,7 @@ import com.misfit.ta.backend.data.*;
 import com.misfit.ta.backend.api.*;
 import com.misfit.ta.ios.AutomationTest;
 
-public class BackendProfileGetTC extends AutomationTest {
+public class BackendProfileGetTC extends BackendAutomation {
 
     String email;
     String password = "qwerty1";

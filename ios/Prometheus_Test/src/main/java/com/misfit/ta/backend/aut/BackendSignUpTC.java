@@ -8,7 +8,7 @@ import com.misfit.ta.backend.data.*;
 import com.misfit.ta.backend.api.*;
 import com.misfit.ta.ios.AutomationTest;
 
-public class BackendSignUpTC extends AutomationTest {
+public class BackendSignUpTC extends BackendAutomation {
     String[] wrongFormatEmails = { "", "wrong1", "wrong2@", "wrong3 @a.b", " wrong4@a.a" };
     String wellFormatEmail = "wellformat@qa.com";
     String duplicatedEmail = "";

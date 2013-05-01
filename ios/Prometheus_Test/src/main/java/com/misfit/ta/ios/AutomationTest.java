@@ -79,11 +79,11 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     @AfterMethod(alwaysRun = true)
     public void cleanUpTest(Method method, ITestResult tr)
     {
+    	Gui.shutdown();
         logger.info("==================================================================================================================");
         logger.info("|  End of test case: " + method.getName());
         logger.info("|  Result: " + results[tr.getStatus() - 1]);
         logger.info("==================================================================================================================\n\n");
-        Gui.shutdown();
     }
 
 }

@@ -8,7 +8,7 @@ import com.misfit.ta.backend.data.*;
 import com.misfit.ta.backend.api.*;
 import com.misfit.ta.ios.AutomationTest;
 
-public class BackendSignOutTC extends AutomationTest {
+public class BackendSignOutTC extends BackendAutomation {
     String email;
     String password = "qwerty1";
     String udid;
