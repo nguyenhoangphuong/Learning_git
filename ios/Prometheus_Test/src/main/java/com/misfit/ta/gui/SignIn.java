@@ -85,7 +85,9 @@ public class SignIn {
 		{
 			Gui.touchAVIew("PTEmailVerifyingTextField", 0);
 			String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
+			
 			System.out.println("Deleting: " + txtEmail);
+			Gui.moveCursorInCurrentTextViewTo(-1);
 			for (int i = 0; i < txtEmail.length(); i++)
 				Gui.pressDelete();
 		}
@@ -93,7 +95,9 @@ public class SignIn {
 		{
 			Gui.touchAVIew("PTPaddingTextField", 0);
 			String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
+			
 			System.out.println("Deleting: " + txtEmail);
+			Gui.moveCursorInCurrentTextViewTo(-1);
 			for (int i = 0; i < txtEmail.length(); i++)
 				Gui.pressDelete();
 		}

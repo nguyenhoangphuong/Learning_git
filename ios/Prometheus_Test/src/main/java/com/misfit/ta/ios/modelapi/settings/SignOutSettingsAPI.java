@@ -22,13 +22,45 @@ public class SignOutSettingsAPI extends ModelAPI {
 			boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
-
+	
+	String email = MVPApi.generateUniqueEmail();
+	String password = "qwerty1";
+	boolean isMale = true;
+	int date = 16;
+	int month = 9;
+	int year = 1991;
+	boolean isUSUnit = false;
+	String h1 = "1";
+	String h2 = ".71";
+	String w1 = "69";
+	String w2 = ".5";
+	int goalLevel = 1;
+	
+	
+	/**
+	 * This method implements the Edge 'e_Init'
+	 * 
+	 */
+	public void e_Init() {
+		// This model require none
+	}
+	
+	/**
+	 * This method implements the Edge 'e_SignUp'
+	 * 
+	 */
+	public void e_SignUp() {
+		// sign up an account
+		PrometheusHelper.signUp(email, password, isMale, date, month, year, isUSUnit, h1, h2, w1, w2, goalLevel);
+	}
+	
 	/**
 	 * This method implements the Edge 'e_BackFromSettings'
 	 * 
 	 */
 	public void e_BackFromSettings() {
-		// TODO:
+		HomeSettings.tapBackAtSettings();
+		ShortcutsTyper.delayOne();
 	}
 
 	/**
@@ -64,14 +96,6 @@ public class SignOutSettingsAPI extends ModelAPI {
 	}
 
 	/**
-	 * This method implements the Edge 'e_Init'
-	 * 
-	 */
-	public void e_Init() {
-		// TODO:
-	}
-
-	/**
 	 * This method implements the Edge 'e_InputActivity'
 	 * 
 	 */
@@ -92,14 +116,6 @@ public class SignOutSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SignOut() {
-		// TODO:
-	}
-
-	/**
-	 * This method implements the Edge 'e_SignUp'
-	 * 
-	 */
-	public void e_SignUp() {
 		// TODO:
 	}
 

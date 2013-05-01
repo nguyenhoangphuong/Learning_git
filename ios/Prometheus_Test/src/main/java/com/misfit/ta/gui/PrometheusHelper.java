@@ -61,15 +61,14 @@ public class PrometheusHelper {
 	}
 
 	public static void enterEmailPassword(String email, String password) {
-		//PTPaddingTextField
-		//PTEmailVerifyingTextField
-		Gui.longTouch(150, 100, 200);
 		
 		if(ViewUtils.isExistedView("PTEmailVerifyingTextField", 0))
 		{
 			Gui.touchAVIew("PTEmailVerifyingTextField", 0);
 			String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
+			
 			System.out.println("Deleting: " + txtEmail);
+			Gui.moveCursorInCurrentTextViewTo(-1);
 			for (int i = 0; i < txtEmail.length(); i++)
 				Gui.pressDelete();
 		}
@@ -77,7 +76,9 @@ public class PrometheusHelper {
 		{
 			Gui.touchAVIew("PTPaddingTextField", 0);
 			String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
+			
 			System.out.println("Deleting: " + txtEmail);
+			Gui.moveCursorInCurrentTextViewTo(-1);
 			for (int i = 0; i < txtEmail.length(); i++)
 				Gui.pressDelete();
 		}
@@ -222,7 +223,7 @@ public class PrometheusHelper {
 	{
 		//startApp();
 		Gui.init("192.168.1.247");
-		HomeSettings.tapDoneAtNewGoal();
+		Gui.moveCursorInCurrentTextViewTo(-1);
 		//Gui.moveCursorInCurrentTextViewTo(-1);
 		
 		
