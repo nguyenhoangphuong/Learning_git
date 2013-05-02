@@ -27,7 +27,7 @@ public class SettingsTest extends AutomationTest {
         System.out.println(actualResult);
     }
 
-    //@Test(groups = { "iOS", "Prometheus", "Settings", "GoalSettings" })
+    @Test(groups = { "iOS", "Prometheus", "Settings", "GoalSettings" })
     public void GoalSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("GoalSettings", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettings.graphml"),

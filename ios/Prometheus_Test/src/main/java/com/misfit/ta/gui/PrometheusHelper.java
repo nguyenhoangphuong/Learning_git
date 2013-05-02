@@ -257,26 +257,29 @@ public class PrometheusHelper {
 		//startApp();
 		Gui.init("192.168.1.247");
 		
-		for(int i = 0; i < 50; i++)
-		{
-			SignIn.tapLogInWithFacebook();
-			ShortcutsTyper.delayTime(5000);
-			HomeScreen.tapSettings();
-			ShortcutsTyper.delayTime(500);
-			Gui.swipeUp(1000);
-			ShortcutsTyper.delayTime(500);
-			
-			HomeSettings.tapSignOut();
-			ShortcutsTyper.delayTime(1000);
-			
-			if(!ViewUtils.isExistedView("UIButtonLabel", " SIGN UP"))
-				Gui.touchAVIew("UIButtonLabel", "Sign out");
-		}
+//		for(int i = 0; i < 1000; i++)
+//		{
+//			SignIn.tapLogInWithFacebook();
+//			ShortcutsTyper.delayTime(5000);
+//			HomeScreen.tapSettings();
+//			ShortcutsTyper.delayTime(500);
+//			Gui.swipeUp(1000);
+//			ShortcutsTyper.delayTime(500);
+//			
+//			HomeSettings.tapSignOut();
+//			ShortcutsTyper.delayTime(1000);
+//			
+//			if(!ViewUtils.isExistedView("UIButtonLabel", " SIGN UP"))
+//				Gui.touchAVIew("UIButtonLabel", "Sign out");
+//		}
 
+		Gui.setSpinnerValue("PTNumberSpinner", 0, 4000);
+		ShortcutsTyper.delayTime(2000);
+		//HomeSettings.tapDoneAtNewGoal();
 		
 //		Gui.swipeUp(1000);
-		Gui.printView();
-//		PrometheusHelper.setInputModeToManual();
+//		Gui.printView();
+		
 		
 		//HomeScreen.tapSyncTray();
 		//HomeScreen.tapSettings();
