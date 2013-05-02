@@ -58,6 +58,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     {
     	Gui.shutdown();
     	instrument.stop();
+    	instrument.kill();
     	
         logger.info("==================================================================================================================");
         logger.info("|  End of test case: " + method.getName());
