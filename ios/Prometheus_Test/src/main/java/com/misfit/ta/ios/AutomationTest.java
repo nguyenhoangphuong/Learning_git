@@ -13,6 +13,7 @@ import org.testng.annotations.*;
 import com.misfit.ios.AppHelper;
 import com.misfit.ta.Settings;
 import com.misfit.ta.gui.Gui;
+import com.misfit.ta.gui.InstrumentHelper;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
 
@@ -21,14 +22,8 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     private static final String[] results = { "PASSED", "FAILED", "UNKNOW" };
     private static final Logger logger = Util.setupLogger(AutomationTest.class);
     protected static boolean debug = false;
-    private Thread instrument = new Thread() 
-	{
-		public void run() 
-		{
-			AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-    				AppHelper.getAppPath(), "script/automation/alertsupport.js");
-		}
-	};
+    private InstrumentHelper instrument = new InstrumentHelper();
+    
 
     static
     {
@@ -69,7 +64,8 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     public void cleanUpTest(Method method, ITestResult tr)
     {
     	Gui.shutdown();
-    	instrument.interrupt();    	
+    	instrument.stop();
+    	instrument.waitTillFinished();
         logger.info("==================================================================================================================");
         logger.info("|  End of test case: " + method.getName());
         logger.info("|  Result: " + results[tr.getStatus() - 1]);
