@@ -23,19 +23,11 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     private static final Logger logger = Util.setupLogger(AutomationTest.class);
     protected static boolean debug = false;
     private InstrumentHelper instrument = new InstrumentHelper();
-    
 
     static
     {
         String isDebug = Settings.getParameter("MVPDebug");
-        if (isDebug != null && isDebug.equalsIgnoreCase("true")) 
-        {
-            debug = true;
-        }
-        else 
-        {
-            debug = false;
-        }
+        debug = (isDebug != null && isDebug.equalsIgnoreCase("true"));
     }
 
     @Override
@@ -65,7 +57,8 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     {
     	Gui.shutdown();
     	instrument.stop();
-    	instrument.waitTillFinished();
+    	Gui.stopApp();
+    	
         logger.info("==================================================================================================================");
         logger.info("|  End of test case: " + method.getName());
         logger.info("|  Result: " + results[tr.getStatus() - 1]);

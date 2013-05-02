@@ -5,7 +5,6 @@ import com.misfit.ios.AppHelper;
 public class InstrumentHelper implements Runnable
 {
     private volatile Thread instrument;
-    private volatile Thread checker;
     
     public void start()
     { 
@@ -15,8 +14,6 @@ public class InstrumentHelper implements Runnable
     
     public void stop()
     {
-    	checker = instrument;
-    	
     	Thread interrupter = instrument;
     	instrument = null;
     	interrupter.interrupt();
@@ -28,19 +25,6 @@ public class InstrumentHelper implements Runnable
 		{
 			AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
 				AppHelper.getAppPath(), "script/automation/alertsupport.js");
-		}
-	}
-	
-	public void waitTillFinished()
-	{
-		while(true)
-		{
-            if (checker.getState() != Thread.State.TERMINATED) 
-            {
-                checker.interrupt();
-            }
-            else
-            	break;
 		}
 	}
 
