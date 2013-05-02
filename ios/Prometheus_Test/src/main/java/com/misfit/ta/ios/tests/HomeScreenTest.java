@@ -16,7 +16,7 @@ import com.misfit.ta.utils.Files;
 public class HomeScreenTest extends AutomationTest 
 {
 
-    //@Test(groups = { "iOS", "Prometheus", "HomeScreen", "DayProgress" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "DayProgress" })
     public void TodayProgress() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();

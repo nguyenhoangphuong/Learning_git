@@ -138,7 +138,7 @@ public class SignUpAPI extends ModelAPI {
     public void e_inputHeight() {
 		this.isUSUnit = PrometheusHelper.coin();
 		this.h1 = this.isUSUnit ? PrometheusHelper.randInt(4, 8) + "'": PrometheusHelper.randInt(1, 3) + "";
-		this.h2 = this.isUSUnit ? PrometheusHelper.randInt(0, 12) + "\\\"": "." + String.format("%2d", PrometheusHelper.randInt(50, 100));
+		this.h2 = this.isUSUnit ? PrometheusHelper.randInt(0, 12) + "\\\"": "." + String.format("%2d", PrometheusHelper.randInt(30, 70));
 		SignUp.enterHeight(h1, h2, isUSUnit);
 		
 		logger.info("Change height to: " + h1 + h2 + (isUSUnit? "" : " m"));
