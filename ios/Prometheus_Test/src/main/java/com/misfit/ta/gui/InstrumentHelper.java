@@ -1,6 +1,7 @@
 package com.misfit.ta.gui;
 
 import com.misfit.ios.AppHelper;
+import com.misfit.ta.utils.ProcessFinder;
 
 public class InstrumentHelper implements Runnable
 {
@@ -26,6 +27,11 @@ public class InstrumentHelper implements Runnable
 			AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
 				AppHelper.getAppPath(), "script/automation/alertsupport.js");
 		}
+	}
+	
+	public void kill()
+	{
+		ProcessFinder.kill("Instruments.app");
 	}
 
 }

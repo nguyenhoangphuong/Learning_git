@@ -962,6 +962,7 @@ public class Gui {
     }
 
     public static void stopApp() {
+    	logger.info("Killing the app...");
         String deviceId = Gui.getCurrentUdid();
         ProcessFinder.kill(deviceId);
         //Processes.killHard(deviceId);
