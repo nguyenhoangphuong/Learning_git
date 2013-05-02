@@ -37,14 +37,7 @@ public class InstrumentHelper implements Runnable
 		{
             if (checker.getState() != Thread.State.TERMINATED) 
             {
-                try 
-                {
-                    Thread.sleep(100);
-                }
-                catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
+                checker.interrupt();
             }
             else
             	break;
