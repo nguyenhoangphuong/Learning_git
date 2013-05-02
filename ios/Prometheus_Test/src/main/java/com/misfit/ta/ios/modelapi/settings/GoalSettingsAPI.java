@@ -87,8 +87,7 @@ public class GoalSettingsAPI extends ModelAPI {
 		HomeSettings.tapDoneAtNewGoal();
 		ShortcutsTyper.delayTime(1000);
 		
-		// TODO: when setSpinnerNumber works correctly, remove the comment below
-		//goal = tempGoal;
+		goal = tempGoal;
 		logger.info("Confirm new goal");
 	}
 
@@ -138,10 +137,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void v_NewGoalConfirmation() {
 		// check alert content
-		
-		// note: currently setSpinnerValue only change client value,
-		// therefore, it doesn't trigger goal value changed alert
-		//Assert.assertTrue(HomeSettings.hasDontForgetMessage(), "Alert message is correct");
+		Assert.assertTrue(HomeSettings.hasDontForgetMessage(), "Alert message is correct");
 	}
 	
 	/**
@@ -162,10 +158,8 @@ public class GoalSettingsAPI extends ModelAPI {
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
 		String expect = this.goal + "";
 		logger.info("Actual goal is: " + actual + " - Expect goal is: " + expect);
-		
-		// note: currently setSpinnerValue only change the client value, not the server one
-		// therefore the value just changes in GoalSettings view
-		//Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
+
+		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
 		
 	}
 

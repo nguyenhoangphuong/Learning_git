@@ -21,7 +21,7 @@ public class HomeScreenTest extends AutomationTest
     {
         ModelHandler model = getModelhandler();
         model.add("DayProgress", new DayProgressAPI(this, Files.getFile("model/homescreen/DayProgress.graphml"),
-                false, new A_StarPathGenerator(new EdgeCoverage(1.0)), false));
+                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("DayProgress");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();

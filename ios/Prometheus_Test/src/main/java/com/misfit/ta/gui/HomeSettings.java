@@ -1,5 +1,6 @@
 package com.misfit.ta.gui;
 
+import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 
 public class HomeSettings {
@@ -89,7 +90,8 @@ public class HomeSettings {
     }
     
     public static void setSpinnerGoal(int value) {
-    	Gui.setSpinnerValue("PTNumberSpinner", 0, value);
+    	String message = "((((((UIApplication sharedApplication) keyWindow) rootViewController) viewControllers) lastObject) setSpinnerValue: " +value+ ")";
+    	NuRemoteClient.sendToServer(message);
     }
     
     public static int getSpinnerGoal()

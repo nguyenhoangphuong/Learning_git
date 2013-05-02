@@ -22,9 +22,9 @@ public class SignInTest extends AutomationTest {
     {    	
         ModelHandler model = getModelhandler();
         model.add("InvalidSignIn", new InvalidSignInAPI(this, Files.getFile("model/signin/InvalidSignIn.graphml"),
-                false, new A_StarPathGenerator(new EdgeCoverage(1.0)), false));
+                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.add("ForgotPassword", new ForgotPasswordAPI(this, Files.getFile("model/signin/ForgotPassword.graphml"),
-                false, new A_StarPathGenerator(new EdgeCoverage(1.0)), false));
+                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("InvalidSignIn");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
@@ -36,7 +36,7 @@ public class SignInTest extends AutomationTest {
     {
         ModelHandler model = getModelhandler();
         model.add("SuccessfulSignIn", new SuccessfulSignInAPI(this, Files
-                .getFile("model/signin/SuccessfulSignIn.graphml"), false, new A_StarPathGenerator(
+                .getFile("model/signin/SuccessfulSignIn.graphml"), false, new NonOptimizedShortestPath(
                 new EdgeCoverage(1.0)), false));
         model.execute("SuccessfulSignIn");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");

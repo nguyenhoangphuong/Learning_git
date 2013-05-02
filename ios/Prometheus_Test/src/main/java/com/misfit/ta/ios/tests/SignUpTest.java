@@ -20,7 +20,7 @@ public class SignUpTest extends AutomationTest {
     public void SignUp() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("SignUp", new SignUpAPI(this, Files.getFile("model/signup/SignUp.graphml"), false,
-                new A_StarPathGenerator(new EdgeCoverage(1.0)), false));
+                new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("SignUp");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
@@ -31,7 +31,7 @@ public class SignUpTest extends AutomationTest {
     public void InvalidSignUp() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("InvalidSignUp", new InvalidSignUpAPI(this, Files
-                .getFile("model/signup/InvalidSignUp.graphml"), false, new A_StarPathGenerator(
+                .getFile("model/signup/InvalidSignUp.graphml"), false, new NonOptimizedShortestPath(
                 new EdgeCoverage(1.0)), false));
         model.execute("InvalidSignUp");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");

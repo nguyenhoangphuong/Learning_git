@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.graphwalker.conditions.EdgeCoverage;
 import org.graphwalker.exceptions.StopConditionException;
-import org.graphwalker.generators.*;
+import org.graphwalker.generators.NonOptimizedShortestPath;
 import org.graphwalker.multipleModels.ModelHandler;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -20,7 +20,7 @@ public class SettingsTest extends AutomationTest {
     public void ProfileSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("ProfileSettings", new ProfileSettingsAPI(this, Files.getFile("model/settings/ProfileSettings.graphml"),
-                false, new A_StarPathGenerator(new EdgeCoverage(1.0)), false));
+                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("ProfileSettings");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
@@ -31,7 +31,7 @@ public class SettingsTest extends AutomationTest {
     public void GoalSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("GoalSettings", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettings.graphml"),
-                false, new A_StarPathGenerator(new EdgeCoverage(1.0)), false));
+                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("GoalSettings");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();

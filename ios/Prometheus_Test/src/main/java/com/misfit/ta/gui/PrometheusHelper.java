@@ -273,9 +273,9 @@ public class PrometheusHelper {
 //				Gui.touchAVIew("UIButtonLabel", "Sign out");
 //		}
 
-		Gui.setSpinnerValue("PTNumberSpinner", 0, 4000);
+		HomeSettings.setSpinnerGoal(4000);
 		ShortcutsTyper.delayTime(2000);
-		//HomeSettings.tapDoneAtNewGoal();
+		HomeSettings.tapDoneAtNewGoal();
 		
 //		Gui.swipeUp(1000);
 //		Gui.printView();
