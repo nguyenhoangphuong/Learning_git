@@ -16,7 +16,7 @@ import com.misfit.ta.utils.Files;
 
 public class SettingsTest extends AutomationTest {
 
-    //@Test(groups = { "iOS", "Prometheus", "Settings", "ProfileSettings" })
+    @Test(groups = { "iOS", "Prometheus", "Settings", "ProfileSettings" })
     public void ProfileSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("ProfileSettings", new ProfileSettingsAPI(this, Files.getFile("model/settings/ProfileSettings.graphml"),
