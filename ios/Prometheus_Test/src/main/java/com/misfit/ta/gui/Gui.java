@@ -377,7 +377,8 @@ public class Gui {
 	}
 	
 	public static void sync() {
-		String message = "(Gui dragFromX: 0 fromY: 200 toX: 480 andToY: 200)";
+//		String message = "(Gui dragFromX: 0 fromY: 200 toX: 480 andToY: 200)";
+		String message = "((ViewUtils findViewWithViewName: @\"PTSyncTrayView\" andIndex: 0) userDidTriggerSyncingWithSimulatedShine)";
 		NuRemoteClient.sendToServer(message);
 	}
     	 
