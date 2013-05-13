@@ -105,7 +105,7 @@ public class SignUp {
     }
 
     public static boolean isSignUpProfileView() {
-        return ViewUtils.isExistedView("UILabel", "PROFILE");
+        return ViewUtils.isExistedView("UILabel", "Profile");
     }
 
     public static boolean isSignUpTutorialView() {
@@ -115,7 +115,7 @@ public class SignUp {
     }
 
     public static boolean isSignUpGoalView() {
-        return ViewUtils.isExistedView("UILabel", "MY GOAL IS...");
+        return ViewUtils.isExistedView("UILabel", "Today I Feel...");
     }
 
     public static boolean isSignUpPairingView() {
