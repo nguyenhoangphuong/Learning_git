@@ -12,6 +12,7 @@ import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.ios.AutomationTest;
+import com.misfit.ta.gui.Gui;
 
 public class DayProgressAPI extends ModelAPI {
 	public DayProgressAPI(AutomationTest automation, File model, boolean efsm,
@@ -47,7 +48,7 @@ public class DayProgressAPI extends ModelAPI {
 		// Height: 68" (or 5'8")
 		// Weight: 120 lbs
 		// Goal: 2500
-		// Birthyear: 1981
+		// Year of birth: 1981
 		
 		// DEVICE SETTINGS:
 		// Time: 12 hours
@@ -120,20 +121,20 @@ public class DayProgressAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_UpdatedToday() {
+		// check summary is updated
+		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMinutes / 60f).replace(".0", "")), "Total hours displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.totalSteps)), "Total steps displayed correctly");
+		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalPoints))), "Total points displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMiles).replace(".0", "")), "Total miles displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalCalories)).replace(".0", "")), "Total calories displayed correctly");
+		
 		// check activity record is saved
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", this.lastStartTime), "Start time displayed correctly");
 		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.lastDuration)), "Duration displayed correctly");	// there's something wrong with the framework
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.lastSteps)), "Steps displayed correctly");
+		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.lastSteps)), "Steps displayed correctly");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.lastPoints))), "Points displayed correctly");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.lastMiles).replace(".0", "")), "Miles displayed correctly");
+		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.lastMiles).replace(".0", "")), "Miles displayed correctly");
 		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.lastCalories)).replace(".0", "")), "Calories displayed correctly");
-		
-		// check summary is updated
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMinutes / 60f).replace(".0", "")), "Total hours displayed correctly");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.totalSteps)), "Total steps displayed correctly");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalPoints))), "Total points displayed correctly");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMiles).replace(".0", "")), "Total miles displayed correctly");
-		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalCalories)).replace(".0", "")), "Total calories displayed correctly");
 	}	
 	
 	/**
@@ -144,4 +145,20 @@ public class DayProgressAPI extends ModelAPI {
 		// nothing to do here
 	}
 
+	/**
+	* This method implements the Vertex 'v_TutorialShown'
+	* 
+	*/
+	public void v_TutorialShown() {
+		//TODO: swipe to the last tutorial and tap "OK, I got it"
+		
+		// comment out this method and wait till the tutorial is stable enough
+//		int numOfTutorials = 4;
+//		
+//		for (int i = 1; i < numOfTutorials; i++) {
+//			Gui.swipeLeft(400);
+//		}
+//		
+//		Gui.touchAVIew("PTOrangeButton", "OK, I GOT IT");
+	}
 }
