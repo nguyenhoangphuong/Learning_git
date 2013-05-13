@@ -126,7 +126,8 @@ public class DayProgressAPI extends ModelAPI {
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.totalSteps)), "Total steps displayed correctly");
 		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalPoints))), "Total points displayed correctly");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMiles).replace(".0", "")), "Total miles displayed correctly");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalCalories)).replace(".0", "")), "Total calories displayed correctly");
+		// Total calories are still being discussed, therefore we should not verified now
+		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalCalories)).replace(".0", "")), "Total calories displayed correctly");
 		
 		// check activity record is saved
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", this.lastStartTime), "Start time displayed correctly");
