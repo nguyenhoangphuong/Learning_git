@@ -23,27 +23,27 @@ public class SignOutSettingsAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 	
-	String email = MVPApi.generateUniqueEmail();
-	String password = "qwerty1";
+	private String email = MVPApi.generateUniqueEmail();
+	private String password = "qwerty1";
 	
-	boolean isMale = true;
-	int date = 16;
-	int month = 9;
-	int year = 1991;
-	boolean isUSUnit = false;
-	String h1 = "1";
-	String h2 = ".71";
-	String w1 = "69";
-	String w2 = ".5";
+	private boolean isMale = true;
+	private int date = 16;
+	private int month = 9;
+	private int year = 1991;
+	private boolean isUSUnit = false;
+	private String h1 = "1";
+	private String h2 = ".71";
+	private String w1 = "69";
+	private String w2 = ".5";
 	
-	int goalValue = 2500;
+	private int goalValue = 2500;
 	
-	String wearAt = "";
+	private String wearAt = "";
 	
-	String lastStartTime = "";
-	int lastDuration = 0;
-	int lastSteps = 0;
-	int hour = 1;
+	private String lastStartTime = "";
+	private int lastDuration = 0;
+	private int lastSteps = 0;
+	private int hour = 1;
 	
 	
 	public void e_Init() 

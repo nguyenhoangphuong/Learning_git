@@ -27,11 +27,15 @@ public class SignUpAPI extends ModelAPI {
         super(automation, model, efsm, generator, weight);
     }
 
-	boolean isMale = true;
-	boolean isUSUnit = true;
-	String h1 = "", h2 = "";
-	String w1 = "", w2 = "";
-	String year = "", month = "", day = "";
+	private boolean isMale = true;
+	private boolean isUSUnit = true;
+	private String h1 = "";
+	private String h2 = "";
+	private String w1 = "";
+	private String w2 = "";
+	private String year = "";
+	private String month = "";
+	private String day = "";
     private static int goal = 0;
     
 //    private static String[] goalPoints = {"1500", "2500", "4000" };

@@ -19,7 +19,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 
-	String[] invalidEmails = {"aa", "aaa@", ".aaa@a.a", "aa@@a.a", "aaa@a..a", "aaa@a.a."};
+	private String[] invalidEmails = {"aa", "aaa@", ".aaa@a.a", "aa@@a.a", "aaa@a..a", "aaa@a.a."};
 	
 	/**
 	 * This method implements the Edge 'e_gotoForgotPassword'

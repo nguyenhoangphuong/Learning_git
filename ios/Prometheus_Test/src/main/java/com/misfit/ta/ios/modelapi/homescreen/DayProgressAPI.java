@@ -20,22 +20,22 @@ public class DayProgressAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 
-	String lastStartTime = "";
-	int lastDuration = 0;
-	int lastSteps = 0;
-	float lastPoints = 0f;
-	float lastMiles = 0f;
-	float lastCalories = 0f;
+	private String lastStartTime = "";
+	private int lastDuration = 0;
+	private int lastSteps = 0;
+	private float lastPoints = 0f;
+	private float lastMiles = 0f;
+	private float lastCalories = 0f;
 		
-	int totalSteps = 0;
-	int totalMinutes = 0;
-	float totalPoints = 0f;
-	float totalMiles = 0f;
-	float totalCalories = 0f;
+	private int totalSteps = 0;
+	private int totalMinutes = 0;
+	private float totalPoints = 0f;
+	private float totalMiles = 0f;
+	private float totalCalories = 0f;
 	
-	int hour = 5;						// for ease of keeping tracks
-	int height = 68;					// 68 inches is default height for men
-	float weight = 120f;				// 120 lbs is default weight for men
+	private int hour = 5;						// for ease of keeping tracks
+	private int height = 68;					// 68 inches is default height for men
+	private float weight = 120f;				// 120 lbs is default weight for men
 	
 	/**
 	 * This method implements the Edge 'e_Init'

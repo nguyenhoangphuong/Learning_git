@@ -19,8 +19,8 @@ public class InvalidSignInAPI extends ModelAPI {
         super(automation, model, efsm, generator, weight);
     }
 
-    String[] invalidEmails = {"aa", "aaa@", ".aaa@a.a", "aa@@a.a", "aaa@a..a", "aaa@a.a."};
-    String[] invalidPasswords = {"qwerty", "123456", "qwert.", "12345."};
+    private String[] invalidEmails = {"aa", "aaa@", ".aaa@a.a", "aa@@a.a", "aaa@a..a", "aaa@a.a."};
+    private String[] invalidPasswords = {"qwerty", "123456", "qwert.", "12345."};
     
     /**
      * This method implements the Edge 'e_Init'

@@ -22,8 +22,8 @@ public class GoalSettingsAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 
-	int goal = 2500;
-	int tempGoal = 2500;
+	private int goal = 2500;
+	private int tempGoal = 2500;
 	
 	/**
 	 * This method implements the Edge 'e_Init'
