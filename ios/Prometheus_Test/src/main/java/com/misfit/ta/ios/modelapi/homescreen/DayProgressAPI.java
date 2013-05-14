@@ -94,6 +94,8 @@ public class DayProgressAPI extends ModelAPI {
 		this.totalCalories += PrometheusHelper.calculateCalories(this.lastPoints, this.weight);
 		
 		hour++;
+		PrometheusHelper.handleTutorial();
+		ShortcutsTyper.delayTime(500);
 	}
 
 	/**

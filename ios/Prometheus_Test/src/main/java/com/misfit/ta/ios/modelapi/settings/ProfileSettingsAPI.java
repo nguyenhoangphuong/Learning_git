@@ -24,11 +24,15 @@ public class ProfileSettingsAPI extends ModelAPI {
 	}
 	
 
-	boolean isMale = true;
-	boolean isUSUnit = true;
-	String h1 = "", h2 = "";
-	String w1 = "", w2 = "";
-	String year = "", month = "", day = "";
+	private boolean isMale = true;
+	private boolean isUSUnit = true;
+	private String h1 = ""; 
+	private String h2 = "";
+	private String w1 = ""; 
+	private String w2 = "";
+	private String year = "";
+	private String month = "";
+	private String day = "";
 
 	
 	/**

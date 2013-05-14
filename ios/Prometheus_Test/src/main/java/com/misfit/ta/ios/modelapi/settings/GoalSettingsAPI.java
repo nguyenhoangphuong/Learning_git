@@ -40,6 +40,8 @@ public class GoalSettingsAPI extends ModelAPI {
 		//ShortcutsTyper.delayTime(1000);
 		PrometheusHelper.inputRandomRecord();
 		ShortcutsTyper.delayTime(1000);
+		PrometheusHelper.handleTutorial();
+		ShortcutsTyper.delayTime(500);
 	}
 
 	/**
