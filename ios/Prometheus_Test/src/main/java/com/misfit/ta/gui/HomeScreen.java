@@ -8,17 +8,22 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeScreen {
     public static void tapSettings() {
-		int num = Gui.countViewWithName("UIButton");
-		Gui.touchAVIew("UIButton", num - 6);
+		Gui.touchAVIew("UIButtonLabel", "setting"); 
+		//this button is temporary since we don't have real Shine and there's no way we get to setting screen through sync tray
     }
 
     public static void tapSyncTray() {
     	int num = Gui.countViewWithName("UIButton");
 		Gui.touchAVIew("UIButton", num - 8);
-    }
+		//TODO: change button. This one is invalid 
+	}
 
     public static void tapOpenManualInput() {
-        Gui.touchAVIew("UIButton", "Manual");
+        Gui.touchAVIew("UIButtonLabel", "Manual");
+    }
+    
+    public static void tapToday() {
+    	Gui.touchAVIew("UIButtonLabel", "Today");
     }
     
     public static void tapRandom() {
@@ -51,12 +56,10 @@ public class HomeScreen {
     }
 
     public static boolean isToday() {
-        //return "TODAY".equals(Gui.getProperty("UILabel", 0, "text"));
     	return ViewUtils.isExistedView("UILabel", "TODAY");
     }
 
     public static boolean isYesterday() {
-        //return "YESTERDAY".equals(Gui.getProperty("UILabel", 0, "text"));
     	return ViewUtils.isExistedView("UILabel", "YESTERDAY");
     }
 

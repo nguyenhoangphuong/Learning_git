@@ -18,11 +18,15 @@ public class HomeSettings {
     }
 
     public static void tapWearingShine() {
-        Gui.touchAVIew("UILabel", "WEARING SHINE");
+        Gui.touchAVIew("UILabel", "WEARING SHINE ON...");
     }
     
     public static void tapUnlink() {
         Gui.touchAVIew("UILabel", "UNLINK");
+    }
+    
+    public static void tapLinkShine() {
+    	Gui.touchAVIew("UILabel", "LINK SHINE");
     }
 
     public static void tapSupport() {
@@ -30,7 +34,7 @@ public class HomeSettings {
     }
 
     public static void tapLikeUs() {
-        Gui.touchAVIew("UILabel", "LIKE US");
+        Gui.touchAVIew("UILabel", "WE'RE LIKABLE");
     }
 
     public static void tapWebsite() {
