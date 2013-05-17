@@ -59,11 +59,11 @@ public class SignUp {
     public static int getCurrentGoal() {
         String text = Gui.getText("UILabel", 0);
         
-        if(text.equals("1500"))
+        if(text.equals("600"))
         	return 0;
-        if(text.equals("2500"))
+        if(text.equals("1000"))
         	return 1;
-        if(text.equals("4000"))
+        if(text.equals("1600"))
         	return 2;
         
         return -1;
