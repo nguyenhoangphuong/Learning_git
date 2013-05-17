@@ -22,8 +22,8 @@ public class GoalSettingsAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 
-	private int goal = 2500;
-	private int tempGoal = 2500;
+	private int goal = 1000;
+	private int tempGoal = 1000;
 	
 	/**
 	 * This method implements the Edge 'e_Init'
@@ -31,7 +31,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void e_Init() {
 		// TODO: THIS MODEL REQUIRES:
-		// Goal: 2500
+		// Goal: 1000
 		
 		// sign up account with require information
 		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
@@ -60,7 +60,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ChangeGoal() {
-		tempGoal = PrometheusHelper.randInt(15, 45) * 100;
+		tempGoal = PrometheusHelper.randInt(10, 25) * 100;
 		HomeSettings.setSpinnerGoal(tempGoal);
 		ShortcutsTyper.delayTime(1000);
 		
