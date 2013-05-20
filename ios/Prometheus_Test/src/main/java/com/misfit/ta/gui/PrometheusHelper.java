@@ -111,9 +111,9 @@ public class PrometheusHelper {
 	}
 
 	public static float calculatePoint(int steps, int minutes) {
-		return steps
+		return (steps
 				* (0.25f + 0.01f * (Math.max(115f, steps * 1f / minutes) - 115))
-				+ 0.0001f;
+				+ 0.0001f) / 2.5f;
 	}
 
 	public static float calculateMiles(int steps, int heightInInches) {
