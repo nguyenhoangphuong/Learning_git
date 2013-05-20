@@ -112,8 +112,7 @@ public class PrometheusHelper {
 
 	public static float calculatePoint(int steps, int minutes) {
 		return (steps
-				* (0.25f + 0.01f * (Math.max(115f, steps * 1f / minutes) - 115))
-				+ 0.0001f) / 2.5f;
+				* (0.25f + 0.01f * (Math.max(115f, steps * 1f / minutes) - 115)) + 0.0001f) / 2.5f;
 	}
 
 	public static float calculateMiles(int steps, int heightInInches) {
@@ -248,13 +247,22 @@ public class PrometheusHelper {
 		if (hasTutorialView) {
 			for (int i = 0; i < 4; i++) {
 				Gui.swipeLeft(500);
-				ShortcutsTyper.delayTime(200); 
+				ShortcutsTyper.delayTime(200);
 			}
 			if (ViewUtils.isExistedView("UIButtonLabel", "OK, I GOT IT")) {
 				Gui.touchAVIew("UIButtonLabel", "OK, I GOT IT");
 			} else if (ViewUtils.isExistedView("UIButtonLabel", "DISMISS IT")) {
 				Gui.touchAVIew("UIButtonLabel", "DISMISS IT");
 			}
+		}
+	}
+
+	public static void handleUpload() {
+		boolean hasUploadMessage = ViewUtils.isExistedView("UILabel",
+				"Do you want to upload your local changes or just sign out?");
+		if (hasUploadMessage) {
+			Gui.touchAVIew("UIButtonLabel", "Sign out");
+			ShortcutsTyper.delayTime(1000);
 		}
 	}
 

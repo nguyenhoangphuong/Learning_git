@@ -158,6 +158,7 @@ public class SignOutSettingsAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(5000);
 		HomeSettings.tapSignOut();
 		ShortcutsTyper.delayTime(3000);
+		PrometheusHelper.handleUpload();
 	}
 	
 	public void e_LogIn() 

@@ -99,6 +99,7 @@ public class SignUpAPI extends ModelAPI {
         Gui.swipeUp(1000);
         HomeSettings.tapSignOut();
         ShortcutsTyper.delayTime(1000);
+        PrometheusHelper.handleUpload();
     }
 
     /**
