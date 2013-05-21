@@ -33,7 +33,7 @@ public class SignInWithFacebookAPI extends ModelAPI {
 	public void e_SignInWithFacebook() {
 		// we use default Facebook account mfwcqa@gmail.com which is already logged in
 		SignIn.tapLogInWithFacebook();
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(20000);
 	}
 
 	/**

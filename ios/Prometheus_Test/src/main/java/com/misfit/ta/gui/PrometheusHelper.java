@@ -151,7 +151,7 @@ public class PrometheusHelper {
 		LaunchScreen.launch();
 
 		SignUp.tapSignUp();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(5000);
 		SignUp.enterEmailPassword(email, password);
 		ShortcutsTyper.delayTime(5000);
 		SignUp.enterGender(isMale);
