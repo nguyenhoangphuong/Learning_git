@@ -47,15 +47,16 @@ public class HomeScreen {
 
     public static void goToPreviousDays(int days) {
         for (int i = 0; i < days; i++) {
+        	System.out.println(i);
             Gui.swipeRight(500);
-            ShortcutsTyper.delayTime(500);
+            ShortcutsTyper.delayTime(2000);
         }
     }
 
     public static void goToNextDays(int days) {
         for (int i = 0; i < days; i++) {
             Gui.swipeLeft(500);
-            ShortcutsTyper.delayTime(500);
+            ShortcutsTyper.delayTime(2000);
         }
     }
 
@@ -74,7 +75,12 @@ public class HomeScreen {
     	title.append(", ");
     	title.append(PrometheusHelper.getMonthString(now.get(Calendar.MONTH) + 1, false));
     	title.append(" ");
-    	title.append(now.get(Calendar.DATE));
+    	int date = Integer.valueOf(now.get(Calendar.DATE));
+    	if (date > 10) {
+    		title.append(now.get(Calendar.DATE));
+    	} else {
+    		title.append("0").append(now.get(Calendar.DATE));
+    	}
     	return ViewUtils.isExistedView("UILabel", title.toString());
     }
 

@@ -24,7 +24,7 @@ public class DayInPastAPI extends ModelAPI {
 	 */
 	public void e_BackToADayInPast() {
 		// we're using qa account which has many days in the past
-		this.days = PrometheusHelper.randInt(2, 31);
+		this.days = 25;//PrometheusHelper.randInt(2, 31);
 		HomeScreen.goToPreviousDays(this.days);
 		ShortcutsTyper.delayTime(5000);
 		
@@ -63,7 +63,7 @@ public class DayInPastAPI extends ModelAPI {
 	 */
 	public void e_TapToday() {
 		HomeScreen.tapToday();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(5000);
 	}
 
 	/**
