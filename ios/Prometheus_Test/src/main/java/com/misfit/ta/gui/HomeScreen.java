@@ -47,7 +47,6 @@ public class HomeScreen {
 
     public static void goToPreviousDays(int days) {
         for (int i = 0; i < days; i++) {
-        	System.out.println(i);
             Gui.swipeRight(500);
             ShortcutsTyper.delayTime(2000);
         }
