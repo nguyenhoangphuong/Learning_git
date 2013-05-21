@@ -99,6 +99,8 @@ public class PrometheusHelper {
 			"November", "December" };
 	private static String[] sortMonths = { "Jan", "Feb", "Mar", "Apr", "May",
 			"Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+	private static String[] sortDaysOfWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+	private static String[] longDaysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 	public static int randInt(int includeFrom, int excludeTo) {
 		Random r = new Random();
@@ -129,6 +131,11 @@ public class PrometheusHelper {
 			boolean isLongMonthString) {
 		return isLongMonthString ? longMonths[monthNumber - 1]
 				: sortMonths[monthNumber - 1];
+	}
+	
+	public static String getDayOfWeek(int dayNumber, boolean isLongString) {
+		return isLongString ? longMonths[dayNumber - 1]
+				: sortDaysOfWeek[dayNumber - 1];
 	}
 
 	public static String formatBirthday(String year, String monthString,

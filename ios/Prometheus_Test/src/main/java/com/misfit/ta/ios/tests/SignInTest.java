@@ -45,7 +45,7 @@ public class SignInTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignIn", "SuccessfulSignIn"})
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignIn", "SignInWithFacebook"})
     public void SignInWithFacebook() throws InterruptedException, StopConditionException, IOException 
     {
         ModelHandler model = getModelhandler();

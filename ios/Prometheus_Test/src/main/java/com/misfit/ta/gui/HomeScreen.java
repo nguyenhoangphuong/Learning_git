@@ -1,5 +1,7 @@
 package com.misfit.ta.gui;
 
+import java.util.Calendar;
+
 import org.apache.commons.lang.StringUtils;
 
 import com.misfit.ios.NuRemoteClient;
@@ -46,12 +48,14 @@ public class HomeScreen {
     public static void goToPreviousDays(int days) {
         for (int i = 0; i < days; i++) {
             Gui.swipeRight(500);
+            ShortcutsTyper.delayTime(500);
         }
     }
 
     public static void goToNextDays(int days) {
         for (int i = 0; i < days; i++) {
             Gui.swipeLeft(500);
+            ShortcutsTyper.delayTime(500);
         }
     }
 
@@ -61,6 +65,17 @@ public class HomeScreen {
 
     public static boolean isYesterday() {
     	return ViewUtils.isExistedView("UILabel", "YESTERDAY");
+    }
+    
+    public static boolean isADayBefore(int days) {
+    	Calendar now = Calendar.getInstance();
+    	now.add(Calendar.DATE,-days);
+    	StringBuilder title = new StringBuilder(PrometheusHelper.getDayOfWeek(now.get(Calendar.DAY_OF_WEEK), false));
+    	title.append(", ");
+    	title.append(PrometheusHelper.getMonthString(now.get(Calendar.MONTH) + 1, false));
+    	title.append(" ");
+    	title.append(now.get(Calendar.DATE));
+    	return ViewUtils.isExistedView("UILabel", title.toString());
     }
 
     public static void closeIntructions()
