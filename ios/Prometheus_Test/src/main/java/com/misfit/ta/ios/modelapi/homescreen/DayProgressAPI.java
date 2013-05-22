@@ -123,21 +123,14 @@ public class DayProgressAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_UpdatedToday() {
-		// check summary is updated
-		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMinutes / 60f).replace(".0", "")), "Total hours displayed correctly");
+		// check summary is 
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.totalSteps)), "Total steps displayed correctly");
-		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalPoints))), "Total points displayed correctly");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMiles).replace(".0", "")), "Total miles displayed correctly");
 		// Total calories are still being discussed, therefore we should not verified now
-		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.totalCalories)).replace(".0", "")), "Total calories displayed correctly");
 		
 		// check activity record is saved
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", this.lastStartTime), "Start time displayed correctly");
-		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.lastDuration)), "Duration displayed correctly");	// there's something wrong with the framework
-		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.lastSteps)), "Steps displayed correctly");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.lastPoints))), "Points displayed correctly");
-		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.lastMiles).replace(".0", "")), "Miles displayed correctly");
-		//Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", Math.round(this.lastCalories)).replace(".0", "")), "Calories displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.0f", Math.floor(this.lastPoints))), "Points displayed correctly");
 	}	
 	
 	/**
@@ -153,15 +146,6 @@ public class DayProgressAPI extends ModelAPI {
 	* 
 	*/
 	public void v_TutorialShown() {
-		//TODO: swipe to the last tutorial and tap "OK, I got it"
-		
-		// comment out this method and wait till the tutorial is stable enough
-//		int numOfTutorials = 4;
-//		
-//		for (int i = 1; i < numOfTutorials; i++) {
-//			Gui.swipeLeft(400);
-//		}
-//		
-//		Gui.touchAVIew("PTOrangeButton", "OK, I GOT IT");
+		PrometheusHelper.handleTutorial();
 	}
 }
