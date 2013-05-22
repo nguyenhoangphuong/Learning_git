@@ -109,9 +109,12 @@ public class SignUp {
     }
 
     public static boolean isSignUpTutorialView() {
-        return  ViewUtils.isExistedView("UILabel", "_walking_") &&
-        		ViewUtils.isExistedView("UILabel", "_swimming_") &&
-        		ViewUtils.isExistedView("UILabel", "and even _cooking!_");
+        return  ViewUtils.isExistedView("PTRichTextLabel", "\\_Walking\\_") &&
+        		ViewUtils.isExistedView("PTRichTextLabel", "\\_Swimming\\_") &&
+        		ViewUtils.isExistedView("PTRichTextLabel", "\\_Biking\\_") &&
+        		ViewUtils.isExistedView("PTRichTextLabel", "\\_Tennis\\_") &&
+        		ViewUtils.isExistedView("PTRichTextLabel", "Even\\n\\_dancing!\\_") &&
+        		ViewUtils.isExistedView("PTRichTextLabel", "Shine converts your activity\\n to points. It tracks:");
     }
 
     public static boolean isSignUpGoalView() {

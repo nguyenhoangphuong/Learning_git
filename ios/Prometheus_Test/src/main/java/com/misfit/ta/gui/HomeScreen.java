@@ -117,14 +117,9 @@ public class HomeScreen {
     }
 
     public static boolean viewNoDataYet() {
-        return !StringUtils.isEmpty(Gui.getProperty("UILabel", "NO DATA YET!", "isHidden"));
+        return !StringUtils.isEmpty(Gui.getProperty("UILabel", "Zip.Zero.Nada", "isHidden"));
     }
 
-    public static boolean syncTrayIsClosed()
-    {
-    	return !ViewUtils.isExistedView("UILabel", "DETECTING SHINE");
-    }
-    
     public static void sync() {
         PrometheusHelper.sync();
     }

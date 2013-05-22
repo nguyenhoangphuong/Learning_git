@@ -121,6 +121,24 @@ public class SignUpAPI extends ModelAPI {
         SignUp.tapFinishSetup();
         ShortcutsTyper.delayTime(5000);
     }
+    
+    /**
+     * This method implements the Edge 'e_OpenTutorial'
+     * 
+     */
+    public void e_OpenTutorial() {
+    	SignUp.tapOpenTutorial();
+    	ShortcutsTyper.delayTime(200);
+    }
+    
+    /**
+     * This method implements the Edge 'e_OpenTutorial'
+     * 
+     */
+    public void e_CloseTutorial() {
+    	SignUp.tapCloseTutorial();
+    	ShortcutsTyper.delayTime(200);
+    }
 
     /**
      * This method implements the Edge 'e_inputBirthDay'
@@ -219,6 +237,15 @@ public class SignUpAPI extends ModelAPI {
     public void v_SignUpGoalUpdated() {
         Assert.assertTrue(SignUp.getCurrentGoal() == goal, "Goal is not updated");
     }
+    
+    /**
+     * This method implements the Vertex 'v_SignUpGoalTutorial'
+     * 
+     */
+    public void v_SignUpGoalTutorial() {
+    	Assert.assertTrue(SignUp.isSignUpTutorialView(), "This is not sign up goal tutorial view.");
+    }
+
 
 
     /**
