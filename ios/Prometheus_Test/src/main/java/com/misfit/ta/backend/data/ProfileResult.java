@@ -1,9 +1,9 @@
 package com.misfit.ta.backend.data;
 
-import com.google.resting.component.impl.ServiceResponse;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
+import com.google.resting.component.impl.ServiceResponse;
 
 public class ProfileResult extends BaseResult {
 
@@ -14,15 +14,20 @@ public class ProfileResult extends BaseResult {
     public ProfileResult(ServiceResponse response) {
         super(response);
 
-        // invalid token
-        if (json.getString("profile") == "null") {
-            profile = null;
-            this.pairResult.put("profile", "null");
+       
+        try {
+            // invalid token
+            if (json.getString("profile") == "null") {
+                profile = null;
+                this.pairResult.put("profile", "null");
 
-            return;
+                return;
+            }
+
+            formatOK();
+        } catch (Exception e) {
+//            return null;
         }
-
-        formatOK();
     }
 
     private void formatOK() {

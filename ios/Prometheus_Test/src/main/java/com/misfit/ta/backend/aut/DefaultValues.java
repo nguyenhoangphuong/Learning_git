@@ -8,9 +8,9 @@ public class DefaultValues {
     static public String UDID2 = "085f57cd4d36d46c06de244fd2be00f4a2ec40c0";
     static public String ArbitraryToken = "134654678931452236-arbitrarytokenasdasfjk";
 
-    static public String InvalidEmail = "Invalid email";
+    static public String InvalidEmail = "Sorry, this email is invalid";
     static public String DuplicateEmail = "Sorry, someone else has used this before";
-    static public String InvalidPassword = "Sorry, the password should have at least 6 characters, at least 1 digit and 1 letter";
+    static public String InvalidPassword = "Sorry, this password is invalid";
     static public String WrongAccountMsg = "Incorrect email or password";
     static public String InvalidAuthToken = "Invalid auth token";
 

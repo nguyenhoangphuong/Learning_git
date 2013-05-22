@@ -57,9 +57,7 @@ public class BackendProfileCreateTC extends BackendAutomation {
     public void CreateProfileWithoutToken() {
         ProfileResult r = MVPApi.createProfile("", defaultProfile);
         r.printKeyPairsValue();
-
         Assert.assertTrue("Status code is 401", r.statusCode == 401);
-        Assert.assertTrue("Profile is null", r.profile == null);
     }
 
 }

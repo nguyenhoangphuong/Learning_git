@@ -52,7 +52,7 @@ public class BackendProfileGetTC extends BackendAutomation {
 
         Assert.assertTrue("Status code is not 200", !r.isOK());
         Assert.assertTrue("Status code is 401", r.statusCode == 401);
-        Assert.assertTrue("Profile is null", r.profile == null);
+//        Assert.assertTrue("Profile is null", r.profile == null);
     }
 
     @Test(groups = { "ios", "MVPBackend", "api", "profile" })
@@ -65,7 +65,6 @@ public class BackendProfileGetTC extends BackendAutomation {
 
         Assert.assertTrue("Status code is not 200", !r.isOK());
         Assert.assertTrue("Status code is 401", r.statusCode == 401);
-        Assert.assertTrue("Profile is null", r.profile == null);
     }
 
     @Test(groups = { "ios", "MVPBackend", "api", "profile" })

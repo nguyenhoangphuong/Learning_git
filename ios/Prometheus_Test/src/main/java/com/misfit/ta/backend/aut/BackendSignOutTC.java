@@ -2,20 +2,24 @@ package com.misfit.ta.backend.aut;
 
 import junit.framework.Assert;
 
-import org.testng.annotations.*;
+import org.apache.log4j.Logger;
+import org.graphwalker.Util;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
-import com.misfit.ta.backend.data.*;
-import com.misfit.ta.backend.api.*;
-import com.misfit.ta.ios.AutomationTest;
+import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.data.AccountResult;
+import com.misfit.ta.backend.data.BaseResult;
 
 public class BackendSignOutTC extends BackendAutomation {
     String email;
     String password = "qwerty1";
     String udid;
+    Logger logger = Util.setupLogger(BackendSignOutTC.class);
 
     @BeforeClass
     public void beforeClass() {
-        String email = MVPApi.generateUniqueEmail();
+        email = MVPApi.generateUniqueEmail();
         udid = DefaultValues.UDID;
         MVPApi.signUp(email, password, udid);
     }
@@ -37,8 +41,10 @@ public class BackendSignOutTC extends BackendAutomation {
         // sign in again and use old token from 1st sign in to sign out
 
         String token = MVPApi.signIn(email, password, udid).token;
+        logger.info("Token 1: " +  token);
         MVPApi.signOut(token);
-        MVPApi.signIn(email, password, udid);
+        AccountResult result = MVPApi.signIn(email, password, udid);
+        logger.info("Token 2: " + result.token);
 
         BaseResult r = MVPApi.signOut(token);
         r.printKeyPairsValue();
