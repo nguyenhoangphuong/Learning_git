@@ -42,32 +42,18 @@ public class BackendProfileUpdateTC extends BackendAutomation {
         ProfileResult r = MVPApi.updateProfile(token, data, defaultProfile.serverId);
         r.printKeyPairsValue();
 
-        Assert.assertTrue("Status code is OK", r.statusCode == 200);
+        Assert.assertTrue("Status code is OK: 210 (for not following protocol)", r.statusCode == 210);
         Assert.assertTrue("Updated had changed", !defaultProfile.updatedAt.equals(r.profile.updatedAt));
         Assert.assertTrue("Name had changed", !defaultProfile.name.equals(r.profile.name));
         Assert.assertTrue("Weight had changed", !defaultProfile.weight.equals(r.profile.weight));
         Assert.assertTrue("Birthday had not changed", defaultProfile.dateOfBirth.equals(r.profile.dateOfBirth));
-
     }
 
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
     public void UpdateProfileUsingExpiredToken() {
         // sign in and sign out then and use old token to update profile
-
         String token = MVPApi.signIn(email, password, udid).token;
-        System.out.println(defaultProfile.name);
-        
-        defaultProfile = MVPApi.getProfile(token).profile;
-        
-        
-        System.out.println("Email: " + email +
-        		"\nToken: " + token +
-        		"\nResult: " + defaultProfile.name);
-        
-        
-        
-        System.exit(0);
-        
+        defaultProfile = MVPApi.getProfile(token).profile;        
         MVPApi.signOut(token);
 
         ProfileData data = new ProfileData();
@@ -101,7 +87,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
         r.printKeyPairsValue();
 
         Assert.assertTrue("Status code is 401", r.statusCode == 401);
-        Assert.assertTrue("Profile is null", r.profile == null);
+        Assert.assertTrue("Profile is null", r.profile == null || r.profile.isNull());
     }
 
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })

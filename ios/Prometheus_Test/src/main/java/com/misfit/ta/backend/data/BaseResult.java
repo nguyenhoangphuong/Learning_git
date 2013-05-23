@@ -92,7 +92,9 @@ public class BaseResult {
 	}
 
 	public boolean isEmptyErrMsg() {
-		return this.errorMessage == null || this.errorMessage.isEmpty();
+		return this.errorMessage == null ||
+				this.errorMessage.equals("null") ||
+				this.errorMessage.isEmpty();
 	}
 
 }

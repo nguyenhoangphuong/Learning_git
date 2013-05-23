@@ -76,7 +76,7 @@ public class BackendProfileGetTC extends BackendAutomation {
         r.printKeyPairsValue();
 
         Assert.assertTrue("Status code is 200", r.isOK());
-        Assert.assertTrue("Error message is empty", r.isEmptyErrMsg());
+        Assert.assertTrue("Error message is empty", r.errorMessage == null || r.isEmptyErrMsg());
         Assert.assertTrue("Profile is null", r.profile == null);
     }
 
