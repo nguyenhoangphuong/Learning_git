@@ -40,7 +40,7 @@ public class BackendSignUpTC extends BackendAutomation {
             
             Assert.assertFalse("Status code is not 200", r.isOK());
             Assert.assertEquals("Error message content", DefaultValues.InvalidEmail, r.errorMessage );
-            Assert.assertTrue("Empty authenticate token", r.token.isEmpty());
+            Assert.assertTrue("Empty authenticate token", r.token == null || r.token.isEmpty());
             
             long stop = System.currentTimeMillis();
             rlog.log((i+1) + "\t" + (stop-start));
@@ -58,7 +58,7 @@ public class BackendSignUpTC extends BackendAutomation {
 
             Assert.assertFalse("Status code is not 200", r.isOK());
             Assert.assertEquals("Error message content", DefaultValues.InvalidPassword, r.errorMessage );
-            Assert.assertTrue("Empty authenticate token", r.token.isEmpty());
+            Assert.assertTrue("Empty authenticate token", r.token == null || r.token.isEmpty());
             long stop = System.currentTimeMillis();
             rlog.log((i+1) + "\t" + (stop-start));
         }
@@ -78,7 +78,7 @@ public class BackendSignUpTC extends BackendAutomation {
 
             Assert.assertFalse("Status code is not 200", r.isOK());
             Assert.assertEquals("Error message content", r.errorMessage, DefaultValues.DuplicateEmail);
-            Assert.assertTrue("Empty authenticate token", r.token.isEmpty());
+            Assert.assertTrue("Empty authenticate token", r.token == null || r.token.isEmpty());
             long stop = System.currentTimeMillis();
             rlog.log( (i+1) + "\t" + (stop-start));
         }

@@ -33,7 +33,7 @@ public class BackendSignInTC extends BackendAutomation {
         Assert.assertTrue("Status code is not 200", !r.isOK());
         Assert.assertEquals("Status code is 404", r.statusCode, 404);
         Assert.assertEquals("Error message content", r.errorMessage, DefaultValues.WrongAccountMsg);
-        Assert.assertTrue("Empty authenticate token", r.token.isEmpty());
+        Assert.assertTrue("Empty authenticate token", r.token == null || r.token.isEmpty());
     }
 
     @Test(groups = { "ios", "MVPBackend", "api", "signin" })
@@ -44,7 +44,7 @@ public class BackendSignInTC extends BackendAutomation {
         Assert.assertTrue("Status code is not 200", !r.isOK());
         Assert.assertEquals("Status code is 404", r.statusCode, 404);
         Assert.assertEquals("Error message content", r.errorMessage, DefaultValues.WrongAccountMsg);
-        Assert.assertTrue("Empty authenticate token", r.token.isEmpty());
+        Assert.assertTrue("Empty authenticate token", r.token == null || r.token.isEmpty());
     }
 
     @Test(groups = { "ios", "MVPBackend", "api", "signin" })

@@ -15,5 +15,23 @@ public class ProfileData {
     public Integer goalLevel = null;
     public String trackingDeviceId = null;
     public RelativeLevelData[] userRelativeLevelsNSData = null;
-
+    
+    public boolean isNull() {
+    	if (serverId != null ||	
+    			updatedAt != null ||
+    			localId != null ||
+    			weight != null ||
+    			height != null ||
+    			unit != null ||
+    			gender != null ||
+    			dateOfBirth != null ||
+    			name != null ||
+    			latestVersion != null ||
+    			goalLevel != null ||
+    			trackingDeviceId != null ||
+    			userRelativeLevelsNSData != null)
+    		return false;
+    	else
+    		return true;
+	}
 }

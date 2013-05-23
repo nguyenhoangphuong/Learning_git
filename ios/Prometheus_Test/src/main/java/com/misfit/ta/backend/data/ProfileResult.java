@@ -1,5 +1,7 @@
 package com.misfit.ta.backend.data;
 
+import java.util.Arrays;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -92,5 +94,4 @@ public class ProfileResult extends BaseResult {
             }
         }
     }
-
 }

@@ -2,6 +2,8 @@ package com.misfit.ta.backend.aut;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.Logger;
+import org.graphwalker.Util;
 import org.testng.annotations.*;
 
 import com.misfit.ta.backend.data.*;
@@ -14,14 +16,16 @@ public class BackendProfileUpdateTC extends BackendAutomation {
     String password = "qwerty1";
     String udid;
     ProfileData defaultProfile;
+    Logger logger = Util.setupLogger(BackendProfileUpdateTC.class);
+
 
     @BeforeClass
     public void setUp() {
         udid = DefaultValues.UDID;
         email = MVPApi.generateUniqueEmail();
         String token = MVPApi.signUp(email, password, udid).token;
-        MVPApi.createProfile(token, defaultProfile);
         defaultProfile = DefaultValues.DefaultProfile();
+        MVPApi.createProfile(token, defaultProfile);
     }
 
     @Test(groups = { "ios", "MVPBackend", "api", "profile" })
@@ -51,7 +55,19 @@ public class BackendProfileUpdateTC extends BackendAutomation {
         // sign in and sign out then and use old token to update profile
 
         String token = MVPApi.signIn(email, password, udid).token;
+        System.out.println(defaultProfile.name);
+        
         defaultProfile = MVPApi.getProfile(token).profile;
+        
+        
+        System.out.println("Email: " + email +
+        		"\nToken: " + token +
+        		"\nResult: " + defaultProfile.name);
+        
+        
+        
+        System.exit(0);
+        
         MVPApi.signOut(token);
 
         ProfileData data = new ProfileData();
@@ -64,7 +80,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
         r.printKeyPairsValue();
 
         Assert.assertTrue("Status code is 401", r.statusCode == 401);
-        Assert.assertTrue("Profile is null", r.profile == null);
+        Assert.assertTrue("Profile is null", r.profile.isNull());
     }
 
     @Test(groups = { "ios", "MVPBackend", "api", "profile" })
@@ -110,5 +126,4 @@ public class BackendProfileUpdateTC extends BackendAutomation {
         Assert.assertTrue("Weight had changed", !defaultProfile.weight.equals(r.profile.weight));
         Assert.assertTrue("Birthday had not changed", defaultProfile.dateOfBirth.equals(r.profile.dateOfBirth));
     }
-
 }
