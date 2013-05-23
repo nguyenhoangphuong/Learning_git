@@ -29,7 +29,7 @@ public class BackendSignOutTC extends BackendAutomation {
 		MVPApi.createProfile(token, DefaultValues.DefaultProfile());
 	}
 
-	@Test(groups = { "ios", "MVPBackend", "api", "signout" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signout" })
 	public void SignOutValidToken() {
 		// sign in then use the token to sign out
 
@@ -40,7 +40,7 @@ public class BackendSignOutTC extends BackendAutomation {
 		Assert.assertTrue("Status code is 200", r.isOK());
 	}
 
-	@Test(groups = { "ios", "MVPBackend", "api", "signout" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signout" })
 	public void SignOutExpiredToken() {
 		// sign in then sign out
 		// sign in again and use old token from 1st sign in to sign out
@@ -77,7 +77,7 @@ public class BackendSignOutTC extends BackendAutomation {
 				pr.statusCode == 210);
 	}
 
-	@Test(groups = { "ios", "MVPBackend", "api", "signout" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signout" })
 	public void SignOutInvalidToken() {
 		// sign out with arbitrary with wrong format token
 
@@ -91,7 +91,7 @@ public class BackendSignOutTC extends BackendAutomation {
 				r.errorMessage, null);
 	}
 
-	@Test(groups = { "ios", "MVPBackend", "api", "signout" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signout" })
 	public void SignOutOnTwoDevices() {
 		// sign in on two devices (two udid) then sign out each devices
 		// two sign out must be success

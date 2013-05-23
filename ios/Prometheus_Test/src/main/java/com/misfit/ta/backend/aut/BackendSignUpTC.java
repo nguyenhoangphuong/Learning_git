@@ -27,7 +27,7 @@ public class BackendSignUpTC extends BackendAutomation {
         udid = DefaultValues.UDID;
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "signup" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signup" })
     public void SignUpWrongFormatEmails() {
         ResultLogger rlog = ResultLogger.getLogger("signup_wrong_format_emails");
         rlog.log("Number of try\ttime taken");
@@ -47,7 +47,7 @@ public class BackendSignUpTC extends BackendAutomation {
         }
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "signup" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signup" })
     public void SignUpWrongFormatPasswords() {
         ResultLogger rlog = ResultLogger.getLogger("signup_wrong_format_password");
         rlog.log("Number of try\ttime taken");
@@ -64,7 +64,7 @@ public class BackendSignUpTC extends BackendAutomation {
         }
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "signup" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signup" })
     public void SignUpDuplicateEmail() {
         ResultLogger rlog = ResultLogger.getLogger("signup_duplicated");
         rlog.log("Number of try\ttime taken");
@@ -84,7 +84,7 @@ public class BackendSignUpTC extends BackendAutomation {
         }
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "signup" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signup" })
     public void SignUpNotRegisteredEmail() {
         ResultLogger rlog = ResultLogger.getLogger("sign_up_ok");
         rlog.log("Number of try\ttime taken");

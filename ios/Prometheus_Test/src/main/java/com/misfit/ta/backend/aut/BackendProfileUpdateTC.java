@@ -28,7 +28,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
         MVPApi.createProfile(token, defaultProfile);
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "profile" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
     public void UpdateProfileUsingValidToken() {
         // sign in and use valid token to update profile
         String token = MVPApi.signIn(email, password, udid).token;
@@ -50,7 +50,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "profile" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
     public void UpdateProfileUsingExpiredToken() {
         // sign in and sign out then and use old token to update profile
 
@@ -83,7 +83,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
         Assert.assertTrue("Profile is null", r.profile.isNull());
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "profile" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
     public void UpdateProfileWithoutToken() {
         // sign in and use arbitrary token to update profile
 
@@ -104,7 +104,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
         Assert.assertTrue("Profile is null", r.profile == null);
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "profile" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
     public void UpdateProfileHadBeenUpdated() {
         // sign in and decrease updatedAt of profile then use that to update
         // profile
