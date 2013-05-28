@@ -4,14 +4,62 @@ import com.google.resting.component.impl.ServiceResponse;
 
 public class GrapItemResult extends BaseResult {
     // fields
-    public Object timestamp;
-    public Object clientId;
-    public Object averageValue;
-    public Object userId;
-    public Object updatedAt;
-    public Object createdAt;
+    private Object timestamp;
+    private Object clientId;
+    private Object averageValue;
+    private Object userId;
+    private Object updatedAt;
+    private Object createdAt;
 
-    // constructor
+    public Object getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Object timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public Object getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Object clientId) {
+		this.clientId = clientId;
+	}
+
+	public Object getAverageValue() {
+		return averageValue;
+	}
+
+	public void setAverageValue(Object averageValue) {
+		this.averageValue = averageValue;
+	}
+
+	public Object getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Object userId) {
+		this.userId = userId;
+	}
+
+	public Object getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Object updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public Object getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Object createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	// constructor
     public GrapItemResult(ServiceResponse response) {
         super(response);
         
@@ -31,4 +79,17 @@ public class GrapItemResult extends BaseResult {
         this.pairResult.put("updated_at", this.updatedAt);
         this.pairResult.put("created_at", this.createdAt);
     }
+    
+    public String toJson() {
+		JSONBuilder builder = new JSONBuilder();
+		
+		builder.addValue("timestamp", this.timestamp);
+		builder.addValue("client_id", this.clientId);
+		builder.addValue("average_value", this.averageValue);
+		builder.addValue("user_id", this.userId);
+		builder.addValue("updated_at", this.updatedAt);
+		builder.addValue("created_at", this.createdAt);
+		
+		return builder.toJSONString();
+	}
 }
