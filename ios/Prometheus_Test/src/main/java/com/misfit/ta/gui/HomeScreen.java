@@ -123,4 +123,12 @@ public class HomeScreen {
     public static void sync() {
         PrometheusHelper.sync();
     }
+    
+    public static void dragUpTimeline() {
+    	Gui.drag(240, 300, 240, 100);
+    }
+    
+    public static void dragDownTimeline() {
+    	Gui.drag(240, 200, 240, 400);
+    }
 }

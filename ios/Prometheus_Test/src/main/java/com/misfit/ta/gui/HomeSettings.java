@@ -9,6 +9,10 @@ public class HomeSettings {
         Gui.touchAVIew("UIButton", "Back");
     }
 	
+	public static void tapBack() {
+		Gui.touchAVIew("UIButton", "Back");
+	}
+	
     public static void tapAdjustGoal() {
         Gui.touchAVIew("UILabel", "ADJUST GOAL");
     }
@@ -187,7 +191,31 @@ public class HomeSettings {
     
     public static boolean isAtWearingShine()
     {
-    	return ViewUtils.isExistedView("UILabel", "WEARING SHINE");
+    	return ViewUtils.isExistedView("UILabel", "WHERE TO WEAR");
+    }
+    
+    public static void tapHead() {
+    	Gui.touchAVIew("UIButton", 0);
+    }
+    
+    public static void tapUpperArm() {
+    	Gui.touchAVIew("UIButton", 1);
+    }
+    
+    public static void tapChest() {
+    	Gui.touchAVIew("UIButton", 2);
+    }
+    
+    public static void tapWrist() {
+    	Gui.touchAVIew("UIButton", 3);
+    }
+    
+    public static void tapWaist() {
+    	Gui.touchAVIew("UIButton", 4);
+    }
+    
+    public static void tapFootAnkle() {
+    	Gui.touchAVIew("UIButton", 5);
     }
     
 }
