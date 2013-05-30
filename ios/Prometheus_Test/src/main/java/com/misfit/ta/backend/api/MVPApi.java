@@ -410,6 +410,28 @@ public class MVPApi {
         requestInf.addParam("authenticity_token", "ki5608apM0mqEpFwvNW6i8Czu6tktVT0+UlWWVhu0Mg");
         MVPApi.post("https://staging-api.misfitwearables.com/shine/v6/admin/delete_user?id=" + id, 443, requestInf);
     }
+    
+    public static List<GraphItemResult> insertGraphItems(String token, List<GraphItemResult> graphItems) {
+    	// prepare
+    	String url = baseAddress + "graph_items/batch_insert";
+		BaseParams requestInf = new BaseParams();
+		
+		requestInf.addParam("authenticity_token", "ki5608apM0mqEpFwvNW6i8Czu6tktVT0+UlWWVhu0Mg");
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("auth_token", token);
+		requestInf.addParam("client_id", "D3A95921-3E6B-4DED-9806-D7EC8A0E8D53");
+		requestInf.addParam("user_id", "519e0cce9f12e50709000003");
+		
+		System.out.print(requestInf.toString());
+		
+		// make POST request and receive raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+		
+		// TODO: convert response to list of graph items
+		graphItems = null;
+		
+		return graphItems;
+	}
 
     public static void main(String[] args) {
 //        MVPApi.removeUser("5142d9a6caedd02bee000062");
