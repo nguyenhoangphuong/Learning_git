@@ -2,8 +2,11 @@ package com.misfit.ta.backend.api;
 
 import static com.google.resting.component.EncodingTypes.UTF8;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -16,7 +19,18 @@ import com.google.resting.json.JSONException;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.data.*;
+import com.misfit.ta.backend.data.AccountResult;
+import com.misfit.ta.backend.data.ActivityResult;
+import com.misfit.ta.backend.data.BaseParams;
+import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.GoalsResult;
+import com.misfit.ta.backend.data.JSONBuilder;
+import com.misfit.ta.backend.data.ProfileData;
+import com.misfit.ta.backend.data.ProfileResult;
+import com.misfit.ta.backend.data.timeline.NotableEventItem;
+import com.misfit.ta.backend.data.timeline.TimelineItem;
+import com.misfit.ta.backend.data.timeline.TimelineItemBase;
+import com.misfit.ta.utils.TextTool;
 
 public class MVPApi {
 
@@ -80,7 +94,7 @@ public class MVPApi {
 
         // post and receive raw data
         ServiceResponse response = MVPApi.post(url, port, requestInf);
-
+        System.out.println("LOG [MVPApi.sign]: response: " + response.getContentData());
         // format data
         AccountResult result = new AccountResult(response);
         return result;
@@ -158,10 +172,31 @@ public class MVPApi {
 
         // post and receive raw data
         ServiceResponse response = MVPApi.post(url, port, requestInf);
-        
+
         // format data
         ProfileResult result = new ProfileResult(response);
         return result;
+    }
+    
+    static public ProfileResult createTimelineItem(String token, TimelineItem item) {
+        // prepare
+        String url = baseAddress + "timeline_items/batch_insert";
+
+//        BaseParams requestInf = createProfileParams(token, data.name, data.weight, data.height, data.unit, data.gender,
+//                data.dateOfBirth, data.goalLevel, data.trackingDeviceId, data.localId, data.latestVersion, null);
+
+        
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        request.addParam("timeline_items", item.toJson());
+        
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, request);
+        System.out.println("LOG [MVPApi.createTimelineItem]: " + response);
+
+        // format data
+//        ProfileResult result = new ProfileResult(response);
+        return null;
     }
 
     static public ProfileResult getProfile(String token) {
@@ -377,6 +412,25 @@ public class MVPApi {
     }
 
     public static void main(String[] args) {
-        MVPApi.removeUser("5142d9a6caedd02bee000062");
+//        MVPApi.removeUser("5142d9a6caedd02bee000062");
+        String email = TextTool.getRandomString(5) + "@ta.com";
+        long time = System.currentTimeMillis();
+        String udid = time + "" + time + "" + time + "" + time;
+                
+        AccountResult result = MVPApi.signUp(email, "misfit1", udid);
+        String token = result.token;
+        System.out.println("LOG [MVPApi.main]: token= " + token);
+        
+        NotableEventItem item = new NotableEventItem(1, null, null, 1, 2);
+        TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_NOTABLE, null, "thinhclientid", 1369876035, 1369876035, item);
+        System.out.println("LOG [ThinhTest.main]: " + timeline.toJson());
+        
+        createTimelineItem(token, timeline);
+    }
+
+    public static String timestampToISODate(long timestamp) {
+        Date expiry = new Date(timestamp);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss,S");
+        return "ISODate(\"" + df.format(expiry) + "\")";
     }
 }
