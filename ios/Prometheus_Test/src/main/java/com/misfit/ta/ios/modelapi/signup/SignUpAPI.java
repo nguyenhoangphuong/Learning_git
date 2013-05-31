@@ -94,8 +94,10 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_SignOut() {
-        HomeScreen.tapSettings();
-        ShortcutsTyper.delayTime(1000);
+    	HomeScreen.tapOpenSyncTray();
+		ShortcutsTyper.delayTime(500);
+		HomeScreen.tapSettings();
+		ShortcutsTyper.delayTime(500);
         Gui.swipeUp(1000);
         HomeSettings.tapSignOut();
         ShortcutsTyper.delayTime(1000);

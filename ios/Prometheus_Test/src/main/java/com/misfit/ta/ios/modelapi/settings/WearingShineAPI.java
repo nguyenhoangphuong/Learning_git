@@ -46,8 +46,10 @@ public class WearingShineAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ChooseSettings() {
+		HomeScreen.tapOpenSyncTray();
+		ShortcutsTyper.delayTime(500);
 		HomeScreen.tapSettings();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(500);
 	}
 
 	/**

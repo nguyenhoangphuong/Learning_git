@@ -5,66 +5,61 @@ import com.misfit.ios.ViewUtils;
 
 public class HomeSettings {
 	
-	public static void tapBackAtSettings() {
-        Gui.touchAVIew("UIButton", "Back");
-    }
-	
 	public static void tapBack() {
 		Gui.touchAVIew("UIButton", "Back");
 	}
-	
-    public static void tapAdjustGoal() {
-        Gui.touchAVIew("UILabel", "ADJUST GOAL");
-    }
 
     public static void tapYourProfile() {
-        Gui.touchAVIew("UILabel", "YOUR PROFILE");
+        Gui.touchAVIew("UILabel", "My Profile");
     }
 
     public static void tapWearingShine() {
-        Gui.touchAVIew("UILabel", "WEARING SHINE ON...");
+        Gui.touchAVIew("UILabel", "Wearing Position");
     }
     
     public static void tapUnlink() {
-        Gui.touchAVIew("UILabel", "UNLINK");
+        Gui.touchAVIew("UILabel", "Unlink");
     }
     
     public static void tapLinkShine() {
-    	Gui.touchAVIew("UILabel", "LINK SHINE");
+    	Gui.touchAVIew("UILabel", "Link");
     }
 
     public static void tapSupport() {
-        Gui.touchAVIew("UILabel", "SUPPORT");
-    }
-
-    public static void tapLikeUs() {
-        Gui.touchAVIew("UILabel", "WE'RE LIKABLE");
-    }
-
-    public static void tapWebsite() {
-        Gui.touchAVIew("UILabel", "WEBSITE");
-    }
-
-    public static void tapStore() {
-        Gui.touchAVIew("UILabel", "STORE");
-    }
-
-    public static void tapRateOurApp() {
-        Gui.touchAVIew("UILabel", "RATE OUR APP");
+        Gui.touchAVIew("UILabel", "Send feedback");
     }
 
     public static void tapDebug() {
-        Gui.touchAVIew("UILabel", "DEBUG");
-    }
-
-    public static void tapBehindTheScenes() {
-        Gui.touchAVIew("UILabel", "BEHIND THE SCENES");
+        Gui.touchAVIew("UILabel", "Debug");
     }
 
     public static void tapSignOut() {
         Gui.touchAVIew("UILabel", "SIGN OUT");
     }
-
+    
+    public static void tapFahrenheit() {
+    	Gui.touchAVIew("UIButtonLabel", "°F");
+    }
+    
+    public static void tapCelcius() {
+    	Gui.touchAVIew("UIButtonLabel", "°C");
+    }
+    
+    public static void tapMi() {
+    	Gui.touchAVIew("UIButtonLabel", "mi");
+    }
+    
+    public static void tapKm() {
+    	Gui.touchAVIew("UIButtonLabel", "km");
+    }
+    
+    public static void tapLbs() {
+    	Gui.touchAVIew("UIButtonLabel", "lbs");
+    }
+    
+    public static void tapKg() {
+    	Gui.touchAVIew("UIButtonLabel", "kg");
+    }
     
     /* Update profile */
     public static void updateGender(boolean isMale) {
@@ -83,20 +78,12 @@ public class HomeSettings {
         PrometheusHelper.enterWeight(digit, fraction, isUSUnit);
     }
     
-    public static void tapBackAtEditProfile() {
-    	Gui.touchAVIew("UIButton", "Back");
-    }
-
     
     /* Set Daily Goal */
     public static void tapDoneAtNewGoal() {
     	Gui.touchAVIew("UIButton", "Done");
     }
 
-    public static void tapBackAtNewGoal() {
-    	Gui.touchAVIew("UIButton", "Back");
-    }
-    
     public static void setSpinnerGoal(int value) {
     	String message = "((((((UIApplication sharedApplication) keyWindow) rootViewController) viewControllers) lastObject) setSpinnerValue: " +value+ ")";
     	NuRemoteClient.sendToServer(message);
@@ -119,10 +106,6 @@ public class HomeSettings {
     
     
     /* Wearing Shine */
-    public static void tapBackAtWearingShine()
-    {
-    	Gui.touchAVIew("UIButton", "Back");
-    }
     
     public static void setWearingShineAt(String location)
     {

@@ -179,21 +179,23 @@ public class PrometheusHelper {
 
 	public static void setInputModeToManual() {
 		// require current view is HomeScreen
+		HomeScreen.tapOpenSyncTray();
+		ShortcutsTyper.delayTime(500);
 		HomeScreen.tapSettings();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(500);
 
 		Gui.swipeUp(1000);
 		ShortcutsTyper.delayTime(1000);
 
 		HomeSettings.tapDebug();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(500);
 
 		HomeSettings.chooseManual();
 		HomeSettings.tapDoneAtDebug();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(500);
 
-		HomeSettings.tapBackAtSettings();
-		ShortcutsTyper.delayTime(1000);
+		HomeSettings.tapBack();
+		ShortcutsTyper.delayTime(500);
 	}
 
 	public static void inputRandomRecord() {

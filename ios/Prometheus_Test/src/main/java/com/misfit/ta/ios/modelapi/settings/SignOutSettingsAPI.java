@@ -59,6 +59,8 @@ public class SignOutSettingsAPI extends ModelAPI {
 	
 	public void e_ToSettings() 
 	{
+		HomeScreen.tapOpenSyncTray();
+		ShortcutsTyper.delayTime(500);
 		HomeScreen.tapSettings();
 		ShortcutsTyper.delayOne();
 	}
@@ -71,8 +73,7 @@ public class SignOutSettingsAPI extends ModelAPI {
 	
 	public void e_ToGoalSettings()
 	{
-		HomeSettings.tapAdjustGoal();
-		ShortcutsTyper.delayOne();
+		//TODO: no goal settings anymore
 	}
 	
 	public void e_ToProfileSettings() 
@@ -83,7 +84,7 @@ public class SignOutSettingsAPI extends ModelAPI {
 	
 	public void e_BackFromSettings() 
 	{
-		HomeSettings.tapBackAtSettings();
+		HomeSettings.tapBack();
 		ShortcutsTyper.delayOne();
 	}
 	
@@ -125,13 +126,13 @@ public class SignOutSettingsAPI extends ModelAPI {
 	
 	public void e_ConfirmProfile() 
 	{
-		HomeSettings.tapBackAtEditProfile();
+		HomeSettings.tapBack();
 		ShortcutsTyper.delayOne();
 	}
 
 	public void e_ConfirmWearingShine() 
 	{
-		HomeSettings.tapBackAtWearingShine();
+		HomeSettings.tapBack();
 		ShortcutsTyper.delayOne();
 	}
 

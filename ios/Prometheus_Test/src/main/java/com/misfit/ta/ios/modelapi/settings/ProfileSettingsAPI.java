@@ -72,8 +72,10 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ChooseSettings() {
+		HomeScreen.tapOpenSyncTray();
+		ShortcutsTyper.delayTime(500);
 		HomeScreen.tapSettings();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(500);
 	}
 
 	/**
@@ -81,7 +83,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_DoneEditting() {
-		HomeSettings.tapBackAtEditProfile();
+		HomeSettings.tapBack();
 		ShortcutsTyper.delayTime(1000);
 	}
 
@@ -144,7 +146,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_PressBack() {
-		HomeSettings.tapBackAtSettings();
+		HomeSettings.tapBack();
 		ShortcutsTyper.delayTime(1000);
 	}
 

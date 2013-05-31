@@ -10,14 +10,14 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeScreen {
     public static void tapSettings() {
-		Gui.touchAVIew("UIButtonLabel", "setting"); 
-		//this button is temporary since we don't have real Shine and there's no way we get to setting screen through sync tray
+    	Gui.touchAVIew("UILabel", "Settings");    }
+    
+    public static void tapAdjustGoal() {
+    	Gui.touchAVIew("UILabel", "My Goal");
     }
 
-    public static void tapSyncTray() {
-    	int num = Gui.countViewWithName("UIButton");
-		Gui.touchAVIew("UIButton", num - 8);
-		//TODO: change button. This one is invalid 
+    public static void tapOpenSyncTray() {
+    	 Gui.touchAVIew("UIButton", 5);
 	}
 
     public static void tapOpenManualInput() {
@@ -25,7 +25,7 @@ public class HomeScreen {
     }
     
     public static void tapToday() {
-    	Gui.touchAVIew("UIButtonLabel", "Today");
+    	Gui.touchAVIew("UIButton", 2);
     }
     
     public static void tapRandom() {
@@ -75,7 +75,7 @@ public class HomeScreen {
     	title.append(PrometheusHelper.getMonthString(now.get(Calendar.MONTH) + 1, false));
     	title.append(" ");
     	int date = Integer.valueOf(now.get(Calendar.DATE));
-    	if (date > 10) {
+    	if (date >= 10) {
     		title.append(now.get(Calendar.DATE));
     	} else {
     		title.append("0").append(now.get(Calendar.DATE));

@@ -49,10 +49,10 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ToGoalSettings() {
-		HomeScreen.tapSettings();
-		ShortcutsTyper.delayTime(1000);
-		HomeSettings.tapAdjustGoal();
-		ShortcutsTyper.delayTime(1000);
+		HomeScreen.tapOpenSyncTray();
+		ShortcutsTyper.delayTime(500);
+		HomeScreen.tapAdjustGoal();
+		ShortcutsTyper.delayTime(500);
 	}
 	
 	/**
@@ -72,9 +72,9 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_CancelEdit() {
-		HomeSettings.tapBackAtNewGoal();
+		HomeSettings.tapBack();
 		ShortcutsTyper.delayTime(1000);
-		HomeSettings.tapBackAtSettings();
+		HomeSettings.tapBack();
 		ShortcutsTyper.delayTime(1000);
 		
 		logger.info("Cancel new goal");
@@ -100,7 +100,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_ConfirmNewGoal() {
 		HomeSettings.tapOKAtNewGoalPopup();
 		ShortcutsTyper.delayTime(1000);
-		HomeSettings.tapBackAtSettings();
+		HomeSettings.tapBack();
 		ShortcutsTyper.delayTime(1000);
 	}
 	
