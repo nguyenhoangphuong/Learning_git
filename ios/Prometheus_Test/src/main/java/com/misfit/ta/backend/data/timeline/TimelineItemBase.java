@@ -1,5 +1,7 @@
 package com.misfit.ta.backend.data.timeline;
 
+import com.google.resting.json.JSONObject;
+
 public abstract class TimelineItemBase {
     
     public static final int TYPE_WEATHER = 1;
@@ -33,6 +35,6 @@ public abstract class TimelineItemBase {
         this.timestamp = timestamp;
     }
     
-    public abstract String toJson();
+    public abstract JSONObject toJson();
         
 }

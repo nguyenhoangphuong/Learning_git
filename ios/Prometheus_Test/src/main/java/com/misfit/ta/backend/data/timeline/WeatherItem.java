@@ -1,5 +1,7 @@
 package com.misfit.ta.backend.data.timeline;
 
+import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.data.JSONBuilder;
 
 public class WeatherItem extends TimelineItemBase {
@@ -40,13 +42,18 @@ public class WeatherItem extends TimelineItemBase {
         this.locationName = locationName;
     }
 
-    public String toJson() {
-        JSONBuilder builder = new JSONBuilder();
-        builder.addValue("temperatureF", temperatureF);
-        builder.addValue("code", temperatureF);
-        builder.addValue("locationName", temperatureF);
-
-        return builder.toJSONString();
+    public JSONObject toJson() {
+        JSONObject object = new JSONObject();
+        try {
+            object.accumulate("temperatureF", temperatureF);
+            object.accumulate("code", temperatureF);
+            object.accumulate("locationName", locationName);
+            return object;
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
     }
     
 }

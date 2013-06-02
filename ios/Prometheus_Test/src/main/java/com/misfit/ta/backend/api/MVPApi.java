@@ -15,6 +15,7 @@ import org.graphwalker.Util;
 import com.google.resting.Resting;
 import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
@@ -27,9 +28,12 @@ import com.misfit.ta.backend.data.GoalsResult;
 import com.misfit.ta.backend.data.JSONBuilder;
 import com.misfit.ta.backend.data.ProfileData;
 import com.misfit.ta.backend.data.ProfileResult;
-import com.misfit.ta.backend.data.timeline.NotableEventItem;
+import com.misfit.ta.backend.data.graph.GraphItem;
+import com.misfit.ta.backend.data.timeline.ActivitySessionItem;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.TimelineItemBase;
+import com.misfit.ta.backend.data.timeline.WeatherItem;
+import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
 public class MVPApi {
@@ -76,7 +80,7 @@ public class MVPApi {
     }
 
     static public String generateUniqueEmail() {
-        return "auto_generated_" + System.currentTimeMillis() + "@qa.com";
+        return System.currentTimeMillis() + "@qa.com";
     }
 
     // account apis
@@ -176,27 +180,6 @@ public class MVPApi {
         // format data
         ProfileResult result = new ProfileResult(response);
         return result;
-    }
-    
-    static public ProfileResult createTimelineItem(String token, TimelineItem item) {
-        // prepare
-        String url = baseAddress + "timeline_items/batch_insert";
-
-//        BaseParams requestInf = createProfileParams(token, data.name, data.weight, data.height, data.unit, data.gender,
-//                data.dateOfBirth, data.goalLevel, data.trackingDeviceId, data.localId, data.latestVersion, null);
-
-        
-        BaseParams request = new BaseParams();
-        request.addHeader("auth_token", token);
-        request.addParam("timeline_items", item.toJson());
-        
-        // post and receive raw data
-        ServiceResponse response = MVPApi.post(url, port, request);
-        System.out.println("LOG [MVPApi.createTimelineItem]: " + response);
-
-        // format data
-//        ProfileResult result = new ProfileResult(response);
-        return null;
     }
 
     static public ProfileResult getProfile(String token) {
@@ -410,44 +393,65 @@ public class MVPApi {
         requestInf.addParam("authenticity_token", "ki5608apM0mqEpFwvNW6i8Czu6tktVT0+UlWWVhu0Mg");
         MVPApi.post("https://staging-api.misfitwearables.com/shine/v6/admin/delete_user?id=" + id, 443, requestInf);
     }
+
+    public static ServiceResponse createGraphItems(String token, JSONArray array) {
+        // prepare
+        String url = baseAddress + "graph_items/batch_insert";
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("graph_items", array.toString());
+
+        // make POST request and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
+        return response;
+    }
+
+    static public ServiceResponse createTimelineItems(String token, JSONArray items) {
+        // prepare
+        String url = baseAddress + "timeline_items/batch_insert";
+
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        request.addObjectParam("timeline_items", items.toString());
+
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, request);
+        return response;
+    }
     
-    public static List<GraphItemResult> insertGraphItems(String token, List<GraphItemResult> graphItems) {
-    	// prepare
-    	String url = baseAddress + "graph_items/batch_insert";
-		BaseParams requestInf = new BaseParams();
-		
-		requestInf.addParam("authenticity_token", "ki5608apM0mqEpFwvNW6i8Czu6tktVT0+UlWWVhu0Mg");
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("auth_token", token);
-		requestInf.addParam("client_id", "D3A95921-3E6B-4DED-9806-D7EC8A0E8D53");
-		requestInf.addParam("user_id", "519e0cce9f12e50709000003");
-		
-		System.out.print(requestInf.toString());
-		
-		// make POST request and receive raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
-		
-		// TODO: convert response to list of graph items
-		graphItems = null;
-		
-		return graphItems;
-	}
 
     public static void main(String[] args) {
-//        MVPApi.removeUser("5142d9a6caedd02bee000062");
-        String email = TextTool.getRandomString(5) + "@ta.com";
-        long time = System.currentTimeMillis();
-        String udid = time + "" + time + "" + time + "" + time;
-                
-        AccountResult result = MVPApi.signUp(email, "misfit1", udid);
+        AccountResult result = MVPApi.signUp(MVPApi.generateUniqueEmail(), "misfit1", "someid");
         String token = result.token;
         System.out.println("LOG [MVPApi.main]: token= " + token);
+        long time = System.currentTimeMillis() / 1000;
+        JSONArray items = new JSONArray();   
+        for (int i = 0; i < 10; i++) {
+            
+             
+            time += 50000;
+            ActivitySessionItem session = new ActivitySessionItem(time, 2000, 20, time, 20, 2, 20, 20);
+            TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_SESSION, time, time, session, TextTool.getRandomString(7), null, null);
+            items.put(timeline.toJson());
+            
+        }
         
-        NotableEventItem item = new NotableEventItem(1, null, null, 1, 2);
-        TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_NOTABLE, null, "thinhclientid", 1369876035, 1369876035, item);
-        System.out.println("LOG [ThinhTest.main]: " + timeline.toJson());
+        createTimelineItems(token, items);
         
-        createTimelineItem(token, timeline);
+
+        System.exit(0);
+        // ------------------
+
+        // //
+        // String id = TextTool.getRandomString(36, 36);
+        // GraphItem item = new GraphItem(time, 50, id, time);
+        // JSONArray array = new JSONArray();
+        // array.put(item.toJson());
+        // System.out.println("LOG [MVPApi.main]: ------------- 22222 " +
+        // array.toString());
+        // createGraphItems(token, array);
+        //
+
     }
 
     public static String timestampToISODate(long timestamp) {

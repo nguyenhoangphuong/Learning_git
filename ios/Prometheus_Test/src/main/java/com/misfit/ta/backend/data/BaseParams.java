@@ -3,16 +3,19 @@ package com.misfit.ta.backend.data;
 import java.util.List;
 import java.util.Vector;
 
+import net.sf.json.util.JSONBuilder;
+
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 
 import com.google.resting.component.RequestParams;
-import com.google.resting.component.impl.BasicRequestParams;
+import com.google.resting.component.impl.json.JSONRequestParams;
 
 public class BaseParams {
     // fields: params and headers
     public List<Header> headers = new Vector<Header>();
-    public RequestParams params = new BasicRequestParams();
+//    public RequestParams params = new BasicRequestParams();
+    public JSONRequestParams params = new JSONRequestParams();
 
     // constructor
     public BaseParams() {
@@ -32,6 +35,10 @@ public class BaseParams {
 
     public void addObjectParam(String key, Object value) {
         params.add(key, (String) value);
+    }
+    
+    public void addJsonParam(String key, JSONBuilder json) {
+        params.add(key, json.toString());
     }
 
 }

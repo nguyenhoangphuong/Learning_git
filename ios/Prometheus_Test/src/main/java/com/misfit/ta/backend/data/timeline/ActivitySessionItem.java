@@ -1,5 +1,7 @@
 package com.misfit.ta.backend.data.timeline;
 
+import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.data.JSONBuilder;
 
 public class ActivitySessionItem extends TimelineItemBase {
@@ -81,16 +83,23 @@ public class ActivitySessionItem extends TimelineItemBase {
         this.steps = steps;
     }
 
-    public String toJson() {
-        JSONBuilder builder = new JSONBuilder();
-        builder.addValue("duration", duration);
-        builder.addValue("distance", distance);
-        builder.addValue("startTime", startTime);
-        builder.addValue("calories", calories);
-        builder.addValue("activityType", activityType);
-        builder.addValue("point", point);
-        builder.addValue("steps", steps);
-        return builder.toJSONString();
+    public JSONObject toJson() {
+        JSONObject object = new JSONObject();
+        try {
+            object.accumulate("duration", duration);
+            object.accumulate("distance", distance);
+            object.accumulate("startTime", startTime);
+            object.accumulate("calories", calories);
+            object.accumulate("activityType", activityType);
+            object.accumulate("point", point);
+            object.accumulate("steps", steps);
+            return object;
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+        
     }
 
 }

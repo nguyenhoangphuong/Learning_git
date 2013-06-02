@@ -1,28 +1,32 @@
 package com.misfit.ta.backend.data.timeline;
 
+import com.google.resting.json.JSONArray;
+import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.JSONBuilder;
 
 public class TimelineItem {
 
     private int itemType;
-    private String clientId;
-    private String userId;
     private long updatedAt;
-    private long createdAt;
+    private long timestamp;
+    private TimelineItemBase data;
+    private String localId;
+    private String serverId;
+    private Object requestChangedValues;
 
-    public TimelineItem(int itemType, String clientId, String userId, long updatedAt, long createdAt,
-            TimelineItemBase data) {
+    public TimelineItem(int itemType, long updatedAt, long timestamp, TimelineItemBase data, String localId,
+            String serverId, Object requestChangedValues) {
         super();
         this.itemType = itemType;
-        this.clientId = clientId;
-        this.userId = userId;
         this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
+        this.timestamp = timestamp;
         this.data = data;
+        this.localId = localId;
+        this.serverId = serverId;
+        this.requestChangedValues = requestChangedValues;
     }
-
-    private TimelineItemBase data;
 
     public int getItemType() {
         return itemType;
@@ -30,22 +34,6 @@ public class TimelineItem {
 
     public void setItemType(int itemType) {
         this.itemType = itemType;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public long getUpdatedAt() {
@@ -56,12 +44,12 @@ public class TimelineItem {
         this.updatedAt = updatedAt;
     }
 
-    public long getCreatedAt() {
-        return createdAt;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setCreatedAt(long createdAt) {
-        this.createdAt = createdAt;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public TimelineItemBase getData() {
@@ -72,13 +60,46 @@ public class TimelineItem {
         this.data = data;
     }
 
-    public String toJson() {
-        JSONBuilder builder = new JSONBuilder();
-        builder.addValue("data", data.toJson());
-        builder.addValue("user_id", userId);
-        builder.addValue("created_at", MVPApi.timestampToISODate(createdAt));
-        builder.addValue("updated_at", MVPApi.timestampToISODate(updatedAt));
+    public String getLocalId() {
+        return localId;
+    }
 
-        return builder.toJSONString();
+    public void setLocalId(String localId) {
+        this.localId = localId;
+    }
+
+    public String getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(String serverId) {
+        this.serverId = serverId;
+    }
+
+    public Object getRequestChangedValues() {
+        return requestChangedValues;
+    }
+
+    public void setRequestChangedValues(Object requestChangedValues) {
+        this.requestChangedValues = requestChangedValues;
+    }
+
+    public JSONObject toJson() {
+        
+      JSONObject object = new JSONObject();
+        try {
+            object.accumulate("itemType", itemType);
+            object.accumulate("timestamp", timestamp);
+            object.accumulate("updatedAt", updatedAt);
+            object.accumulate("data", data.toJson());
+            object.accumulate("localId", localId);
+            object.accumulate("serverId", serverId);
+            object.accumulate("requestChangedValues", requestChangedValues);
+            return object;
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
     }
 }

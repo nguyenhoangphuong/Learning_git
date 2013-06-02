@@ -2,6 +2,8 @@ package com.misfit.ta.backend.data.timeline;
 
 import java.util.Vector;
 
+import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.data.JSONBuilder;
 
 public class NotableEventItem extends TimelineItemBase {
@@ -63,17 +65,24 @@ public class NotableEventItem extends TimelineItemBase {
         this.eventType = eventType;
     }
 
-    public String toJson() {
-        JSONBuilder builder = new JSONBuilder();
-        headers.add("Header 1");
-        headers.add("Header 2");
-        messages.add("Message 1");
-        messages.add("Message 2");
+    public JSONObject toJson() {
+        
+        JSONObject object = new JSONObject();
+        try {
+            headers.add("Header 1");
+            headers.add("Header 2");
+            messages.add("Message 1");
+            messages.add("Message 2");
 
-        builder.addValue("headers", headers);
-        builder.addValue("messages", messages);
-        builder.addValue("eventType", eventType);
-        return builder.toJSONString();
+            object.accumulate("headers", headers);
+            object.accumulate("messages", messages);
+            object.accumulate("eventType", eventType);
+            return object;
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
 
     }
 
