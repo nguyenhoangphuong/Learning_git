@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -20,6 +22,7 @@ import com.google.resting.json.JSONException;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
+import com.misfit.ta.backend.aut.BackendStressTestThread;
 import com.misfit.ta.backend.data.AccountResult;
 import com.misfit.ta.backend.data.ActivityResult;
 import com.misfit.ta.backend.data.BaseParams;
@@ -418,40 +421,44 @@ public class MVPApi {
         ServiceResponse response = MVPApi.post(url, port, request);
         return response;
     }
-    
 
     public static void main(String[] args) {
-        AccountResult result = MVPApi.signUp(MVPApi.generateUniqueEmail(), "misfit1", "someid");
-        String token = result.token;
-        System.out.println("LOG [MVPApi.main]: token= " + token);
-        long time = System.currentTimeMillis() / 1000;
-        JSONArray items = new JSONArray();   
-        for (int i = 0; i < 10; i++) {
-            
-             
-            time += 50000;
-            ActivitySessionItem session = new ActivitySessionItem(time, 2000, 20, time, 20, 2, 20, 20);
-            TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_SESSION, time, time, session, TextTool.getRandomString(7), null, null);
-            items.put(timeline.toJson());
-            
+        // ---------------------------------
+        MVPApi api = new MVPApi();
+        api.runThreadTest();
+    }
+
+    public void runThreadTest() {
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+
+        int userCount = 0;
+        while (userCount < 100) {
+
+            for (int threads = 0; threads < 10; threads++) {
+                MyThread thread = new MyThread(userCount);
+
+                executor.execute(thread);
+                userCount++;
+
+            }
+//            ShortcutsTyper.delayTime(4000);
+//            System.out.println("LOG [MVPApi.runThreadTest]: adding more threads");
+
         }
-        
-        createTimelineItems(token, items);
-        
+        executor.shutdown();
+    }
 
-        System.exit(0);
-        // ------------------
+    public class MyThread implements Runnable {
+        int count = 0;
 
-        // //
-        // String id = TextTool.getRandomString(36, 36);
-        // GraphItem item = new GraphItem(time, 50, id, time);
-        // JSONArray array = new JSONArray();
-        // array.put(item.toJson());
-        // System.out.println("LOG [MVPApi.main]: ------------- 22222 " +
-        // array.toString());
-        // createGraphItems(token, array);
-        //
+        public MyThread(int count) {
+            this.count = count;
+        }
 
+        public void run() {
+            System.out.println("LOG: " + Thread.currentThread().getName() + " Start " + count);
+            System.out.println("LOG: " + Thread.currentThread().getName() + " END " );
+        }
     }
 
     public static String timestampToISODate(long timestamp) {
