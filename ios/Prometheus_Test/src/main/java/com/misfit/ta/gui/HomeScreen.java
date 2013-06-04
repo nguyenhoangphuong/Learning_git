@@ -94,11 +94,11 @@ public class HomeScreen {
     
     /* Visible checking */
     public static boolean isToday() {
-    	return ViewUtils.isExistedView("UILabel", "TODAY");
+    	return ViewUtils.isExistedView("UILabel", "Today");
     }
 
     public static boolean isYesterday() {
-    	return ViewUtils.isExistedView("UILabel", "YESTERDAY");
+    	return ViewUtils.isExistedView("UILabel", "Yesterday");
     }
     
     public static boolean isADayBefore(int days) {
@@ -117,6 +117,13 @@ public class HomeScreen {
     	return ViewUtils.isExistedView("UILabel", title.toString());
     }
 
+    public static boolean isThisWeek() {
+    	return ViewUtils.isExistedView("UILabel", "This week");
+    }
+    
+    public static boolean isLastWeek() {
+    	return ViewUtils.isExistedView("UILabel", "Last week");
+    }
     
     public static boolean isNoDataProgressCircle() {
     	String text = Gui.getProperty("PTRichTextLabel", 0, "text");

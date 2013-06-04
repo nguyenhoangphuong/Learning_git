@@ -53,14 +53,9 @@ public class DayProgressAPI extends ModelAPI {
 		// DEVICE SETTINGS:
 		// Time: 12 hours
 		
-		// APP SETTINGS:
-		// Manual Input
-		
 		// Initalize
 		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1981, true, "5'", "8\\\"", "120", ".0", 1);
 		ShortcutsTyper.delayTime(5000);
-		//PrometheusHelper.setInputModeToManual();
-		//ShortcutsTyper.delayTime(1000);
 	}
 
 	/**

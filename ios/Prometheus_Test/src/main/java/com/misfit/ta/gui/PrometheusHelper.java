@@ -173,9 +173,11 @@ public class PrometheusHelper {
 		SignUp.enterHeight(h1, h2, isUSUnit);
 		SignUp.enterWeight(w1, w2, isUSUnit);
 		SignUp.tapNext();
+		
 		ShortcutsTyper.delayTime(1000);
 		SignUp.setGoal(goalLevel);
 		SignUp.tapNext();
+		
 		ShortcutsTyper.delayTime(1000);
 		SignUp.sync();
 		ShortcutsTyper.delayTime(10000);
