@@ -24,6 +24,10 @@ public class HomeScreen {
         Gui.touchAVIew("UIButtonLabel", "Manual");
     }
     
+    public static void tapProgressCircle() {
+    	Gui.touchAVIew("PTGoalCircleView", 0);
+    }
+    
     
     /* Manual input */
     public static void tapToday() {
@@ -124,12 +128,7 @@ public class HomeScreen {
     public static boolean isLastWeek() {
     	return ViewUtils.isExistedView("UILabel", "Last week");
     }
-    
-    public static boolean isNoDataProgressCircle() {
-    	String text = Gui.getProperty("PTRichTextLabel", 0, "text");
-    	return text.equals("Zip. Zero. Nada.");
-    }
-    
+       
     public static boolean isPointEarnedProgessCircle() {
         String text = Gui.getProperty("PTRichTextLabel", 0, "text");
         return text.matches("^of .* points$");

@@ -36,6 +36,7 @@ public class DayProgressAPI extends ModelAPI {
 	private int hour = 5;						// for ease of keeping tracks
 	private int height = 68;					// 68 inches is default height for men
 	private float weight = 120f;				// 120 lbs is default weight for men
+	private int goalPoints = 1000;				// total goal is 1000 points
 	
 	/**
 	 * This method implements the Edge 'e_Init'
@@ -47,22 +48,23 @@ public class DayProgressAPI extends ModelAPI {
 		// Gender: Male
 		// Height: 68" (or 5'8")
 		// Weight: 120 lbs
-		// Goal: 2500
+		// Goal: 1000
 		// Year of birth: 1981
 		
 		// DEVICE SETTINGS:
 		// Time: 12 hours
 		
 		// Initalize
-		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1981, true, "5'", "8\\\"", "120", ".0", 1);
-		ShortcutsTyper.delayTime(5000);
+		//PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1981, true, "5'", "8\\\"", "120", ".0", 1);
+		//ShortcutsTyper.delayTime(5000);
 	}
 
 	/**
 	 * This method implements the Edge 'e_inputActivity'
 	 * 
 	 */
-	public void e_inputActivity() {
+	public void e_inputActivity() 
+	{
 		HomeScreen.tapOpenManualInput();
 		ShortcutsTyper.delayTime(1000);
 		
@@ -89,8 +91,6 @@ public class DayProgressAPI extends ModelAPI {
 		this.totalCalories += PrometheusHelper.calculateCalories(this.lastPoints, this.weight);
 		
 		hour++;
-		PrometheusHelper.handleTutorial();
-		ShortcutsTyper.delayTime(500);
 	}
 
 	/**
@@ -105,27 +105,61 @@ public class DayProgressAPI extends ModelAPI {
 	
 	
 	/**
+	 * This method implements the Vertex 'v_TodayDefault'
+	 * 
+	 */
+	public void v_TodayDefault() 
+	{
+		// check initial data
+		Assert.assertTrue(HomeScreen.isPointEarnedProgessCircle(), "Progress circle display point earned by default");
+		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "0"), "Zero point is displayed by default");
+		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String.format("of _%d_ points", this.goalPoints)), "Total goal displayed correctly");
+	}
+	
+	/**
 	 * This method implements the Vertex 'v_Today'
 	 * 
 	 */
-	public void v_Today() {
-		// check initial data: on progress circle, sync tray closed, today
-		Assert.assertTrue(HomeScreen.isToday(), "Today is displayed by default");
+	public void v_Today() 
+	{
+		Assert.assertTrue(HomeScreen.isToday(), "Today is displayed");
 	}
 
 	/**
 	 * This method implements the Vertex 'v_UpdatedTimeline'
 	 * 
 	 */
-	public void v_UpdatedToday() {
-		// check summary is 
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.totalSteps)), "Total steps displayed correctly");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.1f", this.totalMiles).replace(".0", "")), "Total miles displayed correctly");
-		// Total calories are still being discussed, therefore we should not verified now
+	public void v_UpdatedToday() 
+	{
+		// check summary through process circle
+		for(int i = 0; i < 3; i++)
+		{		
+			// progress circle display point earned => check total point
+			if(HomeScreen.isPointEarnedProgessCircle())
+				Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", (int)Math.floor(this.totalPoints))), "Total points displayed correctly");
+			
+			// progress circle display point remained => check remain point
+			else if(HomeScreen.isPointEarnedProgessCircle())
+			{
+				String text = Gui.getProperty("PTRichTextLabel", 0, "text");
+				int remainPoints = this.goalPoints - (int)Math.floor(this.totalPoints);
+				Assert.assertTrue(text.contains(String.format("%d", remainPoints)), "Remain points displayed correctly");
+			}
+						
+			// progress circle display summary => check steps / calories / distance
+			else if(HomeScreen.isSummaryProgressCircle())
+			{
+				Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String.format("_%d_ steps", this.totalSteps)), "Total steps displayed correctly");
+				Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String.format("_%.1f_ miles", this.totalMiles)), "Total miles displayed correctly");
+			}
+			
+			HomeScreen.tapProgressCircle();
+		}
 		
 		// check activity record is saved
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", this.lastStartTime), "Start time displayed correctly");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%.0f", Math.floor(this.lastPoints))), "Points displayed correctly");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", this.lastDuration)), "Duration displayed correctly");
+		
 	}	
 	
 	/**
@@ -143,4 +177,5 @@ public class DayProgressAPI extends ModelAPI {
 	public void v_TutorialShown() {
 		PrometheusHelper.handleTutorial();
 	}
+
 }

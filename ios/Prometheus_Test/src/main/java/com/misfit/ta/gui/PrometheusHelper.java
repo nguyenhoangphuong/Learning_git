@@ -1,6 +1,8 @@
 package com.misfit.ta.gui;
 
 import java.util.Random;
+
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ios.AppHelper;
@@ -292,11 +294,12 @@ public class PrometheusHelper {
 	
 	public static void main(String[] args)
 	{
-		String text = "900 points to go";
-		if(text.matches(".* points to go$"))
-			System.out.print("match");
-		else
-			System.out.print("no match");
+		Gui.init("192.168.1.247");
+		
+		String text = Gui.getProperty("PTRichTextLabel", 0, "text");
+		System.out.print(text);
+		int remainPoints = 1000 - 194;
+		Assert.assertTrue(text.contains(String.format("%d", remainPoints)), "Remain points displayed correctly");
 	}
 	
 }
