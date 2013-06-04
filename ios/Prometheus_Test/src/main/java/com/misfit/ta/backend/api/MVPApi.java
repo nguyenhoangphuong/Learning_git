@@ -22,7 +22,7 @@ import com.google.resting.json.JSONException;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.aut.BackendStressTestThread;
+import com.misfit.ta.backend.aut.BackendDatabaseSeedingThread;
 import com.misfit.ta.backend.data.AccountResult;
 import com.misfit.ta.backend.data.ActivityResult;
 import com.misfit.ta.backend.data.BaseParams;
@@ -83,7 +83,7 @@ public class MVPApi {
     }
 
     static public String generateUniqueEmail() {
-        return System.currentTimeMillis() + "@qa.com";
+        return System.currentTimeMillis() + TextTool.getRandomString(6,6)+  "@qa.com";
     }
 
     // account apis
@@ -432,7 +432,7 @@ public class MVPApi {
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
         int userCount = 0;
-        while (userCount < 100) {
+        while (userCount < 5) {
 
             for (int threads = 0; threads < 10; threads++) {
                 MyThread thread = new MyThread(userCount);
@@ -457,6 +457,7 @@ public class MVPApi {
 
         public void run() {
             System.out.println("LOG: " + Thread.currentThread().getName() + " Start " + count);
+            ShortcutsTyper.delayTime(5000);
             System.out.println("LOG: " + Thread.currentThread().getName() + " END " );
         }
     }

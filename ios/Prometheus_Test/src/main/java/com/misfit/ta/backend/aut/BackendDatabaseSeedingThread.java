@@ -1,28 +1,17 @@
 package com.misfit.ta.backend.aut;
 
-import java.lang.reflect.Method;
-
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
-import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.AccountResult;
 import com.misfit.ta.backend.data.ProfileData;
 import com.misfit.ta.backend.data.ProfileResult;
-import com.misfit.ta.backend.data.graph.GraphItem;
-import com.misfit.ta.backend.data.timeline.ActivitySessionItem;
-import com.misfit.ta.backend.data.timeline.TimelineItem;
-import com.misfit.ta.backend.data.timeline.TimelineItemBase;
-import com.misfit.ta.backend.data.timeline.WeatherItem;
-import com.misfit.ta.utils.TextTool;
 
-public class BackendStressTestThread implements Runnable {
+public class BackendDatabaseSeedingThread implements Runnable {
 
     private String password = "misfit1";
     private String udid;
@@ -31,12 +20,12 @@ public class BackendStressTestThread implements Runnable {
     private JSONArray timelineItems;
     private JSONArray graphItems;
     private ResultLogger rlog;
-    private BackendStressTest test;
+    private BackendDatabaseSeeding test;
 
-    Logger logger = Util.setupLogger(BackendStressTestThread.class);
+    Logger logger = Util.setupLogger(BackendDatabaseSeedingThread.class);
 
-    public BackendStressTestThread(int userCount, JSONArray timelineItems,
-            JSONArray graphItems, ResultLogger rlog, BackendStressTest test) {
+    public BackendDatabaseSeedingThread(int userCount, JSONArray timelineItems,
+            JSONArray graphItems, ResultLogger rlog, BackendDatabaseSeeding test) {
         this.userCount = userCount;
         this.timelineItems = timelineItems;
         this.graphItems = graphItems;
@@ -107,7 +96,8 @@ public class BackendStressTestThread implements Runnable {
         response = MVPApi.createGraphItems(token, graphItems);
         long s16 = System.currentTimeMillis();
         Assert.assertTrue(response.getStatusCode() <= 210, "Status code is > 210: " + response.getStatusCode());
-
+        System.out.println("LOG [BackendStressTestThread.run]: ------------------------------------ DONE");
+        
         rlog.log((userCount + 1) + "\t" + (s2 - s1) + "\t"
         // + (s4 - s3) + "\t"
         // + (s6 - s5) + "\t" + (s8 - s7) + "\t"
