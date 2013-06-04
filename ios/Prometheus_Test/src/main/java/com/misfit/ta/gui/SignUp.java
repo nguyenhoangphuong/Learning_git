@@ -7,15 +7,15 @@ public class SignUp {
 
     /* NAVIGATION */
     public static void tapSignUp() {
-        Gui.touchAVIew("UIButtonLabel", " SIGN UP");
+        Gui.touchAVIew("UIButtonLabel", " Shine up");
     }
-    
+
     public static void tapNext() {
-        Gui.tapNext();
+    	Gui.touchAVIew("UIButtonLabel", "Next");
     }
 
     public static void tapPrevious() {
-        Gui.tapPrevious();
+    	Gui.touchAVIew("UIButtonLabel", "Back");
     }
     
 	public static void tapCloseAllTips() 
@@ -95,13 +95,9 @@ public class SignUp {
     }
 
     
-    /* UTILITIES */
-    public static void tapAllowUseCurrentLocation() {
-
-    }
-
+    /* VISIBLE CHECKING */
     public static boolean isSignUpAccountView() {
-        return ViewUtils.isExistedView("UILabel", "SIGN UP");
+        return ViewUtils.isExistedView("UILabel", "Shine up");
     }
 
     public static boolean isSignUpProfileView() {
@@ -113,8 +109,7 @@ public class SignUp {
         		ViewUtils.isExistedView("PTRichTextLabel", "\\_Swimming\\_") &&
         		ViewUtils.isExistedView("PTRichTextLabel", "\\_Biking\\_") &&
         		ViewUtils.isExistedView("PTRichTextLabel", "\\_Tennis\\_") &&
-        		ViewUtils.isExistedView("PTRichTextLabel", "Even\\n\\_dancing!\\_") &&
-        		ViewUtils.isExistedView("PTRichTextLabel", "Shine converts your activity\\n to points. It tracks:");
+        		ViewUtils.isExistedView("PTRichTextLabel", "Even\\n\\_dancing!\\_");
     }
 
     public static boolean isSignUpGoalView() {
@@ -122,9 +117,15 @@ public class SignUp {
     }
 
     public static boolean isSignUpPairingView() {
-        return ViewUtils.isExistedView("UILabel", "SYNC SHINE");
+        return ViewUtils.isExistedView("UILabel", "Link Shine");
     }
 
+    public static boolean isSignUpPairingCompleteView() {
+    	return ViewUtils.isExistedView("UILabel", "LINKING COMPLETE");
+    }
+    
+    
+    /* ALERT */
     public static boolean hasInvalidEmailMessage() {
         return PrometheusHelper.hasInvalidEmailMessage();
     }

@@ -4,19 +4,22 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class LaunchScreen {
+	
     public static void tapIHaveAShine() {
-        Gui.touchAVIew("UIButtonLabel", "I HAVE A SHINE");
+        Gui.touchAVIew("UIButtonLabel", "I have a Shine");
     }
 
     public static void tapSetUpYourShine() {
-        Gui.touchAVIew("PTRichTextLabel", "Need help to _set up_ your Shine?");
+        Gui.touchAVIew("PTRichTextLabel", "_Set up_ your Shine in 30...");
     }
     
     public static void closeHardwareTutorial() {
-    	// touch all 3 close buttons to make sure tutorials close
+    	// touch all 4 close buttons 
+    	// to make sure tutorials close
         Gui.touchButton(5);
         Gui.touchButton(6);
         Gui.touchButton(7);
+        Gui.touchButton(8);
     }
 
     public static void tapAgreeOnPopup() {
@@ -26,6 +29,10 @@ public class LaunchScreen {
     public static void tapAgreeInNDA() {
     	Gui.touchAVIew("UIButtonLabel", "AGREE");
     }
+    
+    public static void tapDisagreeInNDA() {
+    	Gui.touchAVIew("UIButtonLabel", "DISAGREE");
+    }
 
     public static void tapViewNDA() {
         Gui.touchPopupButton(0); // View NDA
@@ -33,15 +40,14 @@ public class LaunchScreen {
     
     public static boolean isAtLaunchScreen()
     {
-    	return ViewUtils.isExistedView("UIButtonLabel", "I HAVE A SHINE");
+    	return ViewUtils.isExistedView("UIButtonLabel", "I have a Shine");
     }
     
     public static void launch() {
     	tapAgreeOnPopup();
-    	ShortcutsTyper.delayTime(1000);
+    	ShortcutsTyper.delayOne();
     	tapIHaveAShine();
-    	ShortcutsTyper.delayTime(1000);
-//    	tapSkip();
-//    	ShortcutsTyper.delayTime(5000);
+    	ShortcutsTyper.delayOne();
     }
+
 }

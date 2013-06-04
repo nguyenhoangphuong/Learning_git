@@ -11,25 +11,25 @@ public class SignIn {
     }
 
     public static void tapLogInWithFacebook() {
-        Gui.touchAVIew("UIButtonLabel", " SIGN IN");
+        Gui.touchAVIew("UIButtonLabel", " Shine in");
     }
 
     
     /* log in screen */
     public static boolean isLoginView() {
-        return ViewUtils.isExistedView("UILabel", "LOG IN");
+        return ViewUtils.isExistedView("UILabel", "Shine in");
     }
     
     public static void tapForgotPassword() {
-        Gui.touchAVIew("UIButtonLabel", "Umm... What's my password again?");
+        Gui.touchAVIew("UIButtonLabel", "What's my password again?");
     }
     
     public static void tapNext() {
-        Gui.tapNext();
+    	Gui.touchAVIew("UIButtonLabel", "Next");
     }
 
     public static void tapPrevious() {
-        Gui.tapPrevious();
+    	Gui.touchAVIew("UIButtonLabel", "Back");
     }
 
     public static void enterEmailPassword(String email, String password) {

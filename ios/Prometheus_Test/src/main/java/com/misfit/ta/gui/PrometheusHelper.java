@@ -10,6 +10,41 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class PrometheusHelper {
 
 	/* Views Helper */
+	
+	public static void enterEmailPassword(String email, String password) {
+
+		if (ViewUtils.isExistedView("PTEmailVerifyingTextField", 0))
+		{
+			Gui.touchAVIew("PTEmailVerifyingTextField", 0);
+			String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
+
+			System.out.println("Deleting: " + txtEmail);
+			Gui.moveCursorInCurrentTextViewTo(-1);
+			for (int i = 0; i < txtEmail.length(); i++)
+				Gui.pressDelete();
+		} 
+		else if (ViewUtils.isExistedView("PTPaddingTextField", 0))
+		{
+			Gui.touchAVIew("PTPaddingTextField", 0);
+			String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
+
+			System.out.println("Deleting: " + txtEmail);
+			Gui.moveCursorInCurrentTextViewTo(-1);
+			for (int i = 0; i < txtEmail.length(); i++)
+				Gui.pressDelete();
+		}
+		
+		ShortcutsTyper.delayTime(800);
+		Gui.type(email);
+		ShortcutsTyper.delayTime(300);
+		Gui.pressNext();
+		ShortcutsTyper.delayTime(300);
+		Gui.pressDelete();
+		Gui.type(password);
+		ShortcutsTyper.delayTime(300);
+		Gui.pressDone();
+	}
+	
 	public static void enterGender(boolean isMale) {
 		Gui.touchAVIew("UIButtonLabel", isMale ? "Male" : "Female");
 	}
@@ -60,40 +95,9 @@ public class PrometheusHelper {
 		Gui.sync();
 	}
 
-	public static void enterEmailPassword(String email, String password) {
-
-		if (ViewUtils.isExistedView("PTEmailVerifyingTextField", 0)) {
-			Gui.touchAVIew("PTEmailVerifyingTextField", 0);
-			String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0,
-					"text");
-
-			System.out.println("Deleting: " + txtEmail);
-			Gui.moveCursorInCurrentTextViewTo(-1);
-			for (int i = 0; i < txtEmail.length(); i++)
-				Gui.pressDelete();
-		} else if (ViewUtils.isExistedView("PTPaddingTextField", 0))
-			;
-		{
-			Gui.touchAVIew("PTPaddingTextField", 0);
-			String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
-
-			System.out.println("Deleting: " + txtEmail);
-			Gui.moveCursorInCurrentTextViewTo(-1);
-			for (int i = 0; i < txtEmail.length(); i++)
-				Gui.pressDelete();
-		}
-		ShortcutsTyper.delayTime(800);
-		Gui.type(email);
-		ShortcutsTyper.delayTime(300);
-		Gui.pressNext();
-		ShortcutsTyper.delayTime(300);
-		Gui.pressDelete();
-		Gui.type(password);
-		ShortcutsTyper.delayTime(300);
-		Gui.pressDone();
-	}
-
+	
 	/* Utilities */
+	
 	private static String[] longMonths = { "January", "February", "March",
 			"April", "May", "June", "July", "August", "September", "October",
 			"November", "December" };
@@ -127,14 +131,13 @@ public class PrometheusHelper {
 		return points * weightInKg / 600f;
 	}
 
-	public static String getMonthString(int monthNumber,
-			boolean isLongMonthString) {
+	public static String getMonthString(int monthNumber, boolean isLongMonthString) {
 		return isLongMonthString ? longMonths[monthNumber - 1]
 				: sortMonths[monthNumber - 1];
 	}
 	
 	public static String getDayOfWeek(int dayNumber, boolean isLongString) {
-		return isLongString ? longMonths[dayNumber - 1]
+		return isLongString ? longDaysOfWeek[dayNumber - 1]
 				: sortDaysOfWeek[dayNumber - 1];
 	}
 
@@ -151,10 +154,13 @@ public class PrometheusHelper {
 				+ (isUSUnit ? " lbs" : " kg");
 	}
 
+	
 	/* Quick navigation */
+	
 	public static void signUp(String email, String password, boolean isMale,
 			int date, int month, int year, boolean isUSUnit, String h1,
-			String h2, String w1, String w2, int goalLevel) {
+			String h2, String w1, String w2, int goalLevel) 
+	{
 		LaunchScreen.launch();
 
 		SignUp.tapSignUp();
@@ -190,7 +196,6 @@ public class PrometheusHelper {
 		HomeSettings.tapDebug();
 		ShortcutsTyper.delayTime(500);
 
-		HomeSettings.chooseManual();
 		HomeSettings.tapDoneAtDebug();
 		ShortcutsTyper.delayTime(500);
 
@@ -279,35 +284,17 @@ public class PrometheusHelper {
 	public void test() {
 		// startApp();
 		Gui.init("192.168.1.247");
+		Gui.printView();
 
-		// for(int i = 0; i < 1000; i++)
-		// {
-		// SignIn.tapLogInWithFacebook();
-		// ShortcutsTyper.delayTime(5000);
-		// HomeScreen.tapSettings();
-		// ShortcutsTyper.delayTime(500);
-		// Gui.swipeUp(1000);
-		// ShortcutsTyper.delayTime(500);
-		//
-		// HomeSettings.tapSignOut();
-		// ShortcutsTyper.delayTime(1000);
-		//
-		// if(!ViewUtils.isExistedView("UIButtonLabel", " SIGN UP"))
-		// Gui.touchAVIew("UIButtonLabel", "Sign out");
-		// }
-
-		HomeSettings.setSpinnerGoal(4000);
-		ShortcutsTyper.delayTime(2000);
-		HomeSettings.tapDoneAtNewGoal();
-
-		// Gui.swipeUp(1000);
-		// Gui.printView();
-
-		// HomeScreen.tapSyncTray();
-		// HomeScreen.tapSettings();
-
-		// PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1",
-		// true, 16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
 	}
-
+	
+	public static void main(String[] args)
+	{
+		String text = "900 points to go";
+		if(text.matches(".* points to go$"))
+			System.out.print("match");
+		else
+			System.out.print("no match");
+	}
+	
 }

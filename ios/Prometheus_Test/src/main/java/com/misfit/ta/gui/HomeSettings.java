@@ -5,6 +5,7 @@ import com.misfit.ios.ViewUtils;
 
 public class HomeSettings {
 	
+	/* Navigation */
 	public static void tapBack() {
 		Gui.touchAVIew("UIButton", "Back");
 	}
@@ -15,26 +16,6 @@ public class HomeSettings {
 
     public static void tapWearingShine() {
         Gui.touchAVIew("UILabel", "Wearing Position");
-    }
-    
-    public static void tapUnlink() {
-        Gui.touchAVIew("UILabel", "Unlink");
-    }
-    
-    public static void tapLinkShine() {
-    	Gui.touchAVIew("UILabel", "Link");
-    }
-
-    public static void tapSupport() {
-        Gui.touchAVIew("UILabel", "Send feedback");
-    }
-
-    public static void tapDebug() {
-        Gui.touchAVIew("UILabel", "Debug");
-    }
-
-    public static void tapSignOut() {
-        Gui.touchAVIew("UILabel", "SIGN OUT");
     }
     
     public static void tapFahrenheit() {
@@ -60,6 +41,35 @@ public class HomeSettings {
     public static void tapKg() {
     	Gui.touchAVIew("UIButtonLabel", "kg");
     }
+    
+    public static void tapFAQ() {
+    	Gui.touchAVIew("UILabel", "FAQ");
+    }
+
+    public static void tapLegalAndPrivacy() {
+        Gui.touchAVIew("UILabel", "Legal & Privacy");
+    }
+    
+    public static void tapSendFeedback() {
+        Gui.touchAVIew("UILabel", "Send feedback");
+    }
+    
+    public static void tapDebug() {
+        Gui.touchAVIew("UILabel", "Debug");
+    }
+    
+    public static void tapLink() {
+        Gui.touchAVIew("UILabel", "Link");
+    }
+    
+    public static void tapUnlink() {
+        Gui.touchAVIew("UILabel", "Unlink");
+    }
+    
+    public static void tapSignOut() {
+        Gui.touchAVIew("UIButtonLabel", "Shine out");
+    }
+    
     
     /* Update profile */
     public static void updateGender(boolean isMale) {
@@ -106,7 +116,6 @@ public class HomeSettings {
     
     
     /* Wearing Shine */
-    
     public static void setWearingShineAt(String location)
     {
     	if(location == DefaultStrings.WearingLocations[0])
@@ -136,47 +145,6 @@ public class HomeSettings {
     	
     }
     
-    
-    /* Mode Debug */
-    public static void tapDoneAtDebug()
-    {
-    	Gui.touchAVIew("UIButtonLabel", "Done");
-    }
-    
-    public static void chooseManual() {
-        Gui.touchAVIew("UITextField", 0);
-        Gui.setPicker(0, "Input form");
-        Gui.dismissPicker();
-    }
-
-    public static void chooseAccelerometer() {
-        Gui.touchAVIew("UITextField", 0);
-        Gui.setPicker(0, "Accelerometer");
-        Gui.dismissPicker();
-    }
-    
-    
-    /* Visible Check */
-    public static boolean isAtSettings()
-    {
-    	return ViewUtils.isExistedView("UILabel", "SETTINGS");
-    }
-
-    public static boolean isAtEditProfile()
-    {
-    	return ViewUtils.isExistedView("UILabel", "EDIT PROFILE");
-    }
-    
-    public static boolean isAtEditGoal()
-    {
-    	return ViewUtils.isExistedView("UILabel", "MY GOAL IS...");
-    }
-    
-    public static boolean isAtWearingShine()
-    {
-    	return ViewUtils.isExistedView("UILabel", "WHERE TO WEAR");
-    }
-    
     public static void tapHead() {
     	Gui.touchAVIew("UIButton", 0);
     }
@@ -199,6 +167,35 @@ public class HomeSettings {
     
     public static void tapFootAnkle() {
     	Gui.touchAVIew("UIButton", 5);
+    }
+
+    
+    /* Mode Debug */
+    public static void tapDoneAtDebug()
+    {
+    	Gui.touchAVIew("UIButtonLabel", "Done");
+    }  
+    
+    
+    /* Visible Check */
+    public static boolean isAtSettings()
+    {
+    	return ViewUtils.isExistedView("UILabel", "Settings");
+    }
+
+    public static boolean isAtEditProfile()
+    {
+    	return ViewUtils.isExistedView("UILabel", "Edit Profile");
+    }
+    
+    public static boolean isAtEditGoal()
+    {
+    	return ViewUtils.isExistedView("UILabel", "My Goal Is...");
+    }
+    
+    public static boolean isAtWearingShine()
+    {
+    	return ViewUtils.isExistedView("UILabel", "Where to wear");
     }
     
 }
