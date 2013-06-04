@@ -43,6 +43,12 @@ public class LaunchScreen {
     	return ViewUtils.isExistedView("UIButtonLabel", "I have a Shine");
     }
     
+    public static boolean isAtInitialScreen()
+    {
+    	return ViewUtils.isExistedView("UIButtonLabel", " Shine in") &&
+    		   ViewUtils.isExistedView("UIButtonLabel", " Shine up");
+    }
+    
     public static void launch() {
     	tapAgreeOnPopup();
     	ShortcutsTyper.delayOne();

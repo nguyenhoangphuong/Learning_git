@@ -113,7 +113,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void v_GoalSettings() {
 		// check if current view is goal settings
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "MY GOAL IS..."), "Current view is GoalSettings");
+		Assert.assertTrue(HomeSettings.isAtEditGoal(), "Current view is GoalSettings");
 		
 		// check if default value is correct
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");

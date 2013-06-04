@@ -145,7 +145,7 @@ public class WearingShineAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_CloseTip() {
-		Gui.touch(320, 480);
+		Gui.touch(300, 460);
 	}
 
 	/**

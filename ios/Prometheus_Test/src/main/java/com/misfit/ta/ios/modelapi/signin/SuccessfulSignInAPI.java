@@ -55,8 +55,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
      */
     public void v_InitialView() {
         // check if this is starting screen
-    	Assert.assertTrue(ViewUtils.isExistedView("UIButtonLabel", " SIGN UP"), "Button Sign Up is available");
-    	Assert.assertTrue(ViewUtils.isExistedView("UIButtonLabel", " SIGN IN"), "Button Sign In is available");
+    	Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialView");
     }
     
     /**
