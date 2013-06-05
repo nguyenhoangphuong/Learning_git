@@ -31,9 +31,17 @@ public class SignInWithFacebookAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SignInWithFacebook() {
+		
 		// we use default Facebook account mfwcqa@gmail.com which is already logged in
 		SignIn.tapLogInWithFacebook();
-		ShortcutsTyper.delayTime(50000);
+		ShortcutsTyper.delayTime(10000);
+		
+		// token expired, try to log in another time
+		if(!HomeScreen.isToday())
+		{
+			SignIn.tapLogInWithFacebook();
+			ShortcutsTyper.delayTime(10000);
+		}
 	}
 
 	/**
@@ -50,7 +58,7 @@ public class SignInWithFacebookAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_InitialView() {
-		// TODO:
+		Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Curren view is InitialView");
 	}
 
 }

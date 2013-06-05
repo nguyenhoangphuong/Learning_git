@@ -168,7 +168,7 @@ public class PrometheusHelper {
 		SignUp.tapSignUp();
 		ShortcutsTyper.delayTime(5000);
 		SignUp.enterEmailPassword(email, password);
-		ShortcutsTyper.delayTime(5000);
+		ShortcutsTyper.delayTime(10000);
 		SignUp.enterGender(isMale);
 		SignUp.enterBirthDay(year + "",
 				PrometheusHelper.getMonthString(month, true), date + "");
@@ -182,7 +182,7 @@ public class PrometheusHelper {
 		
 		ShortcutsTyper.delayTime(1000);
 		SignUp.sync();
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(3000);
 		SignUp.tapFinishSetup();
 		ShortcutsTyper.delayTime(3000);
 	}
@@ -261,7 +261,7 @@ public class PrometheusHelper {
 
 	public static void handleTutorial() {
 		boolean hasTutorialView = ViewUtils.isExistedView("PTRichTextLabel",
-				"This \\_circle\\_ represents\\nyour \\_activity\\_ each day.");
+				"This circle \\_represents\\_\\n\\_your activity\\_ each day.");
 		if (hasTutorialView) {
 			for (int i = 0; i < 4; i++) {
 				Gui.swipeLeft(500);
@@ -271,6 +271,11 @@ public class PrometheusHelper {
 				Gui.touchAVIew("UIButtonLabel", "OK, I GOT IT");
 			} else if (ViewUtils.isExistedView("UIButtonLabel", "DISMISS IT")) {
 				Gui.touchAVIew("UIButtonLabel", "DISMISS IT");
+			}
+			else
+			{
+				Gui.touch(5, 5);
+				Gui.touch(310, 470);
 			}
 		}
 	}
