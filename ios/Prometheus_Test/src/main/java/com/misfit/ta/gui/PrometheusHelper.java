@@ -169,6 +169,10 @@ public class PrometheusHelper {
 		ShortcutsTyper.delayTime(5000);
 		SignUp.enterEmailPassword(email, password);
 		ShortcutsTyper.delayTime(10000);
+		
+		// wait to shutdown location alert
+		ShortcutsTyper.delayTime(10000);
+		
 		SignUp.enterGender(isMale);
 		SignUp.enterBirthDay(year + "",
 				PrometheusHelper.getMonthString(month, true), date + "");
@@ -298,12 +302,9 @@ public class PrometheusHelper {
 	
 	public static void main(String[] args)
 	{
-		Gui.init("192.168.1.247");
+		Gui.init("192.168.1.185");
 		
-		String text = Gui.getProperty("PTRichTextLabel", 0, "text");
-		System.out.print(text);
-		int remainPoints = 1000 - 194;
-		Assert.assertTrue(text.contains(String.format("%d", remainPoints)), "Remain points displayed correctly");
+		Assert.assertTrue(HomeScreen.isToday(), "is today");
 	}
 	
 }
