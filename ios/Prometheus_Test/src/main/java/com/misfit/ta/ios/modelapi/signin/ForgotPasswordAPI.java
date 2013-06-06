@@ -61,7 +61,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	public void e_InputNotExistedEmail() {
 		SignIn.enterEmailForResetPassword(MVPApi.generateUniqueEmail());
 		SignIn.tapSubmitResetPassword();
-		ShortcutsTyper.delayTime(5000);
+		ShortcutsTyper.delayTime(10000);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	public void e_Submit() {
 		SignIn.enterEmailForResetPassword("thy@misfitwearables.com");
 		SignIn.tapSubmitResetPassword();
-		ShortcutsTyper.delayTime(5000);
+		ShortcutsTyper.delayTime(10000);
 	}
 
 	/**

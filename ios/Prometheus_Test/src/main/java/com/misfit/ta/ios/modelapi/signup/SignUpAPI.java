@@ -110,7 +110,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_SubmitValidEmailPassword() {
         SignUp.enterEmailPassword(MVPApi.generateUniqueEmail(), "test12");
-        ShortcutsTyper.delayTime(5000);
+        ShortcutsTyper.delayTime(10000);
     }
 
     /**
@@ -119,9 +119,9 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_Sync() {
         SignUp.sync();
-        ShortcutsTyper.delayTime(10000);
-        SignUp.tapFinishSetup();
         ShortcutsTyper.delayTime(5000);
+        SignUp.tapFinishSetup();
+        ShortcutsTyper.delayTime(10000);
     }
     
     /**
