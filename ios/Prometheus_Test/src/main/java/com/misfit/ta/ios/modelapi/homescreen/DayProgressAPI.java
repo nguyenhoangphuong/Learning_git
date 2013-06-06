@@ -111,9 +111,7 @@ public class DayProgressAPI extends ModelAPI {
 	public void v_TodayDefault() 
 	{
 		// check initial data
-		Assert.assertTrue(HomeScreen.isPointEarnedProgessCircle(), "Progress circle display point earned by default");
-		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "0"), "Zero point is displayed by default");
-		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String.format("of _%d_ points", this.goalPoints)), "Total goal displayed correctly");
+		Assert.assertTrue(HomeScreen.isPointRemainProgessCircle(), "Progress circle display point left by default");
 	}
 	
 	/**

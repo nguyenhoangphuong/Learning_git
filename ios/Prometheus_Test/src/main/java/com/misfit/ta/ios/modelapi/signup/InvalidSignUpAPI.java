@@ -60,7 +60,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      * 
      */
     public void e_FillExistedEmail() {
-        SignUp.enterEmailPassword("thy@misfitwearables.com", "test12");
+        SignUp.enterEmailPassword("mfwcqa.automation@gmail.com", "qwerty1");
         ShortcutsTyper.delayTime(10000);
     }
 

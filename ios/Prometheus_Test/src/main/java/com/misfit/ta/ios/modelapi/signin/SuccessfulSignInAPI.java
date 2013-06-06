@@ -44,7 +44,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
      */
     public void e_FillCorrectEmailPassword() 
     {
-        SignIn.enterEmailPassword("thy@misfitwearables.com", "test12");
+        SignIn.enterEmailPassword("mfwcqa.automation@gmail.com", "qwerty1");
         ShortcutsTyper.delayTime(5000);
      
         // if current view is link Shine

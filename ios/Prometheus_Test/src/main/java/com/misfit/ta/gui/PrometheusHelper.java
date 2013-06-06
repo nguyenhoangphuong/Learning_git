@@ -274,8 +274,7 @@ public class PrometheusHelper {
 			}
 			else
 			{
-				Gui.touch(5, 5);
-				Gui.touch(310, 470);
+				Gui.touchAVIew("PTRichTextLabel", 7);
 			}
 		}
 	}

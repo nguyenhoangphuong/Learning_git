@@ -74,7 +74,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_Submit() {
-		SignIn.enterEmailForResetPassword("thy@misfitwearables.com");
+		SignIn.enterEmailForResetPassword("mfwcqa.automation@gmail.com");
 		SignIn.tapSubmitResetPassword();
 		ShortcutsTyper.delayTime(5000);
 	}
