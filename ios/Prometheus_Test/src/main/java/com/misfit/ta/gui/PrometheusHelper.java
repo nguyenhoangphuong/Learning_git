@@ -304,7 +304,7 @@ public class PrometheusHelper {
 	{
 		Gui.init("192.168.1.185");
 		
-		Assert.assertTrue(HomeScreen.isToday(), "is today");
+		Assert.assertTrue(HomeSettings.isAtSettings(), "is today");
 	}
 	
 }

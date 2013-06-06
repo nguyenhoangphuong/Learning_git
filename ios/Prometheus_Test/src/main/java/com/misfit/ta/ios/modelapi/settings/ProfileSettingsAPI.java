@@ -84,7 +84,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 */
 	public void e_DoneEditting() {
 		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(5000);
 	}
 
 	/**

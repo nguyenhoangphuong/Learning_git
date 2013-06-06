@@ -38,7 +38,7 @@ public class WearingShineAPI extends ModelAPI {
 	};
 	public void e_BackToHomeScreen() {
 		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(300);
+		ShortcutsTyper.delayOne();
 	}
 
 	/**
@@ -47,9 +47,9 @@ public class WearingShineAPI extends ModelAPI {
 	 */
 	public void e_ChooseSettings() {
 		HomeScreen.tapOpenSyncTray();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayOne();
 		HomeScreen.tapSettings();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayOne();
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class WearingShineAPI extends ModelAPI {
 	 */
 	public void e_ChooseWearingShine() {
 		HomeSettings.tapWearingShine();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayOne();
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class WearingShineAPI extends ModelAPI {
 	 */
 	public void e_DoneEditting() {
 		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(300);
+		ShortcutsTyper.delayTime(5000);
 	}
 
 	/**
@@ -140,14 +140,6 @@ public class WearingShineAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(300);
 	}
 	
-	/**
-	 * This method implements the Edge 'e_TapWrist'
-	 * 
-	 */
-	public void e_CloseTip() {
-		Gui.touch(300, 460);
-	}
-
 	/**
 	 * This method implements the Vertex 'v_HomeScreen'
 	 * 
