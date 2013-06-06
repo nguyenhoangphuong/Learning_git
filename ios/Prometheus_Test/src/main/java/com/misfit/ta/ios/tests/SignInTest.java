@@ -24,9 +24,19 @@ public class SignInTest extends AutomationTest {
         ModelHandler model = getModelhandler();
         model.add("InvalidSignIn", new InvalidSignInAPI(this, Files.getFile("model/signin/InvalidSignIn.graphml"),
                 false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("InvalidSignIn");
+        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+        String actualResult = getModelhandler().getStatistics();
+        System.out.println(actualResult);
+    }
+    
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignIn", "ForgotPassword" })
+    public void ForgotPassword() throws InterruptedException, StopConditionException, IOException 
+    {    	
+        ModelHandler model = getModelhandler();
         model.add("ForgotPassword", new ForgotPasswordAPI(this, Files.getFile("model/signin/ForgotPassword.graphml"),
                 false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
-        model.execute("InvalidSignIn");
+        model.execute("ForgotPassword");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);

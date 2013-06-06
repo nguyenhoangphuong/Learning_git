@@ -90,7 +90,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_FillIncorrectPassword() {
         SignIn.enterEmailPassword("test147@thy.com", "test11");
-        ShortcutsTyper.delayTime(10000);
+        ShortcutsTyper.delayTime(5000);
     }
 
     /**
@@ -119,7 +119,7 @@ public class InvalidSignInAPI extends ModelAPI {
      */
     public void e_FillNotExistedEmail() {
         SignIn.enterEmailPassword(MVPApi.generateUniqueEmail(), "abc1333");
-        ShortcutsTyper.delayTime(10000);
+        ShortcutsTyper.delayTime(5000);
     }
 
     /**

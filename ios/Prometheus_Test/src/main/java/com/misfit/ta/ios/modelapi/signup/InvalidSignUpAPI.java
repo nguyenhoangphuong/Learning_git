@@ -34,7 +34,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      */
     public void e_Back() {
         Gui.tapPrevious();
-        ShortcutsTyper.delayTime(300);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -43,7 +43,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      */
     public void e_ChooseSignUp() {
         SignUp.tapSignUp();
-        ShortcutsTyper.delayTime(300);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -52,7 +52,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      */
     public void e_ConfirmAlert() {
         SignUp.tapOK();
-        ShortcutsTyper.delayTime(500);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -70,7 +70,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      */
     public void e_FillInvalidEmail() {
         SignUp.enterEmailPassword("test@com.", "test12");
-        ShortcutsTyper.delayTime(500);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -79,7 +79,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      */
     public void e_FillInvalidPassword() {
         SignUp.enterEmailPassword("test@test.com", "pass");
-        ShortcutsTyper.delayTime(500);
+        ShortcutsTyper.delayOne();
     }
 
     
@@ -99,7 +99,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      */
     public void v_SignUpStep1() {
         Assert.assertTrue(SignUp.isSignUpAccountView(), "This is not sign up step1 view.");
-        ShortcutsTyper.delayTime(500);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -108,7 +108,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      */
     public void v_SignUpStep1DuplicatedEmail() {
         Assert.assertTrue(SignUp.hasExistedEmailMessage(), "This is not sign up duplicated email view.");
-        ShortcutsTyper.delayTime(500);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -117,7 +117,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      */
     public void v_SignUpStep1InvalidEmail() {
         Assert.assertTrue(SignUp.hasInvalidEmailMessage(), "This is not sign up invalid email view.");
-        ShortcutsTyper.delayTime(500);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -126,7 +126,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      */
     public void v_SignUpStep1InvalidPassword() {
         Assert.assertTrue(SignUp.hasInvalidPasswordMessage(), "This is not sign up invalid password view.");
-        ShortcutsTyper.delayTime(500);
+        ShortcutsTyper.delayOne();
     }
 
 }

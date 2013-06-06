@@ -12,6 +12,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignIn;
+import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.ios.AutomationTest;
 
 public class SuccessfulSignInAPI extends ModelAPI {
@@ -41,9 +42,19 @@ public class SuccessfulSignInAPI extends ModelAPI {
      * This method implements the Edge 'e_FillCorrectEmailPassword'
      * 
      */
-    public void e_FillCorrectEmailPassword() {
+    public void e_FillCorrectEmailPassword() 
+    {
         SignIn.enterEmailPassword("thy@misfitwearables.com", "test12");
         ShortcutsTyper.delayTime(5000);
+     
+        // if current view is link Shine
+        if(SignUp.isSignUpPairingView())
+        {
+        	SignUp.sync();
+        	ShortcutsTyper.delayOne();
+        	SignUp.tapFinishSetup();
+        	ShortcutsTyper.delayOne();
+        }
         
         // wait for sync data
         ShortcutsTyper.delayTime(25000);

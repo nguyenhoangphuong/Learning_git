@@ -9,6 +9,7 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
@@ -25,9 +26,13 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 * This method implements the Edge 'e_gotoForgotPassword'
 	 * 
 	 */
-	public void e_gotoForgotPassword() {
-		// THIS MODEL REQUIRE
-		// SWITCH MODEL AT FORGOT PASSWORD
+	public void e_gotoForgotPassword() 
+	{
+		LaunchScreen.launch();
+		SignIn.tapLogIn();
+		ShortcutsTyper.delayOne();
+		SignIn.tapForgotPassword();
+		ShortcutsTyper.delayOne();
 	}
 	
 	/**
@@ -61,7 +66,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	public void e_InputNotExistedEmail() {
 		SignIn.enterEmailForResetPassword(MVPApi.generateUniqueEmail());
 		SignIn.tapSubmitResetPassword();
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(5000);
 	}
 
 	/**
@@ -71,7 +76,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	public void e_Submit() {
 		SignIn.enterEmailForResetPassword("thy@misfitwearables.com");
 		SignIn.tapSubmitResetPassword();
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(5000);
 	}
 
 	/**

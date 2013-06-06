@@ -58,7 +58,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_ChooseSignUp() {
         SignUp.tapSignUp();
-        ShortcutsTyper.delayTime(1000);
+        ShortcutsTyper.delayOne();
     }
     
     /**
@@ -67,7 +67,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_Back() {
         SignUp.tapPrevious();
-        ShortcutsTyper.delayTime(1000);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -76,7 +76,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_Next() {
         SignUp.tapNext();
-        ShortcutsTyper.delayTime(1000);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -86,7 +86,7 @@ public class SignUpAPI extends ModelAPI {
     public void e_SetGoal() {
         goal = new Random().nextInt(3);
         SignUp.setGoal(goal);
-        ShortcutsTyper.delayTime(1000);
+        ShortcutsTyper.delayOne();
     }
 
     /**
@@ -95,12 +95,13 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_SignOut() {
     	HomeScreen.tapOpenSyncTray();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayOne();
 		HomeScreen.tapSettings();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayOne();
+		
         Gui.swipeUp(1000);
         HomeSettings.tapSignOut();
-        ShortcutsTyper.delayTime(1000);
+        ShortcutsTyper.delayOne();
         PrometheusHelper.handleUpload();
     }
 
@@ -119,8 +120,11 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_Sync() {
         SignUp.sync();
-        ShortcutsTyper.delayTime(5000);
+        ShortcutsTyper.delayOne();
         SignUp.tapFinishSetup();
+        ShortcutsTyper.delayOne();
+        
+        // wait for sync
         ShortcutsTyper.delayTime(10000);
     }
     
@@ -153,7 +157,7 @@ public class SignUpAPI extends ModelAPI {
 		HomeSettings.updateBirthDay(year, month, day);
 		
 		logger.info("Change birthday to: " + PrometheusHelper.formatBirthday(year, month, day));
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayOne();
     }
 
     /**
@@ -167,7 +171,7 @@ public class SignUpAPI extends ModelAPI {
 		SignUp.enterHeight(h1, h2, isUSUnit);
 		
 		logger.info("Change height to: " + h1 + h2 + (isUSUnit? "" : " m"));
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayOne();
     }
 
     /**
@@ -179,7 +183,7 @@ public class SignUpAPI extends ModelAPI {
 		SignUp.enterGender(isMale);
 		
 		logger.info("Change male to: " + (isMale ? "Male" : "Female"));
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayOne();
     }
 
     /**
@@ -193,7 +197,7 @@ public class SignUpAPI extends ModelAPI {
 		SignUp.enterWeight(w1, w2, isUSUnit);
 		
 		logger.info("Change weight to: " + w1 + w2 + (isUSUnit? " lbs" : " kg"));
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayOne();
     }
     
 

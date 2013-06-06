@@ -37,7 +37,7 @@ public class SignInWithFacebookAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(10000);
 		
 		// token expired, try to log in another time
-		if(!HomeScreen.isToday())
+		if(LaunchScreen.isAtInitialScreen())
 		{
 			SignIn.tapLogInWithFacebook();
 			ShortcutsTyper.delayTime(10000);
