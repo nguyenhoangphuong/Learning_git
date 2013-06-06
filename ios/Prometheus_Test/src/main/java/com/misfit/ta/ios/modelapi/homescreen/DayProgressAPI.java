@@ -111,7 +111,7 @@ public class DayProgressAPI extends ModelAPI {
 	public void v_TodayDefault() 
 	{
 		// check initial data
-		Assert.assertTrue(HomeScreen.isPointRemainProgessCircle(), "Progress circle display point left by default");
+		Assert.assertTrue(HomeScreen.isPointEarnedProgessCircle(), "Progress circle display point earned by default");
 	}
 	
 	/**
