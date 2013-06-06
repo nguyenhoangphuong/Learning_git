@@ -303,8 +303,11 @@ public class PrometheusHelper {
 	public static void main(String[] args)
 	{
 		Gui.init("192.168.1.185");
-		
-		Assert.assertTrue(HomeSettings.isAtSettings(), "is today");
+		int[] goalPoints = { 600, 1000, 1600 };
+		String[] runningEquals = { "60", "100", "160" };
+		String[] walkingEquals = { "6,000", "10,000", "16,000" };
+		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String.format(" _Running_ %s city blocks, or", runningEquals[0])), "Running equivalent for level 0 is correct");
+		System.out.print(Gui.getProperty("PTRichTextLabel", 0, "text"));
 	}
 	
 }
