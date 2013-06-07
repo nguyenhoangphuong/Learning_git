@@ -40,7 +40,7 @@ public class LaunchScreen {
     
     public static boolean isAtLaunchScreen()
     {
-    	return ViewUtils.isExistedView("UIButtonLabel", "I have a Shine");
+    	return ViewUtils.isExistedView("UIButtonLabel", " I have a Shine");
     }
     
     public static boolean isAtInitialScreen()
