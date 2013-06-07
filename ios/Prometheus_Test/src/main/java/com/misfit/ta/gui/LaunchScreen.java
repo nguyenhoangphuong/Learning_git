@@ -6,7 +6,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class LaunchScreen {
 	
     public static void tapIHaveAShine() {
-        Gui.touchAVIew("UIButtonLabel", "I have a Shine");
+        Gui.touchAVIew("UIButtonLabel", " I have a Shine");
     }
 
     public static void tapSetUpYourShine() {

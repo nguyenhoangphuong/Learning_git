@@ -39,8 +39,11 @@ public class BaseResult {
             json = (JSONObject) JSONSerializer.toJSON(this.rawData.toString());
 
             // middle level data
-            this.errorMessage = json.getString("error_message");
-            this.pairResult.put("error_message", this.errorMessage);
+            if(json.containsKey("error_message"))
+            {
+            	this.errorMessage = json.getString("error_message");
+            	this.pairResult.put("error_message", this.errorMessage);
+            }
         }
 
         this.statusCode = response.getStatusCode();

@@ -12,12 +12,17 @@ public class AccountResult extends BaseResult {
         super(response);
 
         // result
-        this.token = json.getString("auth_token");
-        this.type = json.getString("type");
-
-        // add to base hashmap
-        this.pairResult.put("auth_token", this.token);
-        this.pairResult.put("type", this.type);
+        if(json.containsKey("auth_token"))
+        {
+        	this.token = json.getString("auth_token");
+        	this.pairResult.put("auth_token", this.token);
+        }
+        
+        if(json.containsKey("type"))
+        {
+        	this.type = json.getString("type");
+        	this.pairResult.put("type", this.type);
+        }
     }
 
 }

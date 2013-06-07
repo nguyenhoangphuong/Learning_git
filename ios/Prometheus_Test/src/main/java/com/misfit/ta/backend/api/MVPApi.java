@@ -377,6 +377,8 @@ public class MVPApi {
     }
 
     public static void main(String[] args) {
-        MVPApi.removeUser("5142d9a6caedd02bee000062");
+        MVPApi.signUp("qa001@a.a", "a1v2sa2", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
+//    	MVPApi.signIn("uPPerCAse@a.a", "a1v2sa2", "f230d0c4e69f08cb31e8535f5b512ed7c140289b");
+    	//MVPApi.signOut("4555241420206250051-26xcMsx9CwVyrtipz4Ei");
     }
 }
