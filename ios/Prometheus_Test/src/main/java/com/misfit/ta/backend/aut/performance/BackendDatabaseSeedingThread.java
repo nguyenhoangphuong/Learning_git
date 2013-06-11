@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.aut;
+package com.misfit.ta.backend.aut.performance;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -7,6 +7,8 @@ import org.testng.Assert;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.DefaultValues;
+import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.AccountResult;
 import com.misfit.ta.backend.data.ProfileData;
 import com.misfit.ta.backend.data.ProfileResult;
@@ -20,17 +22,15 @@ public class BackendDatabaseSeedingThread implements Runnable {
     private JSONArray timelineItems;
     private JSONArray graphItems;
     private ResultLogger rlog;
-    private BackendDatabaseSeeding test;
 
     Logger logger = Util.setupLogger(BackendDatabaseSeedingThread.class);
 
     public BackendDatabaseSeedingThread(int userCount, JSONArray timelineItems,
-            JSONArray graphItems, ResultLogger rlog, BackendDatabaseSeeding test) {
+            JSONArray graphItems, ResultLogger rlog) {
         this.userCount = userCount;
         this.timelineItems = timelineItems;
         this.graphItems = graphItems;
         this.rlog = rlog;
-        this.test = test;
     }
 
     public void run() {

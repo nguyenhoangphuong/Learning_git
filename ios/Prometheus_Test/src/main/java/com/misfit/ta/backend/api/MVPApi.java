@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -22,7 +20,6 @@ import com.google.resting.json.JSONException;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.aut.BackendDatabaseSeedingThread;
 import com.misfit.ta.backend.data.AccountResult;
 import com.misfit.ta.backend.data.ActivityResult;
 import com.misfit.ta.backend.data.BaseParams;
@@ -36,8 +33,8 @@ import com.misfit.ta.backend.data.timeline.ActivitySessionItem;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.TimelineItemBase;
 import com.misfit.ta.backend.data.timeline.WeatherItem;
-import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
+import com.thoughtworks.selenium.condition.Not;
 
 public class MVPApi {
 
@@ -83,7 +80,7 @@ public class MVPApi {
     }
 
     static public String generateUniqueEmail() {
-        return System.currentTimeMillis() + TextTool.getRandomString(6,6)+  "@qa.com";
+        return System.currentTimeMillis() + TextTool.getRandomString(6, 6) + "@qa.com";
     }
 
     // account apis
@@ -409,6 +406,31 @@ public class MVPApi {
         return response;
     }
 
+    static public List<TimelineItem> getTimelineItems(String token, long startTime, long endTime, long modifiedSince) {
+        String url = baseAddress + "timeline_items";
+
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        ServiceResponse response;
+        try {
+
+            int count = 0;
+            // request.addParam("startTime", String.valueOf(startTime));
+            // request.addParam("endTime", String.valueOf(endTime));
+            request.addParam("modifiedSince", String.valueOf(modifiedSince));
+            response = MVPApi.get(url, port, request);
+            List<TimelineItem> items = TimelineItem.getTimelineItems(response);
+            count += items.size();
+            System.out.println("LOG [MVPApi.getTimelineItems]: count= " + count);
+            return items;
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     static public ServiceResponse createTimelineItems(String token, JSONArray items) {
         // prepare
         String url = baseAddress + "timeline_items/batch_insert";
@@ -422,49 +444,89 @@ public class MVPApi {
         return response;
     }
 
-    public static void main(String[] args) {
-        // ---------------------------------
-        MVPApi api = new MVPApi();
-        api.runThreadTest();
+    static public JSONArray[] generateTimelineItemsAndGraphItems() {
+        int numberOfItemsPerDay = 1;
+        int numberOfDays = 1;
+        numberOfItemsPerDay = Settings.getInt("NUMBER_OF_ITEMS_PER_DAY");
+        numberOfDays = Settings.getInt("NUMBER_OF_DAYS");
+        return generateTimelineItemsAndGraphItems(numberOfDays, numberOfItemsPerDay);
     }
 
-    public void runThreadTest() {
-        ExecutorService executor = Executors.newFixedThreadPool(10);
+    static public JSONArray[] generateTimelineItemsAndGraphItems(int numberOfDays, int numberOfItemsPerDay) {
 
-        int userCount = 0;
-        while (userCount < 5) {
+        JSONArray timelineItems = new JSONArray();
+        JSONArray graphItems = new JSONArray();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-            for (int threads = 0; threads < 10; threads++) {
-                MyThread thread = new MyThread(userCount);
+        long now = System.currentTimeMillis() / 1000;
+        System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: now1=" + now);
+        System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: now= " + df.format(new Date(now * 1000)));
+        // data for a number of days
+        long period = 86400 / numberOfItemsPerDay;
+        System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: period= " + period);
+        for (int k = 0; k < numberOfDays; k++) {
+            long tmp = now - (k * period * 24);
+            // one weather per day
+            WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
+            TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_WEATHER, tmp, tmp, weather, TextTool
+                    .getRandomString(19, 20), null, null);
+            timelineItems.put(timeline.toJson());
 
-                executor.execute(thread);
-                userCount++;
+            for (int j = 0; j < numberOfItemsPerDay; j++) {
+                // one timeline item per hour
+                tmp -= 3600;
 
+                // df.format(new Date(tmp));
+                System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: tmp= " + tmp);
+                System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: date: "
+                        + df.format(new Date(tmp * 1000)));
+
+                ActivitySessionItem session = new ActivitySessionItem(tmp, 2222, 22, tmp, 22, 2, 22, 22);
+                TimelineItem tmpItem = new TimelineItem(TimelineItemBase.TYPE_SESSION, tmp, tmp, session, TextTool
+                        .getRandomString(19, 20), null, null);
+                timelineItems.put(tmpItem.toJson());
+
+                // one graph item per hour
+                GraphItem graphItem = new GraphItem(tmp, 50, TextTool.getRandomString(19, 20), tmp);
+                graphItems.put(graphItem.toJson());
             }
-//            ShortcutsTyper.delayTime(4000);
-//            System.out.println("LOG [MVPApi.runThreadTest]: adding more threads");
-
         }
-        executor.shutdown();
+
+        JSONArray[] array = new JSONArray[2];
+        array[0] = timelineItems;
+        array[1] = graphItems;
+        // System.exit(0);
+        return array;
     }
 
-    public class MyThread implements Runnable {
-        int count = 0;
+    public static void main(String[] args) {
+        // AccountResult r = MVPApi.signIn("tung@misfitwearables.com",
+        // "qwerty1", "somelocal id");
 
-        public MyThread(int count) {
-            this.count = count;
+        // AccountResult r = MVPApi.signIn("1370526991524dwQnX95@qa.com",
+        // "misfit1", "somelocal id");
+        // String token = r.token;
+        // System.out.println("LOG [MVPApi.main]: token: " + token);
+        // long now = System.currentTimeMillis()/1000;
+        // MVPApi.getTimelineItems(token, now - 8640, now, now - 86400);
+
+        for (int i = 0; i < 20; i++) {
+
+            AccountResult r = MVPApi.signUp(MVPApi.generateUniqueEmail(), "misfit1", TextTool.getRandomString(7, 8));
+            String token = r.token;
+
+            System.out.println("LOG [MVPApi.main]: token: " + token);
+            System.out.println("LOG [MVPApi.main]: error: " + r.rawData);
         }
 
-        public void run() {
-            System.out.println("LOG: " + Thread.currentThread().getName() + " Start " + count);
-            ShortcutsTyper.delayTime(5000);
-            System.out.println("LOG: " + Thread.currentThread().getName() + " END " );
-        }
-    }
+        // long now = System.currentTimeMillis();
+        // now = now /1000;
+        // System.out.println("LOG [MVPApi.main]: now: " + now);
+        // DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // Date date = new Date(now);
+        // System.out.println("LOG [MVPApi.main]: " + date.toString());
+        // System.out.println("LOG [MVPApi.main]: date=" + df.format(new
+        // Date(now*1000)));
 
-    public static String timestampToISODate(long timestamp) {
-        Date expiry = new Date(timestamp);
-        DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss,S");
-        return "ISODate(\"" + df.format(expiry) + "\")";
     }
 }

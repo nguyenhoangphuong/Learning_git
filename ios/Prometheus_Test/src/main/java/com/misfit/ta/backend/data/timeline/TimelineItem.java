@@ -1,10 +1,13 @@
 package com.misfit.ta.backend.data.timeline;
 
+import java.util.List;
+import java.util.Vector;
+
+import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
-import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.data.JSONBuilder;
+import com.misfit.ta.backend.data.ActivityResult;
 
 public class TimelineItem {
 
@@ -101,5 +104,34 @@ public class TimelineItem {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    public static List<TimelineItem> getTimelineItems(ServiceResponse response) throws JSONException {
+        List<TimelineItem> items = new Vector<TimelineItem>();
+        JSONObject responseBody = new JSONObject(response.getResponseString());
+        JSONArray jsonItems = responseBody.getJSONArray("timeline_items");
+
+        for (int i = 0; i < jsonItems.length(); i++) {
+            JSONObject obj = jsonItems.getJSONObject(i);
+            TimelineItem item = new TimelineItem(obj.getInt("itemType"),
+                    obj.getLong("updatedAt"), 
+                    obj.getLong("timestamp"), 
+                    // TODO: for now we dont care about the data
+                    //(TimelineItemBase) (obj.get("data")),
+                    new TimelineItemBase(0, 0) {
+                        @Override
+                        public JSONObject toJson() {
+                            // TODO Auto-generated method stub
+                            return null;
+                        }
+                    },
+                    obj.getString("localId"), 
+                    obj.getString("serverId"),
+                    null);
+            
+            items.add(item);
+        }
+        
+        return items;
     }
 }
