@@ -33,6 +33,7 @@ import com.misfit.ta.backend.data.ProfileData;
 import com.misfit.ta.backend.data.ProfileResult;
 import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.timeline.ActivitySessionItem;
+import com.misfit.ta.backend.data.timeline.NotableEventItem;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.TimelineItemBase;
 import com.misfit.ta.backend.data.timeline.WeatherItem;
@@ -45,8 +46,8 @@ public class MVPApi {
     private static Logger logger = Util.setupLogger(MVPApi.class);
 
     // fields
-    static public String baseAddress = Settings.getValue("MVPBackendBaseAddress");
-    static public int port = Integer.parseInt(Settings.getValue("MVPBackendPort"));
+    public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
+    public static int port = Integer.parseInt(Settings.getValue("MVPBackendPort"));
 
     // helpers
     static private ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
@@ -82,7 +83,7 @@ public class MVPApi {
         return request("put", url, port, requestInf);
     }
 
-    static public String generateUniqueEmail() {
+    public static String generateUniqueEmail() {
         return System.currentTimeMillis() + TextTool.getRandomString(6, 6) + "@qa.com";
     }
 
@@ -107,15 +108,15 @@ public class MVPApi {
         return result;
     }
 
-    static public AccountResult signIn(String email, String password, String udid) {
+    public static AccountResult signIn(String email, String password, String udid) {
         return sign(email, password, udid, "login");
     }
 
-    static public AccountResult signUp(String email, String password, String udid) {
+    public static AccountResult signUp(String email, String password, String udid) {
         return sign(email, password, udid, "signup");
     }
 
-    static public BaseResult signOut(String token) {
+    public static BaseResult signOut(String token) {
         // trace
         logger.info("Token: " + token);
 
@@ -170,7 +171,7 @@ public class MVPApi {
         return requestInf;
     }
 
-    static public ProfileResult createProfile(String token, ProfileData data) {
+    public static ProfileResult createProfile(String token, ProfileData data) {
         // prepare
         String url = baseAddress + "profile";
 
@@ -185,7 +186,7 @@ public class MVPApi {
         return result;
     }
 
-    static public ProfileResult getProfile(String token) {
+    public static ProfileResult getProfile(String token) {
         // prepare
         String url = baseAddress + "profile";
 
@@ -200,7 +201,7 @@ public class MVPApi {
         return result;
     }
 
-    static public ProfileResult updateProfile(String token, ProfileData data, String id) {
+    public static ProfileResult updateProfile(String token, ProfileData data, String id) {
         logger.info("Id: " + id + ", Updated at: " + data.updatedAt);
         // prepare
         String url = baseAddress + "profile";
@@ -251,7 +252,7 @@ public class MVPApi {
         return requestInf;
     }
 
-    static public GoalsResult searchGoal(String token, Long startTime, Long endTime, Long modifiedSince) {
+    public static GoalsResult searchGoal(String token, Long startTime, Long endTime, Long modifiedSince) {
         // prepare
         String url = baseAddress + "goals";
 
@@ -269,7 +270,7 @@ public class MVPApi {
         return result;
     }
 
-    static public GoalsResult getGoal(String token, String serverId) {
+    public static GoalsResult getGoal(String token, String serverId) {
         // prepare
         String url = baseAddress + "goals/" + serverId;
 
@@ -284,7 +285,7 @@ public class MVPApi {
         return result;
     }
 
-    static public GoalsResult createGoal(String token, Double goalValue, Long startTime, Long endTime,
+    public static GoalsResult createGoal(String token, Double goalValue, Long startTime, Long endTime,
             Integer absoluteLevel, Integer userRelativeLevel, Integer timeZoneOffsetInSeconds,
             String[] progressValuesInMinutesNSData, String localId) {
         // prepare
@@ -301,7 +302,7 @@ public class MVPApi {
         return result;
     }
 
-    static public GoalsResult updateGoal(String token, Long updatedAt, Double goalValue, Long startTime, Long endTime,
+    public static GoalsResult updateGoal(String token, Long updatedAt, Double goalValue, Long startTime, Long endTime,
             Integer absoluteLevel, Integer userRelativeLevel, Integer timeZoneOffsetInSeconds,
             String[] progressValuesInMinutesNSData, String localId) {
         // prepare
@@ -318,7 +319,7 @@ public class MVPApi {
         return result;
     }
 
-    static public GoalsResult updateGoal(String token, GoalsResult.Goal goal) {
+    public static GoalsResult updateGoal(String token, GoalsResult.Goal goal) {
         // prepare
         String url = baseAddress + "profile";
 
@@ -335,7 +336,7 @@ public class MVPApi {
     }
 
     // Activity APIs
-    static public ActivityResult getActivity(String token, Object id) {
+    public static ActivityResult getActivity(String token, Object id) {
         // prepare
         String url = baseAddress + "activities/" + id.toString();
         BaseParams requestInf = new BaseParams();
@@ -351,7 +352,7 @@ public class MVPApi {
         return result;
     }
 
-    static public List<ActivityResult> searchActivity(String token, Object startTime, Object endTime,
+    public static List<ActivityResult> searchActivity(String token, Object startTime, Object endTime,
             Object modifiedSince) throws JSONException {
         // prepare
         String url = baseAddress + "activities";
@@ -371,7 +372,7 @@ public class MVPApi {
         return activities;
     }
 
-    static public List<ActivityResult> createActivities(String token, List<ActivityResult> activities, Object serverId,
+    public static List<ActivityResult> createActivities(String token, List<ActivityResult> activities, Object serverId,
             Object clientId, Object updatedAt) throws JSONException {
         // prepare
         String url = baseAddress + "activities";
@@ -391,7 +392,7 @@ public class MVPApi {
         return activities;
     }
 
-    static public void removeUser(String id) {
+    public static void removeUser(String id) {
         BaseParams requestInf = new BaseParams();
         requestInf.addParam("authenticity_token", "ki5608apM0mqEpFwvNW6i8Czu6tktVT0+UlWWVhu0Mg");
         MVPApi.post("https://staging-api.misfitwearables.com/shine/v6/admin/delete_user?id=" + id, 443, requestInf);
@@ -422,7 +423,7 @@ public class MVPApi {
         return createGraphItems(token, jsonItems);
     }
     
-	static public List<GraphItem> getGraphItems(String token,
+	public static List<GraphItem> getGraphItems(String token,
 			long startTime,
 			long endTime,
 			long modifiedSince) {
@@ -450,7 +451,7 @@ public class MVPApi {
 		}
 	}
 
-    static public List<TimelineItem> getTimelineItems(String token, long startTime, long endTime, long modifiedSince) {
+    public static List<TimelineItem> getTimelineItems(String token, long startTime, long endTime, long modifiedSince) {
         String url = baseAddress + "timeline_items";
 
         BaseParams request = new BaseParams();
@@ -475,7 +476,7 @@ public class MVPApi {
 
     }
 
-    static public ServiceResponse createTimelineItems(String token, JSONArray items) {
+    public static ServiceResponse createTimelineItems(String token, JSONArray items) {
         // prepare
         String url = baseAddress + "timeline_items/batch_insert";
 
@@ -488,7 +489,7 @@ public class MVPApi {
         return response;
     }
 
-    static public JSONArray[] generateTimelineItemsAndGraphItems() {
+    public static JSONArray[] generateTimelineItemsAndGraphItems() {
         int numberOfItemsPerDay = 1;
         int numberOfDays = 1;
         numberOfItemsPerDay = Settings.getInt("NUMBER_OF_ITEMS_PER_DAY");
@@ -496,7 +497,7 @@ public class MVPApi {
         return generateTimelineItemsAndGraphItems(numberOfDays, numberOfItemsPerDay);
     }
 
-    static public JSONArray[] generateTimelineItemsAndGraphItems(int numberOfDays, int numberOfItemsPerDay) {
+    public static JSONArray[] generateTimelineItemsAndGraphItems(int numberOfDays, int numberOfItemsPerDay) {
 
         JSONArray timelineItems = new JSONArray();
         JSONArray graphItems = new JSONArray();
@@ -511,9 +512,7 @@ public class MVPApi {
         for (int k = 0; k < numberOfDays; k++) {
             long tmp = now - (k * period * 24);
             // one weather per day
-            WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
-            TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_WEATHER, tmp, tmp, weather, TextTool
-                    .getRandomString(19, 20), null, null);
+            TimelineItem timeline = generateWeatherTimelineItem(tmp);
             timelineItems.put(timeline.toJson());
 
             for (int j = 0; j < numberOfItemsPerDay; j++) {
@@ -525,13 +524,11 @@ public class MVPApi {
                 System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: date: "
                         + df.format(new Date(tmp * 1000)));
 
-                ActivitySessionItem session = new ActivitySessionItem(tmp, 2222, 22, tmp, 22, 2, 22, 22);
-                TimelineItem tmpItem = new TimelineItem(TimelineItemBase.TYPE_SESSION, tmp, tmp, session, TextTool
-                        .getRandomString(19, 20), null, null);
+                TimelineItem tmpItem = generateActivitySessionItem(tmp);
                 timelineItems.put(tmpItem.toJson());
 
                 // one graph item per hour
-                //GraphItem graphItem = new GraphItem(tmp, 50, TextTool.getRandomString(19, 20), tmp);
+                //TODO: one graph item per 2020s 
                 GraphItem graphItem = new GraphItem(tmp, 1, tmp);
                 graphItems.put(graphItem.toJson());
             }
@@ -543,6 +540,28 @@ public class MVPApi {
         // System.exit(0);
         return array;
     }
+
+	public static TimelineItem generateActivitySessionItem(long tmp) {
+		ActivitySessionItem session = new ActivitySessionItem(tmp, 2222, 22, tmp, 22, 2, 22, 22);
+		TimelineItem tmpItem = new TimelineItem(TimelineItemBase.TYPE_SESSION, tmp, tmp, session, TextTool
+		        .getRandomString(19, 20), null, null);
+		return tmpItem;
+	}
+
+	public static TimelineItem generateWeatherTimelineItem(long tmp) {
+		WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
+		TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_WEATHER, tmp, tmp, weather, TextTool
+		        .getRandomString(19, 20), null, null);
+		return timeline;
+	}
+	
+	public static TimelineItem generateNotableEventItem(long tmp, int value) {
+		NotableEventItem notableEventItem = new NotableEventItem(tmp, null, null, value, 1);
+		TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_NOTABLE, tmp, tmp, notableEventItem, TextTool
+		        .getRandomString(19, 20), null, null);
+		return timeline;
+	}
+    
 
     public static void main(String[] args) throws JSONException {
     	AccountResult r1 = MVPApi.signIn("tung@misfitwearables.com", "qwerty1",
