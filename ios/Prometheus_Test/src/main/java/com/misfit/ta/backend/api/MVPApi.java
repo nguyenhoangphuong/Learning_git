@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import netscape.javascript.JSObject;
+
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
@@ -17,6 +19,7 @@ import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
@@ -394,17 +397,58 @@ public class MVPApi {
         MVPApi.post("https://staging-api.misfitwearables.com/shine/v6/admin/delete_user?id=" + id, 443, requestInf);
     }
 
-    public static ServiceResponse createGraphItems(String token, JSONArray array) {
-        // prepare
+    public static ServiceResponse createGraphItems(String token,
+    		JSONArray jsonItems) {
         String url = baseAddress + "graph_items/batch_insert";
-        BaseParams requestInf = new BaseParams();
-        requestInf.addHeader("auth_token", token);
-        requestInf.addParam("graph_items", array.toString());
-
-        // make POST request and receive raw data
-        ServiceResponse response = MVPApi.post(url, port, requestInf);
+        BaseParams request = new BaseParams();
+        ServiceResponse response;
+        
+        request.addHeader("auth_token", token);
+        request.addParam("graph_items", jsonItems.toString());
+        
+        response = MVPApi.post(url, port, request);
+        
         return response;
     }
+    
+    public static ServiceResponse createGraphItems(String token,
+    		List<GraphItem> graphItems) throws JSONException {
+        JSONArray jsonItems = new JSONArray();
+        
+        for (int i = 0; i < graphItems.size(); i++) {
+        	jsonItems.put(graphItems.get(i).toJson());
+        }
+        
+        return createGraphItems(token, jsonItems);
+    }
+    
+	static public List<GraphItem> getGraphItems(String token,
+			long startTime,
+			long endTime,
+			long modifiedSince) {
+		String url = baseAddress + "graph_items";
+		BaseParams request = new BaseParams();
+		ServiceResponse response;
+		List<GraphItem> items;
+
+		request.addHeader("auth_token", token);
+		request.addParam("startTime", String.valueOf(startTime));
+		request.addParam("endTime", String.valueOf(endTime));
+		request.addParam("modifiedSince", String.valueOf(modifiedSince));
+
+		try {
+			response = MVPApi.get(url, port, request);
+			items = GraphItem.getGraphItems(response);
+			System.out.println("LOG [MVPApi.getGraphItems]: count = "
+					+ items.size());
+
+			return items;
+		} catch (JSONException e) {
+			e.printStackTrace();
+
+			return null;
+		}
+	}
 
     static public List<TimelineItem> getTimelineItems(String token, long startTime, long endTime, long modifiedSince) {
         String url = baseAddress + "timeline_items";
@@ -415,8 +459,8 @@ public class MVPApi {
         try {
 
             int count = 0;
-            // request.addParam("startTime", String.valueOf(startTime));
-            // request.addParam("endTime", String.valueOf(endTime));
+//             request.addParam("startTime", String.valueOf(startTime));
+//             request.addParam("endTime", String.valueOf(endTime));
             request.addParam("modifiedSince", String.valueOf(modifiedSince));
             response = MVPApi.get(url, port, request);
             List<TimelineItem> items = TimelineItem.getTimelineItems(response);
@@ -487,7 +531,8 @@ public class MVPApi {
                 timelineItems.put(tmpItem.toJson());
 
                 // one graph item per hour
-                GraphItem graphItem = new GraphItem(tmp, 50, TextTool.getRandomString(19, 20), tmp);
+                //GraphItem graphItem = new GraphItem(tmp, 50, TextTool.getRandomString(19, 20), tmp);
+                GraphItem graphItem = new GraphItem(tmp, 1, tmp);
                 graphItems.put(graphItem.toJson());
             }
         }
@@ -499,34 +544,24 @@ public class MVPApi {
         return array;
     }
 
-    public static void main(String[] args) {
-        // AccountResult r = MVPApi.signIn("tung@misfitwearables.com",
-        // "qwerty1", "somelocal id");
-
-        // AccountResult r = MVPApi.signIn("1370526991524dwQnX95@qa.com",
-        // "misfit1", "somelocal id");
-        // String token = r.token;
-        // System.out.println("LOG [MVPApi.main]: token: " + token);
-        // long now = System.currentTimeMillis()/1000;
-        // MVPApi.getTimelineItems(token, now - 8640, now, now - 86400);
-
-        for (int i = 0; i < 20; i++) {
-
-            AccountResult r = MVPApi.signUp(MVPApi.generateUniqueEmail(), "misfit1", TextTool.getRandomString(7, 8));
-            String token = r.token;
-
-            System.out.println("LOG [MVPApi.main]: token: " + token);
-            System.out.println("LOG [MVPApi.main]: error: " + r.rawData);
-        }
-
-        // long now = System.currentTimeMillis();
-        // now = now /1000;
-        // System.out.println("LOG [MVPApi.main]: now: " + now);
-        // DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        // Date date = new Date(now);
-        // System.out.println("LOG [MVPApi.main]: " + date.toString());
-        // System.out.println("LOG [MVPApi.main]: date=" + df.format(new
-        // Date(now*1000)));
-
+    public static void main(String[] args) throws JSONException {
+    	AccountResult r1 = MVPApi.signIn("tung@misfitwearables.com", "qwerty1",
+    			"somelocal id");
+    	AccountResult r2 = MVPApi.signIn("keepmesignedin@email.com", "qwerty1",
+    			"somelocal id");
+    	
+    	List<GraphItem> graphItems = MVPApi.getGraphItems(r1.token,
+    			1370070000,
+    			1370073600,
+    			631152000);
+    	MVPApi.getGraphItems(r2.token,
+    			1370070000,
+    			1370073600,
+    			631152000);
+    	MVPApi.createGraphItems(r2.token, graphItems);
+    	MVPApi.getGraphItems(r2.token,
+    			1370070000,
+    			1370073600,
+    			631152000);
     }
 }
