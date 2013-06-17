@@ -567,9 +567,8 @@ public class MVPApi {
 		String url = baseAddress + "pedometer";
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
-		ServiceResponse response;
 		try {
-			response = MVPApi.get(url, port, request);
+			ServiceResponse response = MVPApi.get(url, port, request);
 			Pedometer pedometer = Pedometer.getPedometer(response);
 			return pedometer;
 		} catch (JSONException e) {
@@ -583,9 +582,8 @@ public class MVPApi {
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
 		request.addParam("serial_number_string", serialNumberString);
-		ServiceResponse response;
 		try {
-			response = MVPApi.get(url, port, request);
+			ServiceResponse response = MVPApi.get(url, port, request);
 			String message = Pedometer.getMessage(response);
 			return message;
 		} catch (JSONException e) {
@@ -599,9 +597,8 @@ public class MVPApi {
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
 		request.addParam("serial_number_string", serialNumberString);
-		ServiceResponse response;
 		try {
-			response = MVPApi.put(url, port, request);
+			ServiceResponse response = MVPApi.put(url, port, request);
 			String message = Pedometer.getMessage(response);
 			return message;
 		} catch (JSONException e) {
@@ -610,26 +607,54 @@ public class MVPApi {
 		}
 	}
 	
-	public static Pedometer editPedometer(String token,
+	public static Pedometer createPedometer(String token,
 			String serialNumberString, String firmwareRevisionString,
 			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
 			String localId, String serverId, long updatedAt) {
 		String url = baseAddress + "pedometer";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		Pedometer pedometer = new Pedometer(serialNumberString,
-				firmwareRevisionString, linkedTime, unlinkedTime,
-				lastSyncedTime, localId, serverId, updatedAt);
-		request.addObjectParam("pedometer", pedometer.toJson().toString());
-		ServiceResponse response;
+		BaseParams request = buildEditPedometerRequest(token,
+				serialNumberString, firmwareRevisionString, linkedTime,
+				unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
 		try {
-			response = MVPApi.post(url, port, request);
+			ServiceResponse response = MVPApi.post(url, port, request);
 			Pedometer result = Pedometer.getPedometer(response);
 			return result;
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static Pedometer updatePedometer(String token,
+			String serialNumberString, String firmwareRevisionString,
+			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
+			String localId, String serverId, long updatedAt) {
+		String url = baseAddress + "pedometer";
+		BaseParams request = buildEditPedometerRequest(token,
+				serialNumberString, firmwareRevisionString, linkedTime,
+				unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
+		try {
+			ServiceResponse response = MVPApi.put(url, port, request);
+			Pedometer result = Pedometer.getPedometer(response);
+			return result;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+
+	public static BaseParams buildEditPedometerRequest(String token,
+			String serialNumberString, String firmwareRevisionString,
+			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
+			String localId, String serverId, long updatedAt) {
+		BaseParams request = new BaseParams();
+		request.addHeader("auth_token", token);
+		Pedometer pedometer = new Pedometer(serialNumberString,
+				firmwareRevisionString, linkedTime, unlinkedTime,
+				lastSyncedTime, localId, serverId, updatedAt);
+		request.addObjectParam("pedometer", pedometer.toJson().toString());
+		return request;
 	}
 
     public static void main(String[] args) throws JSONException {

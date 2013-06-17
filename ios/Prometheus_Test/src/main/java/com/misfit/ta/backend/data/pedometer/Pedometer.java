@@ -96,7 +96,6 @@ public class Pedometer {
 	public JSONObject toJson() {
 		try {
 			JSONObject object = new JSONObject();
-
 			object.accumulate("serverId", serverId);
 			object.accumulate("localId", localId);
 			object.accumulate("updatedAt", updatedAt);
@@ -117,19 +116,22 @@ public class Pedometer {
 		JSONObject responseBody = new JSONObject(response.getResponseString());
 		JSONObject obj = responseBody.getJSONObject("pedometer");
 		Pedometer pedometer = new Pedometer(
-				obj.getString("serialNumberString"),
-				obj.getString("firmwareRevisionString"),
-				obj.getLong("linkedTime"), obj.getLong("unlinkedTime"),
-				obj.getLong("lastSyncedTime"), obj.getString("localId"),
+				obj.isNull("serialNumberString") ? null : obj.getString("serialNumberString"),
+				obj.isNull("firmwareRevisionString") ? null : obj.getString("firmwareRevisionString"),
+				obj.isNull("linkedTime") ? null : obj.getLong("linkedTime"),
+				obj.isNull("unlinkedTime") ? null : obj.getLong("unlinkedTime"),
+				obj.isNull("lastSyncedTime") ? null : obj
+						.getLong("lastSyncedTime"), obj.getString("localId"),
 				obj.getString("serverId"), obj.getLong("updatedAt"));
 		return pedometer;
 	}
-	
-	public static String getMessage(ServiceResponse response) throws JSONException {
+
+	public static String getMessage(ServiceResponse response)
+			throws JSONException {
 		JSONObject responseBody = new JSONObject(response.getResponseString());
 		return responseBody.getString("message");
 	}
-	
+
 	public static int getResult(ServiceResponse response) throws JSONException {
 		JSONObject responseBody = new JSONObject(response.getResponseString());
 		return responseBody.getInt("result");
