@@ -32,6 +32,7 @@ import com.misfit.ta.backend.data.JSONBuilder;
 import com.misfit.ta.backend.data.ProfileData;
 import com.misfit.ta.backend.data.ProfileResult;
 import com.misfit.ta.backend.data.graph.GraphItem;
+import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.timeline.ActivitySessionItem;
 import com.misfit.ta.backend.data.timeline.NotableEventItem;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
@@ -561,7 +562,75 @@ public class MVPApi {
 		        .getRandomString(19, 20), null, null);
 		return timeline;
 	}
-    
+	
+	public static Pedometer showPedometer(String token) {
+		String url = baseAddress + "pedometer";
+		BaseParams request = new BaseParams();
+		request.addHeader("auth_token", token);
+		ServiceResponse response;
+		try {
+			response = MVPApi.get(url, port, request);
+			Pedometer pedometer = Pedometer.getPedometer(response);
+			return pedometer;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String getDeviceLinkingStatus(String token, String serialNumberString) {
+		String url = baseAddress + "device_linking_status";
+		BaseParams request = new BaseParams();
+		request.addHeader("auth_token", token);
+		request.addParam("serial_number_string", serialNumberString);
+		ServiceResponse response;
+		try {
+			response = MVPApi.get(url, port, request);
+			String message = Pedometer.getMessage(response);
+			return message;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String unlinkDevice(String token, String serialNumberString) {
+		String url = baseAddress + "unlink_device";
+		BaseParams request = new BaseParams();
+		request.addHeader("auth_token", token);
+		request.addParam("serial_number_string", serialNumberString);
+		ServiceResponse response;
+		try {
+			response = MVPApi.put(url, port, request);
+			String message = Pedometer.getMessage(response);
+			return message;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static Pedometer editPedometer(String token,
+			String serialNumberString, String firmwareRevisionString,
+			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
+			String localId, String serverId, long updatedAt) {
+		String url = baseAddress + "pedometer";
+		BaseParams request = new BaseParams();
+		request.addHeader("auth_token", token);
+		Pedometer pedometer = new Pedometer(serialNumberString,
+				firmwareRevisionString, linkedTime, unlinkedTime,
+				lastSyncedTime, localId, serverId, updatedAt);
+		request.addObjectParam("pedometer", pedometer.toJson().toString());
+		ServiceResponse response;
+		try {
+			response = MVPApi.post(url, port, request);
+			Pedometer result = Pedometer.getPedometer(response);
+			return result;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
     public static void main(String[] args) throws JSONException {
     	AccountResult r1 = MVPApi.signIn("tung@misfitwearables.com", "qwerty1",
