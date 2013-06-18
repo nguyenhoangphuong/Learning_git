@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -28,6 +29,8 @@ import com.misfit.ta.backend.data.GoalsResult;
 import com.misfit.ta.backend.data.JSONBuilder;
 import com.misfit.ta.backend.data.ProfileData;
 import com.misfit.ta.backend.data.ProfileResult;
+import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.timeline.ActivitySessionItem;
 import com.misfit.ta.backend.data.timeline.NotableEventItem;
@@ -217,46 +220,29 @@ public class MVPApi {
     }
 
     // goal apis
-    static private BaseParams createGoalParams(String token, Double goalValue, Long startTime, Long endTime,
-            Integer absoluteLevel, Integer userRelativeLevel, Integer timeZoneOffsetInSeconds,
-            String[] progressValuesInMinutesNSData, String localId, Long updatedAt) {
+    static private BaseParams createGoalParams(String token, double goalValue, long startTime, long endTime,
+            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds,
+            ProgressData progressData, String localId, long updatedAt) {
         // build json object string
-        JSONBuilder json = new JSONBuilder();
-        if (goalValue != null)
-            json.addValue("goalValue", goalValue);
-        if (startTime != null)
-            json.addValue("startTime", startTime);
-        if (endTime != null)
-            json.addValue("endTime", endTime);
-        if (absoluteLevel != null)
-            json.addValue("absoluteLevel", absoluteLevel);
-        if (userRelativeLevel != null)
-            json.addValue("userRelativeLevel", userRelativeLevel);
-        if (timeZoneOffsetInSeconds != null)
-            json.addValue("timeZoneOffsetInSeconds", timeZoneOffsetInSeconds);
-        if (progressValuesInMinutesNSData != null)
-            json.addValue("progressValuesInMinutesNSData", Arrays.toString(progressValuesInMinutesNSData));
-        if (localId != null)
-            json.addValue("localId", localId);
-        if (updatedAt != null)
-            json.addValue("updatedAt", updatedAt);
+        
+        Goal goal = new Goal(goalValue, startTime, endTime, absoluteLevel, userRelativeLevel, progressData, timeZoneOffsetInSeconds, localId, updatedAt);
 
         BaseParams requestInf = new BaseParams();
         requestInf.addHeader("auth_token", token);
-        requestInf.addParam("goal", json.toJSONString());
+        requestInf.addParam("goal", goal.toJson().toString());
 
         return requestInf;
     }
 
-    public static GoalsResult searchGoal(String token, Long startTime, Long endTime, Long modifiedSince) {
+    public static GoalsResult searchGoal(String token, long startTime, long endTime, long modifiedSince) {
         // prepare
         String url = baseAddress + "goals";
 
         BaseParams requestInf = new BaseParams();
         requestInf.addHeader("auth_token", token);
-        requestInf.addParam("startTime", startTime.toString());
-        requestInf.addParam("endTime", endTime.toString());
-        requestInf.addParam("updatedAt", modifiedSince.toString());
+        requestInf.addParam("startTime", String.valueOf(startTime));
+        requestInf.addParam("endTime", String.valueOf(endTime));
+        requestInf.addParam("updatedAt", String.valueOf(modifiedSince));
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.get(url, port, requestInf);
@@ -281,14 +267,14 @@ public class MVPApi {
         return result;
     }
 
-    public static GoalsResult createGoal(String token, Double goalValue, Long startTime, Long endTime,
-            Integer absoluteLevel, Integer userRelativeLevel, Integer timeZoneOffsetInSeconds,
-            String[] progressValuesInMinutesNSData, String localId) {
+    public static GoalsResult createGoal(String token, double goalValue, long startTime, long endTime,
+            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds,
+            ProgressData progressData, String localId) {
         // prepare
         String url = baseAddress + "goals";
-
+        
         BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel,
-                userRelativeLevel, timeZoneOffsetInSeconds, progressValuesInMinutesNSData, localId, null);
+                userRelativeLevel, timeZoneOffsetInSeconds, progressData, localId, 0);
 
         // post and receive raw data
         ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -298,14 +284,14 @@ public class MVPApi {
         return result;
     }
 
-    public static GoalsResult updateGoal(String token, Long updatedAt, Double goalValue, Long startTime, Long endTime,
-            Integer absoluteLevel, Integer userRelativeLevel, Integer timeZoneOffsetInSeconds,
-            String[] progressValuesInMinutesNSData, String localId) {
+    public static GoalsResult updateGoal(String token, long updatedAt, double goalValue, long startTime, long endTime,
+            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds,
+            ProgressData progressData, String localId) {
         // prepare
         String url = baseAddress + "profile";
 
         BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel,
-                userRelativeLevel, timeZoneOffsetInSeconds, progressValuesInMinutesNSData, localId, updatedAt);
+                userRelativeLevel, timeZoneOffsetInSeconds, progressData, localId, updatedAt);
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -315,13 +301,13 @@ public class MVPApi {
         return result;
     }
 
-    public static GoalsResult updateGoal(String token, GoalsResult.Goal goal) {
+    public static GoalsResult updateGoal(String token, Goal goal) {
         // prepare
         String url = baseAddress + "profile";
 
-        BaseParams requestInf = createGoalParams(token, goal.goalValue, goal.startTime, goal.endTime,
-                goal.absoluteLevel, goal.userRelativeLevel, goal.timeZoneOffsetInSeconds,
-                goal.progressValuesInMinutesNSData, goal.localId, goal.updatedAt);
+        BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(),
+                goal.getAbsoluteLevel(), goal.getUserRelativeLevel(), goal.getTimeZoneOffsetInSeconds(),
+                goal.getProgressData(), goal.getLocalId(), goal.getUpdatedAt());
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -551,15 +537,31 @@ public class MVPApi {
                 .getRandomString(19, 20), null, null);
         return timeline;
     }
+    
+    public static String generateRandomLocalId() {
+        return TextTool.getRandomString(6, 7);
+    }
 
     public static void main(String[] args) throws JSONException {
-        AccountResult r1 = MVPApi.signIn("tung@misfitwearables.com", "qwerty1", "somelocal id");
-        AccountResult r2 = MVPApi.signIn("keepmesignedin@email.com", "qwerty1", "somelocal id");
-
-        List<GraphItem> graphItems = MVPApi.getGraphItems(r1.token, 1370070000, 1370073600, 631152000);
-        MVPApi.getGraphItems(r2.token, 1370070000, 1370073600, 631152000);
-        MVPApi.createGraphItems(r2.token, graphItems);
-        MVPApi.getGraphItems(r2.token, 1370070000, 1370073600, 631152000);
-
+       
+        String username = generateUniqueEmail();
+       AccountResult r = signUp(username, "misfit1", "someudid");
+       String token = r.token;
+       System.out.println("LOG [MVPApi.main]: token: " + r.token);
+       long now = System.currentTimeMillis();
+       
+       Vector<Integer> points = new Vector<Integer>();
+       points.add(new Integer(0));
+       points.add(new Integer(1));
+       points.add(new Integer(2));
+       ProgressData data = new ProgressData(points, 100, 1234);
+       
+       GoalsResult goal = createGoal(token, new Double(100), new Long(now - 4200), new Long(now + 4200), new Integer(1), new Integer(1), new Integer(0), 
+              data , generateRandomLocalId());
+       
+       System.out.println("LOG [MVPApi.main]: " + goal.rawData);
+       
+//Integer absoluteLevel, Integer userRelativeLevel, Integer timeZoneOffsetInSeconds,
+//            String[] progressValuesInMinutesNSData, String localId) {
     }
 }

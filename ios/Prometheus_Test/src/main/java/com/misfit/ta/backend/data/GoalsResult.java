@@ -1,35 +1,34 @@
 package com.misfit.ta.backend.data;
 
-import java.util.Arrays;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONArray;
+import com.google.resting.json.JSONObject;
+import com.misfit.ta.backend.data.goal.Goal;
 
 public class GoalsResult extends BaseResult {
     // relative class data
-    public class Goal {
-        public String serverId = null;
-        public String localId = null;
-        public Long updatedAt = null;
-        public Double goalValue = null;
-        public Long startTime = null;
-        public Long endTime = null;
-        public Integer absoluteLevel = null;
-        public Integer userRelativeLevel = null;
-        public Integer timeZoneOffsetInSeconds = null;
-        public String[] progressValuesInMinutesNSData = null;
-
-        @Override
-        public String toString() {
-            return "{ serverId: " + serverId + ", localId: " + localId + ", updatedAt: " + updatedAt + ", goalValue: "
-                    + goalValue + ", startTime: " + startTime + ". endTime: " + endTime + ", absoluteLevel: "
-                    + absoluteLevel + ", userRelativeLevel: " + userRelativeLevel + ", timeZoneOffsetInSeconds: "
-                    + timeZoneOffsetInSeconds + ", progressValuesInMinutesNSData: "
-                    + Arrays.toString(progressValuesInMinutesNSData) + " }";
-        }
-    }
+//    public class Goal {
+//        public String serverId = null;
+//        public String localId = null;
+//        public Long updatedAt = null;
+//        public Double goalValue = null;
+//        public Long startTime = null;
+//        public Long endTime = null;
+//        public Integer absoluteLevel = null;
+//        public Integer userRelativeLevel = null;
+//        public Integer timeZoneOffsetInSeconds = null;
+//        public String[] progressValuesInMinutesNSData = null;
+//
+//        @Override
+//        public String toString() {
+//            return "{ serverId: " + serverId + ", localId: " + localId + ", updatedAt: " + updatedAt + ", goalValue: "
+//                    + goalValue + ", startTime: " + startTime + ". endTime: " + endTime + ", absoluteLevel: "
+//                    + absoluteLevel + ", userRelativeLevel: " + userRelativeLevel + ", timeZoneOffsetInSeconds: "
+//                    + timeZoneOffsetInSeconds + ", progressValuesInMinutesNSData: "
+//                    + Arrays.toString(progressValuesInMinutesNSData) + " }";
+//        }
+//    }
 
     // fields
     public Goal[] goals;
@@ -75,26 +74,9 @@ public class GoalsResult extends BaseResult {
 
     private Goal formatResult(JSONObject objJson) {
         Goal goal = new Goal();
+        return goal.getGoal(objJson);
 
-        goal.serverId = objJson.getString("serverId");
-        goal.localId = objJson.getString("localId");
-        goal.updatedAt = objJson.getLong("updatedAt");
-
-        if (objJson.containsKey("goalValue")) {
-            goal.goalValue = objJson.getDouble("goalValue");
-            goal.startTime = objJson.getLong("startTime");
-            goal.endTime = objJson.getLong("endTime");
-            goal.absoluteLevel = objJson.getInt("absoluteLevel");
-            goal.userRelativeLevel = objJson.getInt("userRelativeLevel");
-            goal.timeZoneOffsetInSeconds = objJson.getInt("timeZoneOffsetInSeconds");
-
-            JSONArray arr = objJson.getJSONArray("progressValuesInMinutesNSData");
-            goal.progressValuesInMinutesNSData = new String[4];
-            for (int j = 0; j < 4; j++)
-                goal.progressValuesInMinutesNSData[j] = arr.getString(j);
-        }
-
-        return goal;
+      
     }
 
 }

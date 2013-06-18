@@ -4,14 +4,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.json.JSONSerializer;
+
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.api.MVPApi;
 
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
 
 public class BaseResult {
 	// logger
@@ -30,7 +32,7 @@ public class BaseResult {
 	public String errorMessage;
 
 	// constructor
-	public BaseResult(ServiceResponse response) {
+	public BaseResult(ServiceResponse response) throws JSONException {
 		// raw data
 		this.response = response;
 		this.rawData = response.getContentData().toString();
@@ -39,7 +41,7 @@ public class BaseResult {
 			json = (JSONObject) JSONSerializer.toJSON(this.rawData.toString());
 
 			// middle level data
-			if (json.containsKey("error_message")) {
+			if (!json.isNull("error_message")) {
 				this.errorMessage = json.getString("error_message");
 				this.pairResult.put("error_message", this.errorMessage);
 			}
