@@ -25,8 +25,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
     Logger logger = Util.setupLogger(BackendDatabaseSeedingThread.class);
 
-    public BackendDatabaseSeedingThread(int userCount, JSONArray timelineItems,
-            JSONArray graphItems, ResultLogger rlog) {
+    public BackendDatabaseSeedingThread(int userCount, JSONArray timelineItems, JSONArray graphItems, ResultLogger rlog) {
         this.userCount = userCount;
         this.timelineItems = timelineItems;
         this.graphItems = graphItems;
@@ -97,7 +96,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
         long s16 = System.currentTimeMillis();
         Assert.assertTrue(response.getStatusCode() <= 210, "Status code is > 210: " + response.getStatusCode());
         System.out.println("LOG [BackendStressTestThread.run]: ------------------------------------ DONE");
-        
+
         rlog.log((userCount + 1) + "\t" + (s2 - s1) + "\t"
         // + (s4 - s3) + "\t"
         // + (s6 - s5) + "\t" + (s8 - s7) + "\t"

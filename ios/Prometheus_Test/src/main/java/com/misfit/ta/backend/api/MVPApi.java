@@ -9,8 +9,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import netscape.javascript.JSObject;
-
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
@@ -19,7 +17,6 @@ import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
-import com.google.resting.json.JSONObject;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
@@ -38,7 +35,6 @@ import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.TimelineItemBase;
 import com.misfit.ta.backend.data.timeline.WeatherItem;
 import com.misfit.ta.utils.TextTool;
-import com.thoughtworks.selenium.condition.Not;
 
 public class MVPApi {
 
@@ -398,58 +394,52 @@ public class MVPApi {
         MVPApi.post("https://staging-api.misfitwearables.com/shine/v6/admin/delete_user?id=" + id, 443, requestInf);
     }
 
-    public static ServiceResponse createGraphItems(String token,
-    		JSONArray jsonItems) {
+    public static ServiceResponse createGraphItems(String token, JSONArray jsonItems) {
         String url = baseAddress + "graph_items/batch_insert";
         BaseParams request = new BaseParams();
         ServiceResponse response;
-        
+
         request.addHeader("auth_token", token);
         request.addParam("graph_items", jsonItems.toString());
-        
+
         response = MVPApi.post(url, port, request);
-        
+
         return response;
     }
-    
-    public static ServiceResponse createGraphItems(String token,
-    		List<GraphItem> graphItems) throws JSONException {
+
+    public static ServiceResponse createGraphItems(String token, List<GraphItem> graphItems) throws JSONException {
         JSONArray jsonItems = new JSONArray();
-        
+
         for (int i = 0; i < graphItems.size(); i++) {
-        	jsonItems.put(graphItems.get(i).toJson());
+            jsonItems.put(graphItems.get(i).toJson());
         }
-        
+
         return createGraphItems(token, jsonItems);
     }
-    
-	public static List<GraphItem> getGraphItems(String token,
-			long startTime,
-			long endTime,
-			long modifiedSince) {
-		String url = baseAddress + "graph_items";
-		BaseParams request = new BaseParams();
-		ServiceResponse response;
-		List<GraphItem> items;
 
-		request.addHeader("auth_token", token);
-		request.addParam("startTime", String.valueOf(startTime));
-		request.addParam("endTime", String.valueOf(endTime));
-		request.addParam("modifiedSince", String.valueOf(modifiedSince));
+    public static List<GraphItem> getGraphItems(String token, long startTime, long endTime, long modifiedSince) {
+        String url = baseAddress + "graph_items";
+        BaseParams request = new BaseParams();
+        ServiceResponse response;
+        List<GraphItem> items;
 
-		try {
-			response = MVPApi.get(url, port, request);
-			items = GraphItem.getGraphItems(response);
-			System.out.println("LOG [MVPApi.getGraphItems]: count = "
-					+ items.size());
+        request.addHeader("auth_token", token);
+        request.addParam("startTime", String.valueOf(startTime));
+        request.addParam("endTime", String.valueOf(endTime));
+        request.addParam("modifiedSince", String.valueOf(modifiedSince));
 
-			return items;
-		} catch (JSONException e) {
-			e.printStackTrace();
+        try {
+            response = MVPApi.get(url, port, request);
+            items = GraphItem.getGraphItems(response);
+            System.out.println("LOG [MVPApi.getGraphItems]: count = " + items.size());
 
-			return null;
-		}
-	}
+            return items;
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
 
     public static List<TimelineItem> getTimelineItems(String token, long startTime, long endTime, long modifiedSince) {
         String url = baseAddress + "timeline_items";
@@ -460,8 +450,8 @@ public class MVPApi {
         try {
 
             int count = 0;
-//             request.addParam("startTime", String.valueOf(startTime));
-//             request.addParam("endTime", String.valueOf(endTime));
+            // request.addParam("startTime", String.valueOf(startTime));
+            // request.addParam("endTime", String.valueOf(endTime));
             request.addParam("modifiedSince", String.valueOf(modifiedSince));
             response = MVPApi.get(url, port, request);
             List<TimelineItem> items = TimelineItem.getTimelineItems(response);
@@ -528,7 +518,7 @@ public class MVPApi {
                 timelineItems.put(tmpItem.toJson());
 
                 // one graph item per hour
-                //TODO: one graph item per 2020s 
+                // TODO: one graph item per 2020s
                 GraphItem graphItem = new GraphItem(tmp, 1, tmp);
                 graphItems.put(graphItem.toJson());
             }
@@ -541,46 +531,35 @@ public class MVPApi {
         return array;
     }
 
-	public static TimelineItem generateActivitySessionItem(long tmp) {
-		ActivitySessionItem session = new ActivitySessionItem(tmp, 2222, 22, tmp, 22, 2, 22, 22);
-		TimelineItem tmpItem = new TimelineItem(TimelineItemBase.TYPE_SESSION, tmp, tmp, session, TextTool
-		        .getRandomString(19, 20), null, null);
-		return tmpItem;
-	}
+    public static TimelineItem generateActivitySessionItem(long tmp) {
+        ActivitySessionItem session = new ActivitySessionItem(tmp, 2222, 22, tmp, 22, 2, 22, 22);
+        TimelineItem tmpItem = new TimelineItem(TimelineItemBase.TYPE_SESSION, tmp, tmp, session, TextTool
+                .getRandomString(19, 20), null, null);
+        return tmpItem;
+    }
 
-	public static TimelineItem generateWeatherTimelineItem(long tmp) {
-		WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
-		TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_WEATHER, tmp, tmp, weather, TextTool
-		        .getRandomString(19, 20), null, null);
-		return timeline;
-	}
-	
-	public static TimelineItem generateNotableEventItem(long tmp, int value) {
-		NotableEventItem notableEventItem = new NotableEventItem(tmp, null, null, value, 1);
-		TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_NOTABLE, tmp, tmp, notableEventItem, TextTool
-		        .getRandomString(19, 20), null, null);
-		return timeline;
-	}
-    
+    public static TimelineItem generateWeatherTimelineItem(long tmp) {
+        WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
+        TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_WEATHER, tmp, tmp, weather, TextTool
+                .getRandomString(19, 20), null, null);
+        return timeline;
+    }
+
+    public static TimelineItem generateNotableEventItem(long tmp, int value) {
+        NotableEventItem notableEventItem = new NotableEventItem(tmp, null, null, value, 1);
+        TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_NOTABLE, tmp, tmp, notableEventItem, TextTool
+                .getRandomString(19, 20), null, null);
+        return timeline;
+    }
 
     public static void main(String[] args) throws JSONException {
-    	AccountResult r1 = MVPApi.signIn("tung@misfitwearables.com", "qwerty1",
-    			"somelocal id");
-    	AccountResult r2 = MVPApi.signIn("keepmesignedin@email.com", "qwerty1",
-    			"somelocal id");
-    	
-    	List<GraphItem> graphItems = MVPApi.getGraphItems(r1.token,
-    			1370070000,
-    			1370073600,
-    			631152000);
-    	MVPApi.getGraphItems(r2.token,
-    			1370070000,
-    			1370073600,
-    			631152000);
-    	MVPApi.createGraphItems(r2.token, graphItems);
-    	MVPApi.getGraphItems(r2.token,
-    			1370070000,
-    			1370073600,
-    			631152000);
+        AccountResult r1 = MVPApi.signIn("tung@misfitwearables.com", "qwerty1", "somelocal id");
+        AccountResult r2 = MVPApi.signIn("keepmesignedin@email.com", "qwerty1", "somelocal id");
+
+        List<GraphItem> graphItems = MVPApi.getGraphItems(r1.token, 1370070000, 1370073600, 631152000);
+        MVPApi.getGraphItems(r2.token, 1370070000, 1370073600, 631152000);
+        MVPApi.createGraphItems(r2.token, graphItems);
+        MVPApi.getGraphItems(r2.token, 1370070000, 1370073600, 631152000);
+
     }
 }
