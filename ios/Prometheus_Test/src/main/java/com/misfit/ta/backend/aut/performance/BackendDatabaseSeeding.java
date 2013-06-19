@@ -11,12 +11,6 @@ import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
-import com.misfit.ta.backend.data.graph.GraphItem;
-import com.misfit.ta.backend.data.timeline.ActivitySessionItem;
-import com.misfit.ta.backend.data.timeline.TimelineItem;
-import com.misfit.ta.backend.data.timeline.TimelineItemBase;
-import com.misfit.ta.backend.data.timeline.WeatherItem;
-import com.misfit.ta.utils.TextTool;
 
 public class BackendDatabaseSeeding {
 
@@ -38,13 +32,17 @@ public class BackendDatabaseSeeding {
     public void signupOneMillionUsers() {
         setUpTest();
 
+        long start = System.currentTimeMillis();
+
         logger.info("Params: \n" + "NUMBER_OF_USERS: " + NUMBER_OF_USERS + "\n" + "NUMBER_OF_DAYS: " + NUMBER_OF_DAYS
                 + "\n" + "NUMBER_OF_ITEMS_PER_DAY: " + NUMBER_OF_ITEMS_PER_DAY + "\n" + "NUMBER_OF_THREADS: "
                 + NUMBER_OF_THREADS + "\n");
 
         ResultLogger rlog = ResultLogger.getLogger("signup_a_million_users");
-        rlog.log("Number of try\t" + "signUpTime\t" + "signOutTime\t" + "signInTime\t" + "createProfileTime\t"
-                + "getProfileTime\t" + "updateProfileTime\t" + "addTimelineItems\t" + "addGraphItems\t" + "email");
+        rlog.log("Params: \n" + "NUMBER_OF_USERS: " + NUMBER_OF_USERS + "\n" + "NUMBER_OF_DAYS: " + NUMBER_OF_DAYS
+                + "\n" + "NUMBER_OF_ITEMS_PER_DAY: " + NUMBER_OF_ITEMS_PER_DAY + "\n" + "NUMBER_OF_THREADS: "
+                + NUMBER_OF_THREADS + "\n");
+        rlog.log("Number of try\t" + "signUpTime\t" + "addTimelineItems\t" + "addGraphItems\t" + "email");
 
         JSONArray timelineItems = new JSONArray();
         JSONArray graphItems = new JSONArray();
@@ -55,7 +53,7 @@ public class BackendDatabaseSeeding {
 
         int userCount = 0;
 
-        // ---------------------------------
+        // // ---------------------------------
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
         while (userCount < NUMBER_OF_USERS) {
@@ -66,7 +64,6 @@ public class BackendDatabaseSeeding {
                 userCount++;
             }
         }
-
         executor.shutdown();
     }
 

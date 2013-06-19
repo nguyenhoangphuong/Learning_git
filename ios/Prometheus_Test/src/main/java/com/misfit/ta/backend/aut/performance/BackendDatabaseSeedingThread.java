@@ -25,8 +25,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
     Logger logger = Util.setupLogger(BackendDatabaseSeedingThread.class);
 
-    public BackendDatabaseSeedingThread(int userCount, JSONArray timelineItems,
-            JSONArray graphItems, ResultLogger rlog) {
+    public BackendDatabaseSeedingThread(int userCount, JSONArray timelineItems, JSONArray graphItems, ResultLogger rlog) {
         this.userCount = userCount;
         this.timelineItems = timelineItems;
         this.graphItems = graphItems;
@@ -49,9 +48,10 @@ public class BackendDatabaseSeedingThread implements Runnable {
         Assert.assertTrue(r.isOK(), "Status code is not 200: " + r.statusCode);
 
         // // sign out then
-        // long s3 = System.currentTimeMillis();
-        // MVPApi.signOut(token);
-        // long s4 = System.currentTimeMillis();
+        String email1 = MVPApi.generateUniqueEmail();
+        long s3 = System.currentTimeMillis();
+        MVPApi.signUp(email1, password, udid);
+         long s4 = System.currentTimeMillis();
         //
         // // sign in
         // long s5 = System.currentTimeMillis();
@@ -97,9 +97,9 @@ public class BackendDatabaseSeedingThread implements Runnable {
         long s16 = System.currentTimeMillis();
         Assert.assertTrue(response.getStatusCode() <= 210, "Status code is > 210: " + response.getStatusCode());
         System.out.println("LOG [BackendStressTestThread.run]: ------------------------------------ DONE");
-        
+
         rlog.log((userCount + 1) + "\t" + (s2 - s1) + "\t"
-        // + (s4 - s3) + "\t"
+         + (s4 - s3) + "\t"
         // + (s6 - s5) + "\t" + (s8 - s7) + "\t"
         // + (s10 - s9) + "\t" + (s12 - s11) + "\t"
                 + (s14 - s13) + "\t" + (s16 - s15) + "\t" + email);

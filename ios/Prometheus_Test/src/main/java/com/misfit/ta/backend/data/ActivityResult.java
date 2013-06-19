@@ -68,22 +68,28 @@ public class ActivityResult extends BaseResult {
 
         if (!leaveFieldsNull) {
             // result
-            this.startTime = json.getString("startTime");
-            this.endTime = json.getString("endTime");
-            this.modifiedSince = json.getString("modifiedSince");
-            this.timezoneOffset = json.getString("timezoneOffset");
-            this.activityType = json.getString("activityType");
-            this.bipedalCount = json.getString("bipedalCount");
-            this.intensityLevel = json.getString("intensityLevel");
+            try {
+                this.startTime = json.getString("startTime");
+                this.endTime = json.getString("endTime");
+                this.modifiedSince = json.getString("modifiedSince");
+                this.timezoneOffset = json.getString("timezoneOffset");
+                this.activityType = json.getString("activityType");
+                this.bipedalCount = json.getString("bipedalCount");
+                this.intensityLevel = json.getString("intensityLevel");
 
-            // add to base hashmap
-            this.pairResult.put("startTime", this.startTime);
-            this.pairResult.put("endTime", this.endTime);
-            this.pairResult.put("modifiedSince", this.modifiedSince);
-            this.pairResult.put("timezoneOffset", this.timezoneOffset);
-            this.pairResult.put("activityType", this.activityType);
-            this.pairResult.put("bipedalCount", this.bipedalCount);
-            this.pairResult.put("intensityLevel", this.intensityLevel);
+                // add to base hashmap
+                this.pairResult.put("startTime", this.startTime);
+                this.pairResult.put("endTime", this.endTime);
+                this.pairResult.put("modifiedSince", this.modifiedSince);
+                this.pairResult.put("timezoneOffset", this.timezoneOffset);
+                this.pairResult.put("activityType", this.activityType);
+                this.pairResult.put("bipedalCount", this.bipedalCount);
+                this.pairResult.put("intensityLevel", this.intensityLevel);
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+           
         }
     }
 }

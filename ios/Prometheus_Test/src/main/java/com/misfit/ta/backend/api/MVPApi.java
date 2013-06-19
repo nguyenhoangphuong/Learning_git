@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-import netscape.javascript.JSObject;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -19,7 +18,6 @@ import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
-import com.google.resting.json.JSONObject;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
@@ -31,6 +29,8 @@ import com.misfit.ta.backend.data.GoalsResult;
 import com.misfit.ta.backend.data.JSONBuilder;
 import com.misfit.ta.backend.data.ProfileData;
 import com.misfit.ta.backend.data.ProfileResult;
+import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.timeline.ActivitySessionItem;
@@ -39,7 +39,6 @@ import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.TimelineItemBase;
 import com.misfit.ta.backend.data.timeline.WeatherItem;
 import com.misfit.ta.utils.TextTool;
-import com.thoughtworks.selenium.condition.Not;
 
 public class MVPApi {
 
@@ -222,46 +221,29 @@ public class MVPApi {
     }
 
     // goal apis
-    static private BaseParams createGoalParams(String token, Double goalValue, Long startTime, Long endTime,
-            Integer absoluteLevel, Integer userRelativeLevel, Integer timeZoneOffsetInSeconds,
-            String[] progressValuesInMinutesNSData, String localId, Long updatedAt) {
+    static private BaseParams createGoalParams(String token, double goalValue, long startTime, long endTime,
+            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds,
+            ProgressData progressData, String localId, long updatedAt) {
         // build json object string
-        JSONBuilder json = new JSONBuilder();
-        if (goalValue != null)
-            json.addValue("goalValue", goalValue);
-        if (startTime != null)
-            json.addValue("startTime", startTime);
-        if (endTime != null)
-            json.addValue("endTime", endTime);
-        if (absoluteLevel != null)
-            json.addValue("absoluteLevel", absoluteLevel);
-        if (userRelativeLevel != null)
-            json.addValue("userRelativeLevel", userRelativeLevel);
-        if (timeZoneOffsetInSeconds != null)
-            json.addValue("timeZoneOffsetInSeconds", timeZoneOffsetInSeconds);
-        if (progressValuesInMinutesNSData != null)
-            json.addValue("progressValuesInMinutesNSData", Arrays.toString(progressValuesInMinutesNSData));
-        if (localId != null)
-            json.addValue("localId", localId);
-        if (updatedAt != null)
-            json.addValue("updatedAt", updatedAt);
+        
+        Goal goal = new Goal(goalValue, startTime, endTime, absoluteLevel, userRelativeLevel, progressData, timeZoneOffsetInSeconds, localId, updatedAt);
 
         BaseParams requestInf = new BaseParams();
         requestInf.addHeader("auth_token", token);
-        requestInf.addParam("goal", json.toJSONString());
+        requestInf.addParam("goal", goal.toJson().toString());
 
         return requestInf;
     }
 
-    public static GoalsResult searchGoal(String token, Long startTime, Long endTime, Long modifiedSince) {
+    public static GoalsResult searchGoal(String token, long startTime, long endTime, long modifiedSince) {
         // prepare
         String url = baseAddress + "goals";
 
         BaseParams requestInf = new BaseParams();
         requestInf.addHeader("auth_token", token);
-        requestInf.addParam("startTime", startTime.toString());
-        requestInf.addParam("endTime", endTime.toString());
-        requestInf.addParam("updatedAt", modifiedSince.toString());
+        requestInf.addParam("startTime", String.valueOf(startTime));
+        requestInf.addParam("endTime", String.valueOf(endTime));
+        requestInf.addParam("updatedAt", String.valueOf(modifiedSince));
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.get(url, port, requestInf);
@@ -286,14 +268,14 @@ public class MVPApi {
         return result;
     }
 
-    public static GoalsResult createGoal(String token, Double goalValue, Long startTime, Long endTime,
-            Integer absoluteLevel, Integer userRelativeLevel, Integer timeZoneOffsetInSeconds,
-            String[] progressValuesInMinutesNSData, String localId) {
+    public static GoalsResult createGoal(String token, double goalValue, long startTime, long endTime,
+            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds,
+            ProgressData progressData, String localId) {
         // prepare
         String url = baseAddress + "goals";
-
+        
         BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel,
-                userRelativeLevel, timeZoneOffsetInSeconds, progressValuesInMinutesNSData, localId, null);
+                userRelativeLevel, timeZoneOffsetInSeconds, progressData, localId, 0);
 
         // post and receive raw data
         ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -303,14 +285,14 @@ public class MVPApi {
         return result;
     }
 
-    public static GoalsResult updateGoal(String token, Long updatedAt, Double goalValue, Long startTime, Long endTime,
-            Integer absoluteLevel, Integer userRelativeLevel, Integer timeZoneOffsetInSeconds,
-            String[] progressValuesInMinutesNSData, String localId) {
+    public static GoalsResult updateGoal(String token, long updatedAt, double goalValue, long startTime, long endTime,
+            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds,
+            ProgressData progressData, String localId) {
         // prepare
         String url = baseAddress + "profile";
 
         BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel,
-                userRelativeLevel, timeZoneOffsetInSeconds, progressValuesInMinutesNSData, localId, updatedAt);
+                userRelativeLevel, timeZoneOffsetInSeconds, progressData, localId, updatedAt);
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -320,13 +302,13 @@ public class MVPApi {
         return result;
     }
 
-    public static GoalsResult updateGoal(String token, GoalsResult.Goal goal) {
+    public static GoalsResult updateGoal(String token, Goal goal) {
         // prepare
         String url = baseAddress + "profile";
 
-        BaseParams requestInf = createGoalParams(token, goal.goalValue, goal.startTime, goal.endTime,
-                goal.absoluteLevel, goal.userRelativeLevel, goal.timeZoneOffsetInSeconds,
-                goal.progressValuesInMinutesNSData, goal.localId, goal.updatedAt);
+        BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(),
+                goal.getAbsoluteLevel(), goal.getUserRelativeLevel(), goal.getTimeZoneOffsetInSeconds(),
+                goal.getProgressData(), goal.getLocalId(), goal.getUpdatedAt());
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -399,58 +381,52 @@ public class MVPApi {
         MVPApi.post("https://staging-api.misfitwearables.com/shine/v6/admin/delete_user?id=" + id, 443, requestInf);
     }
 
-    public static ServiceResponse createGraphItems(String token,
-    		JSONArray jsonItems) {
+    public static ServiceResponse createGraphItems(String token, JSONArray jsonItems) {
         String url = baseAddress + "graph_items/batch_insert";
         BaseParams request = new BaseParams();
         ServiceResponse response;
-        
+
         request.addHeader("auth_token", token);
         request.addParam("graph_items", jsonItems.toString());
-        
+
         response = MVPApi.post(url, port, request);
-        
+
         return response;
     }
-    
-    public static ServiceResponse createGraphItems(String token,
-    		List<GraphItem> graphItems) throws JSONException {
+
+    public static ServiceResponse createGraphItems(String token, List<GraphItem> graphItems) throws JSONException {
         JSONArray jsonItems = new JSONArray();
-        
+
         for (int i = 0; i < graphItems.size(); i++) {
-        	jsonItems.put(graphItems.get(i).toJson());
+            jsonItems.put(graphItems.get(i).toJson());
         }
-        
+
         return createGraphItems(token, jsonItems);
     }
-    
-	public static List<GraphItem> getGraphItems(String token,
-			long startTime,
-			long endTime,
-			long modifiedSince) {
-		String url = baseAddress + "graph_items";
-		BaseParams request = new BaseParams();
-		ServiceResponse response;
-		List<GraphItem> items;
 
-		request.addHeader("auth_token", token);
-		request.addParam("startTime", String.valueOf(startTime));
-		request.addParam("endTime", String.valueOf(endTime));
-		request.addParam("modifiedSince", String.valueOf(modifiedSince));
+    public static List<GraphItem> getGraphItems(String token, long startTime, long endTime, long modifiedSince) {
+        String url = baseAddress + "graph_items";
+        BaseParams request = new BaseParams();
+        ServiceResponse response;
+        List<GraphItem> items;
 
-		try {
-			response = MVPApi.get(url, port, request);
-			items = GraphItem.getGraphItems(response);
-			System.out.println("LOG [MVPApi.getGraphItems]: count = "
-					+ items.size());
+        request.addHeader("auth_token", token);
+        request.addParam("startTime", String.valueOf(startTime));
+        request.addParam("endTime", String.valueOf(endTime));
+        request.addParam("modifiedSince", String.valueOf(modifiedSince));
 
-			return items;
-		} catch (JSONException e) {
-			e.printStackTrace();
+        try {
+            response = MVPApi.get(url, port, request);
+            items = GraphItem.getGraphItems(response);
+            System.out.println("LOG [MVPApi.getGraphItems]: count = " + items.size());
 
-			return null;
-		}
-	}
+            return items;
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
 
     public static List<TimelineItem> getTimelineItems(String token, long startTime, long endTime, long modifiedSince) {
         String url = baseAddress + "timeline_items";
@@ -461,8 +437,8 @@ public class MVPApi {
         try {
 
             int count = 0;
-//             request.addParam("startTime", String.valueOf(startTime));
-//             request.addParam("endTime", String.valueOf(endTime));
+            // request.addParam("startTime", String.valueOf(startTime));
+            // request.addParam("endTime", String.valueOf(endTime));
             request.addParam("modifiedSince", String.valueOf(modifiedSince));
             response = MVPApi.get(url, port, request);
             List<TimelineItem> items = TimelineItem.getTimelineItems(response);
@@ -505,11 +481,8 @@ public class MVPApi {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         long now = System.currentTimeMillis() / 1000;
-        System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: now1=" + now);
-        System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: now= " + df.format(new Date(now * 1000)));
         // data for a number of days
         long period = 86400 / numberOfItemsPerDay;
-        System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: period= " + period);
         for (int k = 0; k < numberOfDays; k++) {
             long tmp = now - (k * period * 24);
             // one weather per day
@@ -529,7 +502,7 @@ public class MVPApi {
                 timelineItems.put(tmpItem.toJson());
 
                 // one graph item per hour
-                //TODO: one graph item per 2020s 
+                // TODO: one graph item per 2020s
                 GraphItem graphItem = new GraphItem(tmp, 1, tmp);
                 graphItems.put(graphItem.toJson());
             }
@@ -542,12 +515,12 @@ public class MVPApi {
         return array;
     }
 
-	public static TimelineItem generateActivitySessionItem(long tmp) {
-		ActivitySessionItem session = new ActivitySessionItem(tmp, 2222, 22, tmp, 22, 2, 22, 22);
-		TimelineItem tmpItem = new TimelineItem(TimelineItemBase.TYPE_SESSION, tmp, tmp, session, TextTool
-		        .getRandomString(19, 20), null, null);
-		return tmpItem;
-	}
+    public static TimelineItem generateActivitySessionItem(long tmp) {
+        ActivitySessionItem session = new ActivitySessionItem(tmp, 2222, 22, tmp, 22, 2, 22, 22);
+        TimelineItem tmpItem = new TimelineItem(TimelineItemBase.TYPE_SESSION, tmp, tmp, session, TextTool
+                .getRandomString(19, 20), null, null);
+        return tmpItem;
+    }
 
 	public static TimelineItem generateWeatherTimelineItem(long tmp) {
 		WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
