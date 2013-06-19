@@ -480,11 +480,8 @@ public class MVPApi {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         long now = System.currentTimeMillis() / 1000;
-        System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: now1=" + now);
-        System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: now= " + df.format(new Date(now * 1000)));
         // data for a number of days
         long period = 86400 / numberOfItemsPerDay;
-        System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: period= " + period);
         for (int k = 0; k < numberOfDays; k++) {
             long tmp = now - (k * period * 24);
             // one weather per day
@@ -558,6 +555,7 @@ public class MVPApi {
        
        GoalsResult goal = createGoal(token, new Double(100), new Long(now - 4200), new Long(now + 4200), new Integer(1), new Integer(1), new Integer(0), 
               data , generateRandomLocalId());
+       
        
        System.out.println("LOG [MVPApi.main]: " + goal.rawData);
        

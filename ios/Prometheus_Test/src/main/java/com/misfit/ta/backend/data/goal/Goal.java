@@ -139,6 +139,10 @@ public class Goal {
         Goal goal = new Goal(1, 2, 3, 4, 5, data, 6, "someid", 0);
         System.out.println("LOG [Goal.main]: " + goal.toJson());
 
+        JSONObject json = goal.toJson();
+
+        Goal goal1 = new Goal();
+        goal1 = goal1.getGoal(json);
     }
 
     public Goal getGoal(JSONObject objJson) {
@@ -148,17 +152,22 @@ public class Goal {
             if (!objJson.isNull("updatedAt")) {
                 goal.setUpdatedAt(objJson.getLong("updatedAt"));
             }
-
-            goal.setValue(objJson.getDouble("goalValue"));
-            goal.setStartTime(objJson.getLong("startTime"));
-            goal.setEndTime(objJson.getLong("endTime"));
-            goal.setAbsoluteLevel(objJson.getInt("absoluteLevel"));
-            goal.setUserRelativeLevel(objJson.getInt("userRelativeLevel"));
-
-            goal.setTimeZoneOffsetInSeconds(objJson.getInt("timeZoneOffsetInSeconds"));
+            if (!objJson.isNull("goalValue"))
+                goal.setValue(objJson.getDouble("goalValue"));
+            if (!objJson.isNull("startTime"))
+                goal.setStartTime(objJson.getLong("startTime"));
+            if (!objJson.isNull("endTime"))
+                goal.setEndTime(objJson.getLong("endTime"));
+            if (!objJson.isNull("absoluteLevel"))
+                goal.setAbsoluteLevel(objJson.getInt("absoluteLevel"));
+            if (!objJson.isNull("userRelativeLevel"))
+                goal.setUserRelativeLevel(objJson.getInt("userRelativeLevel"));
+            if (!objJson.isNull("timeZoneOffsetInSeconds"))
+                goal.setTimeZoneOffsetInSeconds(objJson.getInt("timeZoneOffsetInSeconds"));
             ProgressData data = new ProgressData();
-
-            data = data.getProgressData(objJson.getJSONObject("progressData"));
+            if (!objJson.isNull("progressData"))
+                data = data.getProgressData(objJson.getJSONObject("progressData"));
+            goal.setProgressData(data);
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block

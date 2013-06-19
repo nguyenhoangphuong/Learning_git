@@ -1,11 +1,8 @@
 package com.misfit.ta.backend.data;
 
-import java.util.Arrays;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONArray;
+import com.google.resting.json.JSONObject;
 
 public class ProfileResult extends BaseResult {
 
@@ -16,7 +13,6 @@ public class ProfileResult extends BaseResult {
     public ProfileResult(ServiceResponse response) {
         super(response);
 
-       
         try {
             // invalid token
             if (json.getString("profile") == "null") {
@@ -28,52 +24,51 @@ public class ProfileResult extends BaseResult {
 
             formatOK();
         } catch (Exception e) {
-//            return null;
+            // return null;
         }
     }
 
     private void formatOK() {
         // normal result
-        JSONObject proJSON = json.getJSONObject("profile");
+        try {
+            JSONObject proJSON = json.getJSONObject("profile");
 
-        if (proJSON.containsKey("serverId")) {
-            profile.serverId = proJSON.getString("serverId");
-            this.pairResult.put("serverId", profile.serverId);
-        }
+            if (!proJSON.isNull("serverId")) {
+                profile.serverId = proJSON.getString("serverId");
+                this.pairResult.put("serverId", profile.serverId);
+            }
 
-        if (proJSON.containsKey("localId")) {
-            profile.localId = proJSON.getString("localId");
-            this.pairResult.put("localId", profile.localId);
-        }
+            if (!proJSON.isNull("localId")) {
+                profile.localId = proJSON.getString("localId");
+                this.pairResult.put("localId", profile.localId);
+            }
 
-        profile.updatedAt = proJSON.getLong("updatedAt");
-        this.pairResult.put("updatedAt", profile.updatedAt);
+            profile.updatedAt = proJSON.getLong("updatedAt");
+            this.pairResult.put("updatedAt", profile.updatedAt);
 
-        // these result only avaiable with GET-200, PUT-210, POST-210
-        if (proJSON.containsKey("weight")) {
-            profile.weight = proJSON.getDouble("weight");
-            profile.height = proJSON.getDouble("height");
-            profile.unit = proJSON.getInt("unit");
-            profile.gender = proJSON.getInt("gender");
-            profile.dateOfBirth = proJSON.getLong("dateOfBirth");
-            profile.name = proJSON.getString("name");
-            profile.latestVersion = proJSON.getString("latestVersion");
-            profile.goalLevel = proJSON.getInt("goalLevel");
-            profile.trackingDeviceId = proJSON.getString("trackingDeviceId");
+            // these result only avaiable with GET-200, PUT-210, POST-210
+            if (!proJSON.isNull("weight")) {
+                profile.weight = proJSON.getDouble("weight");
+                profile.height = proJSON.getDouble("height");
+                profile.unit = proJSON.getInt("unit");
+                profile.gender = proJSON.getInt("gender");
+                profile.dateOfBirth = proJSON.getLong("dateOfBirth");
+                profile.name = proJSON.getString("name");
+                profile.latestVersion = proJSON.getString("latestVersion");
+                profile.goalLevel = proJSON.getInt("goalLevel");
+                profile.trackingDeviceId = proJSON.getString("trackingDeviceId");
 
-            this.pairResult.put("weight", profile.weight);
-            this.pairResult.put("height", profile.height);
-            this.pairResult.put("unit", profile.unit);
-            this.pairResult.put("gender", profile.gender);
-            this.pairResult.put("dateOfBirth", profile.dateOfBirth);
-            this.pairResult.put("name", profile.name);
-            this.pairResult.put("lastestVersion", profile.latestVersion);
-            this.pairResult.put("goalLevel", profile.goalLevel);
-            this.pairResult.put("trackingDeviceId", profile.trackingDeviceId);
-        }
+                this.pairResult.put("weight", profile.weight);
+                this.pairResult.put("height", profile.height);
+                this.pairResult.put("unit", profile.unit);
+                this.pairResult.put("gender", profile.gender);
+                this.pairResult.put("dateOfBirth", profile.dateOfBirth);
+                this.pairResult.put("name", profile.name);
+                this.pairResult.put("lastestVersion", profile.latestVersion);
+                this.pairResult.put("goalLevel", profile.goalLevel);
+                this.pairResult.put("trackingDeviceId", profile.trackingDeviceId);
+            }
 
-        // direct result
-        if (proJSON.containsKey("userRelativeLevelsNSData")) {
             if (proJSON.getString("userRelativeLevelsNSData") != "null") {
                 JSONArray relativeLevelsJSON = proJSON.getJSONArray("userRelativeLevelsNSData");
                 profile.userRelativeLevelsNSData = new RelativeLevelData[10];
@@ -92,6 +87,9 @@ public class ProfileResult extends BaseResult {
                 profile.userRelativeLevelsNSData = null;
                 this.pairResult.put("userRelativeLevelsNSData", "null");
             }
+        } catch (Exception e) {
+
         }
+
     }
 }

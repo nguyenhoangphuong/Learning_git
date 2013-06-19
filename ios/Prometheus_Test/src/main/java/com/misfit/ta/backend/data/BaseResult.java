@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.json.JSONSerializer;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -32,17 +31,26 @@ public class BaseResult {
 	public String errorMessage;
 
 	// constructor
-	public BaseResult(ServiceResponse response) throws JSONException {
+	public BaseResult(ServiceResponse response) {
 		// raw data
 		this.response = response;
 		this.rawData = response.getContentData().toString();
 
 		if (!this.rawData.trim().isEmpty()) {
-			json = (JSONObject) JSONSerializer.toJSON(this.rawData.toString());
+		    try {
+                json = new JSONObject(this.rawData.toString());
+            } catch (JSONException e1) {
+            }
+//			json = (JSONObject) JSONSerializer.toJSON(this.rawData.toString());
 
 			// middle level data
 			if (!json.isNull("error_message")) {
-				this.errorMessage = json.getString("error_message");
+				try {
+                    this.errorMessage = json.getString("error_message");
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
 				this.pairResult.put("error_message", this.errorMessage);
 			}
 		}

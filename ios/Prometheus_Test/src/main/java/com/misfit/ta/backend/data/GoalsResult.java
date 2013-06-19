@@ -1,34 +1,37 @@
 package com.misfit.ta.backend.data;
 
-
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
+import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.data.goal.Goal;
 
 public class GoalsResult extends BaseResult {
     // relative class data
-//    public class Goal {
-//        public String serverId = null;
-//        public String localId = null;
-//        public Long updatedAt = null;
-//        public Double goalValue = null;
-//        public Long startTime = null;
-//        public Long endTime = null;
-//        public Integer absoluteLevel = null;
-//        public Integer userRelativeLevel = null;
-//        public Integer timeZoneOffsetInSeconds = null;
-//        public String[] progressValuesInMinutesNSData = null;
-//
-//        @Override
-//        public String toString() {
-//            return "{ serverId: " + serverId + ", localId: " + localId + ", updatedAt: " + updatedAt + ", goalValue: "
-//                    + goalValue + ", startTime: " + startTime + ". endTime: " + endTime + ", absoluteLevel: "
-//                    + absoluteLevel + ", userRelativeLevel: " + userRelativeLevel + ", timeZoneOffsetInSeconds: "
-//                    + timeZoneOffsetInSeconds + ", progressValuesInMinutesNSData: "
-//                    + Arrays.toString(progressValuesInMinutesNSData) + " }";
-//        }
-//    }
+    // public class Goal {
+    // public String serverId = null;
+    // public String localId = null;
+    // public Long updatedAt = null;
+    // public Double goalValue = null;
+    // public Long startTime = null;
+    // public Long endTime = null;
+    // public Integer absoluteLevel = null;
+    // public Integer userRelativeLevel = null;
+    // public Integer timeZoneOffsetInSeconds = null;
+    // public String[] progressValuesInMinutesNSData = null;
+    //
+    // @Override
+    // public String toString() {
+    // return "{ serverId: " + serverId + ", localId: " + localId +
+    // ", updatedAt: " + updatedAt + ", goalValue: "
+    // + goalValue + ", startTime: " + startTime + ". endTime: " + endTime +
+    // ", absoluteLevel: "
+    // + absoluteLevel + ", userRelativeLevel: " + userRelativeLevel +
+    // ", timeZoneOffsetInSeconds: "
+    // + timeZoneOffsetInSeconds + ", progressValuesInMinutesNSData: "
+    // + Arrays.toString(progressValuesInMinutesNSData) + " }";
+    // }
+    // }
 
     // fields
     public Goal[] goals;
@@ -51,24 +54,39 @@ public class GoalsResult extends BaseResult {
 
     private void formatOK() {
         // result from search (list result)
-        if (json.containsKey("goals")) {
-            JSONArray arrJson = json.getJSONArray("goals");
-            goals = new Goal[arrJson.size()];
+        if (!json.isNull("goals")) {
+            JSONArray arrJson;
+            try {
+                arrJson = json.getJSONArray("goals");
+                goals = new Goal[arrJson.length()];
 
-            for (int i = 0; i < goals.length; i++) {
-                JSONObject objJson = arrJson.getJSONObject(i);
-                goals[i] = formatResult(objJson);
+                for (int i = 0; i < goals.length; i++) {
+                    JSONObject objJson;
+                    objJson = arrJson.getJSONObject(i);
+                    goals[i] = formatResult(objJson);
 
-                this.pairResult.put("goals[" + i + "]", goals[i]);
+                    this.pairResult.put("goals[" + i + "]", goals[i]);
+                }
+
+                this.pairResult.put("goals", goals);
+            } catch (JSONException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
 
-            this.pairResult.put("goals", goals);
         } else {
-            JSONObject objJson = json.getJSONObject("goal");
-            goals = new Goal[1];
-            goals[0] = formatResult(objJson);
+            JSONObject objJson;
+            try {
+                objJson = json.getJSONObject("goal");
+                goals = new Goal[1];
+                goals[0] = formatResult(objJson);
 
-            this.pairResult.put("goals", goals);
+                this.pairResult.put("goals", goals);
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+          
         }
     }
 
@@ -76,7 +94,6 @@ public class GoalsResult extends BaseResult {
         Goal goal = new Goal();
         return goal.getGoal(objJson);
 
-      
     }
 
 }

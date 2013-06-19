@@ -1,5 +1,6 @@
 package com.misfit.ta.backend.data.goal;
 
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 import com.google.resting.json.JSONArray;
@@ -61,10 +62,18 @@ public class ProgressData {
         ProgressData data = new ProgressData();
         Vector<Integer> points = new Vector<Integer>();
         try {
-            JSONArray array = obj.getJSONArray("points");
-            for (int i=0; i< array.length(); i++) {
-                points.add(array.getInt(i));
+            String p = obj.getString("points");
+            
+            System.out.println("LOG [ProgressData.getProgressData]: --- 11: "+ p);
+            p = p.substring(p.indexOf("[") + 1, p.indexOf("]"));
+            System.out.println("LOG [ProgressData.getProgressData]: --- 22: "+ p);
+            StringTokenizer token = new StringTokenizer(p, ",");
+            while (token.hasMoreTokens()) {
+                String next = token.nextToken().trim();
+                points.add(Integer.parseInt(next));
+                System.out.println("LOG [ProgressData.getProgressData]: next= " + next);
             }
+
             data.setPoints(points);
             data.setSeconds(obj.getInt("seconds"));
             data.setSteps(obj.getInt("steps"));
