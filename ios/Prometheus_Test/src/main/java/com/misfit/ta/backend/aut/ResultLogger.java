@@ -3,16 +3,27 @@ package com.misfit.ta.backend.aut;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ResultLogger {
 
     private static ResultLogger logger;
     private static File file;
     private static FileWriter writer;
+    private static Map<Integer, Integer> errors;
+    private static int request;
+    private static int response;
 
     public static ResultLogger getLogger(String testname) {
         if (logger == null) {
             logger = new ResultLogger(testname);
+            if (errors != null) {
+                errors.clear();
+            }
+            request = 0;
+            response = 0;
         }
 
         return logger;
@@ -35,13 +46,62 @@ public class ResultLogger {
         
     }
     
-    public static void close() {
+    public void close() {
         if (writer != null) {
             try {
                 writer.close();
             } catch (IOException e) {
             }
         }
+    }
+    
+    public static void addErrorCode(int code) {
+        if (logger == null) {
+            return;
+        } else if (errors == null) {
+            errors = new HashMap<Integer, Integer>();
+        }
+        
+        Integer count = errors.get(code);
+        if (count == null || count.intValue() == 0) {
+            errors.put(code, 1);
+        } else  {
+            errors.put(code, count +1);
+        }
+        
+    }
+    
+    
+    public static void registerRequest() {
+        request++;
+    }
+    
+    public static void registerResponse() {
+        response++;
+    }
+    public static void logErrorSummary() {
+        if (errors == null || errors.isEmpty()) {
+            return;
+        }
+        StringBuffer buf = new StringBuffer();
+        buf.append("\n\n======================================\n");
+        buf.append("Request sent:\t" + request + "\n");
+        buf.append("Response received:\t" + response + "\n");
+        buf.append("HTTP error distribution:\n");
+        int count =0;
+        
+        Iterator<Integer> it = errors.keySet().iterator();
+        while (it.hasNext()) {
+            Integer code = it.next();
+            Integer value = errors.get(code);
+            count += value;
+            buf.append("Error" + code + ": \t" + value +"\n");
+        }
+        buf.append("-------------------\n");
+        buf.append("Total: \t" + count + "\n");
+        System.out.println("LOG [ResultLogger.logErrorSummary]: " + buf.toString());
+        logger.log(buf.toString());
+        
     }
 
 }

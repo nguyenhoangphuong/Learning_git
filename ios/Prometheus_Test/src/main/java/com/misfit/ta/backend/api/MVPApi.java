@@ -21,6 +21,7 @@ import com.google.resting.json.JSONException;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
+import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.AccountResult;
 import com.misfit.ta.backend.data.ActivityResult;
 import com.misfit.ta.backend.data.BaseParams;
@@ -56,7 +57,7 @@ public class MVPApi {
 
         // wrapper send request
         ServiceResponse response = null;
-
+        ResultLogger.registerRequest();
         if (type == "post")
             response = PostHelper.post(url, port, UTF8, requestInf.params, requestInf.headers);
         else if (type == "get")
@@ -66,8 +67,14 @@ public class MVPApi {
 
         // log result
         IContentData rawData = response.getContentData();
-        logger.info("Raw Data: " + rawData + "\n");
-
+        logger.info("Response raw Data: " + rawData + "\n");
+        ResultLogger.registerResponse();
+        int error = response.getStatusCode() ;
+        ResultLogger.addErrorCode(error);
+        if (error != 200) {
+            logger.info("ERROR: server returned: " + error);
+        }
+        
         return response;
     }
 
@@ -210,7 +217,7 @@ public class MVPApi {
                 data.dateOfBirth, data.goalLevel, data.trackingDeviceId, data.localId, data.latestVersion,
                 data.updatedAt);
 
-        requestInf.addParam("id", id);
+//        requestInf.addParam("id", id);
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -289,7 +296,7 @@ public class MVPApi {
             int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds,
             ProgressData progressData, String localId) {
         // prepare
-        String url = baseAddress + "profile";
+        String url = baseAddress + "goals";
 
         BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel,
                 userRelativeLevel, timeZoneOffsetInSeconds, progressData, localId, updatedAt);
@@ -297,7 +304,10 @@ public class MVPApi {
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
 
-        // format data
+        // TODO: WHY IS UPDATING RETURNING 404?
+        if (response.getStatusCode() != 200) {
+            return null;
+        }
         GoalsResult result = new GoalsResult(response);
         return result;
     }
@@ -511,7 +521,6 @@ public class MVPApi {
         JSONArray[] array = new JSONArray[2];
         array[0] = timelineItems;
         array[1] = graphItems;
-        // System.exit(0);
         return array;
     }
 
@@ -580,7 +589,7 @@ public class MVPApi {
 		}
 	}
 	
-	public static Pedometer createPedometer(String token,
+    public static Pedometer createPedometer(String token,
 			String serialNumberString, String firmwareRevisionString,
 			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
 			String localId, String serverId, long updatedAt) {
@@ -615,7 +624,6 @@ public class MVPApi {
 			return null;
 		}
 	}
-
 
 	public static BaseParams buildEditPedometerRequest(String token,
 			String serialNumberString, String firmwareRevisionString,
