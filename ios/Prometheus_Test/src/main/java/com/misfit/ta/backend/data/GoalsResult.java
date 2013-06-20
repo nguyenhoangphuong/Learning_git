@@ -39,12 +39,10 @@ public class GoalsResult extends BaseResult {
     // constructor
     public GoalsResult(ServiceResponse response) {
         super(response);
-
         // invalid token || not found
         if (this.statusCode == 401 || this.statusCode == 404) {
             goals = null;
             this.pairResult.put("goals", "null");
-
             return;
         }
 
@@ -77,7 +75,11 @@ public class GoalsResult extends BaseResult {
         } else {
             JSONObject objJson;
             try {
-                objJson = json.getJSONObject("goal");
+                if (!json.isNull("goals")) {
+                    objJson = json.getJSONObject("goals"); 
+                } else {
+                    objJson = json.getJSONObject("goal");
+                }
                 goals = new Goal[1];
                 goals[0] = formatResult(objJson);
 

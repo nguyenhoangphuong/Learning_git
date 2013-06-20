@@ -64,14 +64,11 @@ public class ProgressData {
         try {
             String p = obj.getString("points");
             
-            System.out.println("LOG [ProgressData.getProgressData]: --- 11: "+ p);
             p = p.substring(p.indexOf("[") + 1, p.indexOf("]"));
-            System.out.println("LOG [ProgressData.getProgressData]: --- 22: "+ p);
             StringTokenizer token = new StringTokenizer(p, ",");
             while (token.hasMoreTokens()) {
                 String next = token.nextToken().trim();
                 points.add(Integer.parseInt(next));
-                System.out.println("LOG [ProgressData.getProgressData]: next= " + next);
             }
 
             data.setPoints(points);

@@ -16,6 +16,8 @@ public class Goal {
     int timeZoneOffsetInSeconds;
     private String localId;
     private long updatedAt;
+    
+    private String serverId;
 
     public Goal() {
 
@@ -128,21 +130,13 @@ public class Goal {
             return null;
         }
     }
+    
+    public String getServerId() {
+        return serverId;
+    }
 
-    public static void main(String[] args) {
-        Vector<Integer> points = new Vector<Integer>();
-        points.add(new Integer(0));
-        points.add(new Integer(1));
-        points.add(new Integer(2));
-        ProgressData data = new ProgressData(points, 100, 1234);
-
-        Goal goal = new Goal(1, 2, 3, 4, 5, data, 6, "someid", 0);
-        System.out.println("LOG [Goal.main]: " + goal.toJson());
-
-        JSONObject json = goal.toJson();
-
-        Goal goal1 = new Goal();
-        goal1 = goal1.getGoal(json);
+    public void setServerId(String serverId) {
+        this.serverId = serverId;
     }
 
     public Goal getGoal(JSONObject objJson) {
@@ -167,6 +161,8 @@ public class Goal {
             ProgressData data = new ProgressData();
             if (!objJson.isNull("progressData"))
                 data = data.getProgressData(objJson.getJSONObject("progressData"));
+            if (!objJson.isNull("serverId"))
+                goal.setServerId(objJson.getString("serverId"));
             goal.setProgressData(data);
 
         } catch (JSONException e) {

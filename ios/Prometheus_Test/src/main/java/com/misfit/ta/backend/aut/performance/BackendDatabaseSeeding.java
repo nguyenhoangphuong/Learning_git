@@ -1,7 +1,11 @@
 package com.misfit.ta.backend.aut.performance;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -32,17 +36,35 @@ public class BackendDatabaseSeeding {
     public void signupOneMillionUsers() {
         setUpTest();
 
-        long start = System.currentTimeMillis();
 
         logger.info("Params: \n" + "NUMBER_OF_USERS: " + NUMBER_OF_USERS + "\n" + "NUMBER_OF_DAYS: " + NUMBER_OF_DAYS
                 + "\n" + "NUMBER_OF_ITEMS_PER_DAY: " + NUMBER_OF_ITEMS_PER_DAY + "\n" + "NUMBER_OF_THREADS: "
                 + NUMBER_OF_THREADS + "\n");
 
-        ResultLogger rlog = ResultLogger.getLogger("signup_a_million_users");
+        ResultLogger rlog = ResultLogger.getLogger("signup_a_million_users_" 
+                    + NUMBER_OF_THREADS+"thread_" 
+                    + (NUMBER_OF_ITEMS_PER_DAY * NUMBER_OF_DAYS) + "record");
         rlog.log("Params: \n" + "NUMBER_OF_USERS: " + NUMBER_OF_USERS + "\n" + "NUMBER_OF_DAYS: " + NUMBER_OF_DAYS
                 + "\n" + "NUMBER_OF_ITEMS_PER_DAY: " + NUMBER_OF_ITEMS_PER_DAY + "\n" + "NUMBER_OF_THREADS: "
                 + NUMBER_OF_THREADS + "\n");
-        rlog.log("Number of try\t" + "signUpTime\t" + "addTimelineItems\t" + "addGraphItems\t" + "email");
+        rlog.log("Number of try\t" 
+                + "signUpTime\t" 
+                + "signOut\t"
+                + "signIn\t"
+                + "createProfile\t"
+                + "getProfile\t"
+                + "updateProfile\t"
+                + "createPedo\t"
+                + "showPedo\t"
+                + "updatePedo\t"
+                + "getLinkedDevice\t"
+                + "unlinkDevice\t"
+                + "createGoal\t"
+                + "getGoal\t"
+                + "updateGoal\t"
+                + "searchGoal\t"
+                + "addTimelineItems\t" 
+                + "addGraphItems\t" + "email");
 
         JSONArray timelineItems = new JSONArray();
         JSONArray graphItems = new JSONArray();
@@ -54,17 +76,30 @@ public class BackendDatabaseSeeding {
         int userCount = 0;
 
         // // ---------------------------------
+        
+        Collection<Future<?>> futures = new LinkedList<Future<?>>();
+        
+      
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
         while (userCount < NUMBER_OF_USERS) {
             for (int threads = 0; threads < NUMBER_OF_THREADS; threads++) {
                 BackendDatabaseSeedingThread test = new BackendDatabaseSeedingThread(userCount, timelineItems,
                         graphItems, rlog);
-                executor.submit(test);
+                futures.add(executor.submit(test));
                 userCount++;
             }
         }
         executor.shutdown();
+        
+        for (Future<?> future:futures) {
+            try {
+                future.get();
+            } catch (Exception e) {
+            }
+        }
+        ResultLogger.logErrorSummary();
+        System.out.println("LOG [BackendDatabaseSeeding.enclosing_method]:--------------------------------dadad ");
     }
 
     public static void main(String[] args) {
