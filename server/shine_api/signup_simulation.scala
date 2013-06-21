@@ -31,7 +31,9 @@ class SignupSimulation extends Simulation {
 	}
 
 	def signUpWithLoopingTimes(users: Int, repeat: Int = 0, rampUp: Int = 10) {
-		val httpConf = httpConfig.baseURL(apiUrl("baseUrl"))
+		val httpConf = httpConfig.baseURL(apiUrl("baseUrl")).responseInfoExtractor((response: Response) => {
+  								List[String](response.getResponseBody())
+		})
 		val scn = scenario("Signup API")
 			.repeat(repeat) {
 				feed(newUserInfo)
@@ -41,10 +43,9 @@ class SignupSimulation extends Simulation {
 						.headers(apiKey)
 						.param("email", "${email}")
 						.param("password", "${password}")
-						.param("udid", "${udid}")
+						.param("udid", "${udid}").check(status.is(200))
 				)
 			}
-
 		setUp(scn.users(users).ramp(rampUp).protocolConfig(httpConf))
 	}
 
