@@ -2,7 +2,6 @@ package com.misfit.ta.backend.aut.performance;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -43,7 +42,7 @@ public class BackendDatabaseSeeding {
 
         ResultLogger rlog = ResultLogger.getLogger("signup_a_million_users_" 
                     + NUMBER_OF_THREADS+"thread_" 
-                    + (NUMBER_OF_ITEMS_PER_DAY * NUMBER_OF_DAYS) + "record");
+                    + (NUMBER_OF_ITEMS_PER_DAY * NUMBER_OF_DAYS) + "record_" + NUMBER_OF_USERS + "user");
         rlog.log("Params: \n" + "NUMBER_OF_USERS: " + NUMBER_OF_USERS + "\n" + "NUMBER_OF_DAYS: " + NUMBER_OF_DAYS
                 + "\n" + "NUMBER_OF_ITEMS_PER_DAY: " + NUMBER_OF_ITEMS_PER_DAY + "\n" + "NUMBER_OF_THREADS: "
                 + NUMBER_OF_THREADS + "\n");

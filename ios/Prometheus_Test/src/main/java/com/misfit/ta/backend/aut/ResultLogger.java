@@ -87,6 +87,7 @@ public class ResultLogger {
         buf.append("\n\n======================================\n");
         buf.append("Request sent:\t" + request + "\n");
         buf.append("Response received:\t" + response + "\n");
+        buf.append("Missing response:\t" + (request - response) + "\n");
         buf.append("HTTP error distribution:\n");
         int count =0;
         

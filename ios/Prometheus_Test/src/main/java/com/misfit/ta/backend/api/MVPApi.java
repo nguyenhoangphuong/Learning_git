@@ -387,7 +387,8 @@ public class MVPApi {
     public static void removeUser(String id) {
         BaseParams requestInf = new BaseParams();
         requestInf.addParam("authenticity_token", "ki5608apM0mqEpFwvNW6i8Czu6tktVT0+UlWWVhu0Mg");
-        MVPApi.post("https://staging-api.misfitwearables.com/shine/v6/admin/delete_user?id=" + id, 443, requestInf);
+        String url = baseAddress + "delete_user?id=" + id;
+        MVPApi.post(url, 443, requestInf);
     }
 
     public static ServiceResponse createGraphItems(String token, JSONArray jsonItems) {
@@ -638,23 +639,6 @@ public class MVPApi {
 	}
 
     public static void main(String[] args) throws JSONException {
-    	AccountResult r1 = MVPApi.signIn("tung@misfitwearables.com", "qwerty1",
-    			"somelocal id");
-    	AccountResult r2 = MVPApi.signIn("keepmesignedin@email.com", "qwerty1",
-    			"somelocal id");
-    	
-    	List<GraphItem> graphItems = MVPApi.getGraphItems(r1.token,
-    			1370070000,
-    			1370073600,
-    			631152000);
-    	MVPApi.getGraphItems(r2.token,
-    			1370070000,
-    			1370073600,
-    			631152000);
-    	MVPApi.createGraphItems(r2.token, graphItems);
-    	MVPApi.getGraphItems(r2.token,
-    			1370070000,
-    			1370073600,
-    			631152000);
+    	MVPApi.removeUser("shjnr@fm.com");
     }
 }
