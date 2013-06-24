@@ -41,8 +41,6 @@ public class GoalSettingsAPI extends ModelAPI {
 		PrometheusHelper.inputRandomRecord();
 		ShortcutsTyper.delayTime(1000);
 		
-		PrometheusHelper.handleTutorial();
-		ShortcutsTyper.delayTime(500);
 	}
 
 	/**
@@ -51,10 +49,10 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void e_ToGoalSettings() 
 	{
-		HomeScreen.tapOpenSyncTray();
+		HomeScreen.tapOpenSettingsTray();
 		ShortcutsTyper.delayTime(500);
 		HomeScreen.tapAdjustGoal();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(1000);
 	}
 	
 	/**
@@ -162,6 +160,7 @@ public class GoalSettingsAPI extends ModelAPI {
 		
 		// check if current screen is home screen
 		Assert.assertTrue(HomeScreen.isToday(), "Current screen is HomeScreen");
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -172,6 +171,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	{
 		// just in case tutorial shows up at nowhere
 		PrometheusHelper.handleTutorial();
+		ShortcutsTyper.delayTime(1000);
 				
 		// check if new goal value had been updated
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");

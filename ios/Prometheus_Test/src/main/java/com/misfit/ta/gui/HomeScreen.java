@@ -8,8 +8,13 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class HomeScreen {
 	
 	/* Navigation */
-    public static void tapOpenSyncTray() {
-   	 Gui.touchAVIew("UIButton", 5);
+	public static void tapOpenSettingsTray() {
+		if (ViewUtils.isExistedView("UILabel", "Today")
+				&& ViewUtils.isExistedView("UILabel", "Week")) {
+			Gui.touchAVIew("UILabel", "Today");
+		} else {
+			Gui.touchAVIew("UILabel", "This week");
+		}
 	}
     
     public static void tapSettings() {
@@ -18,6 +23,10 @@ public class HomeScreen {
     
     public static void tapAdjustGoal() {
     	Gui.touchAVIew("UILabel", "My Goal");
+    }
+    
+    public static void tapShinePreferences() {
+    	Gui.touchAVIew("UILabel", "Shine Preferences");
     }
 
     public static void tapOpenManualInput() {

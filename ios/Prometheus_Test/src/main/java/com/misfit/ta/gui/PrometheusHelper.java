@@ -149,13 +149,6 @@ public class PrometheusHelper {
 				+ String.format("%02d", Integer.parseInt(day)) + ", " + year;
 	}
 
-	public static String formatProfile(boolean isMale, boolean isUSUnit,
-			String h1, String h2, String w1, String w2) {
-		return (isMale ? "Male" : "Female") + " - " + h1 + h2
-				+ (isUSUnit ? "" : " m") + " - " + w1 + w2
-				+ (isUSUnit ? " lbs" : " kg");
-	}
-
 	
 	/* Quick navigation */
 	
@@ -186,14 +179,16 @@ public class PrometheusHelper {
 		
 		ShortcutsTyper.delayTime(1000);
 		SignUp.sync();
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(1000);
 		SignUp.tapFinishSetup();
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(1000);
+		PrometheusHelper.handleTutorial();
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	public static void setInputModeToManual() {
 		// require current view is HomeScreen
-		HomeScreen.tapOpenSyncTray();
+		HomeScreen.tapOpenSettingsTray();
 		ShortcutsTyper.delayTime(500);
 		HomeScreen.tapSettings();
 		ShortcutsTyper.delayTime(500);
@@ -265,7 +260,7 @@ public class PrometheusHelper {
 
 	public static void handleTutorial() {
 		boolean hasTutorialView = ViewUtils.isExistedView("PTRichTextLabel",
-				"This circle \\_represents\\_\\n\\_your activity\\_ each day.");
+				"The circle \\_shows\\_ your \\_level of activity\\_.");
 		if (hasTutorialView) {
 			for (int i = 0; i < 4; i++) {
 				Gui.swipeLeft(500);

@@ -72,7 +72,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ChooseSettings() {
-		HomeScreen.tapOpenSyncTray();
+		HomeScreen.tapOpenSettingsTray();
 		ShortcutsTyper.delayTime(500);
 		HomeScreen.tapSettings();
 		ShortcutsTyper.delayTime(500);
@@ -175,10 +175,6 @@ public class ProfileSettingsAPI extends ModelAPI {
 	public void v_Settings() {
 		// check if this is EditProfile screen
 		Assert.assertTrue(HomeSettings.isAtSettings(), "Current screen is Settings");
-		
-		// check the string under your profile cell
-		String profilePreview = PrometheusHelper.formatProfile(isMale, isUSUnit, h1, h2, w1, w2);
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", profilePreview), "The sort preview of profile is " + profilePreview);
 	}
 
 	/**

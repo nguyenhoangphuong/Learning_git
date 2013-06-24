@@ -94,7 +94,7 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_SignOut() {
-    	HomeScreen.tapOpenSyncTray();
+    	HomeScreen.tapOpenSettingsTray();
 		ShortcutsTyper.delayOne();
 		HomeScreen.tapSettings();
 		ShortcutsTyper.delayOne();
@@ -102,7 +102,7 @@ public class SignUpAPI extends ModelAPI {
         Gui.swipeUp(1000);
         HomeSettings.tapSignOut();
         ShortcutsTyper.delayOne();
-        PrometheusHelper.handleUpload();
+        HomeSettings.tapSignOut();
     }
 
     /**
@@ -126,6 +126,7 @@ public class SignUpAPI extends ModelAPI {
         
         // wait for sync
         ShortcutsTyper.delayTime(10000);
+        PrometheusHelper.handleTutorial();
     }
     
     /**
@@ -301,6 +302,7 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void v_SignUpPairing() {
+    	
         Assert.assertTrue(SignUp.isSignUpPairingView(), "This is not sign up pairing view.");
     }
 

@@ -59,7 +59,7 @@ public class SignOutSettingsAPI extends ModelAPI {
 	
 	public void e_ToSettings() 
 	{
-		HomeScreen.tapOpenSyncTray();
+		HomeScreen.tapOpenSettingsTray();
 		ShortcutsTyper.delayTime(500);
 		HomeScreen.tapSettings();
 		ShortcutsTyper.delayOne();
@@ -158,8 +158,8 @@ public class SignOutSettingsAPI extends ModelAPI {
 	{
 		ShortcutsTyper.delayTime(5000);
 		HomeSettings.tapSignOut();
-		ShortcutsTyper.delayTime(3000);
-		PrometheusHelper.handleUpload();
+		ShortcutsTyper.delayTime(1000);
+		HomeSettings.tapSignOut();
 	}
 	
 	public void e_LogIn() 
@@ -210,14 +210,7 @@ public class SignOutSettingsAPI extends ModelAPI {
 		Assert.assertTrue(HomeSettings.isAtSettings(), "Current view is Settings");
 	}
 	
-	public void v_SettingsAfterLogin()
-	{
-		// check the string under your profile cell is correct
-		String profilePreview = PrometheusHelper.formatProfile(isMale, isUSUnit, h1, h2, w1, w2);
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", profilePreview), "The sort preview of profile should be " + profilePreview);
-		
-		// check the string under wearing your shine is correct
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", wearAt), "The wearing location should be " + wearAt);
+	public void v_SettingsAfterLogin() {
 	}
 
 	public void v_ProfileSettings() 
