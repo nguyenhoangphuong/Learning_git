@@ -7,7 +7,7 @@ public class SignUp {
 
     /* NAVIGATION */
     public static void tapSignUp() {
-        Gui.touchAVIew("UIButtonLabel", " Shine up");
+        Gui.touchAVIew("UIButtonLabel", " SIGN UP");
     }
 
     public static void tapNext() {
@@ -70,7 +70,11 @@ public class SignUp {
     }
     
     public static void setGoal(int level) {
-        Gui.setGoalSlider(level);
+    	if (level == 0) {
+    		Gui.swipeLeft(500);
+    	} else if (level == 2) {
+    		Gui.swipeRight(500);
+    	}
     }
     
     public static void tapOpenTutorial()
@@ -97,7 +101,7 @@ public class SignUp {
     
     /* VISIBLE CHECKING */
     public static boolean isSignUpAccountView() {
-        return ViewUtils.isExistedView("UILabel", "Shine up");
+        return ViewUtils.isExistedView("UILabel", "Sign up");
     }
 
     public static boolean isSignUpProfileView() {
@@ -113,7 +117,7 @@ public class SignUp {
     }
 
     public static boolean isSignUpGoalView() {
-        return ViewUtils.isExistedView("UILabel", "Today I Feel...");
+        return ViewUtils.isExistedView("UILabel", "Set your goal");
     }
 
     public static boolean isSignUpPairingView() {

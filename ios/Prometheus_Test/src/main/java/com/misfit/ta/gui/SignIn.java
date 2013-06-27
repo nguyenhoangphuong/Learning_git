@@ -11,13 +11,13 @@ public class SignIn {
     }
 
     public static void tapLogInWithFacebook() {
-        Gui.touchAVIew("UIButtonLabel", " Shine in");
+        Gui.touchAVIew("UIButtonLabel", " SIGN IN");
     }
 
     
     /* log in screen */
     public static boolean isLoginView() {
-        return ViewUtils.isExistedView("UILabel", "Shine in");
+        return ViewUtils.isExistedView("UILabel", "Sign in");
     }
     
     public static void tapForgotPassword() {

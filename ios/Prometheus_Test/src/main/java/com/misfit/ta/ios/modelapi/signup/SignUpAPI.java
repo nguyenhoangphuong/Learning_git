@@ -102,7 +102,7 @@ public class SignUpAPI extends ModelAPI {
         Gui.swipeUp(1000);
         HomeSettings.tapSignOut();
         ShortcutsTyper.delayOne();
-        HomeSettings.tapSignOut();
+        HomeSettings.chooseSignOut();
     }
 
     /**

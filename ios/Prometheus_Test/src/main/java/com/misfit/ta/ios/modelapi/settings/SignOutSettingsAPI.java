@@ -159,7 +159,7 @@ public class SignOutSettingsAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(5000);
 		HomeSettings.tapSignOut();
 		ShortcutsTyper.delayTime(1000);
-		HomeSettings.tapSignOut();
+		HomeSettings.chooseSignOut();
 	}
 	
 	public void e_LogIn() 

@@ -6,7 +6,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class LaunchScreen {
 	
     public static void tapIHaveAShine() {
-        Gui.touchAVIew("UIButtonLabel", " I have a Shine");
+        Gui.touchAVIew("UIButtonLabel", " I HAVE A SHINE");
     }
 
     public static void tapSetUpYourShine() {
@@ -40,13 +40,13 @@ public class LaunchScreen {
     
     public static boolean isAtLaunchScreen()
     {
-    	return ViewUtils.isExistedView("UIButtonLabel", " I have a Shine");
+    	return ViewUtils.isExistedView("UIButtonLabel", " I HAVE A SHINE");
     }
     
     public static boolean isAtInitialScreen()
     {
-    	return ViewUtils.isExistedView("UIButtonLabel", " Shine in") &&
-    		   ViewUtils.isExistedView("UIButtonLabel", " Shine up");
+    	return ViewUtils.isExistedView("UIButtonLabel", " SIGN IN") &&
+    		   ViewUtils.isExistedView("UIButtonLabel", " SIGN UP");
     }
     
     public static void launch() {
