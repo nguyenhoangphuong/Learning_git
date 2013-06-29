@@ -11,12 +11,12 @@ object Predef {
 	val apiKey = Map("api_key" -> "76801581")
 
 	val apiUrl = Map("baseUrl" -> "https://misfit-shine-api-test-1663549078.us-east-1.elb.amazonaws.com",
-		"smallUrl" -> "https://ec2-23-23-25-152.compute-1.amazonaws.com",
+		"smallUrl" -> "https://ec2-184-73-104-151.compute-1.amazonaws.com",
 		"mediumUrl" -> "https://ec2-54-226-191-232.compute-1.amazonaws.com",
 		"largeUrl" -> "https://ec2-23-22-9-220.compute-1.amazonaws.com",
-		"localUrl" -> "http://10.0.1.58:3000",
+		// "localUrl" -> "http://10.0.1.123:9000",
+		"localUrl" -> "http://10.0.1.123:3000",
 		"signup" -> "/shine/v7/signup",
-		// "signup" -> "/shine/v7.1/signup",
 		"login" -> "/shine/v7/login",
 		"logout" -> "/shine/v7/logout",
 		"searchGraphItems" -> "/shine/v7/graph_items")
