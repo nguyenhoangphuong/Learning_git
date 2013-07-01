@@ -11,7 +11,7 @@ import Shine.Predef._
 import Shine.SignupScenarios._
 
 /** This object contains scenarios of logging in
-*/
+  */
 object LoginScenarios {
 
 	/** Login multiple times

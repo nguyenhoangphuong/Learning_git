@@ -7,7 +7,7 @@ import Shine.Predef._
 import Shine.SignupScenarios._
 
 /** This class contains simulations of signing up
-*/
+  */
 class SignupSimulations extends Simulation {
 
 	/** Signup concurrently with different concurrency levels.
@@ -91,36 +91,6 @@ class SignupSimulations extends Simulation {
 			.protocolConfig(httpConf))
 	}
 
-	var duration: Int = 180
-	var baseUrl: String = Predef.apiUrl("largeUrl")
-	var rampUp: Int = 10
-	var configs: List[Map[String, String]] = List(
-		Map("users" -> "10",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString()),
-		Map("users" -> "50",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString()),
-		Map("users" -> "100",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString()),
-		Map("users" -> "200",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString()),
-		Map("users" -> "500",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString()),
-		Map("users" -> "1000",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString())
-		)
-
-	signupWithConcurrencyLevels(configs)
+	signupWithConcurrencyLevels(Predef.configs())
 
 }

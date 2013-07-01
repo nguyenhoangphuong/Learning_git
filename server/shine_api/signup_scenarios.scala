@@ -10,7 +10,7 @@ import Shine.Helper._
 import Shine.Predef._
 
 /** This object contains scenarios of signing up
-*/
+  */
 object SignupScenarios {
 
 	/** Signup multiple accounts

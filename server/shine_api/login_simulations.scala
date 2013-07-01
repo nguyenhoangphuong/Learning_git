@@ -7,7 +7,7 @@ import Shine.Predef._
 import Shine.LoginScenarios._
 
 /** This class contains simulations of logging in
-*/
+  */
 class LoginSimulations extends Simulation {
 
 	// /** Signup new user list
@@ -120,37 +120,7 @@ class LoginSimulations extends Simulation {
 		setUp(scenario.users(users).ramp(rampUp).delay(delay)
 			.protocolConfig(httpConf))
 	}
-
-	var duration: Int = 180
-	var baseUrl: String = Predef.apiUrl("largeUrl")
-	var rampUp: Int = 10
-	var configs: List[Map[String, String]] = List(
-		Map("users" -> "10",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString()),
-		Map("users" -> "50",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString()),
-		Map("users" -> "100",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString()),
-		Map("users" -> "200",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString()),
-		Map("users" -> "500",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString()),
-		Map("users" -> "1000",
-			"duration" -> duration.toString(),
-			"baseUrl" -> baseUrl,
-			"rampUp" -> rampUp.toString())
-		)
-
-	loginWithConcurrencyLevels(configs)
+	
+	loginWithConcurrencyLevels(Predef.configs())
 
 }

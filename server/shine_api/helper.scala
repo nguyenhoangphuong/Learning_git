@@ -3,7 +3,7 @@ package Shine
 import scala.util.Random
 
 /** This object contains general methods to help out
-*/
+  */
 object Helper {
 
 	/** Generate random numeric string

@@ -4,8 +4,9 @@ import com.excilys.ebi.gatling.core.Predef._
 
 import Shine.Helper._
 
-/** This object contains pre-defined info as well as Shine-specific helpers
-*/
+/** This object contains pre-defined info, configuration to run tests
+  * as well as Shine-specific helpers
+  */
 object Predef {
 
 	val apiKey = Map("api_key" -> "76801581")
@@ -14,12 +15,39 @@ object Predef {
 		"smallUrl" -> "https://ec2-184-73-104-151.compute-1.amazonaws.com",
 		"mediumUrl" -> "https://ec2-54-226-191-232.compute-1.amazonaws.com",
 		"largeUrl" -> "https://ec2-23-22-9-220.compute-1.amazonaws.com",
-		// "localUrl" -> "http://10.0.1.123:9000",
-		"localUrl" -> "http://10.0.1.123:3000",
+		"localUrl" -> "http://10.0.1.123:9000",
 		"signup" -> "/shine/v7/signup",
 		"login" -> "/shine/v7/login",
 		"logout" -> "/shine/v7/logout",
 		"searchGraphItems" -> "/shine/v7/graph_items")
+
+	val duration: Int = 180 // for each concurrency level
+
+	val baseUrl: String = apiUrl("largeUrl")
+
+	val rampUp: Int = 10
+
+	val concurrencyLevels: List[String] = List("10",
+		"50",
+		"100",
+		"200",
+		"500",
+		"1000")
+
+	def configs(): List[Map[String, String]] = {
+		var i: Int = 0
+		var size: Int = concurrencyLevels.size
+		var runs: List[Map[String, String]] = List()
+
+		for (i <- 0 until size) {
+			runs = runs :+ Map("users" -> concurrencyLevels(i),
+				"duration" -> duration.toString(),
+				"baseUrl" -> baseUrl,
+				"rampUp" -> rampUp.toString())
+		}
+
+		return runs
+	}
 
 	val user = Map("email" -> "t20130618_141603@t.t",
 		"password" -> "qwerty1",
