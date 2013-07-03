@@ -75,6 +75,9 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_Next() {
+    	if (SignUp.isSignUpProfileView()) {
+    		inputSex();
+    	}
         SignUp.tapNext();
         ShortcutsTyper.delayOne();
     }
@@ -179,12 +182,16 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_inputSex() {
+		inputSex();
+    }
+
+	private void inputSex() {
 		this.isMale = PrometheusHelper.coin();
 		SignUp.enterGender(isMale);
 		
 		logger.info("Change male to: " + (isMale ? "Male" : "Female"));
 		ShortcutsTyper.delayOne();
-    }
+	}
 
     /**
      * This method implements the Edge 'e_inputWeight'

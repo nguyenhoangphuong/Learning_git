@@ -41,6 +41,10 @@ public class SignIn {
     public static boolean hasInvalidEmailMessage() {
         return PrometheusHelper.hasInvalidEmailMessage();
     }
+    
+    public static boolean hasForgotPasswordInvalidEmailMessage() {
+    	return PrometheusHelper.hasForgotPasswordInvalidEmailMessage();
+    }
 
     public static boolean hasInvalidPasswordMessage() {
         return PrometheusHelper.hasInvalidPasswordMessage();

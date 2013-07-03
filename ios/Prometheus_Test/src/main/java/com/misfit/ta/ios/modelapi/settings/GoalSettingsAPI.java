@@ -15,7 +15,8 @@ import com.misfit.ta.gui.*;
 import com.misfit.ta.ios.AutomationTest;
 
 public class GoalSettingsAPI extends ModelAPI {
-	private static final Logger logger = Util.setupLogger(GoalSettingsAPI.class);
+	private static final Logger logger = Util
+			.setupLogger(GoalSettingsAPI.class);
 
 	public GoalSettingsAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
@@ -24,47 +25,45 @@ public class GoalSettingsAPI extends ModelAPI {
 
 	private int goal = 1000;
 	private int tempGoal = 1000;
-	
+
 	/**
 	 * This method implements the Edge 'e_Init'
 	 * 
 	 */
-	public void e_Init() 
-	{
+	public void e_Init() {
 		// TODO: THIS MODEL REQUIRES:
 		// Goal: 1000
-		
+
 		// sign up account with require information
-		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
+		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true,
+				16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
 		ShortcutsTyper.delayTime(5000);
 
 		PrometheusHelper.inputRandomRecord();
 		ShortcutsTyper.delayTime(1000);
-		
+
 	}
 
 	/**
 	 * This method implements the Edge 'e_ToGoalSettings'
 	 * 
 	 */
-	public void e_ToGoalSettings() 
-	{
+	public void e_ToGoalSettings() {
 		HomeScreen.tapOpenSettingsTray();
 		ShortcutsTyper.delayTime(500);
 		HomeScreen.tapAdjustGoal();
 		ShortcutsTyper.delayTime(1000);
 	}
-	
+
 	/**
 	 * This method implements the Edge 'e_ChangeGoal'
 	 * 
 	 */
-	public void e_ChangeGoal() 
-	{
+	public void e_ChangeGoal() {
 		tempGoal = PrometheusHelper.randInt(10, 25) * 100;
 		HomeSettings.setSpinnerGoal(tempGoal);
 		ShortcutsTyper.delayTime(1000);
-		
+
 		logger.info("Set goal to: " + tempGoal);
 	}
 
@@ -72,13 +71,9 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * This method implements the Edge 'e_CancelEdit'
 	 * 
 	 */
-	public void e_CancelEdit() 
-	{
-		HomeSettings.tapBack();
+	public void e_CancelEdit() {
+		HomeSettings.tapCancel();
 		ShortcutsTyper.delayTime(1000);
-		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(1000);
-		
 		logger.info("Cancel new goal");
 	}
 
@@ -86,12 +81,11 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * This method implements the Edge 'e_DoneEdit'
 	 * 
 	 */
-	public void e_DoneEdit() 
-	{
+	public void e_DoneEdit() {
 		ShortcutsTyper.delayTime(1000);
 		HomeSettings.tapDoneAtNewGoal();
 		ShortcutsTyper.delayTime(1000);
-		
+
 		goal = tempGoal;
 		logger.info("Confirm new goal");
 	}
@@ -100,42 +94,36 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * This method implements the Edge 'e_ConfirmNewGoal'
 	 * 
 	 */
-	public void e_ConfirmNewGoal() 
-	{
+	public void e_ConfirmNewGoal() {
 		HomeSettings.tapOKAtNewGoalPopup();
 		ShortcutsTyper.delayTime(1000);
-		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(1000);
 	}
-	
-	
-	
-	
+
 	/**
 	 * This method implements the Vertex 'v_GoalSettings'
 	 * 
 	 */
-	public void v_GoalSettings() 
-	{
+	public void v_GoalSettings() {
 		// check if current view is goal settings
-		Assert.assertTrue(HomeSettings.isAtEditGoal(), "Current view is GoalSettings");
-		
+		Assert.assertTrue(HomeSettings.isAtEditGoal(),
+				"Current view is GoalSettings");
+
 		// check if default value is correct
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
 		String expect = this.goal + "";
-		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
+		Assert.assertTrue(actual.indexOf(expect) >= 0,
+				"Default goal value is correct");
 	}
-	
+
 	/**
 	 * This method implements the Vertex 'v_GoalUpdated'
 	 * 
 	 */
-	public void v_GoalUpdated() 
-	{
+	public void v_GoalUpdated() {
 		// check new spinner value
 		int newGoal = HomeSettings.getSpinnerGoal();
 		Assert.assertTrue(newGoal == tempGoal, "Spinner's value is correct");
-		
+
 		// and how to hit your goal contains only dummy texts
 	}
 
@@ -143,21 +131,20 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * This method implements the Vertex 'v_NewGoalConfirmation'
 	 * 
 	 */
-	public void v_NewGoalConfirmation()
-	{
+	public void v_NewGoalConfirmation() {
 		// check alert content
-		Assert.assertTrue(HomeSettings.hasDontForgetMessage(), "Alert message is correct");
+		Assert.assertTrue(HomeSettings.hasDontForgetMessage(),
+				"Alert message is correct");
 	}
-	
+
 	/**
 	 * This method implements the Vertex 'v_HomeScreen'
 	 * 
 	 */
-	public void v_HomeScreen() 
-	{
+	public void v_HomeScreen() {
 		// just in case tutorial shows up at nowhere
 		PrometheusHelper.handleTutorial();
-		
+
 		// check if current screen is home screen
 		Assert.assertTrue(HomeScreen.isToday(), "Current screen is HomeScreen");
 		ShortcutsTyper.delayTime(1000);
@@ -167,19 +154,20 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * This method implements the Vertex 'v_HomeScreenUpdated'
 	 * 
 	 */
-	public void v_HomeScreenUpdated() 
-	{
+	public void v_HomeScreenUpdated() {
 		// just in case tutorial shows up at nowhere
 		PrometheusHelper.handleTutorial();
 		ShortcutsTyper.delayTime(1000);
-				
-		// check if new goal value had been updated
-		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
-		String expect = this.goal + "";
-		logger.info("Actual goal is: " + actual + " - Expect goal is: " + expect);
 
-		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
-		
+		// check if new goal value had been updated
+		String actual = Gui.getProperty("UILabel", 3, "text");
+		String expect = this.goal + "";
+		logger.info("Actual goal is: " + actual + " - Expect goal is: "
+				+ expect);
+
+		Assert.assertTrue(actual.indexOf(expect) >= 0,
+				"Default goal value is correct");
+
 	}
 
 }

@@ -104,7 +104,7 @@ public class ForgotPasswordAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_InvalidEmailView() {
-		Assert.assertTrue(SignIn.hasInvalidEmailMessage(), "This is not forgot password invalid email view.");
+		Assert.assertTrue(SignIn.hasForgotPasswordInvalidEmailMessage(), "This is not forgot password invalid email view.");
 	}
 
 	/**

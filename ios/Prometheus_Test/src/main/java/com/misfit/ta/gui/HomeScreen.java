@@ -37,12 +37,11 @@ public class HomeScreen {
     	Gui.touchAVIew("PTGoalCircleView", 0);
     }
     
-    
-    /* Manual input */
     public static void tapToday() {
-    	Gui.touchAVIew("UIButton", 2);
+    	Gui.touchAVIew("UIButton", 0);
     }
     
+    /* Manual input */
     public static void tapRandom() {
         Gui.touchAVIew("UIButtonLabel", "Random");
     }

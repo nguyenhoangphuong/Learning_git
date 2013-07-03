@@ -87,6 +87,10 @@ public class PrometheusHelper {
 	public static boolean hasInvalidEmailMessage() {
 		return Gui.getPopupContent().equals(DefaultStrings.InvalidEmailMessage);
 	}
+	
+	public static boolean hasForgotPasswordInvalidEmailMessage() {
+		return Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordInvalidEmailMessage);
+	}
 
 	public static boolean hasInvalidPasswordMessage() {
 		return Gui.getPopupContent().equals(

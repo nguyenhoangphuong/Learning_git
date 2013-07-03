@@ -9,6 +9,7 @@ import org.testng.Assert;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
@@ -19,10 +20,11 @@ public class SignUpGoalAPI extends ModelAPI {
 
 	private int heightInInches = 0;
 	private int weightInLbs = 0;
-	private int[] goalPoints = { 600, 1000, 1600 };
-	String[] runningEquals = { "60", "100", "160" };
-	String[] walkingEquals = { "6,000", "10,000", "16,000" };
+	private String[] walkingEquals = { "6,000", "10,000", "16,000" };
+	private String[] level = { "KINDA ACTIVE", "PRETTY ACTIVE", "INSANELY ACTIVE" };
 	
+	private int currentLevel = 1;
+
 	public SignUpGoalAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
@@ -61,15 +63,16 @@ public class SignUpGoalAPI extends ModelAPI {
 	public void e_SubmitProfile() {
 		this.weightInLbs = PrometheusHelper.randInt(100, 150);
 		this.heightInInches = PrometheusHelper.randInt(50, 70);
-		
+
 		String w1 = this.weightInLbs + "";
 		String w2 = ".0";
 		String h1 = this.heightInInches / 12 + "'";
 		String h2 = this.heightInInches % 12 + "\\\"";
-		
+
+		SignUp.enterGender(true);
 		SignUp.enterWeight(w1, w2, true);
 		SignUp.enterHeight(h1, h2, true);
-		
+
 		SignUp.tapNext();
 		ShortcutsTyper.delayOne();
 	}
@@ -88,7 +91,8 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SetGoalToLevel1() {
-		SignUp.setGoal(0);
+		SignUp.setGoal(0, this.currentLevel);
+		this.currentLevel = 0;
 		ShortcutsTyper.delayOne();
 	}
 
@@ -97,7 +101,8 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SetGoalToLevel2() {
-		SignUp.setGoal(1);
+		SignUp.setGoal(1, this.currentLevel);
+		this.currentLevel = 1;
 		ShortcutsTyper.delayOne();
 	}
 
@@ -106,7 +111,8 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SetGoalToLevel3() {
-		SignUp.setGoal(2);
+		SignUp.setGoal(2, this.currentLevel);
+		this.currentLevel = 2;
 		ShortcutsTyper.delayOne();
 	}
 
@@ -115,19 +121,18 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SubmitValidEmailPassword() {
-		// trial mod is enough
-		SignUp.tapNext();
+		// trial mode is enough
+		SignUp.enterEmailPassword(MVPApi.generateUniqueEmail(), "test12");
+		ShortcutsTyper.delayTime(10000);
 	}
 
-	
-	
-	
 	/**
 	 * This method implements the Vertex 'v_InitialView'
 	 * 
 	 */
 	public void v_InitialView() {
-		Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialView");
+		Assert.assertTrue(LaunchScreen.isAtInitialScreen(),
+				"Current view is InitialView");
 	}
 
 	/**
@@ -135,7 +140,8 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpAccount() {
-		Assert.assertTrue(SignUp.isSignUpAccountView(), "Current view is SignUp - Account");
+		Assert.assertTrue(SignUp.isSignUpAccountView(),
+				"Current view is SignUp - Account");
 	}
 
 	/**
@@ -143,24 +149,26 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpGoal() {
-		Assert.assertTrue(SignUp.isSignUpGoalView(), "Current view is SignUp - Goal");
+		Assert.assertTrue(SignUp.isSignUpGoalView(),
+				"Current view is SignUp - Goal");
 	}
 
 	/**
 	 * This method implements the Vertex 'v_SignUpGoalLevel1'
 	 * 
 	 */
-	private void assertGoal(int goalLevel)
-	{
-		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String.format(" _Running_ %s city blocks, or", this.runningEquals[goalLevel])), "Running equivalent for level " + goalLevel + " is correct");
-		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String.format(" _Walking_ %s steps, or", this.walkingEquals[goalLevel])), "Running equivalent for level " + goalLevel + " is correct");
-		
-		//int calories = (int)(PrometheusHelper.calculateCalories(this.goalPoints[goalLevel], weightInLbs) * 2.5);
-		//Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String.format(" _Burning_ for %d calories.", calories)), "Burning equivalent for level " + goalLevel + " is correct");
+	private void assertGoal(int goalLevel) {
+		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String
+				.format(" \\_Walking\\_\\n%s steps", this.walkingEquals[goalLevel])),
+				"Walking equivalent for level " + goalLevel + " is not correct");
+		Assert.assertTrue(
+				ViewUtils.isExistedView("UILabel", this.level[goalLevel]),
+				"Level string for level " + goalLevel + " is not correct");
 	}
-	
+
 	public void v_SignUpGoalLevel1() {
-		Assert.assertTrue(SignUp.isSignUpGoalView(), "Current view is SignUp - Goal level 0");
+		Assert.assertTrue(SignUp.isSignUpGoalView(),
+				"Current view is SignUp - Goal level 0");
 		assertGoal(0);
 	}
 
@@ -169,7 +177,8 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpGoalLevel2() {
-		Assert.assertTrue(SignUp.isSignUpGoalView(), "Current view is SignUp - Goal level 1");
+		Assert.assertTrue(SignUp.isSignUpGoalView(),
+				"Current view is SignUp - Goal level 1");
 		assertGoal(1);
 	}
 
@@ -178,7 +187,8 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpGoalLevel3() {
-		Assert.assertTrue(SignUp.isSignUpGoalView(), "Current view is SignUp - Goal level 2");
+		Assert.assertTrue(SignUp.isSignUpGoalView(),
+				"Current view is SignUp - Goal level 2");
 		assertGoal(2);
 	}
 
@@ -187,7 +197,8 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpGoalTutorial() {
-		Assert.assertTrue(SignUp.isSignUpTutorialView(), "Current view is SignUp - Tutorial");
+		Assert.assertTrue(SignUp.isSignUpTutorialView(),
+				"Current view is SignUp - Tutorial");
 	}
 
 	/**
@@ -195,7 +206,8 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpProfile() {
-		Assert.assertTrue(SignUp.isSignUpProfileView(), "Current view is SignUp - Profile");
+		Assert.assertTrue(SignUp.isSignUpProfileView(),
+				"Current view is SignUp - Profile");
 	}
 
 }

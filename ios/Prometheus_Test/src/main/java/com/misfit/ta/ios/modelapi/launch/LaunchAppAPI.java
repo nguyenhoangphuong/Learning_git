@@ -22,13 +22,6 @@ public class LaunchAppAPI extends ModelAPI {
 		// nothing to do here :P
 	}
 
-	/**
-	 * This method implements the Edge 'e_tapAgreeOnPopup'
-	 * 
-	 */
-	public void e_tapAgreeOnPopup() {
-		LaunchScreen.tapAgreeOnPopup();
-	}
 
 	/**
 	 * This method implements the Edge 'e_tapIHaveAShine'
@@ -55,12 +48,5 @@ public class LaunchAppAPI extends ModelAPI {
 				"Launch screen is displayed");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_launchView'
-	 * 
-	 */
-	public void v_launchView() {
-		// nothing to do here :P
-	}
 
 }

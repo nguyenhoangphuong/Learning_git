@@ -70,10 +70,19 @@ public class SignUp {
     }
     
     public static void setGoal(int level) {
-    	if (level == 0) {
-    		Gui.swipeLeft(500);
-    	} else if (level == 2) {
-    		Gui.swipeRight(500);
+    	// Current goal is 1 as default 
+    	setGoal(level, 1);
+    }
+    
+    public static void setGoal(int level, int currentLevel) {
+    	if (level < currentLevel) {
+    		for (int i = 0; i < currentLevel - level; i++) {
+    			Gui.swipeLeft(500);
+    		}
+    	} else {
+    		for (int i = 0; i < level - currentLevel; i++) {
+    			Gui.swipeRight(500);
+    		}
     	}
     }
     

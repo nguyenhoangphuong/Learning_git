@@ -9,6 +9,10 @@ public class HomeSettings {
 	public static void tapBack() {
 		Gui.touchAVIew("UIButton", "Back");
 	}
+	
+	public static void tapCancel()	{
+		Gui.touchAVIew("UIButton", "Cancel");
+	}
 
     public static void tapYourProfile() {
         Gui.touchAVIew("UILabel", "My Profile");
@@ -68,11 +72,11 @@ public class HomeSettings {
     
     
     public static void tapSignOut() {
-        Gui.touchAVIew("UIButtonLabel", "SIGN OUT");
+        Gui.touchAVIew("UIButtonLabel", "Shine out");
     }
     
     public static void chooseSignOut() {
-    	 Gui.touchAVIew("UIButtonLabel", "Sign out");
+    	 Gui.touchAVIew("UIButtonLabel", "Shine out");
     }
     
     
@@ -96,7 +100,7 @@ public class HomeSettings {
     
     /* Set Daily Goal */
     public static void tapDoneAtNewGoal() {
-    	Gui.touchAVIew("UIButton", "Done");
+    	Gui.touchAVIew("UIButton", "Save");
     }
 
     public static void setSpinnerGoal(int value) {
@@ -195,7 +199,7 @@ public class HomeSettings {
     
     public static boolean isAtEditGoal()
     {
-    	return ViewUtils.isExistedView("UILabel", "My Goal Is...");
+    	return ViewUtils.isExistedView("UILabel", "My Goal");
     }
     
     public static boolean isAtWearingShine()
