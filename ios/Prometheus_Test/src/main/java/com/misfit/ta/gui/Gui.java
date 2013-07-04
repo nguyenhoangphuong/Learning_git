@@ -378,8 +378,7 @@ public class Gui {
 	}
 	
 	public static void sync() {
-//		String message = "(Gui dragFromX: 0 fromY: 200 toX: 480 andToY: 200)";
-		String message = "((ViewUtils findViewWithViewName: @\"PTSyncTrayView\" andIndex: 0) userDidTriggerSyncingWithSimulatedShine)";
+		String message = "(((((((UIApplication sharedApplication) keyWindow) rootViewController) viewControllers) lastObject) syncController) userDidTriggerSyncingWithSimulatedShine)";
 		NuRemoteClient.sendToServer(message);
 	}
     	 
@@ -684,6 +683,17 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
     
+    /* timeline */
+	public static void dragUpTimeline() {
+		String message = "((ViewUtils findViewWithViewName:@\"PTTimelineHorizontalScrollView\" andIndex: 0) animateViewToTop)";
+		NuRemoteClient.sendToServer(message);
+	}
+
+	public static void dragDownTimeline() {
+		String message = "((ViewUtils findViewWithViewName:@\"PTTimelineHorizontalScrollView\" andIndex: 0) animateViewToBottom)";
+		NuRemoteClient.sendToServer(message);
+	}
+    
     
     // ---- spinner ----
     public static void setSpinnerValue(String spinnerViewName, int index, int value)
@@ -973,5 +983,4 @@ public class Gui {
         System.out.println("LOG [Gui.printViewHierarchy]: view hierarchy: \n" + views);
         return views;
     }
-    
 }

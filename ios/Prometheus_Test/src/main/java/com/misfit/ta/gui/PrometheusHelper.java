@@ -238,12 +238,14 @@ public class PrometheusHelper {
 
 		// enter duration
 		Gui.touchAVIew("UITextField", 2);
+		Gui.pressDelete();
 		Gui.type(String.valueOf(duration));
 		ShortcutsTyper.delayTime(500);
 		Gui.dismissPicker();
 
 		// enter steps
 		Gui.touchAVIew("UITextField", 3);
+		Gui.pressDelete();
 		Gui.type(String.valueOf(steps));
 		ShortcutsTyper.delayTime(500);
 		Gui.dismissPicker();
@@ -264,9 +266,11 @@ public class PrometheusHelper {
 
 	public static void handleTutorial() {
 		boolean hasTutorialView = ViewUtils.isExistedView("PTRichTextLabel",
-				"The circle \\_shows\\_ your \\_level of activity\\_.");
+				"_DOUBLE-TAP_\\n\\n check your progress (and the time).");
+		
+		
 		if (hasTutorialView) {
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 6; i++) {
 				Gui.swipeLeft(500);
 				ShortcutsTyper.delayTime(200);
 			}
@@ -282,27 +286,9 @@ public class PrometheusHelper {
 		}
 	}
 
-	public static void handleUpload() {
-		boolean hasUploadMessage = ViewUtils.isExistedView("UILabel",
-				"Do you want to upload your local changes or just sign out?");
-		if (hasUploadMessage) {
-			Gui.touchAVIew("UIButtonLabel", "Sign out");
-			ShortcutsTyper.delayTime(1000);
-		}
-	}
-
-	@Test
-	public void test() {
-		// startApp();
-		Gui.init("192.168.1.247");
-		Gui.printView();
-
-	}
-	
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		Gui.init("192.168.1.185");
-		Gui.printView();
+		Gui.shutdown();
 	}
 	
 }
