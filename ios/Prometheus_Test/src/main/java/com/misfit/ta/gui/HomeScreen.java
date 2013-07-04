@@ -91,19 +91,6 @@ public class HomeScreen {
         PrometheusHelper.sync();
     }
     
-    public static void closeIntructions()
-    {
-		Gui.swipeLeft(500);
-		ShortcutsTyper.delayTime(1000);
-		Gui.swipeLeft(500);
-		ShortcutsTyper.delayTime(1000);
-		Gui.swipeLeft(500);
-		ShortcutsTyper.delayTime(1000);
-		Gui.touchAVIew("UIButtonLabel", "OK, I GOT IT");
-		ShortcutsTyper.delayTime(2000);
-    }
-    
-    
     /* Visible checking */
     public static boolean isToday() {
     	return ViewUtils.isExistedView("UILabel", "Today");
@@ -150,6 +137,10 @@ public class HomeScreen {
     public static boolean isSummaryProgressCircle() {
     	String text = Gui.getProperty("PTRichTextLabel", 0, "text");
     	return text.matches(".* steps$");
+    }
+    
+    public static boolean isTodayDefault() {
+    	return ViewUtils.isExistedView("UILabel", "Zip. Zero. Nada.");
     }
 
 }

@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -842,13 +843,6 @@ public class Gui {
         return NuRemoteClient.getLastMessage();
     }
     
-    public static void setGoalSlider(int level) {
-		String message = "((ViewUtils findViewWithViewName: @\"UISlider\" andIndex: 0) setValue: %level)\n";
-    	message += "(((((UIApplication sharedApplication) keyWindow) rootViewController) topViewController) updateValue: (ViewUtils findViewWithViewName: @\"UISlider\" andIndex: 0))";
-    	message = message.replace("%level", String.valueOf(level));
-    	NuRemoteClient.sendToServer(message);
-    }
-    
     // ---- bluetooth and location service functions ---------
     public static boolean toggleFlightMode() {
         NuRemoteClient.sendToServer("(Gui toggleFlightMode)");
@@ -979,5 +973,5 @@ public class Gui {
         System.out.println("LOG [Gui.printViewHierarchy]: view hierarchy: \n" + views);
         return views;
     }
-
+    
 }
