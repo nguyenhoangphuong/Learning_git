@@ -12,21 +12,19 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class PrometheusHelper {
 
 	/* Views Helper */
-	
+
 	public static void enterEmailPassword(String email, String password) {
 
-		if (ViewUtils.isExistedView("PTEmailVerifyingTextField", 0))
-		{
+		if (ViewUtils.isExistedView("PTEmailVerifyingTextField", 0)) {
 			Gui.touchAVIew("PTEmailVerifyingTextField", 0);
-			String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
+			String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0,
+					"text");
 
 			System.out.println("Deleting: " + txtEmail);
 			Gui.moveCursorInCurrentTextViewTo(-1);
 			for (int i = 0; i < txtEmail.length(); i++)
 				Gui.pressDelete();
-		} 
-		else if (ViewUtils.isExistedView("PTPaddingTextField", 0))
-		{
+		} else if (ViewUtils.isExistedView("PTPaddingTextField", 0)) {
 			Gui.touchAVIew("PTPaddingTextField", 0);
 			String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
 
@@ -35,7 +33,7 @@ public class PrometheusHelper {
 			for (int i = 0; i < txtEmail.length(); i++)
 				Gui.pressDelete();
 		}
-		
+
 		ShortcutsTyper.delayTime(800);
 		Gui.type(email);
 		ShortcutsTyper.delayTime(300);
@@ -46,7 +44,7 @@ public class PrometheusHelper {
 		ShortcutsTyper.delayTime(300);
 		Gui.pressDone();
 	}
-	
+
 	public static void enterGender(boolean isMale) {
 		Gui.touchAVIew("UIButtonLabel", isMale ? "Male" : "Female");
 	}
@@ -87,9 +85,10 @@ public class PrometheusHelper {
 	public static boolean hasInvalidEmailMessage() {
 		return Gui.getPopupContent().equals(DefaultStrings.InvalidEmailMessage);
 	}
-	
+
 	public static boolean hasForgotPasswordInvalidEmailMessage() {
-		return Gui.getPopupContent().equals(DefaultStrings.ForgotPasswordInvalidEmailMessage);
+		return Gui.getPopupContent().equals(
+				DefaultStrings.ForgotPasswordInvalidEmailMessage);
 	}
 
 	public static boolean hasInvalidPasswordMessage() {
@@ -101,16 +100,17 @@ public class PrometheusHelper {
 		Gui.sync();
 	}
 
-	
 	/* Utilities */
-	
+
 	private static String[] longMonths = { "January", "February", "March",
 			"April", "May", "June", "July", "August", "September", "October",
 			"November", "December" };
 	private static String[] sortMonths = { "Jan", "Feb", "Mar", "Apr", "May",
 			"Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-	private static String[] sortDaysOfWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-	private static String[] longDaysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	private static String[] sortDaysOfWeek = { "Sun", "Mon", "Tue", "Wed",
+			"Thu", "Fri", "Sat" };
+	private static String[] longDaysOfWeek = { "Sunday", "Monday", "Tuesday",
+			"Wednesday", "Thursday", "Friday", "Saturday" };
 
 	public static int randInt(int includeFrom, int excludeTo) {
 		Random r = new Random();
@@ -123,8 +123,11 @@ public class PrometheusHelper {
 	}
 
 	public static float calculatePoint(int steps, int minutes) {
-		return (steps
-				* (0.25f + 0.01f * (Math.max(115f, steps * 1f / minutes) - 115)) + 0.0001f) / 2.5f;
+		// Manual input: real activity points should be floor down before
+		// deviding by 2.5
+		float realPoints = (steps
+				* (0.25f + 0.01f * (Math.max(115f, steps * 1f / minutes) - 115)) + 0.0001f);
+		return (float) (Math.floor(realPoints) / 2.5f);
 	}
 
 	public static float calculateMiles(int steps, int heightInInches) {
@@ -132,16 +135,18 @@ public class PrometheusHelper {
 	}
 
 	public static float calculateCalories(float points, float weightInLbs) {
+		// TODO: update new calculation
 		float weightInKg = (float) (weightInLbs * 0.453592);
 		weightInKg = Math.round(weightInKg * 10) / 10;
 		return points * weightInKg / 600f;
 	}
 
-	public static String getMonthString(int monthNumber, boolean isLongMonthString) {
+	public static String getMonthString(int monthNumber,
+			boolean isLongMonthString) {
 		return isLongMonthString ? longMonths[monthNumber - 1]
 				: sortMonths[monthNumber - 1];
 	}
-	
+
 	public static String getDayOfWeek(int dayNumber, boolean isLongString) {
 		return isLongString ? longDaysOfWeek[dayNumber - 1]
 				: sortDaysOfWeek[dayNumber - 1];
@@ -153,34 +158,32 @@ public class PrometheusHelper {
 				+ String.format("%02d", Integer.parseInt(day)) + ", " + year;
 	}
 
-	
 	/* Quick navigation */
-	
+
 	public static void signUp(String email, String password, boolean isMale,
 			int date, int month, int year, boolean isUSUnit, String h1,
-			String h2, String w1, String w2, int goalLevel) 
-	{
+			String h2, String w1, String w2, int goalLevel) {
 		LaunchScreen.launch();
 
 		SignUp.tapSignUp();
 		ShortcutsTyper.delayTime(5000);
 		SignUp.enterEmailPassword(email, password);
 		ShortcutsTyper.delayTime(10000);
-		
+
 		// wait to shutdown location alert
 		ShortcutsTyper.delayTime(10000);
-		
+
 		SignUp.enterGender(isMale);
 		SignUp.enterBirthDay(year + "",
 				PrometheusHelper.getMonthString(month, true), date + "");
 		SignUp.enterHeight(h1, h2, isUSUnit);
 		SignUp.enterWeight(w1, w2, isUSUnit);
 		SignUp.tapNext();
-		
+
 		ShortcutsTyper.delayTime(1000);
 		SignUp.setGoal(goalLevel);
 		SignUp.tapNext();
-		
+
 		ShortcutsTyper.delayTime(1000);
 		SignUp.sync();
 		ShortcutsTyper.delayTime(1000);
@@ -267,8 +270,7 @@ public class PrometheusHelper {
 	public static void handleTutorial() {
 		boolean hasTutorialView = ViewUtils.isExistedView("PTRichTextLabel",
 				"_DOUBLE-TAP_\\n\\n check your progress (and the time).");
-		
-		
+
 		if (hasTutorialView) {
 			for (int i = 0; i < 6; i++) {
 				Gui.swipeLeft(500);
@@ -278,9 +280,7 @@ public class PrometheusHelper {
 				Gui.touchAVIew("UIButtonLabel", "OK, I GOT IT");
 			} else if (ViewUtils.isExistedView("UIButtonLabel", "DISMISS IT")) {
 				Gui.touchAVIew("UIButtonLabel", "DISMISS IT");
-			}
-			else
-			{
+			} else {
 				Gui.touchAVIew("PTRichTextLabel", 7);
 			}
 		}
@@ -290,5 +290,5 @@ public class PrometheusHelper {
 		Gui.init("192.168.1.185");
 		Gui.shutdown();
 	}
-	
+
 }

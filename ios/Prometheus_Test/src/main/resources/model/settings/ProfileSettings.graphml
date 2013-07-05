@@ -303,7 +303,6 @@
       </data>
     </edge>
     <edge id="e11" source="n7" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-26.25" sy="15.0" tx="-26.25" ty="-15.0">
@@ -321,7 +320,6 @@
       </data>
     </edge>
     <edge id="e12" source="n1" target="n7">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="26.25" sy="-15.0" tx="26.25" ty="15.0">

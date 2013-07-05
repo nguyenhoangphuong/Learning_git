@@ -212,8 +212,6 @@ public class DayProgressAPI extends ModelAPI {
 				"Start time displayed correctly");
 		//open overlay
 		Gui.touchAVIew("PTTimelineItemSessionView", this.lastStartTime);
-		System.out.println(this.lastDuration);
-		System.out.println(this.lastPoints);
 		Assert.assertTrue(
 				ViewUtils.isExistedView("UILabel",
 						String.valueOf(this.lastDuration))
@@ -222,7 +220,7 @@ public class DayProgressAPI extends ModelAPI {
 		Assert.assertTrue(
 				ViewUtils.isExistedView("UILabel",
 						String.format("%d",
-								(int) Math.floor( this.lastPoints)))
+								(int) Math.round( this.lastPoints)))
 						&& ViewUtils.isExistedView("UILabel", "points"),
 				"Points on timeline item are displayed correctly");
 		// close overlay and drag down timeline view
