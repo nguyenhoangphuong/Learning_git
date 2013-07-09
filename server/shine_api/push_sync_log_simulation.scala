@@ -7,10 +7,8 @@ import com.excilys.ebi.gatling.http.Headers.Names._
 import akka.util.duration._
 import bootstrap._
 
-import Shine.APIKey._
-import Shine.APIURL._
-import Shine.NewSyncLog._
-import Shine.NewUserInfo._
+import Shine.Predef._
+import Shine.Helper._
 
 class PushSyncLogSimulation extends Simulation {
 	def pushSyncLogWithLoopingTimes(users: Int, repeat: Int = 0, rampUp: Int = 10) {
@@ -30,7 +28,6 @@ class PushSyncLogSimulation extends Simulation {
 						
 				)
 			}
-
 
 		setUp(scn.users(users).ramp(rampUp).protocolConfig(httpConf))
 	}
@@ -64,7 +61,7 @@ class PushSyncLogSimulation extends Simulation {
 
 		val scn = scenario("Signup API")
 			.repeat(repeat) {
-				feed(newUserInfo).feed(newSyncLog)
+				feed(newUser).feed(newSyncLog)
 					.exec(
 						signUp, pushSyncLog
 					)
