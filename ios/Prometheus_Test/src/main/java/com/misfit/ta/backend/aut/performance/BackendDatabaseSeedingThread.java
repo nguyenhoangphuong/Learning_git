@@ -122,7 +122,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
         long sGetGoal1 = System.currentTimeMillis();
         
         long sUpdateGoal= System.currentTimeMillis();
-        MVPApi.updateGoal(token, now + 234, 2500, now, now + 8400, 3, 2, 0, progressData, "mylocalid");
+        MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 2500, now, now + 8400, 3, 2, 0, progressData, "mylocalid");
         long sUpdateGoal1 = System.currentTimeMillis();
         
         long sSearchGoal= System.currentTimeMillis();

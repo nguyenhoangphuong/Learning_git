@@ -292,11 +292,11 @@ public class MVPApi {
         return result;
     }
 
-    public static GoalsResult updateGoal(String token, long updatedAt, double goalValue, long startTime, long endTime,
-            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds,
-            ProgressData progressData, String localId) {
+    public static GoalsResult updateGoal(String token, long updatedAt, String serverId, double goalValue, long startTime,
+            long endTime, int absoluteLevel, int userRelativeLevel,
+            int timeZoneOffsetInSeconds, ProgressData progressData, String localId) {
         // prepare
-        String url = baseAddress + "goals";
+        String url = baseAddress + "goals/" + serverId;
 
         BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel,
                 userRelativeLevel, timeZoneOffsetInSeconds, progressData, localId, updatedAt);
@@ -304,7 +304,6 @@ public class MVPApi {
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
 
-        // TODO: WHY IS UPDATING RETURNING 404?
         if (response.getStatusCode() != 200) {
             return null;
         }
