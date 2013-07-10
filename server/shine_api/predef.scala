@@ -12,18 +12,24 @@ object Predef {
 	val apiKey = Map("api_key" -> "76801581")
 
 	val apiUrl = Map("baseUrl" -> "https://misfit-shine-api-test-1663549078.us-east-1.elb.amazonaws.com",
-		"smallUrl" -> "https://ec2-184-73-104-151.compute-1.amazonaws.com",
-		"mediumUrl" -> "https://ec2-54-226-191-232.compute-1.amazonaws.com",
-		"largeUrl" -> "https://ec2-23-22-9-220.compute-1.amazonaws.com",
-		"localUrl" -> "http://10.0.1.123:9000",
+		"http" -> "http://",
+		"https" -> "https://",
+		"port" -> ":801",
+		"elb" -> "misfit-shine-api-test-1663549078.us-east-1.elb.amazonaws.com",
+		"small" -> "ec2-184-73-104-151.compute-1.amazonaws.com",
+		"medium" -> "ec2-54-226-191-232.compute-1.amazonaws.com",
+		"large" -> "ec2-23-22-9-220.compute-1.amazonaws.com",
+		"xlarge" -> "ec2-54-242-121-128.compute-1.amazonaws.com",
+		"local" -> "10.0.1.123",
 		"signup" -> "/shine/v7/signup",
 		"login" -> "/shine/v7/login",
 		"logout" -> "/shine/v7/logout",
-		"searchGraphItems" -> "/shine/v7/graph_items")
+		"searchGraphItems" -> "/shine/v7/graph_items",
+		"hello" -> "/shine/v7/hello.json")
 
-	val duration: Int = 180 // for each concurrency level
+	val duration: Int = 120 // for each concurrency level
 
-	val baseUrl: String = apiUrl("largeUrl")
+	val baseUrl: String = apiUrl("http") + apiUrl("xlarge") + apiUrl("port")
 
 	val rampUp: Int = 10
 
