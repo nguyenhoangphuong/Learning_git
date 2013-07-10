@@ -14,7 +14,7 @@ object Predef {
 	val apiUrl = Map("baseUrl" -> "https://misfit-shine-api-test-1663549078.us-east-1.elb.amazonaws.com",
 		"http" -> "http://",
 		"https" -> "https://",
-		"port" -> ":801",
+		"port" -> ":800",
 		"elb" -> "misfit-shine-api-test-1663549078.us-east-1.elb.amazonaws.com",
 		"small" -> "ec2-184-73-104-151.compute-1.amazonaws.com",
 		"medium" -> "ec2-54-226-191-232.compute-1.amazonaws.com",
@@ -25,6 +25,7 @@ object Predef {
 		"login" -> "/shine/v7/login",
 		"logout" -> "/shine/v7/logout",
 		"searchGraphItems" -> "/shine/v7/graph_items",
+		"insertTimelineItems" -> "/shine/v7/timeline_items/batch_insert",
 		"hello" -> "/shine/v7/hello.json")
 
 	val duration: Int = 120 // for each concurrency level
@@ -103,6 +104,38 @@ object Predef {
 
 			Map("log" -> log)
 		}
+	}
+
+	val newTimelineItem = new Feeder[String] {
+		override def hasNext() = true
+
+		override def next(): Map[String, String] = {
+			var newLocalId: String = randomNumericString(5)
+			var item: String = ""
+
+			item += "{\"updatedAt\":1373430705,"
+			item += "\"timestamp\":1373430705,"
+			item += "\"itemType\":1,"
+			item += "\"data\":{\"temperatureF\":100,\"locationName\":\"Stockholm\",\"code\":100},"
+			item += "\"localId\":\"" + newLocalId + "\"}"
+
+			Map("item" -> item)
+		}
+	}
+
+	def newTimelineItems(count: Int = 1): String = {
+		var list: String = "[" + newTimelineItem.next()("item")
+		var i: Int = 0
+
+		for (i <- 1 until count) {
+			list += "," + newTimelineItem.next()("item")
+		}
+
+		list += "]"
+
+		//System.out.println(list)
+
+		return list
 	}
 	
 }
