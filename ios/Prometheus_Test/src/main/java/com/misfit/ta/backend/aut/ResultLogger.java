@@ -15,6 +15,7 @@ public class ResultLogger {
     private static Map<Integer, Integer> errors;
     private static int request;
     private static int response;
+    public static long totalTime;
 
     public static ResultLogger getLogger(String testname) {
         if (logger == null) {
@@ -25,7 +26,7 @@ public class ResultLogger {
             request = 0;
             response = 0;
         }
-
+        totalTime = 0;
         return logger;
     }
 
@@ -100,6 +101,8 @@ public class ResultLogger {
         }
         buf.append("-------------------\n");
         buf.append("Total: \t" + count + "\n");
+        buf.append("Total Time: " + totalTime + "\n");
+        buf.append("Average time: " + (totalTime / request));
         System.out.println("LOG [ResultLogger.logErrorSummary]: " + buf.toString());
         logger.log(buf.toString());
         
