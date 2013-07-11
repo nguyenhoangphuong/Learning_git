@@ -14,6 +14,7 @@ import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.AccountResult;
+import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.GoalsResult;
 import com.misfit.ta.backend.data.ProfileData;
 import com.misfit.ta.backend.data.ProfileResult;
@@ -152,9 +153,10 @@ public class BackendDatabaseSeedingThread implements Runnable {
     public void doAccountOperation(String email) {
         // // sign out then
         s3 = System.currentTimeMillis();
-       MVPApi.signOut(token);
+       BaseResult br = MVPApi.signOut(token);
         s4 = System.currentTimeMillis();
-       //
+        Assert.assertTrue(br.isOK(), "Status code is not 200: " + br.statusCode);
+       
        // // sign in
         s5 = System.currentTimeMillis();
        AccountResult r = MVPApi.signIn(email, "misfit1", udid);
@@ -167,16 +169,17 @@ public class BackendDatabaseSeedingThread implements Runnable {
         ProfileData profile = DefaultValues.DefaultProfile();
         // createProfile
         s7 = System.currentTimeMillis();
-       ProfileResult result = MVPApi.createProfile(token, profile);
+        ProfileResult result = MVPApi.createProfile(token, profile);
         s8 = System.currentTimeMillis();
-       Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
+        Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
 
        // get Profile
         s9 = System.currentTimeMillis();
        result = MVPApi.getProfile(token);
         s10 = System.currentTimeMillis();
+        Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
 
-       // // update profile
+       // update profile
        ProfileData newProfile = result.profile;
        newProfile.name = profile.name + "_new";
        newProfile.updatedAt += 100;
@@ -184,7 +187,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
        result = MVPApi.updateProfile(token, newProfile, profile.serverId);
        s12 = System.currentTimeMillis();
        countRequest += 3;
-       Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
+       Assert.assertTrue(result.isExisted(), "Status code is not 210: " + result.statusCode);
     }
     
     public void doPedometerOperations() {
@@ -192,17 +195,20 @@ public class BackendDatabaseSeedingThread implements Runnable {
         sPedoCreate = System.currentTimeMillis();
         Pedometer pedo = MVPApi.createPedometer(token, "myserial", "hw1234", now, now, now, "localId", null, now);
         sPedoCreate1 = System.currentTimeMillis();
+        Assert.assertTrue(pedo != null, "Pedometer can not be created");
         
         
          sPedoShow = System.currentTimeMillis();
         pedo = MVPApi.showPedometer(token);
          sPedoShow1 = System.currentTimeMillis();
+         Assert.assertTrue(pedo != null, "Can not get pedometer");
         
         
         pedo.setUpdatedAt(System.currentTimeMillis()/1000);
          sPedoUpdate= System.currentTimeMillis();
         pedo = MVPApi.updatePedometer(token, "myserial", "hw1234", now, now, now, "localId", null, now);
          sPedoUpdate1 = System.currentTimeMillis();
+         Assert.assertTrue(pedo != null, "Pedometer can not be updated");
          countRequest += 3;
     }
     
@@ -210,10 +216,12 @@ public class BackendDatabaseSeedingThread implements Runnable {
         sGetDevice= System.currentTimeMillis();
         String status = MVPApi.getDeviceLinkingStatus(token,"myserial");
          sGetDevice1 = System.currentTimeMillis();
+         Assert.assertTrue(status != null, "Can not get linking status");
         
          sGetUnlink= System.currentTimeMillis();
         status = MVPApi.unlinkDevice(token,"myserial");
          sGetUnlink1 = System.currentTimeMillis();
+         Assert.assertTrue(status != null, "Can not unlink device");
          countRequest += 2;
     }
     
@@ -227,18 +235,24 @@ public class BackendDatabaseSeedingThread implements Runnable {
         sCreateGoal= System.currentTimeMillis();
         GoalsResult goalResult = MVPApi.createGoal(token, 2500, now, now + 8400, 3, 2, 0, progressData, "mylocalid");
         sCreateGoal1 = System.currentTimeMillis();
+        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
         
         sGetGoal= System.currentTimeMillis();
-        MVPApi.getGoal(token, goalResult.goals[0].getServerId());
+        goalResult = MVPApi.getGoal(token, goalResult.goals[0].getServerId());
         sGetGoal1 = System.currentTimeMillis();
-        
-        long sUpdateGoal= System.currentTimeMillis();
-        MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 2500, now, now + 8400, 3, 2, 0, progressData, "mylocalid");
-        long sUpdateGoal1 = System.currentTimeMillis();
+        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
         
         sSearchGoal= System.currentTimeMillis();
-        MVPApi.searchGoal(token, now, now + 8400, now);
+        goalResult = MVPApi.searchGoal(token, now, now + 8400, now);
         sSearchGoal1 = System.currentTimeMillis();
+        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
+        
+        sUpdateGoal= System.currentTimeMillis();
+        goalResult = MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 2500, now, now + 8400, 3, 2, 0, progressData, "mylocalid");
+        sUpdateGoal1 = System.currentTimeMillis();
+        Assert.assertTrue(goalResult.isExisted(), "Status code is not 210: " + goalResult.statusCode);
+        
+        
         countRequest += 4;
     }
     
