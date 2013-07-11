@@ -85,7 +85,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
         }
         
         if (operation == 2 || operation <= -1) {
-            doPedometerOoerations();
+            doPedometerOperations();
         }
         
         if (operation == 3 || operation <= -1) {
@@ -164,7 +164,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
        Assert.assertTrue(result.isExisted(), "Status code is not 210: " + result.statusCode);
     }
     
-    public void doPedometerOoerations() {
+    public void doPedometerOperations() {
         long now = System.currentTimeMillis()/1000;
         sPedoCreate = System.currentTimeMillis();
         Pedometer pedo = MVPApi.createPedometer(token, "myserial", "hw1234", now, now, now, "localId", null, now);
@@ -208,7 +208,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
         sGetGoal1 = System.currentTimeMillis();
         
         long sUpdateGoal= System.currentTimeMillis();
-        MVPApi.updateGoal(token, now + 234, 2500, now, now + 8400, 3, 2, 0, progressData, "mylocalid");
+        MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 2500, now, now + 8400, 3, 2, 0, progressData, "mylocalid");
         long sUpdateGoal1 = System.currentTimeMillis();
         
         sSearchGoal= System.currentTimeMillis();
