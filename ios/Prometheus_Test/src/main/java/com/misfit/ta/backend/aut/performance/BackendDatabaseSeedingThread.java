@@ -37,6 +37,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
     private long sGetUnlink, sGetUnlink1, sCreateGoal, sCreateGoal1, sGetGoal, sGetGoal1, sUpdateGoal, sUpdateGoal1, sSearchGoal, sSearchGoal1;
     
     private boolean randomized = false;
+    private long totalTime;
     
 
     Logger logger = Util.setupLogger(BackendDatabaseSeedingThread.class);
@@ -72,10 +73,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
             System.out.println("LOG [BackendDatabaseSeedingThread.run]: random:  " + operation);
         }
         
-        operation = 100;
-        
-       System.out.println("LOG [BackendDatabaseSeedingThread.run]: operation: " + operation + " : " + (operation == 0 || operation <= -1));
-        
+        System.out.println("LOG [BackendDatabaseSeedingThread.run]: operation: " + operation + " : " + (operation == 0 || operation <= -1));
         
         if (operation == 0 || operation <= -1) {
             doAccountOperation(email);
@@ -161,7 +159,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
        s11 = System.currentTimeMillis();
        result = MVPApi.updateProfile(token, newProfile, profile.serverId);
        s12 = System.currentTimeMillis();
-       Assert.assertTrue(result.isExisted(), "Status code is not 210: " + result.statusCode);
+       Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
     }
     
     public void doPedometerOperations() {
@@ -188,7 +186,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
          sGetDevice1 = System.currentTimeMillis();
         
          sGetUnlink= System.currentTimeMillis();
-        status = MVPApi.getDeviceLinkingStatus(token,"myserial");
+        status = MVPApi.unlinkDevice(token,"myserial");
          sGetUnlink1 = System.currentTimeMillis();
     }
     
@@ -214,7 +212,6 @@ public class BackendDatabaseSeedingThread implements Runnable {
         sSearchGoal= System.currentTimeMillis();
         MVPApi.searchGoal(token, now, now + 8400, now);
         sSearchGoal1 = System.currentTimeMillis();
-        
     }
     
     public void doTimelineOperation() {
