@@ -1,7 +1,9 @@
 package com.misfit.ta.backend.aut.performance;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -69,7 +71,7 @@ public class BackendDatabaseSeeding {
                 + "updateGoal\t"
                 + "searchGoal\t"
                 + "addTimelineItems\t" 
-                + "addGraphItems\t" + "email");
+                + "addGraphItems\t" + "email\t" + "userRequestTime\t" + "countRequest\t" + "timePerRequest");
 
         JSONArray timelineItems = new JSONArray();
         JSONArray graphItems = new JSONArray();
@@ -86,7 +88,6 @@ public class BackendDatabaseSeeding {
         
       
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-
         while (userCount < NUMBER_OF_USERS) {
             for (int threads = 0; threads < Math.min(NUMBER_OF_THREADS, NUMBER_OF_USERS - userCount); threads++) {
                 BackendDatabaseSeedingThread test = new BackendDatabaseSeedingThread(userCount, timelineItems,

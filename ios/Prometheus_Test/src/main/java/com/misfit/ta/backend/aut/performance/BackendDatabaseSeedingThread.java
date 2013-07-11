@@ -1,5 +1,6 @@
 package com.misfit.ta.backend.aut.performance;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
@@ -37,7 +38,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
     private long sGetUnlink, sGetUnlink1, sCreateGoal, sCreateGoal1, sGetGoal, sGetGoal1, sUpdateGoal, sUpdateGoal1, sSearchGoal, sSearchGoal1;
     
     private boolean randomized = false;
-    private long totalTime;
+    private long userRequestTime;
     private long countRequest;
     
 
@@ -76,6 +77,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
         
         System.out.println("LOG [BackendDatabaseSeedingThread.run]: operation: " + operation + " : " + (operation == 0 || operation <= -1));
         
+        countRequest = 1;
         if (operation == 0 || operation <= -1) {
             doAccountOperation(email);
         }
@@ -102,7 +104,23 @@ public class BackendDatabaseSeedingThread implements Runnable {
         
         System.out.println("LOG [BackendStressTestThread.run]: ------------------------------------ DONE");
 
-        
+        userRequestTime = (s2 - s1) 
+        		+ (s4 - s3)      
+        		+ (s6 - s5) 
+                + (s8 - s7) 
+                + (s10 - s9) 
+                + (s12 - s11) 
+                + (sPedoCreate1 - sPedoCreate) 
+                + (sPedoShow1 - sPedoShow) 
+                + (sPedoUpdate1 - sPedoUpdate)
+                + (sGetDevice1- sGetDevice) 
+                + (sGetUnlink1- sGetUnlink) 
+                + (sCreateGoal1- sCreateGoal) 
+                + (sGetGoal1- sGetGoal) 
+                + (sUpdateGoal1- sUpdateGoal) 
+                + (sSearchGoal1- sSearchGoal) 
+                + (s14 - s13) 
+                + (s16 - s15);
         rlog.log((userCount + 1) + "\t" 
                 + (s2 - s1) + "\t" 
                 + (s4 - s3) + "\t"
@@ -123,26 +141,12 @@ public class BackendDatabaseSeedingThread implements Runnable {
                 + (sSearchGoal1- sSearchGoal) + "\t"
                 
                 + (s14 - s13) + "\t"
-                + (s16 - s15) + "\t" + email);
-        totalTime = (s2 - s1) 
-        		+ (s4 - s3)      
-        		+ (s6 - s5) 
-                + (s8 - s7) 
-                + (s10 - s9) 
-                + (s12 - s11) 
-                + (sPedoCreate1 - sPedoCreate) 
-                + (sPedoShow1 - sPedoShow) 
-                + (sPedoUpdate1 - sPedoUpdate)
-                + (sGetDevice1- sGetDevice) 
-                + (sGetUnlink1- sGetUnlink) 
-                + (sCreateGoal1- sCreateGoal) 
-                + (sGetGoal1- sGetGoal) 
-                + (sUpdateGoal1- sUpdateGoal) 
-                + (sSearchGoal1- sSearchGoal) 
-                + (s14 - s13) 
-                + (s16 - s15);
-        rlog.log("---Total time: " + totalTime);
-        rlog.log("---Request count: " + countRequest);
+                + (s16 - s15) + "\t" 
+                + email + "\t" 
+                + userRequestTime + "\t"
+                + countRequest + "\t"
+                + (String.valueOf(userRequestTime/countRequest))
+                );
     }
     
     public void doAccountOperation(String email) {
@@ -156,7 +160,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
        AccountResult r = MVPApi.signIn(email, "misfit1", udid);
         s6 = System.currentTimeMillis();
        token = r.token;
-       countRequest = 2;
+       countRequest += 2;
        Assert.assertTrue(r.isOK(), "Status code is not 200: " + r.statusCode);
     }
     public void doProfileOperation() {
@@ -179,7 +183,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
        s11 = System.currentTimeMillis();
        result = MVPApi.updateProfile(token, newProfile, profile.serverId);
        s12 = System.currentTimeMillis();
-       countRequest = 3;
+       countRequest += 3;
        Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
     }
     
@@ -199,7 +203,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
          sPedoUpdate= System.currentTimeMillis();
         pedo = MVPApi.updatePedometer(token, "myserial", "hw1234", now, now, now, "localId", null, now);
          sPedoUpdate1 = System.currentTimeMillis();
-         countRequest = 3;
+         countRequest += 3;
     }
     
     public void doLinkinOperation() {
@@ -210,7 +214,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
          sGetUnlink= System.currentTimeMillis();
         status = MVPApi.unlinkDevice(token,"myserial");
          sGetUnlink1 = System.currentTimeMillis();
-         countRequest = 2;
+         countRequest += 2;
     }
     
     public void doGoalOperation() {
@@ -235,7 +239,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
         sSearchGoal= System.currentTimeMillis();
         MVPApi.searchGoal(token, now, now + 8400, now);
         sSearchGoal1 = System.currentTimeMillis();
-        countRequest = 4;
+        countRequest += 4;
     }
     
     public void doTimelineOperation() {
@@ -250,7 +254,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
          s15 = System.currentTimeMillis();
         response = MVPApi.createGraphItems(token, graphItems);
          s16 = System.currentTimeMillis();
-         countRequest = 2;
+         countRequest += 2;
         Assert.assertTrue(response.getStatusCode() <= 210, "Status code is > 210: " + response.getStatusCode());
         
     }
