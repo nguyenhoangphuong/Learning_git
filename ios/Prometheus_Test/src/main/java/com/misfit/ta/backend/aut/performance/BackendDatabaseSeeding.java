@@ -88,12 +88,13 @@ public class BackendDatabaseSeeding {
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
         while (userCount < NUMBER_OF_USERS) {
-            for (int threads = 0; threads < NUMBER_OF_THREADS; threads++) {
+            for (int threads = 0; threads < Math.min(NUMBER_OF_THREADS, NUMBER_OF_USERS - userCount); threads++) {
                 BackendDatabaseSeedingThread test = new BackendDatabaseSeedingThread(userCount, timelineItems,
                         graphItems, rlog, randomizedOperations);
                 futures.add(executor.submit(test));
                 userCount++;
             }
+   
         }
         executor.shutdown();
         
@@ -109,7 +110,7 @@ public class BackendDatabaseSeeding {
 
     public static void main(String[] args) {
         BackendDatabaseSeeding test = new BackendDatabaseSeeding();
-        test.signupOneMillionUsers(false);
+        test.signupOneMillionUsers(true);
     }
 
 }
