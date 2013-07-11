@@ -17,24 +17,30 @@ import com.misfit.ta.backend.aut.ResultLogger;
 
 public class BackendDatabaseSeeding {
 
-    private static int NUMBER_OF_ITEMS_PER_DAY = 1;
-    private static int NUMBER_OF_DAYS = 1;
-    private static int NUMBER_OF_USERS = 20;
-    private static int NUMBER_OF_THREADS = 2;
+    protected int NUMBER_OF_ITEMS_PER_DAY = 1;
+    protected int NUMBER_OF_DAYS = 1;
+    protected int NUMBER_OF_USERS = 20;
+    protected int NUMBER_OF_THREADS = 2;
 
     Logger logger = Util.setupLogger(BackendDatabaseSeeding.class);
 
-    public void setUpTest() {
+    public BackendDatabaseSeeding() {
         NUMBER_OF_ITEMS_PER_DAY = Settings.getInt("NUMBER_OF_ITEMS_PER_DAY");
         NUMBER_OF_DAYS = Settings.getInt("NUMBER_OF_DAYS");
         NUMBER_OF_USERS = Settings.getInt("NUMBER_OF_USERS");
         NUMBER_OF_THREADS = Settings.getInt("NUMBER_OF_THREADS");
     }
+    
+    public void setParameters(int numberOfUsers, int numberOfThreads, int numberOfDays, int numberOfItemsPerDay) {
+        NUMBER_OF_DAYS = numberOfDays;
+        NUMBER_OF_ITEMS_PER_DAY = numberOfItemsPerDay;
+        NUMBER_OF_THREADS = numberOfThreads;
+        NUMBER_OF_USERS = numberOfUsers;
+        
+    }
 
     @Test(groups = { "backend_stress" })
-    public void signupOneMillionUsers() {
-        setUpTest();
-
+    public void signupOneMillionUsers(boolean randomizedOperations) {
 
         logger.info("Params: \n" + "NUMBER_OF_USERS: " + NUMBER_OF_USERS + "\n" + "NUMBER_OF_DAYS: " + NUMBER_OF_DAYS
                 + "\n" + "NUMBER_OF_ITEMS_PER_DAY: " + NUMBER_OF_ITEMS_PER_DAY + "\n" + "NUMBER_OF_THREADS: "
@@ -84,7 +90,7 @@ public class BackendDatabaseSeeding {
         while (userCount < NUMBER_OF_USERS) {
             for (int threads = 0; threads < NUMBER_OF_THREADS; threads++) {
                 BackendDatabaseSeedingThread test = new BackendDatabaseSeedingThread(userCount, timelineItems,
-                        graphItems, rlog);
+                        graphItems, rlog, randomizedOperations);
                 futures.add(executor.submit(test));
                 userCount++;
             }
@@ -103,7 +109,7 @@ public class BackendDatabaseSeeding {
 
     public static void main(String[] args) {
         BackendDatabaseSeeding test = new BackendDatabaseSeeding();
-        test.signupOneMillionUsers();
+        test.signupOneMillionUsers(false);
     }
 
 }

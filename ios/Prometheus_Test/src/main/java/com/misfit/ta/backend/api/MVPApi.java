@@ -5,10 +5,7 @@ import static com.google.resting.component.EncodingTypes.UTF8;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -18,6 +15,7 @@ import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
@@ -69,12 +67,12 @@ public class MVPApi {
         IContentData rawData = response.getContentData();
         logger.info("Response raw Data: " + rawData + "\n");
         ResultLogger.registerResponse();
-        int error = response.getStatusCode() ;
+        int error = response.getStatusCode();
         ResultLogger.addErrorCode(error);
         if (error != 200) {
             logger.info("ERROR: server returned: " + error);
         }
-        
+
         return response;
     }
 
@@ -217,7 +215,7 @@ public class MVPApi {
                 data.dateOfBirth, data.goalLevel, data.trackingDeviceId, data.localId, data.latestVersion,
                 data.updatedAt);
 
-//        requestInf.addParam("id", id);
+        // requestInf.addParam("id", id);
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -276,11 +274,11 @@ public class MVPApi {
     }
 
     public static GoalsResult createGoal(String token, double goalValue, long startTime, long endTime,
-            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds,
-            ProgressData progressData, String localId) {
+            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds, ProgressData progressData,
+            String localId) {
         // prepare
         String url = baseAddress + "goals";
-        
+
         BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel,
                 userRelativeLevel, timeZoneOffsetInSeconds, progressData, localId, 0);
 
@@ -315,9 +313,9 @@ public class MVPApi {
         // prepare
         String url = baseAddress + "profile";
 
-        BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(),
-                goal.getAbsoluteLevel(), goal.getUserRelativeLevel(), goal.getTimeZoneOffsetInSeconds(),
-                goal.getProgressData(), goal.getLocalId(), goal.getUpdatedAt());
+        BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), goal
+                .getAbsoluteLevel(), goal.getUserRelativeLevel(), goal.getTimeZoneOffsetInSeconds(), goal
+                .getProgressData(), goal.getLocalId(), goal.getUpdatedAt());
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -504,9 +502,6 @@ public class MVPApi {
                 tmp -= 3600;
 
                 // df.format(new Date(tmp));
-                System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: tmp= " + tmp);
-                System.out.println("LOG [MVPApi.generateTimelineItemsAndGraphItems]: date: "
-                        + df.format(new Date(tmp * 1000)));
 
                 TimelineItem tmpItem = generateActivitySessionItem(tmp);
                 timelineItems.put(tmpItem.toJson());
@@ -531,112 +526,104 @@ public class MVPApi {
         return tmpItem;
     }
 
-	public static TimelineItem generateWeatherTimelineItem(long tmp) {
-		WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
-		TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_WEATHER, tmp, tmp, weather, TextTool
-		        .getRandomString(19, 20), null, null);
-		return timeline;
-	}
-	
-	public static TimelineItem generateNotableEventItem(long tmp, int value) {
-		NotableEventItem notableEventItem = new NotableEventItem(tmp, null, null, value, 1);
-		TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_NOTABLE, tmp, tmp, notableEventItem, TextTool
-		        .getRandomString(19, 20), null, null);
-		return timeline;
-	}
-	
-	public static Pedometer showPedometer(String token) {
-		String url = baseAddress + "pedometer";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		try {
-			ServiceResponse response = MVPApi.get(url, port, request);
-			Pedometer pedometer = Pedometer.getPedometer(response);
-			return pedometer;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static String getDeviceLinkingStatus(String token, String serialNumberString) {
-		String url = baseAddress + "device_linking_status";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		request.addParam("serial_number_string", serialNumberString);
-		try {
-			ServiceResponse response = MVPApi.get(url, port, request);
-			String message = Pedometer.getMessage(response);
-			return message;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static String unlinkDevice(String token, String serialNumberString) {
-		String url = baseAddress + "unlink_device";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		request.addParam("serial_number_string", serialNumberString);
-		try {
-			ServiceResponse response = MVPApi.put(url, port, request);
-			String message = Pedometer.getMessage(response);
-			return message;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-    public static Pedometer createPedometer(String token,
-			String serialNumberString, String firmwareRevisionString,
-			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
-			String localId, String serverId, long updatedAt) {
-		String url = baseAddress + "pedometer";
-		BaseParams request = buildEditPedometerRequest(token,
-				serialNumberString, firmwareRevisionString, linkedTime,
-				unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
-		try {
-			ServiceResponse response = MVPApi.post(url, port, request);
-			Pedometer result = Pedometer.getPedometer(response);
-			return result;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static Pedometer updatePedometer(String token,
-			String serialNumberString, String firmwareRevisionString,
-			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
-			String localId, String serverId, long updatedAt) {
-		String url = baseAddress + "pedometer";
-		BaseParams request = buildEditPedometerRequest(token,
-				serialNumberString, firmwareRevisionString, linkedTime,
-				unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
-		try {
-			ServiceResponse response = MVPApi.put(url, port, request);
-			Pedometer result = Pedometer.getPedometer(response);
-			return result;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+    public static TimelineItem generateWeatherTimelineItem(long tmp) {
+        WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
+        TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_WEATHER, tmp, tmp, weather, TextTool
+                .getRandomString(19, 20), null, null);
+        return timeline;
+    }
 
-	public static BaseParams buildEditPedometerRequest(String token,
-			String serialNumberString, String firmwareRevisionString,
-			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
-			String localId, String serverId, long updatedAt) {
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		Pedometer pedometer = new Pedometer(serialNumberString,
-				firmwareRevisionString, linkedTime, unlinkedTime,
-				lastSyncedTime, localId, serverId, updatedAt);
-		request.addObjectParam("pedometer", pedometer.toJson().toString());
-		return request;
-	}
+    public static TimelineItem generateNotableEventItem(long tmp, int value) {
+        NotableEventItem notableEventItem = new NotableEventItem(tmp, null, null, value, 1);
+        TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_NOTABLE, tmp, tmp, notableEventItem, TextTool
+                .getRandomString(19, 20), null, null);
+        return timeline;
+    }
+
+    public static Pedometer showPedometer(String token) {
+        String url = baseAddress + "pedometer";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        try {
+            ServiceResponse response = MVPApi.get(url, port, request);
+            Pedometer pedometer = Pedometer.getPedometer(response);
+            return pedometer;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getDeviceLinkingStatus(String token, String serialNumberString) {
+        String url = baseAddress + "device_linking_status";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        request.addParam("serial_number_string", serialNumberString);
+        try {
+            ServiceResponse response = MVPApi.get(url, port, request);
+            String message = Pedometer.getMessage(response);
+            return message;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String unlinkDevice(String token, String serialNumberString) {
+        String url = baseAddress + "unlink_device";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        request.addParam("serial_number_string", serialNumberString);
+        try {
+            ServiceResponse response = MVPApi.put(url, port, request);
+            String message = Pedometer.getMessage(response);
+            return message;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Pedometer createPedometer(String token, String serialNumberString, String firmwareRevisionString,
+            Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
+        String url = baseAddress + "pedometer";
+        BaseParams request = buildEditPedometerRequest(token, serialNumberString, firmwareRevisionString, linkedTime,
+                unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
+        try {
+            ServiceResponse response = MVPApi.post(url, port, request);
+            Pedometer result = Pedometer.getPedometer(response);
+            return result;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Pedometer updatePedometer(String token, String serialNumberString, String firmwareRevisionString,
+            Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
+        String url = baseAddress + "pedometer";
+        BaseParams request = buildEditPedometerRequest(token, serialNumberString, firmwareRevisionString, linkedTime,
+                unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
+        try {
+            ServiceResponse response = MVPApi.put(url, port, request);
+            Pedometer result = Pedometer.getPedometer(response);
+            return result;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static BaseParams buildEditPedometerRequest(String token, String serialNumberString,
+            String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId,
+            String serverId, long updatedAt) {
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        Pedometer pedometer = new Pedometer(serialNumberString, firmwareRevisionString, linkedTime, unlinkedTime,
+                lastSyncedTime, localId, serverId, updatedAt);
+        request.addObjectParam("pedometer", pedometer.toJson().toString());
+        return request;
+    }
 
     public static void main(String[] args) throws JSONException {
     	MVPApi.removeUser("shjnr@fm.com");
