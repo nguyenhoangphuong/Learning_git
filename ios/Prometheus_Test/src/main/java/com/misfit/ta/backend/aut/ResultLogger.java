@@ -15,6 +15,7 @@ public class ResultLogger {
     private static Map<Integer, Integer> errors;
     private static int request;
     private static int response;
+    // We track total time of request which doesn't have response missing
     public static long totalTime;
 
     public static ResultLogger getLogger(String testname) {
@@ -101,8 +102,8 @@ public class ResultLogger {
         }
         buf.append("-------------------\n");
         buf.append("Total: \t" + count + "\n");
-        buf.append("Total Time: " + totalTime + "\n");
-        buf.append("Average time: " + (totalTime / request));
+        buf.append("Total time of requests which have responses: " + totalTime + "\n");
+        buf.append("Average time (totalTime/response) : " + (totalTime / response));
         System.out.println("LOG [ResultLogger.logErrorSummary]: " + buf.toString());
         logger.log(buf.toString());
         
