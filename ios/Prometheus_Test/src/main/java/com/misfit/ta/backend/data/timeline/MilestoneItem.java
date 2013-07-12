@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
-import com.misfit.ta.backend.data.JSONBuilder;
 
 public class MilestoneItem extends TimelineItemBase {
 

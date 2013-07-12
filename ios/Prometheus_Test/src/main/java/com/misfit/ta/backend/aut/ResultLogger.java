@@ -17,6 +17,8 @@ public class ResultLogger {
     private static int response;
     // We track total time of request which doesn't have response missing
     public static long totalTime;
+    
+    public static long totalTestRunTime;
 
     public static ResultLogger getLogger(String testname) {
         if (logger == null) {
@@ -103,7 +105,8 @@ public class ResultLogger {
         buf.append("-------------------\n");
         buf.append("Total: \t" + count + "\n");
         buf.append("Total Time: " + totalTime + "\n");
-        buf.append("Average time: " + (totalTime / request));
+        buf.append("Average time: " + (totalTime / request) + "\n");
+        buf.append("Requests/second ssss: " + request/(totalTestRunTime/1000));
         System.out.println("LOG [ResultLogger.logErrorSummary]: " + buf.toString());
         logger.log(buf.toString());
         
