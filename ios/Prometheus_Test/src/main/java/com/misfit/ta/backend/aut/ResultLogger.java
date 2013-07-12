@@ -102,8 +102,8 @@ public class ResultLogger {
         }
         buf.append("-------------------\n");
         buf.append("Total: \t" + count + "\n");
-        buf.append("Total time of requests which have responses: " + totalTime + "\n");
-        buf.append("Average time (totalTime/response) : " + (totalTime / response));
+        buf.append("Total Time: " + totalTime + "\n");
+        buf.append("Average time: " + (totalTime / request));
         System.out.println("LOG [ResultLogger.logErrorSummary]: " + buf.toString());
         logger.log(buf.toString());
         

@@ -66,7 +66,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
          s2 = System.currentTimeMillis();
          ResultLogger.totalTime += s2 - s1;
         token = r.token;
-        Assert.assertTrue(r.isOK(), "Status code is not 200: " + r.statusCode);
+//        Assert.assertTrue(r.isOK(), "Status code is not 200: " + r.statusCode);
         
         
         
@@ -123,7 +123,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
                 + (sSearchGoal1- sSearchGoal) 
                 + (s14 - s13) 
                 + (s16 - s15);
-       
+
         rlog.log((userCount + 1) + "\t" 
                 + (s2 - s1) + "\t" 
                 + (s4 - s3) + "\t"
@@ -288,7 +288,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
          s16 = System.currentTimeMillis();
          ResultLogger.totalTime += s16 - s15;
          countRequest += 2;
-        Assert.assertTrue(response.getStatusCode() <= 210, "Status code is > 210: " + response.getStatusCode());
+//        Assert.assertTrue(response.getStatusCode() <= 210, "Status code is > 210: " + response.getStatusCode());
         
     }
 }

@@ -48,7 +48,7 @@ public class BackendDatabaseSeeding {
                 + "\n" + "NUMBER_OF_ITEMS_PER_DAY: " + NUMBER_OF_ITEMS_PER_DAY + "\n" + "NUMBER_OF_THREADS: "
                 + NUMBER_OF_THREADS + "\n");
 
-        ResultLogger rlog = ResultLogger.getLogger("signup_a_million_users_" 
+        ResultLogger rlog = ResultLogger.getLogger("stress_test_" 
                     + NUMBER_OF_THREADS+"thread_" 
                     + (NUMBER_OF_ITEMS_PER_DAY * NUMBER_OF_DAYS) + "record_" + NUMBER_OF_USERS + "user");
         rlog.log("Params: \n" + "NUMBER_OF_USERS: " + NUMBER_OF_USERS + "\n" + "NUMBER_OF_DAYS: " + NUMBER_OF_DAYS
@@ -73,6 +73,8 @@ public class BackendDatabaseSeeding {
                 + "addTimelineItems\t" 
                 + "addGraphItems\t" + "email\t" + "userRequestTime\t" + "countRequest\t" + "timePerRequest");
 
+        long start = System.currentTimeMillis();
+        
         JSONArray timelineItems = new JSONArray();
         JSONArray graphItems = new JSONArray();
 
@@ -105,13 +107,16 @@ public class BackendDatabaseSeeding {
             } catch (Exception e) {
             }
         }
+        
+        long now = System.currentTimeMillis();
+        ResultLogger.totalTestRunTime = (now - start);
+        System.out.println("LOG [BackendDatabaseSeeding.signupOneMillionUsers]: " + ResultLogger.totalTestRunTime);
         ResultLogger.logErrorSummary();
-        System.out.println("LOG [BackendDatabaseSeeding.enclosing_method]:--------------------------------dadad ");
     }
 
     public static void main(String[] args) {
         BackendDatabaseSeeding test = new BackendDatabaseSeeding();
-        test.signupOneMillionUsers(true);
+        test.signupOneMillionUsers(false);
     }
 
 }
