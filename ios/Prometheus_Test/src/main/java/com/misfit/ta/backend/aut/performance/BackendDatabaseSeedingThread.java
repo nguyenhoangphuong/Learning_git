@@ -122,7 +122,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
                 + (sSearchGoal1- sSearchGoal) 
                 + (s14 - s13) 
                 + (s16 - s15);
-        rlog.totalTime += userRequestTime;
+        ResultLogger.totalTime += userRequestTime;
         rlog.log((userCount + 1) + "\t" 
                 + (s2 - s1) + "\t" 
                 + (s4 - s3) + "\t"
