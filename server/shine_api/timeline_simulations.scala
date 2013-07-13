@@ -93,7 +93,7 @@ class TimelineSimulations extends Simulation {
 	insertTimelineItemsConcurrentlyWithDuration(1,
 		2,
 		2,
-		Predef.apiUrl("http") + Predef.apiUrl("xlarge") + Predef.apiUrl("port"),
+		Predef.apiUrl("baseUrl"),
 		0,
 		0)
 
