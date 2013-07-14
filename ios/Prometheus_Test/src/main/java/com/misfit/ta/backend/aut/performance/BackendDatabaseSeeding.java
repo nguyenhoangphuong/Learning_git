@@ -38,6 +38,7 @@ public class BackendDatabaseSeeding {
         NUMBER_OF_ITEMS_PER_DAY = numberOfItemsPerDay;
         NUMBER_OF_THREADS = numberOfThreads;
         NUMBER_OF_USERS = numberOfUsers;
+        
     }
 
     @Test(groups = { "backend_stress" })
@@ -50,7 +51,7 @@ public class BackendDatabaseSeeding {
         ResultLogger rlog = ResultLogger.getLogger("stress_test_" 
                     + NUMBER_OF_THREADS+"thread_" 
                     + (NUMBER_OF_ITEMS_PER_DAY * NUMBER_OF_DAYS) + "record_" + NUMBER_OF_USERS + "user");
-        rlog.log("----- START TEST -----");
+       
         rlog.log("Number of try\t" 
                 + "signUpTime\t" 
                 + "signOut\t"
@@ -108,12 +109,11 @@ public class BackendDatabaseSeeding {
         long now = System.currentTimeMillis();
         ResultLogger.totalTestRunTime = (now - start);
         System.out.println("LOG [BackendDatabaseSeeding.signupOneMillionUsers]: " + ResultLogger.totalTestRunTime);
-        logger.info("Params: \n" + "NUMBER_OF_USERS: " + NUMBER_OF_USERS + "\n" + "NUMBER_OF_DAYS: " + NUMBER_OF_DAYS
-                + "\n" + "NUMBER_OF_ITEMS_PER_DAY: " + NUMBER_OF_ITEMS_PER_DAY + "\n" + "NUMBER_OF_THREADS: "
-                + NUMBER_OF_THREADS + "\n");
+        
         rlog.log("Params: \n" + "NUMBER_OF_USERS: " + NUMBER_OF_USERS + "\n" + "NUMBER_OF_DAYS: " + NUMBER_OF_DAYS
                 + "\n" + "NUMBER_OF_ITEMS_PER_DAY: " + NUMBER_OF_ITEMS_PER_DAY + "\n" + "NUMBER_OF_THREADS: "
                 + NUMBER_OF_THREADS + "\n");
+        
         ResultLogger.logErrorSummary();
     }
 
