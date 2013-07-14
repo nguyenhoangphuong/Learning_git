@@ -10,6 +10,8 @@ import Shine.TimelineScenarios._
   */
 class TimelineSimulations extends Simulation {
 
+	val itemCount: Int = 20
+
 	// /** Signup concurrently with different concurrency levels.
 	//   * Concurrency levels are stored in a list
 	//   * @param configs list of scenarios' configurations. Each list member is a
@@ -19,23 +21,24 @@ class TimelineSimulations extends Simulation {
 	//   * 		"baseUrl"
 	//   * 		"rampUp": ramp up period for this concurrency level
 	//   */
-	// def insertTimelineItemsWithConcurrencyLevels(
-	// 	configs: List[Map[String, String]]) {
-	// 	var i: Int = 0
-	// 	var size: Int = configs.size
-	// 	var x: Map[String, String] = Map("" -> "")
-	// 	var delay: Int = 0
+	def insertTimelineItemsWithConcurrencyLevels(
+		configs: List[Map[String, String]]) {
+		var i: Int = 0
+		var size: Int = configs.size
+		var x: Map[String, String] = Map("" -> "")
+		var delay: Int = 0
 
-	// 	for (i <- 0 until size) {
-	// 		x = configs(i)
-	// 		signupConcurrentlyWithDuration(x("users").toInt,
-	// 			x("duration").toInt,
-	// 			x("baseUrl"),
-	// 			x("rampUp").toInt,
-	// 			delay)
-	// 		delay += x("duration").toInt
-	// 	}
-	// }
+		for (i <- 0 until size) {
+			x = configs(i)
+			insertTimelineItemsConcurrentlyWithDuration(x("users").toInt,
+				itemCount,
+				x("duration").toInt,
+				x("baseUrl"),
+				x("rampUp").toInt,
+				delay)
+			delay += x("duration").toInt
+		}
+	}
 
 	// /** Signup concurrently with durations
 	//   * @param users number of users
@@ -90,11 +93,6 @@ class TimelineSimulations extends Simulation {
 			.protocolConfig(httpConf))
 	}
 
-	insertTimelineItemsConcurrentlyWithDuration(1,
-		2,
-		2,
-		Predef.apiUrl("baseUrl"),
-		0,
-		0)
+	insertTimelineItemsWithConcurrencyLevels(Predef.configs())
 
 }

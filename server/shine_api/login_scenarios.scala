@@ -63,7 +63,7 @@ object LoginScenarios {
 	def loginRequest(email: String,
 		password: String,
 		udid: String): PostHttpRequestBuilder = {
-		http("Signup request")
+		http("Login request")
 			.post(Predef.apiUrl("login"))
 			.headers(Predef.apiKey)
 			.param("email", email)

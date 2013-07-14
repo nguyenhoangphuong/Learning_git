@@ -59,7 +59,7 @@ object TimelineScenarios {
 	  */
 	def insertTimelineItemsRequest(auth_token: String,
 		timeline_items: String): PostHttpRequestBuilder = {
-		http("Insert timeline items")
+		http("Insert timeline items request")
 			.post(Predef.apiUrl("insertTimelineItems"))
 			.headers(Predef.apiKey)
 			.header("auth_token", auth_token)

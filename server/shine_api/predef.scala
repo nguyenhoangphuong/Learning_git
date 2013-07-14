@@ -14,12 +14,12 @@ object Predef {
 	val apiUrl = Map("baseUrl" -> "https://testproduction.misfitwearables.com",
 		"http" -> "http://",
 		"https" -> "https://",
-		"port" -> ":800",
+		"port" -> ":443",
 		"elb" -> "misfit-shine-api-test-1663549078.us-east-1.elb.amazonaws.com",
 		"small" -> "ec2-184-73-104-151.compute-1.amazonaws.com",
 		"medium" -> "ec2-54-226-191-232.compute-1.amazonaws.com",
 		"large" -> "ec2-23-22-9-220.compute-1.amazonaws.com",
-		"xlarge" -> "ec2-54-242-121-128.compute-1.amazonaws.com",
+		"xlarge" -> "ec2-54-224-44-217.compute-1.amazonaws.com",
 		"local" -> "10.0.1.123",
 		"signup" -> "/shine/v7/signup",
 		"login" -> "/shine/v7/login",
@@ -32,7 +32,7 @@ object Predef {
 
 	val duration: Int = 120 // for each concurrency level
 
-	val baseUrl: String = apiUrl("http") + apiUrl("xlarge") + apiUrl("port")
+	val baseUrl: String = apiUrl("https") + apiUrl("xlarge") + apiUrl("port")
 
 	val rampUp: Int = 10
 
