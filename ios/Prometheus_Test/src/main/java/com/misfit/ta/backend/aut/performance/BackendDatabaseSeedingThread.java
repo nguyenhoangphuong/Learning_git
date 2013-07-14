@@ -248,7 +248,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
         points.add(2);
         ProgressData progressData = new ProgressData(points, 100, 200);
         sCreateGoal= System.currentTimeMillis();
-        GoalsResult goalResult = MVPApi.createGoal(token, 2500, now, now + 8400, 3, 2, 0, progressData, "mylocalid");
+        GoalsResult goalResult = MVPApi.createGoal(token, 2500, now, now + 8400, 0, progressData, "mylocalid", 0, now);
         sCreateGoal1 = System.currentTimeMillis();
         ResultLogger.totalTime += sCreateGoal1 - sCreateGoal;
 //        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
@@ -266,7 +266,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 //        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
         
         sUpdateGoal= System.currentTimeMillis();
-        goalResult = MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 2500, now, now + 8400, 3, 2, 0, progressData, "mylocalid");
+        goalResult = MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 2500, now, now + 8400, 0, progressData, "mylocalid", 0);
         sUpdateGoal1 = System.currentTimeMillis();
         ResultLogger.totalTime += sUpdateGoal1 - sUpdateGoal;
 //        Assert.assertTrue(goalResult.isExisted(), "Status code is not 210: " + goalResult.statusCode);

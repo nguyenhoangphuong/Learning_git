@@ -227,11 +227,10 @@ public class MVPApi {
 
     // goal apis
     static private BaseParams createGoalParams(String token, double goalValue, long startTime, long endTime,
-            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds,
-            ProgressData progressData, String localId, long updatedAt) {
+            int timeZoneOffsetInSeconds, ProgressData progressData, String localId,
+            long updatedAt, int level) {
         // build json object string
-        
-        Goal goal = new Goal(goalValue, startTime, endTime, absoluteLevel, userRelativeLevel, progressData, timeZoneOffsetInSeconds, localId, updatedAt);
+        Goal goal = new Goal(goalValue, startTime, endTime, progressData, timeZoneOffsetInSeconds, localId, updatedAt, level);
 
         BaseParams requestInf = new BaseParams();
         requestInf.addHeader("auth_token", token);
@@ -274,13 +273,13 @@ public class MVPApi {
     }
 
     public static GoalsResult createGoal(String token, double goalValue, long startTime, long endTime,
-            int absoluteLevel, int userRelativeLevel, int timeZoneOffsetInSeconds, ProgressData progressData,
-            String localId) {
+            int timeZoneOffsetInSeconds, ProgressData progressData, String localId, int level,
+            long updatedAt) {
         // prepare
         String url = baseAddress + "goals";
 
-        BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel,
-                userRelativeLevel, timeZoneOffsetInSeconds, progressData, localId, 0);
+        BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, timeZoneOffsetInSeconds,
+                progressData, localId, updatedAt, level);
 
         // post and receive raw data
         ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -291,18 +290,18 @@ public class MVPApi {
     }
 
     public static GoalsResult updateGoal(String token, long updatedAt, String serverId, double goalValue, long startTime,
-            long endTime, int absoluteLevel, int userRelativeLevel,
-            int timeZoneOffsetInSeconds, ProgressData progressData, String localId) {
+            long endTime, int timeZoneOffsetInSeconds, ProgressData progressData,
+            String localId, int level) {
         // prepare
         String url = baseAddress + "goals/" + serverId;
 
-        BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, absoluteLevel,
-                userRelativeLevel, timeZoneOffsetInSeconds, progressData, localId, updatedAt);
+        BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, timeZoneOffsetInSeconds,
+                progressData, localId, updatedAt, 0);
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
 
-        if (response.getStatusCode() != 200) {
+        if (response.getStatusCode() != 200 && response.getStatusCode() != 210) {
             return null;
         }
         GoalsResult result = new GoalsResult(response);
@@ -313,9 +312,8 @@ public class MVPApi {
         // prepare
         String url = baseAddress + "profile";
 
-        BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), goal
-                .getAbsoluteLevel(), goal.getUserRelativeLevel(), goal.getTimeZoneOffsetInSeconds(), goal
-                .getProgressData(), goal.getLocalId(), goal.getUpdatedAt());
+        BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), goal.getTimeZoneOffsetInSeconds(), goal
+                .getProgressData(), goal.getLocalId(), goal.getUpdatedAt(), goal.getLevel());
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
