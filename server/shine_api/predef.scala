@@ -19,7 +19,7 @@ object Predef {
 		"small" -> "ec2-184-73-104-151.compute-1.amazonaws.com",
 		"medium" -> "ec2-54-226-191-232.compute-1.amazonaws.com",
 		"large" -> "ec2-23-22-9-220.compute-1.amazonaws.com",
-		"xlarge" -> "ec2-54-224-44-217.compute-1.amazonaws.com",
+		"xlarge" -> "54.224.203.147",
 		"local" -> "10.0.1.123",
 		"signup" -> "/shine/v7/signup",
 		"login" -> "/shine/v7/login",
@@ -36,12 +36,12 @@ object Predef {
 
 	val rampUp: Int = 10
 
-	val concurrencyLevels: List[String] = List("10",
+	val concurrencyLevels: List[String] = List("1"/*,
 		"50",
 		"100",
 		"200",
 		"500",
-		"1000")
+		"1000"*/)
 
 	def configs(): List[Map[String, String]] = {
 		var i: Int = 0

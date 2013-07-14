@@ -25,17 +25,17 @@ object LoginScenarios {
 
 		scenarioName += " - Run ID: " + Helper.randomNumericString(1)
 		scenario(scenarioName)
+		.feed(Predef.newUser)
+		.exec(
+			SignupScenarios.signupRequest("${email}", "${password}", "${udid}")
+		)
 		.doIfOrElse(loopIsDuration == true) {
 			during(loop) {
-				loginScenario(Predef.user("email"),
-					Predef.user("password"),
-					Predef.user("udid"))
+				login("${email}", "${password}", "${udid}")
 			}
 		} { // else: loop is looping times
 			repeat(loop) {
-				loginScenario(Predef.user("email"),
-					Predef.user("password"),
-					Predef.user("udid"))
+				login("${email}", "${password}", "${udid}")
 			}
 		}
 	}
@@ -46,7 +46,7 @@ object LoginScenarios {
 	  * @param udid
 	  * @return com.excilys.ebi.gatling.core.structure.ChainBuilder
 	  */
-	def loginScenario(email: String,
+	def login(email: String,
 		password: String,
 		udid: String): ChainBuilder = {
 		exec(
