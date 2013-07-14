@@ -15,7 +15,7 @@ object Predef {
 		"http" -> "http://",
 		"https" -> "https://",
 		"port" -> ":443",
-		"elb" -> "misfit-shine-api-test-1663549078.us-east-1.elb.amazonaws.com",
+		"elb" -> "testproduction.misfitwearables.com",
 		"small" -> "ec2-184-73-104-151.compute-1.amazonaws.com",
 		"medium" -> "ec2-54-226-191-232.compute-1.amazonaws.com",
 		"large" -> "ec2-23-22-9-220.compute-1.amazonaws.com",
