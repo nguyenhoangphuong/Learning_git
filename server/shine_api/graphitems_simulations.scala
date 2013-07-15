@@ -10,7 +10,28 @@ import Shine.GraphItemsScenarios._
   */
 class GraphItemsSimulations extends Simulation {
 
-		def insertGraphItemsConcurrentlyWithDuration(users: Int = 0,
+	val itemCount: Int = 20
+
+	def insertGraphItemsWithConcurrencyLevels(
+		configs: List[Map[String, String]]) {
+		var i: Int = 0
+		var size: Int = configs.size
+		var x: Map[String, String] = Map("" -> "")
+		var delay: Int = 0
+
+		for (i <- 0 until size) {
+			x = configs(i)
+			insertGraphItemsConcurrentlyWithDuration(x("users").toInt,
+				itemCount,
+				x("duration").toInt,
+				x("baseUrl"),
+				x("rampUp").toInt,
+				delay)
+			delay += x("duration").toInt
+		}
+	}
+
+	def insertGraphItemsConcurrentlyWithDuration(users: Int = 0,
 		itemCount: Int = 0,
 		duration: Int = 0,
 		baseUrl: String = Predef.apiUrl("baseUrl"),
@@ -56,11 +77,6 @@ class GraphItemsSimulations extends Simulation {
 			.protocolConfig(httpConf))
 	}
 
-	insertGraphItemsConcurrentlyWithDuration(1,
-		2,
-		2,
-		Predef.apiUrl("baseUrl"),
-		0,
-		0)
+	insertGraphItemsWithConcurrencyLevels(Predef.configs())
 
 }

@@ -10,7 +10,10 @@ import Shine.Helper._
 import Shine.Predef._
 import Shine.SignupScenarios._
 
+/** This object contains scenarios of graph items
+  */
 object GraphItemsScenarios {
+
 	def getTokenThenInsertGraphItemsScenario(itemCount: Int = 0,
 		loop: Int = 0,
 		loopIsDuration: Boolean = true): ScenarioBuilder = {
@@ -41,7 +44,6 @@ object GraphItemsScenarios {
 		)
 	}
 
-
 	def insertGraphItems(auth_token: String, itemCount: Int = 0):
 		ChainBuilder = {
 		exec(
@@ -57,11 +59,12 @@ object GraphItemsScenarios {
 	  */
 	def insertGraphItemsRequest(auth_token: String,
 		graph_items: String): PostHttpRequestBuilder = {
-		http("Insert graph items")
+		http("Insert graph items request")
 			.post(Predef.apiUrl("insertGraphItems"))
 			.headers(Predef.apiKey)
 			.header("auth_token", auth_token)
 			.param("graph_items", graph_items)
 			.check(bodyString)
 	}
+
 }

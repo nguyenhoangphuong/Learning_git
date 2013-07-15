@@ -40,7 +40,7 @@ class TimelineSimulations extends Simulation {
 		}
 	}
 
-	// /** Signup concurrently with durations
+	// /** Insert timeline items concurrently with durations
 	//   * @param users number of users
 	//   * @param duration duration for each user
 	//   * @param baseUrl
