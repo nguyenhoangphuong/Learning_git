@@ -69,9 +69,7 @@ public class MVPApi {
         ResultLogger.registerResponse();
         int error = response.getStatusCode();
         ResultLogger.addErrorCode(error);
-        if (error != 200) {
-            logger.info("ERROR: server returned: " + error);
-        }
+        logger.info("Response code: " + error);
 
         return response;
     }
@@ -624,6 +622,17 @@ public class MVPApi {
     }
 
     public static void main(String[] args) throws JSONException {
-    	MVPApi.removeUser("shjnr@fm.com");
+    	String email = generateUniqueEmail();
+    	AccountResult result = MVPApi.signUp(email, "misfit", "123456789");
+    	String token = result.token;
+    	String serial = TextTool.getRandomString(9, 10);
+    	 long now = System.currentTimeMillis()/1000;
+        Pedometer pedo = MVPApi.createPedometer(token, serial, "hw1234", now, now, now, "localId", null, now);
+
+    	long start = System.currentTimeMillis();
+    	MVPApi.getDeviceLinkingStatus(token, serial);
+    	long finish = System.currentTimeMillis();
+    	System.out.println("LOG [MVPApi.main]: serial number: " + serial);
+    	System.out.println("LOG [MVPApi.main]: runtime= " + (finish - start));
     }
 }

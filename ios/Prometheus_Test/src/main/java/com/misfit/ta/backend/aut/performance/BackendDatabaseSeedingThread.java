@@ -191,7 +191,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
        // update profile
        ProfileData newProfile = result.profile;
        newProfile.name = profile.name + "_new";
-       newProfile.updatedAt += 100;
+//       newProfile.updatedAt += 100;
        s11 = System.currentTimeMillis();
        result = MVPApi.updateProfile(token, newProfile, profile.serverId);
        s12 = System.currentTimeMillis();
