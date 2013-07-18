@@ -104,7 +104,7 @@ public class ResultLogger {
         }
         buf.append("-------------------\n");
         buf.append("Total: \t" + count + "\n");
-        buf.append("Total Time: " + totalTime + "\n");
+        buf.append("Total time of requests: " + totalTestRunTime + "\n");
         buf.append("Average time: " + (totalTime / request) + "\n");
         buf.append("Requests/second: " + request/(totalTestRunTime/1000));
         System.out.println("LOG [ResultLogger.logErrorSummary]: " + buf.toString());
