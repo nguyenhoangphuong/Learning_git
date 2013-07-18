@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.nt.NTEventLogAppender;
 import org.graphwalker.Util;
 
 import com.google.resting.Resting;
@@ -225,10 +226,10 @@ public class MVPApi {
 
     // goal apis
     static private BaseParams createGoalParams(String token, double goalValue, long startTime, long endTime,
-            int timeZoneOffsetInSeconds, ProgressData progressData, String localId,
-            long updatedAt, int level) {
+            int timeZoneOffsetInSeconds, ProgressData progressData, String localId, long updatedAt, int level) {
         // build json object string
-        Goal goal = new Goal(goalValue, startTime, endTime, progressData, timeZoneOffsetInSeconds, localId, updatedAt, level);
+        Goal goal = new Goal(goalValue, startTime, endTime, progressData, timeZoneOffsetInSeconds, localId, updatedAt,
+                level);
 
         BaseParams requestInf = new BaseParams();
         requestInf.addHeader("auth_token", token);
@@ -271,8 +272,7 @@ public class MVPApi {
     }
 
     public static GoalsResult createGoal(String token, double goalValue, long startTime, long endTime,
-            int timeZoneOffsetInSeconds, ProgressData progressData, String localId, int level,
-            long updatedAt) {
+            int timeZoneOffsetInSeconds, ProgressData progressData, String localId, int level, long updatedAt) {
         // prepare
         String url = baseAddress + "goals";
 
@@ -287,9 +287,9 @@ public class MVPApi {
         return result;
     }
 
-    public static GoalsResult updateGoal(String token, long updatedAt, String serverId, double goalValue, long startTime,
-            long endTime, int timeZoneOffsetInSeconds, ProgressData progressData,
-            String localId, int level) {
+    public static GoalsResult updateGoal(String token, long updatedAt, String serverId, double goalValue,
+            long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, String localId,
+            int level) {
         // prepare
         String url = baseAddress + "goals/" + serverId;
 
@@ -310,8 +310,9 @@ public class MVPApi {
         // prepare
         String url = baseAddress + "profile";
 
-        BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), goal.getTimeZoneOffsetInSeconds(), goal
-                .getProgressData(), goal.getLocalId(), goal.getUpdatedAt(), goal.getLevel());
+        BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), goal
+                .getTimeZoneOffsetInSeconds(), goal.getProgressData(), goal.getLocalId(), goal.getUpdatedAt(), goal
+                .getLevel());
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -621,18 +622,43 @@ public class MVPApi {
         return request;
     }
 
-    public static void main(String[] args) throws JSONException {
-    	String email = generateUniqueEmail();
-    	AccountResult result = MVPApi.signUp(email, "misfit", "123456789");
-    	String token = result.token;
-    	String serial = TextTool.getRandomString(9, 10);
-    	 long now = System.currentTimeMillis()/1000;
-        Pedometer pedo = MVPApi.createPedometer(token, serial, "hw1234", now, now, now, "localId", null, now);
+    public static void syncLog(String token, String log) {
+        String url = baseAddress + "sync_logs";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        request.addHeader("Content-Type", "application/json");
+        request.addParam("log", log);
+//        request.addJsonParam(key, json)
+        ServiceResponse response = MVPApi.post(url, port, request);
+        System.out.println("LOG [MVPApi.syncLog]: ------- " + response.getStatusCode());
+    }
 
-    	long start = System.currentTimeMillis();
-    	MVPApi.getDeviceLinkingStatus(token, serial);
-    	long finish = System.currentTimeMillis();
-    	System.out.println("LOG [MVPApi.main]: serial number: " + serial);
-    	System.out.println("LOG [MVPApi.main]: runtime= " + (finish - start));
+    public static String generateSyncLog() {
+        long timestamp = System.currentTimeMillis();
+//        String serialNumberString = TextTool.getRandomString(9, 10);
+//
+//        String log = "\"\"{\"log\": { \"startTime\":\"\"";
+//        log += timestamp;
+//        log += "\"\" ,      \"endTime\": \"\"";
+//        log += timestamp;
+//
+//        log += "\"\",      \"serialNumberString\": \"\"";
+//        log += "\"";
+//        log += serialNumberString;
+//        log += "\"";
+//        log += "\"\",      \"log\": \"No log\",      \"data\": {         \"fileData\": [            {\"rawData\": \"010111000008000028A0B5510000A40100000000000000000000000000000000000006000000000000000402000000000200000000000000000000000000020000000000000000000200000000000000000000000000000000001E061C08000000000000000000002A0A2A0A00004A122E0A2E0C5A16060000000000000000000000000000001806000000000000000000000200120402020000000000000000000000000000000000000000000000000000000000000000000000000000320C14041A060000000000000000000000000000000000000000000002000000000000000000000000000C0400000200000000000000000000001A06000040101C066A1A2A0A000000000200020000000000000000000000000000000000000000000000000000000000060204000200020004020000000000000000020000000000000002000000000002000200000000000000000002000000080204002A0A1A0600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002020000080200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020002000200000002004612040004020200000000000400000004020600060202000200000004000000000000000602020000000600000002000000000000000402000000000200000000000000000000000000020000000000020006000000000000003E104612360C2008000006020200280A1E0822080E02340E24082008882290249224922492249024922492249024922492249224902492249224902492249224721C661A701C701C701C701C2E0A000000000C0400001C0608020A020000000000000000000000001E080200000000000000000000000000000000000000000000000000000008020000020202001004280A280A44120E020000000000001A063C1000000000000000000200020002000000000000000000000000000000020016043C1002000000000000000000320C4A1202000000000000000000000000000C020C04000000000000020000000200320C00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005C35049F\"}         ]     } }}\"\"";
+//        
+        String log = "{\"startTime\": 347155000, \"endTime\": 347155060, \"serialNumberString\": \"XXXXXXXE01\", \"isSuccessful\": 1, \"data\": {\"fileData\": [ {\"rawData\": \"0101010101\", \"timestampDifference\": 1 } ], \"hardwareLog\": [\"misfit\"] }, \"log\": \"misfit\"}";
+        System.out.println("LOG [MVPApi.generateSyncLog]: \n" + log);
+        return log;
+    }
+
+    public static void main(String[] args) throws JSONException {
+        String email = generateUniqueEmail();
+        AccountResult result = MVPApi.signUp(email, "misfit", "123456789");
+        String token = result.token;
+        String log = generateSyncLog();
+        MVPApi.syncLog(token, log);
+        
     }
 }

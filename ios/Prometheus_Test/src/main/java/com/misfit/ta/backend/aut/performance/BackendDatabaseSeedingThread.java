@@ -10,10 +10,12 @@ import org.testng.Assert;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
+import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.AccountResult;
+import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.GoalsResult;
 import com.misfit.ta.backend.data.ProfileData;
@@ -71,8 +73,9 @@ public class BackendDatabaseSeedingThread implements Runnable {
 //        Assert.assertTrue(r.isOK(), "Status code is not 200: " + r.statusCode);
         
         
+       
         
-        int operation = -1;
+        int operation = Settings.getInt("OPERATION");
         if (randomized) {
         Random rand = new Random(System.currentTimeMillis());
             operation = (randomized) ? rand.nextInt(6) : -1;
@@ -292,5 +295,9 @@ public class BackendDatabaseSeedingThread implements Runnable {
          countRequest += 2;
 //        Assert.assertTrue(response.getStatusCode() <= 210, "Status code is > 210: " + response.getStatusCode());
         
+    }
+    
+    public void doSyncOperation() {
+        MVPApi.syncLog(token, MVPApi.generateSyncLog());
     }
 }
