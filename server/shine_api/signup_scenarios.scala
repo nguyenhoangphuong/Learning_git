@@ -79,6 +79,7 @@ object SignupScenarios {
 			.param("password", password)
 			.param("udid", udid)
 			.check(bodyString)
+			.check(jsonPath("auth_token").find.saveAs("auth_token"))
 	}
 
 }
