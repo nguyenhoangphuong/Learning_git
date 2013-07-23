@@ -3,9 +3,10 @@ package com.misfit.ta.gui;
 public class DefaultStrings {
 	// sign in / sign up
     public static String InvalidEmailMessage = "Sorry, this email is invalid";
-    public static String InvalidPasswordMessage = "The password needs to have at least 6 characters with 1 digit and a letter.";
+    public static String InvalidPasswordMessage = "To keep your account secure, try at least 6 characters.";
     public static String SignInWrongAccountMessage = "Sorry, your email or password is not correct";
     public static String SignUpDuplicatedEmailMessage = "Sorry, someone else has used this before";
+    public static String Title = "Oops...";
     
     // forgot password
     public static String ForgotPasswordEmailNotExistMessage = "The email you entered is not associated with a Shine account";

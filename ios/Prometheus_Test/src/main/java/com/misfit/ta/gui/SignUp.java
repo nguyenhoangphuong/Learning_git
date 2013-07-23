@@ -153,7 +153,7 @@ public class SignUp {
     }
 
     public static boolean hasExistedEmailMessage() {
-        return Gui.getPopupContent().equals(DefaultStrings.SignUpDuplicatedEmailMessage);
+        return PrometheusHelper.hasExistedEmailMessage();
     }
 
     public static void tapOK() {

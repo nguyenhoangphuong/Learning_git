@@ -83,7 +83,8 @@ public class PrometheusHelper {
 	}
 
 	public static boolean hasInvalidEmailMessage() {
-		return Gui.getPopupContent().equals(DefaultStrings.InvalidEmailMessage);
+		return Gui.getPopupContent().equals(DefaultStrings.InvalidEmailMessage)
+				&& Gui.getPopupTitle().equals(DefaultStrings.Title);
 	}
 
 	public static boolean hasForgotPasswordInvalidEmailMessage() {
@@ -93,7 +94,14 @@ public class PrometheusHelper {
 
 	public static boolean hasInvalidPasswordMessage() {
 		return Gui.getPopupContent().equals(
-				DefaultStrings.InvalidPasswordMessage);
+				DefaultStrings.InvalidPasswordMessage)
+				&& Gui.getPopupTitle().equals(DefaultStrings.Title);
+	}
+	
+	public static boolean hasExistedEmailMessage() {
+		return Gui.getPopupContent().equals(
+				DefaultStrings.SignUpDuplicatedEmailMessage)
+				&& Gui.getPopupTitle().equals(DefaultStrings.Title);
 	}
 
 	public static void sync() {
@@ -174,8 +182,8 @@ public class PrometheusHelper {
 		ShortcutsTyper.delayTime(10000);
 
 		SignUp.enterGender(isMale);
-		SignUp.enterBirthDay(year + "",
-				PrometheusHelper.getMonthString(month, true), date + "");
+		SignUp.enterBirthDay(String.valueOf(year),
+				PrometheusHelper.getMonthString(month, true), String.valueOf(date));
 		SignUp.enterHeight(h1, h2, isUSUnit);
 		SignUp.enterWeight(w1, w2, isUSUnit);
 		SignUp.tapNext();

@@ -69,6 +69,8 @@ public class SignUpGoalAPI extends ModelAPI {
 		String h1 = this.heightInInches / 12 + "'";
 		String h2 = this.heightInInches % 12 + "\\\"";
 
+		SignUp.enterBirthDay("1981",
+				PrometheusHelper.getMonthString(6, true), "16");
 		SignUp.enterGender(true);
 		SignUp.enterWeight(w1, w2, true);
 		SignUp.enterHeight(h1, h2, true);
