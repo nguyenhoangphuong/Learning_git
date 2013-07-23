@@ -269,7 +269,7 @@ public class PrometheusHelper {
 
 	public static void handleTutorial() {
 		boolean hasTutorialView = ViewUtils.isExistedView("PTRichTextLabel",
-				"_DOUBLE-TAP_\\n\\n check your progress (and the time).");
+				"_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.");
 
 		if (hasTutorialView) {
 			for (int i = 0; i < 6; i++) {
@@ -278,11 +278,7 @@ public class PrometheusHelper {
 			}
 			if (ViewUtils.isExistedView("UIButtonLabel", "OK, I GOT IT")) {
 				Gui.touchAVIew("UIButtonLabel", "OK, I GOT IT");
-			} else if (ViewUtils.isExistedView("UIButtonLabel", "DISMISS IT")) {
-				Gui.touchAVIew("UIButtonLabel", "DISMISS IT");
-			} else {
-				Gui.touchAVIew("PTRichTextLabel", 7);
-			}
+			} 
 		}
 	}
 

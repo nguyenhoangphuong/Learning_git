@@ -18,6 +18,11 @@ public class SignUp {
     	Gui.touchAVIew("UIButtonLabel", "Back");
     }
     
+    public static void tapSignOut() {
+    	Gui.touchAVIew("UIButtonLabel", "Sign out");
+    	Gui.touchPopupButton("Sign out");
+    }
+    
 	public static void tapCloseAllTips() 
 	{
 		for (int i = 0; i < 3; i++) 

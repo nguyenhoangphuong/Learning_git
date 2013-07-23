@@ -75,11 +75,8 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void e_Next() {
-    	if (SignUp.isSignUpProfileView()) {
-    		inputSex();
-    	}
         SignUp.tapNext();
-        ShortcutsTyper.delayOne();
+        ShortcutsTyper.delayTime(6000);
     }
 
     /**
@@ -106,6 +103,12 @@ public class SignUpAPI extends ModelAPI {
         HomeSettings.tapSignOut();
         ShortcutsTyper.delayOne();
         HomeSettings.chooseSignOut();
+        ShortcutsTyper.delayOne();
+    }
+    
+    public void e_SignOutAtProfileView() {
+    	SignUp.tapSignOut();
+    	ShortcutsTyper.delayOne();
     }
 
     /**
@@ -150,64 +153,44 @@ public class SignUpAPI extends ModelAPI {
     	ShortcutsTyper.delayTime(200);
     }
 
+
     /**
-     * This method implements the Edge 'e_inputBirthDay'
+     * This method implements the Edge 'e_inputProfile'
      * 
      */
-    public void e_inputBirthDay() {
-    	this.year = PrometheusHelper.randInt(1970, 2000) + "";
+    public void e_inputProfile() {
+    	//input sex
+    	this.isMale = PrometheusHelper.coin();
+		SignUp.enterGender(isMale);
+		
+		logger.info("Change male to: " + (isMale ? "Male" : "Female"));
+		ShortcutsTyper.delayTime(200);
+    	
+		//input birthday
+		this.year = PrometheusHelper.randInt(1970, 2000) + "";
 		this.month = PrometheusHelper.getMonthString(PrometheusHelper.randInt(1, 13), true);
 		this.day = PrometheusHelper.randInt(1, 29) + "";
 		HomeSettings.updateBirthDay(year, month, day);
 		
 		logger.info("Change birthday to: " + PrometheusHelper.formatBirthday(year, month, day));
-		ShortcutsTyper.delayOne();
-    }
-
-    /**
-     * This method implements the Edge 'e_inputHeight'
-     * 
-     */
-    public void e_inputHeight() {
+		ShortcutsTyper.delayTime(200);
+		
+		//input height
 		this.h1 = this.isUSUnit ? PrometheusHelper.randInt(4, 8) + "'": PrometheusHelper.randInt(1, 3) + "";
 		this.h2 = this.isUSUnit ? PrometheusHelper.randInt(0, 12) + "\\\"": "." + String.format("%2d", PrometheusHelper.randInt(30, 70));
 		SignUp.enterHeight(h1, h2, isUSUnit);
 		
 		logger.info("Change height to: " + h1 + h2 + (isUSUnit? "" : " m"));
-		ShortcutsTyper.delayOne();
-    }
-
-    /**
-     * This method implements the Edge 'e_inputSex'
-     * 
-     */
-    public void e_inputSex() {
-		inputSex();
-    }
-
-	private void inputSex() {
-		this.isMale = PrometheusHelper.coin();
-		SignUp.enterGender(isMale);
+		ShortcutsTyper.delayTime(200);
 		
-		logger.info("Change male to: " + (isMale ? "Male" : "Female"));
-		ShortcutsTyper.delayOne();
-	}
-
-    /**
-     * This method implements the Edge 'e_inputWeight'
-     * 
-     */
-    public void e_inputWeight() {
+    	//input weight
 		this.w1 = this.isUSUnit ? PrometheusHelper.randInt(80, 260) + "": PrometheusHelper.randInt(40, 120) + "";
 		this.w2 = "." + PrometheusHelper.randInt(0, 10);
 		SignUp.enterWeight(w1, w2, isUSUnit);
 		
 		logger.info("Change weight to: " + w1 + w2 + (isUSUnit? " lbs" : " kg"));
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(200);
     }
-    
-
-    
     
     /**
      * This method implements the Vertex 'v_InitialView'
@@ -269,50 +252,29 @@ public class SignUpAPI extends ModelAPI {
     }
 
     /**
-     * This method implements the Vertex 'v_SignUpStep4UpdatedBirthday'
+     * This method implements the Vertex 'v_SignUpProfileUpdated'
      * 
      */
-    public void v_SignUpProfileUpdatedBirthday() {      
-		String birthday = PrometheusHelper.formatBirthday(year, month, day);
+    public void v_SignUpProfileUpdated() {
+    	//assert sex
+    	 boolean male = Gui.getProperty("UIButton", "Male", "isSelected").equals("1") ? true : false;
+         Assert.assertTrue(isMale == male, "Gender should be " + (isMale ? "Male" : "Female"));
+    	//assert birthday
+    	String birthday = PrometheusHelper.formatBirthday(year, month, day);
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", birthday), "Birthday should be " + birthday);
-    }
-
-    /**
-     * This method implements the Vertex 'v_SignUpStep4UpdatedSex'
-     * 
-     */
-    public void v_SignUpProfileUpdatedSex() {
-        boolean male = Gui.getProperty("UIButton", "Male", "isSelected").equals("1") ? true : false;
-        Assert.assertTrue(isMale == male, "Gender should be " + (isMale ? "Male" : "Female"));
-    }
-
-    /**
-     * This method implements the Vertex 'v_SignUpStep4UpdatedHeight'
-     * 
-     */
-    public void v_SignUpProfileUpdatedHeight() {
-		String height = h1 + h2 + (isUSUnit ? "" : " m");
+    	//assert height
+    	String height = h1 + h2 + (isUSUnit ? "" : " m");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", height), "Height should be " + height);
-    }
-
-    /**
-     * This method implements the Vertex 'v_SignUpStep4UpdatedWeight'
-     * 
-     */
-    public void v_SignUpProfileUpdatedWeight() {
+    	//assert weight
 		String weight = w1 + w2 + (isUSUnit ? " lbs" : " kg");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", weight), "Weight should be " + weight);
     }
-
+    
     /**
      * This method implements the Vertex 'v_SignUpStep5'
      * 
      */
     public void v_SignUpPairing() {
-    	
         Assert.assertTrue(SignUp.isSignUpPairingView(), "This is not sign up pairing view.");
     }
-
-
-
 }
