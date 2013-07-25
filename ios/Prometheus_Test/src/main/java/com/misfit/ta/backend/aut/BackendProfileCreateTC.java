@@ -19,7 +19,7 @@ public class BackendProfileCreateTC extends BackendAutomation {
         defaultProfile = DefaultValues.DefaultProfile();
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "profile" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
     public void CreateNewProfile() {
         String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password, udid).token;
         ProfileResult r = MVPApi.createProfile(token, defaultProfile);
@@ -36,7 +36,7 @@ public class BackendProfileCreateTC extends BackendAutomation {
         Assert.assertEquals("Get birthday is the same", g.profile.dateOfBirth, defaultProfile.dateOfBirth);
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "profile" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
     public void CreateDuplicateProfile() {
         String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password, udid).token;
 
@@ -52,13 +52,11 @@ public class BackendProfileCreateTC extends BackendAutomation {
 
     }
 
-    @Test(groups = { "ios", "MVPBackend", "api", "profile" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
     public void CreateProfileWithoutToken() {
         ProfileResult r = MVPApi.createProfile("", defaultProfile);
         r.printKeyPairsValue();
-
         Assert.assertTrue("Status code is 401", r.statusCode == 401);
-        Assert.assertTrue("Profile is null", r.profile == null);
     }
 
 }

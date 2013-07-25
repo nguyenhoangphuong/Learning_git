@@ -1,6 +1,7 @@
 package com.misfit.ta.backend.data;
 
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONException;
 
 public class AccountResult extends BaseResult {
     // fields
@@ -12,17 +13,21 @@ public class AccountResult extends BaseResult {
         super(response);
 
         // result
-        if(json.containsKey("auth_token"))
-        {
-        	this.token = json.getString("auth_token");
-        	this.pairResult.put("auth_token", this.token);
+
+        try {
+            if (!json.isNull("auth_token"))
+                this.token = json.getString("auth_token");
+            if (!json.isNull("type"))
+                this.type = json.getString("type");
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        
-        if(json.containsKey("type"))
-        {
-        	this.type = json.getString("type");
-        	this.pairResult.put("type", this.type);
-        }
+
+        // add to base hashmap
+        this.pairResult.put("auth_token", this.token);
+        this.pairResult.put("type", this.type);
     }
 
 }

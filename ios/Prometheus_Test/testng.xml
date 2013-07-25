@@ -7,7 +7,7 @@
 	<test name="SmokeTest">
 		<groups>
 			<run>
-				<include name="Prometheus" />
+				<include name="backend_stress" />
 			</run>
 		</groups>
 		<packages>
