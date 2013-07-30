@@ -116,7 +116,7 @@ public class InvalidSignUpAPI extends ModelAPI {
      * 
      */
     public void v_SignUpStep1InvalidEmail() {
-        Assert.assertTrue(SignUp.hasInvalidEmailMessage(), "This is not sign up invalid email view.");
+        Assert.assertTrue(SignUp.hasSignUpInvalidEmailMessage(), "This is not sign up invalid email view.");
         ShortcutsTyper.delayOne();
     }
 

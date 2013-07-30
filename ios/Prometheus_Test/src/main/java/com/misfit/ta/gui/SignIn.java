@@ -7,7 +7,7 @@ public class SignIn {
 
 	/* lauch screen */
     public static void tapLogIn() {
-        Gui.touchAVIew("UIButton", 0);
+        Gui.touchAVIew("PTRichTextLabel", "Already have an account? _Sign in now_.");
     }
 
     public static void tapLogInWithFacebook() {
@@ -38,8 +38,8 @@ public class SignIn {
 
     
     /* pop up messages */
-    public static boolean hasInvalidEmailMessage() {
-        return PrometheusHelper.hasInvalidEmailMessage();
+    public static boolean hasSignInInvalidEmailMessage() {
+        return PrometheusHelper.hasSignInInvalidEmailMessage();
     }
     
     public static boolean hasForgotPasswordInvalidEmailMessage() {
@@ -51,7 +51,7 @@ public class SignIn {
     }
 
     public static boolean hasIncorrectLoginMessage() {
-        return Gui.getPopupContent().equals(DefaultStrings.SignInWrongAccountMessage);
+        return PrometheusHelper.hasIncorrectLoginMessage();
     }
 
     public static void tapIForgot() {

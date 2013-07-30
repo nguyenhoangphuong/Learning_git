@@ -82,8 +82,13 @@ public class PrometheusHelper {
 		ShortcutsTyper.delayTime(1000);
 	}
 
-	public static boolean hasInvalidEmailMessage() {
-		return Gui.getPopupContent().equals(DefaultStrings.InvalidEmailMessage)
+	public static boolean hasSignUpInvalidEmailMessage() {
+		return Gui.getPopupContent().equals(DefaultStrings.SignUpInvalidEmailMessage)
+				&& Gui.getPopupTitle().equals(DefaultStrings.Title);
+	}
+	
+	public static boolean hasSignInInvalidEmailMessage() {
+		return Gui.getPopupContent().equals(DefaultStrings.SignInInvalidEmailMessage)
 				&& Gui.getPopupTitle().equals(DefaultStrings.Title);
 	}
 
@@ -95,6 +100,12 @@ public class PrometheusHelper {
 	public static boolean hasInvalidPasswordMessage() {
 		return Gui.getPopupContent().equals(
 				DefaultStrings.InvalidPasswordMessage)
+				&& Gui.getPopupTitle().equals(DefaultStrings.Title);
+	}
+	
+	public static boolean hasIncorrectLoginMessage() {
+		return Gui.getPopupContent().equals(
+				DefaultStrings.SignInWrongAccountMessage)
 				&& Gui.getPopupTitle().equals(DefaultStrings.Title);
 	}
 	

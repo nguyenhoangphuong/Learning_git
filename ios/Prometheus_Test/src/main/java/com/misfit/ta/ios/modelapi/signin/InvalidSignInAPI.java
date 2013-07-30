@@ -161,7 +161,7 @@ public class InvalidSignInAPI extends ModelAPI {
      * 
      */
     public void v_InvalidEmail() {
-        Assert.assertTrue(SignIn.hasInvalidEmailMessage(), "This is not invalid email view.");
+        Assert.assertTrue(SignIn.hasSignInInvalidEmailMessage(), "This is not invalid email view.");
     }
 
     /**

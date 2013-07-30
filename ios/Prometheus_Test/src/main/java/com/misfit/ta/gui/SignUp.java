@@ -144,8 +144,8 @@ public class SignUp {
     
     
     /* ALERT */
-    public static boolean hasInvalidEmailMessage() {
-        return PrometheusHelper.hasInvalidEmailMessage();
+    public static boolean hasSignUpInvalidEmailMessage() {
+        return PrometheusHelper.hasSignUpInvalidEmailMessage();
     }
 
     public static boolean hasInvalidPasswordMessage() {
