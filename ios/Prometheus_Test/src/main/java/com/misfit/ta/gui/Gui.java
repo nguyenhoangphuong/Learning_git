@@ -6,23 +6,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.MessageFormat;
-import java.util.Date;
-import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
-import org.openqa.selenium.internal.Killable;
 import org.testng.Assert;
 
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.NuRemoteClient;
-import com.misfit.ios.Processes;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.Settings;
+import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ProcessFinder;
 import com.misfit.ta.utils.ShortcutsTyper;
@@ -974,7 +970,8 @@ public class Gui {
     }
     
     public static void captureScreen(String name) {
-        NuRemoteClient.captureScreen(name);
+        File file = NuRemoteClient.captureScreen(name);
+        TRS.instance().addShot(file.getAbsolutePath(), null);
     }
     
     public static String printViewHierarchy() {

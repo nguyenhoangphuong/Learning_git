@@ -8,12 +8,12 @@ public class TRSSampleTest extends TRSAutomation
 	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "TRSTest" })
     public void TRSTestOne() 
     {
-		TRS.instance().addStep("Step 1", null);
-		TRS.instance().addCode("Code 1.1", null);
-		TRS.instance().addCode("Code 1.2", null);
-		TRS.instance().addStep("Step 2", null);
-		TRS.instance().addCode("Code 2.1", null);
-		TRS.instance().addCode("Code 2.2", null);
+		TRS.instance().addStep("Step 10", null);
+		TRS.instance().addCode("Code 10.1", null);
+		TRS.instance().addCode("Code 10.2", null);
+		TRS.instance().addStep("Step 20", null);
+		TRS.instance().addCode("Code 20.1", null);
+		TRS.instance().addCode("Code 20.2", null);
 		
     }
 
