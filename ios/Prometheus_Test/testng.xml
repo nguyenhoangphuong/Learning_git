@@ -4,10 +4,20 @@
 		<listener class-name="com.misfit.ta.testng.OnFailure" />
 		<listener class-name="com.misfit.ta.testng.HandleLogFiles" />
 	</listeners>
-	<test name="SmokeTest">
+	<test name="SmokeTest1">
 		<groups>
 			<run>
-				<include name="backend_stress" />
+				<include name="TRSTest" />
+			</run>
+		</groups>
+		<packages>
+			<package name="com.misfit.*" />
+		</packages>
+	</test>
+	<test name="SmokeTest2">
+		<groups>
+			<run>
+				<include name="TRSTest" />
 			</run>
 		</groups>
 		<packages>

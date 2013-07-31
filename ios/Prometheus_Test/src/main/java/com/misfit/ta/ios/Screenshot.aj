@@ -1,15 +1,22 @@
 package com.misfit.ta.ios;
 
 import com.misfit.ta.gui.Gui;
+import com.misfit.ta.report.*;
 
 public aspect Screenshot {
   
   before():  execution(* com.misfit.ta.*..*.v_*(..)) {
     String name = thisJoinPoint.getSignature().getName();
+    
+    // add new step to TRS
+    TRS.instance().addStep(name, null);
   }
 
   before(): execution(* com.misfit.ta.*..*.e_*(..)) {
     String name = thisJoinPoint.getSignature().getName();
+    
+    // add new step to TRS
+    TRS.instance().addStep(name, null);
   }
   
   after() returning: androidVertexScreenshot() {
