@@ -971,7 +971,10 @@ public class Gui {
     
     public static void captureScreen(String name) {
         File file = NuRemoteClient.captureScreen(name);
-        TRS.instance().addShot(file.getAbsolutePath(), null);
+        
+        if(file != null) {
+        	TRS.instance().addShot(file.getAbsolutePath(), null);
+        }
     }
     
     public static String printViewHierarchy() {
