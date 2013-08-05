@@ -38,12 +38,6 @@ public class SignUpAPI extends ModelAPI {
 	private String day = "";
     private static int goal = 0;
     
-//    private static String[] goalPoints = {"1500", "2500", "4000" };
-//    private static String[] goalEqualRunnings = {"60", "100", "160"};
-//    private static String[] goalEqualCyclings = {"21", "35", "57"};
-//    private static String[] goalEqualWalkings = {"6,000", "10,000", "16,000"};
-//    private static String[] goalEqualBurnings = {"0.2", "0.3", "0.5"};
-
     /**
      * This method implements the Edge 'e_Init'
      * 
@@ -85,7 +79,7 @@ public class SignUpAPI extends ModelAPI {
      */
     public void e_SetGoal() {
         goal = new Random().nextInt(3);
-        SignUp.setGoal(goal);
+        SignUp.setGoal(goal, SignUp.getCurrentGoal());
         ShortcutsTyper.delayOne();
     }
 

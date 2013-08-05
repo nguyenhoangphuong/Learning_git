@@ -41,6 +41,8 @@ public class DayProgressAPI extends ModelAPI {
 	private int height = 68; // 68 inches is default height for men
 	private float weight = 120f; // 120 lbs is default weight for men
 	private int goalPoints = 1000; // total goal is 1000 points
+	
+	private boolean hasNoActivity = true;
 
 	/**
 	 * This method implements the Edge 'e_Init'
@@ -89,6 +91,7 @@ public class DayProgressAPI extends ModelAPI {
 		calculateTotalProgressInfo();
 		this.lastHour = this.hour;
 		this.hour++;
+		this.hasNoActivity = false;
 	}
 
 	private void calculateTotalProgressInfo() {
@@ -115,23 +118,23 @@ public class DayProgressAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_inputFirstStep() {
-		String[] time = {
-				String.format("%d", firstStepHour > 12 ? 12 - firstStepHour
-						: firstStepHour), "00",
-				firstStepHour < 12 ? "AM" : "PM" };
-		this.lastSteps = 100;
-		this.lastDuration = 1;
-		HomeScreen.tapOpenManualInput();
-		ShortcutsTyper.delayTime(500);
-		HomeScreen.enterManualActivity(time, this.lastDuration, this.lastSteps); // score 10pts
-		ShortcutsTyper.delayTime(1000);
-		HomeScreen.tapSave();
-		ShortcutsTyper.delayTime(500);
-		this.firstStepTime = String.format("%d",
-				firstStepHour > 12 ? 12 - firstStepHour : firstStepHour)
-				+ ":00" + (firstStepHour < 12 ? "am" : "pm");
-		calculateTotalProgressInfo();
-		PrometheusHelper.handleTutorial();
+//		String[] time = {
+//				String.format("%d", firstStepHour > 12 ? 12 - firstStepHour
+//						: firstStepHour), "00",
+//				firstStepHour < 12 ? "AM" : "PM" };
+//		this.lastSteps = 100;
+//		this.lastDuration = 1;
+//		HomeScreen.tapOpenManualInput();
+//		ShortcutsTyper.delayTime(500);
+//		HomeScreen.enterManualActivity(time, this.lastDuration, this.lastSteps); // score 10pts
+//		ShortcutsTyper.delayTime(1000);
+//		HomeScreen.tapSave();
+//		ShortcutsTyper.delayTime(500);
+//		this.firstStepTime = String.format("%d",
+//				firstStepHour > 12 ? 12 - firstStepHour : firstStepHour)
+//				+ ":00" + (firstStepHour < 12 ? "am" : "pm");
+//		calculateTotalProgressInfo();
+//		PrometheusHelper.handleTutorial();
 	}
 
 	/**
@@ -146,22 +149,15 @@ public class DayProgressAPI extends ModelAPI {
 	 * This method implements the Vertex 'v_TodayDefault'
 	 * 
 	 */
-	public void v_TodayDefault() {
-		// check initial data
-		Assert.assertTrue(HomeScreen.isTodayDefault(),
-				"Progress circle display point earned by default");
+	public void v_Today() {
+		if (hasNoActivity) {
+			// check initial data
+			Assert.assertTrue(HomeScreen.isTodayDefault(),
+					"Progress circle display point earned by default");
+		}
 		Assert.assertTrue(HomeScreen.isToday(), "Today is displayed");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_Today'
-	 * 
-	 */
-	public void v_Today() {
-		Assert.assertTrue(ViewUtils.isExistedView(
-				"PTTimelineItemNotableEventFirstStepView", this.firstStepTime),
-				"Today is displayed with first step timeline item.");
-	}
 
 	/**
 	 * This method implements the Vertex 'v_UpdatedTimeline'

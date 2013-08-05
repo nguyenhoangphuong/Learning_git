@@ -582,7 +582,17 @@ public class Gui {
     public static void swipeRight(int distance) {
         swipe(3, distance);
     }
-
+    
+	public static void swipeRightToSetGoal() {
+		String message = "(Gui doActionForSwipeGestureIndex: 1 viewName: @\"UIView\" viewIndex: 4 controller: @\"PTSetYourGoalViewController\" action: @\"didSwipe:\" direction: 1 state: 3)";
+		NuRemoteClient.sendToServer(message);
+	}
+	
+	public static void swipeLeftToSetGoal() {
+		String message = "(Gui doActionForSwipeGestureIndex: 0 viewName: @\"UIView\" viewIndex: 4 controller: @\"PTSetYourGoalViewController\" action: @\"didSwipe:\" direction: 2 state: 3)";
+		NuRemoteClient.sendToServer(message);
+	}
+    
     /**
      * 0: up 1: down 2: left 3: right
      */

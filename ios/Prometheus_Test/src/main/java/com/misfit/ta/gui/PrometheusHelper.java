@@ -259,14 +259,14 @@ public class PrometheusHelper {
 		ShortcutsTyper.delayTime(500);
 
 		// enter duration
-		Gui.touchAVIew("UITextField", 2);
+		Gui.touchAVIew("UITextField", 3);
 		Gui.pressDelete();
 		Gui.type(String.valueOf(duration));
 		ShortcutsTyper.delayTime(500);
 		Gui.dismissPicker();
 
 		// enter steps
-		Gui.touchAVIew("UITextField", 3);
+		Gui.touchAVIew("UITextField", 4);
 		Gui.pressDelete();
 		Gui.type(String.valueOf(steps));
 		ShortcutsTyper.delayTime(500);

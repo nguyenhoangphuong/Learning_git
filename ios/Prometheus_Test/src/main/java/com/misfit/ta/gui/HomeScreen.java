@@ -58,11 +58,10 @@ public class HomeScreen {
         Gui.touchAVIew("UIButtonLabel", "Save");
     }
     
-    public static void enterManualActivity(String[] times, int duration, int steps) 
-    {
-        PrometheusHelper.inputManualRecord(times, duration, steps);
-    }
-
+	public static void enterManualActivity(String[] times, int duration,
+			int steps) {
+		PrometheusHelper.inputManualRecord(times, duration, steps);
+	}
 
     /* Timeline */
     public static void goToPreviousDays(int days) {
@@ -140,7 +139,7 @@ public class HomeScreen {
     }
     
     public static boolean isTodayDefault() {
-    	return ViewUtils.isExistedView("UILabel", "Zip. Zero. Nada.");
+    	return ViewUtils.isExistedView("UILabel", "No activity yet.");
     }
 
 }
