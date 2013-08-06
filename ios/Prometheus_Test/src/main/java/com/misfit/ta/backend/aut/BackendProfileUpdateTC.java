@@ -8,7 +8,6 @@ import org.testng.annotations.*;
 
 import com.misfit.ta.backend.data.*;
 import com.misfit.ta.backend.api.*;
-import com.misfit.ta.ios.AutomationTest;
 
 public class BackendProfileUpdateTC extends BackendAutomation {
 

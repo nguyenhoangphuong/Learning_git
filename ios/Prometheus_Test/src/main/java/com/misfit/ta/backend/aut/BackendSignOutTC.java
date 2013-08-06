@@ -4,16 +4,13 @@ import junit.framework.Assert;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
-import org.omg.CosNaming.NamingContextPackage.NotEmpty;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.data.AccountResult;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.ProfileData;
 import com.misfit.ta.backend.data.ProfileResult;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class BackendSignOutTC extends BackendAutomation {
 	String email;

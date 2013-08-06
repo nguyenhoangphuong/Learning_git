@@ -170,7 +170,7 @@ public class MVPApi {
 
         BaseParams requestInf = new BaseParams();
         requestInf.addHeader("auth_token", token);
-        requestInf.addObjectParam("profile", json);
+        requestInf.addParam("profile", json.toJSONString());
 
         return requestInf;
     }
