@@ -7,7 +7,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
+
+import com.misfit.ta.report.TRS;
 
 public class ResultLogger {
 
@@ -60,6 +61,9 @@ public class ResultLogger {
 		try {
 			writer.write(message + "\n");
 			writer.flush();
+			
+			// send to TRS
+			TRS.instance().addCode(message, null);
 		} catch (IOException e) {
 		}
 
