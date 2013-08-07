@@ -51,5 +51,17 @@ public class BaseParams {
 
 		return json.toJSONString();
 	}
+	
+	public String getHeadersAsJsonString() {
+		JSONBuilder json = new JSONBuilder();
+		Iterator<Header> iter = headers.iterator();
+
+		while (iter.hasNext()) {
+			Header header = iter.next();
+			json.addValue(header.getName(), header.getValue());
+		}
+
+		return json.toJSONString();
+	}
 
 }

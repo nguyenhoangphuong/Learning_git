@@ -50,10 +50,12 @@ public class MVPApi {
     static private ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
         // log address
         logger.info(type.toUpperCase() + ": " + url + " - port: " + port);
+        logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
         logger.info("Request params: " + requestInf.getParamsAsJsonString());
         
         // send to TRS
         TRS.instance().addStep(type.toUpperCase() + ": " + url + " - port: " + port, null);
+        TRS.instance().addCode("Request headers: " + requestInf.getHeadersAsJsonString(), null);
         TRS.instance().addCode("Request params: " + requestInf.getParamsAsJsonString(), null);
 
         // wrapper send request

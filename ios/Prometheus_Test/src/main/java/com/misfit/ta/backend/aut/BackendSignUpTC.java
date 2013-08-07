@@ -9,7 +9,7 @@ import com.misfit.ta.backend.api.*;
 
 public class BackendSignUpTC extends BackendAutomation {
 
-	String[] wrongFormatEmails = { "", "wrong100", "wrong2@", "wrong3 @a.b", " wrong5@a.a" };
+	String[] wrongFormatEmails = { "", "wrong100", "wrong2@", "wrong3 @a.b" };
 	String wellFormatEmail = "wellformat@qa.com";
 	String duplicatedEmail = "";
 	String notregisteredEmail;
