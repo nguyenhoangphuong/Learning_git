@@ -18,7 +18,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
     Logger logger = Util.setupLogger(BackendProfileUpdateTC.class);
 
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         udid = DefaultValues.UDID;
         email = MVPApi.generateUniqueEmail();

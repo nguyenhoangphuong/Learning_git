@@ -18,7 +18,7 @@ public class BackendSignOutTC extends BackendAutomation {
 	String udid;
 	Logger logger = Util.setupLogger(BackendSignOutTC.class);
 
-	@BeforeClass
+	@BeforeClass(alwaysRun = true)
 	public void beforeClass() {
 		udid = DefaultValues.UDID;
 		email = MVPApi.generateUniqueEmail();

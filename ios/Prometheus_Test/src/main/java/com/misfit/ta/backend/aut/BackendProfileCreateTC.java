@@ -13,7 +13,7 @@ public class BackendProfileCreateTC extends BackendAutomation {
     String udid;
     ProfileData defaultProfile;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         udid = DefaultValues.UDID;
         defaultProfile = DefaultValues.DefaultProfile();

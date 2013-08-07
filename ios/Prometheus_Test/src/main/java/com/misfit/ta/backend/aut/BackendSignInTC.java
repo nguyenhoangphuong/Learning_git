@@ -15,7 +15,7 @@ public class BackendSignInTC extends BackendAutomation {
 
     String udid;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         validEmail = MVPApi.generateUniqueEmail();
         invalidEmail = MVPApi.generateUniqueEmail() + ".invalid";

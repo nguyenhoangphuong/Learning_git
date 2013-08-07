@@ -15,7 +15,7 @@ public class BackendProfileGetTC extends BackendAutomation {
     String udid;
     ProfileData defaultProfile;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         email = MVPApi.generateUniqueEmail();
         defaultProfile = DefaultValues.DefaultProfile();

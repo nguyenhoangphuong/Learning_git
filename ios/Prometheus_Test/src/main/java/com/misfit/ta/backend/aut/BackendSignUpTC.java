@@ -19,7 +19,7 @@ public class BackendSignUpTC extends BackendAutomation {
 
 	String udid;
 
-	@BeforeClass
+	@BeforeClass(alwaysRun = true)
 	public void setup() {
 		notregisteredEmail = MVPApi.generateUniqueEmail();
 		udid = DefaultValues.UDID;

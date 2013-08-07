@@ -15,7 +15,7 @@ public class BackendPedometerTC extends BackendAutomation {
 	private String password = "test12";
 	private String firmwareRevisionString = "0.0.27r";
 
-	@BeforeClass
+	@BeforeClass(alwaysRun = true)
 	public void setUp() {
 		udid = DefaultValues.UDID;
 	}
