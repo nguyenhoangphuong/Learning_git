@@ -118,7 +118,7 @@
 		<dependency>
 			<groupId>com.misfit.ta</groupId>
 			<artifactId>tools</artifactId>
-			<version>0.0.44</version>
+			<version>0.0.45</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
