@@ -3,6 +3,5 @@
  */
 package com.misfit.ta.backend.aut;
 
-public class BackendAutomation extends com.misfit.ta.aut.AutomationTest 
-{
+public class BackendAutomation extends com.misfit.ta.aut.AutomationTest {
 }
