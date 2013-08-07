@@ -72,7 +72,7 @@ public class HomeSettings {
     
     
     public static void tapSignOut() {
-        Gui.touchAVIew("UIButtonLabel", "Shine out");
+        Gui.touchAVIew("UIButtonLabel", "SHINE OUT");
     }
     
     public static void chooseSignOut() {
