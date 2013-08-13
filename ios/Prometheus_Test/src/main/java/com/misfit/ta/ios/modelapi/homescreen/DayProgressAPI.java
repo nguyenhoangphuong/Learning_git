@@ -16,6 +16,9 @@ import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.gui.Gui;
 
 public class DayProgressAPI extends ModelAPI {
+	private static final String MINUTELABEL = "MINUTES";
+	private static final String POINTLABEL = "POINTS";
+
 	public DayProgressAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
@@ -97,8 +100,11 @@ public class DayProgressAPI extends ModelAPI {
 	private void calculateTotalProgressInfo() {
 		this.lastMiles = PrometheusHelper.calculateMiles(this.lastSteps,
 				this.height);
+		System.out.println("DEBUG: Last steps " + this.lastSteps);
+		System.out.println("DEBUG: Last duration " + this.lastDuration);
 		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
 				this.lastDuration);
+		System.out.println("DEBUG: Last points " + this.lastPoints);
 		this.lastCalories = PrometheusHelper.calculateCalories(this.lastPoints,
 				this.weight);
 
@@ -152,6 +158,7 @@ public class DayProgressAPI extends ModelAPI {
 	public void v_Today() {
 		if (hasNoActivity) {
 			// check initial data
+			ShortcutsTyper.delayOne();
 			Assert.assertTrue(HomeScreen.isTodayDefault(),
 					"Progress circle display point earned by default");
 		}
@@ -208,19 +215,21 @@ public class DayProgressAPI extends ModelAPI {
 				"Start time displayed correctly");
 		//open overlay
 		Gui.touchAVIew("PTTimelineItemSessionView", this.lastStartTime);
+		System.out.println("DEBUG: Assert last duration " + this.lastDuration);
 		Assert.assertTrue(
 				ViewUtils.isExistedView("UILabel",
 						String.valueOf(this.lastDuration))
-						&& ViewUtils.isExistedView("UILabel", "mins"),
+						&& ViewUtils.isExistedView("UILabel", MINUTELABEL),
 				"Duration on timeline item is displayed correctly");
+		System.out.println("DEBUG: Assert last points " + this.lastPoints);
 		Assert.assertTrue(
 				ViewUtils.isExistedView("UILabel",
 						String.format("%d",
-								(int) Math.round( this.lastPoints)))
-						&& ViewUtils.isExistedView("UILabel", "points"),
+								(int) Math.floor(this.lastPoints)))
+						&& ViewUtils.isExistedView("UILabel", POINTLABEL),
 				"Points on timeline item are displayed correctly");
 		// close overlay and drag down timeline view
-		Gui.touchAVIew("UILabel", "mins");
+		Gui.touchAVIew("UILabel", MINUTELABEL);
 		Gui.dragDownTimeline();
 
 	}
