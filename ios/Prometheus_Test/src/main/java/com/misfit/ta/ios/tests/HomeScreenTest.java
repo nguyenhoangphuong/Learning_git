@@ -30,7 +30,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "DayInPast" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "HomeScreen", "DayInPast" })
     public void DayInPast() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
