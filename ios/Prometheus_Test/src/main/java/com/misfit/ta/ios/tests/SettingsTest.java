@@ -17,7 +17,7 @@ import com.misfit.ta.utils.Files;
 
 public class SettingsTest extends AutomationTest {
 
-    @Test(groups = { "iOS", "Prometheus", "Settings", "ProfileSettings" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "ProfileSettings" })
     public void ProfileSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("ProfileSettings", new ProfileSettingsAPI(this, Files.getFile("model/settings/ProfileSettings.graphml"),
@@ -28,7 +28,7 @@ public class SettingsTest extends AutomationTest {
         System.out.println(actualResult);
     }
 
-    @Test(groups = { "iOS", "Prometheus", "Settings", "GoalSettings" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "GoalSettings" })
     public void GoalSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("GoalSettings", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettings.graphml"),
@@ -39,7 +39,7 @@ public class SettingsTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "Settings", "GoalSettings" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "GoalSettings" })
     public void UnitSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("UnitSettings", new UnitSettingsAPI(this, Files.getFile("model/settings/UnitSettings.graphml"),

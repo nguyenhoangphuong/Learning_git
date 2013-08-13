@@ -14,7 +14,7 @@ import com.misfit.ta.ios.modelapi.launch.LaunchAppAPI;
 import com.misfit.ta.utils.Files;
 
 public class LaunchTest extends AutomationTest {
-	@Test(groups = { "iOS", "Prometheus", "Launch" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Launch" })
 	public void LaunchApp() throws InterruptedException,
 			StopConditionException, IOException {
 		ModelHandler model = getModelhandler();
