@@ -2,6 +2,7 @@ package com.misfit.ta.gui;
 
 import java.util.Random;
 
+import org.apache.commons.lang.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -149,15 +150,28 @@ public class PrometheusHelper {
 		return (float) (Math.floor(realPoints) / 2.5f);
 	}
 
-	public static float calculateMiles(int steps, int heightInInches) {
-		return steps * 0.414f * heightInInches / 63360;
+	public static float calculateMiles(int steps, float heightInInches) {
+		return (steps * 0.414f * heightInInches) / 63360f;
 	}
 
-	public static float calculateCalories(float points, float weightInLbs) {
+	public static float calculateCalories(float points, float weightInLbs, float fullBMR, int currentMinute) {
 		// TODO: update new calculation
-		float weightInKg = (float) (weightInLbs * 0.453592);
-		weightInKg = Math.round(weightInKg * 10) / 10;
-		return points * weightInKg / 600f;
+//		E = alpha * activity_points * [weight_in_kg / 60] + beta * BMR_elapsed 
+//				Calories = min(E, 0.5*E + 0.925*BMR_24hrs) 
+//				alpha = 0.15; beta = 1.3 
+		float weightInKg = weightInLbs * 0.45359237f;
+		float alpha = 0.15f;
+		float beta = 1.3f;
+		float E = alpha * points * (weightInKg / 60f) + beta * (fullBMR * (currentMinute / 1440f));
+		return (float) Math.min(E, 0.5f * E + 0.925f * fullBMR);
+	}
+	
+	public static float calculateFullBMR(float weightInLbs, float heightInInches, int age, boolean isMale) {
+		float weightInKg = weightInLbs * 0.453592f;
+		float heightInCm = heightInInches * 2.54f;
+		float genderFactor = isMale ? 5f : -161f;
+		float fullBMR = (10f * weightInKg) + (6.25f * heightInCm) - (5f * age) + genderFactor;
+		return fullBMR;
 	}
 
 	public static String getMonthString(int monthNumber,

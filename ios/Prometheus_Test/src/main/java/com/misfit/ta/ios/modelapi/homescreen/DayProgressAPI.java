@@ -1,19 +1,20 @@
 package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
+import java.util.Calendar;
 
+import org.apache.commons.lang.StringUtils;
 import org.graphwalker.generators.PathGenerator;
-import org.openqa.selenium.android.library.Logger;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.ios.AutomationTest;
-import com.misfit.ta.gui.Gui;
+import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class DayProgressAPI extends ModelAPI {
 	private static final String MINUTELABEL = "MINUTES";
@@ -30,7 +31,6 @@ public class DayProgressAPI extends ModelAPI {
 	private int lastSteps = 0;
 	private float lastPoints = 0f;
 	private float lastMiles = 0f;
-	private float lastCalories = 0f;
 	private int lastHour = 5;
 
 	private int totalSteps = 0;
@@ -39,12 +39,14 @@ public class DayProgressAPI extends ModelAPI {
 	private float totalMiles = 0f;
 	private float totalCalories = 0f;
 
-	private int firstStepHour = 5;
+	// private int firstStepHour = 5;
 	private int hour = 6; // for ease of keeping tracks
-	private int height = 68; // 68 inches is default height for men
+	private float height = 68f; // 68 inches is default height for men
 	private float weight = 120f; // 120 lbs is default weight for men
+	private boolean isMale = true;
+	private int year = 1981;
 	private int goalPoints = 1000; // total goal is 1000 points
-	
+
 	private boolean hasNoActivity = true;
 
 	/**
@@ -64,8 +66,8 @@ public class DayProgressAPI extends ModelAPI {
 		// Time: 12 hours
 
 		// Initalize
-		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true,
-				16, 9, 1981, true, "5'", "8\\\"", "120", ".0", 1);
+		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1",
+				isMale, 16, 9, year, true, "5'", "8\\\"", "120", ".0", 1);
 		ShortcutsTyper.delayTime(5000);
 	}
 
@@ -105,18 +107,13 @@ public class DayProgressAPI extends ModelAPI {
 		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
 				this.lastDuration);
 		System.out.println("DEBUG: Last points " + this.lastPoints);
-		this.lastCalories = PrometheusHelper.calculateCalories(this.lastPoints,
-				this.weight);
 
 		// calculate total progress info
 		this.totalSteps += this.lastSteps;
 		this.totalMinutes += this.lastDuration;
-		this.totalMiles += PrometheusHelper.calculateMiles(this.lastSteps,
-				this.height);
-		this.totalPoints += PrometheusHelper.calculatePoint(this.lastSteps,
-				this.lastDuration);
-		this.totalCalories += PrometheusHelper.calculateCalories(
-				this.lastPoints, this.weight);
+		this.totalPoints += this.lastPoints;
+		this.totalCalories += this.lastMiles;
+		this.totalMiles += this.lastMiles;
 	}
 
 	/**
@@ -124,23 +121,24 @@ public class DayProgressAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_inputFirstStep() {
-//		String[] time = {
-//				String.format("%d", firstStepHour > 12 ? 12 - firstStepHour
-//						: firstStepHour), "00",
-//				firstStepHour < 12 ? "AM" : "PM" };
-//		this.lastSteps = 100;
-//		this.lastDuration = 1;
-//		HomeScreen.tapOpenManualInput();
-//		ShortcutsTyper.delayTime(500);
-//		HomeScreen.enterManualActivity(time, this.lastDuration, this.lastSteps); // score 10pts
-//		ShortcutsTyper.delayTime(1000);
-//		HomeScreen.tapSave();
-//		ShortcutsTyper.delayTime(500);
-//		this.firstStepTime = String.format("%d",
-//				firstStepHour > 12 ? 12 - firstStepHour : firstStepHour)
-//				+ ":00" + (firstStepHour < 12 ? "am" : "pm");
-//		calculateTotalProgressInfo();
-//		PrometheusHelper.handleTutorial();
+		// String[] time = {
+		// String.format("%d", firstStepHour > 12 ? 12 - firstStepHour
+		// : firstStepHour), "00",
+		// firstStepHour < 12 ? "AM" : "PM" };
+		// this.lastSteps = 100;
+		// this.lastDuration = 1;
+		// HomeScreen.tapOpenManualInput();
+		// ShortcutsTyper.delayTime(500);
+		// HomeScreen.enterManualActivity(time, this.lastDuration,
+		// this.lastSteps); // score 10pts
+		// ShortcutsTyper.delayTime(1000);
+		// HomeScreen.tapSave();
+		// ShortcutsTyper.delayTime(500);
+		// this.firstStepTime = String.format("%d",
+		// firstStepHour > 12 ? 12 - firstStepHour : firstStepHour)
+		// + ":00" + (firstStepHour < 12 ? "am" : "pm");
+		// calculateTotalProgressInfo();
+		// PrometheusHelper.handleTutorial();
 	}
 
 	/**
@@ -165,16 +163,16 @@ public class DayProgressAPI extends ModelAPI {
 		Assert.assertTrue(HomeScreen.isToday(), "Today is displayed");
 	}
 
-
 	/**
 	 * This method implements the Vertex 'v_UpdatedTimeline'
 	 * 
 	 */
 	public void v_UpdatedToday() {
 		// check summary through process circle
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 2; i++) {
 			// progress circle display point earned => check total point
-			if (HomeScreen.isPointEarnedProgessCircle())
+			if (HomeScreen.isPointEarnedProgessCircle()) {
+				System.out.println("DEBUG: PROGRESS CIRCLE VIEW 1");
 				Assert.assertTrue(
 						ViewUtils.isExistedView(
 								"UILabel",
@@ -182,19 +180,10 @@ public class DayProgressAPI extends ModelAPI {
 										(int) Math.floor(this.totalPoints))),
 						"Total points displayed correctly");
 
-			// progress circle display point remained => check remain point
-			else if (HomeScreen.isPointRemainProgessCircle()) {
-				String text = Gui.getProperty("PTRichTextLabel", 0, "text");
-				int remainPoints = this.goalPoints
-						- (int) Math.floor(this.totalPoints);
-				Assert.assertTrue(
-						text.contains(String.format("%d", remainPoints)),
-						"Remain points displayed correctly");
-			}
-
-			// progress circle display summary => check steps / calories /
-			// distance
-			else if (HomeScreen.isSummaryProgressCircle()) {
+				// progress circle display summary => check steps / calories /
+				// distance
+			} else if (HomeScreen.isSummaryProgressCircle()) {
+				System.out.println("DEBUG: PROGRESS CIRCLE VIEW 2");
 				Assert.assertTrue(
 						ViewUtils.isExistedView("PTRichTextLabel",
 								String.format("_%d_ steps", this.totalSteps)),
@@ -203,17 +192,47 @@ public class DayProgressAPI extends ModelAPI {
 						ViewUtils.isExistedView("PTRichTextLabel",
 								String.format("_%.1f_ miles", this.totalMiles)),
 						"Total miles displayed correctly");
+				Calendar now = Calendar.getInstance();
+				float fullBMR = PrometheusHelper.calculateFullBMR(weight,
+						height, now.get(Calendar.YEAR) - year, isMale);
+				String caloriesText = Gui.getProperty("PTRichTextLabel", 1, "text");
+				float calories = Float.valueOf(StringUtils.substring(caloriesText, 1, caloriesText.lastIndexOf("_")));
+				float minTotalCalories = PrometheusHelper.calculateCalories(
+						this.totalPoints,
+						weight,
+						fullBMR,
+						now.get(Calendar.HOUR_OF_DAY) * 60
+								+ now.get(Calendar.MINUTE) - 20);
+				float maxTotalCalories = PrometheusHelper.calculateCalories(
+						this.totalPoints,
+						weight,
+						fullBMR,
+						now.get(Calendar.HOUR_OF_DAY) * 60
+								+ now.get(Calendar.MINUTE) + 20);
+				float result = PrometheusHelper.calculateCalories(
+						this.totalPoints,
+						weight,
+						fullBMR,
+						now.get(Calendar.HOUR_OF_DAY) * 60
+								+ now.get(Calendar.MINUTE));
+				System.out.println("DEBUG: Calories text " + calories);
+				System.out.println("DEBUG: Min calories " + minTotalCalories);
+				System.out.println("DEBUG: Max calories " + maxTotalCalories);
+				System.out.println("DEBUG: Calculated Calories " + result);
+				if (calories < minTotalCalories || calories > maxTotalCalories) {
+					Assert.assertTrue(false, "Calories calculation is not correct");
+				}
+				
 			}
-
 			HomeScreen.tapProgressCircle();
 		}
-		
+
 		Gui.dragUpTimeline();
 		// check activity record is saved
 		Assert.assertTrue(
 				ViewUtils.isExistedView("UILabel", this.lastStartTime),
 				"Start time displayed correctly");
-		//open overlay
+		// open overlay
 		Gui.touchAVIew("PTTimelineItemSessionView", this.lastStartTime);
 		System.out.println("DEBUG: Assert last duration " + this.lastDuration);
 		Assert.assertTrue(
@@ -224,8 +243,7 @@ public class DayProgressAPI extends ModelAPI {
 		System.out.println("DEBUG: Assert last points " + this.lastPoints);
 		Assert.assertTrue(
 				ViewUtils.isExistedView("UILabel",
-						String.format("%d",
-								(int) Math.floor(this.lastPoints)))
+						String.format("%d", (int) Math.floor(this.lastPoints)))
 						&& ViewUtils.isExistedView("UILabel", POINTLABEL),
 				"Points on timeline item are displayed correctly");
 		// close overlay and drag down timeline view

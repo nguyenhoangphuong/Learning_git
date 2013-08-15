@@ -108,6 +108,7 @@ public class HomeScreen {
     	title.append(PrometheusHelper.getMonthString(now.get(Calendar.MONTH) + 1, false));
     	title.append(" ");
     	title.append(now.get(Calendar.DATE));
+    	System.out.println(title.toString());
     	return ViewUtils.isExistedView("UILabel", title.toString());
     }
 
@@ -120,13 +121,8 @@ public class HomeScreen {
     }
        
     public static boolean isPointEarnedProgessCircle() {
-        String text = Gui.getProperty("PTRichTextLabel", 0, "text");
+        String text = Gui.getProperty("UILabel", 3, "text");
         return text.matches("^of .* points$");
-    }
-    
-    public static boolean isPointRemainProgessCircle() {
-    	String text = Gui.getProperty("PTRichTextLabel", 0, "text");
-    	return text.matches(".* points to go$");
     }
     
     public static boolean isSummaryProgressCircle() {
