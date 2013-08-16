@@ -890,6 +890,17 @@ public class Gui {
         return locationService;
     }
 
+    public static void tapToSync() {
+    	String message = "(Gui touchAViewWithViewName: @\"PTSyncTrayView\" andIndex: 0)";
+    	NuRemoteClient.sendToServer(message);
+    }
+    
+    public static boolean hasAlert() {
+    	String message = "(ViewUtils findAlertView)";
+    	NuRemoteClient.sendToServer(message);
+    	String result = NuRemoteClient.getLastMessage();
+    	return !StringUtils.isEmpty(result);
+    }
 
     public static void start(String ip) 
     {
