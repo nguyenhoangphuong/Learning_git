@@ -20,8 +20,7 @@ public class SignUpGoalAPI extends ModelAPI {
 
 	private int heightInInches = 0;
 	private int weightInLbs = 0;
-	private String[] walkingEquals = { "6,000", "10,000", "16,000" };
-	private String[] level = { "KINDA ACTIVE", "PRETTY ACTIVE", "INSANELY ACTIVE" };
+	private String[] level = { "KINDA ACTIVE", "PRETTY ACTIVE", "VERY ACTIVE" };
 	
 	private int currentLevel = 1;
 
@@ -160,9 +159,6 @@ public class SignUpGoalAPI extends ModelAPI {
 	 * 
 	 */
 	private void assertGoal(int goalLevel) {
-		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String
-				.format(" \\_Walking\\_\\n%s steps", this.walkingEquals[goalLevel])),
-				"Walking equivalent for level " + goalLevel + " is not correct");
 		Assert.assertTrue(
 				ViewUtils.isExistedView("UILabel", this.level[goalLevel]),
 				"Level string for level " + goalLevel + " is not correct");
