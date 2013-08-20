@@ -89,7 +89,8 @@ public class DayProgressAPI extends ModelAPI {
 		HomeScreen.tapSave();
 		ShortcutsTyper.delayTime(500);
 		PrometheusHelper.handleTutorial();
-
+		ShortcutsTyper.delayTime(500);
+		
 		// save last record info
 		this.lastStartTime = String.format("%d", hour > 12 ? 12 - hour : hour)
 				+ ":00" + (hour < 12 ? "am" : "pm");
@@ -177,7 +178,10 @@ public class DayProgressAPI extends ModelAPI {
 						ViewUtils.isExistedView(
 								"UILabel",
 								String.format("%d",
-										(int) Math.floor(this.totalPoints))),
+										(int) Math.floor(this.totalPoints))) || ViewUtils.isExistedView(
+												"UILabel",
+												String.format("%d",
+														(int) Math.round(this.totalPoints))),
 						"Total points displayed correctly");
 
 				// progress circle display summary => check steps / calories /
@@ -193,10 +197,14 @@ public class DayProgressAPI extends ModelAPI {
 								String.format("_%.1f_ miles", this.totalMiles)),
 						"Total miles displayed correctly");
 				Calendar now = Calendar.getInstance();
+				System.out.println("NOW: " + now);
 				float fullBMR = PrometheusHelper.calculateFullBMR(weight,
 						height, now.get(Calendar.YEAR) - year, isMale);
+				System.out.println("AGE: " + (now.get(Calendar.YEAR) - year));
 				String caloriesText = Gui.getProperty("PTRichTextLabel", 1, "text");
 				float calories = Float.valueOf(StringUtils.substring(caloriesText, 1, caloriesText.lastIndexOf("_")));
+				System.out.println("MINUTE:" + now.get(Calendar.MINUTE));
+				System.out.println("HOUR:" + now.get(Calendar.HOUR_OF_DAY));
 				float minTotalCalories = PrometheusHelper.calculateCalories(
 						this.totalPoints,
 						weight,

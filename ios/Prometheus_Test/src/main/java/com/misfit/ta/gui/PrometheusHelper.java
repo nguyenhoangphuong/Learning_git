@@ -162,7 +162,7 @@ public class PrometheusHelper {
 		float weightInKg = weightInLbs * 0.45359237f;
 		float alpha = 0.15f;
 		float beta = 1.3f;
-		float E = alpha * points * (weightInKg / 60f) + beta * (fullBMR * (currentMinute / 1440f));
+		float E = alpha * points * 2.5f * (weightInKg / 60f) + beta * (fullBMR * (currentMinute / 1440f));
 		return (float) Math.min(E, 0.5f * E + 0.925f * fullBMR);
 	}
 	
