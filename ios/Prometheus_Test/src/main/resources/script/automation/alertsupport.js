@@ -21,7 +21,7 @@ function PrometheusAlertHandler(_alert) {
 	if (name == AllowLocationMsg || message == AllowLocationMsg
 			|| name.indexOf("Current Location") >= 0
 			|| message.indexOf("Current Location") >= 0
-			|| name.indexOf("Facebook") || message.indexOf("Facebook")) {
+			|| name.indexOf("Facebook") >=0 || message.indexOf("Facebook") >= 0) {
 		UIALogger.logDebug("Alert title: " + name);
 		UIALogger.logDebug("Alert message: " + message);
 		UIALogger.logDebug("Tap OK");
