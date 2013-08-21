@@ -10,6 +10,7 @@ import com.misfit.ta.Gui;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.ios.AutomationTest;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SyncTest extends AutomationTest {
 	private static int NUMBER_OF_SYNC = 50;
@@ -33,7 +34,7 @@ public class SyncTest extends AutomationTest {
 				}
 				while (!(ViewUtils.isExistedView("UILabel", "Today") && ViewUtils
 						.isExistedView("UILabel", "Week"))) {
-					Thread.sleep(5000);
+					ShortcutsTyper.delayTime(5000);
 				}
 				if (Sync.hasAlert()) {
 					failedSyncCount++;
@@ -41,9 +42,9 @@ public class SyncTest extends AutomationTest {
 				} else {
 					successfulSyncCount++;
 				}
-				Thread.sleep(30000);
+				ShortcutsTyper.delayTime(30000);
 				if (i % 10 == 0) {
-					Thread.sleep(360000);
+					ShortcutsTyper.delayTime(360000);
 				}
 			}
 		} catch (Exception ex) {
