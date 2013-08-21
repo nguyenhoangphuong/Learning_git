@@ -6,6 +6,7 @@ import org.graphwalker.exceptions.StopConditionException;
 import org.testng.annotations.Test;
 
 import com.misfit.ios.ViewUtils;
+import com.misfit.ta.Gui;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.ios.AutomationTest;
@@ -24,8 +25,12 @@ public class SyncTest extends AutomationTest {
 		try {
 			Sync.signIn();
 			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
-				Sync.openSyncView();
-				Sync.tapToSync();
+				if (Sync.hasAlert() && Gui.getPopupTitle() == "Update Available") {
+					Gui.touchPopupButton("Upgrade Now");
+				} else {
+					Sync.openSyncView();
+					Sync.tapToSync();
+				}
 				while (!(ViewUtils.isExistedView("UILabel", "Today") && ViewUtils
 						.isExistedView("UILabel", "Week"))) {
 					Thread.sleep(5000);
@@ -37,6 +42,9 @@ public class SyncTest extends AutomationTest {
 					successfulSyncCount++;
 				}
 				Thread.sleep(30000);
+				if (i % 10 == 0) {
+					Thread.sleep(360000);
+				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
