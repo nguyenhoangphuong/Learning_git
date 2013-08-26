@@ -131,10 +131,6 @@ public class UnitSettingsAPI extends ModelAPI {
 		this.metricsW1 = "54";
 		this.metricsW2 = ".4";
 
-		this.year = "1991";
-		this.month = PrometheusHelper.getMonthString(9, true);
-		this.day = "16";
-
 		// sign up account with require information
 		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1",
 				isMale, 16, 9, 1991, true, h1, h2, w1, w2, 1);
