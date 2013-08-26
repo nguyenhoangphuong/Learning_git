@@ -11,22 +11,34 @@ public class Sync {
 		// wait for sync data
 		ShortcutsTyper.delayTime(25000);
 	}
-	
+
 	public static void tapToSync() {
 		Gui.tapToSync();
 	}
 	
+	public static void tapLinkShine() {
+		Gui.touchAVIew("UIButtonLabel", "Link Shine");
+	}
+
 	public static void openSyncView() {
 		Gui.touchAVIew("UILabel", "Sync");
 		ShortcutsTyper.delayTime(3000);
 	}
-	
+
 	public static boolean hasAlert() {
 		return Gui.hasAlert();
 	}
 	
-	public static void tapOK() {
-        // popup error message
-        Gui.touchPopupButton(0);
+    public static boolean hasSyncFailedMessage() {
+    	return PrometheusHelper.hasNoShineAvailableMessage();
     }
+    
+    public static boolean hasNoShineAvailableMessage() {
+    	return PrometheusHelper.hasSyncFailedMessage();
+    }
+
+	public static void tapOK() {
+		// popup error message
+		Gui.touchPopupButton(0);
+	}
 }

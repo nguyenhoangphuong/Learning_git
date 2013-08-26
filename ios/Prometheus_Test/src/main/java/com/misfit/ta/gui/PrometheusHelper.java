@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class PrometheusHelper {
@@ -59,6 +60,14 @@ public class PrometheusHelper {
 		Gui.dismissPicker();
 		ShortcutsTyper.delayTime(1000);
 	}
+	
+	public static void enterBirthDay()
+	{
+		Gui.touchAVIew("PTDatePickerControl", 0);
+		ShortcutsTyper.delayTime(1000);
+		Gui.dismissPicker();
+		ShortcutsTyper.delayTime(1000);
+	}
 
 	public static void enterHeight(String digit, String fraction,
 			boolean isUSUnit) {
@@ -71,6 +80,14 @@ public class PrometheusHelper {
 		Gui.dismissPicker();
 		ShortcutsTyper.delayTime(1000);
 	}
+	
+	public static void enterHeight() {
+		/* Example for ft in Gui.setPicker(1, "9\\\""); */
+		Gui.touchAVIew("PTHeightPickerControl", 0);
+		ShortcutsTyper.delayTime(1000);
+		Gui.dismissPicker();
+		ShortcutsTyper.delayTime(1000);
+	}
 
 	public static void enterWeight(String digit, String fraction,
 			boolean isUSUnit) {
@@ -79,6 +96,13 @@ public class PrometheusHelper {
 		Gui.setPicker(2, isUSUnit ? "lbs" : "kg");
 		Gui.setPicker(0, digit);
 		Gui.setPicker(1, fraction);
+		Gui.dismissPicker();
+		ShortcutsTyper.delayTime(1000);
+	}
+	
+	public static void enterWeight() {
+		Gui.touchAVIew("PTWeightPickerControl", 0);
+		ShortcutsTyper.delayTime(1000);
 		Gui.dismissPicker();
 		ShortcutsTyper.delayTime(1000);
 	}
@@ -113,6 +137,18 @@ public class PrometheusHelper {
 	public static boolean hasExistedEmailMessage() {
 		return Gui.getPopupContent().equals(
 				DefaultStrings.SignUpDuplicatedEmailMessage)
+				&& Gui.getPopupTitle().equals(DefaultStrings.Title);
+	}
+	
+	public static boolean hasNoShineAvailableMessage() {
+		return Gui.getPopupContent().equals(
+				DefaultStrings.NoShineAvailableMessage)
+				&& Gui.getPopupTitle().equals(DefaultStrings.NoShineAvailableTitle);
+	}
+	
+	public static boolean hasSyncFailedMessage() {
+		return Gui.getPopupContent().equals(
+				DefaultStrings.SyncFailedMessage)
 				&& Gui.getPopupTitle().equals(DefaultStrings.Title);
 	}
 
@@ -225,6 +261,19 @@ public class PrometheusHelper {
 		PrometheusHelper.handleTutorial();
 		ShortcutsTyper.delayTime(1000);
 	}
+	
+	public static String signUp()
+	{
+		String email = MVPApi.generateUniqueEmail();
+		String h1 = "5'";
+		String h2 = "8\\\"";
+		String w1 = "120";
+		String w2 = ".0";
+		PrometheusHelper.signUp(email, "qwerty1", true, 
+				16, 9, 1991,true, h1, h2, w1, w2, 1);
+		
+		return email;
+	}
 
 	public static void setInputModeToManual() {
 		// require current view is HomeScreen
@@ -316,7 +365,8 @@ public class PrometheusHelper {
 	}
 
 	public static void main(String[] args) {
-		Gui.init("192.168.1.185");
+		Gui.init("192.168.1.206");
+		Sync.tapLinkShine();
 		Gui.shutdown();
 	}
 

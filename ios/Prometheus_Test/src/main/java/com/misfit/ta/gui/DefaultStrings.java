@@ -7,6 +7,9 @@ public class DefaultStrings {
     public static String InvalidPasswordMessage = "To keep your account secure, try at least 6 characters.";
     public static String SignInWrongAccountMessage = "Sorry, your email or password is not correct";
     public static String SignUpDuplicatedEmailMessage = "Sorry, someone else has used this before";
+    public static String NoShineAvailableMessage = "All Shines detected are linked to other accounts. Make sure your Shine is unlinked and try again.";
+    public static String NoShineAvailableTitle = "Multiple Shines Detected";
+    public static String SyncFailedMessage = "Your sync failed. Can you try syncing again?";
     public static String Title = "Oops...";
     
     // forgot password

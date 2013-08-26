@@ -50,14 +50,28 @@ public class SignUp {
     public static void enterBirthDay(String year, String month, String day) {
         PrometheusHelper.enterBirthDay(year, month, day);
     }
+    
+    public static void enterBirthDay() {
+    	PrometheusHelper.enterBirthDay();
+    }
 
     public static void enterHeight(String digit, String fraction, boolean isUSUnit) {
         PrometheusHelper.enterHeight(digit, fraction, isUSUnit);
+    }
+    
+    public static void enterHeight() {
+    	PrometheusHelper.enterHeight();
     }
 
     public static void enterWeight(String digit, String fraction, boolean isUSUnit) {
         PrometheusHelper.enterWeight(digit, fraction, isUSUnit);
     }
+    
+    public static void enterWeight() {
+    	PrometheusHelper.enterWeight();
+    }
+    
+
 
     
     /* STEP 3: SET YOUR GOAL */
@@ -105,6 +119,10 @@ public class SignUp {
     /* STEP 4: PARING */
     public static void sync() {
         PrometheusHelper.sync();
+    }
+    
+    public static void triggerSync() {
+    	
     }
     
     public static void tapFinishSetup()
@@ -155,7 +173,7 @@ public class SignUp {
     public static boolean hasExistedEmailMessage() {
         return PrometheusHelper.hasExistedEmailMessage();
     }
-
+  
     public static void tapOK() {
         // popup error message
         Gui.touchPopupButton(0);
