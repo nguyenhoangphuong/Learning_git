@@ -35,10 +35,6 @@ public class UnitSettingsAPI extends ModelAPI {
 	private String w1 = "";
 	private String w2 = "";
 
-	private String year = "";
-	private String month = "";
-	private String day = "";
-
 	/**
 	 * This method implements the Edge 'e_ChangeProfileDistanceUnit'
 	 * 
