@@ -109,7 +109,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 		this.isMale = PrometheusHelper.coin();
 		HomeSettings.updateGender(this.isMale);
 		
-		logger.info("Change male to: " + (isMale ? "Male" : "Female"));
+		logger.info("Change male to: " + (isMale ? DefaultStrings.MaleLabel : DefaultStrings.FemaleLabel));
 		ShortcutsTyper.delayTime(1000);
 	}
 
@@ -184,12 +184,12 @@ public class ProfileSettingsAPI extends ModelAPI {
 	public void v_UpdatedProfile() {
 		
 		// check gender / birthday / height / weight / gender is updated
-		boolean male = Gui.getProperty("UIButton", "Male", "isSelected").equals("1") ? true : false;
+		boolean male = Gui.getProperty("UIButton", DefaultStrings.MaleLabel, "isSelected").equals("1") ? true : false;
 		String birthday = PrometheusHelper.formatBirthday(year, month, day);
 		String weight = w1 + w2 + (isUSUnit ? " lbs" : " kg");
 		String height = h1 + h2 + (isUSUnit ? "" : " m");
 		
-		Assert.assertTrue(isMale == male, "Gender should be " + (isMale ? "Male" : "Female"));
+		Assert.assertTrue(isMale == male, "Gender should be " + (isMale ? DefaultStrings.MaleLabel : DefaultStrings.FemaleLabel));
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", birthday), "Birthday should be " + birthday);
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", weight), "Weight should be " + weight);
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", height), "Height should be " + height);

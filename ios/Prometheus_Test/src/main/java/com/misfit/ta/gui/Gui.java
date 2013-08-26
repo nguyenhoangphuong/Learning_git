@@ -721,7 +721,11 @@ public class Gui {
         return Integer.parseInt(value);
     }
     
-
+    public static void setSpinnerGoal(int value) {
+		String message = "((((((UIApplication sharedApplication) keyWindow) rootViewController) viewControllers) lastObject) setSpinnerValue: "
+				+ value + ")";
+		NuRemoteClient.sendToServer(message);
+	}
     // ---- pop up ----
     public static void touchPopupButton(int index) {
         String message = "(Gui touchUIButtonInPopUpWithIndex: %index)";

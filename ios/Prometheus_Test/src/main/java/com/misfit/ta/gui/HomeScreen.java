@@ -9,24 +9,24 @@ public class HomeScreen {
 	
 	/* Navigation */
 	public static void tapOpenSettingsTray() {
-		if (ViewUtils.isExistedView("UILabel", "Today")
-				&& ViewUtils.isExistedView("UILabel", "Week")) {
-			Gui.touchAVIew("UILabel", "Today");
+		if (ViewUtils.isExistedView("UILabel", DefaultStrings.TodayTitle)
+				&& ViewUtils.isExistedView("UILabel", DefaultStrings.WeekTitle)) {
+			Gui.touchAVIew("UILabel", DefaultStrings.TodayTitle);
 		} else {
-			Gui.touchAVIew("UILabel", "This week");
+			Gui.touchAVIew("UILabel", DefaultStrings.ThisWeekTitle);
 		}
 	}
     
     public static void tapSettings() {
-    	Gui.touchAVIew("UILabel", "Settings");    
+    	Gui.touchAVIew("UILabel", DefaultStrings.SettingsButton);    
     }
     
     public static void tapAdjustGoal() {
-    	Gui.touchAVIew("UILabel", "My Goal");
+    	Gui.touchAVIew("UILabel", DefaultStrings.MyGoalButton);
     }
     
     public static void tapShinePreferences() {
-    	Gui.touchAVIew("UILabel", "Shine Preferences");
+    	Gui.touchAVIew("UILabel", DefaultStrings.MyShineButton);
     }
 
     public static void tapOpenManualInput() {
@@ -56,7 +56,7 @@ public class HomeScreen {
     }
     
     public static void tapSave() {
-        Gui.touchAVIew("UIButtonLabel", "Save");
+        Gui.touchAVIew("UIButtonLabel", DefaultStrings.SaveButton);
     }
     
 	public static void enterManualActivity(String[] times, int duration,
@@ -93,11 +93,11 @@ public class HomeScreen {
     
     /* Visible checking */
     public static boolean isToday() {
-    	return ViewUtils.isExistedView("UILabel", "Today");
+    	return ViewUtils.isExistedView("UILabel", DefaultStrings.TodayTitle);
     }
 
     public static boolean isYesterday() {
-    	return ViewUtils.isExistedView("UILabel", "Yesterday");
+    	return ViewUtils.isExistedView("UILabel", DefaultStrings.YesterdayTitle);
     }
     
     public static boolean isADayBefore(int days) {
@@ -113,11 +113,11 @@ public class HomeScreen {
     }
 
     public static boolean isThisWeek() {
-    	return ViewUtils.isExistedView("UILabel", "This week");
+    	return ViewUtils.isExistedView("UILabel", DefaultStrings.ThisWeekTitle);
     }
     
     public static boolean isLastWeek() {
-    	return ViewUtils.isExistedView("UILabel", "Last week");
+    	return ViewUtils.isExistedView("UILabel", DefaultStrings.LastWeekTitle);
     }
        
     public static boolean isPointEarnedProgessCircle() {
@@ -131,7 +131,7 @@ public class HomeScreen {
     }
     
     public static boolean isTodayDefault() {
-    	return ViewUtils.isExistedView("UILabel", "No activity yet.");
+    	return ViewUtils.isExistedView("UILabel", DefaultStrings.NoActivityLabel);
     }
 
 }

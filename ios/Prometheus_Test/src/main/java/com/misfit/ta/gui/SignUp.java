@@ -7,33 +7,21 @@ public class SignUp {
 
     /* NAVIGATION */
     public static void tapSignUp() {
-        Gui.touchAVIew("UIButtonLabel", " SIGN UP");
+        Gui.touchAVIew("UIButtonLabel", DefaultStrings.SignUpButton);
     }
 
     public static void tapNext() {
-    	Gui.touchAVIew("UIButtonLabel", "Next");
+    	Gui.touchAVIew("UIButtonLabel", DefaultStrings.NextButton);
     }
 
     public static void tapPrevious() {
-    	Gui.touchAVIew("UIButtonLabel", "Back");
+    	Gui.touchAVIew("UIButtonLabel", DefaultStrings.BackButton);
     }
     
     public static void tapSignOut() {
-    	Gui.touchAVIew("UIButtonLabel", "Sign out");
-    	Gui.touchPopupButton("Sign out");
+    	Gui.touchAVIew("UIButtonLabel", DefaultStrings.SignOutAtProfileViewButton);
+    	Gui.touchPopupButton(DefaultStrings.SignOutAtProfileViewButton);
     }
-    
-	public static void tapCloseAllTips() 
-	{
-		for (int i = 0; i < 3; i++) 
-		{
-			Gui.touchAVIew("PTGoalCircleView", 0);
-			ShortcutsTyper.delayTime(1000);
-		}
-		
-		Gui.touchAVIew("UIButton", "DISMISS IT");
-		ShortcutsTyper.delayTime(1000);
-	}
     
     
     /* STEP 1: ENTER EMAIL AND PASSWORD */
@@ -127,39 +115,37 @@ public class SignUp {
     
     public static void tapFinishSetup()
     {
-    	Gui.touchAVIew("UIButton", "FINISH SETUP");
+    	Gui.touchAVIew("UIButton", DefaultStrings.FinishSetUpButton);
     }
 
     
     /* VISIBLE CHECKING */
     public static boolean isSignUpAccountView() {
-        return ViewUtils.isExistedView("UILabel", "Sign up");
+        return ViewUtils.isExistedView("UILabel", DefaultStrings.SignUpTitle);
     }
 
     public static boolean isSignUpProfileView() {
-        return ViewUtils.isExistedView("UILabel", "Profile");
+        return ViewUtils.isExistedView("UILabel", DefaultStrings.SignUpProfileTitle);
     }
 
-    public static boolean isSignUpTutorialView() {
-        return  ViewUtils.isExistedView("PTRichTextLabel", "\\_Walking\\_") &&
-        		ViewUtils.isExistedView("PTRichTextLabel", "\\_Swimming\\_") &&
-        		ViewUtils.isExistedView("PTRichTextLabel", "\\_Biking\\_") &&
-        		ViewUtils.isExistedView("PTRichTextLabel", "\\_Tennis\\_") &&
-        		ViewUtils.isExistedView("PTRichTextLabel", "Even\\n\\_dancing!\\_");
-    }
+	public static boolean isSignUpTutorialView() {
+		int i = 0;
+		while (i < DefaultStrings.SignUpTutorial.length
+				&& ViewUtils.isExistedView("PTRichTextLabel",
+						DefaultStrings.SignUpTutorial[i])) {
+			i++;
+		}
+		return i == DefaultStrings.SignUpTutorial.length;
+	}
 
     public static boolean isSignUpGoalView() {
-        return ViewUtils.isExistedView("UILabel", "Set your goal");
+        return ViewUtils.isExistedView("UILabel", DefaultStrings.SignUpSetYourGoalTitle);
     }
 
     public static boolean isSignUpPairingView() {
-        return ViewUtils.isExistedView("UILabel", "Link Shine");
+        return ViewUtils.isExistedView("UILabel", DefaultStrings.SignUpLinkShineTitle);
     }
 
-    public static boolean isSignUpPairingCompleteView() {
-    	return ViewUtils.isExistedView("UILabel", "LINKING COMPLETE");
-    }
-    
     
     /* ALERT */
     public static boolean hasSignUpInvalidEmailMessage() {

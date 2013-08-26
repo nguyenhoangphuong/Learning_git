@@ -48,7 +48,7 @@ public class PrometheusHelper {
 	}
 
 	public static void enterGender(boolean isMale) {
-		Gui.touchAVIew("UIButtonLabel", isMale ? "Male" : "Female");
+		Gui.touchAVIew("UIButtonLabel", isMale ? DefaultStrings.MaleLabel : DefaultStrings.FemaleLabel);
 	}
 
 	public static void enterBirthDay(String year, String month, String day) {
@@ -74,7 +74,7 @@ public class PrometheusHelper {
 		/* Example for ft in Gui.setPicker(1, "9\\\""); */
 		Gui.touchAVIew("PTHeightPickerControl", 0);
 		ShortcutsTyper.delayTime(1000);
-		Gui.setPicker(2, isUSUnit ? "ft in" : "m");
+		Gui.setPicker(2, isUSUnit ? DefaultStrings.InchesLabel : DefaultStrings.MetreLabel);
 		Gui.setPicker(0, digit);
 		Gui.setPicker(1, fraction);
 		Gui.dismissPicker();
@@ -93,7 +93,7 @@ public class PrometheusHelper {
 			boolean isUSUnit) {
 		Gui.touchAVIew("PTWeightPickerControl", 0);
 		ShortcutsTyper.delayTime(1000);
-		Gui.setPicker(2, isUSUnit ? "lbs" : "kg");
+		Gui.setPicker(2, isUSUnit ? DefaultStrings.LbsLabel : DefaultStrings.KgLabel);
 		Gui.setPicker(0, digit);
 		Gui.setPicker(1, fraction);
 		Gui.dismissPicker();
@@ -275,26 +275,6 @@ public class PrometheusHelper {
 		return email;
 	}
 
-	public static void setInputModeToManual() {
-		// require current view is HomeScreen
-		HomeScreen.tapOpenSettingsTray();
-		ShortcutsTyper.delayTime(500);
-		HomeScreen.tapSettings();
-		ShortcutsTyper.delayTime(500);
-
-		Gui.swipeUp(1000);
-		ShortcutsTyper.delayTime(1000);
-
-		HomeSettings.tapDebug();
-		ShortcutsTyper.delayTime(500);
-
-		HomeSettings.tapDoneAtDebug();
-		ShortcutsTyper.delayTime(500);
-
-		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(500);
-	}
-
 	public static void inputRandomRecord() {
 		// require current screen is HomeScreen
 		HomeScreen.tapOpenManualInput();
@@ -336,7 +316,6 @@ public class PrometheusHelper {
 		Gui.dismissPicker();
 	}
 
-	// public static void main(String[] args)
 
 	public void startApp() {
 		(new Thread() {
@@ -351,22 +330,21 @@ public class PrometheusHelper {
 
 	public static void handleTutorial() {
 		boolean hasTutorialView = ViewUtils.isExistedView("PTRichTextLabel",
-				"_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.");
+				DefaultStrings.TutorialFirstPageLabel);
 
 		if (hasTutorialView) {
 			for (int i = 0; i < 6; i++) {
 				Gui.swipeLeft(500);
 				ShortcutsTyper.delayTime(200);
 			}
-			if (ViewUtils.isExistedView("UIButtonLabel", "OK, I GOT IT")) {
-				Gui.touchAVIew("UIButtonLabel", "OK, I GOT IT");
+			if (ViewUtils.isExistedView("UIButtonLabel", DefaultStrings.EndTutorialButton)) {
+				Gui.touchAVIew("UIButtonLabel", DefaultStrings.EndTutorialButton);
 			} 
 		}
 	}
 
 	public static void main(String[] args) {
 		Gui.init("192.168.1.206");
-		Sync.tapLinkShine();
 		Gui.shutdown();
 	}
 

@@ -7,29 +7,29 @@ public class SignIn {
 
 	/* lauch screen */
     public static void tapLogIn() {
-        Gui.touchAVIew("PTRichTextLabel", "Already have an account? _Sign in now_.");
+        Gui.touchAVIew("PTRichTextLabel", DefaultStrings.LogInButton);
     }
 
     public static void tapLogInWithFacebook() {
-        Gui.touchAVIew("UIButtonLabel", " SIGN IN");
+        Gui.touchAVIew("UIButtonLabel", DefaultStrings.LogInFacebookButton);
     }
 
     
     /* log in screen */
     public static boolean isLoginView() {
-        return ViewUtils.isExistedView("UILabel", "Sign in");
+        return ViewUtils.isExistedView("UILabel", DefaultStrings.SignInTitle);
     }
     
     public static void tapForgotPassword() {
-        Gui.touchAVIew("UIButtonLabel", "What's my password again?");
+        Gui.touchAVIew("UIButtonLabel", DefaultStrings.ForgotPasswordButton);
     }
     
     public static void tapNext() {
-    	Gui.touchAVIew("UIButtonLabel", "Next");
+    	Gui.touchAVIew("UIButtonLabel", DefaultStrings.NextButton);
     }
 
     public static void tapPrevious() {
-    	Gui.touchAVIew("UIButtonLabel", "Back");
+    	Gui.touchAVIew("UIButtonLabel", DefaultStrings.BackButton);
     }
 
     public static void enterEmailPassword(String email, String password) {
@@ -77,8 +77,8 @@ public class SignIn {
 
     /* forgot password screen */
     public static boolean isForgotPasswordView() {
-        return "SUBMIT".equals(Gui.getProperty("UIButtonLabel", 0, "text"))
-                && "CANCEL".equals(Gui.getProperty("UIButtonLabel", 1, "text"));
+        return DefaultStrings.ForgotPasswordSubmitButton.equals(Gui.getProperty("UIButtonLabel", 0, "text"))
+                && DefaultStrings.ForgotPasswordCancelButton.equals(Gui.getProperty("UIButtonLabel", 1, "text"));
 
     }
 
@@ -123,11 +123,11 @@ public class SignIn {
     }
     
     public static void tapCancelResetPassword() {
-        Gui.touchAVIew("UIButtonLabel", "CANCEL");
+        Gui.touchAVIew("UIButtonLabel", DefaultStrings.ForgotPasswordCancelButton);
     }
 
     public static void tapSubmitResetPassword() {
-        Gui.touchAVIew("UIButtonLabel", "SUBMIT");
+        Gui.touchAVIew("UIButtonLabel", DefaultStrings.ForgotPasswordSubmitButton);
     }
     
     public static boolean hasEmailSentMessage() {

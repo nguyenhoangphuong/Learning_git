@@ -9,6 +9,7 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
@@ -41,10 +42,10 @@ public class UnitSettingsAPI extends ModelAPI {
 	 */
 	public void e_ChangeProfileDistanceUnit() {
 		if (isDistanceUSUnit) {
-			Gui.touchAVIew("UIButton", "km");
+			Gui.touchAVIew("UIButton", DefaultStrings.KmLabel);
 			isDistanceUSUnit = false;
 		} else {
-			Gui.touchAVIew("UIButton", "mi");
+			Gui.touchAVIew("UIButton", DefaultStrings.MileLabel);
 			isDistanceUSUnit = true;
 		}
 		System.out.println("Change Profile Distance Unit");
@@ -59,10 +60,10 @@ public class UnitSettingsAPI extends ModelAPI {
 	 */
 	public void e_ChangeProfileWeightUnit() {
 		if (isWeightUSUnit) {
-			Gui.touchAVIew("UIButton", "kg");
+			Gui.touchAVIew("UIButton", DefaultStrings.KgLabel);
 			isWeightUSUnit = false;
 		} else {
-			Gui.touchAVIew("UIButton", "lbs");
+			Gui.touchAVIew("UIButton", DefaultStrings.LbsLabel);
 			isWeightUSUnit = true;
 		}
 		System.out.println("Change Profile Weight Unit");
@@ -78,7 +79,7 @@ public class UnitSettingsAPI extends ModelAPI {
 	public void e_ChangeSettingsDistanceUnit() {
 		Gui.touchAVIew("PTHeightPickerControl", 0);
 		ShortcutsTyper.delayTime(200);
-		Gui.setPicker(2, !isDistanceUSUnit ? "ft in" : "m");
+		Gui.setPicker(2, !isDistanceUSUnit ? DefaultStrings.InchesLabel : DefaultStrings.MetreLabel);
 		isDistanceUSUnit = !isDistanceUSUnit;
 		System.out.println("Change Settings Distance Unit");
 		System.out.println(isDistanceUSUnit);
@@ -93,7 +94,7 @@ public class UnitSettingsAPI extends ModelAPI {
 	public void e_ChangeSettingsWeightUnit() {
 		Gui.touchAVIew("PTWeightPickerControl", 0);
 		ShortcutsTyper.delayTime(200);
-		Gui.setPicker(2, !isWeightUSUnit ? "lbs" : "kg");
+		Gui.setPicker(2, !isWeightUSUnit ? DefaultStrings.LbsLabel : DefaultStrings.KgLabel);
 		isWeightUSUnit = !isWeightUSUnit;
 		System.out.println("Change Settings Weight Unit");
 		System.out.println(isWeightUSUnit);
@@ -183,9 +184,9 @@ public class UnitSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SettingsView() {
-		boolean currentDistanceUSUnit = Gui.getProperty("UIButton", "mi",
+		boolean currentDistanceUSUnit = Gui.getProperty("UIButton", DefaultStrings.MileLabel,
 				"isSelected").equals("1") ? true : false;
-		boolean currentWeightUSUnit = Gui.getProperty("UIButton", "lbs",
+		boolean currentWeightUSUnit = Gui.getProperty("UIButton", DefaultStrings.LbsLabel,
 				"isSelected").equals("1") ? true : false;
 		Assert.assertTrue(isDistanceUSUnit == currentDistanceUSUnit,
 				"Distance Unit is correct");
