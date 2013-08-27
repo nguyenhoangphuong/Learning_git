@@ -12,18 +12,11 @@ import com.misfit.ta.backend.aut.DefaultValues;
 public class BackendProfileCreateTC extends BackendAutomation {
 
 	String password = "qwerty1";
-	String udid;
-	ProfileData defaultProfile;
-
-	@BeforeClass(alwaysRun = true)
-	public void setUp() {
-		udid = DefaultValues.UDID;
-		defaultProfile = DefaultValues.DefaultProfile();
-	}
+	ProfileData defaultProfile = DefaultValues.DefaultProfile();
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
 	public void CreateNewProfile() {
-		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password, udid).token;
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
 		ProfileResult r = MVPApi.createProfile(token, defaultProfile);
 		r.printKeyPairsValue();
 
@@ -39,7 +32,7 @@ public class BackendProfileCreateTC extends BackendAutomation {
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
 	public void CreateDuplicateProfile() {
-		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password, udid).token;
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
 
 		ProfileResult r1 = MVPApi.createProfile(token, defaultProfile);
 		r1.printKeyPairsValue();

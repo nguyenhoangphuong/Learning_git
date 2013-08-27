@@ -32,6 +32,7 @@ public class BaseResult {
 
 	// constructor
 	public BaseResult(ServiceResponse response) {
+		
 		// raw data
 		this.response = response;
 		this.rawData = response.getContentData().toString();
@@ -41,17 +42,15 @@ public class BaseResult {
                 json = new JSONObject(this.rawData.toString());
             } catch (JSONException e1) {
             }
-//			json = (JSONObject) JSONSerializer.toJSON(this.rawData.toString());
 
 			// middle level data
 			if (!json.isNull("error_message")) {
 				try {
                     this.errorMessage = json.getString("error_message");
+                    this.pairResult.put("error_message", this.errorMessage);
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-				this.pairResult.put("error_message", this.errorMessage);
 			}
 		}
 

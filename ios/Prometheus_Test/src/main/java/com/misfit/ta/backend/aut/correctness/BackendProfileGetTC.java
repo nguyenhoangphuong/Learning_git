@@ -13,7 +13,6 @@ public class BackendProfileGetTC extends BackendAutomation {
 
 	String email;
 	String password = "qwerty1";
-	String udid;
 	ProfileData defaultProfile;
 
 	@BeforeClass(alwaysRun = true)
@@ -22,9 +21,8 @@ public class BackendProfileGetTC extends BackendAutomation {
 		// sign up and create profile
 		email = MVPApi.generateUniqueEmail();
 		defaultProfile = DefaultValues.DefaultProfile();
-		String token = MVPApi.signUp(email, password, udid).token;
+		String token = MVPApi.signUp(email, password).token;
 		MVPApi.createProfile(token, defaultProfile);
-		udid = DefaultValues.UDID;
 
 	}
 
@@ -32,7 +30,7 @@ public class BackendProfileGetTC extends BackendAutomation {
 	public void GetProfileUseValidToken() {
 
 		// sign in then use the token to get profile
-		String token = MVPApi.signIn(email, password, udid).token;
+		String token = MVPApi.signIn(email, password).token;
 		ProfileResult r = MVPApi.getProfile(token);
 		r.printKeyPairsValue();
 
@@ -46,7 +44,7 @@ public class BackendProfileGetTC extends BackendAutomation {
 	public void GetProfileUseExpiredToken() {
 
 		// sign in then sign out then use the old token to get profile
-		String token = MVPApi.signIn(email, password, udid).token;
+		String token = MVPApi.signIn(email, password).token;
 		MVPApi.signOut(token);
 		ProfileResult r = MVPApi.getProfile(token);
 		r.printKeyPairsValue();
@@ -58,7 +56,7 @@ public class BackendProfileGetTC extends BackendAutomation {
 	public void GetProfileWithoutToken() {
 		
 		// sign in then use arbitrary token to get profile
-		MVPApi.signIn(email, password, udid);
+		MVPApi.signIn(email, password);
 		ProfileResult r = MVPApi.getProfile(DefaultValues.ArbitraryToken);
 		r.printKeyPairsValue();
 
@@ -69,7 +67,7 @@ public class BackendProfileGetTC extends BackendAutomation {
 	public void GetEmptyProfile() {
 		
 		// sign up then get profile without creating it
-		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password, udid).token;
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
 		ProfileResult r = MVPApi.getProfile(token);
 		r.printKeyPairsValue();
 

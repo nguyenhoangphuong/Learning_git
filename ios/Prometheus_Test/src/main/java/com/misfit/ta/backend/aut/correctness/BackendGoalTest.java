@@ -1,4 +1,4 @@
-//package com.misfit.ta.backend.aut.test;
+//package com.misfit.ta.backend.aut.correctness;
 //
 //import java.util.Random;
 //import java.util.Vector;

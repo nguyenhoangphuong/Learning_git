@@ -22,8 +22,6 @@ import com.misfit.ta.backend.data.profile.ProfileResult;
 public class BackendPerformanceTest extends BackendAutomation {
 
 	private String password = "misfit1";
-	private String udid;
-
 	private int userCount = 0;
 
 	Logger logger = Util.setupLogger(BackendPerformanceTest.class);
@@ -31,7 +29,6 @@ public class BackendPerformanceTest extends BackendAutomation {
 	@Override
 	@BeforeMethod(alwaysRun = true)
 	public void setUpTest(Method method) {
-		// TODO Auto-generated method stub
 		super.setUpTest(method);
 	}
 
@@ -50,10 +47,9 @@ public class BackendPerformanceTest extends BackendAutomation {
 		logger.info(" ===============  User " + userCount + " =================");
 		String email = MVPApi.generateUniqueEmail();
 		long temp = System.currentTimeMillis();
-		udid = temp + "" + temp + "" + temp + "" + temp;
 		// sign up first
 		long s1 = System.currentTimeMillis();
-		AccountResult r = MVPApi.signUp(email, password, udid);
+		AccountResult r = MVPApi.signUp(email, password);
 		long s2 = System.currentTimeMillis();
 		String token = r.token;
 		Assert.assertTrue(r.isOK(), "Status code is not 200: " + r.statusCode);
@@ -65,7 +61,7 @@ public class BackendPerformanceTest extends BackendAutomation {
 
 		// sign in
 		long s5 = System.currentTimeMillis();
-		r = MVPApi.signIn(email, "misfit1", udid);
+		r = MVPApi.signIn(email, "misfit1");
 		long s6 = System.currentTimeMillis();
 		token = r.token;
 		Assert.assertTrue(r.isOK(), "Status code is not 200: " + r.statusCode);
@@ -127,10 +123,9 @@ public class BackendPerformanceTest extends BackendAutomation {
 			logger.info(" ===============  User " + userCount + " =================");
 			String email = MVPApi.generateUniqueEmail();
 			long temp = System.currentTimeMillis();
-			udid = temp + "" + temp + "" + temp + "" + temp;
 			// sign up first
 			long s1 = System.currentTimeMillis();
-			AccountResult r = MVPApi.signUp(email, password, udid);
+			AccountResult r = MVPApi.signUp(email, password);
 			long s2 = System.currentTimeMillis();
 			String token = r.token;
 			Assert.assertTrue(r.isOK(), "Status code is not 200: " + r.statusCode);

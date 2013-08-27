@@ -92,9 +92,9 @@ public class MVPApi {
     }
 
     // account apis
-    static private AccountResult sign(String email, String password, String udid, String shortUrl) {
+    static private AccountResult sign(String email, String password, String shortUrl) {
         // trace
-        logger.info("Email: " + email + ", Password: " + password + ", Udid: " + udid);
+        logger.info("Email: " + email + ", Password: " + password);
 
         // prepare
         String url = baseAddress + shortUrl;
@@ -102,7 +102,6 @@ public class MVPApi {
         BaseParams requestInf = new BaseParams();
         requestInf.addParam("email", email);
         requestInf.addParam("password", password);
-        requestInf.addParam("udid", udid);
 
         // post and receive raw data
         ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -112,12 +111,12 @@ public class MVPApi {
         return result;
     }
 
-    public static AccountResult signIn(String email, String password, String udid) {
-        return sign(email, password, udid, "login");
+    public static AccountResult signIn(String email, String password) {
+        return sign(email, password, "login");
     }
 
-    public static AccountResult signUp(String email, String password, String udid) {
-        return sign(email, password, udid, "signup");
+    public static AccountResult signUp(String email, String password) {
+        return sign(email, password, "signup");
     }
 
     public static BaseResult signOut(String token) {
@@ -655,11 +654,7 @@ public class MVPApi {
     }
 
     public static void main(String[] args) throws JSONException {
-        String email = generateUniqueEmail();
-        AccountResult result = MVPApi.signUp(email, "misfit", "123456789");
-        String token = result.token;
-        String log = generateSyncLog();
-        MVPApi.syncLog(token, log);
-        
+        String token = MVPApi.signIn("v14@qa.com", "test12").token;
+        MVPApi.getGoal(token, "51ff2c42513810774f00000f");
     }
 }

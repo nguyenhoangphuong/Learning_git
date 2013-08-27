@@ -337,8 +337,11 @@ public class PrometheusHelper {
 	}
 
 	public static void main(String[] args) {
-		Gui.init("192.168.1.175");
-		Gui.shutdown();
+
+//		Gui.init("192.168.1.206");
+//		Gui.printView();
+//		Gui.shutdown();
+
 	}
 
 }

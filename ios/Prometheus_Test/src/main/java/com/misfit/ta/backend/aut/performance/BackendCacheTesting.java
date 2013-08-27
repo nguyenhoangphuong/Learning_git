@@ -4,7 +4,6 @@ import org.testng.Assert;
 
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.DefaultValues;
-import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
@@ -29,7 +28,7 @@ public class BackendCacheTesting {
 
     public BackendCacheTesting() {
         change(SERVER1);
-        AccountResult result = MVPApi.signUp(email, "misfit1", TextTool.getRandomString(6, 8));
+        AccountResult result = MVPApi.signUp(email, "misfit1");
         token = result.token;
     }
 

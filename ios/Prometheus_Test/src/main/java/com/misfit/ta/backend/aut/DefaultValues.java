@@ -1,6 +1,5 @@
 package com.misfit.ta.backend.aut;
 
-import com.misfit.ta.backend.data.*;
 import com.misfit.ta.backend.data.profile.DisplayUnit;
 import com.misfit.ta.backend.data.profile.ProfileData;
 
@@ -12,7 +11,7 @@ public class DefaultValues {
 
     static public String InvalidEmail = "Sorry, this email is invalid";
     static public String DuplicateEmail = "Sorry, someone else has used this before";
-    static public String InvalidPassword = "Sorry, this password is invalid";
+    static public String InvalidPassword = "Sorry, this password is too short";
     static public String WrongAccountMsg = "Incorrect email or password";
     static public String InvalidAuthToken = "Invalid auth token";
 

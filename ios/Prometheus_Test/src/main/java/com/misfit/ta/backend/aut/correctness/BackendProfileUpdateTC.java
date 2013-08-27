@@ -16,7 +16,6 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 
 	String email;
 	String password = "qwerty1";
-	String udid;
 	ProfileData defaultProfile;
 	Logger logger = Util.setupLogger(BackendProfileUpdateTC.class);
 
@@ -24,9 +23,8 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 	public void setUp() {
 		
 		// sign up and create profile
-		udid = DefaultValues.UDID;
 		email = MVPApi.generateUniqueEmail();
-		String token = MVPApi.signUp(email, password, udid).token;
+		String token = MVPApi.signUp(email, password).token;
 		defaultProfile = DefaultValues.DefaultProfile();
 		MVPApi.createProfile(token, defaultProfile);
 	}
@@ -35,7 +33,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 	public void UpdateProfileUsingValidToken() {
 		
 		// sign in and use valid token to update profile
-		String token = MVPApi.signIn(email, password, udid).token;
+		String token = MVPApi.signIn(email, password).token;
 		defaultProfile = MVPApi.getProfile(token).profile;
 		ProfileData data = new ProfileData();
 
@@ -65,7 +63,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 	public void UpdateProfileUsingExpiredToken() {
 		
 		// sign in and sign out then and use old token to update profile
-		String token = MVPApi.signIn(email, password, udid).token;
+		String token = MVPApi.signIn(email, password).token;
 		defaultProfile = MVPApi.getProfile(token).profile;
 		MVPApi.signOut(token);
 
@@ -85,7 +83,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 	public void UpdateProfileWithoutToken() {
 		// sign in and use arbitrary token to update profile
 
-		String token = MVPApi.signIn(email, password, udid).token;
+		String token = MVPApi.signIn(email, password).token;
 		defaultProfile = MVPApi.getProfile(token).profile;
 		MVPApi.signOut(token);
 
@@ -105,7 +103,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 	public void UpdateProfileHadBeenUpdated() {
 		
 		// sign in and decrease updatedAt of profile then use that to update profile
-		String token = MVPApi.signIn(email, password, udid).token;
+		String token = MVPApi.signIn(email, password).token;
 		defaultProfile = MVPApi.getProfile(token).profile;
 		ProfileData data = new ProfileData();
 

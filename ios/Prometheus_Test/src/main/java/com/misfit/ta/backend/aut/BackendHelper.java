@@ -8,9 +8,7 @@ public class BackendHelper {
 
 	public static AccountResult signUp() {
 		String email = MVPApi.generateUniqueEmail();
-		long temp = System.currentTimeMillis();
-		String udid = temp + "" + temp + "" + temp + "" + temp;
-		AccountResult result = MVPApi.signUp(email, password, udid);
+		AccountResult result = MVPApi.signUp(email, password);
 		return result;
 	}
 }
