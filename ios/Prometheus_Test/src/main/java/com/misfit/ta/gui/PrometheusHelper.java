@@ -2,10 +2,6 @@ package com.misfit.ta.gui;
 
 import java.util.Random;
 
-import org.apache.commons.lang.StringUtils;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
@@ -14,6 +10,10 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class PrometheusHelper {
 
 	/* Views Helper */
+	public static boolean isViewVisible(String viewName, String text) {
+		String name = ViewUtils.findView(viewName, text);
+		return !name.isEmpty();
+	}
 
 	public static void enterEmailPassword(String email, String password) {
 
@@ -235,11 +235,8 @@ public class PrometheusHelper {
 		LaunchScreen.launch();
 
 		SignUp.tapSignUp();
-		ShortcutsTyper.delayTime(5000);
+		ShortcutsTyper.delayTime(1000);
 		SignUp.enterEmailPassword(email, password);
-		ShortcutsTyper.delayTime(10000);
-
-		// wait to shutdown location alert
 		ShortcutsTyper.delayTime(10000);
 
 		SignUp.enterGender(isMale);
@@ -345,6 +342,7 @@ public class PrometheusHelper {
 
 	public static void main(String[] args) {
 		Gui.init("192.168.1.206");
+		Gui.printView();
 		Gui.shutdown();
 	}
 

@@ -1008,4 +1008,16 @@ public class Gui {
         System.out.println("LOG [Gui.printViewHierarchy]: view hierarchy: \n" + views);
         return views;
     }
+
+    // timezone and localization
+    public static void setTimezoneWithGMTOffset(int offset) {
+    	String message = "(Gui setTimeZoneWithGMTOffset: %offset)";
+        message.replace("%offset", String.valueOf(offset));
+        NuRemoteClient.sendToServer(message);
+    }
+    
+    
 }
+
+
+
