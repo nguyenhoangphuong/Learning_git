@@ -1012,7 +1012,7 @@ public class Gui {
     // timezone and localization
     public static void setTimezoneWithGMTOffset(int offset) {
     	String message = "(Gui setTimeZoneWithGMTOffset: %offset)";
-        message.replace("%offset", String.valueOf(offset));
+        message = message.replace("%offset", String.valueOf(offset));
         NuRemoteClient.sendToServer(message);
     }
     

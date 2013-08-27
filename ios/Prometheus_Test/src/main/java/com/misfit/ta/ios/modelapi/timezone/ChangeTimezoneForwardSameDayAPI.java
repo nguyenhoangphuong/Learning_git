@@ -6,34 +6,38 @@ import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timezone;
 import com.misfit.ta.ios.AutomationTest;
 
-public class ChangeTimezoneTowardSameDay extends ModelAPI {
-	protected static final Logger logger = Util.setupLogger(ChangeTimezoneTowardSameDay.class);
+public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
+	protected static final Logger logger = Util.setupLogger(ChangeTimezoneForwardSameDayAPI.class);
 	private String email = MVPApi.generateUniqueEmail();
 	private int currentTimezone = 7;
 	private int previousTimezone = 7;
+	private int delta = 1;
 
-	public ChangeTimezoneTowardSameDay(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
+	public ChangeTimezoneForwardSameDayAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
 
 	// edge
 	public void e_init() {
 		// sign up new account
-		PrometheusHelper.signUp(email, "qwerty1", true, 16, 9, 1991, true, "5'", "8\"", "120", ".0", 1);
+		PrometheusHelper.signUp(email, "qwerty1", true, 16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
 		ShortcutsTyper.delayTime(1000);
 	}
 
 	public void e_changeTimezone() {
 		this.previousTimezone = this.currentTimezone;
-		this.currentTimezone = this.currentTimezone + 1;
+		this.currentTimezone = this.currentTimezone + delta;
 		Timezone.changeTimezone(currentTimezone);
 
 		logger.info("Change timezone from " + this.previousTimezone + " to " + this.currentTimezone);
@@ -48,21 +52,29 @@ public class ChangeTimezoneTowardSameDay extends ModelAPI {
 	}
 
 	public void v_HomeScreenUpdated() {
+		Gui.dragUpTimeline();
+		ShortcutsTyper.delayOne();
 		// check if there is a time travel tile
 		String label = "UTC+" + String.valueOf(this.currentTimezone);
-		Assert.assertTrue(PrometheusHelper.isViewVisible("UILabel", label), "Time travel tile's title is visible");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", label), "Time travel tile's title is visible");
 
 		// tap on time travel tile and check content
+		Gui.dragUpTimeline();
 		Timezone.touchTimezoneWithLabel(label);
 		String content = "UTC+" + String.valueOf(this.previousTimezone) + " to UTC+" + String.valueOf(this.currentTimezone);
-		Assert.assertTrue(PrometheusHelper.isViewVisible("UILabel", content), "Time travel detail title is valid");
-		Assert.assertTrue(PrometheusHelper.isViewVisible("UILabel", "You travelled forwards in time by"), "Time travel message is valid");
-
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", content), "Time travel detail title is valid");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TimezoneForwardLabel), "Time travel message is valid");
+		ShortcutsTyper.delayOne();
 		// close the time travel tile
 		Timezone.closeTimeTravelTile();
+		ShortcutsTyper.delayOne();
+		Gui.dragDownTimeline();
+		ShortcutsTyper.delayOne();
 	}
 
 	public void v_End() {
 	}
-
+	
+	public void e_stay() {
+	}
 }

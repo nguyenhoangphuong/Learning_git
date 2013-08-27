@@ -76,6 +76,9 @@ public class DefaultStrings {
     public static String ShineOutButton = "Shine out";
     public static String LinkButton = "Link";
     public static String UnlinkButton = "Unlink";
+    //time zone
+    public static String TimezoneForwardLabel = "You travelled forwards in time by";
+    public static String TimezoneBackwardLabel = "You travelled backwards in time by";
     
     // others
     public static String SyncPlaceShineHere = "Place\\nSHINE here";

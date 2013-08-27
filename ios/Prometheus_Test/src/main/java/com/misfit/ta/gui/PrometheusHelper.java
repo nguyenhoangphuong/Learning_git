@@ -10,11 +10,6 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class PrometheusHelper {
 
 	/* Views Helper */
-	public static boolean isViewVisible(String viewName, String text) {
-		String name = ViewUtils.findView(viewName, text);
-		return !name.isEmpty();
-	}
-
 	public static void enterEmailPassword(String email, String password) {
 
 		if (ViewUtils.isExistedView("PTEmailVerifyingTextField", 0)) {
@@ -342,7 +337,6 @@ public class PrometheusHelper {
 
 	public static void main(String[] args) {
 		Gui.init("192.168.1.206");
-		Gui.printView();
 		Gui.shutdown();
 	}
 
