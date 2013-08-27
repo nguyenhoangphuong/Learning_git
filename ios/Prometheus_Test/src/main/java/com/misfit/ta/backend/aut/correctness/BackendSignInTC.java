@@ -1,83 +1,106 @@
 package com.misfit.ta.backend.aut.correctness;
 
-import junit.framework.Assert;
-
+import org.testng.Assert;
 import org.testng.annotations.*;
 
-import com.misfit.ta.backend.data.*;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.api.*;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 
 public class BackendSignInTC extends BackendAutomation {
+	
     String validEmail;
     String invalidEmail;
     String validPassword = "qwerty1";
     String invalidPassword = "wrong123";
-
-    String udid;
-
+    
+	String[] wrongFormatEmails = { "", "wrong100", "wrong2@", "wrong3 @a.b" };
+	String wellFormatEmail = "wellformat@qa.com";
+	String[] wrongFormatPasswords = { "", "short" };
+	String wellFormatPassword = "qwerty1";
+    
     @BeforeClass(alwaysRun = true)
     public void setUp() {
         validEmail = MVPApi.generateUniqueEmail();
         invalidEmail = MVPApi.generateUniqueEmail() + ".invalid";
-        udid = DefaultValues.UDID;
-        MVPApi.signUp(validEmail, validPassword, udid);
+        MVPApi.signUp(validEmail, validPassword);
 
     }
+    
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signup" })
+	public void SignInWrongFormatEmails() {
+		for (int i = 0; i < wrongFormatEmails.length; i++) {
+			AccountResult r = MVPApi.signIn(wrongFormatEmails[i], wellFormatPassword);
+			r.printKeyPairsValue();
+
+			Assert.assertTrue(r.isNotFound(), "Status code is 404");
+			Assert.assertEquals(DefaultValues.InvalidEmail, r.errorMessage, "Error message content");
+			Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
+		}
+	}
+
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signup" })
+	public void SignInWrongFormatPasswords() {
+		for (int i = 0; i < wrongFormatPasswords.length; i++) {
+			AccountResult r = MVPApi.signIn(wellFormatEmail, wrongFormatPasswords[i]);
+			r.printKeyPairsValue();
+
+			Assert.assertTrue(r.isNotFound(), "Status code is 404");
+			Assert.assertEquals(DefaultValues.InvalidPassword, r.errorMessage, "Error message content");
+			Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
+		}
+	}
 
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signin" })
     public void SignInWrongEmail() {
-        AccountResult r = MVPApi.signIn(invalidEmail, validPassword, udid);
+        AccountResult r = MVPApi.signIn(invalidEmail, validPassword);
         r.printKeyPairsValue();
 
-        Assert.assertTrue("Status code is not 200", !r.isOK());
-        Assert.assertEquals("Status code is 404", r.statusCode, 404);
-        Assert.assertEquals("Error message content", r.errorMessage, DefaultValues.WrongAccountMsg);
-        Assert.assertTrue("Empty authenticate token", r.token == null || r.token.isEmpty());
+        Assert.assertEquals(r.isNotFound(), "Status code is 404");
+        Assert.assertEquals(r.errorMessage, DefaultValues.WrongAccountMsg, "Error message content");
+        Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
     }
 
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signin" })
     public void SignInWrongPassword() {
-        AccountResult r = MVPApi.signIn(validEmail, invalidPassword, udid);
+        AccountResult r = MVPApi.signIn(validEmail, invalidPassword);
         r.printKeyPairsValue();
 
-        Assert.assertTrue("Status code is not 200", !r.isOK());
-        Assert.assertEquals("Status code is 404", r.statusCode, 404);
-        Assert.assertEquals("Error message content", r.errorMessage, DefaultValues.WrongAccountMsg);
-        Assert.assertTrue("Empty authenticate token", r.token == null || r.token.isEmpty());
+        Assert.assertEquals(r.isNotFound(), "Status code is 404");
+        Assert.assertEquals(r.errorMessage, DefaultValues.WrongAccountMsg, "Error message content");
+        Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
     }
 
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signin" })
     public void SignInValidAccount() {
-        AccountResult r = MVPApi.signIn(validEmail, validPassword, udid);
+        AccountResult r = MVPApi.signIn(validEmail, validPassword);
         r.printKeyPairsValue();
 
-        Assert.assertTrue("Status code is 200", r.isOK());
-        Assert.assertTrue("Empty error message", r.isEmptyErrMsg());
-        Assert.assertTrue("Authenticate token is not empty", !r.token.isEmpty());
+        Assert.assertTrue(r.isOK(), "Status code is 200");
+        Assert.assertTrue(r.isEmptyErrMsg(), "Empty error message");
+        Assert.assertTrue(!r.token.isEmpty(), "Authenticate token is not empty");
     }
 
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signin" })
     public void SignInWithTwoDevices() {
-        AccountResult r1 = MVPApi.signIn(validEmail, validPassword, udid);
+        AccountResult r1 = MVPApi.signIn(validEmail, validPassword);
         r1.printKeyPairsValue();
 
-        AccountResult r2 = MVPApi.signIn(validEmail, validPassword, DefaultValues.UDID2);
+        AccountResult r2 = MVPApi.signIn(validEmail, validPassword);
         r2.printKeyPairsValue();
 
-        Assert.assertTrue("Different token between two devices", !r1.token.equals(r2.token));
+        Assert.assertNotEquals(r1.token, r2.token, "Different token between two devices");
     }
 
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signin" })
     public void SignBackInDifferentToken() {
         // check if token changed after sign out and sign back in again
-        AccountResult r1 = MVPApi.signIn(validEmail, validPassword, udid);
+        AccountResult r1 = MVPApi.signIn(validEmail, validPassword);
         MVPApi.signOut(r1.token);
-        AccountResult r2 = MVPApi.signIn(validEmail, validPassword, udid);
+        AccountResult r2 = MVPApi.signIn(validEmail, validPassword);
 
-        Assert.assertTrue("Different token after sign out and sign in again", !r1.token.equals(r2.token));
+        Assert.assertNotEquals(r1.token, r2.token, "Different token after sign out and sign in again");
     }
 
 }

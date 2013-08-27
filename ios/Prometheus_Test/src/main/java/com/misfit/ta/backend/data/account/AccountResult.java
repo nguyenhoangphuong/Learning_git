@@ -5,6 +5,7 @@ import com.google.resting.json.JSONException;
 import com.misfit.ta.backend.data.BaseResult;
 
 public class AccountResult extends BaseResult {
+	
     // fields
     public String token;
     public String type;
@@ -14,7 +15,6 @@ public class AccountResult extends BaseResult {
         super(response);
 
         // result
-
         try {
             if (!json.isNull("auth_token"))
                 this.token = json.getString("auth_token");

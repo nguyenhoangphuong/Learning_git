@@ -64,11 +64,9 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
         logger.info(" ===============  User " + userCount + " =================");
         String email = MVPApi.generateUniqueEmail();
-        long temp = System.currentTimeMillis();
-        udid = temp + "" + temp + "" + temp + "" + temp;
         // sign up first
          s1 = System.currentTimeMillis();
-        AccountResult r = MVPApi.signUp(email, password, udid);
+        AccountResult r = MVPApi.signUp(email, password);
          s2 = System.currentTimeMillis();
          ResultLogger.totalTime += s2 - s1;
         token = r.token;
@@ -169,7 +167,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
        
        // // sign in
         s5 = System.currentTimeMillis();
-       AccountResult r = MVPApi.signIn(email, "misfit1", udid);
+       AccountResult r = MVPApi.signIn(email, "misfit1");
         s6 = System.currentTimeMillis();
         ResultLogger.totalTime += s6 - s5;
        token = r.token;

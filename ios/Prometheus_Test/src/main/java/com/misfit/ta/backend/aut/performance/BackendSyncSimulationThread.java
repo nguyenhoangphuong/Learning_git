@@ -68,7 +68,7 @@ public class BackendSyncSimulationThread implements Runnable {
         udid = temp + "" + temp + "" + temp + "" + temp;
         // sign up first
          s1 = System.currentTimeMillis();
-        AccountResult r = MVPApi.signUp(email, password, udid);
+        AccountResult r = MVPApi.signUp(email, password);
          s2 = System.currentTimeMillis();
          ResultLogger.totalTime += s2 - s1;
         token = r.token;

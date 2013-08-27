@@ -26,7 +26,7 @@ public class LinkOneShineAvailableAPI extends ModelAPI {
 	public void e_init() {
 		
 		// log in and store token
-		String token = MVPApi.signIn("v14@qa.com", "test12", "0123456789").token;
+		String token = MVPApi.signIn("v14@qa.com", "test12").token;
 		MVPApi.unlinkDevice(token, "XXXXXV0014");
 		
 		

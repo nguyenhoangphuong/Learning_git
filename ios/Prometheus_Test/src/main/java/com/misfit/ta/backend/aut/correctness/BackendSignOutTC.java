@@ -1,9 +1,8 @@
 package com.misfit.ta.backend.aut.correctness;
 
-import junit.framework.Assert;
-
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -15,16 +14,15 @@ import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
 
 public class BackendSignOutTC extends BackendAutomation {
+	
 	String email;
 	String password = "qwerty1";
-	String udid;
 	Logger logger = Util.setupLogger(BackendSignOutTC.class);
 
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass() {
-		udid = DefaultValues.UDID;
 		email = MVPApi.generateUniqueEmail();
-		String token = MVPApi.signUp(email, password, udid).token;
+		String token = MVPApi.signUp(email, password).token;
 		MVPApi.createProfile(token, DefaultValues.DefaultProfile());
 	}
 
@@ -32,32 +30,31 @@ public class BackendSignOutTC extends BackendAutomation {
 	public void SignOutValidToken() {
 		// sign in then use the token to sign out
 
-		String token = MVPApi.signIn(email, password, udid).token;
+		String token = MVPApi.signIn(email, password).token;
 		BaseResult r = MVPApi.signOut(token);
 		r.printKeyPairsValue();
 
-		Assert.assertTrue("Status code is 200", r.isOK());
+		Assert.assertTrue(r.isOK(), "Status code is 200");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signout" })
 	public void SignOutExpiredToken() {
+		
 		// sign in then sign out
 		// sign in again and use old token from 1st sign in to sign out
 		// status code should be 200 since it is a sign out
-		String token1 = MVPApi.signIn(email, password, udid).token;
+		String token1 = MVPApi.signIn(email, password).token;
 		logger.info("Token 1: " + token1);
 		MVPApi.signOut(token1);
 
-		String token2 = MVPApi.signIn(email, password, udid).token;
+		String token2 = MVPApi.signIn(email, password).token;
 		logger.info("Token 2: " + token2);
 
 		BaseResult br = MVPApi.signOut(token1);
 		br.printKeyPairsValue();
 
-		Assert.assertTrue("Status code is 200 since this is sign out",
-				br.statusCode == 200);
-		Assert.assertEquals("Null error message since status code is 200",
-				br.errorMessage, null);
+		Assert.assertTrue(br.statusCode == 200, "Status code is 200 since this is sign out");
+		Assert.assertEquals(br.errorMessage, null, "Null error message since status code is 200");
 
 		// then we try to update and the update should go successfully
 		// there might be 210 code returned since we are not following
@@ -68,24 +65,21 @@ public class BackendSignOutTC extends BackendAutomation {
 		profile.setName("Dandelion" + System.nanoTime());
 		profile.setWeight(profile.getWeight() + 1);
 
-		ProfileResult pr = MVPApi.updateProfile(token2, profile,
-				profile.getServerId());
+		ProfileResult pr = MVPApi.updateProfile(token2, profile, profile.getServerId());
 		pr.printKeyPairsValue();
 
-		Assert.assertTrue("Status code: 210 - Force client update (ignorable)",
-				pr.statusCode == 210);
+		Assert.assertTrue(pr.statusCode == 210, "Status code: 210 - Force client update (ignorable)");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signout" })
 	public void SignOutInvalidToken() {
+		
 		// sign out with arbitrary with wrong format token
-
-		MVPApi.signIn(email, password, udid);
-		BaseResult r = MVPApi
-				.signOut("12312578919836435123125-wrongformatorarbitrarytoken");
+		MVPApi.signIn(email, password);
+		BaseResult r = MVPApi.signOut(DefaultValues.ArbitraryToken);
 		r.printKeyPairsValue();
 
-		Assert.assertTrue("Status code is 200", r.statusCode == 200);
+		Assert.assertTrue(r.statusCode == 200, "Status code is 200");
 		Assert.assertEquals("Null error message since status code is 200",
 				r.errorMessage, null);
 	}
@@ -95,20 +89,20 @@ public class BackendSignOutTC extends BackendAutomation {
 		// sign in on two devices (two udid) then sign out each devices
 		// two sign out must be success
 
-		String token1 = MVPApi.signIn(email, password, udid).token;
-		String token2 = MVPApi.signIn(email, password, DefaultValues.UDID2).token;
+		String token1 = MVPApi.signIn(email, password).token;
+		String token2 = MVPApi.signIn(email, password).token;
 
 		// sign out on 1st device
 		BaseResult r1 = MVPApi.signOut(token1);
 		r1.printKeyPairsValue();
 
-		Assert.assertTrue("Status code is 200", r1.isOK());
+		Assert.assertTrue(r1.isOK(), "Status code is 200");
 
 		// sign out on 2nd device
 		BaseResult r2 = MVPApi.signOut(token2);
 		r2.printKeyPairsValue();
 
-		Assert.assertTrue("Status code is 200", r2.isOK());
+		Assert.assertTrue(r2.isOK(), "Status code is 200");
 	}
 
 }
