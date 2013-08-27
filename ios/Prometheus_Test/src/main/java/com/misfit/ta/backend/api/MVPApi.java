@@ -3,6 +3,8 @@ package com.misfit.ta.backend.api;
 import static com.google.resting.component.EncodingTypes.UTF8;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -91,6 +93,45 @@ public class MVPApi {
         return System.currentTimeMillis() + TextTool.getRandomString(6, 6) + "@qa.com";
     }
 
+    public static long getDayStartEpoch(long epoch)
+    {
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTimeInMillis(epoch * 1000);
+    	cal.set(Calendar.HOUR_OF_DAY, 0);
+    	cal.set(Calendar.MINUTE, 0);
+    	cal.set(Calendar.SECOND, 0);
+    	
+    	return cal.getTimeInMillis() / 1000;
+    }
+    
+    public static long getDayStartEpoch(int date, int month, int year)
+    {
+    	Calendar cal = Calendar.getInstance();
+    	cal.set(year, month, date, 0, 0, 0);
+    	
+    	return cal.getTimeInMillis() / 1000;
+    }
+    
+    public static long getDayEndEpoch(long epoch)
+    {
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTimeInMillis(epoch * 1000);
+    	cal.set(Calendar.HOUR_OF_DAY, 23);
+    	cal.set(Calendar.MINUTE, 59);
+    	cal.set(Calendar.SECOND, 59);
+    	
+    	return cal.getTimeInMillis() / 1000;
+    }
+    
+    public static long getDayEndEpoch(int date, int month, int year)
+    {
+    	Calendar cal = Calendar.getInstance();
+    	cal.set(year, month, date, 23, 59, 59);
+    	
+    	return cal.getTimeInMillis() / 1000;
+    }
+      
+    
     // account apis
     static private AccountResult sign(String email, String password, String shortUrl) {
         // trace
@@ -137,6 +178,7 @@ public class MVPApi {
         return result;
     }
 
+    
     // profile apis
     static private BaseParams createProfileParams(String token, String name, Double weight, Double height,
             Integer gender, Long dateOfBirth, Integer goalLevel, String latestVersion, String wearingPosition,
@@ -232,9 +274,9 @@ public class MVPApi {
     }
 
     // goal apis
-    static private BaseParams createGoalParams(String token, double goalValue, long startTime, long endTime,
-            int timeZoneOffsetInSeconds, ProgressData progressData, List<TrippleTapData> trippleTapTypeChanges,
-            String localId, long updatedAt) {
+    static private BaseParams createGoalParams(String token, Double goalValue, Long startTime, Long endTime,
+            Integer timeZoneOffsetInSeconds, ProgressData progressData, List<TrippleTapData> trippleTapTypeChanges,
+            String localId, Long updatedAt) {
     	
         // build json object string
     	Goal goal = new Goal(goalValue, startTime, endTime, timeZoneOffsetInSeconds, progressData, 
@@ -246,7 +288,7 @@ public class MVPApi {
 
         return requestInf;
     }
-
+    
     public static GoalsResult searchGoal(String token, long startTime, long endTime, long modifiedSince) {
         // prepare
         String url = baseAddress + "goals";
@@ -298,6 +340,12 @@ public class MVPApi {
         return result;
     }
 
+    public static GoalsResult createGoal(String token, Goal goal) {
+    	return createGoal(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), 
+    			goal.getTimeZoneOffsetInSeconds(), goal.getProgressData(), goal.getTripleTapTypeChanges(), 
+    			goal.getLocalId(), goal.getUpdatedAt());
+    }
+    
     public static GoalsResult updateGoal(String token, long updatedAt, String serverId, double goalValue,
             long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, 
             List<TrippleTapData> trippleTapTypeChanges, String localId) {
@@ -321,7 +369,7 @@ public class MVPApi {
     public static GoalsResult updateGoal(String token, Goal goal) {
     	
         // prepare
-        String url = baseAddress + "profile";
+        String url = baseAddress + "goals/" + goal.getServerId();
 
         BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), 
         		goal.getTimeZoneOffsetInSeconds(), goal.getProgressData(), goal.getTripleTapTypeChanges(),

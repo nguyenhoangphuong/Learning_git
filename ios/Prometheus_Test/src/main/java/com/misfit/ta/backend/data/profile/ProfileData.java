@@ -45,8 +45,16 @@ public class ProfileData {
 			object.accumulate("goalLevel", goalLevel);
 			object.accumulate("latestVersion", latestVersion);
 			object.accumulate("wearingPosition", wearingPosition);
-			object.accumulate("personalRecords", personalRecords.toJson());
-			object.accumulate("displayedUnits", displayedUnits.toJson());
+
+			if (personalRecords != null)
+				object.accumulate("personalRecords", personalRecords.toJson());
+			else
+				object.accumulate("personalRecords", null);
+			
+			if (displayedUnits != null)
+				object.accumulate("displayedUnits", displayedUnits.toJson());
+			else
+				object.accumulate("displayedUnits", null);
 
 			return object;
 		} catch (JSONException e) {

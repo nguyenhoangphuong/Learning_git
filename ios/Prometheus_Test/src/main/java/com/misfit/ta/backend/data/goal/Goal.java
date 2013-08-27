@@ -25,7 +25,7 @@ public class Goal {
 
 	}
 
-	public Goal(double value, long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, List<TrippleTapData> trippleTapTypeChanges, String localId, long updatedAt) {
+	public Goal(Double value, Long startTime, Long endTime, Integer timeZoneOffsetInSeconds, ProgressData progressData, List<TrippleTapData> trippleTapTypeChanges, String localId, Long updatedAt) {
 		super();
 		this.value = value;
 		this.startTime = startTime;
@@ -39,27 +39,27 @@ public class Goal {
 		this.updatedAt = updatedAt;
 	}
 
-	public double getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(double value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 
-	public long getStartTime() {
+	public Long getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(long startTime) {
+	public void setStartTime(Long startTime) {
 		this.startTime = startTime;
 	}
 
-	public long getEndTime() {
+	public Long getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(long endTime) {
+	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
 	}
 
@@ -79,11 +79,11 @@ public class Goal {
 		this.trippleTapTypeChanges = tripleTapTypeChanges;
 	}
 
-	public int getTimeZoneOffsetInSeconds() {
+	public Integer getTimeZoneOffsetInSeconds() {
 		return timeZoneOffsetInSeconds;
 	}
 
-	public void setTimeZoneOffsetInSeconds(int timeZoneOffsetInSeconds) {
+	public void setTimeZoneOffsetInSeconds(Integer timeZoneOffsetInSeconds) {
 		this.timeZoneOffsetInSeconds = timeZoneOffsetInSeconds;
 	}
 
@@ -95,11 +95,11 @@ public class Goal {
 		this.localId = localId;
 	}
 
-	public long getUpdatedAt() {
+	public Long getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(long updatedAt) {
+	public void setUpdatedAt(Long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
@@ -120,13 +120,19 @@ public class Goal {
 			object.accumulate("endTime", endTime);
 			object.accumulate("timeZoneOffsetInSeconds", timeZoneOffsetInSeconds);
 
-			object.accumulate("progressData", progressData.toJson());
+			if (progressData != null)
+				object.accumulate("progressData", progressData.toJson());
+			else
+				object.accumulate("progressData", null);
 
-			List<JSONObject> arr = new ArrayList<JSONObject>();
-			for (int i = 0; i < trippleTapTypeChanges.size(); i++)
-				arr.add(trippleTapTypeChanges.get(i).toJson());
-			object.accumulate("tripleTapTypeChanges", arr);
-
+			if (trippleTapTypeChanges != null) {
+				List<JSONObject> arr = new ArrayList<JSONObject>();
+				for (int i = 0; i < trippleTapTypeChanges.size(); i++)
+					arr.add(trippleTapTypeChanges.get(i).toJson());
+				object.accumulate("tripleTapTypeChanges", arr);
+			} else
+				object.accumulate("tripleTapTypeChanges", null);
+			
 			object.accumulate("localId", localId);
 			object.accumulate("serverId", serverId);
 			object.accumulate("updatedAt", updatedAt);
@@ -153,31 +159,27 @@ public class Goal {
 			if (!objJson.isNull("timeZoneOffsetInSeconds"))
 				goal.setTimeZoneOffsetInSeconds(objJson.getInt("timeZoneOffsetInSeconds"));
 
-			
-			if (!objJson.isNull("progressData"))
-			{
+			if (!objJson.isNull("progressData")) {
 				ProgressData data = ProgressData.fromJson(objJson.getJSONObject("progressData"));
 				goal.setProgressData(data);
 			}
-			
-			if (!objJson.isNull("tripleTapTypeChanges"))
-			{
+
+			if (!objJson.isNull("tripleTapTypeChanges")) {
 				JSONArray jarr = objJson.getJSONArray("tripleTapTypeChanges");
 				List<TrippleTapData> trippleTapDataList = new ArrayList<TrippleTapData>();
-				
-				for(int i = 0; i < jarr.length(); i++)
+
+				for (int i = 0; i < jarr.length(); i++)
 					trippleTapDataList.add(TrippleTapData.fromJson(jarr.getJSONObject(i)));
-				
+
 				goal.setTripleTapTypeChanges(trippleTapDataList);
 			}
 
-			
 			if (!objJson.isNull("serverId"))
 				goal.setServerId(objJson.getString("serverId"));
-			
+
 			if (!objJson.isNull("localId"))
 				goal.setLocalId(objJson.getString("localId"));
-			
+
 			if (!objJson.isNull("updatedAt"))
 				goal.setUpdatedAt(objJson.getLong("updatedAt"));
 
