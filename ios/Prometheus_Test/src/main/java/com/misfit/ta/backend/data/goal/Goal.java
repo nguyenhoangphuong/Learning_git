@@ -1,159 +1,190 @@
 package com.misfit.ta.backend.data.goal;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 
 public class Goal {
 
-    private double value;
-    private long startTime;
-    private long endTime;
-    private int level;
-    public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
+	private Double value;
+	private Long startTime;
+	private Long endTime;
+	private Integer timeZoneOffsetInSeconds;
 
 	private ProgressData progressData;
-    private int timeZoneOffsetInSeconds;
-    private String localId;
-    private long updatedAt;
-    private String serverId;
-    public Goal() {
+	private List<TrippleTapData> trippleTapTypeChanges;
 
-    }
+	private String serverId;
+	private String localId;
+	private Long updatedAt;
 
-    public Goal(double value, long startTime, long endTime, ProgressData progressData, int timeZoneOffsetInSeconds,
-            String localId, long updatedAt, int level) {
-        super();
-        this.value = value;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.progressData = progressData;
-        this.timeZoneOffsetInSeconds = timeZoneOffsetInSeconds;
-        this.localId = localId;
-        this.updatedAt = updatedAt;
-        this.level = level;
-    }
+	public Goal() {
 
-    public double getValue() {
-        return value;
-    }
+	}
 
-    public void setValue(double value) {
-        this.value = value;
-    }
+	public Goal(double value, long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, List<TrippleTapData> trippleTapTypeChanges, String localId, long updatedAt) {
+		super();
+		this.value = value;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.timeZoneOffsetInSeconds = timeZoneOffsetInSeconds;
 
-    public long getStartTime() {
-        return startTime;
-    }
+		this.progressData = progressData;
+		this.trippleTapTypeChanges = trippleTapTypeChanges;
 
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
+		this.localId = localId;
+		this.updatedAt = updatedAt;
+	}
 
-    public long getEndTime() {
-        return endTime;
-    }
+	public double getValue() {
+		return value;
+	}
 
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
-    }
+	public void setValue(double value) {
+		this.value = value;
+	}
 
-    public ProgressData getProgressData() {
-        return progressData;
-    }
+	public long getStartTime() {
+		return startTime;
+	}
 
-    public void setProgressData(ProgressData progressData) {
-        this.progressData = progressData;
-    }
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
+	}
 
-    public int getTimeZoneOffsetInSeconds() {
-        return timeZoneOffsetInSeconds;
-    }
+	public long getEndTime() {
+		return endTime;
+	}
 
-    public void setTimeZoneOffsetInSeconds(int timeZoneOffsetInSeconds) {
-        this.timeZoneOffsetInSeconds = timeZoneOffsetInSeconds;
-    }
+	public void setEndTime(long endTime) {
+		this.endTime = endTime;
+	}
 
-    public String getLocalId() {
-        return localId;
-    }
+	public ProgressData getProgressData() {
+		return progressData;
+	}
 
-    public void setLocalId(String localId) {
-        this.localId = localId;
-    }
+	public void setProgressData(ProgressData progressData) {
+		this.progressData = progressData;
+	}
 
-    public long getUpdatedAt() {
-        return updatedAt;
-    }
+	public List<TrippleTapData> getTripleTapTypeChanges() {
+		return trippleTapTypeChanges;
+	}
 
-    public void setUpdatedAt(long updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public void setTripleTapTypeChanges(List<TrippleTapData> tripleTapTypeChanges) {
+		this.trippleTapTypeChanges = tripleTapTypeChanges;
+	}
 
-    public JSONObject toJson() {
-        try {
+	public int getTimeZoneOffsetInSeconds() {
+		return timeZoneOffsetInSeconds;
+	}
 
-            JSONObject object = new JSONObject();
+	public void setTimeZoneOffsetInSeconds(int timeZoneOffsetInSeconds) {
+		this.timeZoneOffsetInSeconds = timeZoneOffsetInSeconds;
+	}
 
-            object.accumulate("goalValue", value);
-            object.accumulate("startTime", startTime);
-            object.accumulate("endTime", endTime);
-            object.accumulate("level", level);
-            object.accumulate("timeZoneOffsetInSeconds", timeZoneOffsetInSeconds);
-            object.accumulate("progressData", progressData.toJson());
-            object.accumulate("localId", localId);
-            object.accumulate("updatedAt", updatedAt);
-            return object;
-        } catch (JSONException e) {
-            e.printStackTrace();
+	public String getLocalId() {
+		return localId;
+	}
 
-            return null;
-        }
-    }
-    
-    public String getServerId() {
-        return serverId;
-    }
+	public void setLocalId(String localId) {
+		this.localId = localId;
+	}
 
-    public void setServerId(String serverId) {
-        this.serverId = serverId;
-    }
+	public long getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public Goal getGoal(JSONObject objJson) {
-        Goal goal = new Goal();
-        try {
-            goal.setLocalId(objJson.getString("localId"));
-            if (!objJson.isNull("updatedAt")) {
-                goal.setUpdatedAt(objJson.getLong("updatedAt"));
-            }
-            if (!objJson.isNull("goalValue"))
-                goal.setValue(objJson.getDouble("goalValue"));
-            if (!objJson.isNull("startTime"))
-                goal.setStartTime(objJson.getLong("startTime"));
-            if (!objJson.isNull("endTime"))
-                goal.setEndTime(objJson.getLong("endTime"));
-            if (!objJson.isNull("timeZoneOffsetInSeconds"))
-                goal.setTimeZoneOffsetInSeconds(objJson.getInt("timeZoneOffsetInSeconds"));
-            ProgressData data = new ProgressData();
-            if (!objJson.isNull("progressData"))
-                data = data.getProgressData(objJson.getJSONObject("progressData"));
-            if (!objJson.isNull("serverId"))
-                goal.setServerId(objJson.getString("serverId"));
-            if (!objJson.isNull("level"))
-                goal.setLevel(objJson.getInt("level"));
-            goal.setProgressData(data);
+	public void setUpdatedAt(long updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+	public String getServerId() {
+		return serverId;
+	}
 
-        return goal;
-    }
+	public void setServerId(String serverId) {
+		this.serverId = serverId;
+	}
+
+	public JSONObject toJson() {
+		try {
+			JSONObject object = new JSONObject();
+
+			object.accumulate("goalValue", value);
+			object.accumulate("startTime", startTime);
+			object.accumulate("endTime", endTime);
+			object.accumulate("timeZoneOffsetInSeconds", timeZoneOffsetInSeconds);
+
+			object.accumulate("progressData", progressData.toJson());
+
+			List<JSONObject> arr = new ArrayList<JSONObject>();
+			for (int i = 0; i < trippleTapTypeChanges.size(); i++)
+				arr.add(trippleTapTypeChanges.get(i).toJson());
+			object.accumulate("tripleTapTypeChanges", arr);
+
+			object.accumulate("localId", localId);
+			object.accumulate("serverId", serverId);
+			object.accumulate("updatedAt", updatedAt);
+			return object;
+		} catch (JSONException e) {
+			e.printStackTrace();
+
+			return null;
+		}
+	}
+
+	public static Goal fromJson(JSONObject objJson) {
+		Goal goal = new Goal();
+		try {
+			if (!objJson.isNull("goalValue"))
+				goal.setValue(objJson.getDouble("goalValue"));
+
+			if (!objJson.isNull("startTime"))
+				goal.setStartTime(objJson.getLong("startTime"));
+
+			if (!objJson.isNull("endTime"))
+				goal.setEndTime(objJson.getLong("endTime"));
+
+			if (!objJson.isNull("timeZoneOffsetInSeconds"))
+				goal.setTimeZoneOffsetInSeconds(objJson.getInt("timeZoneOffsetInSeconds"));
+
+			
+			if (!objJson.isNull("progressData"))
+			{
+				ProgressData data = ProgressData.fromJson(objJson.getJSONObject("progressData"));
+				goal.setProgressData(data);
+			}
+			
+			if (!objJson.isNull("tripleTapTypeChanges"))
+			{
+				JSONArray jarr = objJson.getJSONArray("tripleTapTypeChanges");
+				List<TrippleTapData> trippleTapDataList = new ArrayList<TrippleTapData>();
+				
+				for(int i = 0; i < jarr.length(); i++)
+					trippleTapDataList.add(TrippleTapData.fromJson(jarr.getJSONObject(i)));
+				
+				goal.setTripleTapTypeChanges(trippleTapDataList);
+			}
+
+			
+			if (!objJson.isNull("serverId"))
+				goal.setServerId(objJson.getString("serverId"));
+			
+			if (!objJson.isNull("localId"))
+				goal.setLocalId(objJson.getString("localId"));
+			
+			if (!objJson.isNull("updatedAt"))
+				goal.setUpdatedAt(objJson.getLong("updatedAt"));
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return goal;
+	}
 }

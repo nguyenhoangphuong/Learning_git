@@ -61,7 +61,7 @@ public class BaseResult {
 
 	// utilities functions
 	public void printKeyPairsValue() {
-		logger.info("--------------------------------------------------------");
+		logger.info("-------------------------------------------------------------------------------------------------------");
 		
 		for (String key : this.pairResult.keySet()) {
 			if (this.pairResult.get(key) != null &&
@@ -73,7 +73,7 @@ public class BaseResult {
 						+ this.pairResult.get(key));
 		}
 		
-		logger.info("--------------------------------------------------------");
+		logger.info("-------------------------------------------------------------------------------------------------------");
 	}
 
 	// helpers functions

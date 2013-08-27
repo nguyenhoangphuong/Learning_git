@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.data;
+package com.misfit.ta.backend.data.activity;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,7 @@ import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
+import com.misfit.ta.backend.data.BaseResult;
 
 public class ActivityResult extends BaseResult {
     // fields

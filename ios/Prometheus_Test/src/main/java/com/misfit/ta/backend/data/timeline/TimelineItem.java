@@ -7,7 +7,7 @@ import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
-import com.misfit.ta.backend.data.ActivityResult;
+import com.misfit.ta.backend.data.activity.ActivityResult;
 
 public class TimelineItem {
 

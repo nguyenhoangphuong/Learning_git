@@ -1,11 +1,13 @@
-package com.misfit.ta.backend.aut;
+package com.misfit.ta.backend.aut.correctness;
 
 import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.data.AccountResult;
+import com.misfit.ta.backend.aut.BackendAutomation;
+import com.misfit.ta.backend.aut.DefaultValues;
+import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.utils.TextTool;
 import org.testng.Assert;
@@ -98,4 +100,5 @@ public class BackendPedometerTC extends BackendAutomation {
 		AccountResult acc = MVPApi.signUp(email, password, udid);
 		return acc.token;
 	}
+
 }

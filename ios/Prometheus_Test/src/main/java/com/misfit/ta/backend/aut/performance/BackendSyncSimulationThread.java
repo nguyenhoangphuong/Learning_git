@@ -1,5 +1,6 @@
 package com.misfit.ta.backend.aut.performance;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
@@ -14,14 +15,15 @@ import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
-import com.misfit.ta.backend.data.AccountResult;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.GoalsResult;
-import com.misfit.ta.backend.data.ProfileData;
-import com.misfit.ta.backend.data.ProfileResult;
+import com.misfit.ta.backend.data.account.AccountResult;
+import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.goal.ProgressData;
+import com.misfit.ta.backend.data.goal.TrippleTapData;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
+import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.backend.data.profile.ProfileResult;
 import com.misfit.ta.utils.TextTool;
 
 public class BackendSyncSimulationThread implements Runnable {
@@ -196,10 +198,10 @@ public class BackendSyncSimulationThread implements Runnable {
 
        // update profile
        ProfileData newProfile = result.profile;
-       newProfile.name = profile.name + "_new";
+       newProfile.setWeight(profile.getWeight() + 1);
 //       newProfile.updatedAt += 100;
        s11 = System.currentTimeMillis();
-       result = MVPApi.updateProfile(token, newProfile, profile.serverId);
+       result = MVPApi.updateProfile(token, newProfile, profile.getServerId());
        s12 = System.currentTimeMillis();
        ResultLogger.totalTime += s12 - s11;
        countRequest += 3;
@@ -248,13 +250,10 @@ public class BackendSyncSimulationThread implements Runnable {
     
     public void doGoalOperation() {
         long now = System.currentTimeMillis();
-        Vector<Integer> points = new Vector<Integer>();
-        points.add(0);
-        points.add(1);
-        points.add(2);
-        ProgressData progressData = new ProgressData(points, 100, 200);
+        ProgressData progressData = new ProgressData(300, 5000, 1200, 500);
         sCreateGoal= System.currentTimeMillis();
-        GoalsResult goalResult = MVPApi.createGoal(token, 2500, now, now + 8400, 0, progressData, "mylocalid", 0, now);
+        GoalsResult goalResult = MVPApi.createGoal(token, 2500, now, now + 8400, 
+        		0, progressData, new ArrayList<TrippleTapData>(), "mylocalid", now);
         sCreateGoal1 = System.currentTimeMillis();
         ResultLogger.totalTime += sCreateGoal1 - sCreateGoal;
 //        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
@@ -272,7 +271,8 @@ public class BackendSyncSimulationThread implements Runnable {
 //        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
         
         sUpdateGoal= System.currentTimeMillis();
-        goalResult = MVPApi.updateGoal(token, now, goalResult.goals[0].getServerId(), 2500, now, now + 8400, 0, progressData, "mylocalid", 0);
+        goalResult = MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 
+        		2500, now, now + 8400, 0, progressData, new ArrayList<TrippleTapData>(), "mylocalid");
         sUpdateGoal1 = System.currentTimeMillis();
         ResultLogger.totalTime += sUpdateGoal1 - sUpdateGoal;
 //        Assert.assertTrue(goalResult.isExisted(), "Status code is not 210: " + goalResult.statusCode);

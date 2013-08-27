@@ -17,23 +17,15 @@ import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.aut.ResultLogger;
-import com.misfit.ta.backend.data.AccountResult;
-import com.misfit.ta.backend.data.ActivityResult;
-import com.misfit.ta.backend.data.BaseParams;
-import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.GoalsResult;
-import com.misfit.ta.backend.data.JSONBuilder;
-import com.misfit.ta.backend.data.ProfileData;
-import com.misfit.ta.backend.data.ProfileResult;
-import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.backend.data.goal.ProgressData;
-import com.misfit.ta.backend.data.graph.GraphItem;
-import com.misfit.ta.backend.data.pedometer.Pedometer;
-import com.misfit.ta.backend.data.timeline.ActivitySessionItem;
-import com.misfit.ta.backend.data.timeline.NotableEventItem;
-import com.misfit.ta.backend.data.timeline.TimelineItem;
-import com.misfit.ta.backend.data.timeline.TimelineItemBase;
-import com.misfit.ta.backend.data.timeline.WeatherItem;
+import com.misfit.ta.backend.data.account.*;
+import com.misfit.ta.backend.data.goal.*;
+import com.misfit.ta.backend.data.activity.*;
+import com.misfit.ta.backend.data.graph.*;
+import com.misfit.ta.backend.data.profile.*;
+import com.misfit.ta.backend.data.pedometer.*;
+import com.misfit.ta.backend.data.timeline.*;
+import com.misfit.ta.backend.data.*;
+
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.TextTool;
 
@@ -148,10 +140,11 @@ public class MVPApi {
 
     // profile apis
     static private BaseParams createProfileParams(String token, String name, Double weight, Double height,
-            Integer unit, Integer gender, Long dateOfBirth, Integer goalLevel, String trackingDeviceId, String localId,
-            String latestVersion, Long updatedAt) {
+            Integer gender, Long dateOfBirth, Integer goalLevel, String latestVersion, String wearingPosition,
+            PersonalRecord personalRecords, DisplayUnit displayUnit,
+            String localId, Long updatedAt) {
+    	
         // build json object string
-
         JSONBuilder json = new JSONBuilder();
         if (name != null)
             json.addValue("name", name);
@@ -159,20 +152,24 @@ public class MVPApi {
             json.addValue("weight", weight);
         if (height != null)
             json.addValue("height", height);
-        if (unit != null)
-            json.addValue("unit", unit);
         if (gender != null)
             json.addValue("gender", gender);
         if (dateOfBirth != null)
             json.addValue("dateOfBirth", dateOfBirth);
+        
         if (goalLevel != null)
             json.addValue("goalLevel", goalLevel);
-        if (trackingDeviceId != null)
-            json.addValue("trackingDeviceId", trackingDeviceId);
-        if (localId != null)
-            json.addValue("localId", localId);
         if (latestVersion != null)
             json.addValue("latestVersion", latestVersion);
+        if (wearingPosition != null)
+            json.addValue("wearingPosition", wearingPosition);
+        if (latestVersion != null)
+            json.addValue("personalRecords", personalRecords);
+        if (latestVersion != null)
+            json.addValue("displayedUnits", displayUnit);
+        
+        if (localId != null)
+            json.addValue("localId", localId);
         if (updatedAt != null)
             json.addValue("updatedAt", updatedAt);
 
@@ -184,11 +181,13 @@ public class MVPApi {
     }
 
     public static ProfileResult createProfile(String token, ProfileData data) {
+    	
         // prepare
         String url = baseAddress + "profile";
-
-        BaseParams requestInf = createProfileParams(token, data.name, data.weight, data.height, data.unit, data.gender,
-                data.dateOfBirth, data.goalLevel, data.trackingDeviceId, data.localId, data.latestVersion, null);
+        BaseParams requestInf = createProfileParams(token, data.getName(), data.getWeight(), data.getHeight(), 
+        		data.getGender(), data.getDateOfBirth(), data.getGoalLevel(), data.getLatestVersion(),
+        		data.getWearingPosition(), data.getPersonalRecords(), data.getDisplayedUnits(), 
+        		data.getLocalId(), data.getUpdatedAt());
 
         // post and receive raw data
         ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -213,16 +212,17 @@ public class MVPApi {
         return result;
     }
 
-    public static ProfileResult updateProfile(String token, ProfileData data, String id) {
-        logger.info("Id: " + id + ", Updated at: " + data.updatedAt);
+    public static ProfileResult updateProfile(String token, ProfileData data, String serverId) {
+        logger.info("Id: " + serverId + ", Updated at: " + data.getUpdatedAt());
+        
         // prepare
         String url = baseAddress + "profile";
+        BaseParams requestInf = createProfileParams(token, data.getName(), data.getWeight(), data.getHeight(), 
+        		data.getGender(), data.getDateOfBirth(), data.getGoalLevel(), data.getLatestVersion(),
+        		data.getWearingPosition(), data.getPersonalRecords(), data.getDisplayedUnits(), 
+        		data.getLocalId(), data.getUpdatedAt());
 
-        BaseParams requestInf = createProfileParams(token, data.name, data.weight, data.height, data.unit, data.gender,
-                data.dateOfBirth, data.goalLevel, data.trackingDeviceId, data.localId, data.latestVersion,
-                data.updatedAt);
-
-        // requestInf.addParam("id", id);
+         requestInf.addParam("id", serverId);
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -234,11 +234,13 @@ public class MVPApi {
 
     // goal apis
     static private BaseParams createGoalParams(String token, double goalValue, long startTime, long endTime,
-            int timeZoneOffsetInSeconds, ProgressData progressData, String localId, long updatedAt, int level) {
+            int timeZoneOffsetInSeconds, ProgressData progressData, List<TrippleTapData> trippleTapTypeChanges,
+            String localId, long updatedAt) {
+    	
         // build json object string
-        Goal goal = new Goal(goalValue, startTime, endTime, progressData, timeZoneOffsetInSeconds, localId, updatedAt,
-                level);
-
+    	Goal goal = new Goal(goalValue, startTime, endTime, timeZoneOffsetInSeconds, progressData, 
+    			trippleTapTypeChanges, localId, updatedAt);
+        
         BaseParams requestInf = new BaseParams();
         requestInf.addHeader("auth_token", token);
         requestInf.addParam("goal", goal.toJson().toString());
@@ -280,12 +282,14 @@ public class MVPApi {
     }
 
     public static GoalsResult createGoal(String token, double goalValue, long startTime, long endTime,
-            int timeZoneOffsetInSeconds, ProgressData progressData, String localId, int level, long updatedAt) {
+            int timeZoneOffsetInSeconds, ProgressData progressData, List<TrippleTapData> trippleTapTypeChanges,
+            String localId, long updatedAt) {
+    	
         // prepare
         String url = baseAddress + "goals";
 
         BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, timeZoneOffsetInSeconds,
-                progressData, localId, updatedAt, level);
+                progressData, trippleTapTypeChanges, localId, updatedAt);
 
         // post and receive raw data
         ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -296,13 +300,14 @@ public class MVPApi {
     }
 
     public static GoalsResult updateGoal(String token, long updatedAt, String serverId, double goalValue,
-            long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, String localId,
-            int level) {
+            long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, 
+            List<TrippleTapData> trippleTapTypeChanges, String localId) {
+    	
         // prepare
         String url = baseAddress + "goals/" + serverId;
 
         BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, timeZoneOffsetInSeconds,
-                progressData, localId, updatedAt, 0);
+                progressData, trippleTapTypeChanges, localId, updatedAt);
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -315,12 +320,13 @@ public class MVPApi {
     }
 
     public static GoalsResult updateGoal(String token, Goal goal) {
+    	
         // prepare
         String url = baseAddress + "profile";
 
-        BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), goal
-                .getTimeZoneOffsetInSeconds(), goal.getProgressData(), goal.getLocalId(), goal.getUpdatedAt(), goal
-                .getLevel());
+        BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), 
+        		goal.getTimeZoneOffsetInSeconds(), goal.getProgressData(), goal.getTripleTapTypeChanges(),
+                goal.getLocalId(), goal.getUpdatedAt());
 
         // post and recieve raw data
         ServiceResponse response = MVPApi.put(url, port, requestInf);

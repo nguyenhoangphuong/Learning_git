@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.aut;
+package com.misfit.ta.backend.aut.correctness;
 
 import junit.framework.Assert;
 
@@ -8,9 +8,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendAutomation;
+import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.ProfileData;
-import com.misfit.ta.backend.data.ProfileResult;
+import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.backend.data.profile.ProfileResult;
 
 public class BackendSignOutTC extends BackendAutomation {
 	String email;
@@ -62,12 +64,12 @@ public class BackendSignOutTC extends BackendAutomation {
 		// the right protocol. But it is something we can ignore
 		ProfileData profile = MVPApi.getProfile(token2).profile;
 
-		profile.updatedAt += 10;
-		profile.name = "Dandelion" + System.nanoTime();
-		profile.weight += 1;
+		profile.setUpdatedAt(profile.getUpdatedAt() + 10);
+		profile.setName("Dandelion" + System.nanoTime());
+		profile.setWeight(profile.getWeight() + 1);
 
 		ProfileResult pr = MVPApi.updateProfile(token2, profile,
-				profile.serverId);
+				profile.getServerId());
 		pr.printKeyPairsValue();
 
 		Assert.assertTrue("Status code: 210 - Force client update (ignorable)",

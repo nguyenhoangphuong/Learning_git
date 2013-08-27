@@ -1,11 +1,15 @@
-package com.misfit.ta.backend.aut;
+package com.misfit.ta.backend.aut.correctness;
 
 import junit.framework.Assert;
 
 import org.testng.annotations.*;
 
 import com.misfit.ta.backend.data.*;
+import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.api.*;
+import com.misfit.ta.backend.aut.BackendAutomation;
+import com.misfit.ta.backend.aut.DefaultValues;
+import com.misfit.ta.backend.aut.ResultLogger;
 
 public class BackendSignUpTC extends BackendAutomation {
 

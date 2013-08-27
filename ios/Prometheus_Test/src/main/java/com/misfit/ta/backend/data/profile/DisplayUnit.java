@@ -1,0 +1,78 @@
+package com.misfit.ta.backend.data.profile;
+
+import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
+
+public class DisplayUnit {
+
+	// fields
+	private Integer weightUnit;
+	private Integer heightUnit;
+	private Integer temperatureScale;
+
+	// constructors
+	public DisplayUnit() {
+		this.weightUnit = 0;
+		this.heightUnit = 0;
+		this.temperatureScale = 0;
+	}
+
+	public DisplayUnit(int weightUnit, int heightUnit, int temperatureScale) {
+		this.weightUnit = weightUnit;
+		this.heightUnit = heightUnit;
+		this.temperatureScale = temperatureScale;
+	}
+
+	// methods
+	public JSONObject toJson() {
+		try {
+			JSONObject obj = new JSONObject();
+			obj.accumulate("weightUnit", weightUnit);
+			obj.accumulate("heightUnit", heightUnit);
+			obj.accumulate("temperatureScale", temperatureScale);
+
+			return obj;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static DisplayUnit fromJson(JSONObject json) {
+		DisplayUnit obj = new DisplayUnit();
+		try {
+			obj.setWeightUnit(json.getInt("weightUnit"));
+			obj.setHeightUnit(json.getInt("heightUnit"));
+			obj.setTemperatureScale(json.getInt("temperatureScale"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return obj;
+	}
+
+	// getters setters
+	public int getWeightUnit() {
+		return weightUnit;
+	}
+
+	public void setWeightUnit(int weightUnit) {
+		this.weightUnit = weightUnit;
+	}
+
+	public int getHeightUnit() {
+		return heightUnit;
+	}
+
+	public void setHeightUnit(int heightUnit) {
+		this.heightUnit = heightUnit;
+	}
+
+	public int getTemperatureScale() {
+		return temperatureScale;
+	}
+
+	public void setTemperatureScale(int temperatureScale) {
+		this.temperatureScale = temperatureScale;
+	}
+}

@@ -5,6 +5,7 @@ import java.util.Random;
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class PrometheusHelper {
@@ -336,8 +337,19 @@ public class PrometheusHelper {
 	}
 
 	public static void main(String[] args) {
+<<<<<<< Updated upstream
 		Gui.init("192.168.1.206");
 		Gui.shutdown();
+=======
+//		Gui.init("192.168.1.206");
+//		Gui.printView();
+//		Gui.shutdown();
+		String token = MVPApi.signIn("v14@qa.com", "test12", "123456789").token;
+		GoalsResult r = MVPApi.searchGoal(token, 0, Integer.MAX_VALUE, 0);
+		r.printKeyPairsValue();
+		GoalsResult s = MVPApi.getGoal(token, r.goals[0].getServerId());
+		s.printKeyPairsValue();
+>>>>>>> Stashed changes
 	}
 
 }

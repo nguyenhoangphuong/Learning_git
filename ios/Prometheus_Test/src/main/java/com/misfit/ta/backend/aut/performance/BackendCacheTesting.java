@@ -5,10 +5,10 @@ import org.testng.Assert;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
-import com.misfit.ta.backend.data.AccountResult;
-import com.misfit.ta.backend.data.ProfileData;
-import com.misfit.ta.backend.data.ProfileResult;
+import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
+import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.backend.data.profile.ProfileResult;
 import com.misfit.ta.utils.TextTool;
 
 public class BackendCacheTesting {
@@ -43,29 +43,29 @@ public class BackendCacheTesting {
         // get Profile
         result = MVPApi.getProfile(token);
         Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
-        Assert.assertTrue(profile.name.equalsIgnoreCase(result.profile.name), "Name is different, old: " + profile.name
-                + ", new: " + result.profile.name);
+        Assert.assertTrue(profile.getName().equalsIgnoreCase(result.profile.getName()), "Name is different, old: " + profile.getName()
+                + ", new: " + result.profile.getName());
 
         change(SERVER2);
         // update profile
         ProfileData newProfile = result.profile;
-        newProfile.name = profile.name + "_new";
-        result = MVPApi.updateProfile(token, newProfile, profile.serverId);
+        newProfile.setName(profile.getName() + "_new");
+        result = MVPApi.updateProfile(token, newProfile, profile.getServerId());
 
         change(SERVER1);
         // get Profile
         result = MVPApi.getProfile(token);
         Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
-        Assert.assertTrue(newProfile.name.equalsIgnoreCase(result.profile.name), "server 1: Name is different, local: "
-                + newProfile.name + ", server: " + result.profile.name);
+        Assert.assertTrue(newProfile.getName().equalsIgnoreCase(result.profile.getName()), "server 1: Name is different, local: "
+                + newProfile.getName() + ", server: " + result.profile.getName());
 
         change(SERVER2);
 
         // get Profile
         result = MVPApi.getProfile(token);
         Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
-        Assert.assertTrue(newProfile.name.equalsIgnoreCase(result.profile.name), "server 2: Name is different, old: "
-                + newProfile.name + ", new: " + result.profile.name);
+        Assert.assertTrue(newProfile.getName().equalsIgnoreCase(result.profile.getName()), "server 2: Name is different, old: "
+                + newProfile.getName() + ", new: " + result.profile.getName());
     }
 
     public void runPedometerTest() {

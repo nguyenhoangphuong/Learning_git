@@ -1,7 +1,8 @@
-package com.misfit.ta.backend.data;
+package com.misfit.ta.backend.data.account;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONException;
+import com.misfit.ta.backend.data.BaseResult;
 
 public class AccountResult extends BaseResult {
     // fields
