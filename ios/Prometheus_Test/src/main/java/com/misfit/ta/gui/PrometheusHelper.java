@@ -337,19 +337,8 @@ public class PrometheusHelper {
 	}
 
 	public static void main(String[] args) {
-<<<<<<< Updated upstream
-		Gui.init("192.168.1.206");
+		Gui.init("192.168.1.175");
 		Gui.shutdown();
-=======
-//		Gui.init("192.168.1.206");
-//		Gui.printView();
-//		Gui.shutdown();
-		String token = MVPApi.signIn("v14@qa.com", "test12", "123456789").token;
-		GoalsResult r = MVPApi.searchGoal(token, 0, Integer.MAX_VALUE, 0);
-		r.printKeyPairsValue();
-		GoalsResult s = MVPApi.getGoal(token, r.goals[0].getServerId());
-		s.printKeyPairsValue();
->>>>>>> Stashed changes
 	}
 
 }
