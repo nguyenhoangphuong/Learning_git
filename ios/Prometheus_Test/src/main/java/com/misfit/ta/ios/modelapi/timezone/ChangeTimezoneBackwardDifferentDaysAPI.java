@@ -1,13 +1,13 @@
 package com.misfit.ta.ios.modelapi.timezone;
 
 import java.io.File;
+import java.util.Calendar;
+
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
-import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
@@ -16,20 +16,22 @@ import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timezone;
 import com.misfit.ta.ios.AutomationTest;
+import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
-public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
+public class ChangeTimezoneBackwardDifferentDaysAPI extends ModelAPI {
 	protected static final Logger logger = Util
-			.setupLogger(ChangeTimezoneForwardSameDayAPI.class);
+			.setupLogger(ChangeTimezoneBackwardDifferentDaysAPI.class);
 	private String email = MVPApi.generateUniqueEmail();
+	private int currentTimezone = 7;
+	private int previousTimezone = 7;
+	private int delta = 14;
 	private String password = "abcdef";
-	private int currentTimezone = 4;
-	private int previousTimezone = 4;
-	private int delta = 1;
 	private long beforeStartTime = 0;
 	private long beforeEndTime = 0;
 	private long beforeOffset = 0;
 
-	public ChangeTimezoneForwardSameDayAPI(AutomationTest automation,
+	public ChangeTimezoneBackwardDifferentDaysAPI(AutomationTest automation,
 			File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
@@ -37,7 +39,6 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 	// edge
 	public void e_init() {
 		// sign up new account
-		Timezone.changeTimezone(currentTimezone);
 		PrometheusHelper.signUp(email, password, true, 16, 9, 1991, true, "5'",
 				"8\\\"", "120", ".0", 1);
 		ShortcutsTyper.delayTime(1000);
@@ -50,7 +51,7 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 		beforeStartTime = goal.getStartTime();
 		beforeOffset = goal.getTimeZoneOffsetInSeconds();
 		this.previousTimezone = this.currentTimezone;
-		this.currentTimezone = this.currentTimezone + delta;
+		this.currentTimezone = this.currentTimezone - delta;
 		Timezone.changeTimezone(currentTimezone);
 		logger.info("Change timezone from " + this.previousTimezone + " to "
 				+ this.currentTimezone);
@@ -66,11 +67,11 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 	}
 
 	public void v_HomeScreenUpdated() {
-		Timezone.assertTimeZoneTile(DefaultStrings.TimezoneForwardLabel,
+		Timezone.assertTimeZoneTile(DefaultStrings.TimezoneBackwardLabel,
 				this.currentTimezone, this.previousTimezone, this.delta);
 		// check goal start time and end time
 		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime,
-				delta, beforeOffset, true);
+				delta, beforeOffset, false);
 	}
 
 	public void v_End() {

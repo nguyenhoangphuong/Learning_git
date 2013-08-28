@@ -21,19 +21,36 @@ public class Timezone {
 		Gui.touchAVIew("UILabel", DefaultStrings.TileTimeTravelLabel);
 	}
 	
-	public static void assertTimeZoneTile(String detail, int currentTimezone, int previousTimezone) {
+	public static void assertTimeZoneTile(String detail, int currentTimezone, int previousTimezone, int delta) {
 		Gui.dragUpTimeline();
 		ShortcutsTyper.delayOne();
 		// check if there is a time travel tile
-		String label = "UTC+" + String.valueOf(currentTimezone);
+		String content = "";
+		String label = "";
+		if (previousTimezone >= 0) {
+			content+= "UTC+" + String.valueOf(previousTimezone);
+		} else {
+			content+= "UTC" + String.valueOf(previousTimezone);
+		}
+		if (currentTimezone >= 0) {
+			label = "UTC+" + String.valueOf(currentTimezone);
+			content+= " to UTC+" + String.valueOf(currentTimezone);
+		} else {
+			label = "UTC" + String.valueOf(currentTimezone);
+			content+= " to UTC" + String.valueOf(currentTimezone);
+		}
+		
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", label), "Time travel tile's title is visible");
 
 		// tap on time travel tile and check content
 		Gui.dragUpTimeline();
 		Timezone.touchTimezoneWithLabel(label);
-		String content = "UTC+" + String.valueOf(previousTimezone) + " to UTC+" + String.valueOf(currentTimezone);
+		
+		System.out.println("DEBUG: " + String.valueOf(currentTimezone));
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", content), "Time travel detail title is valid");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", detail), "Time travel message is valid");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", delta), "Time delta is valid");
+		ShortcutsTyper.delayOne();
 		ShortcutsTyper.delayOne();
 		// close the time travel tile
 		Timezone.closeTimeTravelTile();

@@ -70,7 +70,7 @@ public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 
 	public void v_HomeScreenUpdated() {
 		Timezone.assertTimeZoneTile(DefaultStrings.TimezoneBackwardLabel,
-				this.currentTimezone, this.previousTimezone);
+				this.currentTimezone, this.previousTimezone, this.delta);
 		// check goal start time and end time
 		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime,
 				delta, beforeOffset, false);
