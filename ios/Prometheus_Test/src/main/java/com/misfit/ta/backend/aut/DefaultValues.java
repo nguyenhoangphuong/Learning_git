@@ -10,7 +10,9 @@ import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.goal.TrippleTapData;
 import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.profile.DisplayUnit;
+import com.misfit.ta.backend.data.profile.PersonalRecord;
 import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.timeline.TimelineData;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.TimelineItemBase;
@@ -174,6 +176,23 @@ public class DefaultValues {
 		cal.set(Calendar.SECOND, (secondsOfDay % 3600) % 60);
 		
 		return CreateTimelineItem(cal.getTimeInMillis() / 1000, timelineType);
+	}
+
+	// statistics
+	static public Statistics RandomStatistic() {
+		
+		Random r = new Random();
+		long timestamp = System.currentTimeMillis() / 1000;
+		
+		PersonalRecord personalRecords = new PersonalRecord();
+		personalRecords.setPersonalBestRecordsInPoint(r.nextInt() % 1500 + 500d);
+		
+		Statistics item = new Statistics();
+		item.setLocalId("statistics-" + System.currentTimeMillis() + "-" + System.nanoTime());
+		item.setUpdatedAt(timestamp);
+		item.setPersonalRecords(personalRecords);
+		
+		return item;
 	}
 
 }

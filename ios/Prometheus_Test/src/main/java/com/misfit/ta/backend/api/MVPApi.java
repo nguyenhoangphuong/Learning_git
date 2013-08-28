@@ -16,12 +16,14 @@ import com.google.resting.json.JSONException;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
+import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.account.*;
 import com.misfit.ta.backend.data.goal.*;
 import com.misfit.ta.backend.data.graph.*;
 import com.misfit.ta.backend.data.profile.*;
 import com.misfit.ta.backend.data.pedometer.*;
+import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.timeline.*;
 import com.misfit.ta.backend.data.*;
 
@@ -159,7 +161,7 @@ public class MVPApi {
 		String log = "{\"startTime\": 347155000, \"endTime\": 347155060, \"serialNumberString\": \"XXXXXXXE01\", \"isSuccessful\": 1, \"data\": {\"fileData\": [ {\"rawData\": \"0101010101\", \"timestampDifference\": 1 } ], \"hardwareLog\": [\"misfit\"] }, \"log\": \"misfit\"}";
 		return log;
 	}
-	
+
 	// utilities
 	public static long getDayStartEpoch() {
 		return getDayStartEpoch(System.currentTimeMillis() / 1000);
@@ -305,6 +307,22 @@ public class MVPApi {
 
 		// format data
 		ProfileResult result = new ProfileResult(response);
+		return result;
+	}
+
+	public static BaseResult userInfo(String token) {
+
+		// prepare
+		String url = baseAddress + "user_info";
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+
+		// format data
+		BaseResult result = new BaseResult(response);
 		return result;
 	}
 
@@ -506,7 +524,7 @@ public class MVPApi {
 	}
 
 	public static TimelineItem getTimelineItem(String token, String serverId) {
-		
+
 		// prepare
 		String url = baseAddress + "timeline_items/" + serverId;
 
@@ -519,21 +537,21 @@ public class MVPApi {
 		// format data
 		return TimelineItem.getTimelineItem(response);
 	}
-	
+
 	public static List<TimelineItem> getTimelineItems(String token, long startTime, long endTime, long modifiedSince) {
-		
+
 		String url = baseAddress + "timeline_items";
-		
+
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
 		request.addParam("startTime", String.valueOf(startTime));
 		request.addParam("endTime", String.valueOf(endTime));
 		request.addParam("modifiedSince", String.valueOf(modifiedSince));
-		
+
 		ServiceResponse response = MVPApi.get(url, port, request);
 		List<TimelineItem> items = TimelineItem.getTimelineItems(response);
 		logger.info("Timeline items count: " + items.size());
-		
+
 		return items;
 
 	}
@@ -619,7 +637,7 @@ public class MVPApi {
 
 	// sync apis
 	public static ServiceResponse syncLog(String token, String log) {
-		
+
 		String url = baseAddress + "sync_logs";
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
@@ -627,17 +645,47 @@ public class MVPApi {
 
 		ServiceResponse response = MVPApi.post(url, port, request);
 		logger.info("Sync log status code: " + response.getStatusCode());
-		
+
 		return response;
+	}
+
+	// statistics
+	public static BaseResult createStatistics(String token, Statistics statistics) {
+
+		// prepare
+		String url = baseAddress + "statistics";
+		BaseParams request = new BaseParams();
+		request.addHeader("auth_token", token);
+		request.addParam("statistics", statistics.toJson().toString());
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.post(url, port, request);
+
+		// format data
+		BaseResult result = new BaseResult(response);
+		return result;
+	}
+
+	public static BaseResult updateStatistics(String token, Statistics statistics) {
+
+		// prepare
+		String url = baseAddress + "statistics";
+		BaseParams request = new BaseParams();
+		request.addHeader("auth_token", token);
+		request.addParam("statistics", statistics.toJson().toString());
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.put(url, port, request);
+
+		// format data
+		BaseResult result = new BaseResult(response);
+		return result;
 	}
 
 	// test
 	public static void main(String[] args) throws JSONException {
-		String token = MVPApi.signIn("thy@misfitwearables.com", "test12").token;
-		List<TimelineItem> items = MVPApi.getTimelineItems(token, 0, Integer.MAX_VALUE, 0);
-		for (TimelineItem item : items) {
-			logger.info(item.toJson().toString());
-		}
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "test12").token;
+		MVPApi.createStatistics(token, DefaultValues.RandomStatistic());
 	}
 
 }
