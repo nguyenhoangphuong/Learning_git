@@ -21,6 +21,8 @@ public class BackendSignUpTC extends BackendAutomation {
 	@BeforeClass(alwaysRun = true)
 	public void setup() {
 		notregisteredEmail = MVPApi.generateUniqueEmail();
+		duplicatedEmail = MVPApi.generateUniqueEmail();
+		MVPApi.signUp(duplicatedEmail, "qwerty1");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signup" })
@@ -49,7 +51,6 @@ public class BackendSignUpTC extends BackendAutomation {
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signup" })
 	public void SignUpDuplicateEmail() {
-		duplicatedEmail = MVPApi.generateUniqueEmail();
 		AccountResult r = MVPApi.signUp(duplicatedEmail, wellFormatPassword);
 
 		Assert.assertTrue(r.isNotFound(), "Status code is 404");

@@ -9,34 +9,37 @@ import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 
 public class GraphItem {
-	private long timestamp;
-    private double averageValue;
-    private double totalValue;
-    private String serverId;
-    private String localId;
-    private long updatedAt;
-    
-    public long getTimestamp() {
+
+	// fields
+	private Long timestamp;
+	private Double averageValue;
+	private Double totalValue;
+	private String serverId;
+	private String localId;
+	private Long updatedAt;
+
+	// getters setters
+	public Long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
 	}
 
-	public double getAverageValue() {
+	public Double getAverageValue() {
 		return averageValue;
 	}
 
-	public void setAverageValue(double averageValue) {
+	public void setAverageValue(Double averageValue) {
 		this.averageValue = averageValue;
 	}
 
-	public double getTotalValue() {
+	public Double getTotalValue() {
 		return totalValue;
 	}
 
-	public void setTotalValue(double totalValue) {
+	public void setTotalValue(Double totalValue) {
 		this.totalValue = totalValue;
 	}
 
@@ -56,55 +59,101 @@ public class GraphItem {
 		this.localId = localId;
 	}
 
-	public long getUpdatedAt() {
+	public Long getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(long updatedAt) {
+	public void setUpdatedAt(Long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-    
-    public GraphItem(long timestamp, double averageValue, long updatedAt) {
-        this.timestamp = timestamp;
-        this.averageValue = averageValue;
-        this.updatedAt = updatedAt;
-    }
 
-	public static List<GraphItem> getGraphItems(ServiceResponse response)
-			throws JSONException {
-		List<GraphItem> graphItems = new Vector<GraphItem>();
-		JSONObject jsonResponse = new JSONObject(response.getResponseString());
-		JSONArray jsonItems = jsonResponse.getJSONArray("graph_items");
+	// constructor
+	public GraphItem() {
 
-		for (int i = 0; i < jsonItems.length(); i++) {
-			JSONObject jsonItem = jsonItems.getJSONObject(i);
-			
-			GraphItem graphItem = new GraphItem(jsonItem.getLong("timestamp"),
-					jsonItem.getDouble("averageValue"),
-					jsonItem.getLong("updatedAt"));
-			
-			graphItems.add(graphItem);
+	}
+
+	public GraphItem(long timestamp, double averageValue, long updatedAt) {
+		this.timestamp = timestamp;
+		this.averageValue = averageValue;
+		this.updatedAt = updatedAt;
+	}
+
+	// methods
+	public static GraphItem getGraphItem(ServiceResponse response) {
+		try {
+			JSONObject jsonResponse = new JSONObject(response.getResponseString());
+			JSONObject jsonItem = jsonResponse.getJSONObject("graph_item");
+
+			return GraphItem.fromJson(jsonItem);
+		} catch (JSONException e) {
+			return null;
 		}
-		
-		return graphItems;
 	}
 	
+	public static List<GraphItem> getGraphItems(ServiceResponse response) {
+
+		try {
+			List<GraphItem> graphItems = new Vector<GraphItem>();
+			JSONObject jsonResponse;
+			jsonResponse = new JSONObject(response.getResponseString());
+			JSONArray jsonItems = jsonResponse.getJSONArray("graph_items");
+
+			for (int i = 0; i < jsonItems.length(); i++) {
+				JSONObject jsonItem = jsonItems.getJSONObject(i);
+				GraphItem graphItem = GraphItem.fromJson(jsonItem);
+				graphItems.add(graphItem);
+			}
+
+			return graphItems;
+		} catch (JSONException e) {
+			return null;
+		}
+	}
+
 	public JSONObject toJson() {
-        try {
-        	JSONObject object = new JSONObject();
-        	
-            object.accumulate("timestamp", timestamp);
-            object.accumulate("averageValue", averageValue);
-            object.accumulate("totalValue", totalValue);
-            object.accumulate("serverId", serverId);
-            object.accumulate("localId", localId);
-            object.accumulate("updatedAt", updatedAt);
-            
-            return object;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            
-            return null;
-        }
-    }
+		try {
+			JSONObject object = new JSONObject();
+
+			object.accumulate("timestamp", timestamp);
+			object.accumulate("averageValue", averageValue);
+			object.accumulate("totalValue", totalValue);
+			object.accumulate("serverId", serverId);
+			object.accumulate("localId", localId);
+			object.accumulate("updatedAt", updatedAt);
+
+			return object;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static GraphItem fromJson(JSONObject jsonItem) {
+
+		GraphItem graphItem = new GraphItem();
+		try {
+			if (!jsonItem.isNull("serverId"))
+				graphItem.setServerId(jsonItem.getString("serverId"));
+
+			if (!jsonItem.isNull("localId"))
+				graphItem.setLocalId(jsonItem.getString("localId"));
+
+			if (!jsonItem.isNull("timestamp"))
+				graphItem.setTimestamp(jsonItem.getLong("timestamp"));
+
+			if (!jsonItem.isNull("updatedAt"))
+				graphItem.setUpdatedAt(jsonItem.getLong("updatedAt"));
+
+			if (!jsonItem.isNull("averageValue"))
+				graphItem.setAverageValue(jsonItem.getDouble("averageValue"));
+
+			if (!jsonItem.isNull("totalValue"))
+				graphItem.setTotalValue(jsonItem.getDouble("totalValue"));
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return graphItem;
+	}
+
 }

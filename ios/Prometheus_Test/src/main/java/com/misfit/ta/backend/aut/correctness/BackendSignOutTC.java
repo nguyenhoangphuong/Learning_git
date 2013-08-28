@@ -80,8 +80,7 @@ public class BackendSignOutTC extends BackendAutomation {
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.statusCode == 200, "Status code is 200");
-		Assert.assertEquals("Null error message since status code is 200",
-				r.errorMessage, null);
+		Assert.assertEquals(r.errorMessage, null, "Null error message since status code is 200");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signout" })

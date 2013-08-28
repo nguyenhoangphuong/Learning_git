@@ -2,7 +2,6 @@ package com.misfit.ta.backend.data.timeline;
 
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
-import com.misfit.ta.backend.data.JSONBuilder;
 
 public class ActivitySessionItem extends TimelineItemBase {
 

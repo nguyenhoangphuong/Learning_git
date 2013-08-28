@@ -77,7 +77,7 @@ public class BackendGoalGetTC {
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "goal" })
-	public void GetGoalUserId() {
+	public void GetGoalUseServerId() {
 		String token = MVPApi.signIn(email, password).token;
 		Goal g1 = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(2, month, year), 
 				MVPApi.getDayEndEpoch(4, month, year), 0).goals[0];

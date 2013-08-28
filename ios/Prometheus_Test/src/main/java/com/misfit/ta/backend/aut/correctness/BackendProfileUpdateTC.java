@@ -54,9 +54,9 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		Assert.assertEquals(defaultProfile.getWeight() + 1, r.profile.getWeight(), "Weight has changed");
 		Assert.assertEquals((Long)(defaultProfile.getDateOfBirth() + 10000), r.profile.getDateOfBirth(), "Birthday has changed");
 		Assert.assertEquals((Integer)2, r.profile.getGoalLevel(), "GoalLevel has changed");
-		Assert.assertEquals(1, r.profile.getDisplayedUnits().getHeightUnit(), "HeightUnit has changed");
-		Assert.assertEquals(1, r.profile.getDisplayedUnits().getWeightUnit(), "WeightUnit has changed");
-		Assert.assertEquals(1, r.profile.getDisplayedUnits().getTemperatureScale(), "TemperatureScale has changed");
+		Assert.assertEquals(r.profile.getDisplayedUnits().getHeightUnit(), 1, "HeightUnit has changed");
+		Assert.assertEquals(r.profile.getDisplayedUnits().getWeightUnit(), 1, "WeightUnit has changed");
+		Assert.assertEquals(r.profile.getDisplayedUnits().getTemperatureScale(), 1, "TemperatureScale has changed");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })

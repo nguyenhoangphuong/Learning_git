@@ -26,6 +26,25 @@ public class ProfileData {
 	public ProfileData() {
 
 	}
+	
+	public ProfileData(String serverId, Long updatedAt, String localId, Double weight, Double height, 
+			Integer gender, Long dateOfBirth, String name, Integer goalLevel, String latestVersion, 
+			String wearingPosition, PersonalRecord personalRecords, DisplayUnit displayedUnits) {
+		super();
+		this.serverId = serverId;
+		this.updatedAt = updatedAt;
+		this.localId = localId;
+		this.weight = weight;
+		this.height = height;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.name = name;
+		this.goalLevel = goalLevel;
+		this.latestVersion = latestVersion;
+		this.wearingPosition = wearingPosition;
+		this.personalRecords = personalRecords;
+		this.displayedUnits = displayedUnits;
+	}
 
 	// methods
 	public JSONObject toJson() {
