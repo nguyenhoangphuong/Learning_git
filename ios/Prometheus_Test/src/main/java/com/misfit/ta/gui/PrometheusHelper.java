@@ -183,6 +183,7 @@ public class PrometheusHelper {
 	}
 
 	public static float calculateMiles(int steps, float heightInInches) {
+		//TODO: check new distance calculation
 		return (steps * 0.414f * heightInInches) / 63360f;
 	}
 
