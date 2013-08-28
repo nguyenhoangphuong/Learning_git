@@ -19,18 +19,15 @@ public class BackendPedometerTC extends BackendAutomation {
 	public void linkDevice() {
 		String email = MVPApi.generateUniqueEmail();
 		String serialNumberString = String.valueOf(System.currentTimeMillis());
+		
 		// link new account to a new device
 		String newAccToken = createNewAccount(email);
-		Pedometer pedometer = createNewPedometer(newAccToken,
-				serialNumberString);
-		Assert.assertFalse(StringUtils.isEmpty(pedometer.getServerId()),
-				"Failed to create new pedometer!");
+		Pedometer pedometer = createNewPedometer(newAccToken, serialNumberString);
+		Assert.assertFalse(StringUtils.isEmpty(pedometer.getServerId()), "Failed to create new pedometer!");
+		
 		// check linking status
-		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken,
-				serialNumberString);
-		Assert.assertTrue(
-				"Device already linked to your account".equals(linkingStatus),
-				"Failed to link account and device!");
+		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken, serialNumberString);
+		Assert.assertTrue("Device already linked to your account".equals(linkingStatus), "Failed to link account and device!");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
@@ -44,47 +41,41 @@ public class BackendPedometerTC extends BackendAutomation {
 
 		String email2 = MVPApi.generateUniqueEmail();
 		String newAccToken2 = createNewAccount(email2);
+		
 		// account 2 steals device
 		createNewPedometer(newAccToken2, serialNumberString);
+		
 		// check linking status
-		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken1,
-				serialNumberString);
-		Assert.assertTrue("Device already linked to another account"
-				.equals(linkingStatus), "Failed to unlink account and device!");
+		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken1, serialNumberString);
+		Assert.assertTrue("Device already linked to another account".equals(linkingStatus), "Failed to unlink account and device!");
 
-		linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken2,
-				serialNumberString);
-		Assert.assertTrue(
-				"Device already linked to your account".equals(linkingStatus),
-				"Failed to steal device!");
+		linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken2, serialNumberString);
+		Assert.assertTrue("Device already linked to your account".equals(linkingStatus), "Failed to steal device!");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void unlinkDevice() {
+		
 		String email = MVPApi.generateUniqueEmail();
 		String serialNumberString = String.valueOf(System.currentTimeMillis());
+		
 		// link new account to a new device
 		String newAccToken = createNewAccount(email);
 		createNewPedometer(newAccToken, serialNumberString);
+		
 		// check linking status
-		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken,
-				serialNumberString);
-		Assert.assertTrue(
-				"Device already linked to your account".equals(linkingStatus),
-				"Failed to link account and device!");
+		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken, serialNumberString);
+		Assert.assertTrue("Device already linked to your account".equals(linkingStatus), "Failed to link account and device!");
+		
 		// unlink device
 		MVPApi.unlinkDevice(newAccToken, serialNumberString);
-		linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken,
-				serialNumberString);
-		Assert.assertTrue("Device is used to be linked to your account"
-				.equals(linkingStatus), "Failed to unlink account and device!");
+		linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken, serialNumberString);
+		Assert.assertTrue("Device is used to be linked to your account".equals(linkingStatus), "Failed to unlink account and device!");
 	}
 
 	private Pedometer createNewPedometer(String token, String serialNumberString) {
 		long timestamp = System.currentTimeMillis();
-		Pedometer pedometer = MVPApi.createPedometer(token, serialNumberString,
-				firmwareRevisionString, timestamp, null, timestamp,
-				TextTool.getRandomString(19, 20), null, timestamp);
+		Pedometer pedometer = MVPApi.createPedometer(token, serialNumberString, firmwareRevisionString, timestamp, null, timestamp, TextTool.getRandomString(19, 20), null, timestamp);
 		System.out.println(pedometer.toJson().toString());
 		return pedometer;
 	}

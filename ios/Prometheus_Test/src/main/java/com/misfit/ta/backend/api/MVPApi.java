@@ -154,6 +154,12 @@ public class MVPApi {
 		return timeline;
 	}
 
+	public static String generateSyncLog() {
+
+		String log = "{\"startTime\": 347155000, \"endTime\": 347155060, \"serialNumberString\": \"XXXXXXXE01\", \"isSuccessful\": 1, \"data\": {\"fileData\": [ {\"rawData\": \"0101010101\", \"timestampDifference\": 1 } ], \"hardwareLog\": [\"misfit\"] }, \"log\": \"misfit\"}";
+		return log;
+	}
+	
 	// utilities
 	public static long getDayStartEpoch() {
 		return getDayStartEpoch(System.currentTimeMillis() / 1000);
@@ -603,7 +609,7 @@ public class MVPApi {
 		}
 	}
 
-	public static BaseParams buildEditPedometerRequest(String token, String serialNumberString, String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
+	private static BaseParams buildEditPedometerRequest(String token, String serialNumberString, String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
 		Pedometer pedometer = new Pedometer(serialNumberString, firmwareRevisionString, linkedTime, unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
@@ -612,22 +618,17 @@ public class MVPApi {
 	}
 
 	// sync apis
-	public static void syncLog(String token, String log) {
+	public static ServiceResponse syncLog(String token, String log) {
+		
 		String url = baseAddress + "sync_logs";
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
-		request.addHeader("Content-Type", "application/json");
 		request.addParam("log", log);
-		// request.addJsonParam(key, json)
+
 		ServiceResponse response = MVPApi.post(url, port, request);
-		System.out.println("LOG [MVPApi.syncLog]: ------- " + response.getStatusCode());
-	}
-
-	public static String generateSyncLog() {
-
-		String log = "{\"startTime\": 347155000, \"endTime\": 347155060, \"serialNumberString\": \"XXXXXXXE01\", \"isSuccessful\": 1, \"data\": {\"fileData\": [ {\"rawData\": \"0101010101\", \"timestampDifference\": 1 } ], \"hardwareLog\": [\"misfit\"] }, \"log\": \"misfit\"}";
-		System.out.println("LOG [MVPApi.generateSyncLog]: \n" + log);
-		return log;
+		logger.info("Sync log status code: " + response.getStatusCode());
+		
+		return response;
 	}
 
 	// test
