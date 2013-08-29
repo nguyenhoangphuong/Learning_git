@@ -4,11 +4,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.statistics.Statistics;
 
-public class BackendStatisticsTC {
+public class BackendStatisticsTC extends BackendAutomation {
 
 	private String password = "qwerty1";
 	private Statistics defaultStatistics = DefaultValues.RandomStatistic();

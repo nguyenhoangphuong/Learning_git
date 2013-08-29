@@ -4,11 +4,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 
-public class BackendGoalCreateTC {
+public class BackendGoalCreateTC extends BackendAutomation {
 
 	String password = "qwerty1";
 	Goal defaultGoal = DefaultValues.DefaultGoal();

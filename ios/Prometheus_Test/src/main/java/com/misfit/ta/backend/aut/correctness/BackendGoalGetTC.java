@@ -5,11 +5,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 
-public class BackendGoalGetTC {
+public class BackendGoalGetTC extends BackendAutomation {
 	
 	String email = MVPApi.generateUniqueEmail();
 	String password = "qwerty1";

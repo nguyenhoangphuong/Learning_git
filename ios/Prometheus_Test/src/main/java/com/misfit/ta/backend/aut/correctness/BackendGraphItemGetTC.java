@@ -7,11 +7,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.graph.GraphItem;
 
-public class BackendGraphItemGetTC {
+public class BackendGraphItemGetTC extends BackendAutomation {
 
 	String email = MVPApi.generateUniqueEmail();
 	String password = "qwerty1";

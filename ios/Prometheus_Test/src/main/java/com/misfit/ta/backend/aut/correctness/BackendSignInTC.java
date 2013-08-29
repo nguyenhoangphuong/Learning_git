@@ -1,5 +1,6 @@
 package com.misfit.ta.backend.aut.correctness;
 
+
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -33,8 +34,8 @@ public class BackendSignInTC extends BackendAutomation {
 		for (int i = 0; i < wrongFormatEmails.length; i++) {
 			AccountResult r = MVPApi.signIn(wrongFormatEmails[i], wellFormatPassword);
 			r.printKeyPairsValue();
-
-			Assert.assertTrue(r.isNotFound(), "Status code is 404");
+			
+			Assert.assertEquals(r.isNotFound(), "Status code is 404");
 			Assert.assertEquals(DefaultValues.InvalidEmail, r.errorMessage, "Error message content");
 			Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
 		}
@@ -57,7 +58,7 @@ public class BackendSignInTC extends BackendAutomation {
         AccountResult r = MVPApi.signIn(invalidEmail, validPassword);
         r.printKeyPairsValue();
 
-        Assert.assertEquals(r.isNotFound(), "Status code is 404");
+        Assert.assertTrue(r.isNotFound(), "Status code is 404");
         Assert.assertEquals(r.errorMessage, DefaultValues.WrongAccountMsg, "Error message content");
         Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
     }
@@ -67,7 +68,7 @@ public class BackendSignInTC extends BackendAutomation {
         AccountResult r = MVPApi.signIn(validEmail, invalidPassword);
         r.printKeyPairsValue();
 
-        Assert.assertEquals(r.isNotFound(), "Status code is 404");
+        Assert.assertTrue(r.isNotFound(), "Status code is 404");
         Assert.assertEquals(r.errorMessage, DefaultValues.WrongAccountMsg, "Error message content");
         Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
     }

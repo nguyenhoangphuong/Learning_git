@@ -8,11 +8,12 @@ import org.testng.annotations.Test;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.graph.GraphItem;
 
-public class BackendGraphItemCreateTC {
+public class BackendGraphItemCreateTC extends BackendAutomation {
 	
 	String password = "qwerty1";
 

@@ -5,8 +5,9 @@ import org.testng.annotations.Test;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendAutomation;
 
-public class BackendSyncLogTC {
+public class BackendSyncLogTC extends BackendAutomation {
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "sync_log" })
 	public void PushSyncLog() {
