@@ -53,13 +53,14 @@ public class BackendGraphItemGetTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
 	public void GetGraphItem() {
 		
+		GraphItem src = DefaultValues.RandomGraphItem(2020 * 6);
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
-		BaseResult r = MVPApi.createGraphItem(token, DefaultValues.RandomGraphItem(2020 * 6));
+		BaseResult r = MVPApi.createGraphItem(token, src);
 		GraphItem ritem = GraphItem.getGraphItem(r.response);
 		
 		GraphItem getitem = MVPApi.getGraphItem(token, ritem.getServerId());
 		Assert.assertNotNull(getitem, "Graph item is not null");
-		Assert.assertEquals(getitem.getAverageValue(), ritem.getAverageValue(), "Average value is the same");
+		Assert.assertEquals(getitem.getAverageValue(), src.getAverageValue(), "Average value is the same");
 	}
 	
 }

@@ -35,7 +35,7 @@ public class BackendSignInTC extends BackendAutomation {
 			AccountResult r = MVPApi.signIn(wrongFormatEmails[i], wellFormatPassword);
 			r.printKeyPairsValue();
 			
-			Assert.assertEquals(r.isNotFound(), "Status code is 404");
+			Assert.assertTrue(r.isNotFound(), "Status code is 404");
 			Assert.assertEquals(DefaultValues.InvalidEmail, r.errorMessage, "Error message content");
 			Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
 		}
@@ -96,6 +96,7 @@ public class BackendSignInTC extends BackendAutomation {
 
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signin" })
     public void SignBackInDifferentToken() {
+    	
         // check if token changed after sign out and sign back in again
         AccountResult r1 = MVPApi.signIn(validEmail, validPassword);
         MVPApi.signOut(r1.token);

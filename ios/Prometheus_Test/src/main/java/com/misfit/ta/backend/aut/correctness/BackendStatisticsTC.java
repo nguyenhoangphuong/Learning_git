@@ -61,7 +61,7 @@ public class BackendStatisticsTC extends BackendAutomation {
 
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
+	//@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
 	public void UpdateNonExistedStatistics() {
 
 		// sign up but dont create statistics
