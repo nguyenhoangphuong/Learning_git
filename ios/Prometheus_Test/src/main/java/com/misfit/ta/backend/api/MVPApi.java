@@ -16,6 +16,7 @@ import com.google.resting.json.JSONException;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
+import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.account.*;
@@ -561,14 +562,9 @@ public class MVPApi {
 		String url = baseAddress + "pedometer";
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
-		try {
-			ServiceResponse response = MVPApi.get(url, port, request);
-			Pedometer pedometer = Pedometer.getPedometer(response);
-			return pedometer;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
+		ServiceResponse response = MVPApi.get(url, port, request);
+		Pedometer pedometer = Pedometer.getPedometer(response);
+		return pedometer;
 	}
 
 	public static String getDeviceLinkingStatus(String token, String serialNumberString) {
@@ -604,29 +600,34 @@ public class MVPApi {
 	public static Pedometer createPedometer(String token, String serialNumberString, String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
 		String url = baseAddress + "pedometer";
 		BaseParams request = buildEditPedometerRequest(token, serialNumberString, firmwareRevisionString, linkedTime, unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
-		try {
-			ServiceResponse response = MVPApi.post(url, port, request);
-			Pedometer result = Pedometer.getPedometer(response);
-			return result;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
+		ServiceResponse response = MVPApi.post(url, port, request);
+		Pedometer result = Pedometer.getPedometer(response);
+		return result;
 	}
 
 	public static Pedometer updatePedometer(String token, String serialNumberString, String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
 		String url = baseAddress + "pedometer";
 		BaseParams request = buildEditPedometerRequest(token, serialNumberString, firmwareRevisionString, linkedTime, unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
-		try {
-			ServiceResponse response = MVPApi.put(url, port, request);
-			Pedometer result = Pedometer.getPedometer(response);
-			return result;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
+		ServiceResponse response = MVPApi.put(url, port, request);
+		Pedometer result = Pedometer.getPedometer(response);
+		return result;
 	}
 
+	public static Pedometer getPedometer(String token) {
+		
+		// prepare
+		String url = baseAddress + "pedometer";
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+
+		// format data
+		return Pedometer.getPedometer(response);
+	}
+	
 	private static BaseParams buildEditPedometerRequest(String token, String serialNumberString, String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
@@ -684,8 +685,25 @@ public class MVPApi {
 
 	// test
 	public static void main(String[] args) throws JSONException {
-		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "test12").token;
-		MVPApi.createStatistics(token, DefaultValues.RandomStatistic());
+		String email1 = MVPApi.generateUniqueEmail();
+		String email2 = MVPApi.generateUniqueEmail();
+		String password = "qqqqqq";
+		String serialNumber = TextTool.getRandomString(10);
+		
+		//logger.info(MVPApi.getPedometer(MVPApi.signIn("qa018@a.a", password).token).toJson().toString());
+		
+		MVPApi.userInfo(MVPApi.signIn("qa018@a.a", password).token);
+//		MVPApi.signUp(email1, password);
+//		MVPApi.signUp(email2, password);
+//		BackendHelper.link(email1, password, serialNumber);
+//		BackendHelper.unlink(email2, password, serialNumber);
+//		String token = MVPApi.signIn(email, password).token;
+//		List<TimelineItem> items = MVPApi.getTimelineItems(token, 0, Integer.MAX_VALUE, 0);
+//		for(TimelineItem item : items)
+//			logger.info(item.toJson().toString());
+		
+		
+		
 	}
 
 }

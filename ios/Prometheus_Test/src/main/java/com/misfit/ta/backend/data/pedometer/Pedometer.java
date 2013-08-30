@@ -1,7 +1,6 @@
 package com.misfit.ta.backend.data.pedometer;
 
 import com.google.resting.component.impl.ServiceResponse;
-import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 
@@ -15,9 +14,11 @@ public class Pedometer {
 	private String serverId;
 	private long updatedAt;
 
-	public Pedometer(String serialNumberString, String firmwareRevisionString,
-			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
-			String localId, String serverId, long updatedAt) {
+	public Pedometer() {
+		
+	}
+	
+	public Pedometer(String serialNumberString, String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
 		super();
 		this.serialNumberString = serialNumberString;
 		this.firmwareRevisionString = firmwareRevisionString;
@@ -111,23 +112,41 @@ public class Pedometer {
 		}
 	}
 
-	public static Pedometer getPedometer(ServiceResponse response)
-			throws JSONException {
-		JSONObject responseBody = new JSONObject(response.getResponseString());
-		JSONObject obj = responseBody.getJSONObject("pedometer");
-		Pedometer pedometer = new Pedometer(
-				obj.isNull("serialNumberString") ? null : obj.getString("serialNumberString"),
-				obj.isNull("firmwareRevisionString") ? null : obj.getString("firmwareRevisionString"),
-				obj.isNull("linkedTime") ? null : obj.getLong("linkedTime"),
-				obj.isNull("unlinkedTime") ? null : obj.getLong("unlinkedTime"),
-				obj.isNull("lastSyncedTime") ? null : obj
-						.getLong("lastSyncedTime"), obj.getString("localId"),
-				obj.getString("serverId"), obj.getLong("updatedAt"));
-		return pedometer;
+	public static Pedometer fromJson(JSONObject obj) {
+		try {
+			Pedometer pedometer = new Pedometer(obj.isNull("serialNumberString") ? null : 
+						obj.getString("serialNumberString"), 
+						obj.isNull("firmwareRevisionString") ? null : obj.getString("firmwareRevisionString"), 
+						obj.isNull("linkedTime") ? null : obj.getLong("linkedTime"), 
+						obj.isNull("unlinkedTime") ? null : obj.getLong("unlinkedTime"), 
+						obj.isNull("lastSyncedTime") ? null : obj.getLong("lastSyncedTime"), 
+						obj.getString("localId"), 
+						obj.getString("serverId"), 
+						obj.getLong("updatedAt"));
+			
+			return pedometer;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
-	public static String getMessage(ServiceResponse response)
-			throws JSONException {
+	public static Pedometer getPedometer(ServiceResponse response) {
+		try {
+			JSONObject responseBody = new JSONObject(response.getResponseString());
+			JSONObject obj = responseBody.getJSONObject("pedometer");
+			Pedometer pedometer = fromJson(obj);
+			
+			return pedometer;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static String getMessage(ServiceResponse response) throws JSONException {
 		JSONObject responseBody = new JSONObject(response.getResponseString());
 		return responseBody.getString("message");
 	}

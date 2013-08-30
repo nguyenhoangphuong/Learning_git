@@ -11,4 +11,27 @@ public class BackendHelper {
 		AccountResult result = MVPApi.signUp(email, password);
 		return result;
 	}
+	
+	public static String createAllTimelineItemsForAccount(String email, String password) {
+		
+		String token = MVPApi.signIn(email, password).token;
+		MVPApi.createTimelineItems(token, DefaultValues.AllTimelineItems());
+		
+		return token;
+	}
+	
+	public static void unlink(String email, String password, String serialNumber) {
+		
+		String token = MVPApi.signIn(email, password).token;
+		MVPApi.unlinkDevice(token, serialNumber);
+	}
+	
+	public static void link(String email, String password, String serialNumber) {
+		
+		long now = System.currentTimeMillis() / 1000;
+		String token = MVPApi.signIn(email, password).token;
+		MVPApi.createPedometer(token, serialNumber, "0.0.36r", now, null, now, "pedometer-" + System.nanoTime(), null, now);
+	
+	}
+	
 }

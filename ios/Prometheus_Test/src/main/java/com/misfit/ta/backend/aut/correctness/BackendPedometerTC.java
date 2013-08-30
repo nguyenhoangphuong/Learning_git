@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
+import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.utils.TextTool;
@@ -18,7 +19,7 @@ public class BackendPedometerTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void linkDevice() {
 		String email = MVPApi.generateUniqueEmail();
-		String serialNumberString = String.valueOf(System.currentTimeMillis());
+		String serialNumberString = TextTool.getRandomString(10);
 		
 		// link new account to a new device
 		String newAccToken = createNewAccount(email);
@@ -27,12 +28,12 @@ public class BackendPedometerTC extends BackendAutomation {
 		
 		// check linking status
 		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken, serialNumberString);
-		Assert.assertTrue("Device already linked to your account".equals(linkingStatus), "Failed to link account and device!");
+		Assert.assertTrue(DefaultValues.DeviceLinkedToYourAccount.equals(linkingStatus), "Failed to link account and device!");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void stealDevice() {
-		String serialNumberString = String.valueOf(System.currentTimeMillis());
+		String serialNumberString = TextTool.getRandomString(10);
 
 		// link device to account 1
 		String email1 = MVPApi.generateUniqueEmail();
@@ -47,17 +48,17 @@ public class BackendPedometerTC extends BackendAutomation {
 		
 		// check linking status
 		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken1, serialNumberString);
-		Assert.assertTrue("Device already linked to another account".equals(linkingStatus), "Failed to unlink account and device!");
+		Assert.assertTrue(DefaultValues.DeviceLinkedToYourAccount.equals(linkingStatus), "Failed to unlink account and device!");
 
 		linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken2, serialNumberString);
-		Assert.assertTrue("Device already linked to your account".equals(linkingStatus), "Failed to steal device!");
+		Assert.assertTrue(DefaultValues.DeviceLinkedToAnotherAccount.equals(linkingStatus), "Failed to steal device!");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void unlinkDevice() {
 		
 		String email = MVPApi.generateUniqueEmail();
-		String serialNumberString = String.valueOf(System.currentTimeMillis());
+		String serialNumberString = TextTool.getRandomString(10);
 		
 		// link new account to a new device
 		String newAccToken = createNewAccount(email);
@@ -65,12 +66,12 @@ public class BackendPedometerTC extends BackendAutomation {
 		
 		// check linking status
 		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken, serialNumberString);
-		Assert.assertTrue("Device already linked to your account".equals(linkingStatus), "Failed to link account and device!");
+		Assert.assertTrue(DefaultValues.DeviceLinkedToYourAccount.equals(linkingStatus), "Failed to link account and device!");
 		
 		// unlink device
 		MVPApi.unlinkDevice(newAccToken, serialNumberString);
 		linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken, serialNumberString);
-		Assert.assertTrue("Device is used to be linked to your account".equals(linkingStatus), "Failed to unlink account and device!");
+		Assert.assertTrue(DefaultValues.DeviceUsedToLinkToYourAccount.equals(linkingStatus), "Failed to unlink account and device!");
 	}
 
 	private Pedometer createNewPedometer(String token, String serialNumberString) {

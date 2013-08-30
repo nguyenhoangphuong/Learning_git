@@ -121,4 +121,5 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		Assert.assertEquals(defaultProfile.getWeight() + 1, r.profile.getWeight(), "Weight has changed");
 		Assert.assertEquals(defaultProfile.getDateOfBirth(), r.profile.getDateOfBirth(), "Birthday has not changed");
 	}
+
 }

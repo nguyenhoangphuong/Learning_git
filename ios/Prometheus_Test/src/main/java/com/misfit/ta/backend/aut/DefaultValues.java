@@ -2,8 +2,11 @@ package com.misfit.ta.backend.aut;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
+import com.google.resting.json.JSONArray;
+import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
@@ -19,6 +22,7 @@ import com.misfit.ta.backend.data.timeline.TimelineItemBase;
 
 public class DefaultValues {
 
+	// values
 	static public String ArbitraryToken = "134654678931452236-arbitrarytokenasdasfjk";
 
 	// messages
@@ -27,6 +31,10 @@ public class DefaultValues {
 	static public String InvalidPassword = "Sorry, this password is too short";
 	static public String WrongAccountMsg = "Incorrect email or password";
 	static public String InvalidAuthToken = "Invalid auth token";
+	static public String DeviceLinkedToYourAccount = "Device already linked to another account";
+	static public String DeviceLinkedToAnotherAccount = "Device already linked to your account";
+	static public String DeviceUsedToLinkToYourAccount = "Device is used to be linked to your account";
+	static public String DeviceNotLinkToAnyAccount = "This device doesn't link to any device";
 
 	// profile
 	static public ProfileData DefaultProfile() {
@@ -141,13 +149,12 @@ public class DefaultValues {
 
 		return item;
 	}
-	
+
 	static public TimelineItem CreateTimelineItem(long timestamp) {
-		
+
 		Random r = new Random();
-		int itemType = r.nextInt() % (TimelineItemBase.TYPE_END - TimelineItemBase.TYPE_START + 1) 
-				+ TimelineItemBase.TYPE_START;
-		
+		int itemType = r.nextInt() % (TimelineItemBase.TYPE_END - TimelineItemBase.TYPE_START + 1) + TimelineItemBase.TYPE_START;
+
 		return CreateTimelineItem(timestamp, itemType);
 	}
 
@@ -155,7 +162,7 @@ public class DefaultValues {
 
 		return CreateTimelineItem(System.currentTimeMillis() / 1000);
 	}
-	
+
 	static public TimelineItem RandomTimelineItem(int secondsOfDay) {
 
 		Calendar cal = Calendar.getInstance();
@@ -166,33 +173,149 @@ public class DefaultValues {
 
 		return CreateTimelineItem(cal.getTimeInMillis() / 1000);
 	}
-	
+
 	static public TimelineItem RandomTimelineItem(int secondsOfDay, int timelineType) {
-		
+
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(System.currentTimeMillis());
 		cal.set(Calendar.HOUR_OF_DAY, secondsOfDay / 3600);
 		cal.set(Calendar.MINUTE, (secondsOfDay % 3600) / 60);
 		cal.set(Calendar.SECOND, (secondsOfDay % 3600) % 60);
-		
+
 		return CreateTimelineItem(cal.getTimeInMillis() / 1000, timelineType);
 	}
 
 	// statistics
 	static public Statistics RandomStatistic() {
-		
+
 		Random r = new Random();
 		long timestamp = System.currentTimeMillis() / 1000;
-		
+
 		PersonalRecord personalRecords = new PersonalRecord();
 		personalRecords.setPersonalBestRecordsInPoint(r.nextInt() % 1500 + 500d);
-		
+
 		Statistics item = new Statistics();
 		item.setLocalId("statistics-" + System.currentTimeMillis() + "-" + System.nanoTime());
 		item.setUpdatedAt(timestamp);
 		item.setPersonalRecords(personalRecords);
-		
+
 		return item;
+	}
+
+	// test account
+	static public int randInt(int includeFrom, int includeTo) {
+		Random r = new Random();
+		return r.nextInt() % (includeTo - includeFrom + 1) + includeFrom;
+	}
+
+	static public TimelineData TimelineDataForSleep() {
+
+		try {
+			JSONArray sleepstates = new JSONArray();
+			sleepstates.put(new int[] { 0, 1 });
+			sleepstates.put(new int[] { 30, 2 });
+			sleepstates.put(new int[] { 90, 3 });
+			sleepstates.put(new int[] { 120, 1 });
+			sleepstates.put(new int[] { 150, 2 });
+			sleepstates.put(new int[] { 180, 3 });
+			sleepstates.put(new int[] { 300, 2 });
+			sleepstates.put(new int[] { 320, 1 });
+			sleepstates.put(new int[] { 330, 2 });
+
+			JSONObject sleepdata = new JSONObject();
+			sleepdata.accumulate("bookmarkTime", MVPApi.getDayStartEpoch());
+			sleepdata.accumulate("realStartTime", MVPApi.getDayStartEpoch() + 3600 * 0.5);
+			sleepdata.accumulate("realEndTime", MVPApi.getDayEndEpoch() + 3600 * 7.5);
+			sleepdata.accumulate("realDeepSleepTimeInMinutes", 60 * 2.5);
+			sleepdata.accumulate("realSleepTimeInMinutes", 60 * 7);
+			sleepdata.accumulate("isFirstSleepOfDay", true);
+			sleepdata.accumulate("sleepStateChanges", sleepstates);
+
+			TimelineData data = new TimelineData();
+			data.setData(sleepdata);
+			return data;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	static public TimelineData TimelineDataForActivity(int activityType, int intenseLevel) {
+
+		try {
+			
+			int[] intensePoints = new int[] { 50, 100, 300, 500 };
+			int duration = randInt(5, 10);
+			int steps = duration * randInt(60, 200);
+			int point = randInt(intensePoints[intenseLevel], intensePoints[intenseLevel + 1] + 1);
+
+			JSONObject data = new JSONObject();
+			data.accumulate("steps", steps);
+			data.accumulate("duration", duration);
+			data.accumulate("distance", randInt(50, 250) / 100d);
+			data.accumulate("point", point);
+			data.accumulate("rawPoint", point * 2.5);
+			data.accumulate("isBestRecord", false);
+			data.accumulate("calories", randInt(50, 100));
+			data.accumulate("activityType", activityType);
+			
+			TimelineData tdata = new TimelineData();
+			tdata.setData(data);
+			
+			return tdata;
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	static public List<TimelineItem> AllTimelineItems() {
+
+		List<TimelineItem> items = new ArrayList<TimelineItem>();
+
+		try {
+
+			// sleep from 0 - 8
+			TimelineData sleepdata = TimelineDataForSleep();
+			TimelineItem sleepitem = new TimelineItem();
+			sleepitem.setItemType(5);
+			sleepitem.setData(sleepdata);
+			sleepitem.setLocalId("sleeptile" + System.nanoTime());
+			sleepitem.setTimestamp(MVPApi.getDayStartEpoch());
+			sleepitem.setUpdatedAt(MVPApi.getDayStartEpoch());
+			
+			items.add(sleepitem);
+
+			// for each activity type
+			int totalMins = 60 * 8 + 1;
+			for (int i = 0; i <= 7; i++) {
+				// for each intensity level
+				for (int j = 0; j < 3; j++) {
+
+					TimelineData actData = TimelineDataForActivity(i, j);
+					TimelineItem actItem = new TimelineItem();
+					actItem.setItemType(2);
+					actItem.setData(actData);
+					actItem.setLocalId("activitytile" + System.nanoTime());
+					actItem.setTimestamp(MVPApi.getDayStartEpoch() + totalMins * 60);
+					actItem.setUpdatedAt(MVPApi.getDayStartEpoch() + totalMins * 60);
+					
+					totalMins += actData.getData().getInt("duration") + 1;
+					
+					items.add(actItem);
+				}
+			}
+
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+
+		return items;
 	}
 
 }

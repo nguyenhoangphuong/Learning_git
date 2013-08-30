@@ -4,7 +4,7 @@ import com.google.resting.json.JSONObject;
 
 public abstract class TimelineItemBase {
     
-	public static final int TYPE_START = 1;
+	public static final int TYPE_START = 0;
     public static final int TYPE_WEATHER = 1;
     public static final int TYPE_SESSION = 2;
     public static final int TYPE_MILESTONE = 3;
