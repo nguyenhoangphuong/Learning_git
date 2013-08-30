@@ -41,7 +41,6 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		data.setUpdatedAt(defaultProfile.getUpdatedAt() + 10);
 		data.setName(name);
 		data.setWeight(defaultProfile.getWeight() + 1);
-		data.setDateOfBirth(defaultProfile.getDateOfBirth() + 10000);
 		data.setGoalLevel(2);
 		data.setDisplayedUnits(new DisplayUnit(1, 1, 1));
 
@@ -49,16 +48,44 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isExisted(), "Status code is OK: 210");
-		Assert.assertNotEquals(defaultProfile.getUpdatedAt(), r.profile.getUpdatedAt(), "UpdatedAt has changed");
 		Assert.assertEquals(name, r.profile.getName(), "Name has changed");
 		Assert.assertEquals(defaultProfile.getWeight() + 1, r.profile.getWeight(), "Weight has changed");
-		Assert.assertEquals((Long)(defaultProfile.getDateOfBirth() + 10000), r.profile.getDateOfBirth(), "Birthday has changed");
 		Assert.assertEquals((Integer)2, r.profile.getGoalLevel(), "GoalLevel has changed");
 		Assert.assertEquals(r.profile.getDisplayedUnits().getHeightUnit(), 1, "HeightUnit has changed");
 		Assert.assertEquals(r.profile.getDisplayedUnits().getWeightUnit(), 1, "WeightUnit has changed");
 		Assert.assertEquals(r.profile.getDisplayedUnits().getTemperatureScale(), 1, "TemperatureScale has changed");
+		
+		// test cache by getting server profile again and see if server return updated version
+		int count = 0;
+		for(int i = 0; i < MVPApi.CACHE_TRY_TIME; i++) {
+			
+			ProfileResult r2 = MVPApi.getProfile(token);
+			ProfileData p = r2.profile;
+			r2.printKeyPairsValue();
+			
+			if(p == null) {
+				count++;
+				continue;
+			}
+			
+			if(!p.getWeight().equals(data.getWeight()))
+				count++;
+		}
+		
+		Assert.assertEquals(count, 0, "Fail count");
 	}
 
+	//@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
+	public void UpdateNonExistedProfile() {
+		
+		// sign up and update profile without creating it
+		ProfileData data = DefaultValues.DefaultProfile();
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		ProfileResult r = MVPApi.updateProfile(token, data, "");
+		
+		Assert.assertTrue(r.isNotFound(), "Status code is 404");
+	}
+	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
 	public void UpdateProfileUsingExpiredToken() {
 		
@@ -97,29 +124,6 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isAuthInvalid(), "Status code is 401");
-	}
-
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
-	public void UpdateProfileHadBeenUpdated() {
-		
-		// sign in and decrease updatedAt of profile then use that to update profile
-		String token = MVPApi.signIn(email, password).token;
-		defaultProfile = MVPApi.getProfile(token).profile;
-		ProfileData data = new ProfileData();
-
-		String name = "Dandelion" + System.nanoTime();
-		data.setUpdatedAt(defaultProfile.getUpdatedAt() - 10);
-		data.setName(name);
-		data.setWeight(defaultProfile.getWeight() + 1);
-
-		ProfileResult r = MVPApi.updateProfile(token, data, defaultProfile.getServerId());
-		r.printKeyPairsValue();
-
-		Assert.assertTrue(r.isExisted(), "Status code is OK: 210");
-		Assert.assertNotEquals(defaultProfile.getUpdatedAt(), r.profile.getUpdatedAt(), "UpdatedAt has changed");
-		Assert.assertEquals(name, r.profile.getName(), "Name has changed");
-		Assert.assertEquals(defaultProfile.getWeight() + 1, r.profile.getWeight(), "Weight has changed");
-		Assert.assertEquals(defaultProfile.getDateOfBirth(), r.profile.getDateOfBirth(), "Birthday has not changed");
 	}
 
 }

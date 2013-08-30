@@ -13,6 +13,7 @@ import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
@@ -39,6 +40,9 @@ public class MVPApi {
 	// fields
 	public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
 	public static int port = Integer.parseInt(Settings.getValue("MVPBackendPort"));
+	
+	public static int CACHE_TRY_TIME = 10;
+	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.36x.3";
 
 	// request helpers
 	static private ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
@@ -612,9 +616,24 @@ public class MVPApi {
 		Pedometer result = Pedometer.getPedometer(response);
 		return result;
 	}
+	
+	public static Pedometer updatePedometer(String token, JSONObject data) {
+		
+		// prepare
+		String url = baseAddress + "pedometer";
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("pedometer", data.toString());
+
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.put(url, port, requestInf);
+
+		// format data
+		return Pedometer.getPedometer(response);
+	}
 
 	public static Pedometer getPedometer(String token) {
-		
+
 		// prepare
 		String url = baseAddress + "pedometer";
 
@@ -627,13 +646,34 @@ public class MVPApi {
 		// format data
 		return Pedometer.getPedometer(response);
 	}
-	
+
 	private static BaseParams buildEditPedometerRequest(String token, String serialNumberString, String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
 		Pedometer pedometer = new Pedometer(serialNumberString, firmwareRevisionString, linkedTime, unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
 		request.addObjectParam("pedometer", pedometer.toJson().toString());
 		return request;
+	}
+
+	public static String getLatestFirmwareVersionString() {
+
+		// prepare
+		String url = baseAddress + "shine_firmwares/get_latest";
+		BaseParams requestInf = new BaseParams();
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+
+		// format data
+		try {
+			JSONObject json = new JSONObject(response.getResponseString());
+			return json.getString("version_number");
+			
+		} catch (JSONException e) {
+			
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	// sync apis
@@ -685,25 +725,9 @@ public class MVPApi {
 
 	// test
 	public static void main(String[] args) throws JSONException {
-		String email1 = MVPApi.generateUniqueEmail();
-		String email2 = MVPApi.generateUniqueEmail();
-		String password = "qqqqqq";
-		String serialNumber = TextTool.getRandomString(10);
 		
-		//logger.info(MVPApi.getPedometer(MVPApi.signIn("qa018@a.a", password).token).toJson().toString());
-		
-		MVPApi.userInfo(MVPApi.signIn("qa018@a.a", password).token);
-//		MVPApi.signUp(email1, password);
-//		MVPApi.signUp(email2, password);
-//		BackendHelper.link(email1, password, serialNumber);
-//		BackendHelper.unlink(email2, password, serialNumber);
-//		String token = MVPApi.signIn(email, password).token;
-//		List<TimelineItem> items = MVPApi.getTimelineItems(token, 0, Integer.MAX_VALUE, 0);
-//		for(TimelineItem item : items)
-//			logger.info(item.toJson().toString());
-		
-		
-		
+		MVPApi.userInfo(MVPApi.signIn("qa016@a.a", "qqqqqq").token);
+		logger.info(MVPApi.getLatestFirmwareVersionString());
 	}
 
 }

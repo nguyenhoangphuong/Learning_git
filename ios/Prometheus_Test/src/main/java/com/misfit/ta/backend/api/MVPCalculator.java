@@ -1,6 +1,6 @@
 package com.misfit.ta.backend.api;
 
-public class Calculation {
+public class MVPCalculator {
 	
 	public static double calculateDistance(int steps, int mins, int heightInInches) {
 		

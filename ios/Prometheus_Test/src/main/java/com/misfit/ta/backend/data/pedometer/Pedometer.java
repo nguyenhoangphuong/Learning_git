@@ -5,20 +5,26 @@ import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 
 public class Pedometer {
+	
 	private String serialNumberString;
 	private String firmwareRevisionString;
 	private Long linkedTime;
 	private Long unlinkedTime;
 	private Long lastSyncedTime;
+	private Integer clockState;
+	private Integer bookmarkState;
+	private Integer batteryLevel;
 	private String localId;
 	private String serverId;
-	private long updatedAt;
+	private Long updatedAt;
 
+	
+	// constructors
 	public Pedometer() {
 		
 	}
 	
-	public Pedometer(String serialNumberString, String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
+	public Pedometer(String serialNumberString, String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, Long updatedAt) {
 		super();
 		this.serialNumberString = serialNumberString;
 		this.firmwareRevisionString = firmwareRevisionString;
@@ -28,8 +34,13 @@ public class Pedometer {
 		this.localId = localId;
 		this.serverId = serverId;
 		this.updatedAt = updatedAt;
+		this.bookmarkState = 0;
+		this.batteryLevel = 100;
+		this.clockState = 0;
 	}
 
+	
+	// getters setters
 	public String getSerialNumberString() {
 		return serialNumberString;
 	}
@@ -69,6 +80,30 @@ public class Pedometer {
 	public void setLastSyncedTime(Long lastSyncedTime) {
 		this.lastSyncedTime = lastSyncedTime;
 	}
+	
+	public Integer getClockState() {
+		return clockState;
+	}
+
+	public void setClockState(Integer clockState) {
+		this.clockState = clockState;
+	}
+
+	public Integer getBookmarkState() {
+		return bookmarkState;
+	}
+
+	public void setBookmarkState(Integer bookmarkState) {
+		this.bookmarkState = bookmarkState;
+	}
+
+	public Integer getBatteryLevel() {
+		return batteryLevel;
+	}
+
+	public void setBatteryLevel(Integer batteryLevel) {
+		this.batteryLevel = batteryLevel;
+	}
 
 	public String getLocalId() {
 		return localId;
@@ -94,6 +129,8 @@ public class Pedometer {
 		this.updatedAt = updatedAt;
 	}
 
+	
+	// methods
 	public JSONObject toJson() {
 		try {
 			JSONObject object = new JSONObject();
@@ -102,6 +139,9 @@ public class Pedometer {
 			object.accumulate("updatedAt", updatedAt);
 			object.accumulate("serialNumberString", serialNumberString);
 			object.accumulate("firmwareRevisionString", firmwareRevisionString);
+			object.accumulate("clockState", clockState);
+			object.accumulate("bookmarkState", bookmarkState);
+			object.accumulate("batteryLevel", batteryLevel);
 			object.accumulate("linkedTime", linkedTime);
 			object.accumulate("unlinkedTime", unlinkedTime);
 			object.accumulate("lastSyncedTime", lastSyncedTime);
@@ -114,15 +154,29 @@ public class Pedometer {
 
 	public static Pedometer fromJson(JSONObject obj) {
 		try {
-			Pedometer pedometer = new Pedometer(obj.isNull("serialNumberString") ? null : 
-						obj.getString("serialNumberString"), 
-						obj.isNull("firmwareRevisionString") ? null : obj.getString("firmwareRevisionString"), 
-						obj.isNull("linkedTime") ? null : obj.getLong("linkedTime"), 
-						obj.isNull("unlinkedTime") ? null : obj.getLong("unlinkedTime"), 
-						obj.isNull("lastSyncedTime") ? null : obj.getLong("lastSyncedTime"), 
-						obj.getString("localId"), 
-						obj.getString("serverId"), 
-						obj.getLong("updatedAt"));
+			Pedometer pedometer = new Pedometer();
+			if(!obj.isNull("serialNumberString"))
+				pedometer.setSerialNumberString(obj.getString("serialNumberString"));
+			if(!obj.isNull("firmwareRevisionString"))
+				pedometer.setFirmwareRevisionString(obj.getString("firmwareRevisionString"));
+			if(!obj.isNull("linkedTime"))
+				pedometer.setLinkedTime(obj.getLong("linkedTime"));
+			if(!obj.isNull("unlinkedTime"))
+				pedometer.setUnlinkedTime(obj.getLong("unlinkedTime"));
+			if(!obj.isNull("lastSyncedTime"))
+				pedometer.setLastSyncedTime(obj.getLong("lastSyncedTime"));
+			if(!obj.isNull("clockState"))
+				pedometer.setClockState(obj.getInt("clockState"));
+			if(!obj.isNull("bookmarkState"))
+				pedometer.setBookmarkState(obj.getInt("bookmarkState"));
+			if(!obj.isNull("batteryLevel"))
+				pedometer.setBatteryLevel(obj.getInt("batteryLevel"));
+			if(!obj.isNull("localId"))
+				pedometer.setLocalId(obj.getString("localId"));
+			if(!obj.isNull("serverId"))
+				pedometer.setServerId(obj.getString("serverId"));
+			if(!obj.isNull("updatedAt"))
+				pedometer.setUpdatedAt(obj.getLong("updatedAt"));
 			
 			return pedometer;
 			
@@ -155,4 +209,5 @@ public class Pedometer {
 		JSONObject responseBody = new JSONObject(response.getResponseString());
 		return responseBody.getInt("result");
 	}
+
 }
