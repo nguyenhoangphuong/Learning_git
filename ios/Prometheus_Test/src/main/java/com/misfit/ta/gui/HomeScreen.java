@@ -32,6 +32,18 @@ public class HomeScreen {
     	Gui.touchAVIew("PTGoalCircleView", 0);
     }
     
+    public static void chooseSleep() {
+    	Gui.touchAVIew("UILabel", DefaultStrings.SleepLabel);
+    }
+    
+    public static void chooseCycling() {
+    	Gui.touchAVIew("UILabel", DefaultStrings.CyclingLabel);
+    }
+    
+    public static void chooseSwimming() {
+    	Gui.touchAVIew("UILabel", DefaultStrings.SwimmingLabel);
+    }
+    
     public static void tapToday() {
     	//iphone 4
     	Gui.touch(300, 75);

@@ -125,6 +125,8 @@ public class SignUpAPI extends ModelAPI {
         ShortcutsTyper.delayOne();
         
         // wait for sync
+        ShortcutsTyper.delayTime(1000);
+		PrometheusHelper.handleUpdateFirmwarePopup();
         ShortcutsTyper.delayTime(10000);
         PrometheusHelper.handleTutorial();
     }

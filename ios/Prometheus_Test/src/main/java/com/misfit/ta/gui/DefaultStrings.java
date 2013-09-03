@@ -80,6 +80,12 @@ public class DefaultStrings {
     public static String UnableToLinkMessage = "This Shine is linked to another account. The owner of that account must unlink it.";
     public static String LinkShineButton = "Link Shine";
     public static String UnableToLinkTitle = "Unable to Link";
+    public static String SleepLabel = "Sleep";
+    public static String CyclingLabel = "Cycling";
+    public static String SwimmingLabel = "Swimming";
+    public static String TennisLabel = "Tennis";
+    public static String BasketballLabel = "Basketball";
+    public static String SoccerLabel = "Soccer";
     //time zone
     public static String TimezoneForwardLabel = "You travelled forwards in time by";
     public static String TimezoneBackwardLabel = "You travelled backwards in time by";
@@ -88,5 +94,7 @@ public class DefaultStrings {
     public static String SyncPlaceShineHere = "Place\\nSHINE here";
     public static String NewGoalInstruction = "Sync to update your new goal on your Shine.";
     public static String[] WearingLocations = {"Head", "Upper Arm", "Chest", "Wrist", "Waist", "Ankle/Foot"};
-    
+    public static String UpdateFirmwareMessage = "We've made your Shine even better! Sync now to get the latest features";
+    public static String UpdateFirmwareTitle = "Update Available";
+    public static String UpdateFirmwareLaterButton = "Later";
 }

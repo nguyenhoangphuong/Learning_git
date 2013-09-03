@@ -45,7 +45,6 @@ public class DayProgressAPI extends ModelAPI {
 	private float weight = 120f; // 120 lbs is default weight for men
 	private boolean isMale = true;
 	private int year = 1981;
-	private int goalPoints = 1000; // total goal is 1000 points
 
 	private boolean hasNoActivity = true;
 
@@ -270,4 +269,7 @@ public class DayProgressAPI extends ModelAPI {
 		// nothing to do here
 	}
 
+	public void e_stay() {
+		
+	}
 }
