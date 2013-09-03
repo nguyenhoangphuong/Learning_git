@@ -30,7 +30,7 @@ public class DefaultStrings {
     public static String SignUpLinkShineTitle = "Link Shine";
     public static String FinishSetUpButton = "FINISH SETUP";
     public static String[] SignUpTutorial = {"\\_Walking\\_", "\\_Swimming\\_", "\\_Biking\\_", "\\_Tennis\\_", "Even\\n\\_dancing!\\_"};
-   
+  
 
     
     // forgot password
@@ -77,6 +77,9 @@ public class DefaultStrings {
     public static String ShineOutButton = "Shine out";
     public static String LinkButton = "Link";
     public static String UnlinkButton = "Unlink";
+    public static String UnableToLinkMessage = "This Shine is linked to another account. The owner of that account must unlink it.";
+    public static String LinkShineButton = "Link Shine";
+    public static String UnableToLinkTitle = "Unable to Link";
     //time zone
     public static String TimezoneForwardLabel = "You travelled forwards in time by";
     public static String TimezoneBackwardLabel = "You travelled backwards in time by";
