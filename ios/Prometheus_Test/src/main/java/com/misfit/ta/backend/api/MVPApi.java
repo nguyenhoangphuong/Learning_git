@@ -726,8 +726,12 @@ public class MVPApi {
 	// test
 	public static void main(String[] args) throws JSONException {
 		
-		MVPApi.userInfo(MVPApi.signIn("qa016@a.a", "qqqqqq").token);
-		logger.info(MVPApi.getLatestFirmwareVersionString());
+//		MVPApi.userInfo(MVPApi.signIn("qa022@a.a", "qqqqqq").token);
+		
+		Pedometer pedo = new Pedometer();
+		pedo.setFirmwareRevisionString("0.0.36r");
+		MVPApi.updatePedometer(MVPApi.signIn("qa023@a.a", "qqqqqq").token, pedo.toJson());
+		
 	}
 
 }

@@ -31,8 +31,8 @@ public class DefaultValues {
 	static public String InvalidPassword = "Sorry, this password is too short";
 	static public String WrongAccountMsg = "Incorrect email or password";
 	static public String InvalidAuthToken = "Invalid auth token";
-	static public String DeviceLinkedToYourAccount = "Device already linked to another account";
-	static public String DeviceLinkedToAnotherAccount = "Device already linked to your account";
+	static public String DeviceLinkedToYourAccount = "Device already linked to your account";
+	static public String DeviceLinkedToAnotherAccount = "Device already linked to another account";
 	static public String DeviceUsedToLinkToYourAccount = "Device is used to be linked to your account";
 	static public String DeviceNotLinkToAnyAccount = "This device doesn't link to any device";
 
