@@ -1,7 +1,6 @@
 package com.misfit.ta.ios.modelapi.timezone;
 
 import java.io.File;
-import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -57,9 +56,6 @@ public class ChangeTimezoneBackwardDifferentDaysAPI extends ModelAPI {
 				+ this.currentTimezone);
 	}
 
-	public void e_checkEnd() {
-	}
-
 	// vertex
 	public void v_HomeScreen() {
 		Assert.assertTrue(HomeScreen.isToday(),
@@ -73,10 +69,6 @@ public class ChangeTimezoneBackwardDifferentDaysAPI extends ModelAPI {
 		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime,
 				delta, beforeOffset, false);
 	}
-
-	public void v_End() {
-	}
-
 	public void e_stay() {
 	}
 }
