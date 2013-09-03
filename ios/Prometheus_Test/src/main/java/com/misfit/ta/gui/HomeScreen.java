@@ -9,13 +9,6 @@ public class HomeScreen {
 	
 	/* Navigation */
 	public static void tapOpenSettingsTray() {
-//		if (ViewUtils.isExistedView("UILabel", DefaultStrings.TodayTitle)
-//				&& ViewUtils.isExistedView("UILabel", DefaultStrings.WeekTitle)) {
-//			Gui.touchAVIew("UILabel", DefaultStrings.TodayTitle);
-//		} else {
-//			Gui.touchAVIew("UILabel", DefaultStrings.ThisWeekTitle);
-//		}
-		
 		Gui.touchAVIew("UILabel", DefaultStrings.MenuButton);
 	}
     
