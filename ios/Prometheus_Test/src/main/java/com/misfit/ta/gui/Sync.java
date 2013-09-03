@@ -3,6 +3,7 @@ package com.misfit.ta.gui;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class Sync {
+	
 	public static void signIn() {
 		LaunchScreen.launch();
 		SignIn.tapLogIn();
@@ -17,11 +18,11 @@ public class Sync {
 	}
 	
 	public static void tapLinkShine() {
-		Gui.touchAVIew("UIButtonLabel", "Link Shine");
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.LinkShineButton);
 	}
 
 	public static void openSyncView() {
-		Gui.touchAVIew("UILabel", "Sync");
+		Gui.touchAVIew("UILabel", DefaultStrings.MenuButton);
 		ShortcutsTyper.delayTime(3000);
 	}
 
@@ -30,15 +31,20 @@ public class Sync {
 	}
 	
     public static boolean hasSyncFailedMessage() {
-    	return PrometheusHelper.hasNoShineAvailableMessage();
+    	return PrometheusHelper.hasSyncFailedMessage();
+    }
+    
+    public static boolean hasUnableToLinkMessage() {
+    	return PrometheusHelper.hasUnableToLinkMessage();
     }
     
     public static boolean hasNoShineAvailableMessage() {
-    	return PrometheusHelper.hasSyncFailedMessage();
+    	return PrometheusHelper.hasNoShineAvailableMessage();
     }
 
 	public static void tapOK() {
 		// popup error message
 		Gui.touchPopupButton(0);
 	}
+
 }

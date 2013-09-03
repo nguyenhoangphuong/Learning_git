@@ -98,6 +98,11 @@ public class MVPApi {
 		return "test" + System.currentTimeMillis() + TextTool.getRandomString(6, 6) + "@qa.com";
 	}
 
+	public static String generateLocalId()
+	{
+		return System.nanoTime() + "-" + TextTool.getRandomString(10);
+	}
+	
 	public static JSONArray[] generateTimelineItemsAndGraphItems() {
 		int numberOfItemsPerDay = 1;
 		int numberOfDays = 1;

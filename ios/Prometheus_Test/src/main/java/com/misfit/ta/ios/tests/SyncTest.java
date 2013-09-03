@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.Gui;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.ios.AutomationTest;
@@ -32,7 +33,7 @@ public class SyncTest extends AutomationTest {
 		System.out.println(actualResult);
 	}
 
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Syncing" }, dependsOnMethods = { "LinkNoShineAvailable" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Syncing" })
 	public void LinkOneShineAvailable() throws InterruptedException, StopConditionException, IOException {
 		ModelHandler model = getModelhandler();
 		model.add("LinkOneShineAvailable", new LinkOneShineAvailableAPI(this, Files.getFile("model/sync/LinkOneShineAvaiable.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
@@ -42,8 +43,15 @@ public class SyncTest extends AutomationTest {
 		System.out.println(actualResult);
 	}
 
-	@Test(groups = { "iOS", "Prometheus", "Syncing" }, dependsOnMethods = { "LinkOneShineAvailable" })
+	@Test(groups = { "iOS", "Prometheus", "Syncing" })
 	public void SyncContinously() throws InterruptedException, StopConditionException, IOException {
+		
+		// set up: link shine v14 to v14 account
+		Long now = System.currentTimeMillis() / 1000;
+		MVPApi.createPedometer(MVPApi.signIn("v14@qa.com", "test12").token, "XXXXXV0014", 
+				MVPApi.LATEST_FIRMWARE_VERSION_STRING, now, null, now, MVPApi.generateLocalId(), null, now);
+		
+		// test
 		int successfulSyncCount = 0;
 		int failedSyncCount = 0;
 		ResultLogger rlog = ResultLogger.getLogger("testSync_" + System.currentTimeMillis());

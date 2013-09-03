@@ -9,6 +9,7 @@ import org.testng.Assert;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Sync;
@@ -25,11 +26,12 @@ public class LinkNoShineAvailableAPI extends ModelAPI {
 	public void e_init() {
 		
 		// sign up a new account and go to LinkShine screen
+		String email = MVPApi.generateUniqueEmail();
 		LaunchScreen.launch();
 
 		SignUp.tapSignUp();
 		ShortcutsTyper.delayTime(1000);
-		SignUp.enterEmailPassword(MVPApi.generateUniqueEmail(), "qwerty1");
+		SignUp.enterEmailPassword(email, "qwerty1");
 		ShortcutsTyper.delayTime(10000);
 
 		SignUp.enterGender(true);
@@ -41,14 +43,25 @@ public class LinkNoShineAvailableAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(1000);
 		SignUp.setGoal(1);
 		SignUp.tapNext();
+		
+		// link v14@qa.com account to v14 shine
+		Long now = System.currentTimeMillis() / 1000;
+		MVPApi.createPedometer(MVPApi.signIn("v14@qa.com", "test12").token, "XXXXXV0014", 
+				MVPApi.LATEST_FIRMWARE_VERSION_STRING, now, null, now, MVPApi.generateLocalId(), null, now);
 	}
 
 	public void e_triggerLink() {
 		ShortcutsTyper.delayTime(1000);
 		Sync.tapToSync();
 		
-		while(!Sync.hasAlert()) {
+		int totalTime = 0;
+		int TIME_OUT = 300;
+		while(!Sync.hasAlert() && !HomeScreen.isToday()) {
 			ShortcutsTyper.delayTime(1000);
+			
+			totalTime += 1;
+			if (totalTime > TIME_OUT)
+				break;
 		}
 	}
 
@@ -66,7 +79,9 @@ public class LinkNoShineAvailableAPI extends ModelAPI {
 	}
 
 	public void v_NoShineAvailable() {
-		Assert.assertTrue(Sync.hasNoShineAvailableMessage(), "Current view is SignUp - Alert No Shine Available");
+		Assert.assertTrue(Sync.hasNoShineAvailableMessage() ||
+				Sync.hasUnableToLinkMessage(), 
+				"Current view is SignUp - Alert No Shine Available");
 	}
 
 }

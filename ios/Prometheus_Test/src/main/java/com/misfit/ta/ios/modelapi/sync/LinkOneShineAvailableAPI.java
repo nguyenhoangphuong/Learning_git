@@ -24,12 +24,11 @@ public class LinkOneShineAvailableAPI extends ModelAPI {
 
 	// edge
 	public void e_init() {
-		
-		// log in and store token
+
+		// log in and unlink device
 		String token = MVPApi.signIn("v14@qa.com", "test12").token;
 		MVPApi.unlinkDevice(token, "XXXXXV0014");
-		
-		
+
 		// sign in
 		LaunchScreen.launch();
 		Sync.signIn();
@@ -43,15 +42,14 @@ public class LinkOneShineAvailableAPI extends ModelAPI {
 		Sync.tapLinkShine();
 		ShortcutsTyper.delayTime(2000);
 		Sync.tapToSync();
-		
-		while(!HomeScreen.isToday()) {
-			if(Sync.hasAlert())				
+
+		while (!HomeScreen.isToday()) {
+			if (Sync.hasAlert())
 				break;
-			
+
 			ShortcutsTyper.delayTime(1000);
 		}
 	}
-
 
 	// vertex
 	public void v_LinkShine() {
