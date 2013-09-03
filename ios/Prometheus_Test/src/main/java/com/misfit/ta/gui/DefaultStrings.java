@@ -44,6 +44,7 @@ public class DefaultStrings {
     public static String ForgotPasswordCancelButton = "CANCEL";
     
     // home screen
+    public static String MenuButton = "Menu";
     public static String TodayTitle = "Today";
     public static String YesterdayTitle = "Yesterday";
     public static String WeekTitle = "Week";
