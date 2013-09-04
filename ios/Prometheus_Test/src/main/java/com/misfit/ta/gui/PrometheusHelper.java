@@ -1,5 +1,6 @@
 package com.misfit.ta.gui;
 
+import java.util.Calendar;
 import java.util.Random;
 
 import com.misfit.ios.AppHelper;
@@ -182,13 +183,19 @@ public class PrometheusHelper {
 		return r.nextBoolean();
 	}
 
-	public static float calculatePoint(int steps, int minutes) {
+	public static float calculatePoint(int steps, int minutes, int activityType) {
 		// Manual input: real activity points should be floor down before
 		// deviding by 2.5
+		float factor = 1f;
+		if (activityType == 2) {
+			factor = 1.5f;
+		} else if (activityType == 3) {
+			factor = 4f;
+		}
 		float stepsPerMin = (float) Math.floor(steps * 1f /minutes);
 		float realPointsPerMin = (stepsPerMin
 				* (0.25f + 0.01f * (Math.max(115f, stepsPerMin) - 115)) + 0.0001f);
-		return (float) ((Math.floor(realPointsPerMin) * minutes) / 2.5f);
+		return (float) ((Math.floor(realPointsPerMin) * minutes) / 2.5f * factor);
 	}
 
 	public static float calculateMiles(int steps, float heightInInches) {
@@ -198,11 +205,6 @@ public class PrometheusHelper {
 
 	public static float calculateCalories(float points, float weightInLbs,
 			float fullBMR, int currentMinute) {
-		// TODO: update new calculation
-		// E = alpha * activity_points * [weight_in_kg / 60] + beta *
-		// BMR_elapsed
-		// Calories = min(E, 0.5*E + 0.925*BMR_24hrs)
-		// alpha = 0.15; beta = 1.3
 		float weightInKg = weightInLbs * 0.45359237f;
 		float alpha = 0.15f;
 		float beta = 1.3f;

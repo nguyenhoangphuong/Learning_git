@@ -79,7 +79,7 @@ public class DayProgressAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(500);
 
 		// input record
-		String[] time = { String.format("%d", hour > 12 ? 12 - hour : hour),
+		String[] time = { String.format("%d", hour > 12 ? hour - 12 : hour),
 				"00", hour < 12 ? "AM" : "PM" };
 		this.lastDuration = PrometheusHelper.randInt(5, 9);
 		this.lastSteps = this.lastDuration * PrometheusHelper.randInt(100, 180);
@@ -91,7 +91,7 @@ public class DayProgressAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(500);
 		
 		// save last record info
-		this.lastStartTime = String.format("%d", hour > 12 ? 12 - hour : hour)
+		this.lastStartTime = String.format("%d", hour > 12 ? hour - 12 : hour)
 				+ ":00" + (hour < 12 ? "am" : "pm");
 		calculateTotalProgressInfo();
 		this.lastHour = this.hour;
@@ -106,7 +106,7 @@ public class DayProgressAPI extends ModelAPI {
 		System.out.println("DEBUG: Last steps " + this.lastSteps);
 		System.out.println("DEBUG: Last duration " + this.lastDuration);
 		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
-				this.lastDuration);
+				this.lastDuration, 100);
 		System.out.println("DEBUG: Last points " + this.lastPoints);
 
 		// calculate total progress info
@@ -122,24 +122,6 @@ public class DayProgressAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_inputFirstStep() {
-		// String[] time = {
-		// String.format("%d", firstStepHour > 12 ? 12 - firstStepHour
-		// : firstStepHour), "00",
-		// firstStepHour < 12 ? "AM" : "PM" };
-		// this.lastSteps = 100;
-		// this.lastDuration = 1;
-		// HomeScreen.tapOpenManualInput();
-		// ShortcutsTyper.delayTime(500);
-		// HomeScreen.enterManualActivity(time, this.lastDuration,
-		// this.lastSteps); // score 10pts
-		// ShortcutsTyper.delayTime(1000);
-		// HomeScreen.tapSave();
-		// ShortcutsTyper.delayTime(500);
-		// this.firstStepTime = String.format("%d",
-		// firstStepHour > 12 ? 12 - firstStepHour : firstStepHour)
-		// + ":00" + (firstStepHour < 12 ? "am" : "pm");
-		// calculateTotalProgressInfo();
-		// PrometheusHelper.handleTutorial();
 	}
 
 	/**
@@ -147,7 +129,6 @@ public class DayProgressAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_checkEnd() {
-		// graph walker to handle
 	}
 
 	/**
@@ -193,10 +174,6 @@ public class DayProgressAPI extends ModelAPI {
 								String.format("_%d_ steps", this.totalSteps)),
 						"Total steps displayed correctly");
 				//TODO: check new distance calculation
-//				Assert.assertTrue(
-//						ViewUtils.isExistedView("PTRichTextLabel",
-//								String.format("_%.1f_ miles", this.totalMiles)),
-//						"Total miles displayed correctly");
 				Calendar now = Calendar.getInstance();
 				System.out.println("NOW: " + now);
 				float fullBMR = PrometheusHelper.calculateFullBMR(weight,
