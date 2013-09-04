@@ -46,7 +46,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
 
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "TaggingActivity" })
     public void TaggingActivity() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();

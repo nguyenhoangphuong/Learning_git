@@ -89,7 +89,7 @@ public class DayProgressAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(500);
 		PrometheusHelper.handleTutorial();
 		ShortcutsTyper.delayTime(500);
-		
+
 		// save last record info
 		this.lastStartTime = String.format("%d", hour > 12 ? hour - 12 : hour)
 				+ ":00" + (hour < 12 ? "am" : "pm");
@@ -100,9 +100,9 @@ public class DayProgressAPI extends ModelAPI {
 	}
 
 	private void calculateTotalProgressInfo() {
-		//TODO: check new distance calculation
-//		this.lastMiles = PrometheusHelper.calculateMiles(this.lastSteps,
-//				this.height);
+		// TODO: check new distance calculation
+		// this.lastMiles = PrometheusHelper.calculateMiles(this.lastSteps,
+		// this.height);
 		System.out.println("DEBUG: Last steps " + this.lastSteps);
 		System.out.println("DEBUG: Last duration " + this.lastDuration);
 		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
@@ -114,7 +114,7 @@ public class DayProgressAPI extends ModelAPI {
 		this.totalMinutes += this.lastDuration;
 		this.totalPoints += this.lastPoints;
 		this.totalCalories += this.lastMiles;
-//		this.totalMiles += this.lastMiles;
+		// this.totalMiles += this.lastMiles;
 	}
 
 	/**
@@ -159,10 +159,10 @@ public class DayProgressAPI extends ModelAPI {
 						ViewUtils.isExistedView(
 								"UILabel",
 								String.format("%d",
-										(int) Math.floor(this.totalPoints))) || ViewUtils.isExistedView(
-												"UILabel",
-												String.format("%d",
-														(int) Math.round(this.totalPoints))),
+										(int) Math.floor(this.totalPoints)))
+								|| ViewUtils.isExistedView("UILabel", String
+										.format("%d", (int) Math
+												.round(this.totalPoints))),
 						"Total points displayed correctly");
 
 				// progress circle display summary => check steps / calories /
@@ -173,14 +173,16 @@ public class DayProgressAPI extends ModelAPI {
 						ViewUtils.isExistedView("PTRichTextLabel",
 								String.format("_%d_ steps", this.totalSteps)),
 						"Total steps displayed correctly");
-				//TODO: check new distance calculation
+				// TODO: check new distance calculation
 				Calendar now = Calendar.getInstance();
 				System.out.println("NOW: " + now);
 				float fullBMR = PrometheusHelper.calculateFullBMR(weight,
 						height, now.get(Calendar.YEAR) - year, isMale);
 				System.out.println("AGE: " + (now.get(Calendar.YEAR) - year));
-				String caloriesText = Gui.getProperty("PTRichTextLabel", 1, "text");
-				float calories = Float.valueOf(StringUtils.substring(caloriesText, 1, caloriesText.lastIndexOf("_")));
+				String caloriesText = Gui.getProperty("PTRichTextLabel", 1,
+						"text");
+				float calories = Float.valueOf(StringUtils.substring(
+						caloriesText, 1, caloriesText.lastIndexOf("_")));
 				System.out.println("MINUTE:" + now.get(Calendar.MINUTE));
 				System.out.println("HOUR:" + now.get(Calendar.HOUR_OF_DAY));
 				float minTotalCalories = PrometheusHelper.calculateCalories(
@@ -206,36 +208,44 @@ public class DayProgressAPI extends ModelAPI {
 				System.out.println("DEBUG: Max calories " + maxTotalCalories);
 				System.out.println("DEBUG: Calculated Calories " + result);
 				if (calories < minTotalCalories || calories > maxTotalCalories) {
-					Assert.assertTrue(false, "Calories calculation is not correct");
+					Assert.assertTrue(false,
+							"Calories calculation is not correct");
 				}
-				
+
 			}
 			HomeScreen.tapProgressCircle();
 		}
-
 		Gui.dragUpTimeline();
-		// check activity record is saved
-		Assert.assertTrue(
-				ViewUtils.isExistedView("UILabel", this.lastStartTime),
-				"Start time displayed correctly");
-		// open overlay
-		Gui.touchAVIew("PTTimelineItemSessionView", this.lastStartTime);
-		System.out.println("DEBUG: Assert last duration " + this.lastDuration);
-		Assert.assertTrue(
-				ViewUtils.isExistedView("UILabel",
-						String.valueOf(this.lastDuration))
-						&& ViewUtils.isExistedView("UILabel", MINUTELABEL),
-				"Duration on timeline item is displayed correctly");
-		System.out.println("DEBUG: Assert last points " + this.lastPoints);
-		Assert.assertTrue(
-				ViewUtils.isExistedView("UILabel",
-						String.format("%d", (int) Math.floor(this.lastPoints)))
-						&& ViewUtils.isExistedView("UILabel", POINTLABEL),
-				"Points on timeline item are displayed correctly");
-		// close overlay and drag down timeline view
-		Gui.touchAVIew("UILabel", MINUTELABEL);
+		if (this.lastPoints >= 50f) {
+			// check activity record is saved
+			Assert.assertTrue(
+					ViewUtils.isExistedView("UILabel", this.lastStartTime),
+					"Start time displayed correctly");
+			// open overlay
+			Gui.touchAVIew("PTTimelineItemSessionView", this.lastStartTime);
+			System.out.println("DEBUG: Assert last duration "
+					+ this.lastDuration);
+			Assert.assertTrue(
+					ViewUtils.isExistedView("UILabel",
+							String.valueOf(this.lastDuration))
+							&& ViewUtils.isExistedView("UILabel", MINUTELABEL),
+					"Duration on timeline item is displayed correctly");
+			System.out.println("DEBUG: Assert last points " + this.lastPoints);
+			Assert.assertTrue(
+					ViewUtils.isExistedView(
+							"UILabel",
+							String.format("%d",
+									(int) Math.floor(this.lastPoints)))
+							&& ViewUtils.isExistedView("UILabel", POINTLABEL),
+					"Points on timeline item are displayed correctly");
+			// close overlay and drag down timeline view
+			Gui.touchAVIew("UILabel", MINUTELABEL);
+		} else {
+			Assert.assertTrue(
+					!ViewUtils.isExistedView("UILabel", this.lastStartTime),
+					"Start time shouldn't be displayed because of low points");
+		}
 		Gui.dragDownTimeline();
-
 	}
 
 	/**
@@ -247,6 +257,6 @@ public class DayProgressAPI extends ModelAPI {
 	}
 
 	public void e_stay() {
-		
+
 	}
 }

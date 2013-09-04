@@ -43,7 +43,7 @@ public class TaggingActivityAPI extends ModelAPI {
 
 	private boolean hasNoActivity = true;
 	private int countSwimmingPopup = 0;
-	private int countCyclingPopup = 1;
+	private int countCyclingPopup = 0;
 
 	public TaggingActivityAPI(AutomationTest automation, File model,
 			boolean efsm, PathGenerator generator, boolean weight) {
@@ -157,11 +157,20 @@ public class TaggingActivityAPI extends ModelAPI {
 		System.out.println("DEBUG: Last duration " + this.lastDuration);
 		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
 				this.lastDuration, activityType);
+		if (this.lastPoints < 50f) {
+			// not enough point to be a cycling/swimming session --> get it back
+			// to walking session
+			this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
+					this.lastDuration, 100);
+		}
 		System.out.println("DEBUG: Last points " + this.lastPoints);
 
 		// calculate total progress info
+		System.out.println("DEBUG: calculate total steps and points ");
 		this.totalSteps += this.lastSteps;
 		this.totalPoints += this.lastPoints;
+		System.out.println("DEBUG: calculate total points " + this.totalPoints);
+		System.out.println("DEBUG: calculate total steps " + this.totalSteps);
 	}
 
 	/**
@@ -249,6 +258,7 @@ public class TaggingActivityAPI extends ModelAPI {
 			// progress circle display point earned => check total point
 			if (HomeScreen.isPointEarnedProgessCircle()) {
 				System.out.println("DEBUG: PROGRESS CIRCLE VIEW 1");
+				System.out.println("DEBUG: Assert total points " + this.totalPoints);
 				Assert.assertTrue(
 						ViewUtils.isExistedView(
 								"UILabel",
@@ -263,6 +273,7 @@ public class TaggingActivityAPI extends ModelAPI {
 				// distance
 			} else if (HomeScreen.isSummaryProgressCircle()) {
 				System.out.println("DEBUG: PROGRESS CIRCLE VIEW 2");
+				System.out.println("DEBUG: Total Steps: " + this.totalSteps);
 				Assert.assertTrue(
 						ViewUtils.isExistedView("PTRichTextLabel",
 								String.format("_%d_ steps", this.totalSteps)),
@@ -272,35 +283,44 @@ public class TaggingActivityAPI extends ModelAPI {
 			HomeScreen.tapProgressCircle();
 		}
 		Gui.dragUpTimeline();
-		// check activity record is saved
-		Assert.assertTrue(
-				ViewUtils.isExistedView("UILabel", this.lastStartTime),
-				"Start time displayed correctly");
-		// open overlay
-		Gui.touchAVIew("PTTimelineItemSessionView", this.lastStartTime);
-		System.out.println("DEBUG: Assert last duration " + this.lastDuration);
-		Assert.assertTrue(
-				ViewUtils.isExistedView("UILabel",
-						String.valueOf(this.lastDuration))
-						&& ViewUtils.isExistedView("UILabel", MINUTELABEL),
-				"Duration on timeline item is displayed correctly");
-		System.out.println("DEBUG: Assert last points " + this.lastPoints);
-		Assert.assertTrue(
-				ViewUtils.isExistedView("UILabel",
-						String.format("%d", (int) Math.floor(this.lastPoints)))
-						&& ViewUtils.isExistedView("UILabel", POINTLABEL),
-				"Points on timeline item are displayed correctly");
-		
-		boolean correctTitle = false;
-		for (int i = 0; i < levelTitle.length; i++) {
-			if (ViewUtils.isExistedView("UILabel", levelTitle[i])) {
-				correctTitle = true;
-				break;
+		if (this.lastPoints >= 50f) {
+			// check activity record is saved
+			Assert.assertTrue(
+					ViewUtils.isExistedView("UILabel", this.lastStartTime),
+					"Start time displayed correctly");
+			// open overlay
+			Gui.touchAVIew("PTTimelineItemSessionView", this.lastStartTime);
+			System.out.println("DEBUG: Assert last duration "
+					+ this.lastDuration);
+			Assert.assertTrue(
+					ViewUtils.isExistedView("UILabel",
+							String.valueOf(this.lastDuration))
+							&& ViewUtils.isExistedView("UILabel", MINUTELABEL),
+					"Duration on timeline item is displayed correctly");
+			System.out.println("DEBUG: Assert last points " + this.lastPoints);
+			Assert.assertTrue(
+					ViewUtils.isExistedView(
+							"UILabel",
+							String.format("%d",
+									(int) Math.floor(this.lastPoints)))
+							&& ViewUtils.isExistedView("UILabel", POINTLABEL),
+					"Points on timeline item are displayed correctly");
+
+			boolean correctTitle = false;
+			for (int i = 0; i < levelTitle.length; i++) {
+				if (ViewUtils.isExistedView("UILabel", levelTitle[i])) {
+					correctTitle = true;
+					break;
+				}
 			}
+			Assert.assertTrue(correctTitle, "Title for tile is not correct");
+			// close overlay and drag down timeline view
+			Gui.touchAVIew("UILabel", MINUTELABEL);
+		} else {
+			Assert.assertTrue(
+					!ViewUtils.isExistedView("UILabel", this.lastStartTime),
+					"Start time shouldn't be displayed because of low points");
 		}
-		Assert.assertTrue(correctTitle, "Title for tile is not correct");
-		// close overlay and drag down timeline view
-				Gui.touchAVIew("UILabel", MINUTELABEL);
 		Gui.dragDownTimeline();
 	}
 }
