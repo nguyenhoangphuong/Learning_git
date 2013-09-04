@@ -10,6 +10,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
@@ -19,10 +20,10 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class TaggingActivityAPI extends ModelAPI {
-	private static final Logger logger = Util
-			.setupLogger(TaggingActivityAPI.class);
+
 	private static final String MINUTELABEL = "MINUTES";
 	private static final String POINTLABEL = "POINTS";
+	
 	private String lastStartTime = "";
 	private int lastDuration = 0;
 	private int lastSteps = 0;
@@ -45,14 +46,12 @@ public class TaggingActivityAPI extends ModelAPI {
 	private int countSwimmingPopup = 0;
 	private int countCyclingPopup = 0;
 
-	public TaggingActivityAPI(AutomationTest automation, File model,
-			boolean efsm, PathGenerator generator, boolean weight) {
+	public TaggingActivityAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
 
 	public void e_Init() {
-		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1",
-				isMale, 16, 9, year, true, "5'", "8\\\"", "120", ".0", 1);
+		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", isMale, 16, 9, year, true, "5'", "8\\\"", "120", ".0", 1);
 		ShortcutsTyper.delayTime(5000);
 	}
 
@@ -64,17 +63,14 @@ public class TaggingActivityAPI extends ModelAPI {
 		openMyShineView();
 		HomeScreen.chooseCycling();
 		ShortcutsTyper.delayTime(300);
-		if (Gui.hasAlert()
-				&& DefaultStrings.WearingPositionForCyclingContent.equals(Gui
-						.getPopupContent())
-				&& DefaultStrings.WearingPositionForCyclingTitle.equals(Gui
-						.getPopupTitle())) {
+		if (HomeScreen.hasSuggestWearingPositionForCyclingMessage()) {
 			Gui.touchPopupButton(DefaultStrings.GotItButton);
 			countCyclingPopup++;
 		}
+		
 		ShortcutsTyper.delayTime(300);
 		HomeScreen.tapSave();
-		activityType = 2;
+		activityType = MVPEnums.ACTIVITY_CYCLING;
 		ShortcutsTyper.delayTime(1000);
 	}
 
@@ -87,7 +83,7 @@ public class TaggingActivityAPI extends ModelAPI {
 		HomeScreen.chooseSleep();
 		ShortcutsTyper.delayTime(300);
 		HomeScreen.tapSave();
-		activityType = 100;
+		activityType = MVPEnums.ACTIVITY_SLEEPING;
 		ShortcutsTyper.delayTime(1000);
 	}
 
@@ -99,17 +95,14 @@ public class TaggingActivityAPI extends ModelAPI {
 		openMyShineView();
 		HomeScreen.chooseSwimming();
 		ShortcutsTyper.delayTime(300);
-		if (Gui.hasAlert()
-				&& DefaultStrings.WearingPositionForSwimmingContent.equals(Gui
-						.getPopupContent())
-				&& DefaultStrings.WearingPositionForSwimmingTitle.equals(Gui
-						.getPopupTitle())) {
+		if (HomeScreen.hasSuggestWearingPositionForSwimmingMessage()) {
 			Gui.touchPopupButton(DefaultStrings.GotItButton);
 			countSwimmingPopup++;
 		}
+		
 		ShortcutsTyper.delayTime(300);
 		HomeScreen.tapSave();
-		activityType = 3;
+		activityType = MVPEnums.ACTIVITY_SWIMMING;
 		ShortcutsTyper.delayTime(1000);
 	}
 
@@ -132,8 +125,7 @@ public class TaggingActivityAPI extends ModelAPI {
 			lastMinute = 1;
 		}
 		minute = String.format("%02d", lastMinute + 1);
-		String[] time = { String.format("%d", hour > 12 ? hour - 12 : hour),
-				minute, hour < 12 ? "AM" : "PM" };
+		String[] time = { String.format("%d", hour > 12 ? hour - 12 : hour), minute, hour < 12 ? "AM" : "PM" };
 		lastDuration = PrometheusHelper.randInt(3, 5);
 		lastSteps = lastDuration * PrometheusHelper.randInt(100, 180);
 		HomeScreen.enterManualActivity(time, lastDuration, lastSteps);
@@ -144,8 +136,7 @@ public class TaggingActivityAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(500);
 
 		// save last record info
-		lastStartTime = String.format("%d", hour > 12 ? hour - 12 : hour) + ":"
-				+ minute + (hour < 12 ? "am" : "pm");
+		lastStartTime = String.format("%d", hour > 12 ? hour - 12 : hour) + ":" + minute + (hour < 12 ? "am" : "pm");
 		calculateTotalProgressInfo();
 		lastHour = hour;
 		hasNoActivity = false;
@@ -155,13 +146,11 @@ public class TaggingActivityAPI extends ModelAPI {
 		System.out.println("DEBUG: Activity Type " + this.activityType);
 		System.out.println("DEBUG: Last steps " + this.lastSteps);
 		System.out.println("DEBUG: Last duration " + this.lastDuration);
-		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
-				this.lastDuration, activityType);
+		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps, this.lastDuration, activityType);
 		if (this.lastPoints < 50f) {
 			// not enough point to be a cycling/swimming session --> get it back
 			// to walking session
-			this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
-					this.lastDuration, 100);
+			this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps, this.lastDuration, 100);
 		}
 		System.out.println("DEBUG: Last points " + this.lastPoints);
 
@@ -189,8 +178,7 @@ public class TaggingActivityAPI extends ModelAPI {
 		if (hasNoActivity) {
 			// check initial data
 			ShortcutsTyper.delayOne();
-			Assert.assertTrue(HomeScreen.isTodayDefault(),
-					"Progress circle display point earned by default");
+			Assert.assertTrue(HomeScreen.isTodayDefault(), "Progress circle display point earned by default");
 		}
 		Assert.assertTrue(HomeScreen.isToday(), "Today is displayed");
 	}
@@ -208,8 +196,7 @@ public class TaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_UpdatedCyclingToday() {
-		Assert.assertTrue(countCyclingPopup > 0 && countCyclingPopup <= 2,
-				"Wearing position for cycling isn't displayed correctly.");
+		Assert.assertTrue(countCyclingPopup > 0 && countCyclingPopup <= 2, "Wearing position for cycling isn't displayed correctly.");
 	}
 
 	/**
@@ -225,7 +212,7 @@ public class TaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_UpdatedNormalToday() {
-		// TODO:
+		
 	}
 
 	/**
@@ -241,8 +228,7 @@ public class TaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_UpdatedSwimmingToday() {
-		Assert.assertTrue(countSwimmingPopup > 0 && countSwimmingPopup <= 2,
-				"Wearing position for swimming isn't displayed correctly.");
+		Assert.assertTrue(countSwimmingPopup > 0 && countSwimmingPopup <= 2, "Wearing position for swimming isn't displayed correctly.");
 	}
 
 	private void openMyShineView() {
@@ -259,25 +245,14 @@ public class TaggingActivityAPI extends ModelAPI {
 			if (HomeScreen.isPointEarnedProgessCircle()) {
 				System.out.println("DEBUG: PROGRESS CIRCLE VIEW 1");
 				System.out.println("DEBUG: Assert total points " + this.totalPoints);
-				Assert.assertTrue(
-						ViewUtils.isExistedView(
-								"UILabel",
-								String.format("%d",
-										(int) Math.floor(this.totalPoints)))
-								|| ViewUtils.isExistedView("UILabel", String
-										.format("%d", (int) Math
-												.round(this.totalPoints))),
-						"Total points displayed correctly");
+				Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", (int) Math.floor(this.totalPoints))) || ViewUtils.isExistedView("UILabel", String.format("%d", (int) Math.round(this.totalPoints))), "Total points displayed correctly");
 
 				// progress circle display summary => check steps / calories /
 				// distance
 			} else if (HomeScreen.isSummaryProgressCircle()) {
 				System.out.println("DEBUG: PROGRESS CIRCLE VIEW 2");
 				System.out.println("DEBUG: Total Steps: " + this.totalSteps);
-				Assert.assertTrue(
-						ViewUtils.isExistedView("PTRichTextLabel",
-								String.format("_%d_ steps", this.totalSteps)),
-						"Total steps displayed correctly");
+				Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String.format("_%d_ steps", this.totalSteps)), "Total steps displayed correctly");
 
 			}
 			HomeScreen.tapProgressCircle();
@@ -285,26 +260,13 @@ public class TaggingActivityAPI extends ModelAPI {
 		Gui.dragUpTimeline();
 		if (this.lastPoints >= 50f) {
 			// check activity record is saved
-			Assert.assertTrue(
-					ViewUtils.isExistedView("UILabel", this.lastStartTime),
-					"Start time displayed correctly");
+			Assert.assertTrue(ViewUtils.isExistedView("UILabel", this.lastStartTime), "Start time displayed correctly");
 			// open overlay
 			Gui.touchAVIew("PTTimelineItemSessionView", this.lastStartTime);
-			System.out.println("DEBUG: Assert last duration "
-					+ this.lastDuration);
-			Assert.assertTrue(
-					ViewUtils.isExistedView("UILabel",
-							String.valueOf(this.lastDuration))
-							&& ViewUtils.isExistedView("UILabel", MINUTELABEL),
-					"Duration on timeline item is displayed correctly");
+			System.out.println("DEBUG: Assert last duration " + this.lastDuration);
+			Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.valueOf(this.lastDuration)) && ViewUtils.isExistedView("UILabel", MINUTELABEL), "Duration on timeline item is displayed correctly");
 			System.out.println("DEBUG: Assert last points " + this.lastPoints);
-			Assert.assertTrue(
-					ViewUtils.isExistedView(
-							"UILabel",
-							String.format("%d",
-									(int) Math.floor(this.lastPoints)))
-							&& ViewUtils.isExistedView("UILabel", POINTLABEL),
-					"Points on timeline item are displayed correctly");
+			Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d", (int) Math.floor(this.lastPoints))) && ViewUtils.isExistedView("UILabel", POINTLABEL), "Points on timeline item are displayed correctly");
 
 			boolean correctTitle = false;
 			for (int i = 0; i < levelTitle.length; i++) {
@@ -317,9 +279,7 @@ public class TaggingActivityAPI extends ModelAPI {
 			// close overlay and drag down timeline view
 			Gui.touchAVIew("UILabel", MINUTELABEL);
 		} else {
-			Assert.assertTrue(
-					!ViewUtils.isExistedView("UILabel", this.lastStartTime),
-					"Start time shouldn't be displayed because of low points");
+			Assert.assertTrue(!ViewUtils.isExistedView("UILabel", this.lastStartTime), "Start time shouldn't be displayed because of low points");
 		}
 		Gui.dragDownTimeline();
 	}

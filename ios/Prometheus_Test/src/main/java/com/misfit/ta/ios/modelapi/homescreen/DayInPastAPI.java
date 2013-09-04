@@ -6,7 +6,6 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.gui.HomeScreen;
-import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
@@ -39,11 +38,6 @@ public class DayInPastAPI extends ModelAPI {
 
 		for (int i = 0; i < this.days; i++) {
 			HomeScreen.goToPreviousDays(1);
-
-			// check there's aleast one item on the timeline (weather)
-			// TODO: currently no way to do it, cause we can always get a
-			// PTTimelineItemWeatherView
-			// even if there's none displayed on the screen
 		}
 
 		ShortcutsTyper.delayTime(1000);
@@ -66,11 +60,6 @@ public class DayInPastAPI extends ModelAPI {
 	public void e_SwipeBackToday() {
 		for (int i = 0; i < this.days; i++) {
 			HomeScreen.goToNextDays(1);
-
-			// check there's aleast one item on the timeline (weather)
-			// TODO: currently no way to do it, cause we can always get a
-			// PTTimelineItemWeatherView
-			// even if there's none displayed on the screen
 		}
 
 		ShortcutsTyper.delayTime(1000);

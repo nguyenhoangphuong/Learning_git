@@ -1,6 +1,5 @@
 package com.misfit.ta.gui;
 
-import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 
 public class HomeSettings {
@@ -41,7 +40,6 @@ public class HomeSettings {
 	public static void tapKg() {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.KgLabel);
 	}
-
 
 	public static void tapLink() {
 		Gui.touchAVIew("UILabel", DefaultStrings.LinkButton);

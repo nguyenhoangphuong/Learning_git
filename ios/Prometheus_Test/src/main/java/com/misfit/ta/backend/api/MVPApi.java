@@ -40,7 +40,7 @@ public class MVPApi {
 	public static int port = Integer.parseInt(Settings.getValue("MVPBackendPort"));
 	
 	public static int CACHE_TRY_TIME = 10;
-	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.36x.3";
+	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.37r";
 
 	// request helpers
 	static private ServiceResponse request(String type, String url, int port, BaseParams requestInf) {

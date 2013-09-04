@@ -180,7 +180,7 @@ public class PrometheusHelper {
 	public static boolean hasSyncFailedMessage() {
 		return Gui.getPopupContent().equals(DefaultStrings.SyncFailedMessage) && Gui.getPopupTitle().equals(DefaultStrings.Title);
 	}
-
+	
 	/* Utilities */
 	public static int randInt(int includeFrom, int excludeTo) {
 		Random r = new Random();
