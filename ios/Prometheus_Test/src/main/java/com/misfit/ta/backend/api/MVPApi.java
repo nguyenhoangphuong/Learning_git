@@ -17,9 +17,8 @@ import com.google.resting.json.JSONObject;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
+import com.misfit.ta.backend.aws.AWSHelper;
 import com.misfit.ta.backend.data.account.*;
 import com.misfit.ta.backend.data.goal.*;
 import com.misfit.ta.backend.data.graph.*;
@@ -28,7 +27,6 @@ import com.misfit.ta.backend.data.pedometer.*;
 import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.timeline.*;
 import com.misfit.ta.backend.data.*;
-
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.TextTool;
 
@@ -168,7 +166,16 @@ public class MVPApi {
 
 	public static String generateSyncLog() {
 
-		String log = "{\"startTime\": 347155000, \"endTime\": 347155060, \"serialNumberString\": \"XXXXXXXE01\", \"isSuccessful\": 1, \"data\": {\"fileData\": [ {\"rawData\": \"0101010101\", \"timestampDifference\": 1 } ], \"hardwareLog\": \"misfit\" }, \"log\": \"misfit\"}";
+		return generateSyncLog(TextTool.getRandomString(10), System.currentTimeMillis() / 1000);
+	}
+	
+	public static String generateSyncLog(String serialNumber, Long timestamp) {
+		String log = "{\"startTime\": " + timestamp 
+				+ ", \"endTime\": " + (timestamp + 10000) 
+				+ ", \"timestamp\": " + timestamp
+				+ ", \"serialNumberString\": \"" + serialNumber
+				+ "\", \"isSuccessful\": 1, \"data\": {\"fileData\": [ {\"rawData\": \"0101010101\", \"timestampDifference\": 1 } ], \"hardwareLog\": \"misfit\" }, \"log\": \"misfit\"}";
+	
 		return log;
 	}
 
@@ -695,6 +702,24 @@ public class MVPApi {
 		return response;
 	}
 
+	public static String getStagingDebugSyncLog(String email, String serialNumber, Long timestamp) {
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(timestamp * 1000);
+		
+		String s3Path = "staging/" 
+				+ cal.get(Calendar.YEAR) + "/" 
+				+ String.format("%02d", cal.get(Calendar.MONTH) + 1) + "/" 
+				+ String.format("%02d", cal.get(Calendar.DATE)) + "/" 
+				+ email + "/" 
+				+ serialNumber + "/" 
+				+ timestamp + "/"
+				+ "debug_log.txt";
+		
+		logger.info(s3Path);
+		return AWSHelper.downloadFileAsString("shine-binary-data", s3Path);
+	}
+	
 	// statistics
 	public static BaseResult createStatistics(String token, Statistics statistics) {
 
@@ -730,13 +755,6 @@ public class MVPApi {
 
 	// test
 	public static void main(String[] args) throws JSONException {
-		
-//		MVPApi.userInfo(MVPApi.signIn("qa022@a.a", "qqqqqq").token);
-		
-		Pedometer pedo = new Pedometer();
-		pedo.setFirmwareRevisionString("0.0.36r");
-		MVPApi.updatePedometer(MVPApi.signIn("qa023@a.a", "qqqqqq").token, pedo.toJson());
-		
 	}
 
 }
