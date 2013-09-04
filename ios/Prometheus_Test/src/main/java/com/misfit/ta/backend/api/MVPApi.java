@@ -168,7 +168,7 @@ public class MVPApi {
 
 	public static String generateSyncLog() {
 
-		String log = "{\"startTime\": 347155000, \"endTime\": 347155060, \"serialNumberString\": \"XXXXXXXE01\", \"isSuccessful\": 1, \"data\": {\"fileData\": [ {\"rawData\": \"0101010101\", \"timestampDifference\": 1 } ], \"hardwareLog\": [\"misfit\"] }, \"log\": \"misfit\"}";
+		String log = "{\"startTime\": 347155000, \"endTime\": 347155060, \"serialNumberString\": \"XXXXXXXE01\", \"isSuccessful\": 1, \"data\": {\"fileData\": [ {\"rawData\": \"0101010101\", \"timestampDifference\": 1 } ], \"hardwareLog\": \"misfit\" }, \"log\": \"misfit\"}";
 		return log;
 	}
 
