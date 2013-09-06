@@ -125,7 +125,7 @@ public class TaggingActivityAPI extends ModelAPI {
 			lastMinute = 1;
 		}
 		minute = String.format("%02d", lastMinute + 1);
-		String[] time = { String.format("%d", hour > 12 ? hour - 12 : hour), minute, hour < 12 ? "AM" : "PM" };
+		String[] time = { String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour), minute, hour < 12 ? "AM" : "PM" };
 		lastDuration = PrometheusHelper.randInt(3, 5);
 		lastSteps = lastDuration * PrometheusHelper.randInt(100, 180);
 		HomeScreen.enterManualActivity(time, lastDuration, lastSteps);
@@ -136,7 +136,7 @@ public class TaggingActivityAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(500);
 
 		// save last record info
-		lastStartTime = String.format("%d", hour > 12 ? hour - 12 : hour) + ":" + minute + (hour < 12 ? "am" : "pm");
+		lastStartTime = String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour) + ":" + minute + (hour < 12 ? "am" : "pm");
 		calculateTotalProgressInfo();
 		lastHour = hour;
 		hasNoActivity = false;

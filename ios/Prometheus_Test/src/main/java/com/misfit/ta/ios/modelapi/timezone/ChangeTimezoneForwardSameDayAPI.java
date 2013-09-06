@@ -54,6 +54,8 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 		Timezone.changeTimezone(currentTimezone);
 		logger.info("Change timezone from " + this.previousTimezone + " to "
 				+ this.currentTimezone);
+		ShortcutsTyper.delayOne();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 
 	public void e_checkEnd() {

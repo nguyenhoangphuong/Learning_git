@@ -79,7 +79,7 @@ public class DayProgressAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(500);
 
 		// input record
-		String[] time = { String.format("%d", hour > 12 ? hour - 12 : hour),
+		String[] time = { String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour),
 				"00", hour < 12 ? "AM" : "PM" };
 		this.lastDuration = PrometheusHelper.randInt(5, 9);
 		this.lastSteps = this.lastDuration * PrometheusHelper.randInt(100, 180);
@@ -91,7 +91,7 @@ public class DayProgressAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(500);
 
 		// save last record info
-		this.lastStartTime = String.format("%d", hour > 12 ? hour - 12 : hour)
+		this.lastStartTime = String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour)
 				+ ":00" + (hour < 12 ? "am" : "pm");
 		calculateTotalProgressInfo();
 		this.lastHour = this.hour;

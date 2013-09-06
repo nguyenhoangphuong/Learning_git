@@ -45,7 +45,7 @@ public class Timezone {
 		// tap on time travel tile and check content
 		Gui.dragUpTimeline();
 		Timezone.touchTimezoneWithLabel(label);
-		
+		ShortcutsTyper.delayOne();
 		System.out.println("DEBUG: " + String.valueOf(currentTimezone));
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", content), "Time travel detail title is valid");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", detail), "Time travel message is valid");
