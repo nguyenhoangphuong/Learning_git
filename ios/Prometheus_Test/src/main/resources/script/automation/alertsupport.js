@@ -35,6 +35,6 @@ function PrometheusAlertHandler(_alert) {
 
 }
 
-target.delay(1000);
+target.delay(10000);
 
 UIALogger.logDebug("If you see this log, maybe something went wrong");
