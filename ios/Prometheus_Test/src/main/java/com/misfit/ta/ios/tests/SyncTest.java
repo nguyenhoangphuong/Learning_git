@@ -76,7 +76,7 @@ public class SyncTest extends AutomationTest {
 				}
 				ShortcutsTyper.delayTime(30000);
 				if (i % 10 == 0) {
-					ShortcutsTyper.delayTime(360000);
+					ShortcutsTyper.delayTime(180000);
 				}
 			}
 		} catch (Exception ex) {
