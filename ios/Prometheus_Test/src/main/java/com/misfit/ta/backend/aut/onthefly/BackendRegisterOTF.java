@@ -39,35 +39,4 @@ public class BackendRegisterOTF extends BackendAutomation {
 		Assert.assertEquals(r2.errorMessage, DefaultValues.InvalidEmail);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "OTF", "signup" })
-	public void RegisterNullParams() {
-		
-		// null email param
-		BaseParams params1 = new BaseParams();
-		params1.addParam("email", null);
-		params1.addParam("password", "qqqqqq");
-		
-		BaseResult r1 = MVPApi.customRequest("signup", MVPApi.HTTP_POST, params1);
-		Assert.assertEquals(r1.statusCode, 404, "Status code");
-		Assert.assertEquals(r1.errorMessage, DefaultValues.InvalidEmail);
-		
-		r1 = MVPApi.customRequest("login", MVPApi.HTTP_POST, params1);
-		Assert.assertEquals(r1.statusCode, 404, "Status code");
-		Assert.assertEquals(r1.errorMessage, DefaultValues.InvalidEmail);
-		
-		// null password param
-		BaseParams params2 = new BaseParams();
-		params2.addParam("email", MVPApi.generateUniqueEmail());
-		params2.addParam("password", null);
-		
-		BaseResult r2 = MVPApi.customRequest("signup", MVPApi.HTTP_POST, params2);
-		Assert.assertEquals(r2.statusCode, 404, "Status code");
-		Assert.assertEquals(r2.errorMessage, DefaultValues.InvalidPassword);
-		
-		r2 = MVPApi.customRequest("login", MVPApi.HTTP_POST, params2);
-		Assert.assertEquals(r2.statusCode, 404, "Status code");
-		Assert.assertEquals(r2.errorMessage, DefaultValues.InvalidPassword);
-		
-	}
-	
 }

@@ -22,20 +22,7 @@ public class BackendPedometerOTF extends BackendAutomation {
 		BaseResult r = MVPApi.customRequest("pedometer", MVPApi.HTTP_POST, params);
 		Assert.assertEquals(r.statusCode, 400, "Status code");
 	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "OTF", "pedometer" })
-	public void CreatePedometerNullParams() {
 		
-		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
-		BaseParams params = new BaseParams();
-		params.addHeader("auth_token", token);
-		params.addParam("pedometer", null);
-		
-		BaseResult r = MVPApi.customRequest("pedometer", MVPApi.HTTP_POST, params);
-		Assert.assertEquals(r.statusCode, 400, "Status code");
-
-	}
-	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "OTF", "pedometer" })
 	public void CreatePedometerWithNullSerialNumber() {
 		
@@ -62,19 +49,6 @@ public class BackendPedometerOTF extends BackendAutomation {
 		BaseResult r = MVPApi.customRequest("pedometer", MVPApi.HTTP_PUT, params);
 		Assert.assertEquals(r.statusCode, 400, "Status code");
 
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "OTF", "pedometer" })
-	public void UpdatePedometerNullParams() {
-		
-		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
-		MVPApi.createPedometer(token, DefaultValues.RandomPedometer());
-		BaseParams params = new BaseParams();
-		params.addHeader("auth_token", token);
-		params.addParam("pedometer", null);
-		
-		BaseResult r = MVPApi.customRequest("pedometer", MVPApi.HTTP_PUT, params);
-		Assert.assertEquals(r.statusCode, 400, "Status code");
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.misfit.ta.backend.api;
 
 import static com.google.resting.component.EncodingTypes.UTF8;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import com.misfit.ta.backend.data.graph.*;
 import com.misfit.ta.backend.data.profile.*;
 import com.misfit.ta.backend.data.pedometer.*;
 import com.misfit.ta.backend.data.statistics.Statistics;
+import com.misfit.ta.backend.data.sync.SyncDebugLog;
 import com.misfit.ta.backend.data.timeline.*;
 import com.misfit.ta.backend.data.*;
 import com.misfit.ta.report.TRS;
@@ -752,8 +754,63 @@ public class MVPApi {
 		return AWSHelper.downloadFileAsString("shine-binary-data", s3Path);
 	}
 	
+	public static String getStagingDebugSyncLog(String s3Path) {
+		
+		return AWSHelper.downloadFileAsString("shine-binary-data", s3Path);
+	}
+	
+	public static String[] listStagingDebugSyncLogs(String email, String serialNumber, long fromTimestamp, long toTimestamp) {
+		
+		Calendar fromCal = Calendar.getInstance();
+		fromCal.setTimeInMillis(fromTimestamp * 1000);
+		int fromYear = fromCal.get(Calendar.YEAR);
+		int fromMonth = fromCal.get(Calendar.MONTH) + 1;
+		int fromDate = fromCal.get(Calendar.DATE);
+
+		Calendar toCal = Calendar.getInstance();
+		toCal.setTimeInMillis(toTimestamp * 1000);
+		int toYear = fromCal.get(Calendar.YEAR);
+		int toMonth = fromCal.get(Calendar.MONTH) + 1;
+		int toDate = fromCal.get(Calendar.DATE);
+		
+		List<String> result = new ArrayList<String>();
+		
+		for(int y = fromYear; y <= toYear; y++) {
+			for(int m = fromMonth; m <= toMonth; m++) {
+				for(int d = fromDate; d <= toDate; d++) {
+					
+					// prefix for this day
+					String prefix = "staging/" 
+							+ y + "/" 
+							+ String.format("%02d", m) + "/" 
+							+ String.format("%02d", d) + "/" 
+							+ email + "/" 
+							+ serialNumber + "/";
+					
+					// check if timestamp is in range
+					List<String> keys = AWSHelper.listFiles("shine-binary-data", prefix);
+					for(String key : keys) {
+											
+						if(!key.contains("debug_log.txt")) {
+							continue;
+						}
+						
+						String[] parts = key.split("/");
+						long timestamp = Long.valueOf(parts[6]);
+						if(timestamp > toTimestamp || timestamp < fromTimestamp)
+							continue;
+						
+						result.add(key);
+					}
+				}
+			}
+		}
+		
+		return result.toArray(new String[result.size()]);
+	}
+		
 	// statistics
-	public static BaseResult createStatistics(String token, Statistics statistics) {
+ 	public static BaseResult createStatistics(String token, Statistics statistics) {
 
 		// prepare
 		String url = baseAddress + "statistics";
@@ -796,6 +853,11 @@ public class MVPApi {
 	
 	// test
 	public static void main(String[] args) throws JSONException {
+			
+		String log = getStagingDebugSyncLog("staging/2013/09/05/thy@misfitwearables.com/XXXXXV0007/1378348887/debug_log.txt");
+		logger.info(log);
+		SyncDebugLog debug = new SyncDebugLog(log);
+		debug.info();
 	}
 
 }
