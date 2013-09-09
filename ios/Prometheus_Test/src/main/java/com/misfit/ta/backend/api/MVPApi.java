@@ -39,11 +39,16 @@ public class MVPApi {
 	public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
 	public static int port = Integer.parseInt(Settings.getValue("MVPBackendPort"));
 	
+	public static String HTTP_POST = "POST";
+	public static String HTTP_GET = "GET";
+	public static String HTTP_PUT = "PUT";
+	
 	public static int CACHE_TRY_TIME = 10;
 	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.39r";
 
 	// request helpers
 	static private ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
+		
 		// log address
 		logger.info(type.toUpperCase() + ": " + url + " - port: " + port);
 		logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
@@ -57,11 +62,11 @@ public class MVPApi {
 		// wrapper send request
 		ServiceResponse response = null;
 		ResultLogger.registerRequest();
-		if (type == "post")
+		if (type.equalsIgnoreCase(MVPApi.HTTP_POST))
 			response = PostHelper.post(url, port, UTF8, requestInf.params, requestInf.headers);
-		else if (type == "get")
+		else if (type.equalsIgnoreCase(MVPApi.HTTP_GET))
 			response = Resting.get(url, port, requestInf.params, UTF8, requestInf.headers);
-		else if (type == "put")
+		else if (type.equalsIgnoreCase(MVPApi.HTTP_PUT))
 			response = PutHelper.put(url, UTF8, port, requestInf.params, requestInf.headers);
 
 		// log result
@@ -598,11 +603,10 @@ public class MVPApi {
 		}
 	}
 
-	public static String unlinkDevice(String token, String serialNumberString) {
+	public static String unlinkDevice(String token) {
 		String url = baseAddress + "unlink_device";
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
-		request.addParam("serial_number_string", serialNumberString);
 		try {
 			ServiceResponse response = MVPApi.put(url, port, request);
 			String message = Pedometer.getMessage(response);
@@ -621,11 +625,39 @@ public class MVPApi {
 		return result;
 	}
 
+	public static BaseResult createPedometer(String token, Pedometer item) {
+		
+		String url = baseAddress + "pedometer";
+		BaseParams request = new BaseParams();
+
+		request.addHeader("auth_token", token);
+		request.addParam("pedometer", item.toJson().toString());
+
+		return new BaseResult(MVPApi.post(url, port, request));
+	}
+	
 	public static Pedometer updatePedometer(String token, String serialNumberString, String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
 		String url = baseAddress + "pedometer";
 		BaseParams request = buildEditPedometerRequest(token, serialNumberString, firmwareRevisionString, linkedTime, unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
 		ServiceResponse response = MVPApi.put(url, port, request);
 		Pedometer result = Pedometer.getPedometer(response);
+		return result;
+	}
+	
+	public static BaseResult updatePedometer(String token, Pedometer item) {
+
+		// prepare
+		String url = baseAddress + "pedometer";
+		BaseParams request = new BaseParams();
+
+		request.addHeader("auth_token", token);
+		request.addParam("pedometer", item.toJson().toString());
+
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.put(url, port, request);
+
+		// format data
+		BaseResult result = new BaseResult(response);
 		return result;
 	}
 	
@@ -753,6 +785,15 @@ public class MVPApi {
 		return result;
 	}
 
+	// others
+	public static BaseResult customRequest(String shortUrl, String verb, BaseParams params) {
+		
+		String url = baseAddress + shortUrl;
+		ServiceResponse response = MVPApi.request(verb, url, port, params);
+
+		return new BaseResult(response);
+	}
+	
 	// test
 	public static void main(String[] args) throws JSONException {
 	}

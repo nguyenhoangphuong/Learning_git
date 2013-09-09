@@ -151,6 +151,27 @@ public class Pedometer {
 			return null;
 		}
 	}
+	
+	public JSONObject toJsonIncludeNull() {
+		try {
+			JSONObject object = new JSONObject();
+			object.accumulate("serverId", serverId != null ? serverId : JSONObject.NULL);
+			object.accumulate("localId", localId != null ? localId : JSONObject.NULL);
+			object.accumulate("updatedAt", updatedAt != null ? updatedAt : JSONObject.NULL);
+			object.accumulate("serialNumberString", serialNumberString != null ? serialNumberString : JSONObject.NULL);
+			object.accumulate("firmwareRevisionString", firmwareRevisionString != null ? firmwareRevisionString : JSONObject.NULL);
+			object.accumulate("clockState", clockState != null ? clockState : JSONObject.NULL);
+			object.accumulate("bookmarkState", bookmarkState != null ? bookmarkState : JSONObject.NULL);
+			object.accumulate("batteryLevel", batteryLevel != null ? batteryLevel : JSONObject.NULL);
+			object.accumulate("linkedTime", linkedTime != null ? linkedTime : JSONObject.NULL);
+			object.accumulate("unlinkedTime", unlinkedTime != null ? unlinkedTime : JSONObject.NULL);
+			object.accumulate("lastSyncedTime", lastSyncedTime != null ? lastSyncedTime : JSONObject.NULL);
+			return object;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static Pedometer fromJson(JSONObject obj) {
 		try {

@@ -81,6 +81,42 @@ public class ProfileData {
 			return null;
 		}
 	}
+	
+	public JSONObject toJsonIncludeNull() {
+		
+		try {
+			JSONObject object = new JSONObject();
+
+			object.accumulate("localId", localId == null ? JSONObject.NULL : localId);
+			object.accumulate("serverId", serverId == null ? JSONObject.NULL : serverId);
+			object.accumulate("updatedAt", updatedAt == null ? JSONObject.NULL : updatedAt);
+
+			object.accumulate("weight", weight == null ? JSONObject.NULL : weight);
+			object.accumulate("height", height == null ? JSONObject.NULL : height);
+			object.accumulate("gender", gender == null ? JSONObject.NULL : gender);
+			object.accumulate("dateOfBirth", dateOfBirth == null ? JSONObject.NULL : dateOfBirth);
+			object.accumulate("name", name == null ? JSONObject.NULL : serverId);
+
+			object.accumulate("goalLevel", goalLevel == null ? JSONObject.NULL : goalLevel);
+			object.accumulate("latestVersion", latestVersion == null ? JSONObject.NULL : latestVersion);
+			object.accumulate("wearingPosition", wearingPosition == null ? JSONObject.NULL : wearingPosition);
+
+			if (personalRecords != null)
+				object.accumulate("personalRecords", personalRecords.toJson());
+			else
+				object.accumulate("personalRecords", JSONObject.NULL);
+			
+			if (displayedUnits != null)
+				object.accumulate("displayedUnits", displayedUnits.toJson());
+			else
+				object.accumulate("displayedUnits", JSONObject.NULL);
+
+			return object;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static ProfileData fromJson(JSONObject json) {
 		ProfileData obj = new ProfileData();

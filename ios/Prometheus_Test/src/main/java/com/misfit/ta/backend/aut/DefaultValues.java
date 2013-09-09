@@ -12,6 +12,7 @@ import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.goal.TrippleTapData;
 import com.misfit.ta.backend.data.graph.GraphItem;
+import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.DisplayUnit;
 import com.misfit.ta.backend.data.profile.PersonalRecord;
 import com.misfit.ta.backend.data.profile.ProfileData;
@@ -19,6 +20,7 @@ import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.timeline.TimelineData;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.TimelineItemBase;
+import com.misfit.ta.utils.TextTool;
 
 public class DefaultValues {
 
@@ -34,7 +36,10 @@ public class DefaultValues {
 	static public String DeviceLinkedToYourAccount = "Device already linked to your account";
 	static public String DeviceLinkedToAnotherAccount = "Device already linked to another account";
 	static public String DeviceUsedToLinkToYourAccount = "Device is used to be linked to your account";
-	static public String DeviceNotLinkToAnyAccount = "This device doesn't link to any device";
+	static public String DeviceUsedToLinkToOtherAccount = "Device is used to be linked to other account";
+	static public String DeviceNotLinkToAnyAccount = "Device is not linked to any account yet";
+	static public String DeviceNotLinkToThisAccount = "This device doesn't link to any device";
+	static public String DeviceUnlinkedSuccessfully = "Unlink device successfully";
 
 	// profile
 	static public ProfileData DefaultProfile() {
@@ -100,6 +105,26 @@ public class DefaultValues {
 		return g;
 	}
 
+	// pedomeer
+	static public Pedometer RandomPedometer() {
+		
+		Long now = System.currentTimeMillis() / 1000;
+		
+		Pedometer item = new Pedometer();
+		item.setLocalId("pedometer-" + MVPApi.generateLocalId());
+		item.setBatteryLevel(100);
+		item.setBookmarkState(0);
+		item.setClockState(0);
+		item.setFirmwareRevisionString(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
+		item.setLastSyncedTime(now);
+		item.setLinkedTime(now);
+		item.setSerialNumberString(TextTool.getRandomString(10, 10));
+		item.setUnlinkedTime(null);
+		item.setUpdatedAt(now);
+		
+		return item;
+	}
+	
 	// graphitem
 	static public GraphItem CreateGraphItem(long timestamp) {
 

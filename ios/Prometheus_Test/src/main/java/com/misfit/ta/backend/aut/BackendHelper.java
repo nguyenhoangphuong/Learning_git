@@ -39,10 +39,10 @@ public class BackendHelper {
 		return token;
 	}
 
-	public static void unlink(String email, String password, String serialNumber) {
+	public static void unlink(String email, String password) {
 
 		String token = MVPApi.signIn(email, password).token;
-		MVPApi.unlinkDevice(token, serialNumber);
+		MVPApi.unlinkDevice(token);
 	}
 
 	public static void link(String email, String password, String serialNumber) {

@@ -236,7 +236,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 //         Assert.assertTrue(status != null, "Can not get linking status");
         
          sGetUnlink= System.currentTimeMillis();
-        status = MVPApi.unlinkDevice(token,mySerial);
+        status = MVPApi.unlinkDevice(token);
          sGetUnlink1 = System.currentTimeMillis();
          ResultLogger.totalTime += sGetUnlink1 - sGetUnlink;
 //         Assert.assertTrue(status != null, "Can not unlink device");

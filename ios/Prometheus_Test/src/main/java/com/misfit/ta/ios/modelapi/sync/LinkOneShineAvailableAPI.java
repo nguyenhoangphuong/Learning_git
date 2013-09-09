@@ -27,7 +27,7 @@ public class LinkOneShineAvailableAPI extends ModelAPI {
 
 		// log in and unlink device
 		String token = MVPApi.signIn("v14@qa.com", "test12").token;
-		MVPApi.unlinkDevice(token, "XXXXXV0014");
+		MVPApi.unlinkDevice(token);
 
 		// sign in
 		LaunchScreen.launch();

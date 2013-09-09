@@ -10,9 +10,9 @@ import org.apache.http.message.BasicHeader;
 import com.google.resting.component.impl.json.JSONRequestParams;
 
 public class BaseParams {
+	
 	// fields: params and headers
 	public List<Header> headers = new Vector<Header>();
-	// public RequestParams params = new BasicRequestParams();
 	public JSONRequestParams params = new JSONRequestParams();
 
 	// constructor
