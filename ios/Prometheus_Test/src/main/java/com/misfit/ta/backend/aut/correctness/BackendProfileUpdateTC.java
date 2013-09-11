@@ -75,7 +75,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		Assert.assertEquals(count, 0, "Fail count");
 	}
 
-	//@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
 	public void UpdateNonExistedProfile() {
 		
 		// sign up and update profile without creating it

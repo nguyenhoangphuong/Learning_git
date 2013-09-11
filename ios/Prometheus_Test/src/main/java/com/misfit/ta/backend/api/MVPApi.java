@@ -854,10 +854,11 @@ public class MVPApi {
 	// test
 	public static void main(String[] args) throws JSONException {
 			
-		String log = getStagingDebugSyncLog("staging/2013/09/05/thy@misfitwearables.com/XXXXXV0007/1378348887/debug_log.txt");
-		logger.info(log);
-		SyncDebugLog debug = new SyncDebugLog(log);
-		debug.info();
+//		String log = getStagingDebugSyncLog("staging/2013/09/05/thy@misfitwearables.com/XXXXXV0007/1378348887/debug_log.txt");
+//		logger.info(log);
+//		SyncDebugLog debug = new SyncDebugLog(log);
+//		debug.info();
+
 	}
 
 }

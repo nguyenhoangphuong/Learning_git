@@ -187,6 +187,7 @@ public class BackendPedometerTC extends BackendAutomation {
 				
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void UpdateNonExistedPedometer() {
 		
 		// sign up and update pedometer without creating it
