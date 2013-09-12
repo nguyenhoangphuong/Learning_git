@@ -193,15 +193,7 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void v_InitialView() {
-        // nothing to do here
-    }
-    
-    /**
-     * This method implements the Vertex 'v_HomeScreen'
-     * 
-     */
-    public void v_HomeScreen() {
-        // check if current view is HomeScreen
+    	// check if current view is HomeScreen
     	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");
     }
 
@@ -226,7 +218,13 @@ public class SignUpAPI extends ModelAPI {
      * 
      */
     public void v_SignUpGoalUpdated() {
+    	String[] suggestTimeStrings = SignUp.getHowToHitCurrentGoal();
+    	
         Assert.assertTrue(SignUp.getCurrentGoal() == goal, "Goal is not updated");
+        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_WALK_  " + suggestTimeStrings[0]), "Suggest time for walking is correct");
+        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_RUN_  " + suggestTimeStrings[1]), "Suggest time for running is correct");
+        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_SWIM_  " + suggestTimeStrings[2]), "Suggest time for swimming is correct");
+        
     }
     
     /**

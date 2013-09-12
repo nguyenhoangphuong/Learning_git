@@ -9,6 +9,8 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.common.MVPCalculator;
+import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -26,20 +28,15 @@ public class DayProgressAPI extends ModelAPI {
 	}
 
 	private String lastStartTime = "";
-	private String firstStepTime = "";
 	private int lastDuration = 0;
 	private int lastSteps = 0;
 	private float lastPoints = 0f;
 	private float lastMiles = 0f;
-	private int lastHour = 5;
 
 	private int totalSteps = 0;
-	private int totalMinutes = 0;
 	private float totalPoints = 0f;
 	private float totalMiles = 0f;
-	private float totalCalories = 0f;
 
-	// private int firstStepHour = 5;
 	private int hour = 6; // for ease of keeping tracks
 	private float height = 68f; // 68 inches is default height for men
 	private float weight = 120f; // 120 lbs is default weight for men
@@ -79,10 +76,14 @@ public class DayProgressAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(500);
 
 		// input record
-		String[] time = { String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour),
-				"00", hour < 12 ? "AM" : "PM" };
+		String[] time = { 
+				String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour),
+				"00", 
+				hour < 12 ? "AM" : "PM" };
+		
 		this.lastDuration = PrometheusHelper.randInt(5, 9);
 		this.lastSteps = this.lastDuration * PrometheusHelper.randInt(100, 180);
+		
 		HomeScreen.enterManualActivity(time, this.lastDuration, this.lastSteps);
 		ShortcutsTyper.delayTime(1000);
 		HomeScreen.tapSave();
@@ -94,34 +95,24 @@ public class DayProgressAPI extends ModelAPI {
 		this.lastStartTime = String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour)
 				+ ":00" + (hour < 12 ? "am" : "pm");
 		calculateTotalProgressInfo();
-		this.lastHour = this.hour;
 		this.hour++;
 		this.hasNoActivity = false;
 	}
 
 	private void calculateTotalProgressInfo() {
-		// TODO: check new distance calculation
-		// this.lastMiles = PrometheusHelper.calculateMiles(this.lastSteps,
-		// this.height);
+
+		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps, this.lastDuration, 100);
+		this.lastMiles = PrometheusHelper.calculateMiles(lastSteps, lastDuration, height);
+		
 		System.out.println("DEBUG: Last steps " + this.lastSteps);
 		System.out.println("DEBUG: Last duration " + this.lastDuration);
-		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
-				this.lastDuration, 100);
 		System.out.println("DEBUG: Last points " + this.lastPoints);
+		System.out.println("DEBUG: Last miles " + this.lastMiles);
 
 		// calculate total progress info
 		this.totalSteps += this.lastSteps;
-		this.totalMinutes += this.lastDuration;
 		this.totalPoints += this.lastPoints;
-		this.totalCalories += this.lastMiles;
-		// this.totalMiles += this.lastMiles;
-	}
-
-	/**
-	 * This method implements the Edge 'e_inputFirstStep'
-	 * 
-	 */
-	public void e_inputFirstStep() {
+		this.totalMiles += this.lastMiles;
 	}
 
 	/**
@@ -154,7 +145,8 @@ public class DayProgressAPI extends ModelAPI {
 		for (int i = 0; i < 2; i++) {
 			// progress circle display point earned => check total point
 			if (HomeScreen.isPointEarnedProgessCircle()) {
-				System.out.println("DEBUG: PROGRESS CIRCLE VIEW 1");
+
+				// check total point
 				Assert.assertTrue(
 						ViewUtils.isExistedView(
 								"UILabel",
@@ -165,15 +157,35 @@ public class DayProgressAPI extends ModelAPI {
 												.round(this.totalPoints))),
 						"Total points displayed correctly");
 
-				// progress circle display summary => check steps / calories /
-				// distance
-			} else if (HomeScreen.isSummaryProgressCircle()) {
+				// check remain walking time
+				int remainMins = MVPCalculator.calculateNearestTimeRemainInMinute(1000 - (int)this.totalPoints, MVPEnums.ACTIVITY_WALKING);
+				String remainTimeString = Gui.getProperty("PTRichTextLabel", 0, "text");
+				remainTimeString = remainTimeString.substring(
+						remainTimeString.indexOf('_') + 1,
+						remainTimeString.lastIndexOf('_'));
+				
+				Assert.assertEquals(remainTimeString, MVPCalculator.convertNearestTimeInMinuteToString(remainMins),
+						"Remain time displayed correctly");
+
+			}
+			// progress circle display summary => check steps / calories /
+			// distance
+			else if (HomeScreen.isSummaryProgressCircle()) {
 				System.out.println("DEBUG: PROGRESS CIRCLE VIEW 2");
+				
+				// check total step
 				Assert.assertTrue(
 						ViewUtils.isExistedView("PTRichTextLabel",
 								String.format("_%d_ steps", this.totalSteps)),
 						"Total steps displayed correctly");
-				// TODO: check new distance calculation
+				
+				// check total distance
+				Assert.assertTrue(
+						ViewUtils.isExistedView("PTRichTextLabel",
+								String.format("_%.1f_ miles", this.totalMiles)),
+						"Total miles displayed correctly");
+				
+				// check total burned calories
 				Calendar now = Calendar.getInstance();
 				System.out.println("NOW: " + now);
 				float fullBMR = PrometheusHelper.calculateFullBMR(weight,
@@ -190,13 +202,13 @@ public class DayProgressAPI extends ModelAPI {
 						weight,
 						fullBMR,
 						now.get(Calendar.HOUR_OF_DAY) * 60
-								+ now.get(Calendar.MINUTE) - 20);
+								+ now.get(Calendar.MINUTE) - 10);
 				float maxTotalCalories = PrometheusHelper.calculateCalories(
 						this.totalPoints,
 						weight,
 						fullBMR,
 						now.get(Calendar.HOUR_OF_DAY) * 60
-								+ now.get(Calendar.MINUTE) + 20);
+								+ now.get(Calendar.MINUTE) + 10);
 				float result = PrometheusHelper.calculateCalories(
 						this.totalPoints,
 						weight,
@@ -246,14 +258,6 @@ public class DayProgressAPI extends ModelAPI {
 					"Start time shouldn't be displayed because of low points");
 		}
 		Gui.dragDownTimeline();
-	}
-
-	/**
-	 * This method implements the Vertex 'v_EndInput'
-	 * 
-	 */
-	public void v_EndInput() {
-		// nothing to do here
 	}
 
 	public void e_stay() {

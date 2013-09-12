@@ -11,15 +11,15 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.common.MVPCalculator;
+import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.gui.*;
 import com.misfit.ta.ios.AutomationTest;
 
 public class GoalSettingsAPI extends ModelAPI {
-	private static final Logger logger = Util
-			.setupLogger(GoalSettingsAPI.class);
+	private static final Logger logger = Util.setupLogger(GoalSettingsAPI.class);
 
-	public GoalSettingsAPI(AutomationTest automation, File model, boolean efsm,
-			PathGenerator generator, boolean weight) {
+	public GoalSettingsAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
 
@@ -35,8 +35,7 @@ public class GoalSettingsAPI extends ModelAPI {
 		// Goal: 1000
 
 		// sign up account with require information
-		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true,
-				16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
+		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", true, 16, 9, 1991, true, "5'", "8\\\"", "120", ".0", 1);
 		ShortcutsTyper.delayTime(5000);
 
 		PrometheusHelper.inputRandomRecord();
@@ -105,14 +104,12 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void v_GoalSettings() {
 		// check if current view is goal settings
-		Assert.assertTrue(HomeSettings.isAtEditGoal(),
-				"Current view is GoalSettings");
+		Assert.assertTrue(HomeSettings.isAtEditGoal(), "Current view is GoalSettings");
 
 		// check if default value is correct
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
 		String expect = this.goal + "";
-		Assert.assertTrue(actual.indexOf(expect) >= 0,
-				"Default goal value is correct");
+		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
 	}
 
 	/**
@@ -120,11 +117,20 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_GoalUpdated() {
+
 		// check new spinner value
 		int newGoal = HomeSettings.getSpinnerGoal();
 		Assert.assertTrue(newGoal == tempGoal, "Spinner's value is correct");
 
-		// and how to hit your goal contains only dummy texts
+		// check how to hit your goal
+		int walkMins = MVPCalculator.calculateNearestTimeRemainInMinute(tempGoal, MVPEnums.ACTIVITY_WALKING);
+		int runMins = MVPCalculator.calculateNearestTimeRemainInMinute(tempGoal, MVPEnums.ACTIVITY_RUNNING);
+		int swimMins = MVPCalculator.calculateNearestTimeRemainInMinute(tempGoal, MVPEnums.ACTIVITY_SWIMMING);
+
+		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_WALK_  " + MVPCalculator.convertNearestTimeInMinuteToString(walkMins)), "Suggest time for walking is correct");
+		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_RUN_  " + MVPCalculator.convertNearestTimeInMinuteToString(runMins)), "Suggest time for running is correct");
+		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_SWIM_  " + MVPCalculator.convertNearestTimeInMinuteToString(swimMins)), "Suggest time for swimming is correct");
+
 	}
 
 	/**
@@ -133,8 +139,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void v_NewGoalConfirmation() {
 		// check alert content
-		Assert.assertTrue(HomeSettings.hasDontForgetMessage(),
-				"Alert message is correct");
+		Assert.assertTrue(HomeSettings.hasDontForgetMessage(), "Alert message is correct");
 	}
 
 	/**
@@ -155,6 +160,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_HomeScreenUpdated() {
+		
 		// just in case tutorial shows up at nowhere
 		PrometheusHelper.handleTutorial();
 		ShortcutsTyper.delayTime(1000);
@@ -162,11 +168,9 @@ public class GoalSettingsAPI extends ModelAPI {
 		// check if new goal value had been updated
 		String actual = Gui.getProperty("UILabel", 3, "text");
 		String expect = this.goal + "";
-		logger.info("Actual goal is: " + actual + " - Expect goal is: "
-				+ expect);
+		logger.info("Actual goal is: " + actual + " - Expect goal is: " + expect);
 
-		Assert.assertTrue(actual.indexOf(expect) >= 0,
-				"Default goal value is correct");
+		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
 
 	}
 

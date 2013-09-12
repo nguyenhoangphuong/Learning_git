@@ -302,8 +302,11 @@ public class PrometheusHelper {
 
 	
 	public static void main(String[] args) {
-		Gui.init("192.168.1.206");
-		Gui.shutdown();
+		Gui.init("192.168.1.209");
+//		Gui.printView();
+		Gui.getProperty("PTRichTextLabel", 2, "text");
+		Gui.getProperty("PTRichTextLabel", 5, "text");
+		Gui.getProperty("PTRichTextLabel", 6, "text");
 	}
 
 }
