@@ -76,6 +76,20 @@ public class SignUp {
         return -1;
     }
     
+    public static String[] getHowToHitCurrentGoal() {
+    	
+    	String text = Gui.getText("UILabel", 0);
+        
+        if(text.equals("600"))
+        	return new String[] {"1 hour", "20 mins", "30 mins"};
+        if(text.equals("1000"))
+        	return new String[] {"2 hours", "45 mins", "1 hour"};
+        if(text.equals("1600"))
+        	return new String[] {"3 hours", "1 hour", "1.5 hours"};
+        
+        return new String[] {"","",""};
+    }
+    
     public static void setGoal(int level) {
     	// Current goal is 1 as default 
     	setGoal(level, getCurrentGoal());

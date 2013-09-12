@@ -130,6 +130,17 @@ public class SyncTest extends AutomationTest {
 
 		// upload file to TRS
 		TRS.instance().addFileToCurrentTest(file.getAbsolutePath(), null);
+		
+		// assert test result
+		int sum = 0;
+		for(int i = 0; i < failedSyncCount + successfulSyncCount; i++) {
+			sum += (uiEndTime[i] - uiStartTime[i]);
+		}
+		double failPercentage = failedSyncCount / (failedSyncCount + successfulSyncCount);
+		double averageUITime = sum / (failedSyncCount + successfulSyncCount);
+		
+		Assert.assertTrue(failPercentage <= 0.15, "Fail percentage is <= 15%");
+		Assert.assertTrue(averageUITime <= 6d, "Average total time in IU is <= 6s");
 
 	}
 
