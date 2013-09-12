@@ -2,5 +2,5 @@ Total test: 1
 Fail number: 0
 Success number: 1
 
-No.	Status	UITotalTime	ScanningTime	ConnectionOpenTime	UIStart	UIEnd	TriggerSyncTime	FinishHandshakeTime	FirstRequest	CleanUpConnection
-1	true	25	20	3	1378883830	1378883855	1378883829	1378883849	1378883849	1378883852	
+No.	Status	NumberOfRetries	RetryReasons	UITotalTime	ScanningTime	GetSettingsTime	TransferDataTime	SetSettingsAndCleanupTime
+1	true	0		15	10	1	0	2	

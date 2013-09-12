@@ -27,7 +27,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SyncTest extends AutomationTest {
 	
-	private static int NUMBER_OF_SYNC = 50;
+	private static int NUMBER_OF_SYNC = 1;
 
 	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Syncing", "Linking" })
 	public void LinkNoShineAvailable() throws InterruptedException, StopConditionException, IOException {
@@ -72,9 +72,9 @@ public class SyncTest extends AutomationTest {
 
 		// start test
 		try {
-			long begin = System.currentTimeMillis() / 1000;
+			long begin = System.currentTimeMillis() / 1000 - 720;
 
-			 Sync.signIn();
+			 //Sync.signIn();
 			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 				
 				TRS.instance().addStep("Sync number: " + (i + 1), null);
@@ -109,7 +109,7 @@ public class SyncTest extends AutomationTest {
 				}
 
 				// parse sync log and store the record
-				ShortcutsTyper.delayTime(10000);
+				ShortcutsTyper.delayTime(15000);
 				String log = MVPApi.getLatestSyncLog("v14@qa.com", "XXXXXV0014", begin);
 				uiStartTime[i] = start / 1000;
 				uiEndTime[i] = end / 1000;
@@ -155,20 +155,18 @@ public class SyncTest extends AutomationTest {
 			fr.print("Success number: " + successfulSyncCount + "\n");
 			fr.print('\n');
 
-			fr.print("No.\tStatus\tUITotalTime\tScanningTime\tConnectionOpenTime\tUIStart\tUIEnd\tTriggerSyncTime\tFinishHandshakeTime\tFirstRequest\tCleanUpConnection\n");
+			fr.print("No.\tStatus\tNumberOfRetries\tRetryReasons\tUITotalTime\tScanningTime\tGetSettingsTime\tTransferDataTime\tSetSettingsAndCleanupTime\n");
 			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 
 				fr.print((i + 1) + "\t");
 				fr.print(statusPassed[i] + "\t");
+				fr.print(syncLogs[i].numberOfRetries + "\t");
+				fr.print(syncLogs[i].retryReasons + "\t");
 				fr.print((uiEndTime[i] - uiStartTime[i]) + "\t");
 				fr.print((syncLogs[i].handShakeTimestamp - syncLogs[i].userTriggerSyncTimestamp) + "\t");
-				fr.print((syncLogs[i].cleanUpConnectionTimestamp - syncLogs[i].sendPlayingSyncAnimationTimestamp) + "\t");
-				fr.print(uiStartTime[i] + "\t");
-				fr.print(uiEndTime[i] + "\t");
-				fr.print(syncLogs[i].userTriggerSyncTimestamp + "\t");
-				fr.print(syncLogs[i].handShakeTimestamp + "\t");
-				fr.print(syncLogs[i].sendPlayingSyncAnimationTimestamp + "\t");
-				fr.print(syncLogs[i].cleanUpConnectionTimestamp + "\t");
+				fr.print((syncLogs[i].receiveGetPointTimestamp - syncLogs[i].handShakeTimestamp) + "\t");
+				fr.print((syncLogs[i].receiveGetBatteryTimestamp - syncLogs[i].sendGetFileListTimestamp) + "\t");
+				fr.print((syncLogs[i].cleanUpConnectionTimestamp - syncLogs[i].sendSetGoalTimestamp) + "\t");
 				fr.print('\n');
 			}
 			fr.close();

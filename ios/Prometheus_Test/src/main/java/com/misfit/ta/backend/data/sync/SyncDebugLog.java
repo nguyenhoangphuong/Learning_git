@@ -47,7 +47,7 @@ public class SyncDebugLog {
 	public long receiveSetDoubleTapsSettingTimestamp = 0;
 	public long sendSetTripleTapsSettingTimestamp = 0;
 	public long receiveSetTripleTapsSettingTimestamp = 0;
-	
+
 	public long sendGetDebugFileTimestamp = 0;
 	public long receiveGetDebugFileTimestamp = 0;
 	public long sendEraseDebugFileTimestamp = 0;
@@ -72,6 +72,8 @@ public class SyncDebugLog {
 	public int preSyncPoint = -1;
 	public int syncPoint = -1;
 	public int postSyncPoint = -1;
+	public int numberOfRetries = 0;
+	public String retryReasons = "";
 
 	public boolean isPlayingSyncAnimationOK = true;
 	public boolean isGetTimeOK = true;
@@ -90,7 +92,7 @@ public class SyncDebugLog {
 	public boolean isGetPointAfterSyncOK = true;
 	public boolean isGetGoalAfterSyncOK = true;
 	public boolean isStopSyncAnimtaionOK = true;
-	
+
 	// constructor
 	public SyncDebugLog(String log) {
 
@@ -106,7 +108,7 @@ public class SyncDebugLog {
 
 			if (lines[i].contains("START NEW SYNC SESSION")) {
 				this.startSyncSessionTimestamp = getTimestamp(lines[i - 1]);
-				
+
 				this.appMode = getAppMode(lines[i]);
 				this.syncMode = getSyncMode(lines[i]);
 			}
@@ -120,8 +122,7 @@ public class SyncDebugLog {
 			if (lines[i].contains("HANDSHAKED WITH SHINE"))
 				this.handShakeTimestamp = getTimestamp(lines[i - 1]);
 
-			if (lines[i].contains("SEND REQUEST: PLAY PAIRING ANIMATION") ||
-				lines[i].contains("SEND REQUEST: PLAY SYNCING ANIMATION")) {
+			if (lines[i].contains("SEND REQUEST: PLAY PAIRING ANIMATION") || lines[i].contains("SEND REQUEST: PLAY SYNCING ANIMATION")) {
 				this.sendPlayingSyncAnimationTimestamp = getTimestamp(lines[i - 1]);
 				this.receivePlayingSyncAnimationTimestamp = getTimestamp(lines[i + 1]);
 				this.isPlayingSyncAnimationOK = isStatusSuccess(lines[i + 2]);
@@ -177,8 +178,8 @@ public class SyncDebugLog {
 				this.receiveGetBatteryTimestamp = getTimestamp(lines[i + 1]);
 				this.isGetBatteryOK = isStatusSuccess(lines[i + 2]);
 			}
-			
-			if(lines[i].contains("BATTERY:")) {
+
+			if (lines[i].contains("BATTERY:")) {
 				this.batteryLevel = getBatteryLevel(lines[i]);
 			}
 
@@ -198,7 +199,7 @@ public class SyncDebugLog {
 				this.sendSetPointTimestamp = getTimestamp(lines[i - 1]);
 				this.receiveSetPointTimestamp = getTimestamp(lines[i + 3]);
 				this.isSetPointOK = isStatusSuccess(lines[i + 4]);
-				
+
 				int[] points = getSyncPointInfo(lines[i + 1]);
 				this.preSyncPoint = points[0];
 				this.syncPoint = points[1];
@@ -239,6 +240,18 @@ public class SyncDebugLog {
 
 			if (lines[i].contains("CLEAN UP CONNECTIONS"))
 				this.cleanUpConnectionTimestamp = getTimestamp(lines[i]);
+
+			// retry
+			if (lines[i].contains("DROP CONNECTION AND RETRY"))
+				this.numberOfRetries++;
+			
+			if (lines[i].contains(". RETRY")) {
+				if(this.retryReasons != "")
+					this.retryReasons += ", ";
+				
+				this.retryReasons += getRetryReason(lines[i]);
+			}
+				
 		}
 	}
 
@@ -252,51 +265,57 @@ public class SyncDebugLog {
 	}
 
 	private int getAppMode(String line) {
-		
-		return line.contains("FOREGROUND") ?  APP_MODE_FOREGROUND : APP_MODE_BACKGROUND;
+
+		return line.contains("FOREGROUND") ? APP_MODE_FOREGROUND : APP_MODE_BACKGROUND;
 	}
-	
+
 	private int getSyncMode(String line) {
-		
+
 		return line.contains("MANUAL") ? SYNC_MODE_MANUAL : SYNC_MODE_AUTO;
 	}
-	
+
 	private int getBatteryLevel(String line) {
-		
+
 		line = line.replace("%", "");
 		String[] parts = line.split(":");
 		return Integer.valueOf(parts[1].trim());
 	}
-	
+
 	private int getDoubleTapsValue(String line) {
-		
+
 		String[] parts = line.split(":");
 		return Integer.valueOf(parts[2].trim());
 	}
-	
+
 	private int getTripleTapsValue(String line) {
-		
+
 		String[] parts = line.split(":");
 		return Integer.valueOf(parts[2].trim());
 	}
-	
+
 	private int[] getSyncPointInfo(String line) {
-		
+
 		line = line.replace(",", ":");
 		String[] parts = line.split(":");
 		int[] points = new int[3];
 		points[0] = Integer.valueOf(parts[2].trim());
 		points[1] = Integer.valueOf(parts[4].trim());
 		points[2] = Integer.valueOf(parts[6].trim());
-		
+
 		return points;
 	}
 	
-	private boolean isStatusSuccess(String line) {
+	private String getRetryReason(String line) {
 		
+		String[] parts = line.split(".");
+		return parts[1].trim();
+	}
+
+	private boolean isStatusSuccess(String line) {
+
 		return line.contains("SUCCESS");
 	}
-	
+
 	public void info() {
 
 		logger.info("---------------");
@@ -387,5 +406,4 @@ public class SyncDebugLog {
 
 	}
 
-}
-;
+};
