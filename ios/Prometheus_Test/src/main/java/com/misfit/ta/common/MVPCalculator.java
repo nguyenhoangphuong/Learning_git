@@ -23,16 +23,15 @@ public class MVPCalculator {
 		
 		// Manual input: real activity points should be floor down before
 		// deviding by 2.5
-		float factor = 1f;
-		if (activityType == MVPEnums.ACTIVITY_CYCLING) {
-			factor = 1.5f;
-		} else if (activityType == MVPEnums.ACTIVITY_SWIMMING) {
-			factor = 4f;
-		}
-		
+		System.out.println("DEBUG ENUM");
 		float stepsPerMin = (float) Math.floor(steps * 1f / minutes);
+		if (activityType == MVPEnums.ACTIVITY_CYCLING) {
+			return Math.floor(stepsPerMin * 0.375f) * minutes / 2.5f;
+		} else if (activityType == MVPEnums.ACTIVITY_SWIMMING) {
+			return Math.floor(stepsPerMin) * minutes / 2.5f;
+		}
 		float realPointsPerMin = (stepsPerMin * (0.25f + 0.01f * (Math.max(115f, stepsPerMin) - 115)) + 0.0001f);
-		return (Math.floor(realPointsPerMin) * minutes) / 2.5f * factor;
+		return (Math.floor(realPointsPerMin) * minutes) / 2.5f;
 	}
 
 	public static double calculateFullBMR(float weightInLbs, float heightInInches, int age, boolean isMale) {
