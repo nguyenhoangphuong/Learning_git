@@ -111,7 +111,7 @@ public class SyncDebugLog {
 				this.syncMode = getSyncMode(lines[i]);
 			}
 
-			if (lines[i].contains("USER TRIGGERED PAIRING") || lines[i].contains("USER SYNCING PAIRING"))
+			if (lines[i].contains("USER TRIGGERED"))
 				this.userTriggerSyncTimestamp = getTimestamp(lines[i - 1]);
 
 			if (lines[i].contains("SHINE CONNECTED"))

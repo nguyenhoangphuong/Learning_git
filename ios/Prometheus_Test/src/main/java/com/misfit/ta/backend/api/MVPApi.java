@@ -2,6 +2,11 @@ package com.misfit.ta.backend.api;
 
 import static com.google.resting.component.EncodingTypes.UTF8;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -808,7 +813,16 @@ public class MVPApi {
 		
 		return result.toArray(new String[result.size()]);
 	}
+	
+	public static String getLatestSyncLog(String email, String serialNumber, long sinceTimestamp) {
 		
+		String[] paths = listStagingDebugSyncLogs(email, serialNumber, sinceTimestamp, System.currentTimeMillis() / 1000 + 360);
+		logger.info(paths[paths.length - 1]);
+		String log = getStagingDebugSyncLog(paths[paths.length - 1]);
+		
+		return log;
+	}
+	
 	// statistics
  	public static BaseResult createStatistics(String token, Statistics statistics) {
 
@@ -855,9 +869,40 @@ public class MVPApi {
 	public static void main(String[] args) throws JSONException {
 			
 //		String log = getStagingDebugSyncLog("staging/2013/09/05/thy@misfitwearables.com/XXXXXV0007/1378348887/debug_log.txt");
+//		String log = MVPApi.getLatestSyncLog("v14@qa.com", "XXXXXV0014", 1378879000);
 //		logger.info(log);
 //		SyncDebugLog debug = new SyncDebugLog(log);
 //		debug.info();
+		
+		File detailResult = new File("sync/sync_result_detail.xls");
+		if(detailResult.exists()) {
+			detailResult.delete();
+			try {
+				detailResult.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		PrintWriter fr;
+		try {
+			fr = new PrintWriter(detailResult.getAbsolutePath(), "UTF-8");
+			fr.print("Total test: " + 50 + "\n");
+			fr.print("Fail number: " + 50 + "\n");
+			fr.print("Success number: " + 0 + "\n");
+			fr.print('\n');
+			fr.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		logger.info("adsas");
+		
 
 	}
 
