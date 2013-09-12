@@ -46,8 +46,7 @@ public class HomeScreen {
     }
     
     public static void tapToday() {
-    	//iphone 4
-    	Gui.touch(300, 75);
+    	Gui.touchAVIew("UIButton", 0);
     }
     
     /* Manual input */

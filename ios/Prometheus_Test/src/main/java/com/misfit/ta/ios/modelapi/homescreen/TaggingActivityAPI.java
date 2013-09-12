@@ -111,18 +111,20 @@ public class TaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_inputActivity() {
+		ShortcutsTyper.delayTime(2000);
 		HomeScreen.tapOpenManualInput();
 		ShortcutsTyper.delayTime(500);
-
 		// input record
 		Calendar now = Calendar.getInstance();
 		hour = now.get(Calendar.HOUR_OF_DAY);
 		if (lastMinute == -1) {
 			lastMinute = now.get(Calendar.MINUTE);
-		} else if (lastMinute > 0 && lastMinute < 50) {
+		} else if (lastMinute > 0 && lastMinute < 49) {
 			lastMinute = lastMinute + 10;
 		} else {
-			lastMinute = 1;
+			now.add(Calendar.MINUTE, 15);
+			lastMinute = now.get(Calendar.MINUTE);
+			hour = now.get(Calendar.HOUR_OF_DAY);
 		}
 		minute = String.format("%02d", lastMinute + 1);
 		String[] time = { String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour), minute, hour < 12 ? "AM" : "PM" };

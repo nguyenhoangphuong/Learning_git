@@ -26,9 +26,9 @@ public class MVPCalculator {
 		System.out.println("DEBUG ENUM");
 		float stepsPerMin = (float) Math.floor(steps * 1f / minutes);
 		if (activityType == MVPEnums.ACTIVITY_CYCLING) {
-			return Math.floor(stepsPerMin * 0.375f) * minutes / 2.5f;
+			return Math.floor(stepsPerMin * 0.375f * minutes) / 2.5f;
 		} else if (activityType == MVPEnums.ACTIVITY_SWIMMING) {
-			return Math.floor(stepsPerMin) * minutes / 2.5f;
+			return Math.floor(stepsPerMin * minutes) / 2.5f;
 		}
 		float realPointsPerMin = (stepsPerMin * (0.25f + 0.01f * (Math.max(115f, stepsPerMin) - 115)) + 0.0001f);
 		return (Math.floor(realPointsPerMin) * minutes) / 2.5f;
