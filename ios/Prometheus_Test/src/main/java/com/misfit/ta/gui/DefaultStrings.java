@@ -95,7 +95,6 @@ public class DefaultStrings {
 	public static String[] WearingLocations = { "Head", "Upper Arm", "Chest",
 			"Wrist", "Waist", "Ankle/Foot" };
 	public static String UpdateFirmwareMessage = "We've made your Shine even better! Sync now to get the latest features";
-	public static String UpdateFirmwareTitle = "Update Available";
 	public static String UpdateFirmwareLaterButton = "Later";
 
 	public static String[] WalkingLevel = { "KINDA ACTIVE", "PRETTY ACTIVE",

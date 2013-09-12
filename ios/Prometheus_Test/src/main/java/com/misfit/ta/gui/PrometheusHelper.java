@@ -242,8 +242,8 @@ public class PrometheusHelper {
 	}
 
 	public static void handleUpdateFirmwarePopup() {
-		if (DefaultStrings.UpdateFirmwareTitle.equals(Gui.getPopupTitle()) && DefaultStrings.UpdateFirmwareMessage.equals(Gui.getPopupContent())) {
-			Gui.touchPopupButton(DefaultStrings.UpdateFirmwareLaterButton);
+		if (ViewUtils.isExistedView("UILabel", DefaultStrings.UpdateFirmwareMessage)) {
+			Gui.touchAVIew("UILabel", DefaultStrings.UpdateFirmwareMessage);
 		}
 	}
 
