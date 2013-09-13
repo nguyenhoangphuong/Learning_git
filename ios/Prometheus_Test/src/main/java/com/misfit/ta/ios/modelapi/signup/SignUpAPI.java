@@ -149,7 +149,6 @@ public class SignUpAPI extends ModelAPI {
     	ShortcutsTyper.delayTime(200);
     }
 
-
     /**
      * This method implements the Edge 'e_inputProfile'
      * 
@@ -188,13 +187,14 @@ public class SignUpAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(200);
     }
     
+    
+    
     /**
      * This method implements the Vertex 'v_InitialView'
      * 
      */
     public void v_InitialView() {
-    	// check if current view is HomeScreen
-    	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");
+    	Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
     }
 
     /**
@@ -221,9 +221,9 @@ public class SignUpAPI extends ModelAPI {
     	String[] suggestTimeStrings = SignUp.getHowToHitCurrentGoal();
     	
         Assert.assertTrue(SignUp.getCurrentGoal() == goal, "Goal is not updated");
-        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_WALK_  " + suggestTimeStrings[0]), "Suggest time for walking is correct");
-        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_RUN_  " + suggestTimeStrings[1]), "Suggest time for running is correct");
-        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_SWIM_  " + suggestTimeStrings[2]), "Suggest time for swimming is correct");
+        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_WALK_\\n " + suggestTimeStrings[0]), "Suggest time for walking is correct");
+        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_RUN_\\n " + suggestTimeStrings[1]), "Suggest time for running is correct");
+        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_SWIM_\\n " + suggestTimeStrings[2]), "Suggest time for swimming is correct");
         
     }
     
@@ -271,4 +271,5 @@ public class SignUpAPI extends ModelAPI {
     public void v_SignUpPairing() {
         Assert.assertTrue(SignUp.isSignUpPairingView(), "This is not sign up pairing view.");
     }
+
 }

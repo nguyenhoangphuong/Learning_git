@@ -1,34 +1,29 @@
 package com.misfit.ta.common;
 
 public class MVPCalculator {
-	
+
 	private static double ALPHA = 0.15d;
 	private static double BETA = 1.3d;
 	private static double DELTA = 0.925d;
 	private static double GAMMA = 0.5d;
-	
-	private static double PPS_NORMAL = 0.25f;
-	private static double PPS_CYCLING = 0.375f;
-	private static double PPS_SWIMMING = 1f;
-	
+
+	private static double PPS_CYCLING = 0.375d;
+	private static double PPS_SWIMMING = 1d;
+
 	private static double DIVISOR_WALKING = 10;
 	private static double DIVISOR_SWIMMING = 22;
 	private static double DIVISOR_RUNNING = 30;
-		
+
 	public static double calculateMiles(int steps, int mins, float heightInInches) {
-		
+
 		double SR = steps * 1d / mins;
-		double RSL = (SR < 80 ? 0.33d : 
-					 (SR <= 140 ? 0.002 * (SR - 80) + 0.33d :
-					 (SR <= 186 ? 0.0085 * (SR - 140) + 0.45 :
-					  0.001 * (SR - 186) + 0.841
-					 )));
+		double RSL = (SR < 80 ? 0.33d : (SR <= 140 ? 0.002 * (SR - 80) + 0.33d : (SR <= 186 ? 0.0085 * (SR - 140) + 0.45 : 0.001 * (SR - 186) + 0.841)));
 		double DPM = SR * RSL * heightInInches / 12;
-		return DPM * mins;
+		return DPM * mins * 0.000189394;
 	}
-	
+
 	public static double calculatePoint(int steps, int minutes, int activityType) {
-		
+
 		// Manual input: real activity points should be floor down before
 		// deviding by 2.5
 		System.out.println("DEBUG ENUM");
@@ -43,24 +38,23 @@ public class MVPCalculator {
 	}
 
 	public static double calculateFullBMR(float weightInLbs, float heightInInches, int age, boolean isMale) {
-		
+
 		double weightInKg = weightInLbs * 0.453592d;
 		double heightInCm = heightInInches * 2.54d;
 		double genderFactor = isMale ? 5d : -161d;
 		double fullBMR = (10d * weightInKg) + (6.25d * heightInCm) - (5d * age) + genderFactor;
-		
+
 		return fullBMR;
 	}
 
 	public static double calculateCalories(float points, float weightInLbs, float fullBMR, int currentMinute) {
-		
+
 		double weightInKg = weightInLbs * 0.45359237f;
-		double E = ALPHA * points * 2.5f * (weightInKg / 60f) 
-				+ BETA * (fullBMR * (currentMinute / 1440f));
-		
+		double E = ALPHA * points * 2.5f * (weightInKg / 60f) + BETA * (fullBMR * (currentMinute / 1440f));
+
 		return Math.min(E, GAMMA * E + DELTA * fullBMR);
 	}
-	
+
 	public static int calculateNearestTimeRemainInMinute(int points, int activityType) {
 		
 		int[] scales = new int[] {5, 10, 15, 20, 30, 45, 60};
@@ -70,10 +64,17 @@ public class MVPCalculator {
 										DIVISOR_WALKING))));
 		
 		if(mins >= 60) {
+			
+			if(mins % 60 == 0)
+				return mins;
+			
 			int hours = mins / 60;
 			int remainMins = mins % 60;
 			
-			return hours * 60 + (remainMins >= 30 ? 30 : 0);
+			if(remainMins <= 30)
+				return hours * 60 + 30;
+			
+			return (hours + 1) * 60;
 		}
 		
 		for(int i = 0; i < scales.length; i++)
@@ -82,16 +83,19 @@ public class MVPCalculator {
 		
 		return -1;
 	}
-	
+
 	public static String convertNearestTimeInMinuteToString(int minutes) {
-		
-		if(minutes < 60)
+
+		if (minutes < 60)
 			return minutes + " mins";
-		else if(minutes == 60)
+		else if (minutes == 60)
 			return "1 hour";
+
+		float hours = minutes / 60f;
+		if(minutes % 60 == 0)
+			return String.format("%d hours", hours);
 		
-		float hours = minutes / 60;
-		return hours + " hours";
+		return String.format("%.1f hours", hours);
 	}
-	
+
 }

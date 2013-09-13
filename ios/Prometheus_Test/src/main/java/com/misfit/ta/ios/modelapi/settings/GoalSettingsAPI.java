@@ -121,16 +121,16 @@ public class GoalSettingsAPI extends ModelAPI {
 
 		// check new spinner value
 		int newGoal = HomeSettings.getSpinnerGoal();
-		Assert.assertTrue(newGoal == tempGoal, "Spinner's value is correct");
+		Assert.assertEquals(newGoal, tempGoal, "Spinner's value is correct");
 
 		// check how to hit your goal
 		int walkMins = MVPCalculator.calculateNearestTimeRemainInMinute(tempGoal, MVPEnums.ACTIVITY_WALKING);
 		int runMins = MVPCalculator.calculateNearestTimeRemainInMinute(tempGoal, MVPEnums.ACTIVITY_RUNNING);
 		int swimMins = MVPCalculator.calculateNearestTimeRemainInMinute(tempGoal, MVPEnums.ACTIVITY_SWIMMING);
 
-		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_WALK_  " + MVPCalculator.convertNearestTimeInMinuteToString(walkMins)), "Suggest time for walking is correct");
-		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_RUN_  " + MVPCalculator.convertNearestTimeInMinuteToString(runMins)), "Suggest time for running is correct");
-		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_SWIM_  " + MVPCalculator.convertNearestTimeInMinuteToString(swimMins)), "Suggest time for swimming is correct");
+		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_WALK_\\n " + MVPCalculator.convertNearestTimeInMinuteToString(walkMins)), "Suggest time for walking is correct");
+		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_RUN_\\n " + MVPCalculator.convertNearestTimeInMinuteToString(runMins)), "Suggest time for running is correct");
+		Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_SWIM_\\n " + MVPCalculator.convertNearestTimeInMinuteToString(swimMins)), "Suggest time for swimming is correct");
 
 	}
 
@@ -167,11 +167,13 @@ public class GoalSettingsAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(1000);
 
 		// check if new goal value had been updated
-		String actual = Gui.getProperty("UILabel", 3, "text");
+		String actual = Gui.getProperty("UILabel", 4, "text");
 		String expect = this.goal + "";
 		logger.info("Actual goal is: " + actual + " - Expect goal is: " + expect);
 
-		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
+		Assert.assertTrue(actual.indexOf(expect) >= 0 ||
+				ViewUtils.isExistedView("UILabel", String.format("of %d points", expect)), 
+				"Default goal value is correct");
 
 	}
 

@@ -2,11 +2,15 @@ package com.misfit.ta.gui;
 
 import java.util.Random;
 
+import org.testng.Assert;
+
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.common.MVPCalculator;
+import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.utils.ShortcutsTyper;
+import com.sun.istack.logging.Logger;
 
 public class PrometheusHelper {
 
@@ -302,8 +306,12 @@ public class PrometheusHelper {
 
 	
 	public static void main(String[] args) {
-		Gui.init("192.168.1.206");
-		Gui.shutdown();
+		Gui.init("192.168.1.247");
+//		Gui.printViewWithViewName("UILabel");
+		int newGoal = HomeSettings.getSpinnerGoal();
+		Assert.assertEquals(newGoal, 1200, "Spinner's value is correct");
+//		System.out.println(MVPCalculator.calculateMiles(1000, 5, 68));
+
 	}
 
 }
