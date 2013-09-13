@@ -196,6 +196,14 @@ public class SignUpAPI extends ModelAPI {
     public void v_InitialView() {
     	Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
     }
+    
+    /**
+     * This method implements the Vertex 'v_HomeScreen'
+     * 
+     */
+    public void v_HomeScreen() {
+    	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");
+    }
 
     /**
      * This method implements the Vertex 'v_SignUpAccount'
