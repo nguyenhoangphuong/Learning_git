@@ -14,7 +14,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.Gui;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.sync.SyncDebugLog;
 import com.misfit.ta.gui.Sync;
@@ -74,7 +73,7 @@ public class SyncTest extends AutomationTest {
 		try {
 			long begin = System.currentTimeMillis() / 1000 - 720;
 
-			 //Sync.signIn();
+			Sync.signIn();
 			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 				
 				TRS.instance().addStep("Sync number: " + (i + 1), null);
@@ -83,17 +82,9 @@ public class SyncTest extends AutomationTest {
 				long end = 0;
 				boolean passed = true;
 
-				// TODO: change check upgrade to adapt new flow
-				// since MVP17.1 there's no alert
-				// alert will be replace by popup and icon at the top
-				if (Sync.hasAlert() && Gui.getPopupTitle() == "Update Available") {
-					Gui.touchPopupButton("Upgrade Now");
-					start = System.currentTimeMillis();
-				} else {
-					Sync.openSyncView();
-					Sync.tapToSync();
-					start = System.currentTimeMillis();
-				}
+				Sync.openSyncView();
+				Sync.tapToSync();
+				start = System.currentTimeMillis();
 
 				while (!(ViewUtils.isExistedView("UILabel", "Today") && ViewUtils.isExistedView("UILabel", "Week"))) {
 					ShortcutsTyper.delayTime(100);
@@ -130,18 +121,6 @@ public class SyncTest extends AutomationTest {
 
 		// upload file to TRS
 		TRS.instance().addFileToCurrentTest(file.getAbsolutePath(), null);
-		
-		// assert test result
-		int sum = 0;
-		for(int i = 0; i < failedSyncCount + successfulSyncCount; i++) {
-			sum += (uiEndTime[i] - uiStartTime[i]);
-		}
-		double failPercentage = failedSyncCount / (failedSyncCount + successfulSyncCount);
-		double averageUITime = sum / (failedSyncCount + successfulSyncCount);
-		
-		Assert.assertTrue(failPercentage <= 0.15, "Fail percentage is <= 15%");
-		Assert.assertTrue(averageUITime <= 6d, "Average total time in IU is <= 6s");
-
 	}
 
 	private File writeResult(String filepath, int failedSyncCount, int successfulSyncCount, SyncDebugLog[] syncLogs, long[] uiStartTime, long[] uiEndTime, boolean[] statusPassed) {
