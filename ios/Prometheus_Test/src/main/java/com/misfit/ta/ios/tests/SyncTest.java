@@ -27,7 +27,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SyncTest extends AutomationTest {
 	
-	private static int NUMBER_OF_SYNC = 1;
+	private static int NUMBER_OF_SYNC = 25;
 
 	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Syncing", "Linking" })
 	public void LinkNoShineAvailable() throws InterruptedException, StopConditionException, IOException {
