@@ -84,7 +84,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_DoneEdit() {
 		ShortcutsTyper.delayTime(1000);
 		HomeSettings.tapDoneAtNewGoal();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(5000);
 
 		goal = tempGoal;
 		logger.info("Confirm new goal");

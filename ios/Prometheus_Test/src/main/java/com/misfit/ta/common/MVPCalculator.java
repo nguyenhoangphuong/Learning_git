@@ -93,7 +93,7 @@ public class MVPCalculator {
 
 		float hours = minutes / 60f;
 		if(minutes % 60 == 0)
-			return String.format("%d hours", hours);
+			return String.format("%.0f hours", hours);
 		
 		return String.format("%.1f hours", hours);
 	}
