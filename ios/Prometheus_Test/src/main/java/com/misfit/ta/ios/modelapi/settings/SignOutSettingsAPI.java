@@ -104,7 +104,7 @@ public class SignOutSettingsAPI extends ModelAPI {
 
 	public void e_ChangeGoal() {
 		goalValue = PrometheusHelper.randInt(25, 45) * 100;
-		HomeSettings.setSpinnerGoal(goalValue);
+		HomeSettings.setSpinnerGoal(goalValue, HomeSettings.getSpinnerGoal());
 		ShortcutsTyper.delayOne();
 	}
 

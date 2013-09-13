@@ -1,6 +1,7 @@
 package com.misfit.ta.gui;
 
 import com.misfit.ios.ViewUtils;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeSettings {
 
@@ -81,8 +82,12 @@ public class HomeSettings {
 		Gui.touchAVIew("UIButton", DefaultStrings.SaveButton);
 	}
 
-	public static void setSpinnerGoal(int value) {
-		Gui.setSpinnerGoal(value);
+	public static void setSpinnerGoal(int newGoal, int currentGoal) {
+		int buttonIndex = newGoal >= currentGoal ? 0 : 1;
+		for (int i = 0; i < Math.abs(newGoal - currentGoal) / 100; i++) {
+			Gui.touchAVIew("UIButton", buttonIndex);
+			ShortcutsTyper.delayTime(500);
+		}
 	}
 
 	public static int getSpinnerGoal() {

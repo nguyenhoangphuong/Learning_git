@@ -60,7 +60,8 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void e_ChangeGoal() {
 		tempGoal = PrometheusHelper.randInt(10, 25) * 100;
-		HomeSettings.setSpinnerGoal(tempGoal);
+		int currentGoal = HomeSettings.getSpinnerGoal();
+		HomeSettings.setSpinnerGoal(tempGoal, currentGoal);
 		ShortcutsTyper.delayTime(1000);
 
 		logger.info("Set goal to: " + tempGoal);
