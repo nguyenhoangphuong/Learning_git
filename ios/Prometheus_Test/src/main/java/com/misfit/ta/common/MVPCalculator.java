@@ -9,8 +9,11 @@ public class MVPCalculator {
 
 	private static double PPS_CYCLING = 0.375d;
 	private static double PPS_SWIMMING = 1d;
-
-	private static double DIVISOR_WALKING = 10;
+	private static double PPS_TENNIS = 1.25d;
+	private static double PPS_BASKETBALL = 1d;
+	private static double PPS_SOCCER = 0.875d;
+	private static int MIN_POINT_PER_MIN = 162;
+	static double DIVISOR_WALKING = 10;
 	private static double DIVISOR_SWIMMING = 22;
 	private static double DIVISOR_RUNNING = 30;
 
@@ -26,15 +29,25 @@ public class MVPCalculator {
 
 		// Manual input: real activity points should be floor down before
 		// deviding by 2.5
-		System.out.println("DEBUG ENUM");
+		boolean isWalking = false;
 		float stepsPerMin = (float) Math.floor(steps * 1f / minutes);
+		double result = 0d;
 		if (activityType == MVPEnums.ACTIVITY_CYCLING) {
-			return Math.floor(stepsPerMin * PPS_CYCLING * minutes) / 2.5f;
+			result = Math.floor(stepsPerMin * PPS_CYCLING * minutes);
 		} else if (activityType == MVPEnums.ACTIVITY_SWIMMING) {
-			return Math.floor(stepsPerMin * PPS_SWIMMING * minutes) / 2.5f;
+			result = Math.floor(stepsPerMin * PPS_SWIMMING * minutes);
+		} else if (activityType == MVPEnums.ACTIVITY_TENNIS) {
+			result = Math.floor(stepsPerMin * PPS_TENNIS * minutes);
+		} else if (activityType == MVPEnums.ACTIVITY_BASKETBALL) {
+			result = Math.floor(stepsPerMin * PPS_BASKETBALL * minutes);
+		} else if (activityType == MVPEnums.ACTIVITY_SOCCER) {
+			result = Math.floor(stepsPerMin * PPS_SOCCER * minutes);
+		} else {
+			float realPointsPerMin = (stepsPerMin * (0.25f + 0.01f * (Math.max(115f, stepsPerMin) - 115)) + 0.0001f);
+			result = (Math.floor(realPointsPerMin) * minutes) / 2.5f;
+			isWalking = true;
 		}
-		float realPointsPerMin = (stepsPerMin * (0.25f + 0.01f * (Math.max(115f, stepsPerMin) - 115)) + 0.0001f);
-		return (Math.floor(realPointsPerMin) * minutes) / 2.5f;
+		return isWalking ? result : Math.min(result, MIN_POINT_PER_MIN) / 2.5f;
 	}
 
 	public static double calculateFullBMR(float weightInLbs, float heightInInches, int age, boolean isMale) {
