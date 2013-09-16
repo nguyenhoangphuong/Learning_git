@@ -74,14 +74,14 @@ public class HomeScreen {
     /* Timeline */
     public static void goToPreviousDays(int days) {
         for (int i = 0; i < days; i++) {
-            Gui.touchAVIew("UIRoundedRectButton", 0);
+            Gui.touchAVIew("UIButton", 4);
             ShortcutsTyper.delayTime(2000);
         }
     }
 
     public static void goToNextDays(int days) {
         for (int i = 0; i < days; i++) {
-        	Gui.touchAVIew("UIRoundedRectButton", 1);
+        	Gui.touchAVIew("UIButton", 5);
             ShortcutsTyper.delayTime(2000);
         }
     }
