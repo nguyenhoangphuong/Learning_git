@@ -264,4 +264,8 @@ public class DayProgressAPI extends ModelAPI {
 	public void e_stay() {
 
 	}
+	
+	public void v_EndInput() {
+
+	}
 }
