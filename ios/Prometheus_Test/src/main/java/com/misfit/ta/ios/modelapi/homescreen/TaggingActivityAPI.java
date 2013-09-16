@@ -45,6 +45,7 @@ public class TaggingActivityAPI extends ModelAPI {
 	private boolean hasNoActivity = true;
 	private int countSwimmingPopup = 0;
 	private int countCyclingPopup = 0;
+	private int countSleepPopup = 0;
 
 	public TaggingActivityAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
@@ -81,6 +82,10 @@ public class TaggingActivityAPI extends ModelAPI {
 	public void e_chooseSleep() {
 		openMyShineView();
 		HomeScreen.chooseSleep();
+		if (HomeScreen.hasSuggestWearingPositionForSleepMessage()) {
+			Gui.touchPopupButton(DefaultStrings.GotItButton);
+			countSleepPopup++;
+		}
 		ShortcutsTyper.delayTime(300);
 		HomeScreen.tapSave();
 		activityType = MVPEnums.ACTIVITY_SLEEPING;
@@ -214,7 +219,7 @@ public class TaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_UpdatedNormalToday() {
-		
+		Assert.assertTrue(countSleepPopup > 0 && countSleepPopup <= 2, "Wearing position for sleep isn't displayed correctly.");
 	}
 
 	/**

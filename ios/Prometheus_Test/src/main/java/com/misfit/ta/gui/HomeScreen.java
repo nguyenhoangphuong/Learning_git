@@ -143,16 +143,19 @@ public class HomeScreen {
 
     // alerts
 	public static boolean hasSuggestWearingPositionForSwimmingMessage() {
-		
 		return Gui.hasAlert() && 
 				DefaultStrings.WearingPositionForSwimmingContent.equals(Gui.getPopupContent()) && 
 				DefaultStrings.WearingPositionForSwimmingTitle.equals(Gui.getPopupTitle());
 	}
 	
 	public static boolean hasSuggestWearingPositionForCyclingMessage() {
-		
 		return Gui.hasAlert() && 
 				DefaultStrings.WearingPositionForCyclingContent.equals(Gui.getPopupContent()) && 
 				DefaultStrings.WearingPositionForCyclingTitle.equals(Gui.getPopupTitle());
+	}
+	public static boolean hasSuggestWearingPositionForSleepMessage() {
+		return Gui.hasAlert() && 
+				DefaultStrings.WearingPositionForSleepContent.equals(Gui.getPopupContent()) && 
+				DefaultStrings.WearingPositionForSleepTitle.equals(Gui.getPopupTitle());
 	}
 }

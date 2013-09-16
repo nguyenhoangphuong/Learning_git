@@ -104,8 +104,11 @@ public class DefaultStrings {
 	public static String[] CyclingLevel = { "MILD CYCLING", "MODERATE CYCLING",
 			"INTENSE CYCLING" };
 	public static String WearingPositionForCyclingTitle = "Wearing Position for Cycling";
-	public static String WearingPositionForCyclingContent = "Clip Shine to your shoe or sock while cycling for the most accurate results.";
+	public static String WearingPositionForCyclingContent = "For the best results, wear Shine on your ankle, or clip it to your shoe.";
 	public static String WearingPositionForSwimmingTitle = "Wearing Position for Swimming";
 	public static String WearingPositionForSwimmingContent = "Wear Shine on your wrist while swimming for the most accurate results.";
+	public static String WearingPositionForSleepTitle = "Wearing Position for Sleep";
+	public static String WearingPositionForSleepContent = "Wear Shine on your non-dominant wrist while sleeping for the most accurate results.";
+
 	public static String GotItButton = "Got it";
 }
