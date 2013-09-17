@@ -1,5 +1,8 @@
 package com.misfit.ta.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MVPCalculator {
 
 	private static double ALPHA = 0.15d;
@@ -12,11 +15,19 @@ public class MVPCalculator {
 	private static double PPS_TENNIS = 1.25d;
 	private static double PPS_BASKETBALL = 1d;
 	private static double PPS_SOCCER = 0.875d;
-	private static int MIN_POINT_PER_MIN = 162;
+	private static int MIN_POINT_PER_MINUTE = 162;
 	static double DIVISOR_WALKING = 10;
 	private static double DIVISOR_SWIMMING = 22;
 	private static double DIVISOR_RUNNING = 30;
-
+	private static final Map<Integer, Double> factorCalculationMap  = new HashMap<Integer, Double>();
+    static
+    {
+    	factorCalculationMap.put(MVPEnums.ACTIVITY_TENNIS, PPS_TENNIS);
+    	factorCalculationMap.put(MVPEnums.ACTIVITY_SWIMMING, PPS_SWIMMING);
+    	factorCalculationMap.put(MVPEnums.ACTIVITY_CYCLING, PPS_CYCLING);
+    	factorCalculationMap.put(MVPEnums.ACTIVITY_BASKETBALL, PPS_BASKETBALL);
+    	factorCalculationMap.put(MVPEnums.ACTIVITY_SOCCER, PPS_SOCCER);
+    }
 	public static double calculateMiles(int steps, int mins, float heightInInches) {
 
 		double SR = steps * 1d / mins;
@@ -32,22 +43,14 @@ public class MVPCalculator {
 		boolean isWalking = false;
 		float stepsPerMin = (float) Math.floor(steps * 1f / minutes);
 		double result = 0d;
-		if (activityType == MVPEnums.ACTIVITY_CYCLING) {
-			result = Math.floor(stepsPerMin * PPS_CYCLING * minutes);
-		} else if (activityType == MVPEnums.ACTIVITY_SWIMMING) {
-			result = Math.floor(stepsPerMin * PPS_SWIMMING * minutes);
-		} else if (activityType == MVPEnums.ACTIVITY_TENNIS) {
-			result = Math.floor(stepsPerMin * PPS_TENNIS * minutes);
-		} else if (activityType == MVPEnums.ACTIVITY_BASKETBALL) {
-			result = Math.floor(stepsPerMin * PPS_BASKETBALL * minutes);
-		} else if (activityType == MVPEnums.ACTIVITY_SOCCER) {
-			result = Math.floor(stepsPerMin * PPS_SOCCER * minutes);
+		if (factorCalculationMap.containsKey(activityType)) {
+			result = Math.floor(stepsPerMin * factorCalculationMap.get(activityType)) * minutes;
 		} else {
 			float realPointsPerMin = (stepsPerMin * (0.25f + 0.01f * (Math.max(115f, stepsPerMin) - 115)) + 0.0001f);
 			result = (Math.floor(realPointsPerMin) * minutes) / 2.5f;
 			isWalking = true;
 		}
-		return isWalking ? result : Math.min(result, MIN_POINT_PER_MIN * minutes) / 2.5f;
+		return isWalking ? result : Math.min(result, MIN_POINT_PER_MINUTE * minutes) / 2.5f;
 	}
 
 	public static double calculateFullBMR(float weightInLbs, float heightInInches, int age, boolean isMale) {
