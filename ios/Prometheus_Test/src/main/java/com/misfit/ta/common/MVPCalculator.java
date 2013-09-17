@@ -47,7 +47,7 @@ public class MVPCalculator {
 			result = (Math.floor(realPointsPerMin) * minutes) / 2.5f;
 			isWalking = true;
 		}
-		return isWalking ? result : Math.min(result, MIN_POINT_PER_MIN) / 2.5f;
+		return isWalking ? result : Math.min(result, MIN_POINT_PER_MIN * minutes) / 2.5f;
 	}
 
 	public static double calculateFullBMR(float weightInLbs, float heightInInches, int age, boolean isMale) {
