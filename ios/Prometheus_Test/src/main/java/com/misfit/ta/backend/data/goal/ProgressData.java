@@ -9,6 +9,7 @@ public class ProgressData {
 	private Integer steps;
 	private Integer fullBmrCalorie;
 	private Double points;
+	private Double distanceMiles;
 
 	public ProgressData() {
 
@@ -52,6 +53,14 @@ public class ProgressData {
 	public void setFullBmrCalorie(int bmr) {
 		this.fullBmrCalorie = bmr;
 	}
+	
+	public Double getDistanceMiles() {
+		return distanceMiles;
+	}
+
+	public void setDistanceMiles(Double distanceMiles) {
+		this.distanceMiles = distanceMiles;
+	}
 
 	public JSONObject toJson() {
 		try {
@@ -61,6 +70,7 @@ public class ProgressData {
 			object.accumulate("steps", this.steps);
 			object.accumulate("seconds", this.seconds);
 			object.accumulate("fullBmrCalorie", this.fullBmrCalorie);
+			object.accumulate("distanceMiles", this.distanceMiles);
 			return object;
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -82,6 +92,9 @@ public class ProgressData {
 			
 			if(!obj.isNull("fullBmrCalorie"))
 				data.setFullBmrCalorie(obj.getInt("fullBmrCalorie"));
+			
+			if(!obj.isNull("distanceMiles"))
+				data.setDistanceMiles(obj.getDouble("distanceMiles"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

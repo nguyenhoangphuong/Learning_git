@@ -20,6 +20,7 @@ import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.timeline.TimelineData;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.TimelineItemBase;
+import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.utils.TextTool;
 
 public class DefaultValues {
@@ -64,45 +65,38 @@ public class DefaultValues {
 	}
 
 	// goal
-	static public Goal DefaultGoal() {
-
+	static public Goal CreateGoal(long timestamp) {
+		
 		ProgressData progressData = new ProgressData();
 		progressData.setFullBmrCalorie(1500);
+		List<TrippleTapData> tripleTaps = new ArrayList<TrippleTapData>();
+		tripleTaps.add(new TrippleTapData(timestamp, MVPEnums.ACTIVITY_SLEEPING));
 		Goal g = new Goal();
 
-		g.setLocalId(System.currentTimeMillis() + "-" + System.nanoTime());
-		g.setUpdatedAt((long) (System.currentTimeMillis() / 1000));
+		g.setLocalId("goal-" + MVPApi.generateLocalId());
+		g.setUpdatedAt(timestamp);
 
 		g.setValue(1000.0);
-		g.setStartTime(MVPApi.getDayStartEpoch(System.currentTimeMillis() / 1000));
-		g.setEndTime(MVPApi.getDayEndEpoch(System.currentTimeMillis() / 1000));
+		g.setStartTime(MVPApi.getDayStartEpoch(timestamp));
+		g.setEndTime(MVPApi.getDayEndEpoch(timestamp));
 		g.setTimeZoneOffsetInSeconds(7 * 3600);
 		g.setProgressData(progressData);
-		g.setTripleTapTypeChanges(new ArrayList<TrippleTapData>());
+		g.setTripleTapTypeChanges(tripleTaps);
 
 		return g;
 	}
+	
+	static public Goal DefaultGoal() {
 
+		return CreateGoal(System.currentTimeMillis());
+	}
+	
 	static public Goal GoalForDate(int date, int month, int year) {
 
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month, date);
 
-		ProgressData progressData = new ProgressData();
-		progressData.setFullBmrCalorie(1500);
-		Goal g = new Goal();
-
-		g.setLocalId(cal.getTimeInMillis() + "-" + System.nanoTime());
-		g.setUpdatedAt((long) (System.currentTimeMillis() / 1000));
-
-		g.setValue(1000.0);
-		g.setStartTime(MVPApi.getDayStartEpoch(cal.getTimeInMillis() / 1000));
-		g.setEndTime(MVPApi.getDayEndEpoch(cal.getTimeInMillis() / 1000));
-		g.setTimeZoneOffsetInSeconds(7 * 3600);
-		g.setProgressData(progressData);
-		g.setTripleTapTypeChanges(new ArrayList<TrippleTapData>());
-
-		return g;
+		return CreateGoal(cal.getTimeInMillis());
 	}
 
 	// pedomeer

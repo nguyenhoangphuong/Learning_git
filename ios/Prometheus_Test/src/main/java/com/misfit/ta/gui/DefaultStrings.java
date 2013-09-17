@@ -58,6 +58,12 @@ public class DefaultStrings {
 	public static String EndTutorialButton = "OK, I GOT IT";
 	public static String TutorialFirstPageLabel = "_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.";
 	public static String TileTimeTravelLabel = "TIME TRAVEL";
+	
+	// tiles
+	public static String TileTapMeLabel = "Tap Me!";
+	public static String TileActivitiesLabel = "Activities";
+	public static String TileSleepLabel = "Sleep";
+	public static String TileMilestonesLabel = "Milestones";
 
 	// settings
 	public static String MyProfileButton = "My Profile";

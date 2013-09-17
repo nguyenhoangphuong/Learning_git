@@ -14,6 +14,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
@@ -203,6 +204,12 @@ public class SignUpAPI extends ModelAPI {
      */
     public void v_HomeScreen() {
     	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");
+    	
+    	// check tutorial tiles
+    	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileTapMeLabel), "Tap Me! tile is displayed");
+    	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileActivitiesLabel), "Activities tile is displayed");
+    	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileSleepLabel), "Sleep tile is displayed");
+    	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileMilestonesLabel), "Milestones tile is displayed");
     }
 
     /**

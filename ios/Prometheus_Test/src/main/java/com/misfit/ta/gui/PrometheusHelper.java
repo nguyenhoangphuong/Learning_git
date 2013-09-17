@@ -291,6 +291,28 @@ public class PrometheusHelper {
 		return email;
 	}
 
+	public static void signIn(String email, String password) {
+		
+		LaunchScreen.launch();
+		SignIn.tapLogIn();
+		ShortcutsTyper.delayOne();
+		SignIn.enterEmailPassword(email, password);
+		ShortcutsTyper.delayTime(10000);
+	}
+	
+	public static void signOut() {
+		
+		HomeScreen.tapOpenSettingsTray();
+		ShortcutsTyper.delayOne();
+		HomeScreen.tapSettings();
+		ShortcutsTyper.delayOne();
+		Gui.swipeUp(1000);
+		HomeSettings.tapSignOut();
+		ShortcutsTyper.delayOne();
+		HomeSettings.chooseSignOut();
+		ShortcutsTyper.delayOne();
+	}
+	
 	public static void sync() {
 		Gui.sync();
 	}

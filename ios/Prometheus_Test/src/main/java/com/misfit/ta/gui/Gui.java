@@ -663,7 +663,7 @@ public class Gui {
     }
 
     public static void drag(int x1, int y1, int x2, int y2) {
-        String message = "(Gui dragFromX: %x1 fromY: %y1 toX: %x2 andToY: %y2";
+        String message = "(Gui dragFromX: %x1 fromY: %y1 toX: %x2 andToY: %y2)";
         message = message.replace("%x1", String.valueOf(x1));
         message = message.replace("%y1", String.valueOf(y1));
         message = message.replace("%x2", String.valueOf(x2));
