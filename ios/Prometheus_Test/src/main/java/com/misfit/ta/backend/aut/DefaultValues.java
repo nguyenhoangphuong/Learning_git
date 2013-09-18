@@ -88,7 +88,7 @@ public class DefaultValues {
 	
 	static public Goal DefaultGoal() {
 
-		return CreateGoal(System.currentTimeMillis());
+		return CreateGoal(System.currentTimeMillis() / 1000);
 	}
 	
 	static public Goal GoalForDate(int date, int month, int year) {
@@ -96,7 +96,7 @@ public class DefaultValues {
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month, date);
 
-		return CreateGoal(cal.getTimeInMillis());
+		return CreateGoal(cal.getTimeInMillis() / 1000);
 	}
 
 	// pedomeer

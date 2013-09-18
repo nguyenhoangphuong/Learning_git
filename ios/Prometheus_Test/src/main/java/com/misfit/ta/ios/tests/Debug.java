@@ -21,12 +21,6 @@ public class Debug {
 	public static void main(String[] args) {
 		Gui.init("192.168.1.247");
 		
-		String startTime = 7 + ":00am";
-		String endTime = 7 + ":50am";
-		
-		Timeline.openTile(startTime);
-		Assert.assertTrue(Timeline.isActivityTileCorrect(startTime, endTime, 50, 500, DefaultStrings.WalkingLevel[2]),
-				"Activity tile is displayed correctly");
-		Timeline.closeCurrentTile();
+		Gui.drag("PTGoalCircleView", 0, -200, 0);
 	}
 }

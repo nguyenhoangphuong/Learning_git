@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.tiles.DailyGoalMilestonesAPI;
 import com.misfit.ta.ios.modelapi.tiles.PersonalBestMilestoneAPI;
+import com.misfit.ta.ios.modelapi.tiles.StreakMilestoneAPI;
 import com.misfit.ta.utils.Files;
 
 public class TilesTest extends AutomationTest {
@@ -37,6 +38,19 @@ public class TilesTest extends AutomationTest {
         		Files.getFile("model/tiles/DailyGoalMilestone.graphml"),
                 false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("DailyGoalMilestones");
+        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+        String actualResult = getModelhandler().getStatistics();
+        System.out.println(actualResult);
+    }
+	
+	//@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone" })
+    public void StreakMilestone() throws InterruptedException, StopConditionException, IOException 
+    {    	
+        ModelHandler model = getModelhandler();
+        model.add("StreakMilestone", new StreakMilestoneAPI(this, 
+        		Files.getFile("model/tiles/StreakMilestone.graphml"),
+                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("StreakMilestone");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);

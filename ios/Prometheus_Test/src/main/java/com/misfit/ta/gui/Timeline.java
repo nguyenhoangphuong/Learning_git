@@ -8,6 +8,7 @@ public class Timeline {
 	static public String LabelPoints = "POINTS";
 	static public String LabelMilestone = "MILESTONE";
 	static public String LabelPersonalBest = "PERSONAL BEST";
+	static public String LabelDayStreak = "DAY STREAK";
 	
 	static public String PersonalBestOutdidMessage = "You outdid your previous record by %d points!";
 	
@@ -92,6 +93,8 @@ public class Timeline {
 		"Now that's a perfect week.",
 	};
 	static public String[] Streak8to12DaysMessages = new String[] {
+		"You're taking streak to a whole new level.",
+		"Hitting goals must be your thing.",
 		"Everyone loves a streaker. Now someone call security.",
 		"I'm sensing a pattern here...",
 		"You're soooooo predictable.",
@@ -109,6 +112,11 @@ public class Timeline {
 	static public void dragDownTimeline() {
 		
 		Gui.dragDownTimeline();
+	}
+	
+	static public void pullToRefresh() {
+		
+		Gui.swipeLeft(1000);
 	}
 	
 	
@@ -157,6 +165,14 @@ public class Timeline {
 				ViewUtils.isExistedView("UILabel", LabelPersonalBest) &&
 				(isDynamicMessageDisplayed(messages) || 
 				 ViewUtils.isExistedView("UILabel", outdidMessage));
+	}
+	
+	static public boolean isStreakTileCorrect(String time, int numberOfDays, String[] messages) {
+		
+		return  ViewUtils.isExistedView("UILabel", time) &&
+				ViewUtils.isExistedView("UILabel", String.valueOf(numberOfDays)) &&
+				ViewUtils.isExistedView("UILabel", LabelDayStreak) &&
+				isDynamicMessageDisplayed(messages);
 	}
 	
 	static public boolean isDynamicMessageDisplayed(String[] availableMessages) {
