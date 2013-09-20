@@ -21,7 +21,7 @@ public class BackgroundSyncDebug
 	        		AppHelper.getAppPath(), 
 	        		"script/quietsync.js");
 	        
-	        ShortcutsTyper.delayTime(1000 * 300);
+	        ShortcutsTyper.delayTime(1000 * 360);
     	}
     }
 }
