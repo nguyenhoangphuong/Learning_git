@@ -161,7 +161,7 @@ public class Timeline {
 		String outdidMessage = String.format(PersonalBestOutdidMessage, points - lastPoint);
 		return  ViewUtils.isExistedView("UILabel", time) &&
 				ViewUtils.isExistedView("UILabel", String.valueOf(points)) &&
-				ViewUtils.isExistedView("UILabel", LabelPoints.toLowerCase()) &&
+				ViewUtils.isExistedView("UILabel", LabelPoints) &&
 				ViewUtils.isExistedView("UILabel", LabelPersonalBest) &&
 				(isDynamicMessageDisplayed(messages) || 
 				 ViewUtils.isExistedView("UILabel", outdidMessage));
