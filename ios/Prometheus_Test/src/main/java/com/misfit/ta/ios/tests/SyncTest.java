@@ -51,9 +51,16 @@ public class SyncTest extends AutomationTest {
 	@Test(groups = { "iOS", "Prometheus", "Syncing", "iOSAutomation", "ContinuousSyncing" })
 	public void SyncContinously() throws InterruptedException, StopConditionException, IOException {
 
+		
+		String email = "v14@qa.com";
+		String password = "test12";
+		String serialNumber = "XXXXXV0014";
+		
 		// set up: link shine v14 to v14 account
 		Long now = System.currentTimeMillis() / 1000;
-		MVPApi.createPedometer(MVPApi.signIn("v14@qa.com", "test12").token, "XXXXXV0014", MVPApi.LATEST_FIRMWARE_VERSION_STRING, now, null, now, MVPApi.generateLocalId(), null, now);
+		MVPApi.createPedometer(MVPApi.signIn(email, password).token, serialNumber, 
+				MVPApi.LATEST_FIRMWARE_VERSION_STRING, now, null, now, 
+				MVPApi.generateLocalId(), null, now);
 
 		// create sync folder if not exist
 		File sync = new File("sync");
@@ -73,7 +80,7 @@ public class SyncTest extends AutomationTest {
 		try {
 			long begin = System.currentTimeMillis() / 1000 - 720;
 
-			Sync.signIn();
+			Sync.signIn(email, password);
 			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 				
 				TRS.instance().addStep("Sync number: " + (i + 1), null);
@@ -101,7 +108,7 @@ public class SyncTest extends AutomationTest {
 
 				// parse sync log and store the record
 				ShortcutsTyper.delayTime(15000);
-				String log = MVPApi.getLatestSyncLog("v14@qa.com", "XXXXXV0014", begin);
+				String log = MVPApi.getLatestSyncLog(email, password, begin);
 				uiStartTime[i] = start / 1000;
 				uiEndTime[i] = end / 1000;
 				statusPassed[i] = passed;
