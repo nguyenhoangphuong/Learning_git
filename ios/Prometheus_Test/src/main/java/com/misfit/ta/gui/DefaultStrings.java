@@ -58,7 +58,7 @@ public class DefaultStrings {
 	public static String EndTutorialButton = "OK, I GOT IT";
 	public static String TutorialFirstPageLabel = "_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.";
 	public static String TileTimeTravelLabel = "TIME TRAVEL";
-	
+
 	// tiles
 	public static String TileTapMeLabel = "Tap Me!";
 	public static String TileActivitiesLabel = "Activities";
@@ -94,6 +94,15 @@ public class DefaultStrings {
 	// time zone
 	public static String TimezoneForwardLabel = "You travelled forwards in time by";
 	public static String TimezoneBackwardLabel = "You travelled backwards in time by";
+
+	public static String[] TimezoneGainedTimeLabel = {
+			"You've turned the clocks forward by",
+			"Great Scott! You traveled fowards in time by",
+			"Doc! You sped up the space-time continuum by" };
+	public static String[] TimezoneLostTimeLabel = {
+			"You've turned the clocks backwards by",
+			"Great Scott! You traveled backwards in time by",
+			"Doc! You reversed the space-time continuum by" };
 
 	// others
 	public static String SyncPlaceShineHere = "Place\\nSHINE here";

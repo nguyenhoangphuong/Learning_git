@@ -21,7 +21,14 @@ public class Timezone {
 		Gui.touchAVIew("UILabel", DefaultStrings.TileTimeTravelLabel);
 	}
 	
+	/**
+	 * @deprecated Use {@link #assertTimeZoneTile(int,int,int,boolean)} instead
+	 */
 	public static void assertTimeZoneTile(String detail, int currentTimezone, int previousTimezone, int delta) {
+		assertTimeZoneTile(currentTimezone, previousTimezone, delta, false);
+	}
+
+	public static void assertTimeZoneTile(int currentTimezone, int previousTimezone, int delta, boolean isForward) {
 		Gui.dragUpTimeline();
 		ShortcutsTyper.delayOne();
 		// check if there is a time travel tile
@@ -48,7 +55,15 @@ public class Timezone {
 		ShortcutsTyper.delayOne();
 		System.out.println("DEBUG: " + String.valueOf(currentTimezone));
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", content), "Time travel detail title is valid");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", detail), "Time travel message is valid");
+		String[] detail = isForward ? DefaultStrings.TimezoneGainedTimeLabel : DefaultStrings.TimezoneLostTimeLabel;
+		boolean checkDetail = false;
+		for (int i = 0;  i < detail.length; i++) {
+			if (ViewUtils.isExistedView("UILabel", detail[i])) {
+				checkDetail = true;
+				break;
+			}
+		}
+		Assert.assertTrue(checkDetail, "Time travel message is valid");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", delta), "Time delta is valid");
 		ShortcutsTyper.delayOne();
 		ShortcutsTyper.delayOne();

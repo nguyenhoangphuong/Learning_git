@@ -11,7 +11,6 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
-import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -71,8 +70,8 @@ public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 	}
 
 	public void v_HomeScreenUpdated() {
-		Timezone.assertTimeZoneTile(DefaultStrings.TimezoneBackwardLabel,
-				this.currentTimezone, this.previousTimezone, this.delta);
+		Timezone.assertTimeZoneTile(this.currentTimezone,
+				this.previousTimezone, this.delta, false);
 		// check goal start time and end time
 		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime,
 				delta, beforeOffset, false);
