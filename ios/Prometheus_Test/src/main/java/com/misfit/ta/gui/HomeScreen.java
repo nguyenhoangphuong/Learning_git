@@ -2,6 +2,7 @@ package com.misfit.ta.gui;
 
 import java.util.Calendar;
 
+import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.utils.ShortcutsTyper;
 
@@ -96,6 +97,14 @@ public class HomeScreen {
     
     public static void sync() {
         PrometheusHelper.sync();
+    }
+    
+    public static void pullToRefresh() {
+    	String message = "((ViewUtils findViewWithViewName:@\"PTGoalCircleHorizontalScrollView\" andIndex:0) showSyncingWithServerView)";
+    	NuRemoteClient.sendToServer(message);
+    	
+    	message = "((PTClientServerSyncService sharedService) startSyncing)";
+    	NuRemoteClient.sendToServer(message);
     }
     
     /* Visible checking */

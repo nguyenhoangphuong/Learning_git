@@ -873,10 +873,15 @@ public class MVPApi {
 	// test
 	public static void main(String[] args) throws JSONException {
 			
-		String log = MVPApi.getLatestSyncLog("v14@qa.com", "XXXXXV0014", 1378879000);
-		logger.info(log);
-		SyncDebugLog debug = new SyncDebugLog(log);
-		debug.info();	
+		String token = MVPApi.signIn("science003@qa.com", "test12").token;
+//		MVPApi.unlinkDevice(token);	
+//		Long now = System.currentTimeMillis() / 1000;
+//		MVPApi.createPedometer(MVPApi.signIn("science003@qa.com", "test12").token, "science003", 
+//				MVPApi.LATEST_FIRMWARE_VERSION_STRING, now, null, now, MVPApi.generateLocalId(), null, now);
+		Pedometer pedo = MVPApi.getPedometer(token);
+		pedo.setFirmwareRevisionString(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
+		pedo.setSerialNumberString("science003");
+		MVPApi.updatePedometer(token, pedo);
 
 	}
 

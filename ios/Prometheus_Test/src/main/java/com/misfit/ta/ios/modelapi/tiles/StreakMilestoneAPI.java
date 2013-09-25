@@ -7,6 +7,7 @@ import org.testng.Assert;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timeline;
@@ -30,9 +31,8 @@ public class StreakMilestoneAPI extends ModelAPI {
 	public void e_init() {
 
 		// sign up with goal = 1000 pts
-		email = "test1379418406879sjk92z@qa.com";
-//		email = PrometheusHelper.signUp();
-//		ShortcutsTyper.delayTime(5000);
+		email = PrometheusHelper.signUp();
+		ShortcutsTyper.delayTime(5000);
 
 		// get current goal
 		token = MVPApi.signIn(email, "qwerty1").token;
@@ -55,7 +55,8 @@ public class StreakMilestoneAPI extends ModelAPI {
 	public void e_refresh() {
 		
 		// get new data from server
-		
+		Gui.swipeLeft(1000);
+		ShortcutsTyper.delayTime(5000);
 	}
 
 	public void e_finishGoal() {
@@ -67,7 +68,7 @@ public class StreakMilestoneAPI extends ModelAPI {
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(times, 5, 1500);
 		HomeScreen.tapSave();
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(5000);
 	}
 
 	public void e_resetGoal() {
@@ -78,6 +79,7 @@ public class StreakMilestoneAPI extends ModelAPI {
 
 	public void v_HomeScreen() {
 
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		Assert.assertTrue(HomeScreen.isToday(), "Current screen is HomeScreen");
 	}
 
@@ -110,10 +112,18 @@ public class StreakMilestoneAPI extends ModelAPI {
 		
 		String title = (mins / 60) + ":" + String.format("%02d", mins % 60 + 5) + "am";
 		Timeline.dragUpTimeline();
-		Timeline.openTile(title);
-		Timeline.isStreakTileCorrect(title, dayDiff, messages);
-		Timeline.closeCurrentTile();
-		Timeline.dragDownTimeline();
+		Gui.swipeUp(1000);
+		
+		boolean pass = false;
+		for(int i = 0; i < 5; i++) {
+			Timeline.openTile(title);
+			if(Timeline.isStreakTileCorrect(title, dayDiff, messages))
+				pass = true;
+			Timeline.closeCurrentTile();
+			Timeline.dragDownTimeline();
+		}
+		
+		Assert.assertTrue(pass, "At least one tile has correct content");
 	}
 
 }

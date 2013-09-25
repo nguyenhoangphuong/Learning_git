@@ -4,6 +4,7 @@ import java.io.File;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ta.Gui;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
@@ -80,6 +81,7 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	
 	public void v_HomeScreen200() {
 		
+		Gui.swipeUp(1000);
 		checkActivityTile();
 		checkGoalTile(2000, Timeline.DailyGoalMessagesFor200Percent);
 	}

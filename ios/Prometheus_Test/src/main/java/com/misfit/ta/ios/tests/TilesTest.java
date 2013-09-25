@@ -43,7 +43,7 @@ public class TilesTest extends AutomationTest {
         System.out.println(actualResult);
     }
 	
-	//@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone" })
     public void StreakMilestone() throws InterruptedException, StopConditionException, IOException 
     {    	
         ModelHandler model = getModelhandler();
