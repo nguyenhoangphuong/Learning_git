@@ -19,7 +19,7 @@ public class BackendPedometerTC extends BackendAutomation {
 	private String firmwareRevisionString = MVPApi.LATEST_FIRMWARE_VERSION_STRING;
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
-	public void LinkOneAccountToOneDevice() {
+	public void LinkOneAccountToOneShine() {
 		
 		String email = MVPApi.generateUniqueEmail();
 		String serialNumberString = TextTool.getRandomString(10);
@@ -35,7 +35,7 @@ public class BackendPedometerTC extends BackendAutomation {
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
-	public void LinkOneAccountToTwoDevices() {
+	public void LinkOneAccountToTwoShines() {
 		
 		String email = MVPApi.generateUniqueEmail();
 		String serialNumberString = TextTool.getRandomString(10);
@@ -60,7 +60,7 @@ public class BackendPedometerTC extends BackendAutomation {
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
-	public void LinkToAlreadyLinkedDevice() {
+	public void LinkToAlreadyLinkedShine() {
 		String serialNumberString = TextTool.getRandomString(10);
 
 		// link device to account 1
@@ -82,6 +82,26 @@ public class BackendPedometerTC extends BackendAutomation {
 		Assert.assertTrue(DefaultValues.DeviceLinkedToAnotherAccount.equals(linkingStatus), "Failed to steal device!");
 	}
 
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
+	public void LinkToShineWhichWasUnlinkedBefore() {
+		
+		String serialNumberString = TextTool.getRandomString(10);
+
+		// link
+		String email = MVPApi.generateUniqueEmail();
+		String token = createNewAccount(email);
+		createNewPedometer(token, serialNumberString);
+		
+		// unlink
+		MVPApi.unlinkDevice(token);
+		
+		// link again
+		createNewPedometer(token, serialNumberString);
+
+		String linkingStatus = MVPApi.getDeviceLinkingStatus(token, serialNumberString);
+		Assert.assertTrue(DefaultValues.DeviceLinkedToYourAccount.equals(linkingStatus), "Linking status");
+	}
+	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void UnlinkNoneLinkedDevice() {
 		

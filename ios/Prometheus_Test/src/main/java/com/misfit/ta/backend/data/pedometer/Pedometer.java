@@ -11,6 +11,7 @@ public class Pedometer {
 	private Long linkedTime;
 	private Long unlinkedTime;
 	private Long lastSyncedTime;
+	private Long lastSuccessfulTime;
 	private Integer clockState;
 	private Integer bookmarkState;
 	private Integer batteryLevel;
@@ -79,6 +80,14 @@ public class Pedometer {
 
 	public void setLastSyncedTime(Long lastSyncedTime) {
 		this.lastSyncedTime = lastSyncedTime;
+	}
+	
+	public Long getLastSuccessfulTime() {
+		return lastSuccessfulTime;
+	}
+
+	public void setLastSuccessfulTime(Long lastSuccessfulTime) {
+		this.lastSuccessfulTime = lastSuccessfulTime;
 	}
 	
 	public Integer getClockState() {

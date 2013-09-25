@@ -6,11 +6,14 @@ import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
+import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.ios.AutomationTest;
@@ -43,7 +46,8 @@ public class LinkOneShineAvailableAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(2000);
 		Sync.tapToSync();
 
-		while (!HomeScreen.isToday()) {
+		boolean hasTutorialView = ViewUtils.isExistedView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
+		while (!HomeScreen.isToday() && !hasTutorialView) {
 			if (Sync.hasAlert())
 				break;
 

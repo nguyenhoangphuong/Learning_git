@@ -9,6 +9,7 @@ import org.testng.Assert;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignUp;
@@ -46,8 +47,15 @@ public class LinkNoShineAvailableAPI extends ModelAPI {
 		
 		// link v14@qa.com account to v14 shine
 		Long now = System.currentTimeMillis() / 1000;
-		MVPApi.createPedometer(MVPApi.signIn("v14@qa.com", "test12").token, "XXXXXV0014", 
-				MVPApi.LATEST_FIRMWARE_VERSION_STRING, now, null, now, MVPApi.generateLocalId(), null, now);
+		String token = MVPApi.signIn("v14@qa.com", "test12").token;	
+		Pedometer pedo = MVPApi.getPedometer(token);
+		pedo.setFirmwareRevisionString(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
+		pedo.setSerialNumberString("XXXXXV0014");
+		pedo.setLocalId("pedometer-" + MVPApi.generateLocalId());
+		pedo.setLastSyncedTime(now);
+		pedo.setLinkedTime(now);
+		pedo.setUpdatedAt(now);
+		MVPApi.updatePedometer(token, pedo);
 	}
 
 	public void e_triggerLink() {
