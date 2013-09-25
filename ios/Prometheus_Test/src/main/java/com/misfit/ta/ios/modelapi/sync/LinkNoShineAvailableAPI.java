@@ -83,6 +83,7 @@ public class LinkNoShineAvailableAPI extends ModelAPI {
 	
 	public void e_tapNext() {
 		SignUp.tapNext();
+		ShortcutsTyper.delayTime(2000);
 	}
 
 	// vertex
@@ -94,6 +95,11 @@ public class LinkNoShineAvailableAPI extends ModelAPI {
 		Assert.assertTrue(Sync.hasNoShineAvailableMessage() ||
 				Sync.hasUnableToLinkMessage(), 
 				"Current view is SignUp - Alert No Shine Available");
+	}
+	
+	public void v_SetGoal() {
+		
+		Assert.assertTrue(SignUp.isSignUpGoalView(), "Current view is SetGoal");
 	}
 
 }
