@@ -57,8 +57,10 @@ public class PrometheusHelper {
 	public static void enterBirthDay(String year, String month, String day) {
 		Gui.touchAVIew("PTDatePickerControl", 0);
 		ShortcutsTyper.delayTime(1000);
-		Gui.setPicker(0, month);
-		Gui.setPicker(1, day);
+		int monthIndex = Gui.isRunningOnIOS7() ? 1 : 0;
+		int dayIndex = Gui.isRunningOnIOS7() ? 0 : 1;
+		Gui.setPicker(monthIndex, month);
+		Gui.setPicker(dayIndex, day);
 		Gui.setPicker(2, year);
 		Gui.dismissPicker();
 		ShortcutsTyper.delayTime(1000);
@@ -328,12 +330,8 @@ public class PrometheusHelper {
 
 	
 	public static void main(String[] args) {
-		Gui.init("192.168.1.247");
-//		Gui.printViewWithViewName("UILabel");
-		int newGoal = HomeSettings.getSpinnerGoal();
-		Assert.assertEquals(newGoal, 1200, "Spinner's value is correct");
-//		System.out.println(MVPCalculator.calculateMiles(1000, 5, 68));
-
+		Gui.init("192.168.1.185");
+		Gui.shutdown();
 	}
 
 }

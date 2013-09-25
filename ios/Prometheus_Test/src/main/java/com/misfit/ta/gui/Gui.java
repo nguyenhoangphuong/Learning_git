@@ -1011,6 +1011,12 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
     
+    public static boolean isRunningOnIOS7() {
+    	String message = "(Gui isRunningOnIOS7)";
+    	NuRemoteClient.sendToServer(message);
+    	String result = NuRemoteClient.getLastMessage();
+    	return "1".equals(result) ? true : false;
+    }
     
 }
 
