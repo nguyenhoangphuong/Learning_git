@@ -6,10 +6,12 @@ import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignUp;
@@ -64,7 +66,9 @@ public class LinkNoShineAvailableAPI extends ModelAPI {
 		
 		int totalTime = 0;
 		int TIME_OUT = 300;
-		while(!Sync.hasAlert() && !HomeScreen.isToday()) {
+		
+		boolean hasTutorialView = ViewUtils.isExistedView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
+		while(!Sync.hasAlert() && !HomeScreen.isToday() && !hasTutorialView) {
 			ShortcutsTyper.delayTime(1000);
 			
 			totalTime += 1;

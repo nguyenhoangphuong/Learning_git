@@ -46,12 +46,16 @@ public class LinkOneShineAvailableAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(2000);
 		Sync.tapToSync();
 
+		int totalTime = 0;
+		int TIME_OUT = 300;
+		
 		boolean hasTutorialView = ViewUtils.isExistedView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
-		while (!HomeScreen.isToday() && !hasTutorialView) {
-			if (Sync.hasAlert())
-				break;
-
+		while (!Sync.hasAlert() && !HomeScreen.isToday() && !hasTutorialView) {
+			
 			ShortcutsTyper.delayTime(1000);
+			totalTime += 1;
+			if (totalTime > TIME_OUT)
+				break;
 		}
 	}
 
