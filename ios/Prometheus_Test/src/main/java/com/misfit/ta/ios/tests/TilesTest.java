@@ -49,7 +49,7 @@ public class TilesTest extends AutomationTest {
         ModelHandler model = getModelhandler();
         model.add("StreakMilestone", new StreakMilestoneAPI(this, 
         		Files.getFile("model/tiles/StreakMilestone.graphml"),
-                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), true));
         model.execute("StreakMilestone");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();

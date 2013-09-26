@@ -1,0 +1,294 @@
+2013-09-26 15:42:00,511 [main] INFO  - Done merging
+2013-09-26 15:42:00,612 [main] INFO  - Edge: 'e_init', INDEX=6 
+2013-09-26 15:42:00,612 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=1;
+2013-09-26 15:42:00,614 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,614 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=2;
+2013-09-26 15:42:00,614 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,615 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=2;
+2013-09-26 15:42:00,618 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,618 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=2;
+2013-09-26 15:42:00,618 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,619 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=3;
+2013-09-26 15:42:00,619 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,619 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=3;
+2013-09-26 15:42:00,625 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,625 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=3;
+2013-09-26 15:42:00,626 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,626 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=4;
+2013-09-26 15:42:00,626 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,626 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=4;
+2013-09-26 15:42:00,630 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,630 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=4;
+2013-09-26 15:42:00,630 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,631 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=5;
+2013-09-26 15:42:00,631 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,631 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=5;
+2013-09-26 15:42:00,634 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,634 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=5;
+2013-09-26 15:42:00,635 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,636 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=6;
+2013-09-26 15:42:00,636 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,636 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=6;
+2013-09-26 15:42:00,638 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,638 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=6;
+2013-09-26 15:42:00,639 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,639 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=7;
+2013-09-26 15:42:00,640 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,640 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=7;
+2013-09-26 15:42:00,641 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,641 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=7;
+2013-09-26 15:42:00,642 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,642 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=8;
+2013-09-26 15:42:00,643 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,643 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=8;
+2013-09-26 15:42:00,644 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,644 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=8;
+2013-09-26 15:42:00,645 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,645 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=9;
+2013-09-26 15:42:00,645 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,646 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=9;
+2013-09-26 15:42:00,649 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,649 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=9;
+2013-09-26 15:42:00,650 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,650 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=10;
+2013-09-26 15:42:00,650 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,651 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=10;
+2013-09-26 15:42:00,652 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,652 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=10;
+2013-09-26 15:42:00,653 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,653 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=11;
+2013-09-26 15:42:00,653 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,653 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=11;
+2013-09-26 15:42:00,655 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,656 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=11;
+2013-09-26 15:42:00,657 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,657 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=12;
+2013-09-26 15:42:00,657 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,657 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=12;
+2013-09-26 15:42:00,659 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,659 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=12;
+2013-09-26 15:42:00,659 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,660 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=13;
+2013-09-26 15:42:00,660 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,660 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=13;
+2013-09-26 15:42:00,664 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,664 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=13;
+2013-09-26 15:42:00,665 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,665 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=14;
+2013-09-26 15:42:00,666 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,666 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=14;
+2013-09-26 15:42:00,668 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,668 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=14;
+2013-09-26 15:42:00,669 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,669 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=15;
+2013-09-26 15:42:00,670 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,670 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=15;
+2013-09-26 15:42:00,672 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:00,673 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=15;
+2013-09-26 15:42:00,673 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:00,673 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=16;
+2013-09-26 15:42:00,674 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:00,674 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=16;
+2013-09-26 15:42:00,674 [main] INFO  - Vertex: 'End', INDEX=5  DATA: i=16;
+2013-09-26 15:42:02,075 [Thread-2] INFO  - Coverage Edges: 5/5 => 100%
+Coverage Vertices: 5/5 => 100%
+Unvisited Edges:  0
+Unvisited Vertices: 0
+Test sequence length:  46
+Execution time: 1 seconds
+2013-09-26 15:42:23,685 [main] INFO  - Done merging
+2013-09-26 15:42:23,784 [main] INFO  - Edge: 'e_init', INDEX=6 
+2013-09-26 15:42:23,784 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=1;
+2013-09-26 15:42:23,786 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,786 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=2;
+2013-09-26 15:42:23,786 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,786 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=2;
+2013-09-26 15:42:23,789 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,789 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=2;
+2013-09-26 15:42:23,790 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,790 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=3;
+2013-09-26 15:42:23,791 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,791 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=3;
+2013-09-26 15:42:23,792 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,792 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=3;
+2013-09-26 15:42:23,793 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,793 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=4;
+2013-09-26 15:42:23,793 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,793 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=4;
+2013-09-26 15:42:23,795 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,795 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=4;
+2013-09-26 15:42:23,795 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,795 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=5;
+2013-09-26 15:42:23,796 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,796 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=5;
+2013-09-26 15:42:23,799 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,800 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=5;
+2013-09-26 15:42:23,800 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,801 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=6;
+2013-09-26 15:42:23,801 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,801 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=6;
+2013-09-26 15:42:23,803 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,803 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=6;
+2013-09-26 15:42:23,804 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,804 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=7;
+2013-09-26 15:42:23,805 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,805 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=7;
+2013-09-26 15:42:23,807 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,807 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=7;
+2013-09-26 15:42:23,808 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,808 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=8;
+2013-09-26 15:42:23,809 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,809 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=8;
+2013-09-26 15:42:23,810 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,810 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=8;
+2013-09-26 15:42:23,811 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,811 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=9;
+2013-09-26 15:42:23,811 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,811 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=9;
+2013-09-26 15:42:23,814 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,814 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=9;
+2013-09-26 15:42:23,814 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,815 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=10;
+2013-09-26 15:42:23,815 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,815 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=10;
+2013-09-26 15:42:23,816 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,816 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=10;
+2013-09-26 15:42:23,817 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,817 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=11;
+2013-09-26 15:42:23,818 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,818 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=11;
+2013-09-26 15:42:23,820 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,820 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=11;
+2013-09-26 15:42:23,821 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,821 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=12;
+2013-09-26 15:42:23,821 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,821 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=12;
+2013-09-26 15:42:23,822 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,822 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=12;
+2013-09-26 15:42:23,823 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,823 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=13;
+2013-09-26 15:42:23,824 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,824 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=13;
+2013-09-26 15:42:23,825 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,825 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=13;
+2013-09-26 15:42:23,825 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,826 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=14;
+2013-09-26 15:42:23,826 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,826 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=14;
+2013-09-26 15:42:23,831 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,832 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=14;
+2013-09-26 15:42:23,832 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,832 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=15;
+2013-09-26 15:42:23,833 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,833 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=15;
+2013-09-26 15:42:23,835 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:23,836 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=15;
+2013-09-26 15:42:23,836 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:23,837 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=16;
+2013-09-26 15:42:23,837 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:23,837 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=16;
+2013-09-26 15:42:23,840 [main] INFO  - Vertex: 'End', INDEX=5  DATA: i=16;
+2013-09-26 15:42:25,218 [Thread-2] INFO  - Coverage Edges: 5/5 => 100%
+Coverage Vertices: 5/5 => 100%
+Unvisited Edges:  0
+Unvisited Vertices: 0
+Test sequence length:  46
+Execution time: 1 seconds
+2013-09-26 15:42:51,812 [main] INFO  - Done merging
+2013-09-26 15:42:51,940 [main] INFO  - Edge: 'e_init', INDEX=6 
+2013-09-26 15:42:51,940 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=1;
+2013-09-26 15:42:51,941 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,942 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=2;
+2013-09-26 15:42:51,942 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,942 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=2;
+2013-09-26 15:42:51,944 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,944 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=2;
+2013-09-26 15:42:51,945 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,945 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=3;
+2013-09-26 15:42:51,945 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,945 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=3;
+2013-09-26 15:42:51,947 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,947 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=3;
+2013-09-26 15:42:51,947 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,947 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=4;
+2013-09-26 15:42:51,948 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,948 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=4;
+2013-09-26 15:42:51,950 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,950 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=4;
+2013-09-26 15:42:51,951 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,951 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=5;
+2013-09-26 15:42:51,952 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,952 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=5;
+2013-09-26 15:42:51,954 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,954 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=5;
+2013-09-26 15:42:51,955 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,955 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=6;
+2013-09-26 15:42:51,956 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,956 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=6;
+2013-09-26 15:42:51,959 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,959 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=6;
+2013-09-26 15:42:51,960 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,960 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=7;
+2013-09-26 15:42:51,960 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,960 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=7;
+2013-09-26 15:42:51,963 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,963 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=7;
+2013-09-26 15:42:51,964 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,964 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=8;
+2013-09-26 15:42:51,964 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,964 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=8;
+2013-09-26 15:42:51,966 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,966 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=8;
+2013-09-26 15:42:51,967 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,967 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=9;
+2013-09-26 15:42:51,968 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,968 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=9;
+2013-09-26 15:42:51,969 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,969 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=9;
+2013-09-26 15:42:51,970 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,970 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=10;
+2013-09-26 15:42:51,971 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,971 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=10;
+2013-09-26 15:42:51,973 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,973 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=10;
+2013-09-26 15:42:51,974 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,974 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=11;
+2013-09-26 15:42:51,974 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,974 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=11;
+2013-09-26 15:42:51,977 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,977 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=11;
+2013-09-26 15:42:51,977 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,977 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=12;
+2013-09-26 15:42:51,978 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,978 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=12;
+2013-09-26 15:42:51,979 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,979 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=12;
+2013-09-26 15:42:51,980 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,980 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=13;
+2013-09-26 15:42:51,980 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,981 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=13;
+2013-09-26 15:42:51,982 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,982 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=13;
+2013-09-26 15:42:51,983 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,983 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=14;
+2013-09-26 15:42:51,983 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,983 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=14;
+2013-09-26 15:42:51,988 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,988 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=14;
+2013-09-26 15:42:51,989 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,989 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=15;
+2013-09-26 15:42:51,990 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,990 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=15;
+2013-09-26 15:42:51,991 [main] INFO  - Edge: 'e_resetGoal', INDEX=9 
+2013-09-26 15:42:51,992 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=4  DATA: i=15;
+2013-09-26 15:42:51,993 [main] INFO  - Edge: 'e_createGoalInThePast', INDEX=7 
+2013-09-26 15:42:51,993 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: i=16;
+2013-09-26 15:42:51,993 [main] INFO  - Edge: 'e_finishGoal', INDEX=8 
+2013-09-26 15:42:51,993 [main] INFO  - Vertex: 'v_DaysStreak', INDEX=3  DATA: i=16;
+2013-09-26 15:42:51,994 [main] INFO  - Vertex: 'End', INDEX=5  DATA: i=16;
+2013-09-26 15:42:53,400 [Thread-2] INFO  - Coverage Edges: 5/5 => 100%
+Coverage Vertices: 5/5 => 100%
+Unvisited Edges:  0
+Unvisited Vertices: 0
+Test sequence length:  46
+Execution time: 1 seconds

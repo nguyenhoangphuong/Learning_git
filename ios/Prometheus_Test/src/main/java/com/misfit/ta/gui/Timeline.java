@@ -92,7 +92,7 @@ public class Timeline {
 		"Security, we have a streaker.",
 		"Now that's a perfect week.",
 	};
-	static public String[] Streak8to12DaysMessages = new String[] {
+	static public String[] Streak8to11DaysMessages = new String[] {
 		"You're taking streak to a whole new level.",
 		"Hitting goals must be your thing.",
 		"Everyone loves a streaker. Now someone call security.",
@@ -103,7 +103,20 @@ public class Timeline {
 		"Utter and complete domination.",
 		"How long is this going to go on for?",
 	};
-
+	static public String[] Streak12to13DaysOnMessages = new String[] {
+		"You're almost at two weeks!",
+		"Can you make it to two weeks?",
+	};
+	static public String[] Streak14DaysMessages = new String[] {
+		"You've been streaking for half a month now!",
+		"2 weeks! Domination!",
+	};
+	static public String[] Streak15DaysOnMessages = new String[] {
+		"You're streaking faster than we can write these messages.",
+		"Error: No more messages left. You're too good.",
+		"When will it end?",
+	};
+	
 	static public void dragUpTimeline() {
 		
 		Gui.dragUpTimeline();

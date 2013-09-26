@@ -17,7 +17,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     protected static boolean debug = false;
-    private InstrumentHelper instrument = new InstrumentHelper();
+    protected InstrumentHelper instrument = new InstrumentHelper();
 
     static
     {

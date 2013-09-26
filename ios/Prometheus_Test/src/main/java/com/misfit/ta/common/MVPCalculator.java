@@ -73,29 +73,40 @@ public class MVPCalculator {
 
 	public static int calculateNearestTimeRemainInMinute(int points, int activityType) {
 		
-		int[] scales = new int[] {5, 10, 15, 20, 30, 45, 60};
+		int[] scales = new int[] {0, 5, 10, 15, 20, 30, 45, 60};
 		int mins = (int) (points /  (activityType == MVPEnums.ACTIVITY_WALKING ? DIVISOR_WALKING : 
-									(activityType == MVPEnums.ACTIVITY_RUNNING ? DIVISOR_RUNNING :
-									(activityType == MVPEnums.ACTIVITY_SWIMMING ? DIVISOR_SWIMMING :
+						   		 (activityType == MVPEnums.ACTIVITY_RUNNING ? DIVISOR_RUNNING :
+								 (activityType == MVPEnums.ACTIVITY_SWIMMING ? DIVISOR_SWIMMING :
 										DIVISOR_WALKING))));
-		
+				
+		// mins >= 60
 		if(mins >= 60) {
 			
-			if(mins % 60 == 0)
-				return mins;
+			if(mins % 60d == 0)
+				return (int)mins;
 			
-			int hours = mins / 60;
+			int hours = (int) Math.floor(mins / 60f);
 			int remainMins = mins % 60;
 			
-			if(remainMins <= 30)
+			if(remainMins < 15)
+				return hours * 60;
+			else if(remainMins < 45)
 				return hours * 60 + 30;
 			
 			return (hours + 1) * 60;
 		}
 		
-		for(int i = 0; i < scales.length; i++)
+		// mins < 60
+		for(int i = 1; i < scales.length; i++)
+		{
 			if(mins <= scales[i])
-				return scales[i];
+			{
+				int distanceToLowerScale = Math.abs(scales[i - 1] - mins);
+				int distanceToHigherScale = Math.abs(scales[i] - mins);
+				
+				return distanceToLowerScale < distanceToHigherScale ? scales[i - 1] : scales[i];
+			}
+		}
 		
 		return -1;
 	}

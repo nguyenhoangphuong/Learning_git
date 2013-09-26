@@ -50,79 +50,80 @@ public class StreakMilestoneAPI extends ModelAPI {
 		goal.getProgressData().setSteps(4000);
 		goal.getProgressData().setSeconds(3600);
 		MVPApi.createGoal(token, goal);
-	}
-	
-	public void e_refresh() {
-		
+
+		// reset current goal using api
+		MVPApi.updateGoal(token, todayBlankGoal);
+				
 		// get new data from server
 		Gui.swipeLeft(1000);
-		ShortcutsTyper.delayTime(5000);
+		ShortcutsTyper.delayTime(8000);
 	}
 
 	public void e_finishGoal() {
 
-		// input 1260 pts record (5 mins 1500 steps)
+		// input 1012 pts record (1 min 550 steps)
 		mins += 10;
 		String[] times = new String[] { mins / 60 + "", String.format("%02d", mins % 60), "AM" };
 
 		HomeScreen.tapOpenManualInput();
-		PrometheusHelper.inputManualRecord(times, 5, 1500);
+		PrometheusHelper.inputManualRecord(times, 1, 550);
 		HomeScreen.tapSave();
 		ShortcutsTyper.delayTime(5000);
 	}
 
-	public void e_resetGoal() {
-
-		// reset current goal using api
-		MVPApi.updateGoal(token, todayBlankGoal);
-	}
-
+	
 	public void v_HomeScreen() {
 
 		PrometheusHelper.handleUpdateFirmwarePopup();
 		Assert.assertTrue(HomeScreen.isToday(), "Current screen is HomeScreen");
 	}
 
-	public void v_3DaysStreak() {
+	public void v_DaysStreak() {
+
+		int totalGoal = dayDiff + 1;
+		String[] messages = {};
 		
-		checkStreakTile(Timeline.Streak3DaysMessages);
+		if(totalGoal == 3)
+			messages = Timeline.Streak3DaysMessages;
+		if(totalGoal == 4)
+			messages = Timeline.Streak4DaysMessages;
+		if(totalGoal >= 5 && totalGoal <= 6)
+			messages = Timeline.Streak5to6DaysMessages;
+		if(totalGoal == 7)
+			messages = Timeline.Streak7DaysMessages;
+		if(totalGoal >= 8 && totalGoal <= 11)
+			messages = Timeline.Streak8to11DaysMessages;
+		if(totalGoal >= 12 && totalGoal <= 13)
+			messages = Timeline.Streak12to13DaysOnMessages;
+		if(totalGoal == 14)
+			messages = Timeline.Streak14DaysMessages;
+		if(totalGoal >= 15)
+			messages = Timeline.Streak15DaysOnMessages;
+		
+		if(messages.length != 0)
+			checkStreakTile(messages);
 	}
 
-	public void v_4DaysStreak() {
-
-		checkStreakTile(Timeline.Streak4DaysMessages);
-	}
-
-	public void v_5to6DaysStreak() {
-
-		checkStreakTile(Timeline.Streak5to6DaysMessages);
-	}
-
-	public void v_7DaysStreak() {
-
-		checkStreakTile(Timeline.Streak7DaysMessages);
-	}
-
-	public void v_8to12DaysStreak() {
-
-		checkStreakTile(Timeline.Streak8to12DaysMessages);
+	public void v_End() {
+		
 	}
 	
 	public void checkStreakTile(String[] messages) {
-		
-		String title = (mins / 60) + ":" + String.format("%02d", mins % 60 + 5) + "am";
+
 		Timeline.dragUpTimeline();
 		Gui.swipeUp(1000);
-		
+
+		String title = (mins / 60) + ":" + String.format("%02d", mins % 60 + 1) + "am";
 		boolean pass = false;
-		for(int i = 0; i < 5; i++) {
+		for (int i = 0; i < 3; i++) {
 			Timeline.openTile(title);
-			if(Timeline.isStreakTileCorrect(title, dayDiff, messages))
+			if (Timeline.isStreakTileCorrect(title, dayDiff + 1, messages))
 				pass = true;
 			Timeline.closeCurrentTile();
-			Timeline.dragDownTimeline();
 		}
-		
+
+		Timeline.dragDownTimeline();
+
 		Assert.assertTrue(pass, "At least one tile has correct content");
 	}
 

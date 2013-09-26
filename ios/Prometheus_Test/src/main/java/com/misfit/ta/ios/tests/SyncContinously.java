@@ -13,28 +13,26 @@ import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.sync.SyncDebugLog;
-import com.misfit.ta.gui.InstrumentHelper;
 import com.misfit.ta.gui.Sync;
+import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class SyncContinously {
+public class SyncContinously extends AutomationTest {
 
-	private static int NUMBER_OF_SYNC = 25;
+	private static int NUMBER_OF_SYNC = 30;
 	
 	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "QuietSync", "SyncContinously" })
 	public void QuietSyncContinously() {
-		InstrumentHelper instrument = new InstrumentHelper();
 
 		for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 
-			System.out.println("------------------------------ Quiet Sync: " + i);
+			System.out.println("--------------------- Quiet Sync: " + i + " ----------------------");
 			instrument.kill();
 			AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), "script/quietsync.js");
-
-			for(int j = 0; j < 10; j++) {
-				ShortcutsTyper.delayOne();
-			}
+			
+			// wait for next quiet sync
+			ShortcutsTyper.delayTime(2000);
 		}
 	}
 	
@@ -42,9 +40,9 @@ public class SyncContinously {
 	public void ManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
 
 		
-		String email = "v14@qa.com";
-		String password = "test12";
-		String serialNumber = "XXXXXV0014";
+		String email = "nhhai16991@gmail.com";
+		String password = "qqqqqq";
+		String serialNumber = "science003";
 		
 		// set up: link shine v14 to v14 account
 		Long now = System.currentTimeMillis() / 1000;
@@ -97,16 +95,12 @@ public class SyncContinously {
 				}
 
 				// parse sync log and store the record
-				ShortcutsTyper.delayTime(15000);
+				ShortcutsTyper.delayTime(5000);
 				String log = MVPApi.getLatestSyncLog(email, password, begin);
 				uiStartTime[i] = start / 1000;
 				uiEndTime[i] = end / 1000;
 				statusPassed[i] = passed;
 				syncLogs[i] = new SyncDebugLog(log);
-
-				if ((i + 1) % 10 == 0) {
-					ShortcutsTyper.delayTime(180000);
-				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -167,4 +161,10 @@ public class SyncContinously {
 		return detailResult;
 	}
 
+	public static void main(String[] args) {
+		
+		SyncContinously syncTest = new SyncContinously();
+		syncTest.QuietSyncContinously();
+	}
+	
 }
