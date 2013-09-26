@@ -56,12 +56,12 @@ public class SignIn {
 
     public static void tapIForgot() {
         // popup Sorry your email or password is not correct
-        Gui.touchPopupButton(1);
+        Gui.touchPopupButton(Gui.isRunningOnIOS7() ? 0 : 1);
     }
 
     public static void tapTryAgain() {
         // popup Sorry your email or password is not correct
-        Gui.touchPopupButton(0);
+        Gui.touchPopupButton(Gui.isRunningOnIOS7() ? 1 : 0);
     }
 
     public static void tapOK() {
