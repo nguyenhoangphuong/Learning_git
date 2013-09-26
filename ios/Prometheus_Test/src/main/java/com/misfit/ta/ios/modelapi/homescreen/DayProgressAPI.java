@@ -11,6 +11,7 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -76,14 +77,15 @@ public class DayProgressAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(500);
 
 		// input record
-		String[] time = { 
-				String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour),
-				"00", 
-				hour < 12 ? "AM" : "PM" };
-		
+		String amString = Gui.isRunningOnIOS7() ? "am" : "AM";
+		String pmString = Gui.isRunningOnIOS7() ? "pm" : "PM";
+		String[] time = {
+				String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12
+						: hour), "00", hour < 12 ? amString : pmString };
+
 		this.lastDuration = PrometheusHelper.randInt(5, 9);
 		this.lastSteps = this.lastDuration * PrometheusHelper.randInt(100, 180);
-		
+
 		HomeScreen.enterManualActivity(time, this.lastDuration, this.lastSteps);
 		ShortcutsTyper.delayTime(1000);
 		HomeScreen.tapSave();
@@ -92,7 +94,8 @@ public class DayProgressAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(500);
 
 		// save last record info
-		this.lastStartTime = String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour)
+		this.lastStartTime = String.format("%d", hour > 12 ? hour - 12
+				: hour == 0 ? 12 : hour)
 				+ ":00" + (hour < 12 ? "am" : "pm");
 		calculateTotalProgressInfo();
 		this.hour++;
@@ -101,9 +104,11 @@ public class DayProgressAPI extends ModelAPI {
 
 	private void calculateTotalProgressInfo() {
 
-		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps, this.lastDuration, 100);
-		this.lastMiles = PrometheusHelper.calculateMiles(lastSteps, lastDuration, height);
-		
+		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
+				this.lastDuration, 100);
+		this.lastMiles = PrometheusHelper.calculateMiles(lastSteps,
+				lastDuration, height);
+
 		System.out.println("DEBUG: Last steps " + this.lastSteps);
 		System.out.println("DEBUG: Last duration " + this.lastDuration);
 		System.out.println("DEBUG: Last points " + this.lastPoints);
@@ -158,34 +163,54 @@ public class DayProgressAPI extends ModelAPI {
 						"Total points displayed correctly");
 
 				// check remain walking time
-				int remainMins = MVPCalculator.calculateNearestTimeRemainInMinute(1000 - (int)this.totalPoints, MVPEnums.ACTIVITY_WALKING);
-				String remainTimeString = Gui.getProperty("PTRichTextLabel", 0, "text");
-				remainTimeString = remainTimeString.substring(
-						remainTimeString.indexOf('_') + 1,
-						remainTimeString.lastIndexOf('_'));
-				
-				Assert.assertEquals(remainTimeString, MVPCalculator.convertNearestTimeInMinuteToString(remainMins),
-						"Remain time displayed correctly");
+				if (1000 > this.totalPoints) {
+					int remainMins = MVPCalculator
+							.calculateNearestTimeRemainInMinute(
+									1000 - (int) this.totalPoints,
+									MVPEnums.ACTIVITY_WALKING);
+					String remainTimeString = Gui.getProperty(
+							"PTRichTextLabel", 0, "text");
+					remainTimeString = remainTimeString.substring(
+							remainTimeString.indexOf('_') + 1,
+							remainTimeString.lastIndexOf('_'));
+
+					Assert.assertEquals(remainTimeString, MVPCalculator
+							.convertNearestTimeInMinuteToString(remainMins),
+							"Remain time displayed correctly");
+				} else {
+					int beatGoalPercentage = Math
+							.round(((int) this.totalPoints - 1000) / 10);
+					String beatGoalString = String.valueOf(beatGoalPercentage)
+							+ "%";
+					System.out.println("DEBUG beat goal: " + beatGoalString);
+					Assert.assertTrue(
+							ViewUtils.isExistedView("UILabel",
+									DefaultStrings.BeatGoalMessage)
+									&& ViewUtils.isExistedView(
+											"PTRichTextLabel", beatGoalString),
+							"Beat goal message is displayed OK");
+				}
 
 			}
 			// progress circle display summary => check steps / calories /
 			// distance
 			else if (HomeScreen.isSummaryProgressCircle()) {
 				System.out.println("DEBUG: PROGRESS CIRCLE VIEW 2");
-				
+
 				// check total step
 				Assert.assertTrue(
 						ViewUtils.isExistedView("PTRichTextLabel",
 								String.format("_%d_ steps", this.totalSteps)),
 						"Total steps displayed correctly");
-				
+
 				// check total distance
-				// TODO: uncomment this when distance calculation in app is fixed
-//				Assert.assertTrue(
-//						ViewUtils.isExistedView("PTRichTextLabel",
-//								String.format("_%.1f_ miles", this.totalMiles)),
-//						"Total miles displayed correctly");
-				
+				// TODO: uncomment this when distance calculation in app is
+				// fixed
+				// Assert.assertTrue(
+				// ViewUtils.isExistedView("PTRichTextLabel",
+				// String.format("_%.1f_ miles", this.totalMiles)),
+				// "Total miles displayed correctly");
+
 				// check total burned calories
 				Calendar now = Calendar.getInstance();
 				System.out.println("NOW: " + now);
@@ -264,7 +289,7 @@ public class DayProgressAPI extends ModelAPI {
 	public void e_stay() {
 
 	}
-	
+
 	public void v_EndInput() {
 
 	}

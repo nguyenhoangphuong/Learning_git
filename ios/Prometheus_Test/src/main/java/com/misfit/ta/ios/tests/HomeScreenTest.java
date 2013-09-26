@@ -24,7 +24,7 @@ public class HomeScreenTest extends AutomationTest
     {
         ModelHandler model = getModelhandler();
         model.add("DayProgress", new DayProgressAPI(this, Files.getFile("model/homescreen/DayProgress.graphml"),
-                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("DayProgress");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
@@ -51,7 +51,7 @@ public class HomeScreenTest extends AutomationTest
     {
         ModelHandler model = getModelhandler();
         model.add("TaggingActivity", new TaggingActivityAPI(this, Files.getFile("model/homescreen/TaggingActivity.graphml"),
-                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("TaggingActivity");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
