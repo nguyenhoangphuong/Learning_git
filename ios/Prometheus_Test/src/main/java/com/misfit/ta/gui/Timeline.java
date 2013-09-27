@@ -10,6 +10,7 @@ public class Timeline {
 	static public String LabelPersonalBest = "PERSONAL BEST";
 	static public String LabelDayStreak = "DAY STREAK";
 	static public String LabelMarathon = "MARATHONS";
+	static public String LabelAchievement = "ACHIEVEMENT";
 	
 	static public String PersonalBestOutdidMessage = "You outdid your previous record by %d points!";
 	
@@ -198,6 +199,15 @@ public class Timeline {
 				ViewUtils.isExistedView("UILabel", LabelDayStreak) &&
 				isDynamicMessageDisplayed(messages);
 	}
+	
+	static public boolean isLifetimeDistanceBadgeTileCorrect(String time, int numberOfMarathons, String message) {
+		
+		return  ViewUtils.isExistedView("UILabel", time) &&
+				ViewUtils.isExistedView("UILabel", String.valueOf(numberOfMarathons)) &&
+				ViewUtils.isExistedView("UILabel", LabelMarathon) &&
+				ViewUtils.isExistedView("UILabel", LabelAchievement) &&
+				ViewUtils.isExistedView("UILabel", message);
+	} 
 	
 	static public boolean isDynamicMessageDisplayed(String[] availableMessages) {
 		

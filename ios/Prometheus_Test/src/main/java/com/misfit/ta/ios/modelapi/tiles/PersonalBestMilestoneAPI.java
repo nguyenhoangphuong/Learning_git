@@ -53,7 +53,7 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(times, 50, 5000);
 		HomeScreen.tapSave();
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(5000);
 		Timeline.dragUpTimeline();
 	}
 	

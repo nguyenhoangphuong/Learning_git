@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.tiles.DailyGoalMilestonesAPI;
+import com.misfit.ta.ios.modelapi.tiles.LifetimeDistanceAchievementAPI;
 import com.misfit.ta.ios.modelapi.tiles.PersonalBestMilestoneAPI;
 import com.misfit.ta.ios.modelapi.tiles.StreakMilestoneAPI;
 import com.misfit.ta.utils.Files;
@@ -55,4 +56,18 @@ public class TilesTest extends AutomationTest {
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
     }
+	
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone" })
+    public void LifetimeDistanceAchievement() throws InterruptedException, StopConditionException, IOException 
+    {    	
+        ModelHandler model = getModelhandler();
+        model.add("LifetimeDistanceAchievement", new LifetimeDistanceAchievementAPI(this, 
+        		Files.getFile("model/tiles/LifetimeDistanceAchievement.graphml"),
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), true));
+        model.execute("LifetimeDistanceAchievement");
+        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+        String actualResult = getModelhandler().getStatistics();
+        System.out.println(actualResult);
+    }
+	
 }

@@ -59,7 +59,7 @@ public class StreakMilestoneAPI extends ModelAPI {
 				
 		// get new data from server
 		Gui.swipeLeft(1000);
-		ShortcutsTyper.delayTime(8000);
+		ShortcutsTyper.delayTime(4000);
 	}
 
 	public void e_finishGoal() {

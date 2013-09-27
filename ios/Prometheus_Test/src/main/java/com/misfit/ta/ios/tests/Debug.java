@@ -17,6 +17,7 @@ import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
+import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.report.TRS;
@@ -27,14 +28,11 @@ public class Debug {
 	private static Logger logger = Util.setupLogger(Debug.class);
 	
 	public static void main(String[] args) {
-//		Gui.init("192.168.1.188");
-		String email = "nhhai16991@gmail.com";
-		String password = "qqqqqq";
-		String serialNumber = "science020";
+		Gui.init("192.168.1.188");
+		HomeScreen.tapOpenSettingsTray();
+		HomeScreen.tapSettings();
 		
-		String[] logs = MVPApi.listStagingDebugSyncLogs(email, serialNumber, System.currentTimeMillis() / 1000 - 3600 * 48,
-				System.currentTimeMillis() / 1000);
-		for(String s : logs)
-			logger.info(s);
+			HomeSettings.tapKm();
+		HomeSettings.tapBack();
 	}
 }
