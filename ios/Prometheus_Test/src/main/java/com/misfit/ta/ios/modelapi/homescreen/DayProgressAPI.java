@@ -179,10 +179,11 @@ public class DayProgressAPI extends ModelAPI {
 							"Remain time displayed correctly");
 				} else {
 					int beatGoalPercentage = Math
-							.round(((int) this.totalPoints - 1000) / 10);
+							.round(((int) Math.floor(this.totalPoints) - 1000) / 10);
 					String beatGoalString = String.valueOf(beatGoalPercentage)
 							+ "%";
 					System.out.println("DEBUG beat goal: " + beatGoalString);
+					ShortcutsTyper.delayTime(4000);
 					Assert.assertTrue(
 							ViewUtils.isExistedView("UILabel",
 									DefaultStrings.BeatGoalMessage)
