@@ -27,7 +27,6 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 		
 		// sign up with goal = 1000 pts
 		String email = PrometheusHelper.signUp();
-		ShortcutsTyper.delayTime(5000);
 		
 		// api: create yesterday's goal
 		long yesterday = System.currentTimeMillis() / 1000 - 3600 * 24;
@@ -41,11 +40,9 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 		statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
 		MVPApi.createStatistics(token, statistics);
 		
-		// sign out and sign in to make sure local db is latest
-		PrometheusHelper.signOut();
-		PrometheusHelper.signIn(email, "qwerty1");
+		// pull to refresh to make sure local db is latest
+		HomeScreen.pullToRefresh();
 		ShortcutsTyper.delayTime(5000);
-		MVPApi.userInfo(token);
 	}
 	
 	public void e_inputPersonalBest() {

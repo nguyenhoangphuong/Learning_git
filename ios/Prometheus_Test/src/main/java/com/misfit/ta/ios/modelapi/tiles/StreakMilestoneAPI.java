@@ -36,7 +36,6 @@ public class StreakMilestoneAPI extends ModelAPI {
 
 		// sign up with goal = 1000 pts
 		email = PrometheusHelper.signUp();
-		ShortcutsTyper.delayTime(5000);
 
 		// get current goal
 		token = MVPApi.signIn(email, "qwerty1").token;

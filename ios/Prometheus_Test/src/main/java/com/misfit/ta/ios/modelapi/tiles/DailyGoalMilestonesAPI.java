@@ -5,9 +5,6 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.Gui;
-import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.aut.DefaultValues;
-import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -28,19 +25,7 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	public void e_init() {
 		
 		// sign up with goal = 1000 pts
-		String email = PrometheusHelper.signUp();
-		ShortcutsTyper.delayTime(5000);
-		
-		// api: create yesterday's goal
-		long yesterday = System.currentTimeMillis() / 1000 - 3600 * 24;
-		String token = MVPApi.signIn(email, "qwerty1").token;
-		Goal goal = DefaultValues.CreateGoal(yesterday);
-		MVPApi.createGoal(token, goal);
-		
-		// sign out and sign in to dismiss tutorial tiles
-		PrometheusHelper.signOut();
-		PrometheusHelper.signIn(email, "qwerty1");
-		ShortcutsTyper.delayTime(5000);
+		PrometheusHelper.signUp();
 	}
 	
 	public void e_inputHalfGoal() {
@@ -52,7 +37,7 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(times, 50, 5000);
 		HomeScreen.tapSave();
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(5000);
 		Timeline.dragUpTimeline();
 	}
 	

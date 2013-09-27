@@ -9,6 +9,7 @@ public class Timeline {
 	static public String LabelMilestone = "MILESTONE";
 	static public String LabelPersonalBest = "PERSONAL BEST";
 	static public String LabelDayStreak = "DAY STREAK";
+	static public String LabelMarathon = "MARATHONS";
 	
 	static public String PersonalBestOutdidMessage = "You outdid your previous record by %d points!";
 	
@@ -115,6 +116,16 @@ public class Timeline {
 		"You're streaking faster than we can write these messages.",
 		"Error: No more messages left. You're too good.",
 		"When will it end?",
+	};
+	static public String[] LifetimeDistanceInUSUnitMessages = new String[] {
+		"That's 50mi since you started using Shine, way to go!",
+		"That's 150 total miles. Nice work!",
+		"That's 300 lifetime miles. Impressive!",
+	};
+	static public String[] LifetimeDistanceInSIUnitMessages = new String[] {
+		"That's 80km since you started using Shine, way to go!",
+		"That's 250 total kilometers. Nice work!",
+		"That's 500 lifetime kilometers. Impressive!",
 	};
 	
 	static public void dragUpTimeline() {
