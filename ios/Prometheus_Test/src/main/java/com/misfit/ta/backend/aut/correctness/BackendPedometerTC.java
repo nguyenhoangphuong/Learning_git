@@ -217,7 +217,7 @@ public class BackendPedometerTC extends BackendAutomation {
 		BaseResult r = MVPApi.updatePedometer(token, DefaultValues.RandomPedometer());
 		Pedometer pedo = Pedometer.getPedometer(r.response);
 		
-		Assert.assertEquals(r.statusCode, 404, "Status code");
+		Assert.assertEquals(r.statusCode, 400, "Status code");
 		Assert.assertEquals(pedo, null, "Pedometer from result");
 	}
 	

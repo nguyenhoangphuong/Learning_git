@@ -11,7 +11,6 @@ import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.timeline.TimelineItem;
 
 public class BackendTimelineItemOTF extends BackendAutomation {
 
@@ -25,8 +24,7 @@ public class BackendTimelineItemOTF extends BackendAutomation {
 		
 		// batch
 		BaseResult r = MVPApi.customRequest("timeline_items/batch_insert", MVPApi.HTTP_POST, params);
-		Assert.assertEquals(r.statusCode, 200, "Status code");
-		Assert.assertTrue(TimelineItem.getTimelineItems(r.response).size() == 0, "Size of timeline items list");
+		Assert.assertEquals(r.statusCode, 400, "Status code");
 		
 		// single
 		r = MVPApi.customRequest("timeline_items", MVPApi.HTTP_POST, params);

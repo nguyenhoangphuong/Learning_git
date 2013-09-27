@@ -34,7 +34,7 @@ public class BackendStatisticsTC extends BackendAutomation {
 		Statistics stats1 = Statistics.fromResponse(r1.response);
 		Statistics stats2 = Statistics.fromResponse(r2.response);
 
-		Assert.assertTrue(r2.isExisted(), "Status code is 210");
+		Assert.assertEquals(r2.statusCode, 210, "Status code");
 		Assert.assertEquals(stats1.getServerId(), stats2.getServerId(), "Server Id is the same");
 		Assert.assertEquals(stats2.getPersonalRecords().getPersonalBestRecordsInPoint(), 
 				defaultStatistics.getPersonalRecords().getPersonalBestRecordsInPoint(),
@@ -55,7 +55,7 @@ public class BackendStatisticsTC extends BackendAutomation {
 		BaseResult r = MVPApi.updateStatistics(token, src);
 		Statistics stats = Statistics.fromResponse(r.response);
 
-		Assert.assertTrue(r.isExisted(), "Status code is 210");
+		Assert.assertEquals(r.statusCode, 210, "Status code");
 		Assert.assertTrue(stats.getServerId() != null, "Server Id is not null");
 		Assert.assertEquals(stats.getPersonalRecords().getPersonalBestRecordsInPoint(), 5000d, "Personal best in points is updated");
 
@@ -73,7 +73,7 @@ public class BackendStatisticsTC extends BackendAutomation {
 		BaseResult r = MVPApi.updateStatistics(token, src);
 		Statistics stats = Statistics.fromResponse(r.response);
 
-		Assert.assertTrue(r.isNotFound(), "Status code is 404");
+		Assert.assertEquals(r.statusCode, 400, "Status code");
 		Assert.assertNull(stats, "Statistics is null");
 	}
 

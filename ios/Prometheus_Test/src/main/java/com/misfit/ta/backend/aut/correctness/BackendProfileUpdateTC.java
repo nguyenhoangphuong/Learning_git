@@ -83,7 +83,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
 		ProfileResult r = MVPApi.updateProfile(token, data, "");
 		
-		Assert.assertTrue(r.isNotFound(), "Status code is 404");
+		Assert.assertEquals(r.statusCode, 400, "Status code");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })

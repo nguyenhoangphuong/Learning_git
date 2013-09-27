@@ -12,6 +12,7 @@ public class Statistics {
 	private String localId;
 	private Long updatedAt;
 	private PersonalRecord personalRecords;
+	private Double lifetimeDistance;
 
 	// constructors
 	public Statistics() {
@@ -37,6 +38,8 @@ public class Statistics {
 				obj.accumulate("updatedAt", updatedAt);
 			if (personalRecords != null)
 				obj.accumulate("personalRecords", personalRecords.toJson());
+			if (lifetimeDistance != null)
+				obj.accumulate("lifetimeDistance", lifetimeDistance);
 
 			return obj;
 		} catch (JSONException e) {
@@ -56,6 +59,8 @@ public class Statistics {
 				obj.setUpdatedAt(json.getLong("updatedAt"));
 			if (!json.isNull("personalRecords"))
 				obj.setPersonalRecords(PersonalRecord.fromJson(json.getJSONObject("personalRecords")));
+			if (!json.isNull("lifetimeDistance"))
+				obj.setLifetimeDistance(json.getDouble("lifetimeDistance"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -105,5 +110,13 @@ public class Statistics {
 
 	public void setPersonalRecords(PersonalRecord personalRecords) {
 		this.personalRecords = personalRecords;
+	}
+	
+	public Double getLifetimeDistance() {
+		return lifetimeDistance;
+	}
+
+	public void setLifetimeDistance(Double lifetimeDistance) {
+		this.lifetimeDistance = lifetimeDistance;
 	}
 }

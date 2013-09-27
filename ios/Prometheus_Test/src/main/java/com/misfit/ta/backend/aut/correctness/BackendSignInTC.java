@@ -35,7 +35,7 @@ public class BackendSignInTC extends BackendAutomation {
 			AccountResult r = MVPApi.signIn(wrongFormatEmails[i], wellFormatPassword);
 			r.printKeyPairsValue();
 			
-			Assert.assertTrue(r.isNotFound(), "Status code is 404");
+			Assert.assertEquals(r.statusCode, 400, "Status code");
 			Assert.assertEquals(DefaultValues.InvalidEmail, r.errorMessage, "Error message content");
 			Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
 		}
@@ -47,7 +47,7 @@ public class BackendSignInTC extends BackendAutomation {
 			AccountResult r = MVPApi.signIn(wellFormatEmail, wrongFormatPasswords[i]);
 			r.printKeyPairsValue();
 
-			Assert.assertTrue(r.isNotFound(), "Status code is 404");
+			Assert.assertEquals(r.statusCode, 400, "Status code");
 			Assert.assertEquals(DefaultValues.InvalidPassword, r.errorMessage, "Error message content");
 			Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
 		}
@@ -58,7 +58,7 @@ public class BackendSignInTC extends BackendAutomation {
         AccountResult r = MVPApi.signIn(invalidEmail, validPassword);
         r.printKeyPairsValue();
 
-        Assert.assertTrue(r.isNotFound(), "Status code is 404");
+        Assert.assertEquals(r.statusCode, 400, "Status code");
         Assert.assertEquals(r.errorMessage, DefaultValues.WrongAccountMsg, "Error message content");
         Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
     }
@@ -68,7 +68,7 @@ public class BackendSignInTC extends BackendAutomation {
         AccountResult r = MVPApi.signIn(validEmail, invalidPassword);
         r.printKeyPairsValue();
 
-        Assert.assertTrue(r.isNotFound(), "Status code is 404");
+        Assert.assertEquals(r.statusCode, 400, "Status code");
         Assert.assertEquals(r.errorMessage, DefaultValues.WrongAccountMsg, "Error message content");
         Assert.assertTrue(r.token == null || r.token.isEmpty(), "Empty authenticate token");
     }

@@ -19,11 +19,11 @@ public class BackendRegisterOTF extends BackendAutomation {
 		params1.addParam("email", MVPApi.generateUniqueEmail());
 		
 		BaseResult r1 = MVPApi.customRequest("signup", MVPApi.HTTP_POST, params1);
-		Assert.assertEquals(r1.statusCode, 404, "Status code");
+		Assert.assertEquals(r1.statusCode, 400, "Status code");
 		Assert.assertEquals(r1.errorMessage, DefaultValues.InvalidPassword);
 		
 		r1 = MVPApi.customRequest("login", MVPApi.HTTP_POST, params1);
-		Assert.assertEquals(r1.statusCode, 404, "Status code");
+		Assert.assertEquals(r1.statusCode, 400, "Status code");
 		Assert.assertEquals(r1.errorMessage, DefaultValues.InvalidPassword);
 		
 		// no email param
@@ -31,11 +31,11 @@ public class BackendRegisterOTF extends BackendAutomation {
 		params2.addParam("password", "qqqqqqq");
 		
 		BaseResult r2 = MVPApi.customRequest("signup", MVPApi.HTTP_POST, params2);
-		Assert.assertEquals(r2.statusCode, 404, "Status code");
+		Assert.assertEquals(r2.statusCode, 400, "Status code");
 		Assert.assertEquals(r2.errorMessage, DefaultValues.InvalidEmail);
 		
 		r2 = MVPApi.customRequest("login", MVPApi.HTTP_POST, params2);
-		Assert.assertEquals(r2.statusCode, 404, "Status code");
+		Assert.assertEquals(r2.statusCode, 400, "Status code");
 		Assert.assertEquals(r2.errorMessage, DefaultValues.InvalidEmail);
 	}
 	

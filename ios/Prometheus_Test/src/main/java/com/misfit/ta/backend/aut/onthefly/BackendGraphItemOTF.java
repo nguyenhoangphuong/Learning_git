@@ -11,7 +11,6 @@ import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.graph.GraphItem;
 
 public class BackendGraphItemOTF extends BackendAutomation {
 
@@ -25,8 +24,7 @@ public class BackendGraphItemOTF extends BackendAutomation {
 		
 		// batch
 		BaseResult r = MVPApi.customRequest("graph_items/batch_insert", MVPApi.HTTP_POST, params);
-		Assert.assertEquals(r.statusCode, 200, "Status code");
-		Assert.assertTrue(GraphItem.getGraphItems(r.response).size() == 0, "Size of graph items list");
+		Assert.assertEquals(r.statusCode, 400, "Status code");
 		
 		// single
 		r = MVPApi.customRequest("graph_items", MVPApi.HTTP_POST, params);
