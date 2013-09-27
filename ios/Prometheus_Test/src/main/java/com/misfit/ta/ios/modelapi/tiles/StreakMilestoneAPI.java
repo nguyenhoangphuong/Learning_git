@@ -1,6 +1,10 @@
 package com.misfit.ta.ios.modelapi.tiles;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
@@ -93,8 +97,13 @@ public class StreakMilestoneAPI extends ModelAPI {
 			messages = Timeline.Streak7DaysMessages;
 		if(totalGoal >= 8 && totalGoal <= 11)
 			messages = Timeline.Streak8to11DaysMessages;
-		if(totalGoal >= 12 && totalGoal <= 13)
-			messages = Timeline.Streak12to13DaysOnMessages;
+		if(totalGoal >= 12 && totalGoal <= 13) {
+			List<String> list = new ArrayList<String>();
+			list.addAll(Arrays.asList(Timeline.Streak8to11DaysMessages));
+			list.addAll(Arrays.asList(Timeline.Streak12to13DaysOnMessages));
+
+			messages = list.toArray(new String[list.size()]);
+		}
 		if(totalGoal == 14)
 			messages = Timeline.Streak14DaysMessages;
 		if(totalGoal >= 15)
@@ -117,8 +126,12 @@ public class StreakMilestoneAPI extends ModelAPI {
 		boolean pass = false;
 		for (int i = 0; i < 3; i++) {
 			Timeline.openTile(title);
-			if (Timeline.isStreakTileCorrect(title, dayDiff + 1, messages))
+			Gui.captureScreen("streaktile-" + System.nanoTime());
+			if (Timeline.isStreakTileCorrect(title, dayDiff + 1, messages)) {
 				pass = true;
+				Timeline.closeCurrentTile();
+				break;
+			}
 			Timeline.closeCurrentTile();
 		}
 

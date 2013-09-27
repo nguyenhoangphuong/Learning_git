@@ -20,8 +20,8 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 public class AWSHelper {
 
-	private static String ACCESS_KEY = "AKIAIGJPXMUKYD5HMWEQ";
-	private static String SECRET_KEY = "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";
+	private static String ACCESS_KEY = "AKIAJVQX34LED7SQ6P5Q";
+	private static String SECRET_KEY = "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";
 
 	public static AmazonS3 getS3Connection() {
 

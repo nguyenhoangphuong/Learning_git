@@ -40,9 +40,9 @@ public class SyncContinously extends AutomationTest {
 	public void ManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
 
 		
-		String email = "nhhai16991@gmail.com";
-		String password = "qqqqqq";
-		String serialNumber = "science003";
+		String email = "v14@qa.com";
+		String password = "test12";
+		String serialNumber = "XXXXXV0014";
 		
 		// set up: link shine v14 to v14 account
 		Long now = System.currentTimeMillis() / 1000;
@@ -105,6 +105,9 @@ public class SyncContinously extends AutomationTest {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		
+		System.out.println("Sync passed: " + successfulSyncCount);
+		System.out.println("Sync falied: " + failedSyncCount);
 
 		// write the result in detail to excel file
 		File file = writeResult("sync/sync_result_detail.xls", failedSyncCount, successfulSyncCount, 
