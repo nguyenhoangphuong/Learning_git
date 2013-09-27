@@ -46,6 +46,18 @@ public class HomeScreen {
     	Gui.touchAVIew("UILabel", DefaultStrings.SwimmingLabel);
     }
     
+    public static void chooseTennis() {
+    	Gui.touchAVIew("UILabel", DefaultStrings.TennisLabel);
+    }
+    
+    public static void chooseSoccer() {
+    	Gui.touchAVIew("UILabel", DefaultStrings.SoccerLabel);
+    }
+    
+    public static void chooseBasketball() {
+    	Gui.touchAVIew("UILabel", DefaultStrings.BasketballLabel);
+    }
+    
     public static void tapToday() {
     	Gui.touchAVIew("UIButton", 0);
     }

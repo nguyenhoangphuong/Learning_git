@@ -118,6 +118,12 @@ public class DefaultStrings {
 			"MODERATE SWIMMING", "INTENSE SWIMMING" };
 	public static String[] CyclingLevel = { "MILD CYCLING", "MODERATE CYCLING",
 			"INTENSE CYCLING" };
+	public static String[] TennisLevel = { "MILD TENNIS", "MODERATE TENNIS",
+	"INTENSE TENNIS" };
+	public static String[] BasketballLevel = { "MILD BASKETBALL", "MODERATE BASKETBALL",
+	"INTENSE BASKETBALL" };
+	public static String[] SoccerLevel = { "MILD SOCCER", "MODERATE SOCCER",
+	"INTENSE SOCCER" };
 	public static String WearingPositionForCyclingTitle = "Wearing Position for Cycling";
 	public static String WearingPositionForCyclingContent = "For the best results, wear Shine on your ankle, or clip it to your shoe.";
 	public static String WearingPositionForSwimmingTitle = "Wearing Position for Swimming";

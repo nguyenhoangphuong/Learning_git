@@ -290,4 +290,50 @@ public class TaggingActivityAPI extends ModelAPI {
 		}
 		Gui.dragDownTimeline();
 	}
+	
+	public void e_chooseTennis() {
+		openMyShineView();
+		HomeScreen.chooseTennis();
+		ShortcutsTyper.delayTime(300);
+		HomeScreen.tapSave();
+		activityType = MVPEnums.ACTIVITY_TENNIS;
+		ShortcutsTyper.delayTime(1000);
+	}
+	
+	public void e_chooseSoccer() {
+		openMyShineView();
+		HomeScreen.chooseSoccer();
+		ShortcutsTyper.delayTime(300);
+		HomeScreen.tapSave();
+		activityType = MVPEnums.ACTIVITY_SOCCER;
+		ShortcutsTyper.delayTime(1000);
+	}
+	
+	public void e_chooseBasketball() {
+		openMyShineView();
+		HomeScreen.chooseBasketball();
+		ShortcutsTyper.delayTime(300);
+		HomeScreen.tapSave();
+		activityType = MVPEnums.ACTIVITY_BASKETBALL;
+		ShortcutsTyper.delayTime(1000);
+	}
+	
+	public void v_UpdatedSoccerToday() {
+	}
+	
+	public void v_UpdatedBasketballToday() {
+	}
+	
+	public void v_UpdatedTennisToday() {
+	}
+	
+	public void v_UpdatedTennisTimeline() {
+		checkUpdatedTimeline(DefaultStrings.TennisLevel);
+	}
+	public void v_UpdatedBasketballTimeline() {
+		checkUpdatedTimeline(DefaultStrings.BasketballLevel);
+	}
+	public void v_UpdatedSoccerTimeline() {
+		checkUpdatedTimeline(DefaultStrings.SoccerLevel);
+	}
 }
