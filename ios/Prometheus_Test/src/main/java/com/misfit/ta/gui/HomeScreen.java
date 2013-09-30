@@ -47,14 +47,17 @@ public class HomeScreen {
     }
     
     public static void chooseTennis() {
+    	Gui.swipeUp(10);
     	Gui.touchAVIew("UILabel", DefaultStrings.TennisLabel);
     }
     
     public static void chooseSoccer() {
+    	Gui.swipeUp(10);
     	Gui.touchAVIew("UILabel", DefaultStrings.SoccerLabel);
     }
     
     public static void chooseBasketball() {
+    	Gui.swipeUp(10);
     	Gui.touchAVIew("UILabel", DefaultStrings.BasketballLabel);
     }
     

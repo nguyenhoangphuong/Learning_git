@@ -132,13 +132,7 @@ public class DayProgressAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_Today() {
-		if (hasNoActivity) {
-			// check initial data
-			ShortcutsTyper.delayOne();
-			Assert.assertTrue(HomeScreen.isTodayDefault(),
-					"Progress circle display point earned by default");
-		}
-		Assert.assertTrue(HomeScreen.isToday(), "Today is displayed");
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**

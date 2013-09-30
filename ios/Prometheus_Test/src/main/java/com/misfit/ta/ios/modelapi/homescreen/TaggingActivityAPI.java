@@ -46,6 +46,7 @@ public class TaggingActivityAPI extends ModelAPI {
 	private int countSwimmingPopup = 0;
 	private int countCyclingPopup = 0;
 	private int countSleepPopup = 0;
+	private int tilesCount = 4;
 
 	public TaggingActivityAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
@@ -63,7 +64,6 @@ public class TaggingActivityAPI extends ModelAPI {
 	public void e_chooseCycling() {
 		openMyShineView();
 		HomeScreen.chooseCycling();
-		ShortcutsTyper.delayTime(300);
 		if (HomeScreen.hasSuggestWearingPositionForCyclingMessage()) {
 			Gui.touchPopupButton(DefaultStrings.GotItButton);
 			countCyclingPopup++;
@@ -99,7 +99,6 @@ public class TaggingActivityAPI extends ModelAPI {
 	public void e_chooseSwimming() {
 		openMyShineView();
 		HomeScreen.chooseSwimming();
-		ShortcutsTyper.delayTime(300);
 		if (HomeScreen.hasSuggestWearingPositionForSwimmingMessage()) {
 			Gui.touchPopupButton(DefaultStrings.GotItButton);
 			countSwimmingPopup++;
@@ -182,12 +181,13 @@ public class TaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_Today() {
-		if (hasNoActivity) {
-			// check initial data
-			ShortcutsTyper.delayOne();
-			Assert.assertTrue(HomeScreen.isTodayDefault(), "Progress circle display point earned by default");
-		}
-		Assert.assertTrue(HomeScreen.isToday(), "Today is displayed");
+//		if (hasNoActivity) {
+//			// check initial data
+//			ShortcutsTyper.delayOne();
+//			Assert.assertTrue(HomeScreen.isTodayDefault(), "Progress circle display point earned by default");
+//		}
+//		Assert.assertTrue(HomeScreen.isToday(), "Today is displayed");
+		ShortcutsTyper.delayOne();
 	}
 
 	/**
@@ -266,6 +266,10 @@ public class TaggingActivityAPI extends ModelAPI {
 		}
 		Gui.dragUpTimeline();
 		if (this.lastPoints >= 50f) {
+			tilesCount++;
+			if (tilesCount > 9) {
+				Gui.swipeUp((int)(tilesCount / 9) * 500);
+			}
 			// check activity record is saved
 			Assert.assertTrue(ViewUtils.isExistedView("UILabel", this.lastStartTime), "Start time displayed correctly");
 			// open overlay
