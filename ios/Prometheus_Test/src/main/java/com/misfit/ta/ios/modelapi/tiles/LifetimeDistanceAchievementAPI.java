@@ -7,7 +7,6 @@ import org.testng.Assert;
 
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
@@ -36,19 +35,6 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		// store the token for later use
 		token = MVPApi.signIn(email, "qwerty1").token;
 		blankGoal = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(), Integer.MAX_VALUE, 0).goals[0];
-
-		// token = "2810711875833311358-bf9912c82feaf8761f268d0150859ec0";
-		// blankGoal = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(),
-		// Integer.MAX_VALUE, 0).goals[0];
-		// blankStatistics =
-		// Statistics.fromResponse(MVPApi.userInfo(token).response);
-		//
-		// blankGoal.getProgressData().setDistanceMiles(0d);
-		// blankGoal.getProgressData().setPoints(0);
-		// blankGoal.getProgressData().setSteps(0);
-		// blankGoal.getProgressData().setSeconds(0);
-		// blankStatistics.setLifetimeDistance(0d);
-		// e_reset();
 	}
 
 	public void e_changeUnitToUS() {
@@ -111,6 +97,8 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 	private void checkBadgesTile(boolean usUnit) {
 
 		Timeline.dragUpTimeline();
+		Gui.swipeUp(1000);
+		Gui.swipeUp(1000);
 		Gui.swipeUp(1000);
 
 		boolean[] passes = new boolean[] { false, false, false };

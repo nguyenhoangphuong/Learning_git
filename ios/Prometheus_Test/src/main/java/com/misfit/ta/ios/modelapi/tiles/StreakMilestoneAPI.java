@@ -119,7 +119,8 @@ public class StreakMilestoneAPI extends ModelAPI {
 	public void checkStreakTile(String[] messages) {
 
 		Timeline.dragUpTimeline();
-		Gui.swipeUp(1000);
+		for(int i = 0; i < dayDiff; i++)
+			Gui.swipeUp(1000);
 
 		String title = (mins / 60) + ":" + String.format("%02d", mins % 60 + 1) + "am";
 		boolean pass = false;

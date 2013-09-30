@@ -65,8 +65,8 @@ public class Timeline {
 		"That's no small feet! (Ewww, bad pun. Ouch.)",
 		"That burn you feel, in your lungs? That's pride.",
 		"You're one of those \"over-achiever\" types, aren't you?",
-		"And the Gold Medal for Awesome goes to...",
-		"We're not worthy! We're not worthy!",
+		"\"And the Gold Medal for Awesome goes to...\"",
+		"\"We're not worthy! We're not worthy!\"",
 	};
 	static public String[] Streak3DaysMessages = new String[] {
 		"We can see you're goal oriented.",
@@ -91,7 +91,7 @@ public class Timeline {
 	static public String[] Streak7DaysMessages = new String[] {
 		"Nice, an entire week!",
 		"A week streak! You're a streak freak!",
-		"Security, we have a streaker.",
+		"\"Security, we have a streaker.\"",
 		"Now that's a perfect week.",
 	};
 	static public String[] Streak8to11DaysMessages = new String[] {

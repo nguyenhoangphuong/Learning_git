@@ -174,18 +174,6 @@ public class PrometheusHelper {
 	public static boolean hasExistedEmailMessage() {
 		return Gui.getPopupContent().equals(DefaultStrings.SignUpDuplicatedEmailMessage) && Gui.getPopupTitle().equals(DefaultStrings.Title);
 	}
-
-	public static boolean hasNoShineAvailableMessage() {
-		return Gui.getPopupContent().equals(DefaultStrings.NoShineAvailableMessage) && Gui.getPopupTitle().equals(DefaultStrings.NoShineAvailableTitle);
-	}
-
-	public static boolean hasUnableToLinkMessage() {
-		return Gui.getPopupContent().equals(DefaultStrings.UnableToLinkMessage) && Gui.getPopupTitle().equals(DefaultStrings.UnableToLinkTitle);
-	}
-
-	public static boolean hasSyncFailedMessage() {
-		return Gui.getPopupContent().equals(DefaultStrings.SyncFailedMessage) && Gui.getPopupTitle().equals(DefaultStrings.Title);
-	}
 	
 	/* Utilities */
 	public static int randInt(int includeFrom, int excludeTo) {

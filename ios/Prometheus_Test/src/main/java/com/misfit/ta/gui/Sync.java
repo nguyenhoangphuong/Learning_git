@@ -35,18 +35,18 @@ public class Sync {
 		return Gui.hasAlert();
 	}
 	
-    public static boolean hasSyncFailedMessage() {
-    	return PrometheusHelper.hasSyncFailedMessage();
-    }
-    
-    public static boolean hasUnableToLinkMessage() {
-    	return PrometheusHelper.hasUnableToLinkMessage();
-    }
-    
     public static boolean hasNoShineAvailableMessage() {
-    	return PrometheusHelper.hasNoShineAvailableMessage();
-    }
+		return Gui.getPopupContent().equals(DefaultStrings.NoShineAvailableMessage) && Gui.getPopupTitle().equals(DefaultStrings.NoShineAvailableTitle);
+	}
 
+	public static boolean hasUnableToLinkMessage() {
+		return Gui.getPopupContent().equals(DefaultStrings.UnableToLinkMessage) && Gui.getPopupTitle().equals(DefaultStrings.UnableToLinkTitle);
+	}
+
+	public static boolean hasSyncFailedMessage() {
+		return Gui.getPopupContent().equals(DefaultStrings.SyncFailedMessage) && Gui.getPopupTitle().equals(DefaultStrings.Title);
+	}
+	
 	public static void tapOK() {
 		// popup error message
 		Gui.touchPopupButton(0);

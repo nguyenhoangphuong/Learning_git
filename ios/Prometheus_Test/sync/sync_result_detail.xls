@@ -1,35 +1,35 @@
 Total test: 30
-Fail number: 7
-Success number: 23
+Fail number: 3
+Success number: 27
 
 No.	Status	NumberOfRetries	RetryReasons	UITotalTime	ScanningTime	GetSettingsTime	TransferDataTime	SetSettingsAndCleanupTime
-1	true	0		2	0	0	0	0	
-2	true	0		12	0	0	0	0	
-3	true	0		13	0	0	0	0	
-4	false	0		25	0	0	0	0	
-5	false	0		23	0	0	0	0	
-6	true	0		17	0	0	0	0	
-7	true	0		12	0	0	0	0	
-8	true	0		13	0	0	0	0	
-9	true	0		21	0	0	0	0	
-10	true	0		50	0	0	0	0	
-11	true	0		13	0	0	0	0	
-12	false	0		23	0	0	0	0	
-13	true	0		16	0	0	0	0	
-14	true	0		13	0	0	0	0	
-15	true	0		26	0	0	0	0	
-16	true	0		13	0	0	0	0	
-17	false	0		24	0	0	0	0	
-18	true	0		16	0	0	0	0	
-19	false	0		24	0	0	0	0	
-20	true	0		25	0	0	0	0	
-21	true	0		17	0	0	0	0	
-22	false	0		24	0	0	0	0	
-23	true	0		19	0	0	0	0	
-24	true	0		16	0	0	0	0	
-25	false	0		24	0	0	0	0	
-26	true	0		13	0	0	0	0	
-27	true	0		13	0	0	0	0	
-28	true	0		13	0	0	0	0	
-29	true	0		17	0	0	0	0	
-30	true	0		13	0	0	0	0	
+1	true	0		18	0	0	0	0	
+2	true	0		11	0	0	0	0	
+3	true	0		19	0	0	0	0	
+4	true	0		14	0	0	0	0	
+5	true	0		14	0	0	0	0	
+6	false	0		26	0	0	0	0	
+7	true	0		21	0	0	0	0	
+8	true	0		17	0	0	0	0	
+9	true	0		13	0	0	0	0	
+10	true	0		10	0	0	0	0	
+11	true	0		14	0	0	0	0	
+12	true	0		12	0	0	0	0	
+13	true	0		10	0	0	0	0	
+14	false	0		25	0	0	0	0	
+15	true	0		11	0	0	0	0	
+16	true	0		11	0	0	0	0	
+17	true	0		14	0	0	0	0	
+18	true	0		12	0	0	0	0	
+19	true	0		10	0	0	0	0	
+20	true	0		15	0	0	0	0	
+21	true	0		10	0	0	0	0	
+22	true	0		12	0	0	0	0	
+23	false	0		27	0	0	0	0	
+24	true	0		20	0	0	0	0	
+25	true	0		10	0	0	0	0	
+26	true	0		23	0	0	0	0	
+27	true	0		12	0	0	0	0	
+28	true	0		9	0	0	0	0	
+29	true	0		10	0	0	0	0	
+30	true	0		16	0	0	0	0	

@@ -116,6 +116,55 @@ public class SyncContinously extends AutomationTest {
 		// upload file to TRS
 		TRS.instance().addFileToCurrentTest(file.getAbsolutePath(), null);
 	}
+	
+	@Test
+	public void QuickManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
+
+		String email = "nhhai16991@gmail.com";
+		String password = "qqqqqq";
+		String serialNumber = "science020";
+		
+		// set up: link shine v14 to v14 account
+		Long now = System.currentTimeMillis() / 1000;
+		MVPApi.createPedometer(MVPApi.signIn(email, password).token, serialNumber, 
+				MVPApi.LATEST_FIRMWARE_VERSION_STRING, now, null, now, 
+				MVPApi.generateLocalId(), null, now);
+
+		// tracking
+		int successfulSyncCount = 0;
+		int failedSyncCount = 0;
+		
+		// start test
+		try {
+
+			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
+				
+				TRS.instance().addStep("Sync number: " + (i + 1), null);
+
+				Sync.openSyncView();
+				Sync.tapToSync();
+
+				while (!(ViewUtils.isExistedView("UILabel", "Today") && ViewUtils.isExistedView("UILabel", "Week"))) {
+					ShortcutsTyper.delayTime(100);
+				}
+
+				if (Sync.hasAlert()) {
+					failedSyncCount++;
+					Sync.tapOK();
+				} else {
+					successfulSyncCount++;
+				}
+
+				// parse sync log and store the record
+				ShortcutsTyper.delayTime(5000);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		System.out.println("Sync passed: " + successfulSyncCount);
+		System.out.println("Sync falied: " + failedSyncCount);
+	}
 
 	private File writeResult(String filepath, int failedSyncCount, int successfulSyncCount, SyncDebugLog[] syncLogs, long[] uiStartTime, long[] uiEndTime, boolean[] statusPassed) {
 
@@ -162,12 +211,6 @@ public class SyncContinously extends AutomationTest {
 		}
 
 		return detailResult;
-	}
-
-	public static void main(String[] args) {
-		
-		SyncContinously syncTest = new SyncContinously();
-		syncTest.QuietSyncContinously();
 	}
 	
 }
