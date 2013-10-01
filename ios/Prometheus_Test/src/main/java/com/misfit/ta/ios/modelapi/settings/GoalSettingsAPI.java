@@ -172,7 +172,7 @@ public class GoalSettingsAPI extends ModelAPI {
 		logger.info("Actual goal is: " + actual + " - Expect goal is: " + expect);
 
 		Assert.assertTrue(actual.indexOf(expect) >= 0 ||
-				ViewUtils.isExistedView("UILabel", String.format("of %d points", expect)), 
+				ViewUtils.isExistedView("UILabel", String.format("of %s points", expect)), 
 				"Default goal value is correct");
 
 	}
