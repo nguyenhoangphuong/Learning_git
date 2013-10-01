@@ -28,7 +28,8 @@ public class Debug {
 	private static Logger logger = Util.setupLogger(Debug.class);
 	
 	public static void main(String[] args) {
-		Gui.init("192.168.1.115");
-		Gui.printView();
+		Gui.init("192.168.1.144");
+//		Gui.printViewWithViewName("UILabel");
+		System.out.println(ViewUtils.isExistedView("UILabel", "1500"));
 	}
 }

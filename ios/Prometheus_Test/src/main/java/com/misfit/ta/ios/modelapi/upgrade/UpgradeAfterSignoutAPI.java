@@ -15,7 +15,7 @@ import com.misfit.ta.gui.InstrumentHelper;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timeline;
-import com.misfit.ta.ios.AutomationTest;
+import com.misfit.ta.aut.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
@@ -39,6 +39,8 @@ public class UpgradeAfterSignoutAPI extends ModelAPI {
 		if(!f.exists())
 			Assert.fail("Path to old app not exist");
 		
+		pathToOldApp = f.getAbsolutePath();
+		
 		// make sure new app file exist
 		String pathToNewApp = Settings.getParameter("appPath");
 		if(pathToNewApp == null)
@@ -59,7 +61,7 @@ public class UpgradeAfterSignoutAPI extends ModelAPI {
 		
 		InstrumentHelper instrument = new InstrumentHelper();
         instrument.start();
-		ShortcutsTyper.delayTime(5000);
+		ShortcutsTyper.delayTime(10000);
     	Gui.init(Settings.getParameter("DeviceIP"));
 	}
 	
@@ -70,7 +72,8 @@ public class UpgradeAfterSignoutAPI extends ModelAPI {
 		checkAppsExist();
 		
 		// install old app
-		AppHelper.install(pathToOldApp);
+		Gui.uninstall(Gui.getUdids().get(0));
+		Gui.install(Gui.getUdids().get(0), pathToOldApp);
 		killInstrument();
 		launchInstrument();
 	}
@@ -98,13 +101,17 @@ public class UpgradeAfterSignoutAPI extends ModelAPI {
 		PrometheusHelper.signOut();
 	}
 	
-	public void e_installAndLaunchNewApp() {
+	public void e_installAndLaunchLatestApp() {
 		
 		// kill app
 		killInstrument();
 		
 		// install and launch new app
 		AppHelper.install();
+		
+		// because install happen in new thread, 
+		// make sure it finish before launching instrument
+		ShortcutsTyper.delayTime(20000);
 		launchInstrument();
 	}
 	
@@ -113,13 +120,14 @@ public class UpgradeAfterSignoutAPI extends ModelAPI {
 		PrometheusHelper.signIn(email, "qwerty1");
 		
 		// wait for data
-		ShortcutsTyper.delayTime(5000);
+		ShortcutsTyper.delayTime(20000);
 	}
 	
 	public void e_toProfile() {
 		
 		HomeScreen.tapOpenSettingsTray();
 		HomeScreen.tapSettings();
+		ShortcutsTyper.delayTime(500);
 		HomeSettings.tapYourProfile();
 	}
 	
@@ -141,14 +149,16 @@ public class UpgradeAfterSignoutAPI extends ModelAPI {
 	}
 	
 	public void v_HomeScreenAfterUpgrade() {
-		
+				
 		// check current progress
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", 1500), "Total points OK");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "1500"), "Total points OK");
 		HomeScreen.tapProgressCircle();
-		
-		
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "_15000_ steps"), "Total steps OK");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "_6.0_ miles"), "Total distance OK");
 		
 		// check activities is saved
+		Timeline.dragUpTimeline();
+		Gui.swipeUp(1000);
 		for(int i = 1; i <= 5; i++) {
 			
 			String startTime = i + ":00am";
@@ -186,7 +196,7 @@ public class UpgradeAfterSignoutAPI extends ModelAPI {
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", birthday), "Birthday is saved");
 		
 		// height
-		String height = "5'8\"";
+		String height = "5'8\\\"";
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", height), "Height should be " + height);
 		
 		// weight

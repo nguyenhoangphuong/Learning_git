@@ -1013,8 +1013,11 @@ public class Gui {
     
     public static boolean isRunningOnIOS7() {
     	String message = "(Gui isRunningOnIOS7)";
-    	NuRemoteClient.sendToServer(message);
+    	NuRemoteClient.sendToServer(message, true, false);
     	String result = NuRemoteClient.getLastMessage();
+    	
+    	if(result.isEmpty())
+    		return false;
     	return "1".equals(result) ? true : false;
     }
     
