@@ -120,16 +120,6 @@ public class SyncContinously extends AutomationTest {
 	@Test
 	public void QuickManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
 
-		String email = "nhhai16991@gmail.com";
-		String password = "qqqqqq";
-		String serialNumber = "science020";
-		
-		// set up: link shine v14 to v14 account
-		Long now = System.currentTimeMillis() / 1000;
-		MVPApi.createPedometer(MVPApi.signIn(email, password).token, serialNumber, 
-				MVPApi.LATEST_FIRMWARE_VERSION_STRING, now, null, now, 
-				MVPApi.generateLocalId(), null, now);
-
 		// tracking
 		int successfulSyncCount = 0;
 		int failedSyncCount = 0;

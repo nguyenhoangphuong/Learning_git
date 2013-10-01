@@ -19,15 +19,15 @@ import com.misfit.ta.aut.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class UpgradeAfterSignoutAPI extends ModelAPI {
+public class UpgradeAppAPI extends ModelAPI {
 
-	public UpgradeAfterSignoutAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
+	public UpgradeAppAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
 
 	public String pathToOldApp = null;
+	public boolean willSignOutBeforeUpgrade = true;
 	private String email = "";
-	
 	
 	private void checkAppsExist() {
 		
@@ -98,7 +98,8 @@ public class UpgradeAfterSignoutAPI extends ModelAPI {
 	
 	public void e_signOut() {
 		
-		PrometheusHelper.signOut();
+		if(willSignOutBeforeUpgrade)
+			PrometheusHelper.signOut();
 	}
 	
 	public void e_installAndLaunchLatestApp() {

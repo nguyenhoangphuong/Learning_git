@@ -11,45 +11,51 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.aut.AutomationTest;
-import com.misfit.ta.ios.modelapi.upgrade.UpgradeAfterSignoutAPI;
+import com.misfit.ta.ios.modelapi.upgrade.UpgradeAppAPI;
 import com.misfit.ta.utils.Files;
 
 public class UpgradeAppTest extends AutomationTest 
 {
 
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "ProductionOnly" })
-    public void UpgradeWithoutSignOutFromMVP16_1() throws InterruptedException, StopConditionException, IOException
+    public void UpgradeFromMVP16_1() throws InterruptedException, StopConditionException, IOException
     {
-        testUpgradeWithoutSignOutFromApp("apps/mvp16.1/Prometheus.ipa");
+        testUpgradeFromApp("apps/mvp16.1/Prometheus.ipa", true);
+        testUpgradeFromApp("apps/mvp16.1/Prometheus.ipa", false);
     }
     
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
-    public void UpgradeWithoutSignOutFromMVP17_1() throws InterruptedException, StopConditionException, IOException
+    public void UpgradeFromMVP17_1() throws InterruptedException, StopConditionException, IOException
     {
-    	testUpgradeWithoutSignOutFromApp("apps/mvp17.1/Prometheus.ipa");
+    	testUpgradeFromApp("apps/mvp17.1/Prometheus.ipa", true);
+    	testUpgradeFromApp("apps/mvp17.1/Prometheus.ipa", false);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
-    public void UpgradeWithoutSignOutFromMVP18() throws InterruptedException, StopConditionException, IOException
+    //@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
+    public void UpgradeFromMVP18() throws InterruptedException, StopConditionException, IOException
     {
-    	testUpgradeWithoutSignOutFromApp("apps/mvp18/Prometheus.ipa");
+    	testUpgradeFromApp("apps/mvp18/Prometheus.ipa", true);
+    	testUpgradeFromApp("apps/mvp18/Prometheus.ipa", false);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
-    public void UpgradeWithoutSignOutFromMVP18_1() throws InterruptedException, StopConditionException, IOException
+    //@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
+    public void UpgradeFromMVP18_1() throws InterruptedException, StopConditionException, IOException
     {
-    	testUpgradeWithoutSignOutFromApp("apps/mvp18.1/Prometheus.ipa");
+    	testUpgradeFromApp("apps/mvp18.1/Prometheus.ipa", true);
+    	testUpgradeFromApp("apps/mvp18.1/Prometheus.ipa", false);
     }
 
     // test helpers
-    public void testUpgradeWithoutSignOutFromApp(String pathToApp) 
+    public void testUpgradeFromApp(String pathToApp, boolean willSignOutBeforeUpgrade)
     	throws FileNotFoundException, StopConditionException, InterruptedException {
     
     	ModelHandler model = getModelhandler();
-        UpgradeAfterSignoutAPI api = new UpgradeAfterSignoutAPI(this, 
+        UpgradeAppAPI api = new UpgradeAppAPI(this, 
         		Files.getFile("model/upgrade/UpgradeAfterSignout.graphml"),
                 true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false);
+        
         api.pathToOldApp = pathToApp;
+        api.willSignOutBeforeUpgrade = willSignOutBeforeUpgrade;
         
         model.add("UpgradeAfterSignout", api);
         model.execute("UpgradeAfterSignout");
