@@ -172,17 +172,14 @@ public class DayProgressAPI extends ModelAPI {
 							.convertNearestTimeInMinuteToString(remainMins),
 							"Remain time displayed correctly");
 				} else {
-					int beatGoalPercentage = Math
-							.round(((int) Math.floor(this.totalPoints) - 1000) / 10);
-					String beatGoalString = String.valueOf(beatGoalPercentage)
-							+ "%";
+					int beatGoalPercentage = (int) Math.round((Math
+							.floor(this.totalPoints) - 1000) / 10);
+					String beatGoalString = DefaultStrings.BeatGoalMessage + "\\_" + String.valueOf(beatGoalPercentage)
+							+ "%\\_";
 					System.out.println("DEBUG beat goal: " + beatGoalString);
 					ShortcutsTyper.delayTime(4000);
-					Assert.assertTrue(
-							ViewUtils.isExistedView("UILabel",
-									DefaultStrings.BeatGoalMessage)
-									&& ViewUtils.isExistedView(
-											"PTRichTextLabel", beatGoalString),
+					Assert.assertTrue(ViewUtils.isExistedView(
+							"PTRichTextLabel", beatGoalString),
 							"Beat goal message is displayed OK");
 				}
 

@@ -132,5 +132,5 @@ public class DefaultStrings {
 	public static String WearingPositionForSleepContent = "Wear Shine on your non-dominant wrist while sleeping for the most accurate results.";
 
 	public static String GotItButton = "Got it";
-	public static String BeatGoalMessage = "you beat your goal by";
+	public static String BeatGoalMessage = "you beat your\\ngoal by ";
 }
