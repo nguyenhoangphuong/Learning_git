@@ -28,11 +28,7 @@ public class Debug {
 	private static Logger logger = Util.setupLogger(Debug.class);
 	
 	public static void main(String[] args) {
-		Gui.init("192.168.1.188");
-		HomeScreen.tapOpenSettingsTray();
-		HomeScreen.tapSettings();
-		
-			HomeSettings.tapKm();
-		HomeSettings.tapBack();
+		Gui.init("192.168.1.115");
+		Gui.printView();
 	}
 }

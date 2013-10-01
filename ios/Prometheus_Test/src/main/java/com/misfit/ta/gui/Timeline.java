@@ -169,7 +169,7 @@ public class Timeline {
 				ViewUtils.isExistedView("UILabel", LabelMinutes) &&
 				ViewUtils.isExistedView("UILabel", String.valueOf(points)) &&
 				ViewUtils.isExistedView("UILabel", LabelPoints) &&
-				ViewUtils.isExistedView("UILabel", bottomTitle);
+				(bottomTitle == null || ViewUtils.isExistedView("UILabel", bottomTitle));
 	}
 	
 	static public boolean isDailyGoalMilestoneTileCorrect(String time, int points, String[] goalMessages) {
