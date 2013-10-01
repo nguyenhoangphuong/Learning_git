@@ -340,4 +340,10 @@ public class TaggingActivityAPI extends ModelAPI {
 	public void v_UpdatedSoccerTimeline() {
 		checkUpdatedTimeline(DefaultStrings.SoccerLevel);
 	}
+	public void e_checkEnd() {
+		
+	}
+	public void v_EndInput() {
+		
+	}
 }
