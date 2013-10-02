@@ -1,6 +1,8 @@
 package com.misfit.ta.gui;
 
 public class DefaultStrings {
+	
+	// commons
 	public static String NextButton = "Next";
 	public static String BackButton = "Back";
 	public static String SaveButton = "Save";
@@ -8,17 +10,16 @@ public class DefaultStrings {
 	public static String CancelButton = "Cancel";
 	public static String MaleLabel = "Male";
 	public static String FemaleLabel = "Female";
-	// sign in / sign up / link
+	public static String LoadingLabel = "Loading";
+	
+	// sign in / sign up
+	public static String Title = "Oops...";
 	public static String SignUpInvalidEmailMessage = "Sorry, this email is invalid";
 	public static String SignInInvalidEmailMessage = "Make sure you have the '@' and '.' in your email address.";
 	public static String InvalidPasswordMessage = "To keep your account secure, try at least 6 characters.";
 	public static String SignInWrongAccountMessage = "Incorrect email or password";
 	public static String SignUpDuplicatedEmailMessage = "Sorry, someone else has used this before";
-	public static String NoShineAvailableMessage = "All Shines detected are linked to other accounts. Make sure your Shine is unlinked and try again.";
-	public static String NoShineAvailableTitle = "Multiple Shines Detected";
-	public static String SyncFailedMessage = "Your sync failed. Can you try syncing again?";
-	public static String Title = "Oops...";
-	public static String LogInButton = "Already have an account? _Sign in now_.";
+		public static String LogInButton = "Already have an account? _Sign in now_.";
 	public static String LogInFacebookButton = " SIGN IN";
 	public static String SignUpButton = " SIGN UP";
 	public static String HaveShineButton = " I HAVE A SHINE";
@@ -33,6 +34,13 @@ public class DefaultStrings {
 			"\\_Swimming\\_", "\\_Biking\\_", "\\_Tennis\\_",
 			"Even\\n\\_dancing!\\_" };
 
+	// link
+	public static String NoShineAvailableMessage = "All Shines detected are linked to other accounts. Make sure your Shine is unlinked and try again.";
+	public static String NoShineAvailableTitle = "Multiple Shines Detected";
+	public static String SyncFailedMessage = "Your sync failed. Can you try syncing again?";
+	public static String UnableToLinkMessage = "This Shine is linked to another account. The owner of that account must unlink it.";
+	public static String UnableToLinkTitle = "Unable to Link";
+	
 	// forgot password
 	public static String ForgotPasswordEmailNotExistMessage = "The email you entered is not associated with a Shine account";
 	public static String ForgotPasswordEmailSentMessage = "Check your email to reset your password";
@@ -83,15 +91,14 @@ public class DefaultStrings {
 	public static String ShineOutButton = "Shine out";
 	public static String LinkButton = "Link";
 	public static String UnlinkButton = "Unlink";
-	public static String UnableToLinkMessage = "This Shine is linked to another account. The owner of that account must unlink it.";
 	public static String LinkShineButton = "Link Shine";
-	public static String UnableToLinkTitle = "Unable to Link";
 	public static String SleepLabel = "Sleep";
 	public static String CyclingLabel = "Cycling";
 	public static String SwimmingLabel = "Swimming";
 	public static String TennisLabel = "Tennis";
 	public static String BasketballLabel = "Basketball";
 	public static String SoccerLabel = "Soccer";
+	
 	// time zone
 	public static String TimezoneForwardLabel = "You travelled forwards in time by";
 	public static String TimezoneBackwardLabel = "You travelled backwards in time by";

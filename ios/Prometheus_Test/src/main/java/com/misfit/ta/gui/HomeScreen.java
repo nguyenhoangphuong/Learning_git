@@ -115,11 +115,7 @@ public class HomeScreen {
     }
     
     public static void pullToRefresh() {
-    	String message = "((ViewUtils findViewWithViewName:@\"PTGoalCircleHorizontalScrollView\" andIndex:0) showSyncingWithServerView)";
-    	NuRemoteClient.sendToServer(message);
-    	
-    	message = "((PTClientServerSyncService sharedService) startSyncing)";
-    	NuRemoteClient.sendToServer(message);
+    	Gui.swipeLeft(1000);
     }
     
     /* Visible checking */

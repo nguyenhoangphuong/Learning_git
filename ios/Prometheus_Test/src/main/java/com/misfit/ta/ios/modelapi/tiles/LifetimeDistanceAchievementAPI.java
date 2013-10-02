@@ -8,6 +8,7 @@ import org.testng.Assert;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.statistics.Statistics;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
@@ -75,7 +76,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 
 		// pull to refresh
 		HomeScreen.pullToRefresh();
-		ShortcutsTyper.delayTime(5000);
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 
 	public void v_HomeScreen() {
@@ -109,12 +110,18 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 			Timeline.openTile(title);
 			Gui.captureScreen("streaktile-" + System.nanoTime());
 
-			if (Timeline.isLifetimeDistanceBadgeTileCorrect(title, 2, messages[0]))
+			if (!passes[0] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 2, messages[0])) {
 				passes[0] = true;
-			if (Timeline.isLifetimeDistanceBadgeTileCorrect(title, 6, messages[1]))
+				continue;
+			}
+			if (!passes[1] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 6, messages[1])) {
 				passes[1] = true;
-			if (Timeline.isLifetimeDistanceBadgeTileCorrect(title, 12, messages[2]))
+				continue;
+			}
+			if (!passes[2] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 12, messages[2])) {
 				passes[2] = true;
+				continue;
+			}
 
 			Timeline.closeCurrentTile();
 		}
@@ -133,6 +140,6 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		else
 			HomeSettings.tapKm();
 		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(2000);
+		ShortcutsTyper.delayTime(200);
 	}
 }

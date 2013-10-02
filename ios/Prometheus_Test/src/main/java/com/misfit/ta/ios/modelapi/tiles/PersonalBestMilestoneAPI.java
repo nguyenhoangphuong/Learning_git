@@ -8,12 +8,12 @@ import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.statistics.Statistics;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class PersonalBestMilestoneAPI extends ModelAPI {
 
@@ -42,7 +42,7 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 		
 		// pull to refresh to make sure local db is latest
 		HomeScreen.pullToRefresh();
-		ShortcutsTyper.delayTime(5000);
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 	
 	public void e_inputPersonalBest() {
@@ -53,7 +53,6 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(times, 50, 5000);
 		HomeScreen.tapSave();
-		ShortcutsTyper.delayTime(5000);
 		Timeline.dragUpTimeline();
 	}
 	

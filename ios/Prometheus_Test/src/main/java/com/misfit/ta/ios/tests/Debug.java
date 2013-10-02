@@ -34,6 +34,8 @@ public class Debug {
 	public static void main(String[] args) {
 		
 		Gui.init("192.168.1.158");
-		System.out.println(ViewUtils.isExistedView("UILabel", "PRETTY ACTIVE"));
+		HomeScreen.pullToRefresh();
+		PrometheusHelper.waitForViewToDissappear("UILabel", "Loading");
+		Timeline.dragUpTimeline();
 	}
 }

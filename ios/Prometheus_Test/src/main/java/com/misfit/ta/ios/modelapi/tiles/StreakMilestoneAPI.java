@@ -11,6 +11,7 @@ import org.testng.Assert;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -58,8 +59,8 @@ public class StreakMilestoneAPI extends ModelAPI {
 		MVPApi.updateGoal(token, todayBlankGoal);
 				
 		// get new data from server
-		Gui.swipeLeft(1000);
-		ShortcutsTyper.delayTime(4000);
+		HomeScreen.pullToRefresh();
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 
 	public void e_finishGoal() {
