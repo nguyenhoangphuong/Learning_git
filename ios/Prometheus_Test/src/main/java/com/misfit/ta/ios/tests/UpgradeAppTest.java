@@ -31,7 +31,7 @@ public class UpgradeAppTest extends AutomationTest
     	testUpgradeFromApp("apps/mvp17.1/Prometheus.ipa", false);
     }
     
-    //@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
     public void UpgradeFromMVP18() throws InterruptedException, StopConditionException, IOException
     {
     	testUpgradeFromApp("apps/mvp18/Prometheus.ipa", true);
@@ -51,7 +51,7 @@ public class UpgradeAppTest extends AutomationTest
     
     	ModelHandler model = getModelhandler();
         UpgradeAppAPI api = new UpgradeAppAPI(this, 
-        		Files.getFile("model/upgrade/UpgradeAfterSignout.graphml"),
+        		Files.getFile("model/upgrade/UpgradeApp.graphml"),
                 true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false);
         
         api.pathToOldApp = pathToApp;
