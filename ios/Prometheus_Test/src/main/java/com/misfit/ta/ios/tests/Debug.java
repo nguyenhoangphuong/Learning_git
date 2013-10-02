@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.testng.Assert;
 
+import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.DefaultValues;
@@ -18,6 +19,9 @@ import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
+import com.misfit.ta.gui.LaunchScreen;
+import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.report.TRS;
@@ -28,8 +32,8 @@ public class Debug {
 	private static Logger logger = Util.setupLogger(Debug.class);
 	
 	public static void main(String[] args) {
-		Gui.init("192.168.1.144");
-//		Gui.printViewWithViewName("UILabel");
-		System.out.println(ViewUtils.isExistedView("UILabel", "1500"));
+		
+		Gui.init("192.168.1.158");
+		System.out.println(ViewUtils.isExistedView("UILabel", "PRETTY ACTIVE"));
 	}
 }

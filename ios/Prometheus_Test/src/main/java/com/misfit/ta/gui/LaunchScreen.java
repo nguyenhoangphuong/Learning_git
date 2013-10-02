@@ -1,7 +1,6 @@
 package com.misfit.ta.gui;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class LaunchScreen {
 
@@ -23,7 +22,6 @@ public class LaunchScreen {
 
 	public static void launch() {
 		tapIHaveAShine();
-		ShortcutsTyper.delayOne();
 	}
 
 }

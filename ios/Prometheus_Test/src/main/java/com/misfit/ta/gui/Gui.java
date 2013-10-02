@@ -41,14 +41,11 @@ public class Gui {
                 Files.extractJar("tools", true);
                 fruitStrapPath = Files.getExecutableFile(Settings.getValue("fruitStrapPath"));
             } catch (IOException e1) {
-                // e1.printStackTrace();
-                // logger.debug(e1);
+                 e1.printStackTrace();
             }
         }
-        logger.info("Fruitstrap path= " + fruitStrapPath);
+        
         try {
-            // Files.extractJar(Settings.getValue("instrumentsTemplate"),
-            // false);
             File file = Files.getFile(Settings.getValue("instrumentsTemplate"));
             if (file.length() <= 0) {
                 file.delete();
@@ -57,14 +54,10 @@ public class Gui {
             }
 
             template = file.getAbsolutePath();
-
-            // Files.extractJar(Settings.getValue("instrumentsTemplate"),
-            // false);
         } catch (Exception e) {
             logger.debug(e.toString());
-            // e.printStackTrace();
+             e.printStackTrace();
         }
-        logger.info("template= " + template);
     }
 
     /**
@@ -80,7 +73,7 @@ public class Gui {
         System.out.println("LOG [Gui.install]: " + bundlePath);
         ProcessBuilder pb = new ProcessBuilder(fruitStrapPath, "install", "--id", deviceUDID, "--bundle", bundlePath);
 
-        runProcess(pb, true, true);
+        runProcess(pb);
     }
 
     public static String runProcess(ProcessBuilder pb) {
@@ -327,6 +320,10 @@ public class Gui {
         install(getCurrentUdid(), getAppPath(appPathParamName));
     }
 
+    public static void init(String ip, int numberOfRetry) {
+        NuRemoteClient.init(ip, numberOfRetry);
+    }
+    
     public static void init(String ip) {
         NuRemoteClient.init(ip);
     }

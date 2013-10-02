@@ -1,7 +1,8 @@
 package com.misfit.ta.gui;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.common.MVPCalculator;
+import com.misfit.ta.common.MVPEnums;
 
 public class SignUp {
 
@@ -79,15 +80,17 @@ public class SignUp {
     public static String[] getHowToHitCurrentGoal() {
     	
     	String text = Gui.getText("UILabel", 0);
+        int goal = Integer.parseInt(text);
         
-        if(text.equals("600"))
-        	return new String[] {"1 hour", "20 mins", "30 mins"};
-        if(text.equals("1000"))
-        	return new String[] {"2 hours", "45 mins", "1 hour"};
-        if(text.equals("1600"))
-        	return new String[] {"3 hours", "1 hour", "1.5 hours"};
+        int walkTime = MVPCalculator.calculateNearestTimeRemainInMinute(goal, MVPEnums.ACTIVITY_WALKING);
+        int runTime = MVPCalculator.calculateNearestTimeRemainInMinute(goal, MVPEnums.ACTIVITY_RUNNING);
+        int swimTime = MVPCalculator.calculateNearestTimeRemainInMinute(goal, MVPEnums.ACTIVITY_SWIMMING);
         
-        return new String[] {"","",""};
+        return new String[] { 
+        		MVPCalculator.convertNearestTimeInMinuteToString(walkTime),
+        		MVPCalculator.convertNearestTimeInMinuteToString(runTime),
+        		MVPCalculator.convertNearestTimeInMinuteToString(swimTime),
+        };        
     }
     
     public static void setGoal(int level) {

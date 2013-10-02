@@ -22,111 +22,62 @@ public class ForgotPasswordAPI extends ModelAPI {
 
 	private String[] invalidEmails = {"aa", "aaa@", ".aaa@a.a", "aa@@a.a", "aaa@a..a", "aaa@a.a."};
 	
-	/**
-	 * This method implements the Edge 'e_gotoForgotPassword'
-	 * 
-	 */
 	public void e_gotoForgotPassword() 
 	{
 		LaunchScreen.launch();
 		SignIn.tapLogIn();
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(200);
 		SignIn.tapForgotPassword();
-		ShortcutsTyper.delayOne();
 	}
 	
-	/**
-	 * This method implements the Edge 'e_ConfirmAlert'
-	 * 
-	 */
 	public void e_ConfirmAlert() {
 		SignIn.tapCancel();
-		ShortcutsTyper.delayTime(1000);
 	}
 
 	public void e_TapOK() {
 		SignIn.tapOK();
-		ShortcutsTyper.delayTime(1000);
 	}
 
-	/**
-	 * This method implements the Edge 'e_InputInvalidEmail'
-	 * 
-	 */
 	public void e_InputInvalidEmail() {
 		SignIn.enterEmailForResetPassword(invalidEmails[PrometheusHelper.randInt(0, invalidEmails.length)]);
 		SignIn.tapSubmitResetPassword();
-		ShortcutsTyper.delayTime(1000);
+		PrometheusHelper.waitForAlert();
 	}
 
-	/**
-	 * This method implements the Edge 'e_InputNotExistedEmail'
-	 * 
-	 */
 	public void e_InputNotExistedEmail() {
 		SignIn.enterEmailForResetPassword(MVPApi.generateUniqueEmail());
 		SignIn.tapSubmitResetPassword();
-		ShortcutsTyper.delayTime(6000);
+		PrometheusHelper.waitForAlert();
 	}
 
-	/**
-	 * This method implements the Edge 'e_Submit'
-	 * 
-	 */
 	public void e_Submit() {
 		SignIn.enterEmailForResetPassword("mfwcqa.automation@gmail.com");
 		SignIn.tapSubmitResetPassword();
-		ShortcutsTyper.delayTime(5000);
+		PrometheusHelper.waitForAlert();
 	}
 
-	/**
-	 * This method implements the Edge 'e_tapForgotPassword'
-	 * 
-	 */
 	public void e_tapForgotPassword() {
 		SignIn.tapForgotPassword();
-		ShortcutsTyper.delayTime(1000);
 	}
 
+		
 	
-	
-	
-	/**
-	 * This method implements the Vertex 'v_ForgotPassword'
-	 * 
-	 */
 	public void v_ForgotPassword() {
 		Assert.assertTrue(SignIn.isForgotPasswordView(), "This is not forgot password view.");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_InvalidEmailView'
-	 * 
-	 */
 	public void v_InvalidEmailView() {
 		Assert.assertTrue(SignIn.hasForgotPasswordInvalidEmailMessage(), "This is not forgot password invalid email view.");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_EmailSentView'
-	 * 
-	 */
 	public void v_EmailSentView() {
 		Assert.assertTrue(SignIn.hasEmailSentMessage(), "This is not forgot password email sent view.");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_NotExistedEmailView'
-	 * 
-	 */
 	public void v_NotExistedEmailView() {
 		Assert.assertTrue(SignIn.hasNotAssociatedEmailMessage(), "This is not forgot password not existed email view.");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_SignInView'
-	 * 
-	 */
 	public void v_SignInView() {
 		Assert.assertTrue(SignIn.isLoginView(), "This is not forgot password log in view.");
 	}

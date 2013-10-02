@@ -41,8 +41,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
         
         instrument.kill();
         instrument.start();
-		ShortcutsTyper.delayTime(20000);
-    	Gui.init(Settings.getParameter("DeviceIP"));
+    	Gui.init(Settings.getParameter("DeviceIP"), 30);
     }
 
     @Override

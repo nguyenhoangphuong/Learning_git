@@ -1,27 +1,18 @@
 package com.misfit.ta.ios.modelapi.signup;
 
 import java.io.File;
-import org.apache.log4j.Logger;
-import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
-import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.LaunchScreen;
-import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.ios.AutomationTest;
 
 public class SignUpGoalAPI extends ModelAPI {
-	private static final Logger logger = Util.setupLogger(SignUpAPI.class);
 
-	private int heightInInches = 0;
-	private int weightInLbs = 0;
 	private String[] level = { "KINDA ACTIVE", "PRETTY ACTIVE", "VERY ACTIVE" };
-	
 	private int currentLevel = 1;
 
 	public SignUpGoalAPI(AutomationTest automation, File model, boolean efsm,
@@ -29,183 +20,107 @@ public class SignUpGoalAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 
-	/**
-	 * This method implements the Edge 'e_Init'
-	 * 
-	 */
+	
 	public void e_Init() {
 		LaunchScreen.launch();
 	}
 
-	/**
-	 * This method implements the Edge 'e_ChooseSignUp'
-	 * 
-	 */
 	public void e_ChooseSignUp() {
 		SignUp.tapSignUp();
-		ShortcutsTyper.delayOne();
+	}
+	
+	public void e_SubmitValidEmailPassword() {
+		SignUp.tapNext();
 	}
 
-	/**
-	 * This method implements the Edge 'e_CloseTutorial'
-	 * 
-	 */
-	public void e_CloseTutorial() {
-		SignUp.tapCloseTutorial();
-		ShortcutsTyper.delayOne();
-	}
-
-	/**
-	 * This method implements the Edge 'e_SubmitProfile'
-	 * 
-	 */
 	public void e_SubmitProfile() {
-		this.weightInLbs = PrometheusHelper.randInt(100, 150);
-		this.heightInInches = PrometheusHelper.randInt(50, 70);
 
-		String w1 = this.weightInLbs + "";
-		String w2 = ".0";
-		String h1 = this.heightInInches / 12 + "'";
-		String h2 = this.heightInInches % 12 + "\\\"";
-
-		SignUp.enterBirthDay("1981",
-				PrometheusHelper.getMonthString(6, true), "16");
 		SignUp.enterGender(true);
-		SignUp.enterWeight(w1, w2, true);
-		SignUp.enterHeight(h1, h2, true);
+		SignUp.enterBirthDay();
+		SignUp.enterWeight();
+		SignUp.enterHeight();
 
 		SignUp.tapNext();
-		ShortcutsTyper.delayOne();
 	}
-
-	/**
-	 * This method implements the Edge 'e_OpenTutorial'
-	 * 
-	 */
+	
 	public void e_OpenTutorial() {
 		SignUp.tapOpenTutorial();
-		ShortcutsTyper.delayOne();
+	}
+	
+	public void e_CloseTutorial() {
+		SignUp.tapCloseTutorial();
 	}
 
-	/**
-	 * This method implements the Edge 'e_SetGoalToLevel1'
-	 * 
-	 */
 	public void e_SetGoalToLevel1() {
 		SignUp.setGoal(0, this.currentLevel);
 		this.currentLevel = 0;
-		ShortcutsTyper.delayOne();
 	}
 
-	/**
-	 * This method implements the Edge 'e_SetGoalToLevel2'
-	 * 
-	 */
 	public void e_SetGoalToLevel2() {
 		SignUp.setGoal(1, this.currentLevel);
 		this.currentLevel = 1;
-		ShortcutsTyper.delayOne();
 	}
 
-	/**
-	 * This method implements the Edge 'e_SetGoalToLevel3'
-	 * 
-	 */
 	public void e_SetGoalToLevel3() {
 		SignUp.setGoal(2, this.currentLevel);
 		this.currentLevel = 2;
-		ShortcutsTyper.delayOne();
 	}
 
-	/**
-	 * This method implements the Edge 'e_SubmitValidEmailPassword'
-	 * 
-	 */
-	public void e_SubmitValidEmailPassword() {
-		// trial mode is enough
-		SignUp.enterEmailPassword(MVPApi.generateUniqueEmail(), "test12");
-		ShortcutsTyper.delayTime(10000);
-	}
 
-	/**
-	 * This method implements the Vertex 'v_InitialView'
-	 * 
-	 */
+
+
+
 	public void v_InitialView() {
 		Assert.assertTrue(LaunchScreen.isAtInitialScreen(),
 				"Current view is InitialView");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_SignUpAccount'
-	 * 
-	 */
 	public void v_SignUpAccount() {
 		Assert.assertTrue(SignUp.isSignUpAccountView(),
 				"Current view is SignUp - Account");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_SignUpGoal'
-	 * 
-	 */
 	public void v_SignUpGoal() {
 		Assert.assertTrue(SignUp.isSignUpGoalView(),
 				"Current view is SignUp - Goal");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_SignUpGoalLevel1'
-	 * 
-	 */
-	private void assertGoal(int goalLevel) {
-		Assert.assertTrue(
-				ViewUtils.isExistedView("UILabel", this.level[goalLevel]),
-				"Level string for level " + goalLevel + " is not correct");
-	}
-
 	public void v_SignUpGoalLevel1() {
-		Assert.assertTrue(SignUp.isSignUpGoalView(),
-				"Current view is SignUp - Goal level 0");
 		assertGoal(0);
 	}
 
-	/**
-	 * This method implements the Vertex 'v_SignUpGoalLevel2'
-	 * 
-	 */
 	public void v_SignUpGoalLevel2() {
-		Assert.assertTrue(SignUp.isSignUpGoalView(),
-				"Current view is SignUp - Goal level 1");
 		assertGoal(1);
 	}
 
-	/**
-	 * This method implements the Vertex 'v_SignUpGoalLevel3'
-	 * 
-	 */
 	public void v_SignUpGoalLevel3() {
-		Assert.assertTrue(SignUp.isSignUpGoalView(),
-				"Current view is SignUp - Goal level 2");
 		assertGoal(2);
 	}
 
-	/**
-	 * This method implements the Vertex 'v_SignUpGoalTutorial'
-	 * 
-	 */
 	public void v_SignUpGoalTutorial() {
 		Assert.assertTrue(SignUp.isSignUpTutorialView(),
 				"Current view is SignUp - Tutorial");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_SignUpProfile'
-	 * 
-	 */
 	public void v_SignUpProfile() {
 		Assert.assertTrue(SignUp.isSignUpProfileView(),
 				"Current view is SignUp - Profile");
+	}
+	
+	
+	private void assertGoal(int goalLevel) {
+		
+		// check goal level in string
+		Assert.assertTrue(
+				ViewUtils.isExistedView("UILabel", this.level[goalLevel]),
+				"Level string for level " + goalLevel + " is not correct");
+
+        // check suggest time with correct calculation
+    	String[] suggestTimeStrings = SignUp.getHowToHitCurrentGoal();
+
+        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_WALK_\\n " + suggestTimeStrings[0]), "Suggest time for walking is correct");
+        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_RUN_\\n " + suggestTimeStrings[1]), "Suggest time for running is correct");
+        Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", "_SWIM_\\n " + suggestTimeStrings[2]), "Suggest time for swimming is correct");
 	}
 
 }

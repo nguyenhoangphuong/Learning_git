@@ -1,7 +1,6 @@
 package com.misfit.ta.gui;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SignIn {
 
@@ -83,41 +82,8 @@ public class SignIn {
     }
 
     public static void enterEmailForResetPassword(String email) {
-    	
-    	Gui.longTouch(150, 100, 200);
-		if(ViewUtils.isExistedView("PTEmailVerifyingTextField", 0))
-		{
-			Gui.touchAVIew("PTEmailVerifyingTextField", 0);
-			String txtEmail = Gui.getProperty("PTEmailVerifyingTextField", 0, "text");
-
-			Gui.moveCursorInCurrentTextViewTo(-1);
-			for (int i = 0; i < txtEmail.length(); i++)
-				Gui.pressDelete();
-		}
-		else if(ViewUtils.isExistedView("PTPaddingTextField", 0));
-		{
-			Gui.touchAVIew("PTPaddingTextField", 0);
-			String txtEmail = Gui.getProperty("PTPaddingTextField", 0, "text");
-
-			Gui.moveCursorInCurrentTextViewTo(-1);
-			for (int i = 0; i < txtEmail.length(); i++)
-				Gui.pressDelete();
-		}
-		
-        ShortcutsTyper.delayTime(800);
-        Gui.type(email);
-    }
-    
-    public static void changePassword(String newPassword) {
-        Gui.touchAVIew("PTBlackTextField", 0);
-        ShortcutsTyper.delayTime(10000);
-        Gui.type(newPassword);
-        ShortcutsTyper.delayTime(10000);
-        Gui.pressNext();
-        ShortcutsTyper.delayTime(10000);
-        Gui.type(newPassword);
-        ShortcutsTyper.delayTime(10000);
-        Gui.pressDone();
+     	
+    	Gui.setText("PTPaddingTextField", 0, email);
     }
     
     public static void tapCancelResetPassword() {
