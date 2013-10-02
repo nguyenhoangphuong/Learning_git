@@ -125,6 +125,10 @@ public class HomeSettings {
 	public static void tapFootAnkle() {
 		Gui.touchAVIew("UIButton", 5);
 	}
+	
+	public static void tapWearingShine() {
+		
+	}
 
 	/* Mode Debug */
 	public static void tapDoneAtDebug() {
@@ -144,4 +148,7 @@ public class HomeSettings {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.MyGoalTitle);
 	}
 
+	public static boolean isAtMyShine() {
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.MyShineTitle);
+	}
 }

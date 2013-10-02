@@ -22,7 +22,7 @@ public class HomeScreen {
     	Gui.touchAVIew("UILabel", DefaultStrings.MyGoalButton);
     }
     
-    public static void tapShinePreferences() {
+    public static void tapMyShine() {
     	Gui.touchAVIew("UILabel", DefaultStrings.MyShineButton);
     }
 

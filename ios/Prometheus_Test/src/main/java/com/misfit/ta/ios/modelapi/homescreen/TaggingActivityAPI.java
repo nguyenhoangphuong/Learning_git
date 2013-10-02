@@ -241,7 +241,7 @@ public class TaggingActivityAPI extends ModelAPI {
 	private void openMyShineView() {
 		HomeScreen.tapOpenSettingsTray();
 		ShortcutsTyper.delayTime(500);
-		HomeScreen.tapShinePreferences();
+		HomeScreen.tapMyShine();
 		ShortcutsTyper.delayTime(500);
 	}
 

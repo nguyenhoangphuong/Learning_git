@@ -53,6 +53,7 @@ public class DefaultStrings {
 	public static String LastWeekTitle = "Last week";
 	public static String SettingsButton = "Settings";
 	public static String MyShineButton = "My Shine";
+	public static String MyShineTitle = "My Shine";
 	public static String MyGoalButton = "My Goal";
 	public static String NoActivityLabel = "No activity yet.";
 	public static String EndTutorialButton = "OK, I GOT IT";
@@ -119,11 +120,11 @@ public class DefaultStrings {
 	public static String[] CyclingLevel = { "MILD CYCLING", "MODERATE CYCLING",
 			"INTENSE CYCLING" };
 	public static String[] TennisLevel = { "MILD TENNIS", "MODERATE TENNIS",
-	"INTENSE TENNIS" };
-	public static String[] BasketballLevel = { "MILD BASKETBALL", "MODERATE BASKETBALL",
-	"INTENSE BASKETBALL" };
+			"INTENSE TENNIS" };
+	public static String[] BasketballLevel = { "MILD BASKETBALL",
+			"MODERATE BASKETBALL", "INTENSE BASKETBALL" };
 	public static String[] SoccerLevel = { "MILD SOCCER", "MODERATE SOCCER",
-	"INTENSE SOCCER" };
+			"INTENSE SOCCER" };
 	public static String WearingPositionForCyclingTitle = "Wearing Position for Cycling";
 	public static String WearingPositionForCyclingContent = "For the best results, wear Shine on your ankle, or clip it to your shoe.";
 	public static String WearingPositionForSwimmingTitle = "Wearing Position for Swimming";
@@ -133,4 +134,16 @@ public class DefaultStrings {
 
 	public static String GotItButton = "Got it";
 	public static String BeatGoalMessage = "you beat your\\ngoal by ";
+
+	// Wearing Shine
+	public static String WearingShineTitle = "Help the Misfit team build better algorithms for you by selecting your favourite position to wear the Shine";
+	public static String WearingShineButton = "Wearing Shine";
+	public static String PositionText[] = { "OTHER", "ANKLE", "WAIST", "WRIST",
+			"CHEST" };
+	public static String PositionDescription[] = {
+			"Elsewhere -- be creative! \\n(and _tell us_ about it!)",
+			"On your shoe, shoelace, or sock. For cycling, this is the best.",
+			"Around a belt loop, on your waistband, or in your pocket.",
+			"Like a watch. For sleeping and swimming, this is the best.",
+			"Shirt collar, shirt pocket, or on your button-up shirt.", };
 }
