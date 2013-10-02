@@ -152,7 +152,7 @@ public class BackendPedometerTC extends BackendAutomation {
 		
 		// sign up and create pedometer
 		String email = MVPApi.generateUniqueEmail();
-		String serialNumberString = TextTool.getRandomString(10);
+		String serialNumberString = TextTool.getRandomString(10, 10);
 		
 		// link new account to a new device
 		String token = createNewAccount(email);
