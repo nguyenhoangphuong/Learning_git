@@ -30,14 +30,7 @@ public class UpgradeAppTest extends AutomationTest
     	testUpgradeFromApp("apps/mvp17.1/Prometheus.ipa", true);
     	testUpgradeFromApp("apps/mvp17.1/Prometheus.ipa", false);
     }
-    
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
-    public void UpgradeFromMVP18() throws InterruptedException, StopConditionException, IOException
-    {
-    	testUpgradeFromApp("apps/mvp18/Prometheus.ipa", true);
-    	testUpgradeFromApp("apps/mvp18/Prometheus.ipa", false);
-    }
-    
+        
     //@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
     public void UpgradeFromMVP18_1() throws InterruptedException, StopConditionException, IOException
     {
