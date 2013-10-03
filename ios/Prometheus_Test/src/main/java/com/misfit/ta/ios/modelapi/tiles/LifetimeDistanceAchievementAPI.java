@@ -124,6 +124,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 			}
 
 			Timeline.closeCurrentTile();
+			ShortcutsTyper.delayTime(500);
 		}
 
 		Timeline.dragDownTimeline();

@@ -36,12 +36,13 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
         if (!debug)
         {
     		AppHelper.cleanCache();
-    		ShortcutsTyper.delayTime(1000);
+    		ShortcutsTyper.delayTime(3000);
         }
         
         instrument.kill();
         instrument.start();
-    	Gui.init(Settings.getParameter("DeviceIP"), 30);
+        ShortcutsTyper.delayTime(10000);
+    	Gui.init(Settings.getParameter("DeviceIP"), 10);
     }
 
     @Override
