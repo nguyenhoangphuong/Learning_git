@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ios.AppHelper;
-import com.misfit.ta.ios.tests.Debug;
 import com.misfit.ta.utils.ProcessFinder;
 
 public class InstrumentHelper implements Runnable
@@ -35,7 +34,7 @@ public class InstrumentHelper implements Runnable
 		}
 	}
 	
-	public void kill()
+	public static void kill()
 	{
 		ProcessFinder.kill("Instruments.app");
 		ProcessFinder.kill("instruments");

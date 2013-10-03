@@ -9,31 +9,47 @@ import java.io.UnsupportedEncodingException;
 import org.graphwalker.exceptions.StopConditionException;
 import org.testng.annotations.Test;
 
-import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.sync.SyncDebugLog;
+import com.misfit.ta.gui.InstrumentHelper;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.report.TRS;
+import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SyncContinously extends AutomationTest {
 
 	private static int NUMBER_OF_SYNC = 30;
-	
+
 	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "QuietSync", "SyncContinously" })
 	public void QuietSyncContinously() {
-
+	
+		instrument.stop();
+		InstrumentHelper.kill();
+		
 		for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 
 			System.out.println("--------------------- Quiet Sync: " + i + " ----------------------");
-			instrument.kill();
+
+			// delete trace
+			Files.delete("instrumentscli0.trace");
+						
+			// start app, note that we load app in another thread
+			// so we must wait about 15s for app to be fully loaded
+			instrument.start();
+			ShortcutsTyper.delayTime(15000);
 			
-			// wait for next quiet sync
-			ShortcutsTyper.delayTime(3000);
-			AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), "script/quietsync.js");	
+			// do whatever you want here: connect Nu, check for views...
+			// currently we just do wait for quiet sync to finish
+			ShortcutsTyper.delayTime(30 * 1000);
+			
+			// kill app
+			instrument.stop();
+			InstrumentHelper.kill();
+			ShortcutsTyper.delayTime(5 * 1000);
 		}
 	}
 	
