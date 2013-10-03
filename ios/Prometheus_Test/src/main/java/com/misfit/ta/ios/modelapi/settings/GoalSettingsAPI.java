@@ -49,9 +49,9 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void e_ToGoalSettings() {
 		HomeScreen.tapOpenSettingsTray();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(200);
 		HomeScreen.tapAdjustGoal();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(300);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class GoalSettingsAPI extends ModelAPI {
 		tempGoal = PrometheusHelper.randInt(10, 25) * 100;
 		int currentGoal = HomeSettings.getSpinnerGoal();
 		HomeSettings.setSpinnerGoal(tempGoal, currentGoal);
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(300);
 
 		logger.info("Set goal to: " + tempGoal);
 	}
@@ -82,7 +82,6 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_DoneEdit() {
-		ShortcutsTyper.delayTime(1000);
 		HomeSettings.tapDoneAtNewGoal();
 		ShortcutsTyper.delayTime(5000);
 
@@ -96,7 +95,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void e_ConfirmNewGoal() {
 		HomeSettings.tapOKAtNewGoalPopup();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(200);
 	}
 
 	/**

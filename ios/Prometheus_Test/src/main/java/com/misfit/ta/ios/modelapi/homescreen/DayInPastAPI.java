@@ -74,7 +74,7 @@ public class DayInPastAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_TapToday() {
-		HomeScreen.tapToday();
+		HomeScreen.tapArrowButtonToday();
 		ShortcutsTyper.delayTime(1000);
 
 		// restore days to 0

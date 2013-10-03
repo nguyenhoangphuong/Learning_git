@@ -55,7 +55,7 @@ public class DefaultStrings {
 	public static String MenuButton = "Menu";
 	public static String TodayTitle = "Today";
 	public static String YesterdayTitle = "Yesterday";
-	public static String WeekTitle = "Week";
+	public static String WeekButton = "Week";
 	public static String TodayButton = "Day";
 	public static String ThisWeekTitle = "This week";
 	public static String LastWeekTitle = "Last week";
@@ -153,4 +153,5 @@ public class DefaultStrings {
 			"Around a belt loop, on your waistband, or in your pocket.",
 			"Like a watch. For sleeping and swimming, this is the best.",
 			"Shirt collar, shirt pocket, or on your button-up shirt.", };
+	public static String PointsDisplay = "of %d points";
 }
