@@ -33,9 +33,7 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-		Gui.init("192.168.1.158");
-		HomeScreen.pullToRefresh();
-		PrometheusHelper.waitForViewToDissappear("UILabel", "Loading");
-		Timeline.dragUpTimeline();
+//		Gui.init("192.168.1.158");
+		System.out.println(MVPApi.getLatestSyncLog("v14@qa.com", "XXXXXV0014", System.currentTimeMillis() / 1000 - 3600));
 	}
 }

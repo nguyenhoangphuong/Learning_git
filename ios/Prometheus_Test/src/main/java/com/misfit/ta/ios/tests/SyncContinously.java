@@ -102,7 +102,7 @@ public class SyncContinously extends AutomationTest {
 				}
 
 				// parse sync log and store the record
-				ShortcutsTyper.delayTime(180000);
+				ShortcutsTyper.delayTime(5000);
 				String log = MVPApi.getLatestSyncLog(email, password, begin);
 				uiStartTime[i] = start / 1000;
 				uiEndTime[i] = end / 1000;

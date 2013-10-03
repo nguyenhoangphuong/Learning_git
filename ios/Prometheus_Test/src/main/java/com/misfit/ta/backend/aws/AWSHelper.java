@@ -66,6 +66,7 @@ public class AWSHelper {
 		}
 
 		try {
+			file.delete();
 			FileUtils.deleteDirectory(s3folder);
 		} catch (IOException e) {
 			e.printStackTrace();
