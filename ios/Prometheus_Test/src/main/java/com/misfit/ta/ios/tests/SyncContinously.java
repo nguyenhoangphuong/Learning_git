@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.sync.SyncDebugLog;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.ios.AutomationTest;
@@ -29,10 +30,10 @@ public class SyncContinously extends AutomationTest {
 
 			System.out.println("--------------------- Quiet Sync: " + i + " ----------------------");
 			instrument.kill();
-			AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), "script/quietsync.js");
 			
 			// wait for next quiet sync
-			ShortcutsTyper.delayTime(2000);
+			ShortcutsTyper.delayTime(3000);
+			AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), "script/quietsync.js");	
 		}
 	}
 	
@@ -44,11 +45,17 @@ public class SyncContinously extends AutomationTest {
 		String password = "test12";
 		String serialNumber = "XXXXXV0014";
 		
-		// set up: link shine v14 to v14 account
+		// set up: link shine v14 to v14 account	
 		Long now = System.currentTimeMillis() / 1000;
-		MVPApi.createPedometer(MVPApi.signIn(email, password).token, serialNumber, 
-				MVPApi.LATEST_FIRMWARE_VERSION_STRING, now, null, now, 
-				MVPApi.generateLocalId(), null, now);
+		String token = MVPApi.signIn(email, password).token;	
+		Pedometer pedo = MVPApi.getPedometer(token);
+		pedo.setFirmwareRevisionString(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
+		pedo.setSerialNumberString(serialNumber);
+		pedo.setLocalId("pedometer-" + MVPApi.generateLocalId());
+		pedo.setLastSyncedTime(now);
+		pedo.setLinkedTime(now);
+		pedo.setUpdatedAt(now);
+		MVPApi.updatePedometer(token, pedo);
 
 		// create sync folder if not exist
 		File sync = new File("sync");
@@ -95,7 +102,7 @@ public class SyncContinously extends AutomationTest {
 				}
 
 				// parse sync log and store the record
-				ShortcutsTyper.delayTime(5000);
+				ShortcutsTyper.delayTime(180000);
 				String log = MVPApi.getLatestSyncLog(email, password, begin);
 				uiStartTime[i] = start / 1000;
 				uiEndTime[i] = end / 1000;
