@@ -26,7 +26,7 @@ public class WearingShineAPI extends ModelAPI {
 
 	public void e_Init() {
 		
-		PrometheusHelper.signUp();
+//		PrometheusHelper.signUp();
 		HomeScreen.tapOpenSettingsTray();
 		HomeScreen.tapMyShine();
 	}
@@ -43,7 +43,7 @@ public class WearingShineAPI extends ModelAPI {
 	public void e_Back() {
 		
 		HomeSettings.tapBack();
-		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.MyShineTitle);
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.MyShineTitle);
 	}
 
 	public void e_ChoosePosition() {
