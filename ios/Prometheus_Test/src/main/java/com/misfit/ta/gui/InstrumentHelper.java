@@ -34,7 +34,7 @@ public class InstrumentHelper implements Runnable
 		}
 	}
 	
-	public static void kill()
+	public void kill()
 	{
 		ProcessFinder.kill("Instruments.app");
 		ProcessFinder.kill("instruments");

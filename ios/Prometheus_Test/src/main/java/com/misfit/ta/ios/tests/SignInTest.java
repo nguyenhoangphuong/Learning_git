@@ -54,18 +54,5 @@ public class SignInTest extends AutomationTest {
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
     }
-    
-    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignIn", "SignInWithFacebook"})
-    public void SignInWithFacebook() throws InterruptedException, StopConditionException, IOException 
-    {
-        ModelHandler model = getModelhandler();
-        model.add("SignInWithFacebook", new SignInWithFacebookAPI(this, Files
-                .getFile("model/signin/SignInWithFacebook.graphml"), false, new NonOptimizedShortestPath(
-                new EdgeCoverage(1.0)), false));
-        model.execute("SignInWithFacebook");
-        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
-        String actualResult = getModelhandler().getStatistics();
-        System.out.println(actualResult);
-    }
 
 }

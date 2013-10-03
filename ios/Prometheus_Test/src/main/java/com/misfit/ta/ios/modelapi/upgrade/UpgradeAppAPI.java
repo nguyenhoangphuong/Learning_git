@@ -53,7 +53,8 @@ public class UpgradeAppAPI extends ModelAPI {
 	
 	private void killInstrument() {
 		
-		InstrumentHelper.kill();
+		InstrumentHelper instrument = new InstrumentHelper();
+		instrument.kill();
 	}
 	
 	private void launchInstrument() {

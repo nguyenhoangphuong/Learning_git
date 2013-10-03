@@ -5,7 +5,6 @@ import java.util.concurrent.Callable;
 
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.utils.ShortcutsTyper;
@@ -94,6 +93,10 @@ public class PrometheusHelper {
 	}
 
 	public static void inputManualRecord(String[] times, int duration, int steps) {
+		
+		// it's am in iOS7 instead of AM
+		if(Gui.isRunningOnIOS7())
+			times[2] = times[2].toLowerCase();
 		
 		// enter time
 		Gui.touchAVIew("UITextField", 1);

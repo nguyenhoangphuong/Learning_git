@@ -28,7 +28,7 @@ public class SyncContinously extends AutomationTest {
 	public void QuietSyncContinously() {
 	
 		instrument.stop();
-		InstrumentHelper.kill();
+		instrument.kill();
 		
 		for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 
@@ -48,7 +48,7 @@ public class SyncContinously extends AutomationTest {
 			
 			// kill app
 			instrument.stop();
-			InstrumentHelper.kill();
+			instrument.kill();
 			ShortcutsTyper.delayTime(5 * 1000);
 		}
 	}

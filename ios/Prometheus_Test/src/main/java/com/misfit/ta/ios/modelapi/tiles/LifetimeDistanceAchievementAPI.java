@@ -107,24 +107,20 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		String[] messages = usUnit ? Timeline.LifetimeDistanceInUSUnitMessages : Timeline.LifetimeDistanceInSIUnitMessages;
 
 		for (int i = 0; i < 3; i++) {
+
 			Timeline.openTile(title);
 			Gui.captureScreen("streaktile-" + System.nanoTime());
 
-			if (!passes[0] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 2, messages[0])) {
+			if (!passes[0] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 2, messages[0]))
 				passes[0] = true;
-				continue;
-			}
-			if (!passes[1] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 6, messages[1])) {
+
+			if (!passes[1] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 6, messages[1]))
 				passes[1] = true;
-				continue;
-			}
-			if (!passes[2] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 12, messages[2])) {
+			
+			if (!passes[2] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 12, messages[2]))
 				passes[2] = true;
-				continue;
-			}
 
 			Timeline.closeCurrentTile();
-			ShortcutsTyper.delayTime(500);
 		}
 
 		Timeline.dragDownTimeline();

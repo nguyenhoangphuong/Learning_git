@@ -4,8 +4,8 @@ import java.io.File;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
-import com.misfit.ta.Gui;
 import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timeline;
@@ -25,7 +25,7 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	public void e_init() {
 		
 		// sign up with goal = 1000 pts
-		PrometheusHelper.signUp();
+//		PrometheusHelper.signUp();
 	}
 	
 	public void e_inputHalfGoal() {
@@ -38,12 +38,13 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 		PrometheusHelper.inputManualRecord(times, 50, 5000);
 		HomeScreen.tapSave();
 		Timeline.dragUpTimeline();
+		ShortcutsTyper.delayTime(500);
 	}
 	
 	
 	public void v_HomeScreen() {
 		
-		Assert.assertTrue(HomeScreen.isTodayDefault(), "Current screen is HomeScreen");
+		Assert.assertTrue(HomeScreen.isToday(), "Current screen is HomeScreen");
 	}
 	
 	public void v_HomeScreen50() {
