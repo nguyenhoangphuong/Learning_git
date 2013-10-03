@@ -7,8 +7,6 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
-import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
@@ -22,172 +20,101 @@ public class UnitSettingsAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 
-	private boolean isMale = true;
 	private boolean isDistanceUSUnit = true;
 	private boolean isWeightUSUnit = true;
-
-	private String metricsH1 = "";
-	private String metricsH2 = "";
-	private String metricsW1 = "";
-	private String metricsW2 = "";
-
-	private String h1 = "";
-	private String h2 = "";
-	private String w1 = "";
-	private String w2 = "";
-
-	/**
-	 * This method implements the Edge 'e_ChangeProfileDistanceUnit'
-	 * 
-	 */
+	
+	private String heightDefaultInUS = "5'4\\\"";
+	private String heightDefaultInSI = "1.63 m";
+	private String weightDefaultInUS = "140.0 lbs";
+	private String weightDefaultInSI = "63.5 kg";
+	
+	public void e_Init() {
+		
+		// sign up account with default profile
+		PrometheusHelper.signUp();
+		PrometheusHelper.inputRandomRecord();
+		HomeScreen.tapProgressCircle();
+	}
+	
+	public void e_ChooseSettings() {
+		
+		HomeScreen.tapOpenSettingsTray();
+		HomeScreen.tapSettings();
+	}
+	
 	public void e_ChangeProfileDistanceUnit() {
-		if (isDistanceUSUnit) {
-			Gui.touchAVIew("UIButton", DefaultStrings.KmLabel);
-			isDistanceUSUnit = false;
-		} else {
-			Gui.touchAVIew("UIButton", DefaultStrings.MileLabel);
-			isDistanceUSUnit = true;
-		}
-		System.out.println("Change Profile Distance Unit");
-		System.out.println(isDistanceUSUnit);
+		
+		Gui.touchAVIew("UIButton", isDistanceUSUnit ? DefaultStrings.KmLabel : DefaultStrings.MileLabel);
+		isDistanceUSUnit = !isDistanceUSUnit;
+		
+		System.out.println("Change Profile Distance Unit to: " + isDistanceUSUnit);
 		HomeSettings.tapYourProfile();
-		ShortcutsTyper.delayTime(1000);
 	}
 
-	/**
-	 * This method implements the Edge 'e_ChangeProfileWeightUnit'
-	 * 
-	 */
 	public void e_ChangeProfileWeightUnit() {
-		if (isWeightUSUnit) {
-			Gui.touchAVIew("UIButton", DefaultStrings.KgLabel);
-			isWeightUSUnit = false;
-		} else {
-			Gui.touchAVIew("UIButton", DefaultStrings.LbsLabel);
-			isWeightUSUnit = true;
-		}
-		System.out.println("Change Profile Weight Unit");
-		System.out.println(isWeightUSUnit);
+		
+		Gui.touchAVIew("UIButton", isWeightUSUnit ? DefaultStrings.KgLabel : DefaultStrings.LbsLabel);
+		isWeightUSUnit = !isWeightUSUnit;
+		
+		System.out.println("Change Profile Weight Unit to: " + isWeightUSUnit);
 		HomeSettings.tapYourProfile();
-		ShortcutsTyper.delayTime(1000);
 	}
 
-	/**
-	 * This method implements the Edge 'e_ChangeSettingsDistanceUnit'
-	 * 
-	 */
 	public void e_ChangeSettingsDistanceUnit() {
+		
 		Gui.touchAVIew("PTHeightPickerControl", 0);
-		ShortcutsTyper.delayTime(200);
 		Gui.setPicker(2, !isDistanceUSUnit ? DefaultStrings.InchesLabel : DefaultStrings.MetreLabel);
 		isDistanceUSUnit = !isDistanceUSUnit;
-		System.out.println("Change Settings Distance Unit");
-		System.out.println(isDistanceUSUnit);
+		
+		System.out.println("Change Settings Distance Unit to: " + isDistanceUSUnit);
 		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(2000);
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.EditProfileTitle);
 	}
 
-	/**
-	 * This method implements the Edge 'e_ChangeSettingsWeightUnit'
-	 * 
-	 */
 	public void e_ChangeSettingsWeightUnit() {
+		
 		Gui.touchAVIew("PTWeightPickerControl", 0);
-		ShortcutsTyper.delayTime(200);
 		Gui.setPicker(2, !isWeightUSUnit ? DefaultStrings.LbsLabel : DefaultStrings.KgLabel);
 		isWeightUSUnit = !isWeightUSUnit;
-		System.out.println("Change Settings Weight Unit");
-		System.out.println(isWeightUSUnit);
+		
+		System.out.println("Change Settings Weight Unit to: " + isWeightUSUnit);
 		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(2000);
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.EditProfileTitle);
 	}
 
-	/**
-	 * This method implements the Edge 'e_ChooseSettings'
-	 * 
-	 */
-	public void e_ChooseSettings() {
-		HomeScreen.tapOpenSettingsTray();
-		ShortcutsTyper.delayTime(500);
-		HomeScreen.tapSettings();
-		ShortcutsTyper.delayTime(500);
-	}
-
-	/**
-	 * This method implements the Edge 'e_Init'
-	 * 
-	 */
-	public void e_Init() {
-		// THIS MODEL REQUIRE SIGN UP A NEW ACCOUNT
-		// THAT HAVE THE FOLLOWING PROFILE
-
-		this.isMale = true;
-		this.h1 = "5'";
-		this.h2 = "8\\\"";
-		this.w1 = "120";
-		this.w2 = ".0";
-
-		this.metricsH1 = "1";
-		this.metricsH2 = ".73";
-		this.metricsW1 = "54";
-		this.metricsW2 = ".4";
-
-		// sign up account with require information
-		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1",
-				isMale, 16, 9, 1991, true, h1, h2, w1, w2, 1);
-		ShortcutsTyper.delayTime(5000);
-	}
-
-	/**
-	 * This method implements the Edge 'e_PressBack'
-	 * 
-	 */
 	public void e_PressBack() {
+		
 		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(1000);
 	}
 
-	/**
-	 * This method implements the Vertex 'v_HomeScreen'
-	 * 
-	 */
+
+	
 	public void v_HomeScreen() {
+			
+		String distanceSummary = Gui.getProperty("PTRichTextLabel", 2, "text");
 		Assert.assertTrue(HomeScreen.isToday(), "Current screen is Homescreen");
+		Assert.assertTrue(distanceSummary.contains(isDistanceUSUnit ? "miles" : "km"),
+				"Distance summary display in correct unit");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_ProfileView'
-	 * 
-	 */
 	public void v_ProfileView() {
-		String weight = "";
-		String height = "";
-		if (isDistanceUSUnit) {
-			height = h1 + h2;
-		} else {
-			height = metricsH1 + metricsH2 + " m";
-		}
+		
+		String weight = isWeightUSUnit ? weightDefaultInUS : weightDefaultInSI;
+		String height = isDistanceUSUnit ? heightDefaultInUS : heightDefaultInSI;
 
-		if (isWeightUSUnit) {
-			weight = w1 + w2 + " lbs";
-		} else {
-			weight = metricsW1 + metricsW2 + " kg";
-		}
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", height),
 				"Height should be " + height);
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", weight),
 				"Weight should be " + weight);
 	}
 
-	/**
-	 * This method implements the Vertex 'v_SettingsView'
-	 * 
-	 */
 	public void v_SettingsView() {
+		
 		boolean currentDistanceUSUnit = Gui.getProperty("UIButton", DefaultStrings.MileLabel,
 				"isSelected").equals("1") ? true : false;
 		boolean currentWeightUSUnit = Gui.getProperty("UIButton", DefaultStrings.LbsLabel,
 				"isSelected").equals("1") ? true : false;
+		
 		Assert.assertTrue(isDistanceUSUnit == currentDistanceUSUnit,
 				"Distance Unit is correct");
 		Assert.assertTrue(isWeightUSUnit == currentWeightUSUnit,

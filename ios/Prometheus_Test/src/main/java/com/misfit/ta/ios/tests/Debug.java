@@ -35,30 +35,8 @@ public class Debug {
 		
 		Gui.init("192.168.1.185");
 		
-		int hour = 2;
-		boolean usUnit = true;
-		boolean[] passes = new boolean[] { false, false, false };
-		String title = hour + ":00am";
-		String[] messages = usUnit ? Timeline.LifetimeDistanceInUSUnitMessages : Timeline.LifetimeDistanceInSIUnitMessages;
-
-		for (int i = 0; i < 3; i++) {
-			
-			Timeline.openTile(title);
-			Gui.captureScreen("streaktile-" + System.nanoTime());
-
-			if (!passes[0] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 2, messages[0]))
-				passes[0] = true;
-
-			if (!passes[1] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 6, messages[1]))
-				passes[1] = true;
-			
-			if (!passes[2] && Timeline.isLifetimeDistanceBadgeTileCorrect(title, 12, messages[2]))
-				passes[2] = true;
-
-			Timeline.closeCurrentTile();
-//			ShortcutsTyper.delayTime(1000);
-		}
+		for(int i = 0; i < 10; i++)
+		System.out.println(Gui.getProperty("PTRichTextLabel", i, "text"));
 		
-		Assert.assertTrue(passes[0] && passes[1] && passes[2], "All tiles have correct content");
 	}
 }
