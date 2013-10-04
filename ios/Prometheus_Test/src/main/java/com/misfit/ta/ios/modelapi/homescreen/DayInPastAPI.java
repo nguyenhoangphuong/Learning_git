@@ -19,94 +19,60 @@ public class DayInPastAPI extends ModelAPI {
 
 	private int days = 0;
 
-	/**
-	 * This method implements the Edge 'e_Init'
-	 * 
-	 */
+	
 	public void e_Init() {
-		// wait for app to get all data
-		ShortcutsTyper.delayTime(60000);
+		
 		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 
-	/**
-	 * This method implements the Edge 'e_BackToADayInPast'
-	 * 
-	 */
 	public void e_BackToADayInPast() {
+		
 		// we're using qa account which has many days in the past
 		this.days = PrometheusHelper.randInt(2, 7);
-
-		for (int i = 0; i < this.days; i++) {
-			HomeScreen.goToPreviousDays(1);
-		}
-
-		ShortcutsTyper.delayTime(1000);
+		HomeScreen.goToPreviousDays(this.days);
 	}
 
-	/**
-	 * This method implements the Edge 'e_BackToYesterday'
-	 * 
-	 */
 	public void e_BackToYesterday() {
+		
 		this.days = 1;
 		HomeScreen.goToPreviousDays(1);
-		ShortcutsTyper.delayTime(1000);
 	}
 
-	/**
-	 * This method implements the Edge 'e_SwipeBack'
-	 * 
-	 */
 	public void e_SwipeBackToday() {
-		for (int i = 0; i < this.days; i++) {
-			HomeScreen.goToNextDays(1);
-		}
-
-		ShortcutsTyper.delayTime(1000);
+		
+		HomeScreen.goToNextDays(this.days);
 
 		// restore days to 0
 		this.days = 0;
 	}
 
-	/**
-	 * This method implements the Edge 'e_TapToday'
-	 * 
-	 */
 	public void e_TapToday() {
+		
 		HomeScreen.tapArrowButtonToday();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayOne();
 
 		// restore days to 0
 		this.days = 0;
 	}
 
-	/**
-	 * This method implements the Vertex 'v_DayInPast'
-	 * 
-	 */
+	
 	public void v_DayInPast() {
+		
 		// check date display correctly
 		Assert.assertTrue(HomeScreen.isADayBefore(this.days),
 				"Current view is HomeScreen - Day Before " + this.days
 						+ " days");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_HomeScreen'
-	 * 
-	 */
 	public void v_HomeScreen() {
+		
 		// check if this screen is home screen - today
 		Assert.assertTrue(HomeScreen.isToday(),
 				"Current view is HomeScreen - Today");
 	}
 
-	/**
-	 * This method implements the Vertex 'v_Yesterday'
-	 * 
-	 */
 	public void v_Yesterday() {
+		
 		// check if this screen is home screen - yesterday
 		Assert.assertTrue(HomeScreen.isYesterday(),
 				"Current view is HomeScreen - Yesterday");

@@ -91,14 +91,12 @@ public class HomeScreen {
 	public static void goToPreviousDays(int days) {
 		for (int i = 0; i < days; i++) {
 			Gui.touchAVIew("UIButton", 4);
-			ShortcutsTyper.delayTime(500);
 		}
 	}
 
 	public static void goToNextDays(int days) {
 		for (int i = 0; i < days; i++) {
 			Gui.touchAVIew("UIButton", 5);
-			ShortcutsTyper.delayTime(500);
 		}
 	}
 	

@@ -26,7 +26,7 @@ public class UpgradeAppTest extends AutomationTest
         testUpgradeFromApp(mvp, false);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "ProductionOnly" })
     public void UpgradeFromMVP17_1() throws InterruptedException, StopConditionException, IOException
     {
     	File mvp = Files.getFile("apps/mvp17.1/Prometheus.ipa");
@@ -34,7 +34,7 @@ public class UpgradeAppTest extends AutomationTest
         testUpgradeFromApp(mvp, false);
     }
         
-    //@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "ProductionOnly" })
+    //@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "ProductionOnly" })
     public void UpgradeFromMVP18_1() throws InterruptedException, StopConditionException, IOException
     {
     	File mvp = Files.getFile("apps/mvp18.1/Prometheus.ipa");
