@@ -31,9 +31,9 @@ public class UnitSettingsAPI extends ModelAPI {
 	public void e_Init() {
 		
 		// sign up account with default profile
-//		PrometheusHelper.signUp();
-//		PrometheusHelper.inputRandomRecord();
-//		HomeScreen.tapProgressCircle();
+		PrometheusHelper.signUp();
+		PrometheusHelper.inputRandomRecord();
+		HomeScreen.tapProgressCircle();
 	}
 	
 	public void e_ChooseSettings() {
