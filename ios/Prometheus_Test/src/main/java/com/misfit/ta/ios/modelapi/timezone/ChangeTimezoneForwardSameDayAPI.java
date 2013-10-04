@@ -7,8 +7,6 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
-import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.gui.HomeScreen;
@@ -17,10 +15,10 @@ import com.misfit.ta.gui.Timezone;
 import com.misfit.ta.ios.AutomationTest;
 
 public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
-	protected static final Logger logger = Util
-			.setupLogger(ChangeTimezoneForwardSameDayAPI.class);
-	private String email = MVPApi.generateUniqueEmail();
-	private String password = "abcdef";
+	protected static final Logger logger = Util.setupLogger(ChangeTimezoneForwardSameDayAPI.class);
+
+	private String email;
+	private String password = "qwerty1";
 	private int currentTimezone = 4;
 	private int previousTimezone = 4;
 	private int delta = 1;
@@ -28,21 +26,20 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 	private long beforeEndTime = 0;
 	private long beforeOffset = 0;
 
-	public ChangeTimezoneForwardSameDayAPI(AutomationTest automation,
-			File model, boolean efsm, PathGenerator generator, boolean weight) {
+	public ChangeTimezoneForwardSameDayAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
 
 	// edge
 	public void e_init() {
+
 		// sign up new account
 		Timezone.changeTimezone(currentTimezone);
-		PrometheusHelper.signUp(email, password, true, 16, 9, 1991, true, "5'",
-				"8\\\"", "120", ".0", 1);
-		ShortcutsTyper.delayTime(1000);
+		email = PrometheusHelper.signUpDefaultProfile();
 	}
 
 	public void e_changeTimezone() {
+
 		GoalsResult goalsResult = Timezone.searchGoal(email, password);
 		Goal goal = goalsResult.goals[0];
 		beforeEndTime = goal.getEndTime();
@@ -51,10 +48,7 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 		this.previousTimezone = this.currentTimezone;
 		this.currentTimezone = this.currentTimezone + delta;
 		Timezone.changeTimezone(currentTimezone);
-		logger.info("Change timezone from " + this.previousTimezone + " to "
-				+ this.currentTimezone);
-		ShortcutsTyper.delayOne();
-		PrometheusHelper.handleUpdateFirmwarePopup();
+		logger.info("Change timezone from " + this.previousTimezone + " to " + this.currentTimezone);
 	}
 
 	public void e_checkEnd() {
@@ -62,16 +56,17 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 
 	// vertex
 	public void v_HomeScreen() {
-		Assert.assertTrue(HomeScreen.isToday(),
-				"Current view is HomeScreen - Today");
+		
+		Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen - Today");
 	}
 
 	public void v_HomeScreenUpdated() {
-		Timezone.assertTimeZoneTile(this.currentTimezone,
-				this.previousTimezone, this.delta, true);
+		
+		// check tile
+		Timezone.assertTimeZoneTile(this.currentTimezone, this.previousTimezone, this.delta, true);
+		
 		// check goal start time and end time
-		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime,
-				delta, beforeOffset, true);
+		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime, delta, beforeOffset, true);
 	}
 
 	public void v_End() {

@@ -249,6 +249,41 @@ public class PrometheusHelper {
 		return email;
 	}
 
+	public static String signUpDefaultProfile() {
+		
+		LaunchScreen.launch();
+
+		// email and password
+		String email = MVPApi.generateUniqueEmail();
+		SignUp.tapSignUp();
+		SignUp.enterEmailPassword(email, "qwerty1");
+		waitForView("UILabel", DefaultStrings.SignUpProfileTitle);
+
+		// profile
+		SignUp.enterGender(true);
+		SignUp.enterBirthDay();
+		SignUp.enterHeight();
+		SignUp.enterWeight();
+		SignUp.tapNext();
+
+		// goal
+		SignUp.setGoal(1);
+		SignUp.tapNext();
+		waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
+
+		// linking shine
+		SignUp.sync();
+		waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
+		
+		// tutorial
+		PrometheusHelper.handleTutorial();
+		
+		// firmware popup
+		PrometheusHelper.handleUpdateFirmwarePopup();
+		
+		return email;
+	}
+	
 	public static void signIn(String email, String password) {
 		
 		LaunchScreen.launch();

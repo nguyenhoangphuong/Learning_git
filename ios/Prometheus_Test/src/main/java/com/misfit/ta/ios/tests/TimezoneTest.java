@@ -16,51 +16,42 @@ import com.misfit.ta.ios.modelapi.timezone.ChangeTimezoneForwardSameDayAPI;
 import com.misfit.ta.utils.Files;
 
 public class TimezoneTest extends AutomationTest {
+	
 	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "TimeZone" })
-	public void ChangeTimezoneBackwardSameday() throws InterruptedException,
-			StopConditionException, IOException {
+	public void ChangeTimezoneBackwardSameday() throws InterruptedException, StopConditionException, IOException 
+	{
 		ModelHandler model = getModelhandler();
-		model.add(
-				"ChangeTimezoneBackwardSameday",
-				new ChangeTimezoneBackwardSameDayAPI(this, Files
-						.getFile("model/timezone/ChangeTimezone.graphml"), false,
-						new NonOptimizedShortestPath(new EdgeCoverage(1.0)),
-						false));
+		model.add("ChangeTimezoneBackwardSameday", new ChangeTimezoneBackwardSameDayAPI(this, 
+				Files.getFile("model/timezone/ChangeTimezone.graphml"), false, 
+				new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
 		model.execute("ChangeTimezoneBackwardSameday");
-		Assert.assertTrue(getModelhandler().isAllModelsDone(),
-				"Not all models are done");
+		Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
 		String actualResult = getModelhandler().getStatistics();
 		System.out.println(actualResult);
 	}
+
 	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "TimeZone" })
-	public void ChangeTimezoneForwardSameday() throws InterruptedException,
-			StopConditionException, IOException {
+	public void ChangeTimezoneForwardSameday() throws InterruptedException, StopConditionException, IOException 
+	{
 		ModelHandler model = getModelhandler();
-		model.add(
-				"ChangeTimezoneForwardSameday",
-				new ChangeTimezoneForwardSameDayAPI(this, Files
-						.getFile("model/timezone/ChangeTimezone.graphml"), false,
-						new NonOptimizedShortestPath(new EdgeCoverage(1.0)),
-						false));
+		model.add("ChangeTimezoneForwardSameday", new ChangeTimezoneForwardSameDayAPI(this, 
+				Files.getFile("model/timezone/ChangeTimezone.graphml"), false, 
+				new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
 		model.execute("ChangeTimezoneForwardSameday");
-		Assert.assertTrue(getModelhandler().isAllModelsDone(),
-				"Not all models are done");
+		Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
 		String actualResult = getModelhandler().getStatistics();
 		System.out.println(actualResult);
 	}
+
 	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "TimeZone" })
-	public void ChangeTimezoneBackwardDifferentDays() throws InterruptedException,
-			StopConditionException, IOException {
+	public void ChangeTimezoneBackwardDifferentDays() throws InterruptedException, StopConditionException, IOException 
+	{
 		ModelHandler model = getModelhandler();
-		model.add(
-				"ChangeTimezoneBackwardDifferentDays",
-				new ChangeTimezoneBackwardDifferentDaysAPI(this, Files
-						.getFile("model/timezone/ChangeTimezoneDifferentDays.graphml"), false,
-						new NonOptimizedShortestPath(new EdgeCoverage(1.0)),
-						false));
+		model.add("ChangeTimezoneBackwardDifferentDays", new ChangeTimezoneBackwardDifferentDaysAPI(this, 
+				Files.getFile("model/timezone/ChangeTimezoneDifferentDays.graphml"), false, 
+				new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
 		model.execute("ChangeTimezoneBackwardDifferentDays");
-		Assert.assertTrue(getModelhandler().isAllModelsDone(),
-				"Not all models are done");
+		Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
 		String actualResult = getModelhandler().getStatistics();
 		System.out.println(actualResult);
 	}

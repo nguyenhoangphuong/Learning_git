@@ -33,10 +33,13 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-		Gui.init("192.168.1.185");
+//		Gui.init("192.168.1.185");
 		
-		for(int i = 0; i < 10; i++)
-		System.out.println(Gui.getProperty("PTRichTextLabel", i, "text"));
+		System.out.println(String.format("%+d", 0));
+		System.out.println(String.format("%+d", 7));
+		System.out.println(String.format("%+d", +12));
+		System.out.println(String.format("%+d", -12));
+		System.out.println(String.format("%+d", -7));
 		
 	}
 }

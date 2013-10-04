@@ -4,6 +4,8 @@ import com.misfit.ios.ViewUtils;
 
 public class Timeline {
 	
+	static public String LabelHour = "hour";
+	static public String LabelHours = "hours";
 	static public String LabelMinutes = "MINUTES";
 	static public String LabelPoints = "POINTS";
 	static public String LabelMilestone = "MILESTONE";
@@ -11,6 +13,7 @@ public class Timeline {
 	static public String LabelDayStreak = "DAY STREAK";
 	static public String LabelMarathon = "MARATHONS";
 	static public String LabelAchievement = "ACHIEVEMENT";
+	static public String LabelTimeTravel = "TIME TRAVEL";
 	
 	static public String PersonalBestOutdidMessage = "You outdid your previous record by %d points!";
 	
@@ -208,7 +211,16 @@ public class Timeline {
 				ViewUtils.isExistedView("UILabel", LabelAchievement) &&
 				ViewUtils.isExistedView("UILabel", message);
 	} 
-	
+
+	static public boolean isTimezoneTileCorrect(String content, int timezoneDiff, String[] messages) {
+		
+		String unitLabel = timezoneDiff == 1 ? LabelHour : LabelHours;
+		return  ViewUtils.isExistedView("UILabel", content) &&
+				ViewUtils.isExistedView("UILabel", timezoneDiff + "") &&
+				ViewUtils.isExistedView("UILabel", unitLabel) &&
+				isDynamicMessageDisplayed(messages);
+	}
+
 	static public boolean isDynamicMessageDisplayed(String[] availableMessages) {
 		
 		for(String message : availableMessages)
