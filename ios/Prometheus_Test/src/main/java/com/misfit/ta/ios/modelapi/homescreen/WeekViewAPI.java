@@ -2,6 +2,9 @@ package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
@@ -60,7 +63,16 @@ public class WeekViewAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_CheckGoal() {
-		// TODO:
+		HomeScreen.dragUpTimeline();
+		Integer improvement = calculateImprovement();
+		if (improvement != null) {
+			String message = improvement > 0 ? DefaultStrings.MoreImprovmentMessage
+					: DefaultStrings.LessImprovmentMessage;
+			Assert.assertTrue(ViewUtils.isExistedView("UILabel",
+					String.format("%d%%", Math.abs(improvement)))
+					&& ViewUtils.isExistedView("UILabel", message), "Improvement is displayed OK");
+		}
+		HomeScreen.dragDownTimeline();
 	}
 
 	/**
@@ -168,14 +180,62 @@ public class WeekViewAPI extends ModelAPI {
 	private long getTimeStampOfPreviousDay(int index) {
 		Calendar dayBefore = Calendar.getInstance();
 		dayBefore.add(Calendar.DATE, -(index));
-		long timeStamp = MVPApi
-				.getDayStartEpoch(dayBefore.get(Calendar.DATE),
-						dayBefore.get(Calendar.MONTH),
-						dayBefore.get(Calendar.YEAR));
+		long timeStamp = MVPApi.getDayStartEpoch(dayBefore.get(Calendar.DATE),
+				dayBefore.get(Calendar.MONTH), dayBefore.get(Calendar.YEAR));
 		return timeStamp;
 	}
 
 	public void v_UpdatedTodayGoal() {
 
+	}
+
+	public Integer calculateImprovement() {
+		int day = now.get(Calendar.DAY_OF_WEEK);
+		int index = day != 1 ? day - 2 : 6;
+		Goal[] thisWeekGoals = {};
+		Goal[] lastWeekGoals = {};
+		long startTimeStamp = index > 0 ? getTimeStampOfPreviousDay(index)
+				: MVPApi.getDayStartEpoch();
+		// get this week goals
+		// if today is Thursday, we only search goal from Monday to Thursday
+		thisWeekGoals = MVPApi.searchGoal(token, startTimeStamp,
+				MVPApi.getDayStartEpoch(), 0).goals;
+		// get last week goals
+		// only search goal from last Monday to last Thursday
+		lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - 604800,
+				MVPApi.getDayStartEpoch() - 604800, 0).goals;
+		// create a map with timestamp and last week points
+		Map<Long, Double> lastWeekPointsWithTimestampMap = new HashMap<Long, Double>(
+				(int) (lastWeekGoals.length / 0.75) + 1);
+		for (int i = 0; i < lastWeekGoals.length; i++) {
+			lastWeekPointsWithTimestampMap.put(lastWeekGoals[i].getStartTime(),
+					lastWeekGoals[i].getProgressData().getPoints());
+		}
+
+		int deltaProgress = 0;
+		int lastWeekProgress = 0;
+		for (int i = 0; i < thisWeekGoals.length; i++) {
+			// find the corresponding day in last week, 7 days ago
+			long lastWeekDayTimestamp = thisWeekGoals[i].getStartTime() - 604800;
+			if (lastWeekPointsWithTimestampMap
+					.containsKey(lastWeekDayTimestamp)) {
+				int lastWeekDayPoints = (int) Math
+						.floor(lastWeekPointsWithTimestampMap
+								.get(lastWeekDayTimestamp) / 2.5);
+
+				deltaProgress += (int) Math.floor(thisWeekGoals[i]
+						.getProgressData().getPoints() / 2.5)
+						- lastWeekDayPoints;
+				lastWeekProgress += lastWeekDayPoints;
+			}
+		}
+		System.out.println("DEBUG: deltaProgress" + deltaProgress);
+		System.out.println("DEBUG: lastWeekProgress" + lastWeekProgress);
+		Integer improvement = null;
+		if (lastWeekProgress != 0) {
+			improvement = Integer.valueOf((int) Math
+					.round((deltaProgress * 1d / lastWeekProgress) * 100d));
+		}
+		return improvement;
 	}
 }

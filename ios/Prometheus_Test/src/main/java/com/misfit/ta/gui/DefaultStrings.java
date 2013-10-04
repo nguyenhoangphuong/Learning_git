@@ -154,4 +154,6 @@ public class DefaultStrings {
 			"Like a watch. For sleeping and swimming, this is the best.",
 			"Shirt collar, shirt pocket, or on your button-up shirt.", };
 	public static String PointsDisplay = "of %d points";
+	public static String LessImprovmentMessage = "less active than last week";
+	public static String MoreImprovmentMessage = "more active than last week";
 }
