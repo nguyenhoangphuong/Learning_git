@@ -9,6 +9,7 @@ target/
 */*/tools
 */*/script
 */*/model
+*/*/apps
 ios/*/*/ios
 */*/logs
 */*/instrumentscli*.trace
