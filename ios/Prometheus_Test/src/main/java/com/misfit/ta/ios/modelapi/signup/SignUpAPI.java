@@ -75,7 +75,7 @@ public class SignUpAPI extends ModelAPI {
 		logger.info("Change birthday to: " + PrometheusHelper.formatBirthday(year, month, day));
 		
 		// input height
-		this.h1 = this.isUSUnit ? PrometheusHelper.randInt(4, 8) + "'": PrometheusHelper.randInt(1, 3) + "";
+		this.h1 = this.isUSUnit ? PrometheusHelper.randInt(4, 8) + "'": "1";
 		this.h2 = this.isUSUnit ? PrometheusHelper.randInt(0, 12) + "\\\"": "." + String.format("%2d", PrometheusHelper.randInt(30, 70));
 		SignUp.enterHeight(h1, h2, isUSUnit);
 		

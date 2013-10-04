@@ -88,7 +88,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	public void e_EditHeight() {
 		
 		this.heightUseUSUnit = PrometheusHelper.coin();
-		this.h1 = this.heightUseUSUnit ? PrometheusHelper.randInt(4, 8) + "'": PrometheusHelper.randInt(1, 3) + "";
+		this.h1 = this.heightUseUSUnit ? PrometheusHelper.randInt(4, 8) + "'": "1";
 		this.h2 = this.heightUseUSUnit ? PrometheusHelper.randInt(0, 12) + "\\\"": "." + String.format("%2d", PrometheusHelper.randInt(50, 100));
 		HomeSettings.updateHeight(h1, h2, heightUseUSUnit);
 		
