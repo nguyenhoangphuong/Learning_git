@@ -7,7 +7,6 @@ import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
-import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.gui.HomeScreen;
@@ -15,7 +14,6 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timezone;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 
@@ -38,7 +36,7 @@ public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 	public void e_init() {
 
 		Timezone.changeTimezone(currentTimezone);
-		PrometheusHelper.signUpDefaultProfile();
+		email = PrometheusHelper.signUpDefaultProfile();
 	}
 
 	public void e_changeTimezone() {
