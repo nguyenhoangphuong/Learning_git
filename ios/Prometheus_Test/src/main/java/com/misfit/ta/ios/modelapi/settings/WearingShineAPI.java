@@ -26,7 +26,7 @@ public class WearingShineAPI extends ModelAPI {
 
 	public void e_Init() {
 		
-//		PrometheusHelper.signUp();
+		PrometheusHelper.signUp();
 		HomeScreen.tapOpenSettingsTray();
 		HomeScreen.tapMyShine();
 	}
