@@ -35,11 +35,7 @@ public class Debug {
 		
 //		Gui.init("192.168.1.185");
 		
-		System.out.println(String.format("%+d", 0));
-		System.out.println(String.format("%+d", 7));
-		System.out.println(String.format("%+d", +12));
-		System.out.println(String.format("%+d", -12));
-		System.out.println(String.format("%+d", -7));
+		System.out.println(String.format("%02d", 6));
 		
 	}
 }
