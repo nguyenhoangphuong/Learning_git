@@ -1,43 +1,10 @@
 package com.misfit.ta.backend.aut;
 
-import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
-import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.data.account.AccountResult;
+import com.misfit.ta.backend.data.goal.Goal;
 
 public class BackendHelper {
-
-	private static String password = "misfit1";
-
-	public static JSONObject removeKeysHaveNullValue(JSONObject src) {
-
-		JSONObject json = new JSONObject(src, JSONObject.getNames(src));
-		JSONArray keys = json.names();
-		for (int i = 0; i < keys.length(); i++) {
-			try {
-				String key = keys.getString(i);
-				if (json.get(key) == null)
-					json.remove(key);
-			} catch (JSONException e) {
-			}
-		}
-		return json;
-	}
-
-	public static AccountResult signUp() {
-		String email = MVPApi.generateUniqueEmail();
-		AccountResult result = MVPApi.signUp(email, password);
-		return result;
-	}
-
-	public static String createAllTimelineItemsForAccount(String email, String password) {
-
-		String token = MVPApi.signIn(email, password).token;
-		MVPApi.createTimelineItems(token, DefaultValues.AllTimelineItems());
-
-		return token;
-	}
 
 	public static void unlink(String email, String password) {
 
@@ -50,7 +17,28 @@ public class BackendHelper {
 		long now = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signIn(email, password).token;
 		MVPApi.createPedometer(token, serialNumber, "0.0.36r", now, null, now, "pedometer-" + System.nanoTime(), null, now);
-
+	}
+	
+	public static void clearLatestGoal(String email, String password) {
+		
+		String token = MVPApi.signIn(email, password).token;
+		Goal[] goals = MVPApi.searchGoal(token, 0, Integer.MAX_VALUE, 0).goals;
+		if(goals == null || goals.length == 0)
+			return;
+		
+		Goal blank = goals[0];
+		blank.getProgressData().setDistanceMiles(0d);
+		blank.getProgressData().setPoints(0);
+		blank.getProgressData().setFullBmrCalorie(0);
+		blank.getProgressData().setSteps(0);
+		blank.getProgressData().setSeconds(0);
+		
+		MVPApi.updateGoal(token, blank);
+	}
+	
+	public static void main(String[] args) throws JSONException {
+		
+		clearLatestGoal("qa089@a.a", "qqqqqq");
 	}
 
 }
