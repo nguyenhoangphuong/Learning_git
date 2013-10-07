@@ -13,6 +13,10 @@ public class HomeSettings {
 	public static void tapCancel() {
 		Gui.touchAVIew("UIButton", DefaultStrings.CancelButton);
 	}
+	
+	public static void tapMisfitLabs() {
+		Gui.touchAVIew("UILabel", DefaultStrings.MisfitLabsButton);
+	}
 
 	public static void tapYourProfile() {
 		Gui.touchAVIew("UILabel", DefaultStrings.MyProfileButton);
@@ -130,6 +134,10 @@ public class HomeSettings {
 		
 	}
 
+	public static void tapSave() {
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SaveButton);
+	}
+	
 	/* Mode Debug */
 	public static void tapDoneAtDebug() {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.DoneButton);

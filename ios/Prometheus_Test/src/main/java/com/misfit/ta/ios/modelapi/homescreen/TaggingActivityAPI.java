@@ -14,6 +14,7 @@ import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
+import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
@@ -65,7 +66,7 @@ public class TaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_chooseCycling() {
-		openMyShineView();
+		openMisfitLabsView();
 		HomeScreen.chooseCycling();
 		if (HomeScreen.hasSuggestWearingPositionForCyclingMessage()) {
 			Gui.touchPopupButton(DefaultStrings.GotItButton);
@@ -76,6 +77,7 @@ public class TaggingActivityAPI extends ModelAPI {
 		HomeScreen.tapSave();
 		activityType = MVPEnums.ACTIVITY_CYCLING;
 		ShortcutsTyper.delayTime(1000);
+		HomeSettings.tapCancel();
 	}
 
 	/**
@@ -83,16 +85,17 @@ public class TaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_chooseSleep() {
-		openMyShineView();
+		openMisfitLabsView();
 		HomeScreen.chooseSleep();
 		if (HomeScreen.hasSuggestWearingPositionForSleepMessage()) {
 			Gui.touchPopupButton(DefaultStrings.GotItButton);
 			countSleepPopup++;
 		}
-		ShortcutsTyper.delayTime(300);
-		HomeScreen.tapSave();
+		ShortcutsTyper.delayTime(200);
+		HomeSettings.tapSave();
 		activityType = MVPEnums.ACTIVITY_SLEEPING;
 		ShortcutsTyper.delayTime(1000);
+		HomeSettings.tapCancel();
 	}
 
 	/**
@@ -100,17 +103,18 @@ public class TaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_chooseSwimming() {
-		openMyShineView();
+		openMisfitLabsView();
 		HomeScreen.chooseSwimming();
 		if (HomeScreen.hasSuggestWearingPositionForSwimmingMessage()) {
 			Gui.touchPopupButton(DefaultStrings.GotItButton);
 			countSwimmingPopup++;
 		}
 
-		ShortcutsTyper.delayTime(300);
-		HomeScreen.tapSave();
+		ShortcutsTyper.delayTime(200);
+		HomeSettings.tapSave();
 		activityType = MVPEnums.ACTIVITY_SWIMMING;
 		ShortcutsTyper.delayTime(1000);
+		HomeSettings.tapCancel();
 	}
 
 	/**
@@ -254,11 +258,13 @@ public class TaggingActivityAPI extends ModelAPI {
 				"Wearing position for swimming isn't displayed correctly.");
 	}
 
-	private void openMyShineView() {
+	private void openMisfitLabsView() {
 		HomeScreen.tapOpenSettingsTray();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(200);
 		HomeScreen.tapMyShine();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(200);
+		HomeSettings.tapMisfitLabs();
+		ShortcutsTyper.delayTime(200);
 	}
 
 	private void checkUpdatedTimeline(String[] levelTitle) {
@@ -339,30 +345,33 @@ public class TaggingActivityAPI extends ModelAPI {
 	}
 
 	public void e_chooseTennis() {
-		openMyShineView();
+		openMisfitLabsView();
 		HomeScreen.chooseTennis();
-		ShortcutsTyper.delayTime(300);
-		HomeScreen.tapSave();
+		ShortcutsTyper.delayTime(200);
+		HomeSettings.tapSave();
 		activityType = MVPEnums.ACTIVITY_TENNIS;
 		ShortcutsTyper.delayTime(1000);
+		HomeSettings.tapCancel();
 	}
 
 	public void e_chooseSoccer() {
-		openMyShineView();
+		openMisfitLabsView();
 		HomeScreen.chooseSoccer();
-		ShortcutsTyper.delayTime(300);
-		HomeScreen.tapSave();
+		ShortcutsTyper.delayTime(200);
+		HomeSettings.tapSave();
 		activityType = MVPEnums.ACTIVITY_SOCCER;
 		ShortcutsTyper.delayTime(1000);
+		HomeSettings.tapCancel();
 	}
 
 	public void e_chooseBasketball() {
-		openMyShineView();
+		openMisfitLabsView();
 		HomeScreen.chooseBasketball();
-		ShortcutsTyper.delayTime(300);
-		HomeScreen.tapSave();
+		ShortcutsTyper.delayTime(200);
+		HomeSettings.tapSave();
 		activityType = MVPEnums.ACTIVITY_BASKETBALL;
 		ShortcutsTyper.delayTime(1000);
+		HomeSettings.tapCancel();
 	}
 
 	public void v_UpdatedSoccerToday() {

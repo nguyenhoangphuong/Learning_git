@@ -47,7 +47,6 @@ public class HomeScreen {
 	}
 
 	public static void chooseTennis() {
-		Gui.swipeUp(10);
 		Gui.touchAVIew("UILabel", DefaultStrings.TennisLabel);
 	}
 
@@ -57,7 +56,6 @@ public class HomeScreen {
 	}
 
 	public static void chooseBasketball() {
-		Gui.swipeUp(10);
 		Gui.touchAVIew("UILabel", DefaultStrings.BasketballLabel);
 	}
 

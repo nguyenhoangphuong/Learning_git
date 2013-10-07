@@ -2,7 +2,6 @@ package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +21,8 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class WeekViewAPI extends ModelAPI {
+	private static final int SevenDaysDiff = 604800;
+
 	public WeekViewAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
@@ -202,8 +203,8 @@ public class WeekViewAPI extends ModelAPI {
 				MVPApi.getDayStartEpoch(), 0).goals;
 		// get last week goals
 		// only search goal from last Monday to last Thursday
-		lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - 604800,
-				MVPApi.getDayStartEpoch() - 604800, 0).goals;
+		lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - SevenDaysDiff,
+				MVPApi.getDayStartEpoch() - SevenDaysDiff, 0).goals;
 		// create a map with timestamp and last week points
 		Map<Long, Double> lastWeekPointsWithTimestampMap = new HashMap<Long, Double>(
 				(int) (lastWeekGoals.length / 0.75) + 1);
@@ -216,7 +217,7 @@ public class WeekViewAPI extends ModelAPI {
 		int lastWeekProgress = 0;
 		for (int i = 0; i < thisWeekGoals.length; i++) {
 			// find the corresponding day in last week, 7 days ago
-			long lastWeekDayTimestamp = thisWeekGoals[i].getStartTime() - 604800;
+			long lastWeekDayTimestamp = thisWeekGoals[i].getStartTime() - SevenDaysDiff;
 			if (lastWeekPointsWithTimestampMap
 					.containsKey(lastWeekDayTimestamp)) {
 				int lastWeekDayPoints = (int) Math

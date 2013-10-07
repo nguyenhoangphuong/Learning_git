@@ -67,6 +67,7 @@ public class DefaultStrings {
 	public static String EndTutorialButton = "OK, I GOT IT";
 	public static String TutorialFirstPageLabel = "_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.";
 	public static String TileTimeTravelLabel = "TIME TRAVEL";
+	public static String MisfitLabsButton = "Misfit Labs";
 
 	// tiles
 	public static String TileTapMeLabel = "Tap Me!";
