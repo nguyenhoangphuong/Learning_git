@@ -10,6 +10,7 @@ public class Timeline {
 	static public String LabelPoints = "POINTS";
 	static public String LabelMilestone = "MILESTONE";
 	static public String LabelPersonalBest = "PERSONAL BEST";
+	static public String LabelStreak = "STREAK";
 	static public String LabelDayStreak = "DAY STREAK";
 	static public String LabelMarathon = "MARATHONS";
 	static public String LabelAchievement = "ACHIEVEMENT";
@@ -200,6 +201,7 @@ public class Timeline {
 		return  ViewUtils.isExistedView("UILabel", time) &&
 				ViewUtils.isExistedView("UILabel", String.valueOf(numberOfDays)) &&
 				ViewUtils.isExistedView("UILabel", LabelDayStreak) &&
+				ViewUtils.isExistedView("UILabel", LabelStreak) &&
 				isDynamicMessageDisplayed(messages);
 	}
 	

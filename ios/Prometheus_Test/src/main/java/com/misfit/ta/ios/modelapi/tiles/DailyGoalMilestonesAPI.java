@@ -25,7 +25,7 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	public void e_init() {
 		
 		// sign up with goal = 1000 pts
-//		PrometheusHelper.signUp();
+		PrometheusHelper.signUp();
 	}
 	
 	public void e_inputHalfGoal() {

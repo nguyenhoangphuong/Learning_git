@@ -8,6 +8,7 @@ import org.testng.Assert;
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.Settings;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
@@ -27,7 +28,13 @@ public class UpgradeAppAPI extends ModelAPI {
 
 	public String pathToOldApp = null;
 	public boolean willSignOutBeforeUpgrade = true;
+	public boolean willCheckProfile = false;
+	
 	private String email = "";
+	private int numberOfActivity = 1;
+	private int totalPoint = numberOfActivity * (numberOfActivity + 1) / 2 * 1000;
+	private int totalStep = totalPoint * 10;
+	private float totalMile = numberOfActivity * (numberOfActivity + 1) / 2 * 0.4f;
 	
 	private void checkAppsExist() {
 		
@@ -87,7 +94,7 @@ public class UpgradeAppAPI extends ModelAPI {
 	public void e_inputActivities() {
 		
 		// input some activities
-		for(int i = 1; i <= 5; i++) {
+		for(int i = 1; i <= numberOfActivity; i++) {
 			
 			String[] times = new String[] { String.valueOf(i), "00", "AM" };
 			HomeScreen.tapOpenManualInput();
@@ -112,7 +119,7 @@ public class UpgradeAppAPI extends ModelAPI {
 		
 		// because install happen in new thread, 
 		// make sure it finish before launching instrument
-		ShortcutsTyper.delayTime(20000);
+		ShortcutsTyper.delayTime(10000);
 		launchInstrument();
 	}
 	
@@ -121,15 +128,17 @@ public class UpgradeAppAPI extends ModelAPI {
 		PrometheusHelper.signIn(email, "qwerty1");
 		
 		// wait for data
-		ShortcutsTyper.delayTime(20000);
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 	
 	public void e_toProfile() {
 		
-		HomeScreen.tapOpenSettingsTray();
-		HomeScreen.tapSettings();
-		ShortcutsTyper.delayTime(500);
-		HomeSettings.tapYourProfile();
+		if(willCheckProfile) {
+			HomeScreen.tapOpenSettingsTray();
+			HomeScreen.tapSettings();
+			ShortcutsTyper.delayTime(500);
+			HomeSettings.tapYourProfile();
+		}
 	}
 	
 	
@@ -152,15 +161,15 @@ public class UpgradeAppAPI extends ModelAPI {
 	public void v_HomeScreenAfterUpgrade() {
 				
 		// check current progress
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "1500"), "Total points OK");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", totalPoint + ""), "Total points OK");
 		HomeScreen.tapProgressCircle();
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "_15000_ steps"), "Total steps OK");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "_6.0_ miles"), "Total distance OK");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("_%d_ steps", totalStep)), "Total steps OK");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("_%.1f_ miles", totalMile)), "Total distance OK");
 		
 		// check activities is saved
 		Timeline.dragUpTimeline();
 		Gui.swipeUp(1000);
-		for(int i = 1; i <= 5; i++) {
+		for(int i = 1; i <= numberOfActivity; i++) {
 			
 			String startTime = i + ":00am";
 			String endTime = i + ":" + (i * 10) + "am";
@@ -188,21 +197,24 @@ public class UpgradeAppAPI extends ModelAPI {
 	
 	public void v_ProfileAfterUpgrade() {
 		
-		// sex
-		boolean male = Gui.getProperty("UIButton", "Male", "isSelected").equals("1") ? true : false;
-		Assert.assertTrue(male, "Gender is saved");
-		
-		// birthday
-		String birthday = PrometheusHelper.formatBirthday("1991", "September" , "16");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", birthday), "Birthday is saved");
-		
-		// height
-		String height = "5'8\\\"";
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", height), "Height should be " + height);
-		
-		// weight
-		String weight = "120.0 lbs";
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", weight), "Weight should be " + weight);
+		if(willCheckProfile) {
+			
+			// sex
+			boolean male = Gui.getProperty("UIButton", "Male", "isSelected").equals("1") ? true : false;
+			Assert.assertTrue(male, "Gender is saved");
+			
+			// birthday
+			String birthday = PrometheusHelper.formatBirthday("1991", "September" , "16");
+			Assert.assertTrue(ViewUtils.isExistedView("UILabel", birthday), "Birthday is saved");
+			
+			// height
+			String height = "5'8\\\"";
+			Assert.assertTrue(ViewUtils.isExistedView("UILabel", height), "Height should be " + height);
+			
+			// weight
+			String weight = "120.0 lbs";
+			Assert.assertTrue(ViewUtils.isExistedView("UILabel", weight), "Weight should be " + weight);
+		}
 	}
 
 }
