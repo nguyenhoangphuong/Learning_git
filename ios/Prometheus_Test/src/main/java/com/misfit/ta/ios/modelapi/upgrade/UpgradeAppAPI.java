@@ -1,6 +1,7 @@
 package com.misfit.ta.ios.modelapi.upgrade;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
@@ -18,6 +19,7 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.aut.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class UpgradeAppAPI extends ModelAPI {
@@ -25,22 +27,41 @@ public class UpgradeAppAPI extends ModelAPI {
 	public UpgradeAppAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
-
-	public String pathToOldApp = null;
+	
+	// static
+	static private String[] MVPAppPaths = new String[] {
+		"apps/mvp16.1/Prometheus.ipa",
+		"apps/mvp17.1/Prometheus.ipa",
+		"apps/mvp18.1/Prometheus.ipa",
+	};
+	public static int MVP_16_1 = 0;
+	public static int MVP_17_1 = 1;
+	public static int MVP_18_1 = 2;
+	
+	// fields
+	public int fromMVP = -1;
 	public boolean willSignOutBeforeUpgrade = true;
 	public boolean willCheckProfile = false;
-	
+	 
+	private String pathToOldApp = null;
 	private String email = "";
 	private int numberOfActivity = 1;
-	private int totalPoint = numberOfActivity * (numberOfActivity + 1) / 2 * 1000;
+	private int totalPoint = numberOfActivity * (numberOfActivity + 1) / 2 * 100;
 	private int totalStep = totalPoint * 10;
 	private float totalMile = numberOfActivity * (numberOfActivity + 1) / 2 * 0.4f;
 	
 	private void checkAppsExist() {
 		
 		// make sure old app file exist
-		if(pathToOldApp == null)
+		if(fromMVP < 0 || fromMVP >= MVPAppPaths.length)
 			Assert.fail("Path to old app is not set");
+
+		pathToOldApp = MVPAppPaths[fromMVP];
+		try {
+			Files.getFile(pathToOldApp);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 		File f = new File(pathToOldApp);
 		if(!f.exists())
@@ -105,8 +126,13 @@ public class UpgradeAppAPI extends ModelAPI {
 	
 	public void e_signOut() {
 		
-		if(willSignOutBeforeUpgrade)
+		if(willSignOutBeforeUpgrade) {
+			
+			if(fromMVP == MVP_16_1)
+				Gui.touchAVIew("UILabel", "Sync");
+				
 			PrometheusHelper.signOut();
+		}
 	}
 	
 	public void e_installAndLaunchLatestApp() {

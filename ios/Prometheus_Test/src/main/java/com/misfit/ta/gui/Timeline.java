@@ -164,8 +164,14 @@ public class Timeline {
 		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() - 10);
 	}
 	
+	static public void editTile(String title) {
+		
+		Gui.longTouchAView("UILabel", title, 1500);
+	}
+
+
 	
-	static public boolean isActivityTileCorrect(String startTime, String endTime, 
+ 	static public boolean isActivityTileCorrect(String startTime, String endTime, 
 			int duration, int points, String bottomTitle) {
 		
 		return  ViewUtils.isExistedView("UILabel", startTime + " - " + endTime) &&

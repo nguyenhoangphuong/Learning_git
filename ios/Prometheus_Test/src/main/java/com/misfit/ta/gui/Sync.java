@@ -31,6 +31,7 @@ public class Sync {
 		ShortcutsTyper.delayTime(3000);
 	}
 
+	
 	public static boolean hasAlert() {
 		return Gui.hasAlert();
 	}
@@ -47,9 +48,24 @@ public class Sync {
 		return Gui.getPopupContent().equals(DefaultStrings.SyncFailedMessage) && Gui.getPopupTitle().equals(DefaultStrings.Title);
 	}
 	
+	public static boolean hasShineOutOfSyncMessage() {
+		
+		return Gui.getPopupContent().equals(DefaultStrings.ShineOutOfSyncMessage) && Gui.getPopupTitle().equals(DefaultStrings.ShineOutOfSyncTitle);
+	}
+	
 	public static void tapOK() {
 		// popup error message
 		Gui.touchPopupButton(0);
 	}
 
+	public static void tapPopupSyncLater() {
+		
+		Gui.touchPopupButton(1);
+	}
+	
+	public static void tapPopupSyncNow() {
+		
+		Gui.touchPopupButton(0);
+	}
+	
 }

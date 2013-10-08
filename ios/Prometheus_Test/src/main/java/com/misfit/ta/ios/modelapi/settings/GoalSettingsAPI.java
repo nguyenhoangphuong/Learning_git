@@ -13,7 +13,6 @@ import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.gui.*;
 import com.misfit.ta.ios.AutomationTest;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class GoalSettingsAPI extends ModelAPI {
 	private static final Logger logger = Util
@@ -34,28 +33,32 @@ public class GoalSettingsAPI extends ModelAPI {
 	}
 
 	public void e_ToGoalSettings() {
+		
 		HomeScreen.tapOpenSettingsTray();
-		ShortcutsTyper.delayTime(200);
-		HomeScreen.tapAdjustGoal();
-		ShortcutsTyper.delayTime(300);
 		HomeScreen.tapAdjustGoal();
 	}
 
 	public void e_ChangeGoal() {
-		tempGoal = PrometheusHelper.randInt(10, 25) * 100;
+		
+		do {
+			tempGoal = PrometheusHelper.randInt(10, 25) * 100;
+		}
+		while (tempGoal == goal);
+		
 		int currentGoal = HomeSettings.getSpinnerGoal();
 		HomeSettings.setSpinnerGoal(tempGoal, currentGoal);
-		ShortcutsTyper.delayTime(300);
 
 		logger.info("Set goal to: " + tempGoal);
 	}
 
 	public void e_CancelEdit() {
+		
 		HomeSettings.tapCancel();
 		logger.info("Cancel new goal");
 	}
 
 	public void e_DoneEdit() {
+		
 		HomeSettings.tapDoneAtNewGoal();
 		PrometheusHelper.waitForAlert();
 		goal = tempGoal;
@@ -63,11 +66,12 @@ public class GoalSettingsAPI extends ModelAPI {
 	}
 
 	public void e_ConfirmNewGoal() {
+		
 		HomeSettings.tapOKAtNewGoalPopup();
-		ShortcutsTyper.delayTime(200);
 	}
 
 	public void v_GoalSettings() {
+		
 		// check if current view is goal settings
 		Assert.assertTrue(HomeSettings.isAtEditGoal(),
 				"Current view is GoalSettings");
@@ -80,6 +84,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	}
 
 	public void v_GoalUpdated() {
+		
 		// check new spinner value
 		int newGoal = HomeSettings.getSpinnerGoal();
 		Assert.assertEquals(newGoal, tempGoal, "Spinner's value is correct");
@@ -115,17 +120,20 @@ public class GoalSettingsAPI extends ModelAPI {
 	}
 
 	public void v_NewGoalConfirmation() {
+		
 		// check alert content
 		Assert.assertTrue(HomeSettings.hasDontForgetMessage(),
 				"Alert message is correct");
 	}
 
 	public void v_HomeScreen() {
+		
 		// check if current screen is home screen
 		Assert.assertTrue(HomeScreen.isToday(), "Current screen is HomeScreen");
 	}
 
 	public void v_HomeScreenUpdated() {
+		
 		// check if new goal value had been updated
 		String actual = Gui.getProperty("UILabel", 4, "text");
 		String expect = this.goal + "";

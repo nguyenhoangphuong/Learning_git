@@ -40,6 +40,8 @@ public class DefaultStrings {
 	public static String SyncFailedMessage = "Your sync failed. Can you try syncing again?";
 	public static String UnableToLinkMessage = "This Shine is linked to another account. The owner of that account must unlink it.";
 	public static String UnableToLinkTitle = "Unable to Link";
+	public static String ShineOutOfSyncTitle = "Shine Out of Sync.";
+	public static String ShineOutOfSyncMessage = "You'll needto sync Shine to reflect the change in activity progress.";
 	
 	// forgot password
 	public static String ForgotPasswordEmailNotExistMessage = "The email you entered is not associated with a Shine account";
@@ -69,6 +71,10 @@ public class DefaultStrings {
 	public static String TileTimeTravelLabel = "TIME TRAVEL";
 	public static String MisfitLabsButton = "Misfit Labs";
 
+	// edit tag
+	public static String EditTagTitle = "Edit Tag";
+	public static String PointLostPopupMessage = "Changing to this tag will decrease the amount of points earned.";
+	
 	// tiles
 	public static String TileTapMeLabel = "Tap Me!";
 	public static String TileActivitiesLabel = "Activities";
@@ -99,6 +105,7 @@ public class DefaultStrings {
 	public static String TennisLabel = "Tennis";
 	public static String BasketballLabel = "Basketball";
 	public static String SoccerLabel = "Soccer";
+	public static String DefaultLabel = "Default";
 	
 	// time zone
 	public static String TimezoneForwardLabel = "You travelled forwards in time by";

@@ -16,6 +16,7 @@ import com.misfit.ta.backend.data.sync.SyncDebugLog;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.EditTagScreen;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
@@ -24,6 +25,7 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
+import com.misfit.ta.ios.modelapi.homescreen.EditActivityIntegrationAPI;
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.ShortcutsTyper;
 
@@ -33,9 +35,12 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-//		Gui.init("192.168.1.185");
+		Gui.init("192.168.1.216");
 		
-		System.out.println(String.format("%02d", 6));
+//		Timeline.editTile("10:36am");
+//		Gui.longTouchAView("UILabel", "10:36am", 2000);
+//		Gui.touchAVIew("UILabel", "Soccer");
+		EditTagScreen.tapPopupCancel();
 		
 	}
 }
