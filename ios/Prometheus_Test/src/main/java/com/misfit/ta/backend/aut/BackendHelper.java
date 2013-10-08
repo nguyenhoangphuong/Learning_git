@@ -38,7 +38,8 @@ public class BackendHelper {
 	
 	public static void main(String[] args) throws JSONException {
 		
-		clearLatestGoal("qa089@a.a", "qqqqqq");
+		String token = MVPApi.signIn("qa089@a.a", "qqqqqq").token;
+		MVPApi.getTimelineItems(token, System.currentTimeMillis() / 1000 - 3600, Integer.MAX_VALUE, 0);
 	}
 
 }

@@ -25,7 +25,7 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
-import com.misfit.ta.ios.modelapi.homescreen.EditActivityIntegrationAPI;
+import com.misfit.ta.ios.modelapi.homescreen.EditActivityFlowAPI;
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.ShortcutsTyper;
 
@@ -37,10 +37,8 @@ public class Debug {
 		
 		Gui.init("192.168.1.216");
 		
-//		Timeline.editTile("10:36am");
-//		Gui.longTouchAView("UILabel", "10:36am", 2000);
-//		Gui.touchAVIew("UILabel", "Soccer");
-		EditTagScreen.tapPopupCancel();
+//		Timeline.editTile("3:46pm");
+		Timeline.openTile("3:46pm - 4:36pm");
 		
 	}
 }

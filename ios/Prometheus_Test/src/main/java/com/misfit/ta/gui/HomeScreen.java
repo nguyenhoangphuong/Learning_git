@@ -200,4 +200,5 @@ public class HomeScreen {
 	public static void changeToWeekView() {
 		Gui.touchAVIew("UILabel", DefaultStrings.WeekButton);
 	}
+
 }
