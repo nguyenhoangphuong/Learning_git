@@ -11,7 +11,7 @@ public class EditTagScreen {
 	
 	public static void tapSave() {
 		
-		Gui.touchAVIew("UIButtonLabel", DefaultStrings.NextButton);
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SaveButton);
 	}
 	
 	public static void selectActivity(String activityName) {
