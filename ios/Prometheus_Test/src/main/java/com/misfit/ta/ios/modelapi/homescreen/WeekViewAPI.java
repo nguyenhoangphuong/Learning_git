@@ -65,7 +65,7 @@ public class WeekViewAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_CheckGoal() {
-		Timeline.dragUpTimeline();
+		Timeline.dragUpTimelineAndHandleTutorial();
 		Integer improvement = calculateImprovement();
 		if (improvement != null) {
 			String message = improvement > 0 ? DefaultStrings.MoreImprovmentMessage

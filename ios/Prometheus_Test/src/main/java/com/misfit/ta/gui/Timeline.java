@@ -96,7 +96,17 @@ public class Timeline {
 			"That's 250 total kilometers. Nice work!",
 			"That's 500 lifetime kilometers. Impressive!", };
 
+	public static void dragUpTimelineAndHandleTutorial() {
+		
+		dragUpTimeline();
+		
+		// maybe there're 2 tutorials
+		PrometheusHelper.handleTagEditingTutorial();
+		PrometheusHelper.handleTagEditingTutorial();
+	}
+	
 	public static void dragUpTimeline() {
+		
 		Gui.dragUpTimeline();
 	}
 

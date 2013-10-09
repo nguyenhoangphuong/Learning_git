@@ -198,7 +198,7 @@ public class UpgradeAppAPI extends ModelAPI {
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("_%.1f_ miles", totalMile)), "Total distance OK");
 		
 		// check activities is saved
-		Timeline.dragUpTimeline();
+		Timeline.dragUpTimelineAndHandleTutorial();
 		Gui.swipeUp(1000);
 		for(int i = 1; i <= numberOfActivity; i++) {
 			

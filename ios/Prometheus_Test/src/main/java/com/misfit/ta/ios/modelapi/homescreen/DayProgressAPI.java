@@ -102,13 +102,12 @@ public class DayProgressAPI extends ModelAPI {
 		this.totalMiles += this.lastMiles;
 	}
 
+	
+	
 	public void v_Today() {
 
 		if(this.isNoActivity)
 			Assert.assertTrue(HomeScreen.isTodayDefault(), "Homescreen - Today - No activity is default");
-	}
-
-	public void e_checkEnd() {
 	}
 
 	public void v_UpdatedToday() {
@@ -183,10 +182,9 @@ public class DayProgressAPI extends ModelAPI {
 			HomeScreen.tapProgressCircle();
 		}
 		
-		Timeline.dragUpTimeline();
-//		Gui.swipeUp(1000);
-//		Gui.swipeUp(1000);
-		PrometheusHelper.handleTagEditingTutorial();
+		Timeline.dragUpTimelineAndHandleTutorial();
+		Gui.swipeUp(1000);
+		Gui.swipeUp(1000);
 		
 		if (this.lastPoints >= 50f) {
 			
@@ -203,11 +201,4 @@ public class DayProgressAPI extends ModelAPI {
 		Timeline.dragDownTimeline();
 	}
 
-	public void e_stay() {
-
-	}
-
-	public void v_EndInput() {
-
-	}
 }

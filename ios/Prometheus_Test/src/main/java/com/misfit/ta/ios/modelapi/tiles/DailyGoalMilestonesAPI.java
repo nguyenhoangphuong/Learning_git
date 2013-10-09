@@ -37,7 +37,7 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(times, 50, 5000);
 		HomeScreen.tapSave();
-		Timeline.dragUpTimeline();
+		Timeline.dragUpTimelineAndHandleTutorial();
 		ShortcutsTyper.delayTime(500);
 	}
 	

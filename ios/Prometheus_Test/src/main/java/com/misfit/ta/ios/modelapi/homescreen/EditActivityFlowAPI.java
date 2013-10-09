@@ -7,6 +7,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.statistics.Statistics;
@@ -41,24 +42,11 @@ public class EditActivityFlowAPI extends ModelAPI {
 		String email = PrometheusHelper.signUp();
 		
 		// create 2 goals in the past
-		String token = MVPApi.signIn(email, "qwerty1").token;
-		for(int i = 1; i <= 2; i++) {
-			
-			long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * i;
-			Goal goal = DefaultValues.CreateGoal(timestamp);
-			goal.setValue(2500d);
-			goal.getProgressData().setPoints(2500d);
-			goal.getProgressData().setDistanceMiles(2d);
-			goal.getProgressData().setSteps(4000);
-			goal.getProgressData().setSeconds(3600);
-			MVPApi.createGoal(token, goal);
-		}
+		BackendHelper.completeGoalInPast(email, "qwerty1", 1);
+		BackendHelper.completeGoalInPast(email, "qwerty1", 2);
 				
 		// create a personal best record
-		Statistics statistics = DefaultValues.RandomStatistic();
-		statistics.getPersonalRecords().setPersonalBestRecordsInPoint(2500d);
-		statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
-		MVPApi.createStatistics(token, statistics);
+		BackendHelper.setPersonalBest(email, "qwerty1", 2500);
 		
 		// get new data from server
 		HomeScreen.pullToRefresh();
@@ -80,7 +68,7 @@ public class EditActivityFlowAPI extends ModelAPI {
 	
 	public void e_holdToEditActivity() {
 	
-		Timeline.dragUpTimeline();
+		Timeline.dragUpTimelineAndHandleTutorial();
 		Timeline.editTile("1:00am");
 	}
 	
@@ -188,7 +176,7 @@ public class EditActivityFlowAPI extends ModelAPI {
 			
 			// check hit goal animation
 			Assert.assertTrue(ViewUtils.isExistedView("UILabel", "GOAL"), "Goal animation plays");
-			Timeline.dragUpTimeline();
+			Timeline.dragUpTimelineAndHandleTutorial();
 			
 			// check 100% tile
 			String hit100GoalTime = String.format("1:%02dam", 1000/ppm);

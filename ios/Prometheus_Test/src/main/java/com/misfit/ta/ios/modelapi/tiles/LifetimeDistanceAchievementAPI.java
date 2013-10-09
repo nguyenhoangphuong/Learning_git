@@ -97,7 +97,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 
 	private void checkBadgesTile(boolean usUnit) {
 
-		Timeline.dragUpTimeline();
+		Timeline.dragUpTimelineAndHandleTutorial();
 		Gui.swipeUp(1000);
 		Gui.swipeUp(1000);
 		Gui.swipeUp(1000);

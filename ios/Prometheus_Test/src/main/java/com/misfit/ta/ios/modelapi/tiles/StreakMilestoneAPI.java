@@ -9,6 +9,7 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.gui.DefaultStrings;
@@ -46,14 +47,7 @@ public class StreakMilestoneAPI extends ModelAPI {
 	public void e_createGoalInThePast() {
 
 		// create goal in the past using api
-		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * (++dayDiff);
-		Goal goal = DefaultValues.CreateGoal(timestamp);
-		goal.setValue(1000d);
-		goal.getProgressData().setPoints(1200d);
-		goal.getProgressData().setDistanceMiles(2d);
-		goal.getProgressData().setSteps(4000);
-		goal.getProgressData().setSeconds(3600);
-		MVPApi.createGoal(token, goal);
+		BackendHelper.completeGoalInPast(email, "qwerty1", ++dayDiff);
 
 		// reset current goal using api
 		MVPApi.updateGoal(token, todayBlankGoal);
@@ -119,7 +113,7 @@ public class StreakMilestoneAPI extends ModelAPI {
 	
 	public void checkStreakTile(String[] messages) {
 
-		Timeline.dragUpTimeline();
+		Timeline.dragUpTimelineAndHandleTutorial();
 		for(int i = 0; i < dayDiff; i++)
 			Gui.swipeUp(1000);
 

@@ -20,7 +20,7 @@ public class Timezone {
 		String[] detail = isForward ? DefaultStrings.TimezoneGainedTimeLabel : DefaultStrings.TimezoneLostTimeLabel;
 		
 		// tap on tile and check its content
-		Timeline.dragUpTimeline();
+		Timeline.dragUpTimelineAndHandleTutorial();
 		Timeline.openTile(label);
 		Assert.assertTrue(Timeline.isTimezoneTileCorrect(content, delta, detail),
 				"Time travel tile's detail is correct");

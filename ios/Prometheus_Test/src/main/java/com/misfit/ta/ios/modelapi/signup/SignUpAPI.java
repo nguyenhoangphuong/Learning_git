@@ -140,7 +140,7 @@ public class SignUpAPI extends ModelAPI {
     	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");
     	
     	// check tutorial tiles
-    	Timeline.dragUpTimeline();
+    	Timeline.dragUpTimelineAndHandleTutorial();
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileTapMeLabel), "Tap Me! tile is displayed");
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileActivitiesLabel), "Activities tile is displayed");
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileSleepLabel), "Sleep tile is displayed");

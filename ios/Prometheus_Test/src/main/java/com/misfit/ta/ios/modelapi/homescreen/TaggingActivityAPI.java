@@ -299,7 +299,7 @@ public class TaggingActivityAPI extends ModelAPI {
 			}
 			HomeScreen.tapProgressCircle();
 		}
-		Timeline.dragUpTimeline();
+		Timeline.dragUpTimelineAndHandleTutorial();
 		PrometheusHelper.handleTagEditingTutorial();
 		if (this.lastPoints >= 50f) {
 			tilesCount++;
