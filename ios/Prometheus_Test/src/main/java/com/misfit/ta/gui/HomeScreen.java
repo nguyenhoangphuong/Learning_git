@@ -105,14 +105,6 @@ public class HomeScreen {
 		Gui.touchAVIew("UIButton", 5);
 	}
 
-	public static void dragUpTimeline() {
-		Gui.drag(240, 300, 240, 100);
-	}
-
-	public static void dragDownTimeline() {
-		Gui.drag(240, 200, 240, 400);
-	}
-
 	public static void sync() {
 		PrometheusHelper.sync();
 	}

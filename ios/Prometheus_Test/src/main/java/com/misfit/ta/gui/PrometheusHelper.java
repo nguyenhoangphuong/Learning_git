@@ -198,6 +198,12 @@ public class PrometheusHelper {
 			}
 		}
 	}
+	
+	public static void handleTagEditingTutorial() {
+		if (ViewUtils.isExistedView("UIButtonLabel", DefaultStrings.EndTutorialButton)) {
+			Gui.touchAVIew("UIButtonLabel", DefaultStrings.EndTutorialButton);
+		}
+	}
 
 	public static void handleUpdateFirmwarePopup() {
 		if (ViewUtils.isExistedView("UILabel", DefaultStrings.UpdateFirmwareMessage)) {

@@ -16,6 +16,7 @@ import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Sync;
+import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
@@ -64,7 +65,7 @@ public class WeekViewAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_CheckGoal() {
-		HomeScreen.dragUpTimeline();
+		Timeline.dragUpTimeline();
 		Integer improvement = calculateImprovement();
 		if (improvement != null) {
 			String message = improvement > 0 ? DefaultStrings.MoreImprovmentMessage
@@ -73,7 +74,7 @@ public class WeekViewAPI extends ModelAPI {
 					String.format("%d%%", Math.abs(improvement)))
 					&& ViewUtils.isExistedView("UILabel", message), "Improvement is displayed OK");
 		}
-		HomeScreen.dragDownTimeline();
+		Timeline.dragDownTimeline();
 	}
 
 	/**

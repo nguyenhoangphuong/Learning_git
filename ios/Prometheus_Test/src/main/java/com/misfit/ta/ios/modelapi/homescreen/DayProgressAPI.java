@@ -183,9 +183,10 @@ public class DayProgressAPI extends ModelAPI {
 			HomeScreen.tapProgressCircle();
 		}
 		
-		Gui.dragUpTimeline();
-		Gui.swipeUp(1000);
-		Gui.swipeUp(1000);
+		Timeline.dragUpTimeline();
+//		Gui.swipeUp(1000);
+//		Gui.swipeUp(1000);
+		PrometheusHelper.handleTagEditingTutorial();
 		
 		if (this.lastPoints >= 50f) {
 			
@@ -199,7 +200,7 @@ public class DayProgressAPI extends ModelAPI {
 			Assert.assertTrue(!ViewUtils.isExistedView("UILabel", this.lastStartTime), 
 					"Start time shouldn't be displayed because of low points");
 		}
-		Gui.dragDownTimeline();
+		Timeline.dragDownTimeline();
 	}
 
 	public void e_stay() {

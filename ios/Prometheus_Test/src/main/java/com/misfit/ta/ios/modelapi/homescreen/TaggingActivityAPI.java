@@ -16,6 +16,7 @@ import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
@@ -298,7 +299,8 @@ public class TaggingActivityAPI extends ModelAPI {
 			}
 			HomeScreen.tapProgressCircle();
 		}
-		Gui.dragUpTimeline();
+		Timeline.dragUpTimeline();
+		PrometheusHelper.handleTagEditingTutorial();
 		if (this.lastPoints >= 50f) {
 			tilesCount++;
 			if (tilesCount > 9) {
@@ -341,7 +343,7 @@ public class TaggingActivityAPI extends ModelAPI {
 					!ViewUtils.isExistedView("UILabel", this.lastStartTime),
 					"Start time shouldn't be displayed because of low points");
 		}
-		Gui.dragDownTimeline();
+		Timeline.dragDownTimeline();
 	}
 
 	public void e_chooseTennis() {
