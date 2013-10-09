@@ -35,10 +35,11 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-		Gui.init("192.168.1.216");
+		Gui.init("192.168.1.144");
 		
 //		Timeline.editTile("3:46pm");
-		Timeline.openTile("3:46pm - 4:36pm");
+//		Timeline.openTile("3:46pm - 4:36pm");
+		ViewUtils.isExistedView("UILabel", "Today");
 		
 	}
 }

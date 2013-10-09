@@ -1,6 +1,5 @@
 package com.misfit.ta.ios.tests;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

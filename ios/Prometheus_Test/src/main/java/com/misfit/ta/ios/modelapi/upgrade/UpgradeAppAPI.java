@@ -29,7 +29,7 @@ public class UpgradeAppAPI extends ModelAPI {
 	}
 	
 	// static
-	static private String[] MVPAppPaths = new String[] {
+	private static String[] MVPAppPaths = new String[] {
 		"apps/mvp16.1/Prometheus.ipa",
 		"apps/mvp17.1/Prometheus.ipa",
 		"apps/mvp18.1/Prometheus.ipa",
@@ -38,17 +38,20 @@ public class UpgradeAppAPI extends ModelAPI {
 	public static int MVP_17_1 = 1;
 	public static int MVP_18_1 = 2;
 	
+	
 	// fields
 	public int fromMVP = -1;
 	public boolean willSignOutBeforeUpgrade = true;
 	public boolean willCheckProfile = false;
 	 
+	
 	private String pathToOldApp = null;
 	private String email = "";
 	private int numberOfActivity = 1;
 	private int totalPoint = numberOfActivity * (numberOfActivity + 1) / 2 * 100;
 	private int totalStep = totalPoint * 10;
 	private float totalMile = numberOfActivity * (numberOfActivity + 1) / 2 * 0.4f;
+	
 	
 	private void checkAppsExist() {
 		
@@ -129,7 +132,7 @@ public class UpgradeAppAPI extends ModelAPI {
 		if(willSignOutBeforeUpgrade) {
 			
 			if(fromMVP == MVP_16_1)
-				Gui.touchAVIew("UILabel", "Sync");
+				Gui.touchAVIew("UILabel", "Today");
 				
 			PrometheusHelper.signOut();
 		}
@@ -145,7 +148,7 @@ public class UpgradeAppAPI extends ModelAPI {
 		
 		// because install happen in new thread, 
 		// make sure it finish before launching instrument
-		ShortcutsTyper.delayTime(10000);
+		ShortcutsTyper.delayTime(15000);
 		launchInstrument();
 	}
 	
@@ -173,15 +176,17 @@ public class UpgradeAppAPI extends ModelAPI {
 		Assert.assertTrue(LaunchScreen.isAtLaunchScreen(), "Current view is LaunchScreen");
 	}
 	
-	public void v_InitialScreen() {
-		
-		Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
-	}
-	
 	public void v_HomeScreen() {
 		
 		PrometheusHelper.handleUpdateFirmwarePopup();
 		Assert.assertTrue(HomeScreen.isToday(), "Current view is Homescreen - Today");
+	}
+	
+	public void v_InitialScreen() {
+		
+		if(willSignOutBeforeUpgrade) {
+			Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
+		}
 	}
 	
 	public void v_HomeScreenAfterUpgrade() {

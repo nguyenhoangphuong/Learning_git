@@ -2,7 +2,9 @@ package com.misfit.ta.backend.aut;
 
 import com.google.resting.json.JSONException;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.backend.data.statistics.Statistics;
 
 public class BackendHelper {
 
@@ -17,6 +19,36 @@ public class BackendHelper {
 		long now = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signIn(email, password).token;
 		MVPApi.createPedometer(token, serialNumber, "0.0.36r", now, null, now, "pedometer-" + System.nanoTime(), null, now);
+	}
+	
+	public static void setPersonalBest(String email, String password, int points) {
+
+		String token = MVPApi.signIn(email, password).token;
+		Statistics statistics = DefaultValues.RandomStatistic();
+		statistics.getPersonalRecords().setPersonalBestRecordsInPoint((double)points * 2.5);
+		statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
+		BaseResult result = MVPApi.createStatistics(token, statistics);
+		
+		if(result.isExisted()) {
+			
+			statistics = Statistics.fromResponse(result.response);
+			statistics.getPersonalRecords().setPersonalBestRecordsInPoint((double)points);
+			statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
+			MVPApi.updateStatistics(token, statistics);
+		}
+	}
+	
+	public static void completeGoalInPast(String email, String password, int diffFromToday) {
+
+		String token = MVPApi.signIn(email, password).token;
+		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * diffFromToday;
+		Goal goal = DefaultValues.CreateGoal(timestamp);
+		goal.setValue(2500d);
+		goal.getProgressData().setPoints(2500d);
+		goal.getProgressData().setDistanceMiles(2d);
+		goal.getProgressData().setSteps(4000);
+		goal.getProgressData().setSeconds(3600);
+		MVPApi.createGoal(token, goal);
 	}
 	
 	public static void clearLatestGoal(String email, String password) {
@@ -38,8 +70,11 @@ public class BackendHelper {
 	
 	public static void main(String[] args) throws JSONException {
 		
-		String token = MVPApi.signIn("qa089@a.a", "qqqqqq").token;
-		MVPApi.getTimelineItems(token, System.currentTimeMillis() / 1000 - 3600, Integer.MAX_VALUE, 0);
+		String email = "qa092@a.a";
+		String password = "qqqqqq";
+		completeGoalInPast(email, password, 1);
+		completeGoalInPast(email, password, 2);
+		setPersonalBest(email, password, 1800);
 	}
 
 }
