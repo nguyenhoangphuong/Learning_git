@@ -4,6 +4,7 @@ import com.google.resting.json.JSONException;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.statistics.Statistics;
 
 public class BackendHelper {
@@ -16,19 +17,38 @@ public class BackendHelper {
 
 	public static void link(String email, String password, String serialNumber) {
 
-		long now = System.currentTimeMillis() / 1000;
+		Long now = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signIn(email, password).token;
-		MVPApi.createPedometer(token, serialNumber, "0.0.36r", now, null, now, "pedometer-" + System.nanoTime(), null, now);
+		
+		// create first
+		String localId = "pedometer-" + System.nanoTime();
+		Pedometer pedo = MVPApi.createPedometer(token, serialNumber, MVPApi.LATEST_FIRMWARE_VERSION_STRING, 
+				now, null, now, localId, null, now);
+		
+		if(pedo.getLocalId().equals(localId))
+			return;
+		
+		// if server return another pedo, use update instead
+		pedo = MVPApi.getPedometer(token);
+		pedo.setFirmwareRevisionString(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
+		pedo.setSerialNumberString(serialNumber);
+		pedo.setLocalId("pedometer-" + MVPApi.generateLocalId());
+		pedo.setLastSyncedTime(now);
+		pedo.setLinkedTime(now);
+		pedo.setUpdatedAt(now);
+		MVPApi.updatePedometer(token, pedo);
 	}
 	
 	public static void setPersonalBest(String email, String password, int points) {
 
+		// create first
 		String token = MVPApi.signIn(email, password).token;
 		Statistics statistics = DefaultValues.RandomStatistic();
 		statistics.getPersonalRecords().setPersonalBestRecordsInPoint((double)points * 2.5);
 		statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
 		BaseResult result = MVPApi.createStatistics(token, statistics);
 		
+		// if existed, update instead
 		if(result.isExisted()) {
 			
 			statistics = Statistics.fromResponse(result.response);
