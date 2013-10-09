@@ -60,12 +60,12 @@ public class Sync {
 
 	public static void tapPopupSyncLater() {
 		
-		Gui.touchPopupButton(1);
+		Gui.touchPopupButton(0);
 	}
 	
 	public static void tapPopupSyncNow() {
 		
-		Gui.touchPopupButton(0);
+		Gui.touchPopupButton(1);
 	}
 	
 }

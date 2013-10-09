@@ -160,6 +160,18 @@ public class HomeScreen {
 				DefaultStrings.NoActivityLabel);
 	}
 
+	public static boolean isEditTagTutorial() {
+		
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.TutorialForUpdateActivityTag) &&
+				ViewUtils.isExistedView("UIButtonLabel", DefaultStrings.EndTutorialButton);
+	}
+	
+	public static boolean isDeleteSleepTutorial() {
+		
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.TutorialForDeleteSleepTile) &&
+				ViewUtils.isExistedView("UIButtonLabel", DefaultStrings.EndTutorialButton);
+	}
+	
 	// alerts
 	public static boolean hasSuggestWearingPositionForSwimmingMessage() {
 		return Gui.hasAlert()

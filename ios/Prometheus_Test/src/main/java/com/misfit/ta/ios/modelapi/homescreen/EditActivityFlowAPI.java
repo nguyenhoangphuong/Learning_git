@@ -6,11 +6,8 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.backend.aut.DefaultValues;
-import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.backend.data.statistics.Statistics;
+import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.EditTagScreen;
@@ -29,8 +26,8 @@ public class EditActivityFlowAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 	
-	private int steps = 5000;
-	private int mins = 50;
+	private int steps = 500;
+	private int mins = 5;
 	private int rawPoint = (int)Math.floor(PrometheusHelper.calculatePoint(steps, mins, MVPEnums.ACTIVITY_WALKING));
 	private int point = rawPoint;
 	private int currentActivity;
@@ -51,6 +48,7 @@ public class EditActivityFlowAPI extends ModelAPI {
 		// get new data from server
 		HomeScreen.pullToRefresh();
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
+		
 	}
 	
 	public void e_inputFirstActivity() {
@@ -61,14 +59,18 @@ public class EditActivityFlowAPI extends ModelAPI {
 		HomeScreen.tapSave();
 	}
 	
+	public void e_dragUpTimeline() {
+		
+		Timeline.dragUpTimeline();
+	}
+	
 	public void e_followTutorial() {
 		
-		// TODO
+		PrometheusHelper.handleTagEditingTutorial();
 	}
 	
 	public void e_holdToEditActivity() {
 	
-		Timeline.dragUpTimelineAndHandleTutorial();
 		Timeline.editTile("1:00am");
 	}
 	
@@ -132,7 +134,8 @@ public class EditActivityFlowAPI extends ModelAPI {
 	}
 	
 	public void v_ActivityTutorial() {
-		// TODO
+		
+		Assert.assertTrue(HomeScreen.isEditTagTutorial(), "Current view is HomeScreen - Edit Tag tutorial");
 	}
 	
 	public void v_EditActivityTag() {
@@ -140,19 +143,16 @@ public class EditActivityFlowAPI extends ModelAPI {
 		Assert.assertTrue(EditTagScreen.isEditTagScreen(), "Current view is Edit Tag");
 	}
 	
-	public void v_HomeScreenUpdated() {
-
-		int newPoint = (int) Math.floor(PrometheusHelper.calculatePoint(steps, mins, currentActivity));
-
-		checkDailyGoalMilestone(newPoint);
-		checkStreakMilestone(newPoint);
-		checkPersonalBestMilestone(newPoint);
-		checkNewTileAndProgress(newPoint);
-	}
-	
 	public void v_SyncRequireAlert() {
 		
 		Assert.assertTrue(Sync.hasShineOutOfSyncMessage(), "Sync require alert shows up");
+	}
+
+	public void v_HomeScreenUpdated() {
+
+		int newPoint = (int) Math.floor(MVPCalculator.calculatePointForNewTag(steps, mins, currentActivity));
+
+		checkDailyGoalMilestone(newPoint);
 	}
 	
 	public void v_LostPointAlert() {
@@ -176,7 +176,7 @@ public class EditActivityFlowAPI extends ModelAPI {
 			
 			// check hit goal animation
 			Assert.assertTrue(ViewUtils.isExistedView("UILabel", "GOAL"), "Goal animation plays");
-			Timeline.dragUpTimelineAndHandleTutorial();
+			Timeline.dragUpTimeline();
 			
 			// check 100% tile
 			String hit100GoalTime = String.format("1:%02dam", 1000/ppm);
@@ -184,7 +184,7 @@ public class EditActivityFlowAPI extends ModelAPI {
 			capture();
 			Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(hit100GoalTime, 1000, Timeline.DailyGoalMessagesFor100Percent),
 					"Goal 100% tile displays correctly");
-			Timeline.closeCurrentTile();
+			Timeline.closeCurrentTile(); 
 		}
 		
 		if(newPoint >= 1500) {
@@ -215,11 +215,14 @@ public class EditActivityFlowAPI extends ModelAPI {
 		if(newPoint <= point)
 			return;
 		
+		float ppm = newPoint * 1f / mins;
+		String hit100GoalTime = String.format("1:%02dam", 1000/ppm);
+		
 		for(int i = 0; i < 10; i++) {
 			
-			Timeline.openTile("1:00am");
+			Timeline.openTile(hit100GoalTime);
 			capture();
-			if(Timeline.isStreakTileCorrect("1:00am", 3, Timeline.Streak3DaysMessages)) {
+			if(Timeline.isStreakTileCorrect(hit100GoalTime, 3, Timeline.Streak3DaysMessages)) {
 				Timeline.closeCurrentTile();
 				return;
 			}
@@ -254,7 +257,7 @@ public class EditActivityFlowAPI extends ModelAPI {
 		// check progress circle
 		Timeline.dragDownTimeline();
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", newPoint + ""), "Total points updated correctly");
-		Timeline.dragDownTimeline();
+		Timeline.dragUpTimeline();
 	}
 
 }

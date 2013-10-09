@@ -16,11 +16,12 @@ public class MVPCalculator {
 	private static double PPS_BASKETBALL = 1d;
 	private static double PPS_SOCCER = 0.875d;
 	private static int MIN_POINT_PER_MINUTE = 162;
-	static double DIVISOR_WALKING = 10;
+	private static double DIVISOR_WALKING = 10;
 	private static double DIVISOR_SWIMMING = 22;
 	private static double DIVISOR_RUNNING = 30;
 	private static final Map<Integer, Double> factorCalculationMap  = new HashMap<Integer, Double>();
-    static
+    
+	static
     {
     	factorCalculationMap.put(MVPEnums.ACTIVITY_TENNIS, PPS_TENNIS);
     	factorCalculationMap.put(MVPEnums.ACTIVITY_SWIMMING, PPS_SWIMMING);
@@ -28,6 +29,7 @@ public class MVPCalculator {
     	factorCalculationMap.put(MVPEnums.ACTIVITY_BASKETBALL, PPS_BASKETBALL);
     	factorCalculationMap.put(MVPEnums.ACTIVITY_SOCCER, PPS_SOCCER);
     }
+    
 	public static double calculateMiles(int steps, int mins, float heightInInches) {
 
 		double SR = steps * 1d / mins;
@@ -71,6 +73,16 @@ public class MVPCalculator {
 		return Math.min(E, GAMMA * E + DELTA * fullBMR);
 	}
 
+	public static double calculatePointForNewTag(int steps, int mins, int newActivityType) {
+		
+		int rawPoint = (int) Math.floor(calculatePoint(steps, mins, MVPEnums.ACTIVITY_WALKING));
+		
+		if(newActivityType == MVPEnums.ACTIVITY_RUNNING || newActivityType == MVPEnums.ACTIVITY_WALKING)
+			return rawPoint;
+		
+		return Math.min(steps * factorCalculationMap.get(newActivityType), mins * 162);
+	}
+	
 	public static int calculateNearestTimeRemainInMinute(int points, int activityType) {
 		
 		int[] scales = new int[] {0, 5, 10, 15, 20, 30, 45, 60};

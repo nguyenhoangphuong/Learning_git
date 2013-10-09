@@ -4,11 +4,7 @@ import java.io.File;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
-import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.backend.aut.DefaultValues;
-import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;

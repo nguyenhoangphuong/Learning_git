@@ -10,7 +10,6 @@ import org.testng.Assert;
 
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;

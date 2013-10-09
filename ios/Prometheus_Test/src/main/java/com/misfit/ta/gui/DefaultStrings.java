@@ -41,7 +41,7 @@ public class DefaultStrings {
 	public static String UnableToLinkMessage = "This Shine is linked to another account. The owner of that account must unlink it.";
 	public static String UnableToLinkTitle = "Unable to Link";
 	public static String ShineOutOfSyncTitle = "Shine Out of Sync.";
-	public static String ShineOutOfSyncMessage = "You'll needto sync Shine to reflect the change in activity progress.";
+	public static String ShineOutOfSyncMessage = "You'll need to sync Shine to reflect the change in activity progress.";
 	
 	// forgot password
 	public static String ForgotPasswordEmailNotExistMessage = "The email you entered is not associated with a Shine account";
@@ -70,6 +70,9 @@ public class DefaultStrings {
 	public static String TutorialFirstPageLabel = "_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.";
 	public static String TileTimeTravelLabel = "TIME TRAVEL";
 	public static String MisfitLabsButton = "Misfit Labs";
+	
+	public static String TutorialForUpdateActivityTag = "Hold down on an activity highlight to change the tag. You can only do this on the current day.";
+	public static String TutorialForDeleteSleepTile = "Hold down on a sleep highlight to remove it. You can only do this on the current day.";
 
 	// edit tag
 	public static String EditTagTitle = "Edit Tag";
