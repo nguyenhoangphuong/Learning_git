@@ -127,7 +127,7 @@ public class Timeline {
 	}
 
 	public static void closeCurrentTile() {
-		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() - 10);
+		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() - 120);
 	}
 
 	public static void editTile(String title) {

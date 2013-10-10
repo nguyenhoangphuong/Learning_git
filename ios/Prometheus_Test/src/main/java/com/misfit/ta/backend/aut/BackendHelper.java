@@ -52,7 +52,7 @@ public class BackendHelper {
 		if(result.isExisted()) {
 			
 			statistics = Statistics.fromResponse(result.response);
-			statistics.getPersonalRecords().setPersonalBestRecordsInPoint((double)points);
+			statistics.getPersonalRecords().setPersonalBestRecordsInPoint((double)points * 2.5);
 			statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
 			MVPApi.updateStatistics(token, statistics);
 		}

@@ -39,7 +39,8 @@ public class Debug {
 		
 //		Timeline.editTile("3:46pm");
 //		Timeline.openTile("3:46pm - 4:36pm");
-		ViewUtils.isExistedView("UILabel", "Today");
+//		ViewUtils.isExistedView("UILabel", "Today");
+		Gui.touchAVIew("UIButton", 0);
 		
 	}
 }
