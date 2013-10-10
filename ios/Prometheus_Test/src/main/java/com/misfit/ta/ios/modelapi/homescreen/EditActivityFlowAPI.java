@@ -135,7 +135,7 @@ public class EditActivityFlowAPI extends ModelAPI {
 
 		int newPoint = (int) Math.floor(MVPCalculator.calculatePointForNewTag(steps, mins, currentActivity));
 
-		checkDailyGoalMilestone(newPoint);
+		checkNewTileAndProgress(newPoint);
 	}
 	
 	public void v_LostPointAlert() {
@@ -150,47 +150,20 @@ public class EditActivityFlowAPI extends ModelAPI {
 		Gui.captureScreen("EditActivityFlow-" + System.nanoTime());
 	}
 	
-	private void checkDailyGoalMilestone(int newPoint) {
+	private void checkNewTileAndProgress(int newPoint) {
 		
-		float ppm = newPoint * 1f / mins;
-		
-		// check daily goal milestones
-		if(newPoint >= 1000) {
-			
-			// check hit goal animation
-			Assert.assertTrue(ViewUtils.isExistedView("UILabel", "GOAL"), "Goal animation plays");
-			Timeline.dragUpTimeline();
-			
-			// check 100% tile
-			String hit100GoalTime = String.format("1:%02dam", 1000/ppm);
-			Timeline.openTile(hit100GoalTime);
-			capture();
-			Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(hit100GoalTime, 1000, Timeline.DailyGoalMessagesFor100Percent),
-					"Goal 100% tile displays correctly");
-			Timeline.closeCurrentTile(); 
-		}
-		
-		if(newPoint >= 1500) {
-			
-			// check 150% tile
-			String hit150GoalTime = String.format("1:%02dam", 1500/ppm);
-			Timeline.openTile(hit150GoalTime);
-			capture();
-			Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(hit150GoalTime, 1500, Timeline.DailyGoalMessagesFor150Percent),
-					"Goal 150% tile displays correctly");
-			Timeline.closeCurrentTile();
-		}
-		
-		if(newPoint >= 2000) {
-			
-			// check 200% tile
-			String hit200GoalTime = String.format("1:%02dam", 2000/ppm);
-			Timeline.openTile(hit200GoalTime);
-			capture();
-			Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(hit200GoalTime, 2000, Timeline.DailyGoalMessagesFor200Percent),
-					"Goal 200% tile displays correctly");
-			Timeline.closeCurrentTile();
-		}
+		// check tile updated and progress
+		Timeline.openTile("1:00am - 1:50am");
+		Timeline.openTile("1:00am");
+		capture();
+		Assert.assertTrue(Timeline.isActivityTileCorrect("1:00am", "1:50am", mins, newPoint, null),
+				"Activity updated correctly");
+		Timeline.closeCurrentTile();
+
+		// check progress circle
+		Timeline.dragDownTimeline();
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", newPoint + ""), "Total points updated correctly");
+		Timeline.dragUpTimeline();
 	}
 
 }

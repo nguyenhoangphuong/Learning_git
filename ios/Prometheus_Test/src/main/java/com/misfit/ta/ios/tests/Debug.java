@@ -9,6 +9,7 @@ import org.testng.Assert;
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.statistics.Statistics;
@@ -35,12 +36,10 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-		Gui.init("192.168.1.144");
+//		Gui.init("192.168.1.144");
+		BackendHelper.clearLatestGoal("qa093@a.a", "qqqqqq");
+//		BackendHelper.setPersonalBest("qa093@a.a", "qqqqqq", 499);
 		
-//		Timeline.editTile("3:46pm");
-//		Timeline.openTile("3:46pm - 4:36pm");
-//		ViewUtils.isExistedView("UILabel", "Today");
-		Gui.touchAVIew("UIButton", 0);
 		
 	}
 }
