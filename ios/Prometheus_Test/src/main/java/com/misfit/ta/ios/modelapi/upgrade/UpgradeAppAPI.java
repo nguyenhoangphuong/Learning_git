@@ -19,10 +19,12 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.aut.AutomationTest;
+import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.utils.TextTool;
 
 public class UpgradeAppAPI extends ModelAPI {
 
@@ -114,6 +116,9 @@ public class UpgradeAppAPI extends ModelAPI {
 		
 		// sign up using default profile and goal
 		email = PrometheusHelper.signUp();
+		
+		// link device to account
+		BackendHelper.link(email, "qwerty1", TextTool.getRandomString(10, 10));
 	}
 	
 	public void e_inputActivities() {
@@ -156,16 +161,6 @@ public class UpgradeAppAPI extends ModelAPI {
 		
 		// wait for data
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
-		
-		if(fromMVP == MVP_16_1) {
-			
-			// linking shine
-			SignUp.sync();
-			PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
-			
-			// tutorial
-			PrometheusHelper.handleTutorial();
-		}
 	}
 	
 	public void e_toProfile() {
