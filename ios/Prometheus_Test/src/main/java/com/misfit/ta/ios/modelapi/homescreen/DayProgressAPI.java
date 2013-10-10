@@ -201,4 +201,6 @@ public class DayProgressAPI extends ModelAPI {
 		Timeline.dragDownTimeline();
 	}
 
+	public void v_EndInput() {}
+	
 }
