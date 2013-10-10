@@ -29,7 +29,7 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 		BackendHelper.completeGoalInPast(email, "qwerty1", 1);
 		
 		// api: update statistics to set best point to 400 pts
-		BackendHelper.setPersonalBest(email, "qwerty1", 1000);
+		BackendHelper.setPersonalBest(email, "qwerty1", 400);
 		
 		// pull to refresh to make sure local db is latest
 		HomeScreen.pullToRefresh();
