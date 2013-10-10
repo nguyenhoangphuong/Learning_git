@@ -2,15 +2,9 @@ package com.misfit.ta.backend.api;
 
 import static com.google.resting.component.EncodingTypes.UTF8;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -32,7 +26,6 @@ import com.misfit.ta.backend.data.graph.*;
 import com.misfit.ta.backend.data.profile.*;
 import com.misfit.ta.backend.data.pedometer.*;
 import com.misfit.ta.backend.data.statistics.Statistics;
-import com.misfit.ta.backend.data.sync.SyncDebugLog;
 import com.misfit.ta.backend.data.timeline.*;
 import com.misfit.ta.backend.data.*;
 import com.misfit.ta.report.TRS;
@@ -52,7 +45,7 @@ public class MVPApi {
 	public static String HTTP_PUT = "PUT";
 	
 	public static int CACHE_TRY_TIME = 10;
-	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.40r";
+	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.43r";
 
 	// request helpers
 	static private ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
