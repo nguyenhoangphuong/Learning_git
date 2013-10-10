@@ -19,6 +19,7 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.aut.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
 
@@ -41,7 +42,6 @@ public class UpgradeAppAPI extends ModelAPI {
 	
 	// fields
 	public int fromMVP = -1;
-	public boolean willSignOutBeforeUpgrade = true;
 	public boolean willCheckProfile = false;
 	 
 	
@@ -129,13 +129,10 @@ public class UpgradeAppAPI extends ModelAPI {
 	
 	public void e_signOut() {
 		
-		if(willSignOutBeforeUpgrade) {
-			
-			if(fromMVP == MVP_16_1)
-				Gui.touchAVIew("UILabel", "Today");
+		if(fromMVP == MVP_16_1)
+			Gui.touchAVIew("UILabel", "Today");
 				
-			PrometheusHelper.signOut();
-		}
+		PrometheusHelper.signOut();
 	}
 	
 	public void e_installAndLaunchLatestApp() {
@@ -168,6 +165,8 @@ public class UpgradeAppAPI extends ModelAPI {
 			ShortcutsTyper.delayTime(500);
 			HomeSettings.tapYourProfile();
 		}
+		else
+			TRS.instance().addCode("Don't check profile. Do nothing.", null);
 	}
 	
 	
@@ -184,9 +183,7 @@ public class UpgradeAppAPI extends ModelAPI {
 	
 	public void v_InitialScreen() {
 		
-		if(willSignOutBeforeUpgrade) {
-			Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
-		}
+		Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
 	}
 	
 	public void v_HomeScreenAfterUpgrade() {
@@ -246,6 +243,8 @@ public class UpgradeAppAPI extends ModelAPI {
 			String weight = "120.0 lbs";
 			Assert.assertTrue(ViewUtils.isExistedView("UILabel", weight), "Weight should be " + weight);
 		}
+		else
+			TRS.instance().addCode("Don't check profile. Do nothing.", null);
 	}
 
 }
