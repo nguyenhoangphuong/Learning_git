@@ -16,6 +16,7 @@ import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.InstrumentHelper;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.aut.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
@@ -155,6 +156,16 @@ public class UpgradeAppAPI extends ModelAPI {
 		
 		// wait for data
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
+		
+		if(fromMVP == MVP_16_1) {
+			
+			// linking shine
+			SignUp.sync();
+			PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
+			
+			// tutorial
+			PrometheusHelper.handleTutorial();
+		}
 	}
 	
 	public void e_toProfile() {
