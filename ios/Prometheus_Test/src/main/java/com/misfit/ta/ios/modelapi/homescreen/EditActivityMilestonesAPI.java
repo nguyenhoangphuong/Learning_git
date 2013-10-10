@@ -28,7 +28,6 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 	
 	private int steps = 5000;
 	private int mins = 50;
-	private int point = (int)Math.floor(PrometheusHelper.calculatePoint(steps, mins, MVPEnums.ACTIVITY_WALKING));
 	
 	public void e_init() {
 		
@@ -47,7 +46,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 	
-	public void e_inputFirstActivityAndFinishTutorial() {
+	public void e_inputActivityAndFinishTutorial() {
 		
 		// input first activity
 		HomeScreen.tapOpenManualInput();
@@ -60,7 +59,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 	
 	public void e_holdToEditActivity() {
 	
-		Timeline.editTile("1:00am");
+		Timeline.holdAndPressTile("1:00am");
 	}
 	
 	public void e_changeToSwimming() {
