@@ -54,7 +54,7 @@ public class EditActivityFlowAPI extends ModelAPI {
 	
 	public void e_holdToEditActivity() {
 	
-		Timeline.editTile("1:00am");
+		Timeline.holdAndPressTile("1:00am");
 	}
 	
 	public void e_changeToSwimming() {

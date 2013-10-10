@@ -98,11 +98,7 @@ public class PrometheusHelper {
 		times[2] = Gui.isRunningOnIOS7() ? times[2].toLowerCase() : times[2].toUpperCase();
 	
 		// enter time
-		Gui.touchAVIew("UITextField", 1);
-		Gui.setPicker(0, times[0]);
-		Gui.setPicker(1, times[1]);
-		Gui.setPicker(2, times[2]);
-		Gui.dismissPicker();
+		manualInputTime(times);
 
 		// enter duration
 		Gui.touchAVIew("UITextField", 3);
@@ -112,6 +108,14 @@ public class PrometheusHelper {
 		// enter steps
 		Gui.touchAVIew("UITextField", 4);
 		Gui.setText("UITextField", 4, steps + "");
+		Gui.dismissPicker();
+	}
+
+	public static void manualInputTime(String[] times) {
+		Gui.touchAVIew("UITextField", 1);
+		Gui.setPicker(0, times[0]);
+		Gui.setPicker(1, times[1]);
+		Gui.setPicker(2, times[2]);
 		Gui.dismissPicker();
 	}
 

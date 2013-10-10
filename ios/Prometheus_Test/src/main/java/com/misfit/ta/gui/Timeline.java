@@ -130,7 +130,7 @@ public class Timeline {
 		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() - 120);
 	}
 
-	public static void editTile(String title) {
+	public static void holdAndPressTile(String title) {
 		Gui.longTouchAView("UILabel", title, 1500);
 	}
 

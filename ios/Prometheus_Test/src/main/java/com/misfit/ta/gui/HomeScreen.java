@@ -78,6 +78,14 @@ public class HomeScreen {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SaveButton);
 	}
 
+	public static void tap180MinNap() {
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings._180MinNap);
+	}
+	
+	public static void tap8HourSleep() {
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings._8HourSleep);
+	}
+	
 	public static void enterManualActivity(String[] times, int duration,
 			int steps) {
 		PrometheusHelper.inputManualRecord(times, duration, steps);
