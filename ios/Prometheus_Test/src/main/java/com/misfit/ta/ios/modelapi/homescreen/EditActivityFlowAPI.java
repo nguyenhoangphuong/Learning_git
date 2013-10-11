@@ -153,10 +153,10 @@ public class EditActivityFlowAPI extends ModelAPI {
 	private void checkNewTileAndProgress(int newPoint) {
 		
 		// check tile updated and progress
-		Timeline.openTile("1:00am - 1:50am");
+		Timeline.openTile("1:00am - 1:05am");
 		Timeline.openTile("1:00am");
 		capture();
-		Assert.assertTrue(Timeline.isActivityTileCorrect("1:00am", "1:50am", mins, newPoint, null),
+		Assert.assertTrue(Timeline.isActivityTileCorrect("1:00am", "1:05am", mins, newPoint, null),
 				"Activity updated correctly");
 		Timeline.closeCurrentTile();
 

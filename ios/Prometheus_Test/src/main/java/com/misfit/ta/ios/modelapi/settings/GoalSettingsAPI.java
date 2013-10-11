@@ -27,9 +27,9 @@ public class GoalSettingsAPI extends ModelAPI {
 	private int tempGoal = 1000;
 
 	public void e_Init() {
-		// sign up account with require information
+
 		PrometheusHelper.signUp();
-		PrometheusHelper.inputRandomRecord();
+		PrometheusHelper.inputManualRecord(new String[] {"1", "00", "am"}, 5, 500);
 	}
 
 	public void e_ToGoalSettings() {

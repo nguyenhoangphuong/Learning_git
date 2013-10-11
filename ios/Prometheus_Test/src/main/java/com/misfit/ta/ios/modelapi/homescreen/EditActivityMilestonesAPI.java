@@ -6,6 +6,7 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
@@ -33,13 +34,14 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		
 		// sign up
 		String email = PrometheusHelper.signUp();
+		String token = MVPApi.signIn(email, "qwerty1").token;
 		
 		// create 2 goals in the past
-		BackendHelper.completeGoalInPast(email, "qwerty1", 1);
-		BackendHelper.completeGoalInPast(email, "qwerty1", 2);
+		BackendHelper.completeGoalInPast(token, 1);
+		BackendHelper.completeGoalInPast(token, 2);
 				
 		// create a personal best record
-		BackendHelper.setPersonalBest(email, "qwerty1", 1000);
+		BackendHelper.setPersonalBest(token, 1000);
 		
 		// get new data from server
 		HomeScreen.pullToRefresh();

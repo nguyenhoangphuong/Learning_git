@@ -41,12 +41,27 @@ public class StreakMilestoneAPI extends ModelAPI {
 		// get current goal
 		token = MVPApi.signIn(email, "qwerty1").token;
 		todayBlankGoal = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(), Integer.MAX_VALUE, 0).goals[0];
+		
+		// update current day goal's value to 100 pts
+		todayBlankGoal.setValue(100 * 2.5d);
+		MVPApi.updateGoal(token, todayBlankGoal);
+		
+		// create 2 goals in the past
+		BackendHelper.completeGoalInPast(token, ++dayDiff);
+		BackendHelper.completeGoalInPast(token, ++dayDiff);
+		
+		// get new data from server
+		HomeScreen.pullToRefresh();
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
+		
+		// Now we have 2 complete goals and
+		// today goal with value = 100
 	}
 
 	public void e_createGoalInThePast() {
 
 		// create goal in the past using api
-		BackendHelper.completeGoalInPast(email, "qwerty1", ++dayDiff);
+		BackendHelper.completeGoalInPast(token, ++dayDiff);
 
 		// reset current goal using api
 		MVPApi.updateGoal(token, todayBlankGoal);
@@ -58,12 +73,12 @@ public class StreakMilestoneAPI extends ModelAPI {
 
 	public void e_finishGoal() {
 
-		// input 1012 pts record (1 min 550 steps)
-		mins += 10;
+		// input 100 pts (10 mins - 1000 steps)
+		mins += 20;
 		String[] times = new String[] { mins / 60 + "", String.format("%02d", mins % 60), "AM" };
 
 		HomeScreen.tapOpenManualInput();
-		PrometheusHelper.inputManualRecord(times, 1, 550);
+		PrometheusHelper.inputManualRecord(times, 10, 1000);
 		HomeScreen.tapSave();
 		ShortcutsTyper.delayTime(5000);
 	}
@@ -116,7 +131,7 @@ public class StreakMilestoneAPI extends ModelAPI {
 		for(int i = 0; i < dayDiff; i++)
 			Gui.swipeUp(1000);
 
-		String title = (mins / 60) + ":" + String.format("%02d", mins % 60 + 1) + "am";
+		String title = (mins / 60) + ":" + String.format("%02d", mins % 60 + 10) + "am";
 		boolean pass = false;
 		for (int i = 0; i < 3; i++) {
 			Timeline.openTile(title);

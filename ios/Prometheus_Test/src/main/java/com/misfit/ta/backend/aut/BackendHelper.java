@@ -39,18 +39,17 @@ public class BackendHelper {
 		MVPApi.updatePedometer(token, pedo);
 	}
 	
-	public static void setPersonalBest(String email, String password, int points) {
-
+	public static void setPersonalBest(String token, int points) {
+		
 		// create first
-		String token = MVPApi.signIn(email, password).token;
 		Statistics statistics = DefaultValues.RandomStatistic();
 		statistics.getPersonalRecords().setPersonalBestRecordsInPoint((double)points * 2.5);
 		statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
 		BaseResult result = MVPApi.createStatistics(token, statistics);
-		
+
 		// if existed, update instead
 		if(result.isExisted()) {
-			
+
 			statistics = Statistics.fromResponse(result.response);
 			statistics.getPersonalRecords().setPersonalBestRecordsInPoint((double)points * 2.5);
 			statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
@@ -58,9 +57,14 @@ public class BackendHelper {
 		}
 	}
 	
-	public static void completeGoalInPast(String email, String password, int diffFromToday) {
+	public static void setPersonalBest(String email, String password, int points) {
 
 		String token = MVPApi.signIn(email, password).token;
+		setPersonalBest(token, points);
+	}
+	
+	public static void completeGoalInPast(String token, int diffFromToday) {
+		
 		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * diffFromToday;
 		Goal goal = DefaultValues.CreateGoal(timestamp);
 		goal.setValue(2500d);
@@ -71,9 +75,14 @@ public class BackendHelper {
 		MVPApi.createGoal(token, goal);
 	}
 	
-	public static void clearLatestGoal(String email, String password) {
-		
+	public static void completeGoalInPast(String email, String password, int diffFromToday) {
+
 		String token = MVPApi.signIn(email, password).token;
+		completeGoalInPast(token, diffFromToday);
+	}
+	
+	public static void clearLatestGoal(String token) {
+		
 		Goal[] goals = MVPApi.searchGoal(token, 0, Integer.MAX_VALUE, 0).goals;
 		if(goals == null || goals.length == 0)
 			return;
@@ -87,6 +96,13 @@ public class BackendHelper {
 		
 		MVPApi.updateGoal(token, blank);
 	}
+	
+	public static void clearLatestGoal(String email, String password) {
+		
+		String token = MVPApi.signIn(email, password).token;
+		clearLatestGoal(token);
+	}
+	
 	
 	public static void main(String[] args) throws JSONException {
 		

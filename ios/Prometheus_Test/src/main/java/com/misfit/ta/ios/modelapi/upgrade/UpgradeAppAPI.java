@@ -16,7 +16,6 @@ import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.InstrumentHelper;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.aut.AutomationTest;
 import com.misfit.ta.backend.aut.BackendHelper;

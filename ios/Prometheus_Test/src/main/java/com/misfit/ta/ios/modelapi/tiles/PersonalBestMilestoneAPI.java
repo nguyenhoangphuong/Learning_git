@@ -4,6 +4,7 @@ import java.io.File;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
@@ -24,12 +25,13 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 		
 		// sign up with goal = 1000 pts
 		String email = PrometheusHelper.signUp();
+		String token = MVPApi.signIn(email, "qwerty1").token;
 		
 		// api: create yesterday's goal
-		BackendHelper.completeGoalInPast(email, "qwerty1", 1);
+		BackendHelper.completeGoalInPast(token, 1);
 		
 		// api: update statistics to set best point to 400 pts
-		BackendHelper.setPersonalBest(email, "qwerty1", 400);
+		BackendHelper.setPersonalBest(token, 400);
 		
 		// pull to refresh to make sure local db is latest
 		HomeScreen.pullToRefresh();
