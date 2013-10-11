@@ -14,11 +14,8 @@ import com.misfit.ta.ios.modelapi.homescreen.DayInPastAPI;
 import com.misfit.ta.ios.modelapi.homescreen.DayProgressAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityFlowAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityRandomAPI;
-<<<<<<< HEAD
-import com.misfit.ta.ios.modelapi.homescreen.EditActivityMilestonesAPI;
-=======
 import com.misfit.ta.ios.modelapi.homescreen.SleepTileRemovingAPI;
->>>>>>> Add new test for sleep removal
+
 import com.misfit.ta.ios.modelapi.homescreen.TaggingActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.WeekViewAPI;
 import com.misfit.ta.ios.modelapi.signin.SignInWithFacebookAPI;
