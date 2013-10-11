@@ -339,7 +339,7 @@ function generateSignupAccount()
 	var today = new Date();
 	var ms = today.getTime();
   
-	return "test" + ms.toString() + "@test.com";
+	return "test-" + ms.toString() + "@qa.com";
 }
 
 function generateRandomDigitString()

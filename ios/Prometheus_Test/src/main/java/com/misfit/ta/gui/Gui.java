@@ -1008,6 +1008,22 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
     
+    public static void setLanguageWithLanguageCode(String language) {
+    	String message = "(Gui setLanguage: @\"%language\")";
+        message = message.replace("%language", language);
+        NuRemoteClient.sendToServer(message);
+    }
+    
+    public static void startLocaleThread() {
+    	
+    	NuRemoteClient.sendToServer("(Gui startTestingLocaleThread)");
+    }
+    
+    public static void stopLocaleThread() {
+    	
+    	NuRemoteClient.sendToServer("(Gui stopTestingLocaleThread)");
+    }
+    
     public static boolean isRunningOnIOS7() {
     	String message = "(Gui isRunningOnIOS7)";
     	NuRemoteClient.sendToServer(message, true, false);

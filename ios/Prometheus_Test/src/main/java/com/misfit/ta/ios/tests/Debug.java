@@ -8,6 +8,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
+import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.DefaultValues;
@@ -36,9 +37,9 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-//		Gui.init("192.168.1.144");
-		BackendHelper.clearLatestGoal("qa093@a.a", "qqqqqq");
-//		BackendHelper.setPersonalBest("qa093@a.a", "qqqqqq", 499);
+		Gui.init(Settings.getParameter("DeviceIP"), 30);
+    	Gui.startLocaleThread();
+    	Gui.setLanguageWithLanguageCode("fr");
 		
 		
 	}

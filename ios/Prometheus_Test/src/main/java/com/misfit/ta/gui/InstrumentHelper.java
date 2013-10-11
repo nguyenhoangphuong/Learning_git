@@ -10,6 +10,7 @@ public class InstrumentHelper implements Runnable
 {
     private volatile Thread instrument;
     private static Logger logger = Util.setupLogger(InstrumentHelper.class);
+    public String script = "script/automation/alertsupport.js";
     
     public void start()
     { 
@@ -30,8 +31,18 @@ public class InstrumentHelper implements Runnable
 		while(instrument == Thread.currentThread())
 		{
 			AppHelper.launchInstrument(AppHelper.getCurrentUdid(),
-				AppHelper.getAppPath(), "script/automation/alertsupport.js");
+				AppHelper.getAppPath(), script);
 		}
+	}
+	
+	public String getState() {
+		
+		return instrument.getState().name();
+	}
+	
+	public boolean isFinished() {
+		
+		return instrument.getState() == Thread.State.TERMINATED;
 	}
 	
 	public void kill()
