@@ -13,7 +13,12 @@ import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.homescreen.DayInPastAPI;
 import com.misfit.ta.ios.modelapi.homescreen.DayProgressAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityFlowAPI;
+import com.misfit.ta.ios.modelapi.homescreen.EditActivityRandomAPI;
+<<<<<<< HEAD
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityMilestonesAPI;
+=======
+import com.misfit.ta.ios.modelapi.homescreen.SleepTileRemovingAPI;
+>>>>>>> Add new test for sleep removal
 import com.misfit.ta.ios.modelapi.homescreen.TaggingActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.WeekViewAPI;
 import com.misfit.ta.ios.modelapi.signin.SignInWithFacebookAPI;
@@ -85,14 +90,24 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
     
+
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "EditTag" })
     public void EditActivityTagMilestones() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
-        model.add("EditTagToHitMilestones", new EditActivityMilestonesAPI(this, 
+        model.add("EditTagToHitMilestones", new EditActivityRandomAPI(this, 
         		Files.getFile("model/homescreen/EditActivityMilestones.graphml"),
                 true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("EditTagToHitMilestones");
+    }
+    
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "RemoveSleep" })
+    public void SleepTileRemoving() throws InterruptedException, StopConditionException, IOException
+    {
+        ModelHandler model = getModelhandler();
+        model.add("SleepTileRemoving", new SleepTileRemovingAPI(this, Files.getFile("model/homescreen/SleepTileRemoving.graphml"),
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("SleepTileRemoving");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
