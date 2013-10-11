@@ -47,14 +47,14 @@ public class UpgradeAppTest extends AutomationTest
     }
         
     
-    //@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "ProductionOnly" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "ProductionOnly" })
     public void UpgradeFromMVP18_1WithoutSignOut() throws InterruptedException, StopConditionException, IOException
     {
     	int mvp = UpgradeAppAPI.MVP_18_1;
     	testUpgradeFromApp("UpradeAppFromMVP18.1WithoutSignOut", mvp, false);
     }
     
-    //@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "ProductionOnly" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "ProductionOnly" })
     public void UpgradeFromMVP18_1AfterSignOut() throws InterruptedException, StopConditionException, IOException
     {
     	int mvp = UpgradeAppAPI.MVP_18_1;

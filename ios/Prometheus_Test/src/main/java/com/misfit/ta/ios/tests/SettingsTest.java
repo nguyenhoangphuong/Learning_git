@@ -40,7 +40,7 @@ public class SettingsTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "GoalSettings" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "UnitSettings" })
     public void UnitSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("UnitSettings", new UnitSettingsAPI(this, Files.getFile("model/settings/UnitSettings.graphml"),
