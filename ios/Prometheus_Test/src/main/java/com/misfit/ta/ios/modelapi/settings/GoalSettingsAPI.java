@@ -29,7 +29,10 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_Init() {
 
 		PrometheusHelper.signUp();
+		
+		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(new String[] {"1", "00", "am"}, 5, 500);
+		HomeScreen.tapSave();
 	}
 
 	public void e_ToGoalSettings() {
