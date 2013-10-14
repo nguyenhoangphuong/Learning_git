@@ -207,14 +207,15 @@ public class UpgradeAppAPI extends ModelAPI {
 			String startTime = i + ":00am";
 			String endTime = i + ":" + (i * 10) + "am";
 			Timeline.openTile(startTime);
-			Timeline.isActivityTileCorrect(startTime, endTime, i * 10, i * 100, null);
+			Assert.assertTrue(Timeline.isActivityTileCorrect(startTime, endTime, i * 10, i * 100, null), "Timeline item saved");
 			Timeline.closeCurrentTile();
 			
 			// check hit goal 100 item
 			if(i == 4) {
 				
 				Timeline.openTile("4:40am");
-				Timeline.isDailyGoalMilestoneTileCorrect("4:40am", 1000, Timeline.DailyGoalMessagesFor100Percent);
+				Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect("4:40am", 1000, Timeline.DailyGoalMessagesFor100Percent),
+						"Daily goal 100% tile saved");
 				Timeline.closeCurrentTile();
 			}
 			
@@ -222,7 +223,8 @@ public class UpgradeAppAPI extends ModelAPI {
 			if(i == 5) {
 
 				Timeline.openTile("5:50am");
-				Timeline.isDailyGoalMilestoneTileCorrect("5:50am", 1500, Timeline.DailyGoalMessagesFor150Percent);
+				Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect("5:50am", 1500, Timeline.DailyGoalMessagesFor150Percent),
+						"Daily goal 150% tile saved");
 				Timeline.closeCurrentTile();
 			}
 		}
