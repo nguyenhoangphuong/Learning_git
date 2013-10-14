@@ -16,7 +16,7 @@ public class LocalizationTest extends AutomationTest
 			"ru", "ms", "ar", "es", "it", "tr", "pt"
 	};
 
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localization", "ProductionOnly" })
+//    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localization", "ProductionOnly" })
     public void Localization()
     {
     	for(int i = 0; i < languages.length; i++) {
