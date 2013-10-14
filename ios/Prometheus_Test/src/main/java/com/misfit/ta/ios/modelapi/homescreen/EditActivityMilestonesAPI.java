@@ -122,7 +122,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 			Timeline.dragUpTimeline();
 			
 			// check 100% tile
-			String hit100GoalTime = String.format("1:%02dam", 1000/ppm);
+			String hit100GoalTime = String.format("1:%02dam", (int)(1000/ppm));
 			boolean pass = false;
 			for(int i = 0; i < 2 && !pass; i++) {
 				
@@ -138,7 +138,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		if(newPoint >= 1500) {
 			
 			// check 150% tile
-			String hit150GoalTime = String.format("1:%02dam", 1500/ppm);
+			String hit150GoalTime = String.format("1:%02dam", (int)(1500/ppm));
 			Timeline.openTile(hit150GoalTime);
 			capture();
 			Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(hit150GoalTime, 1500, Timeline.DailyGoalMessagesFor150Percent),
@@ -149,7 +149,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		if(newPoint >= 2000) {
 			
 			// check 200% tile
-			String hit200GoalTime = String.format("1:%02dam", 2000/ppm);
+			String hit200GoalTime = String.format("1:%02dam", (int)(2000/ppm));
 			Timeline.openTile(hit200GoalTime);
 			capture();
 			Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(hit200GoalTime, 2000, Timeline.DailyGoalMessagesFor200Percent),
@@ -164,7 +164,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 			return;
 		
 		float ppm = newPoint * 1f / mins;
-		String hit100GoalTime = String.format("1:%02dam", 1000/ppm);
+		String hit100GoalTime = String.format("1:%02dam", (int)(1000/ppm));
 		
 		// check streak tile
 		boolean pass = false;
