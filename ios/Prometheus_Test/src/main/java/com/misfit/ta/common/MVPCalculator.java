@@ -80,7 +80,7 @@ public class MVPCalculator {
 		if(newActivityType == MVPEnums.ACTIVITY_RUNNING || newActivityType == MVPEnums.ACTIVITY_WALKING)
 			return rawPoint;
 		
-		return Math.min(steps * factorCalculationMap.get(newActivityType), mins * 162);
+		return Math.min(steps * factorCalculationMap.get(newActivityType), mins * 162) / 2.5;
 	}
 	
 	public static int calculateNearestTimeRemainInMinute(int points, int activityType) {
