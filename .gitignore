@@ -4,6 +4,7 @@ target/
 /.project
 /.settings
 */*/test-output
+*/*/localize_result
 */*/null
 */*/target
 */*/tools

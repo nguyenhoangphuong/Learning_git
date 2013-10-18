@@ -208,6 +208,11 @@ public class Gui {
     }
 
     public static String launchInstrument(String UDID, String appName, String testCase) {
+    	
+    	return launchInstrument(UDID, appName, testCase, "logs");
+    }
+    
+    public static String launchInstrument(String UDID, String appName, String testCase, String resultFolder) {
         logger.info("Launching testcase\ntestCase= " + testCase + "\nUDID= " + UDID + "\nappName= " + appName);
         System.out.println("Launching testcase\ntestCase= " + testCase + "\nUDID= " + UDID + "\nappName= " + appName);
         File aCase;
@@ -241,19 +246,19 @@ public class Gui {
 
             pb = new ProcessBuilder();
             pb.command("instruments", "-t", template, appName, "-e", "UIASCRIPT", testCase, "-e", "UIARESULTSPATH",
-                    "logs");
+            		resultFolder);
         } else {
             pb = new ProcessBuilder();
             String command = "instruments -w " + UDID + " -t " + template + " " + appName + " -e UIASCRIPT " + testCase
-                    + " -e UIARESULTSPATH logs";
+                    + " -e UIARESULTSPATH " + resultFolder;
             logger.info("Command: " + command);
             System.out.println("LOG [AppHelper.launchInstrument]: command= \n" + command);
             pb.command("instruments", "-w", UDID, "-t", template, appName, "-e", "UIASCRIPT", testCase, "-e",
-                    "UIARESULTSPATH", "logs");
+                    "UIARESULTSPATH", resultFolder);
         }
         String result = runProcess(pb, true, true);
         // logger.info("Instruments results: \n" + result);
-        failOnError(result);
+        // failOnError(result);
 
         return result;
     }

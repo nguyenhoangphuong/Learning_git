@@ -61,9 +61,6 @@ public class ResultLogger {
 		try {
 			writer.write(message + "\n");
 			writer.flush();
-			
-			// send to TRS
-			TRS.instance().addCode(message, null);
 		} catch (IOException e) {
 		}
 

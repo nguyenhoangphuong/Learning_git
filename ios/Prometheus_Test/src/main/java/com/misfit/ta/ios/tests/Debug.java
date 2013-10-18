@@ -37,8 +37,13 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-//		Gui.init(Settings.getParameter("DeviceIP"), 30);
-    	logger.info(MVPCalculator.calculatePointForNewTag(500, 5, MVPEnums.ACTIVITY_SOCCER));
-    	logger.info(Math.floor(MVPCalculator.calculatePointForNewTag(500, 5, MVPEnums.ACTIVITY_SOCCER)));
+		Thread thread = new Thread()
+    	{
+    	    public void run() {
+    	    	Gui.launchInstrument(Gui.getCurrentUdid(),
+    					Gui.getAppPath(), "script/localize/localize_test.js", "logs");
+    	    }
+    	};
+    	thread.start();
 	}
 }
