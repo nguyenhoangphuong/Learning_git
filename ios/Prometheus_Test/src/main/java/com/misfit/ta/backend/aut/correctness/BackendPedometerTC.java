@@ -22,7 +22,7 @@ public class BackendPedometerTC extends BackendAutomation {
 	public void LinkOneAccountToOneShine() {
 		
 		String email = MVPApi.generateUniqueEmail();
-		String serialNumberString = TextTool.getRandomString(10);
+		String serialNumberString = TextTool.getRandomString(10, 10);
 		
 		// link new account to a new device
 		String newAccToken = createNewAccount(email);
@@ -38,8 +38,8 @@ public class BackendPedometerTC extends BackendAutomation {
 	public void LinkOneAccountToTwoShines() {
 		
 		String email = MVPApi.generateUniqueEmail();
-		String serialNumberString = TextTool.getRandomString(10);
-		String serialNumberString2 = TextTool.getRandomString(10);
+		String serialNumberString = TextTool.getRandomString(10, 10);
+		String serialNumberString2 = TextTool.getRandomString(10, 10);
 		
 		// link new account to a new device
 		String newAccToken = createNewAccount(email);
@@ -61,7 +61,7 @@ public class BackendPedometerTC extends BackendAutomation {
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void LinkToAlreadyLinkedShine() {
-		String serialNumberString = TextTool.getRandomString(10);
+		String serialNumberString = TextTool.getRandomString(10, 10);
 
 		// link device to account 1
 		String email1 = MVPApi.generateUniqueEmail();
@@ -85,7 +85,7 @@ public class BackendPedometerTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void LinkToShineWhichWasUnlinkedBefore() {
 		
-		String serialNumberString = TextTool.getRandomString(10);
+		String serialNumberString = TextTool.getRandomString(10, 10);
 
 		// link
 		String email = MVPApi.generateUniqueEmail();
@@ -106,7 +106,7 @@ public class BackendPedometerTC extends BackendAutomation {
 	public void UnlinkNoneLinkedDevice() {
 		
 		String email = MVPApi.generateUniqueEmail();
-		String serialNumberString = TextTool.getRandomString(10);
+		String serialNumberString = TextTool.getRandomString(10, 10);
 		
 		// link new account to a new device
 		String newAccToken = createNewAccount(email);
@@ -122,7 +122,7 @@ public class BackendPedometerTC extends BackendAutomation {
 	public void UnlinkAlreadyLinkedDevice() {
 		
 		String email = MVPApi.generateUniqueEmail();
-		String serialNumberString = TextTool.getRandomString(10);
+		String serialNumberString = TextTool.getRandomString(10, 10);
 		
 		// link new account to a new device
 		String newAccToken = createNewAccount(email);
@@ -191,8 +191,8 @@ public class BackendPedometerTC extends BackendAutomation {
 		
 		// sign up and create pedometer
 		String email = MVPApi.generateUniqueEmail();
-		String serialNumberString = TextTool.getRandomString(10);
-		String serialNumberString2 = TextTool.getRandomString(10);
+		String serialNumberString = TextTool.getRandomString(10, 10);
+		String serialNumberString2 = TextTool.getRandomString(10, 10);
 		
 		// link new account to a new device
 		String token = createNewAccount(email);

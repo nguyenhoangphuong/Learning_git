@@ -37,13 +37,9 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-		Thread thread = new Thread()
-    	{
-    	    public void run() {
-    	    	Gui.launchInstrument(Gui.getCurrentUdid(),
-    					Gui.getAppPath(), "script/localize/localize_test.js", "logs");
-    	    }
-    	};
-    	thread.start();
+		Gui.init("192.168.1.144");
+		HomeScreen.pullToRefresh();
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
+		HomeScreen.tapOpenManualInput();
 	}
 }

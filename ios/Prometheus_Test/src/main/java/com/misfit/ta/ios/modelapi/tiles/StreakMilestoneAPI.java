@@ -46,15 +46,10 @@ public class StreakMilestoneAPI extends ModelAPI {
 		todayBlankGoal.setValue(100 * 2.5d);
 		MVPApi.updateGoal(token, todayBlankGoal);
 		
-		// create 2 goals in the past
-		BackendHelper.completeGoalInPast(token, ++dayDiff);
+		// create 1 goal in the past
 		BackendHelper.completeGoalInPast(token, ++dayDiff);
 		
-		// get new data from server
-		HomeScreen.pullToRefresh();
-		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
-		
-		// Now we have 2 complete goals and
+		// Now we have 1 complete goal and
 		// today goal with value = 100
 	}
 
