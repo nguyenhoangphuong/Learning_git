@@ -1,0 +1,5 @@
+<% html = "" %>
+
+	<% html += @logs + "<br/>" %>
+
+$("#result").html("<%= escape_javascript(html).html_safe %>");

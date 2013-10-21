@@ -1,4 +1,33 @@
 <h1>Log Filter</h1>
-<% @logs.each do |log| %>
-	<p><%= log.to_json %>
+
+<h1><%= @logs %></h1>
+
+<%= form_tag log_filter_path, method: "post", remote: true do %>
+
+	<%= label_tag(:startTime, "Start time:") %>
+	<%= text_field_tag(:startTime) %>
+	<br></br>
+	<%= label_tag(:endTime, "End time:") %>
+	<%= text_field_tag(:endTime) %>
+	<br></br>
+	<%= label_tag(:appVersion, "App version:") %>
+	<%= text_field_tag(:appVersion) %>
+	<br></br>
+	<%= label_tag(:syncMode, "Sync mode:") %>
+	<%= select_tag "syncMode", options_from_collection_for_select(Sync::Log::SYNC_MODES, :first, :last)%>
+	<br></br>
+	<%= label_tag(:error_codes, "Failure reason:") %>
+	<%= select_tag "error_codes", options_from_collection_for_select(Sync::Log::SYNC_FAILED_ERRORS, :first, :last), :multiple => true %>
+	<br></br>
+	<%= label_tag(:device_infos, "Device info:") %>
+	<%= select_tag "device_infos", options_from_collection_for_select(Sync::Log::DEVICE_INFOS, :first, :first), :multiple => true %>
+	<br></br>
+	<%= label_tag(:ios_versions, "iOS version:") %>
+	<%= select_tag "ios_versions", options_from_collection_for_select(Sync::Log::IOS_VERSIONS, :to_s, :to_s), :multiple => true %>
+	<br></br>
+ 	<%= submit_tag "Search" %>
+	<br></br>
+  
 <% end %>
+
+<div id="result"></div>
