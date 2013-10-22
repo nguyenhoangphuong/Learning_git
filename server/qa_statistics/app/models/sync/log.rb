@@ -85,67 +85,57 @@ module Sync
       result
     end
 
-    def self.get_statistics_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos)
-      # get total number of failures by app version and time range
-      total_failure = search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, nil, nil, nil).count
-
-     
-      ios_versions = ["all"] if ios_versions.nil?
-      failure_reasons = ["all"] if failure_reasons.nil?
-      device_infos = ["all"] if device_infos.nil?
-    
-      # build sample message
-      result = []
-      ios_versions.each do |ios_version|
-        str1 = ios_version != "all" ? "Criteria with ios version " + ios_version + ", " : "Criteria with " 
-        device_infos.each do |device_info|
-          str2 = device_info != "all" ? str1 + "device " + device_info + ", " : str1
-          failure_reasons.each do |failure_reason|
-            
-            str3 = failure_reason != "all" ? str2 + "failure code " + failure_reason.to_s + " and failure reason " + SYNC_FAILED_ERRORS[failure_reason] + ": " : str2
-            failure = search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_version != "all" ? [ios_version] : nil, failure_reason != "all" ? [failure_reason] : nil, device_info != "all" ? [device_info] : nil).count
-            percentage = (failure.to_f / total_failure) * 100
-            str3 << failure.to_s + " failures, " + percentage.to_s + " \%" + "\<\/br\>"
-            result << str3
-          end
-        end
-      end
-      @statistics = result.join("\n")
-    end
-
-    def self.calculate_statistics_from_logs(sync_logs)
+    def self.calculate_statistics_from_logs(sync_logs, has_ios_version, has_failure_reasons, has_device_infos)
       json = DEVICE_INFOS.map { |k, v| v.map {|model| {model => k} } }.flatten.inject(&:merge).to_json
     #  debugger
-      map = %Q{
-        function() {
-          var failure_reasons = JSON.parse('#{SYNC_FAILED_ERRORS.to_json}');
-          var reason = failure_reasons[this.data.failureReason] || "Unknown reason";
-          var failureCode = this.data.failureReason;
-          var iosVersion = this.data.iosVersion;
-          var device_models = JSON.parse('#{json}');
-          var deviceInfo = device_models[this.data.deviceInfo] || "Unknown device info";
-          emit({ failureCode: failureCode, failureReason: reason, iosVersion: iosVersion, deviceInfo: deviceInfo}, 1);
-        }
-      }
+      map = "function() { var keys = new Object(); "
+      map << "keys.failureCode = this.data.failureReason; " if has_failure_reasons
+      map << "keys.iosVersion = this.data.iosVersion; " if has_ios_version
+      map << %Q{
+        var device_models = JSON.parse('#{json}');
+        keys.deviceInfo = device_models[this.data.deviceInfo] || "Unknown device info";
+      } if has_device_infos
+      map << "emit(keys, 1); }"
 
       reduce = %Q{
         function(key, values) {
           return Array.sum(values);
         }
       }
-      
+     #debugger
       mr_result = sync_logs.map_reduce(map, reduce).out(inline: true).to_a
+      #debugger
       # each entry of mr_result is a json like this 
       # {"_id"=>{"failureCode" => -8, failureReason"=>"Disconnected by user", "iosVersion"=>"6.1.2", "deviceInfo"=>"iPod 5"}, "value"=>1.0}
     
       result = []
-     
-      total_failures = sync_logs.count
-      mr_result.each do |entry|
-        failures = entry["value"].to_i
-        percentage = (entry["value"] * 100 / total_failures).round(2)
-        result << [entry["_id"]["failureCode"].to_i, entry["_id"]["failureReason"], entry["_id"]["iosVersion"], entry["_id"]["deviceInfo"], failures, percentage]
-      end 
+      if has_ios_version or has_device_infos or has_failure_reasons
+        total_failures = sync_logs.count
+
+        #build label
+        tmpArray = []
+        tmpArray << "failure code" if has_failure_reasons
+        tmpArray << "failure reason" if has_failure_reasons
+        tmpArray << "iOS version" if has_ios_version
+        tmpArray << "device model" if has_device_infos
+        tmpArray << "number of failures"
+        tmpArray << "failure rate"
+        result << tmpArray
+
+        mr_result.each do |entry|
+          failures = entry["value"].to_i
+          percentage = (entry["value"] * 100 / total_failures).round(2)
+          # result << [entry["_id"]["failureCode"].to_i, entry["_id"]["failureReason"], entry["_id"]["iosVersion"], entry["_id"]["deviceInfo"], failures, percentage]
+          tmpArray = []
+          tmpArray << entry["_id"]["failureCode"].to_i if has_failure_reasons
+          tmpArray << SYNC_FAILED_ERRORS[entry["_id"]["failureCode"].to_i] if has_failure_reasons
+          tmpArray << entry["_id"]["iosVersion"] if has_ios_version
+          tmpArray << entry["_id"]["deviceInfo"] if has_device_infos
+          tmpArray << failures
+          tmpArray << percentage
+          result << tmpArray
+        end 
+      end
 
 
       #debugger
@@ -154,7 +144,7 @@ module Sync
 
     def self.calculate_statistics_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos)
        total_logs = search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos)
-       statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs)
+       statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !ios_versions.nil?, !failure_reasons.nil?, !device_infos.nil?)
        arrayResult = []
        arrayResult << "Total failures: " + total_logs.count.to_s + "\<\/br\>"
        arrayResult << build_statistics_result(statisticsFromLogs)
@@ -164,10 +154,23 @@ module Sync
     def self.build_statistics_result(statisticsFromLogs)
       # each entry of statisticsFromLogs is an array like this [-8, "Disconnected by user","6.1.2","iPod 5",1,0.28]
       result = []
+      i = 0
+      count = statisticsFromLogs.first.count
       statisticsFromLogs.each do |entry|
-        temp = "Failure code: " + entry[0].to_s + ", failure reason: \"" + entry[1] + "\", iOS version: " + entry[2] + ", device model: " + 
-            entry[3] + ", number of failures: " + entry[4].to_s + ", failure rate: " + entry[5].to_s + "\%" + "\<\/br\>"
-        result << temp
+        # temp = "Failure code: " + entry[0].to_s + ", failure reason: \"" + entry[1] + "\", iOS version: " + entry[2] + ", device model: " + 
+        #     entry[3] + ", number of failures: " + entry[4].to_s + ", failure rate: " + entry[5].to_s + "\%" + "\<\/br\>"
+        # result << temp
+        if i == 0
+          i += 1
+        else 
+          temp = "Result for "
+          for j in 0...count 
+            temp += statisticsFromLogs.first[j] + ": " + entry[j].to_s
+            temp += j < count - 1 ? ", " : "\%"
+          end
+          temp += "\<\/br\>"
+          result << temp
+        end 
       end 
       result
     end
