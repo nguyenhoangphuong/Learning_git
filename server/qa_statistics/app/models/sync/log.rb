@@ -161,17 +161,8 @@ module Sync
         count = statisticsFromLogs.first.count
         i = 0
         statisticsFromLogs.each do |entry|
-          temp = ""
-          j = 0
-          entry.each do |value|
-            temp += value.to_s
-            if j < count - 1
-              temp += "\t"
-            else
-              temp += i ==0 ? "<\/br\>" : "\%\<\/br\>"
-            end 
-            j += 1
-          end
+          temp = entry.join("\t")
+          temp += i == 0 ? "<\/br\>" : "\%\<\/br\>"
           i += 1
           result << temp
         end 
