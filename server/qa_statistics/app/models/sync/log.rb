@@ -119,12 +119,12 @@ module Sync
 
         #build label
         tmpArray = []
-        tmpArray << "failure code" if has_failure_reasons
-        tmpArray << "failure reason" if has_failure_reasons
+        tmpArray << "Failure code" if has_failure_reasons
+        tmpArray << "Failure reason" if has_failure_reasons
         tmpArray << "iOS version" if has_ios_version
-        tmpArray << "device model" if has_device_infos
-        tmpArray << "number of failures"
-        tmpArray << "failure rate"
+        tmpArray << "Device model" if has_device_infos
+        tmpArray << "Number of failures"
+        tmpArray << "Failure rate"
         result << tmpArray
 
         mr_result.each do |entry|
@@ -133,7 +133,7 @@ module Sync
           tmpArray = []
           tmpArray << entry["_id"]["failureCode"].to_i if has_failure_reasons
           tmpArray << SYNC_FAILED_ERRORS[entry["_id"]["failureCode"].to_i] || "Unknown reason" if has_failure_reasons
-          tmpArray << entry["_id"]["iosVersion"] if has_ios_version
+          tmpArray << "\'" + entry["_id"]["iosVersion"] if has_ios_version # the result can be parsed into csv file, so 7.0 will become 7, add "'" to avoid it
           tmpArray << entry["_id"]["deviceInfo"] if has_device_infos
           tmpArray << failures
           tmpArray << percentage
@@ -157,21 +157,23 @@ module Sync
       # each entry of statisticsFromLogs is an array like this [-8, "Disconnected by user","6.1.2","iPod 5",1,0.28], 
       #but the first entry is used to store labels
       result = []
-      i = 0
       if statisticsFromLogs.count > 1
         count = statisticsFromLogs.first.count
+        i = 0
         statisticsFromLogs.each do |entry|
-          if i == 0
-            i += 1
-          else 
-            temp = "Result for "
-            for j in 0...count 
-              temp += statisticsFromLogs.first[j] + ": " + entry[j].to_s
-              temp += j < count - 1 ? ", " : "\%"
-            end
-            temp += "\<\/br\>"
-            result << temp
-          end 
+          temp = ""
+          j = 0
+          entry.each do |value|
+            temp += value.to_s
+            if j < count - 1
+              temp += "\t"
+            else
+              temp += i ==0 ? "<\/br\>" : "\%\<\/br\>"
+            end 
+            j += 1
+          end
+          i += 1
+          result << temp
         end 
       end
       result
