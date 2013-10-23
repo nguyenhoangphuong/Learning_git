@@ -67,7 +67,7 @@ module Sync
     }
 
     IOS_VERSIONS = [
-      "6.1.3", "6.1.4", "7.0", "7.0.1", "7.0.2" 
+      "6.1.3", "6.1.4", "7.0", "7.0.1", "7.0.2", "7.0.3" 
     ]
 
     def self.search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_version, failure_reasons, device_infos)
@@ -86,7 +86,7 @@ module Sync
     def self.calculate_statistics_from_logs(sync_logs, has_ios_version, has_failure_reasons, has_device_infos)
       deviceJson = DEVICE_INFOS.map { |k, v| v.map {|model| {model => k} } }.flatten.inject(&:merge).to_json
 
-      # this is what deviceJson looks like
+      # This is what deviceJson looks like
       # "{\"iPod5,1\":\"iPod 5\",\"iPhone4,1\":\"iPhone 4S\",\"iPad2,5\":\"iPad Mini\"
       # ,\"iPad2,6\":\"iPad Mini\",\"iPhone5,1\":\"iPhone 5\",\"iPhone5,2\":\"iPhone 5\"
       # ,\"iPhone5,3\":\"iPhone 5C\",\"iPhone5,4\":\"iPhone 5C\",\"iPhone6,1\":\"iPhone 5S\"
