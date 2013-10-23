@@ -1,8 +1,8 @@
 class LogFilterController < ApplicationController
   def index
-  	endTime = DateTime.new(Time.now.year, Time.now.month, Time.now.day, 7, 0, 0).to_i #current day, at 12am, timezone -7
+  	endTime = DateTime.new(Time.now.year, Time.now.month, Time.now.day, 0, 0, 0).to_i #current day, at 12am, timezone GMT+0
   	dt = Time.now - (7 * 24 * 60 * 60) #1 week ago
-  	startTime = DateTime.new(dt.year, dt.month, dt.day, 7, 0, 0).to_i #1 week before current day, at 12am, timezone -7
+  	startTime = DateTime.new(dt.year, dt.month, dt.day, 0, 0, 0).to_i #1 week before current day, at 12am, timezone GMT+0
   	@timeStamps = [startTime, endTime]
   end
 

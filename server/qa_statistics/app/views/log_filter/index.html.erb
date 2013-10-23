@@ -1,5 +1,5 @@
 <h1>Log Filter</h1>
-
+<%= stylesheet_link_tag "application" ,  :media => "all" %>
 <%= form_tag log_filter_path, method: "post", remote: true, id: "log_filter_form" do %>
 <div class = "log_filter_form">
 	<%= label_tag(:startTime, "Start time:") %>
@@ -27,9 +27,12 @@
 	<br></br>
  </div>
 <% end %>
-
+<div id="loading" style="display:none;">
+  <p><img src="/assets/ajax-loader-pacman.gif" /> Please keep calm and wait !!! It could take several minutes !!! </p>
+</div>
 <div id="log_filter_result"></div>
 
+ 
 <script type="text/javascript">
 $('#log_filter_form').submit( function () {
 	 var startTime = $('#startTime').val();
@@ -38,5 +41,9 @@ $('#log_filter_form').submit( function () {
 	 	alert("Please input at least one value for start time or end time. That will help improve searching");
 	 	return false;
 	 }
+	 console.log("ajax start");
+	 $("#loading").show();
 	});
+
+
 </script>

@@ -155,7 +155,7 @@ module Sync
 
     def self.build_statistics_result(statisticsFromLogs)
       # each entry of statisticsFromLogs is an array like this [-8, "Disconnected by user","6.1.2","iPod 5",1,0.28], 
-      #but the first entry is used to store labels
+      # but the first entry is used to store labels
       result = []
       if statisticsFromLogs.count > 1
         count = statisticsFromLogs.first.count
