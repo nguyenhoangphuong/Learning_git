@@ -15,7 +15,7 @@ module Sync
     field :x_st,  as: :extracting_status, type: Integer
     field :s3_p,  as: :s3_folder_path, type: String
     field :ip,    as: :ip_address, type: String
-  validates_presence_of :start_time
+  
     SYNC_FAILED_ERRORS = {
       -1 => "Unknown",
       -2 => "Disconnected unexpectedly",
@@ -67,7 +67,7 @@ module Sync
     }
 
     IOS_VERSIONS = [
-      "6.1.3", "7.0", "7.0.1", "7.0.2" 
+      "6.1.3", "6.1.4", "7.0", "7.0.1", "7.0.2" 
     ]
 
     def self.search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_version, failure_reasons, device_infos)
@@ -84,12 +84,20 @@ module Sync
     end
 
     def self.calculate_statistics_from_logs(sync_logs, has_ios_version, has_failure_reasons, has_device_infos)
-      json = DEVICE_INFOS.map { |k, v| v.map {|model| {model => k} } }.flatten.inject(&:merge).to_json
+      deviceJson = DEVICE_INFOS.map { |k, v| v.map {|model| {model => k} } }.flatten.inject(&:merge).to_json
+
+      # this is what deviceJson looks like
+      # "{\"iPod5,1\":\"iPod 5\",\"iPhone4,1\":\"iPhone 4S\",\"iPad2,5\":\"iPad Mini\"
+      # ,\"iPad2,6\":\"iPad Mini\",\"iPhone5,1\":\"iPhone 5\",\"iPhone5,2\":\"iPhone 5\"
+      # ,\"iPhone5,3\":\"iPhone 5C\",\"iPhone5,4\":\"iPhone 5C\",\"iPhone6,1\":\"iPhone 5S\"
+      # ,\"iPhone6,2\":\"iPhone 5S\",\"iPad3,1\":\"iPad\",\"iPad3,2\":\"iPad\",\"iPad3,3\":\"iPad\"
+      # ,\"iPad3,4\":\"iPad\",\"iPad3,5\":\"iPad\",\"iPad3,6\":\"iPad\"}"
+
       map = "function() { var keys = new Object(); "
       map << "keys.failureCode = this.data.failureReason; " if has_failure_reasons
       map << "keys.iosVersion = this.data.iosVersion; " if has_ios_version
       map << %Q{
-        var device_models = JSON.parse('#{json}');
+        var device_models = JSON.parse('#{deviceJson}');
         keys.deviceInfo = device_models[this.data.deviceInfo] || "Unknown device info";
       } if has_device_infos
       map << "emit(keys, 1); }"
@@ -132,7 +140,7 @@ module Sync
           result << tmpArray
         end 
       end
-      
+
       result
     end 
 
