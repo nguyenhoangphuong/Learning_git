@@ -1,14 +1,12 @@
 <h1>Log Filter</h1>
 
-<h1><%= @logs %></h1>
-
-<%= form_tag log_filter_path, method: "post", remote: true do %>
-
+<%= form_tag log_filter_path, method: "post", remote: true, id: "log_filter_form" do %>
+<div class = "log_filter_form">
 	<%= label_tag(:startTime, "Start time:") %>
-	<%= text_field_tag(:startTime) %>
+	<%= number_field_tag :startTime %>
 	<br></br>
 	<%= label_tag(:endTime, "End time:") %>
-	<%= text_field_tag(:endTime) %>
+	<%= number_field_tag(:endTime) %>
 	<br></br>
 	<%= label_tag(:appVersion, "App version:") %>
 	<%= text_field_tag(:appVersion) %>
@@ -27,7 +25,18 @@
 	<br></br>
  	<%= submit_tag "Search" %>
 	<br></br>
-  
+ </div>
 <% end %>
 
-<div id="result"></div>
+<div id="log_filter_result"></div>
+
+<script type="text/javascript">
+$('#log_filter_form').submit( function () {
+	 var startTime = $('#startTime').val();
+	 var endTime = $('#endTime').val();
+	 if (!startTime && !endTime) {
+	 	alert("Please input at least one value for start time or end time. That will help improve searching");
+	 	return false;
+	 }
+	});
+</script>

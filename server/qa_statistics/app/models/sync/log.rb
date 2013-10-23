@@ -15,7 +15,7 @@ module Sync
     field :x_st,  as: :extracting_status, type: Integer
     field :s3_p,  as: :s3_folder_path, type: String
     field :ip,    as: :ip_address, type: String
-
+  validates_presence_of :start_time
     SYNC_FAILED_ERRORS = {
       -1 => "Unknown",
       -2 => "Disconnected unexpectedly",
@@ -124,7 +124,7 @@ module Sync
           percentage = (entry["value"] * 100 / total_failures).round(2)
           tmpArray = []
           tmpArray << entry["_id"]["failureCode"].to_i if has_failure_reasons
-          tmpArray << SYNC_FAILED_ERRORS[entry["_id"]["failureCode"].to_i] if has_failure_reasons
+          tmpArray << SYNC_FAILED_ERRORS[entry["_id"]["failureCode"].to_i] || "Unknown reason" if has_failure_reasons
           tmpArray << entry["_id"]["iosVersion"] if has_ios_version
           tmpArray << entry["_id"]["deviceInfo"] if has_device_infos
           tmpArray << failures
@@ -132,6 +132,7 @@ module Sync
           result << tmpArray
         end 
       end
+      
       result
     end 
 
@@ -149,20 +150,22 @@ module Sync
       #but the first entry is used to store labels
       result = []
       i = 0
-      count = statisticsFromLogs.first.count
-      statisticsFromLogs.each do |entry|
-        if i == 0
-          i += 1
-        else 
-          temp = "Result for "
-          for j in 0...count 
-            temp += statisticsFromLogs.first[j] + ": " + entry[j].to_s
-            temp += j < count - 1 ? ", " : "\%"
-          end
-          temp += "\<\/br\>"
-          result << temp
+      if statisticsFromLogs.count > 1
+        count = statisticsFromLogs.first.count
+        statisticsFromLogs.each do |entry|
+          if i == 0
+            i += 1
+          else 
+            temp = "Result for "
+            for j in 0...count 
+              temp += statisticsFromLogs.first[j] + ": " + entry[j].to_s
+              temp += j < count - 1 ? ", " : "\%"
+            end
+            temp += "\<\/br\>"
+            result << temp
+          end 
         end 
-      end 
+      end
       result
     end
   end

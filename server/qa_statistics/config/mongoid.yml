@@ -6,10 +6,12 @@ development:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
       database: shine_staging_20130915
+      #database: shine_production
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
         - localhost:27017
+        #- ec2-23-20-44-202.compute-1.amazonaws.com:27017
       options:
         # Change whether the session persists in safe mode by default.
         # (default: false)
