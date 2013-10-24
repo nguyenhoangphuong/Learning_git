@@ -73,7 +73,7 @@ module Sync
     def self.search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_version, failure_reasons, device_infos)
       # build search criteria
       result = self.where(isok: isok)
-      result = result.and(:end_time.gte => from_time) if from_time.present?
+      result = result.and(:start_time.gte => from_time) if from_time.present?
       result = result.and(:start_time.lte => to_time) if to_time.present?
       result = result.and(:'data.appVersion' => app_version) if app_version.present?
       result = result.and(:'data.syncMode' => sync_mode) if sync_mode.present?
