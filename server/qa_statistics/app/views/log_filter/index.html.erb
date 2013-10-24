@@ -2,10 +2,10 @@
 <%= stylesheet_link_tag "application" ,  :media => "all" %>
 <%= form_tag log_filter_path, method: "post", remote: true, id: "log_filter_form" do %>
 <div class = "log_filter_form">
-	<%= label_tag(:startTime, "Start time:") %>
+	<%= label_tag(:startTime, "From time:") %>
 	<%= number_field_tag :startTime, @timeStamps[0] %>
 	<br></br>
-	<%= label_tag(:endTime, "End time:") %>
+	<%= label_tag(:endTime, "To time:") %>
 	<%= number_field_tag :endTime, @timeStamps[1] %>
 	<br></br>
 	<%= label_tag(:appVersion, "App version:") %>
