@@ -115,7 +115,11 @@ module Sync
     
       result = []
       if has_ios_version or has_device_infos or has_failure_reasons
-        total_failures = sync_logs.count
+        total_failures = 0
+
+        mr_result.each do |entry|
+          total_failures += entry["value"].to_i
+        end
 
         #build label
         tmpArray = []
@@ -141,14 +145,14 @@ module Sync
         end 
       end
 
-      result
+      return total_failures, result
     end 
 
     def self.calculate_statistics_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos)
        total_logs = search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos)
-       statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !ios_versions.nil?, !failure_reasons.nil?, !device_infos.nil?)
+       total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !ios_versions.nil?, !failure_reasons.nil?, !device_infos.nil?)
        arrayResult = []
-       arrayResult << "Total failures: " + total_logs.count.to_s + "\<\/br\>"
+       arrayResult << "Total failures: " + total_failures.to_s + "\<\/br\>"
        arrayResult << build_statistics_result(statisticsFromLogs)
        result = arrayResult.join("\n")
     end 
