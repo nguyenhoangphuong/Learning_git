@@ -67,7 +67,7 @@ module Sync
     }
 
     IOS_VERSIONS = [
-      "6.1.3", "6.1.4", "7.0", "7.0.1", "7.0.2", "7.0.3" 
+      "6.0", "6.0.1", "6.0.2", "6.1", "6.1.1", "6.1.2", "6.1.3", "6.1.4", "7.0", "7.0.1", "7.0.2", "7.0.3" 
     ]
 
     def self.search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_version, failure_reasons, device_infos)
@@ -114,12 +114,13 @@ module Sync
       # {"_id"=>{"failureCode" => -8, failureReason"=>"Disconnected by user", "iosVersion"=>"6.1.2", "deviceInfo"=>"iPod 5"}, "value"=>1.0}
     
       result = []
-      if has_ios_version or has_device_infos or has_failure_reasons
-        total_failures = 0
+      total_failures = 0
 
-        mr_result.each do |entry|
-          total_failures += entry["value"].to_i
-        end
+      mr_result.each do |entry|
+        total_failures += entry["value"].to_i
+      end
+      if has_ios_version or has_device_infos or has_failure_reasons
+       
 
         #build label
         tmpArray = []
