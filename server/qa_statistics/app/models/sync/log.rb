@@ -61,11 +61,11 @@ module Sync
         "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4"],
       "iPod 5" => ["iPod5,1"],
       "iPhone 4S" => ["iPhone4,1", "iPhone4,2"],
-      "iPad Mini" => ["iPad2,5", "iPad2,6", "iPad2,7"],
       "iPhone 5" => ["iPhone5,1", "iPhone5,2"],
       "iPhone 5C" => ["iPhone5,3", "iPhone5,4"],
       "iPhone 5S" => ["iPhone6,1", "iPhone6,2"],
-      "iPad" => ["iPad3,1", "iPad3,2", "iPad3,3", "iPad3,4", "iPad3,5", "iPad3,6", "iPad4,2", "iPad4,5"]
+      "iPad" => ["iPad3,1", "iPad3,2", "iPad3,3", "iPad3,4", "iPad3,5", "iPad3,6", "iPad4,2", "iPad4,5"],
+      "iPad Mini" => ["iPad2,5", "iPad2,6", "iPad2,7"]
     }
 
     IOS_VERSIONS = [
