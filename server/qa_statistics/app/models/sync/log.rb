@@ -57,17 +57,24 @@ module Sync
     }
 
     DEVICE_INFOS = {
+      "Unsupported devices" => ["iPhone2,1", "iPhone3,1", "iPhone3,2", "iPhone3,3", "iPod4,1", 
+        "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4"],
       "iPod 5" => ["iPod5,1"],
-      "iPhone 4S" => ["iPhone4,1"],
-      "iPad Mini" => ["iPad2,5", "iPad2,6"],
+      "iPhone 4S" => ["iPhone4,1", "iPhone4,2"],
+      "iPad Mini" => ["iPad2,5", "iPad2,6", "iPad2,7"],
       "iPhone 5" => ["iPhone5,1", "iPhone5,2"],
       "iPhone 5C" => ["iPhone5,3", "iPhone5,4"],
       "iPhone 5S" => ["iPhone6,1", "iPhone6,2"],
-      "iPad" => ["iPad3,1", "iPad3,2", "iPad3,3", "iPad3,4", "iPad3,5", "iPad3,6"]
+      "iPad" => ["iPad3,1", "iPad3,2", "iPad3,3", "iPad3,4", "iPad3,5", "iPad3,6", "iPad4,2", "iPad4,5"]
     }
 
     IOS_VERSIONS = [
-      "6.0", "6.0.1", "6.0.2", "6.1", "6.1.1", "6.1.2", "6.1.3", "6.1.4", "7.0", "7.0.1", "7.0.2", "7.0.3" 
+      "5.0", "5.0.1",
+      "5.1", "5.1.1", 
+      "6.0", "6.0.1", "6.0.2", 
+      "6.1", "6.1.1", "6.1.2", "6.1.3", "6.1.4", 
+      "7.0", "7.0.1", "7.0.2", "7.0.3", 
+      "7.1"
     ]
 
     def self.search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_version, failure_reasons, device_infos)

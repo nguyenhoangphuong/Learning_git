@@ -10,7 +10,6 @@ class LogFilterController < ApplicationController
   	startTime = params[:startTime].presence.try(&:to_i)
   	endTime = params[:endTime].presence.try(&:to_i)
   	appVersion = params[:appVersion].presence.try(&:to_s)
-  	#debugger
   	errorCodes = params[:error_codes].presence ? params[:error_codes] : nil #params[:errorCodes].count == 1 && 
   	deviceInfos = params[:device_infos].presence ? params[:device_infos] : nil
   	iosVersions = params[:ios_versions].presence ? params[:ios_versions] : nil
