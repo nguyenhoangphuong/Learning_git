@@ -51,6 +51,7 @@ module Sync
     SYNC_DISCOVERY_ERROR_CODES = [-9, -20, -30, -31, -32, -40]
 
     SYNC_MODES = {
+      -1 => "All",
       1 => "Manual sync",
       2 => "Quiet sync",
       3 => "Background sync"

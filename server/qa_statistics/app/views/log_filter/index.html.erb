@@ -17,19 +17,23 @@
 	  </tr>
 	  <tr>
 	  	<td><%= label_tag(:syncMode, "Sync mode:") %></td>
-	  	<td><%= select_tag "syncMode", options_from_collection_for_select(Sync::Log::SYNC_MODES, :first, :last), :style => "width: 150px; height: 15px;"%></td>
+	  	<td><%= select_tag "syncMode", options_from_collection_for_select(Sync::Log::SYNC_MODES, :first, :last), 
+	  	:style => "width: 150px; height: 15px;" %></td>
 	  </tr>
 	  <tr>
 	  	<td><%= label_tag(:error_codes, "Failure reason:") %></td>
-	  	<td><%= select_tag "error_codes", options_from_collection_for_select(Sync::Log::SYNC_FAILED_ERRORS, :first, :last), :multiple => true, :style => "width: 300px; height: 200px;", :include_blank => true %></td>
+	  	<td><%= select_tag "error_codes", options_from_collection_for_select(Sync::Log::SYNC_FAILED_ERRORS, :first, :last), :multiple => true, 
+	  	:style => "width: 300px; height: 200px;", :prompt => "None" %></td>
 	  </tr>
 	  <tr>
 	  	<td><%= label_tag(:device_infos, "Device info:") %></td>
-	  	<td><%= select_tag "device_infos", options_from_collection_for_select(Sync::Log::DEVICE_INFOS, :first, :first), :multiple => true, :style => "width: 300px; height: 60px;", :include_blank => true %></td>
+	  	<td><%= select_tag "device_infos", options_from_collection_for_select(Sync::Log::DEVICE_INFOS, :first, :first), :multiple => true, 
+	  	:style => "width: 300px; height: 60px;", :prompt => "None" %></td>
 	  </tr>
 	  <tr>
 	  	<td><%= label_tag(:ios_versions, "iOS version:") %></td>
-	  	<td><%= select_tag "ios_versions", options_from_collection_for_select(Sync::Log::IOS_VERSIONS, :to_s, :to_s), :multiple => true, :style => "width: 100px; height: 60px;", :include_blank => true %></td>
+	  	<td><%= select_tag "ios_versions", options_from_collection_for_select(Sync::Log::IOS_VERSIONS, :to_s, :to_s), :multiple => true, 
+	  	:style => "width: 100px; height: 60px;", :prompt => "None" %></td>
 	  </tr>
 	  <tr>
  		<td><%= submit_tag "Search" %></td>

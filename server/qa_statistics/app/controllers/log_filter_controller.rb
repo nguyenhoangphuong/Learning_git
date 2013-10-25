@@ -13,7 +13,7 @@ class LogFilterController < ApplicationController
   	errorCodes = params[:error_codes].presence ? params[:error_codes] : nil #params[:errorCodes].count == 1 && 
   	deviceInfos = params[:device_infos].presence ? params[:device_infos] : nil
   	iosVersions = params[:ios_versions].presence ? params[:ios_versions] : nil
-  	syncMode = params[:syncMode].presence ? params[:syncMode].to_i : nil
+  	syncMode = params[:syncMode].presence && params[:syncMode].to_i != -1 ? params[:syncMode].to_i : nil
 
   	# select box includes blank value, so we must filter that blank value
   	errorCodes = !errorCodes.nil? && !(errorCodes.count ==1 && errorCodes.first.empty?) ? errorCodes : nil
