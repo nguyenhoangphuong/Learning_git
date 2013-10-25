@@ -78,11 +78,12 @@ module Sync
       "7.1"
     ]
 
-    def self.search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_version, failure_reasons, device_infos)
+    def self.search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_version, failure_reasons, device_infos, firmware)
       # build search criteria
       result = self.where(isok: isok)
       result = result.and(:start_time.gte => from_time) if from_time.present?
       result = result.and(:start_time.lte => to_time) if to_time.present?
+      result = result.and(:firmware_revision_string => firmware) if firmware.present?
       result = result.and(:'data.appVersion' => app_version) if app_version.present?
       result = result.and(:'data.syncMode' => sync_mode) if sync_mode.present?
       result = result.in(:'data.iosVersion' => ios_version) if ios_version.present?
@@ -157,8 +158,8 @@ module Sync
       return total_failures, result
     end 
 
-    def self.calculate_statistics_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos)
-       total_logs = search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos)
+    def self.calculate_statistics_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos, firmware)
+       total_logs = search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos, firmware)
        total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !ios_versions.nil?, !failure_reasons.nil?, !device_infos.nil?)
        arrayResult = []
        arrayResult << "Total failures: " + total_failures.to_s + "\<\/br\>"
