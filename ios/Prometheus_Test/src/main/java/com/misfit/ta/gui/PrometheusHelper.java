@@ -261,6 +261,7 @@ public class PrometheusHelper {
 	public static String signUpDefaultProfile() {
 		
 		LaunchScreen.launch();
+		ShortcutsTyper.delayOne();
 
 		// email and password
 		String email = MVPApi.generateUniqueEmail();
@@ -392,7 +393,7 @@ public class PrometheusHelper {
 	public void startApp() {
 		(new Thread() {
 			public void run() {
-				AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), "script/automation/alertsupport.js");
+				AppHelper.launchInstrument(AppHelper.getCurrentUdid(), AppHelper.getAppPath(), "script/automation/loop.js");
 			}
 		}).start();
 		ShortcutsTyper.delayTime(20000);

@@ -138,23 +138,45 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		if(newPoint >= 1500) {
 			
 			// check 150% tile
-			String hit150GoalTime = String.format("1:%02dam", (int)(1500/ppm));
-			Timeline.openTile(hit150GoalTime);
-			capture();
-			Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(hit150GoalTime, 1500, Timeline.DailyGoalMessagesFor150Percent),
-					"Goal 150% tile displays correctly");
-			Timeline.closeCurrentTile();
+			int startMin = (int)(1500/ppm);
+			boolean pass = false;
+			
+			for(int i = -1; i <= 1; i++) {
+				
+				String hit150GoalTime = String.format("1:%02dam", startMin + i);
+				if(ViewUtils.isExistedView("UILabel", hit150GoalTime)) {
+					
+					Timeline.openTile(hit150GoalTime);
+					capture();
+					pass = Timeline.isDailyGoalMilestoneTileCorrect(hit150GoalTime, 1500, Timeline.DailyGoalMessagesFor150Percent);
+					Timeline.closeCurrentTile();
+					break;
+				}
+			}
+			
+			Assert.assertTrue(pass, "Goal 150% tile displays correctly");
 		}
 		
 		if(newPoint >= 2000) {
 			
 			// check 200% tile
-			String hit200GoalTime = String.format("1:%02dam", (int)(2000/ppm));
-			Timeline.openTile(hit200GoalTime);
-			capture();
-			Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(hit200GoalTime, 2000, Timeline.DailyGoalMessagesFor200Percent),
-					"Goal 200% tile displays correctly");
-			Timeline.closeCurrentTile();
+			int startMin = (int)(2000/ppm);
+			boolean pass = false;
+			
+			for(int i = -1; i <= 1; i++) {
+				
+				String hit200GoalTime = String.format("1:%02dam", startMin + i);
+				if(ViewUtils.isExistedView("UILabel", hit200GoalTime)) {
+					
+					Timeline.openTile(hit200GoalTime);
+					capture();
+					pass = Timeline.isDailyGoalMilestoneTileCorrect(hit200GoalTime, 2000, Timeline.DailyGoalMessagesFor200Percent);
+					Timeline.closeCurrentTile();
+					break;
+				}
+			}
+			
+			Assert.assertTrue(pass, "Goal 200% tile displays correctly");
 		}
 	}
 

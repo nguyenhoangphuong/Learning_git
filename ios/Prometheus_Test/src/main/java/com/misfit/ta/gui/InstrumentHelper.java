@@ -10,10 +10,14 @@ public class InstrumentHelper implements Runnable
 {
     private volatile Thread instrument;
     private static Logger logger = Util.setupLogger(InstrumentHelper.class);
-    public String script = "script/automation/alertsupport.js";
+    public String script = "script/automation/loop.js";
     
     public void start()
     { 
+    	if(instrument != null) {
+    		kill();
+    	}
+    	
     	instrument = new Thread(this);
     	logger.info("Launching Instrument...");
     	instrument.start();
@@ -49,6 +53,7 @@ public class InstrumentHelper implements Runnable
 	{
 		ProcessFinder.kill("Instruments.app");
 		ProcessFinder.kill("instruments");
+		instrument = null;
 	}
 
 }

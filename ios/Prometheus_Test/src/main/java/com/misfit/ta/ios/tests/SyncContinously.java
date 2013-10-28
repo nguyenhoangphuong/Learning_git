@@ -22,7 +22,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SyncContinously extends AutomationTest {
 
-	private static int NUMBER_OF_SYNC = 30;
+	private static int NUMBER_OF_SYNC = 100;
 
 	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "QuietSync", "SyncContinously" })
 	public void QuietSyncContinously() {

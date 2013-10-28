@@ -17,18 +17,95 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class LocalizationTest extends AutomationTest 
 {
 	private static Logger logger = Util.setupLogger(LocalizationTest.class);
-	
-	private String[] languages = {
-			"fr", "th", "ko", "zh-Hans", "zh-Hant", "ja", "du",
-			"ru", "ms", "ar", "es", "it", "tr", "pt"
-	};
 
-    @Test
-    public void Localization()
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeFR", "ProductionOnly" })
+    public void LocalizationFR()
     {
-    	for(int i = 0; i < languages.length; i++)
-    		testLocalizationForLanguage(languages[i]);
+   		testLocalizationForLanguage("fr");
     }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeTH", "ProductionOnly" })
+    public void LocalizationTH()
+    {
+   		testLocalizationForLanguage("th");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeKO", "ProductionOnly" })
+    public void LocalizationKO()
+    {
+   		testLocalizationForLanguage("ko");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeZH_HANS", "ProductionOnly" })
+    public void LocalizationZH_HANS()
+    {
+   		testLocalizationForLanguage("zh-hans");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeZH_HANT", "ProductionOnly" })
+    public void LocalizationZH_HANT()
+    {
+   		testLocalizationForLanguage("zh-hant");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeJA", "ProductionOnly" })
+    public void LocalizationJA()
+    {
+   		testLocalizationForLanguage("ja");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeRU", "ProductionOnly" })
+    public void LocalizationRU()
+    {
+   		testLocalizationForLanguage("ru");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeMS", "ProductionOnly" })
+    public void LocalizationMS()
+    {
+   		testLocalizationForLanguage("ms");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeAR", "ProductionOnly" })
+    public void LocalizationAR()
+    {
+   		testLocalizationForLanguage("ar");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeES", "ProductionOnly" })
+    public void LocalizationES()
+    {
+   		testLocalizationForLanguage("es");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeIT", "ProductionOnly" })
+    public void LocalizationIT()
+    {
+   		testLocalizationForLanguage("it");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeTR", "ProductionOnly" })
+    public void LocalizationTR()
+    {
+   		testLocalizationForLanguage("tr");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizePT_PT", "ProductionOnly" })
+    public void LocalizationPT_PT()
+    {
+   		testLocalizationForLanguage("pt-PT");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "LocalizeDE", "ProductionOnly" })
+    public void LocalizationDE()
+    {
+   		testLocalizationForLanguage("de");
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Localize", "ProductionOnly" })
+
+	
+	
     
     public void testLocalizationForLanguage(String language) {
     	

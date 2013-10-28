@@ -39,6 +39,29 @@ public class BackendHelper {
 		MVPApi.updatePedometer(token, pedo);
 	}
 	
+	public static void setLifetimeDistance(String token, double miles) {
+		
+		// create first
+		Statistics statistics = DefaultValues.RandomStatistic();
+		statistics.setLifetimeDistance(miles);
+		statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
+		BaseResult result = MVPApi.createStatistics(token, statistics);
+
+		// if existed, update instead
+		if(result.isExisted()) {
+
+			statistics = Statistics.fromResponse(result.response);
+			statistics.setLifetimeDistance(miles);
+			statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
+			MVPApi.updateStatistics(token, statistics);
+		}
+	}
+	
+	public static void setLifetimeDistance(String email, String password, double miles) {
+		
+		setLifetimeDistance(MVPApi.signIn(email, password).token, miles);
+	}
+	
 	public static void setPersonalBest(String token, int points) {
 		
 		// create first
