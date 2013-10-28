@@ -92,7 +92,7 @@ module Sync
       result
     end
 
-    def self.calculate_statistics_from_logs(sync_logs, has_ios_version, has_failure_reasons, has_device_infos)
+    def self.calculate_statistics_from_logs(sync_logs, has_ios_version, has_failure_reasons, has_device_infos, showLastCommand)
       deviceJson = DEVICE_INFOS.map { |k, v| v.map {|model| {model => k} } }.flatten.inject(&:merge).to_json
 
       # This is what deviceJson looks like
@@ -103,6 +103,7 @@ module Sync
       # ,\"iPad3,4\":\"iPad\",\"iPad3,5\":\"iPad\",\"iPad3,6\":\"iPad\"}"
 
       map = "function() { var keys = new Object(); "
+      map << "keys.lastCommand = this.data.lastCommand; " if showLastCommand
       map << "keys.failureCode = this.data.failureReason; " if has_failure_reasons
       map << "keys.iosVersion = this.data.iosVersion; " if has_ios_version
       map << %Q{
@@ -128,7 +129,7 @@ module Sync
       mr_result.each do |entry|
         total_failures += entry["value"].to_i
       end
-      if has_ios_version or has_device_infos or has_failure_reasons
+      if has_ios_version or has_device_infos or has_failure_reasons or showLastCommand
        
 
         #build label
@@ -137,6 +138,7 @@ module Sync
         tmpArray << "Failure reason" if has_failure_reasons
         tmpArray << "iOS version" if has_ios_version
         tmpArray << "Device model" if has_device_infos
+        tmpArray << "Last command"
         tmpArray << "Number of failures"
         tmpArray << "Failure rate"
         result << tmpArray
@@ -149,18 +151,19 @@ module Sync
           tmpArray << SYNC_FAILED_ERRORS[entry["_id"]["failureCode"].to_i] || "Unknown reason" if has_failure_reasons
           tmpArray << "\'" + entry["_id"]["iosVersion"] if has_ios_version # the result can be parsed into csv file, so 7.0 will become 7, add "'" to avoid it
           tmpArray << entry["_id"]["deviceInfo"] if has_device_infos
+          lastCommand = entry["_id"]["lastCommand"].nil? ? "Last command is nil" : entry["_id"]["lastCommand"].empty? ? "Last command is empty" : entry["_id"]["lastCommand"]
+          tmpArray << lastCommand
           tmpArray << failures
           tmpArray << percentage
           result << tmpArray
         end 
       end
-
       return total_failures, result
     end 
 
-    def self.calculate_statistics_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos, firmware)
+    def self.calculate_statistics_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos, firmware, showLastCommand)
        total_logs = search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos, firmware)
-       total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !ios_versions.nil?, !failure_reasons.nil?, !device_infos.nil?)
+       total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !ios_versions.nil?, !failure_reasons.nil?, !device_infos.nil?, showLastCommand)
        arrayResult = []
        arrayResult << "Total failures: " + total_failures.to_s + "\<\/br\>"
        arrayResult << build_statistics_result(statisticsFromLogs)
