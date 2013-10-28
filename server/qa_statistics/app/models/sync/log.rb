@@ -138,7 +138,7 @@ module Sync
         tmpArray << "Failure reason" if has_failure_reasons
         tmpArray << "iOS version" if has_ios_version
         tmpArray << "Device model" if has_device_infos
-        tmpArray << "Last command"
+        tmpArray << "Last command" if showLastCommand
         tmpArray << "Number of failures"
         tmpArray << "Failure rate"
         result << tmpArray
@@ -151,8 +151,10 @@ module Sync
           tmpArray << SYNC_FAILED_ERRORS[entry["_id"]["failureCode"].to_i] || "Unknown reason" if has_failure_reasons
           tmpArray << "\'" + entry["_id"]["iosVersion"] if has_ios_version # the result can be parsed into csv file, so 7.0 will become 7, add "'" to avoid it
           tmpArray << entry["_id"]["deviceInfo"] if has_device_infos
-          lastCommand = entry["_id"]["lastCommand"].nil? ? "Last command is nil" : entry["_id"]["lastCommand"].empty? ? "Last command is empty" : entry["_id"]["lastCommand"]
-          tmpArray << lastCommand
+          if showLastCommand
+            lastCommand = entry["_id"]["lastCommand"].nil? ? "Last command is nil" : entry["_id"]["lastCommand"].empty? ? "Last command is empty" : entry["_id"]["lastCommand"]
+            tmpArray << lastCommand
+          end
           tmpArray << failures
           tmpArray << percentage
           result << tmpArray
