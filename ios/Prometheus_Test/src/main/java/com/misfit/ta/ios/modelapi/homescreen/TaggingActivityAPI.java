@@ -141,7 +141,7 @@ public class TaggingActivityAPI extends ModelAPI {
 			hour = now.get(Calendar.HOUR_OF_DAY);
 			setNewHour = true;
 		}
-		minute = String.format("%02d", lastMinute + 1);
+		minute = String.format("%02d", lastMinute == 59 ? 59 : lastMinute + 1);
 		String[] time = {
 				String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12
 						: hour), minute, hour < 12 ? "AM" : "PM" };
