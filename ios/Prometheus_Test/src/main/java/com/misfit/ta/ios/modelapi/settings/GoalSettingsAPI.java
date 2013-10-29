@@ -28,8 +28,10 @@ public class GoalSettingsAPI extends ModelAPI {
 
 	public void e_Init() {
 
-		PrometheusHelper.signUp();
+		// sign up with goal = 1000
+		PrometheusHelper.signUpDefaultProfile();
 		
+		// input a dummy record
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(new String[] {"1", "00", "am"}, 5, 500);
 		HomeScreen.tapSave();

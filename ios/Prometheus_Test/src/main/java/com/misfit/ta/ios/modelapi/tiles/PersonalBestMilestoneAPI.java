@@ -24,7 +24,7 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 	public void e_init() {
 		
 		// sign up with goal = 1000 pts
-		String email = PrometheusHelper.signUp();
+		String email = PrometheusHelper.signUpDefaultProfile();
 		String token = MVPApi.signIn(email, "qwerty1").token;
 		
 		// api: create yesterday's goal

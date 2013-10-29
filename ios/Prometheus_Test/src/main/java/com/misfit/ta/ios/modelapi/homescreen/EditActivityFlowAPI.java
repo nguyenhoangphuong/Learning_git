@@ -31,7 +31,7 @@ public class EditActivityFlowAPI extends ModelAPI {
 	
 	public void e_init() {
 		
-		PrometheusHelper.signUp();
+		PrometheusHelper.signUpDefaultProfile();
 	}
 	
 	public void e_inputFirstActivity() {

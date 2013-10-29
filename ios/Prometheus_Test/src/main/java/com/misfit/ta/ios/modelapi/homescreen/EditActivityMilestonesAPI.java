@@ -33,7 +33,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 	public void e_init() {
 		
 		// sign up
-		String email = PrometheusHelper.signUp();
+		String email = PrometheusHelper.signUpDefaultProfile();
 		String token = MVPApi.signIn(email, "qwerty1").token;
 		
 		// create 2 goals in the past

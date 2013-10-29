@@ -31,8 +31,13 @@ public class UnitSettingsAPI extends ModelAPI {
 	public void e_Init() {
 		
 		// sign up account with default profile
-		PrometheusHelper.signUp();
-		PrometheusHelper.inputRandomRecord();
+		PrometheusHelper.signUpDefaultProfile();
+		
+		// input a record
+		HomeScreen.tapOpenManualInput();
+		PrometheusHelper.inputManualRecord(new String[] {"1", "00", "am"}, 5, 500);
+		HomeScreen.tapSave();
+		
 		HomeScreen.tapProgressCircle();
 	}
 	
