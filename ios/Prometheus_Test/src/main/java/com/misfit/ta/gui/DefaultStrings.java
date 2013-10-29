@@ -170,4 +170,7 @@ public class DefaultStrings {
 	public static String _180MinNap = "180-min nap";
 	public static String _8HourSleep = "8-hour sleep";
 	public static String RemoveSleepButton = "Remove Sleep";
+	
+	public static String BatteryLowTitle = "Your battery is low";
+	public static String BatteryLowMessage = "Please replace your battery. Tap this to show how to replace.";
 }

@@ -210,6 +210,12 @@ public class PrometheusHelper {
 	}
 
 	public static void handleUpdateFirmwarePopup() {
+		if (ViewUtils.isExistedView("UILabel", DefaultStrings.BatteryLowTitle) && ViewUtils.isExistedView("UILabel", DefaultStrings.BatteryLowMessage)) {
+			Gui.touchAVIew("UIButtonLabel", DefaultStrings.CancelButton);
+		}
+	}
+	
+	public static void handleBatteryLowPopup() {
 		if (ViewUtils.isExistedView("UILabel", DefaultStrings.UpdateFirmwareMessage)) {
 			Gui.touchAVIew("UILabel", DefaultStrings.UpdateFirmwareMessage);
 		}
