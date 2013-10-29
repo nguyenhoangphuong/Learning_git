@@ -1,4 +1,6 @@
 QaStatistics::Application.routes.draw do
+  get "goal_filter" => "goal_filter#index"
+
   get "log_filter" => "log_filter#index"
   post "log_filter" => "log_filter#post"
   # The priority is based upon order of creation:

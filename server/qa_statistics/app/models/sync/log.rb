@@ -15,6 +15,10 @@ module Sync
     field :x_st,  as: :extracting_status, type: Integer
     field :s3_p,  as: :s3_folder_path, type: String
     field :ip,    as: :ip_address, type: String
+
+    field :uid, as: :user_id
+    belongs_to :user, foreign_key: :uid, index: true
+
   
     SYNC_FAILED_ERRORS = {
       -1 => "Unknown",
