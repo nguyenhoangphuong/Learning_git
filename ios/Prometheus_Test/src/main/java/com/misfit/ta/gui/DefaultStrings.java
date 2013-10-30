@@ -173,6 +173,8 @@ public class DefaultStrings {
 	
 	public static String BatteryLowTitle = "Your battery is low";
 	public static String BatteryLowMessage = "Please replace your battery. Tap this to show how to replace.";
+	public static String DismissButton = "Dismiss";
+	public static String ShowMeHowButton = "Show Me How";
 	
 	public static String SyncLaterButton = "Sync Later";
 	public static String SyncNowButton = "Sync Now";

@@ -892,7 +892,7 @@ public class Gui {
     }
 
     public static void tapToSync() {
-    	String message = "(Gui touchAViewWithViewName: @\"PTSyncTrayView\" andIndex: 0)";
+    	String message = "(Gui touchAViewWithViewName: @\"PTAECASyncIntroAnimationView\" andIndex: 0)";
     	NuRemoteClient.sendToServer(message);
     }
     
@@ -903,8 +903,7 @@ public class Gui {
     	return !StringUtils.isEmpty(result);
     }
 
-    public static void start(String ip) 
-    {
+    public static void start(String ip) {
     	// DEPRECATED
     	// USE APPHELPER.CLEANCACHE
     	// APPHELPER.LAUCHINSTRUMENT

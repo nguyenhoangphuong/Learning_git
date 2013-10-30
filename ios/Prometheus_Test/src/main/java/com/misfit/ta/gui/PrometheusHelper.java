@@ -210,7 +210,7 @@ public class PrometheusHelper {
 
 	public static void handleBatteryLowPopup() {
 		if (ViewUtils.isExistedView("UILabel", DefaultStrings.BatteryLowTitle) && ViewUtils.isExistedView("UILabel", DefaultStrings.BatteryLowMessage)) {
-			Gui.touchAVIew("UIButtonLabel", DefaultStrings.CancelButton);
+			Gui.touchAVIew("UIButtonLabel", DefaultStrings.DismissButton);
 		}
 	}
 	
@@ -405,7 +405,7 @@ public class PrometheusHelper {
 	}
 	
 	public static void main(String[] args) {
-		Gui.init("192.168.1.185");
+		Gui.init("192.168.1.162");
 		Gui.shutdown();
 	}
 
