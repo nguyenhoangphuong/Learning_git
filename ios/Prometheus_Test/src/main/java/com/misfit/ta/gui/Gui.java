@@ -263,7 +263,7 @@ public class Gui {
         return result;
     }
 
-    private static void failOnError(String result) {
+    public static void failOnError(String result) {
         if (result.toLowerCase().indexOf("uncaught javascript error") > 0 || result.toLowerCase().indexOf("fail") > 0) {
             Assert.assertTrue(false, "Test output contain fail string");
         }

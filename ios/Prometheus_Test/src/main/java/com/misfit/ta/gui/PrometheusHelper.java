@@ -94,7 +94,7 @@ public class PrometheusHelper {
 	public static void inputManualRecord(String[] times, int duration, int steps) {
 		
 		// it's am in iOS7 instead of AM
-		times[2] = Gui.isRunningOnIOS7() ? times[2].toLowerCase() : times[2].toUpperCase();
+		times[2] = times[2].toUpperCase();
 	
 		// enter time
 		manualInputTime(times);

@@ -140,8 +140,10 @@ public class LocalizationTest extends AutomationTest
     	Thread thread = new Thread()
     	{
     	    public void run() {
-    	    	Gui.launchInstrument(AppHelper.getCurrentUdid(),
+    	    	String result = Gui.launchInstrument(AppHelper.getCurrentUdid(),
     					AppHelper.getAppPath(), "script/localize/localize_test.js", outputDir);
+    	    	
+    	    	Gui.failOnError(result);
     	    }
     	};
     	thread.start();

@@ -2,6 +2,7 @@ package com.misfit.ta.gui;
 
 import java.util.Calendar;
 
+import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 
 public class HomeScreen {
@@ -118,7 +119,14 @@ public class HomeScreen {
 	}
 
 	public static void pullToRefresh() {
-		Gui.swipeLeft(1000);
+		
+		// TODO: use something generic, currently we have to call dev code directly
+		// swipe works on iOS6 but doesn't on iOS7
+		
+		//Gui.swipeLeft(1000);
+		NuRemoteClient.sendToServer("((ViewUtils findViewWithViewName:@\"PTGoalCircleHorizontalScrollView\" andIndex:0) animateToWaitingPositionBeforeSyncingFinish)");
+		NuRemoteClient.sendToServer("((ViewUtils findViewWithViewName:@\"PTGoalCircleHorizontalScrollView\" andIndex:0) startLoadingAnimation)");
+		NuRemoteClient.sendToServer("((PTClientServerSyncService sharedService) startSyncing)");
 	}
 
 	/* Visible checking */
