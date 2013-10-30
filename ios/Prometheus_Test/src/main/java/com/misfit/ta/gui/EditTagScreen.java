@@ -21,12 +21,12 @@ public class EditTagScreen {
 	
 	public static void tapPopupChangeTag() {
 		
-		Gui.touchPopupButton(1);
+		Gui.touchPopupButton(DefaultStrings.ChangeTagButton);
 	}
 	
 	public static void tapPopupCancel() {
 		
-		Gui.touchPopupButton(0);
+		Gui.touchPopupButton(DefaultStrings.CancelButton);
 	}
 	
 	public static boolean isEditTagScreen() {

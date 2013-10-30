@@ -59,13 +59,12 @@ public class Sync {
 	}
 
 	public static void tapPopupSyncLater() {
-		
-		Gui.touchPopupButton(0);
+		Gui.touchPopupButton(DefaultStrings.SyncLaterButton);
 	}
 	
 	public static void tapPopupSyncNow() {
 		
-		Gui.touchPopupButton(1);
+		Gui.touchPopupButton(DefaultStrings.SyncNowButton);
 	}
 	
 }
