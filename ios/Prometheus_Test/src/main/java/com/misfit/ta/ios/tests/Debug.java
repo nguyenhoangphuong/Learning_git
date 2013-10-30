@@ -28,9 +28,7 @@ public class Debug {
 //		Gui.swipe(20, 150, 0, 150);
 
 		HomeScreen.pullToRefresh();
-		
 		PrometheusHelper.waitForViewToDissappear("UILabel", "Loading");
-		PrometheusHelper.handleUpdateFirmwarePopup();
 
 	}
 }
