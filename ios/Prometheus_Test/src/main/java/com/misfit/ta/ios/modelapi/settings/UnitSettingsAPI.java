@@ -23,10 +23,10 @@ public class UnitSettingsAPI extends ModelAPI {
 	private boolean isDistanceUSUnit = true;
 	private boolean isWeightUSUnit = true;
 	
-	private String heightDefaultInUS = "5'8\\\"";
-	private String heightDefaultInSI = "1.73 m";
-	private String weightDefaultInUS = "120.0 lbs";
-	private String weightDefaultInSI = "54.4 kg";
+	private String heightDefaultInUS = "5'4\\\"";
+	private String heightDefaultInSI = "1.63 m";
+	private String weightDefaultInUS = "140.0 lbs";
+	private String weightDefaultInSI = "63.5 kg";
 	
 	public void e_Init() {
 		

@@ -39,19 +39,16 @@ public class PrometheusHelper {
 	}
 
 	public static void enterBirthDay(String year, String month, String day) {
-		
-		boolean isIOS7 = Gui.isRunningOnIOS7();
-		
+			
 		Gui.touchAVIew("PTDatePickerControl", 0);
-		int monthIndex = isIOS7 ? 1 : 0;
-		int dayIndex = isIOS7 ? 0 : 1;
-		Gui.setPicker(monthIndex, month);
-		Gui.setPicker(dayIndex, day);
+		Gui.setPicker(0, month);
+		Gui.setPicker(1, day);
 		Gui.setPicker(2, year);
 		Gui.dismissPicker();
 	}
 
 	public static void enterBirthDay() {
+		
 		Gui.touchAVIew("PTDatePickerControl", 0);
 		Gui.dismissPicker();
 	}
@@ -72,6 +69,7 @@ public class PrometheusHelper {
 	}
 
 	public static void enterWeight(String digit, String fraction, boolean isUSUnit) {
+		
 		Gui.touchAVIew("PTWeightPickerControl", 0);
 		Gui.setPicker(2, isUSUnit ? DefaultStrings.LbsLabel : DefaultStrings.KgLabel);
 		Gui.setPicker(0, digit);
@@ -80,6 +78,7 @@ public class PrometheusHelper {
 	}
 
 	public static void enterWeight() {
+		
 		Gui.touchAVIew("PTWeightPickerControl", 0);
 		Gui.dismissPicker();
 	}
