@@ -110,6 +110,7 @@ module Sync
       map << "keys.lastCommand = this.data.lastCommand; " if showLastCommand
       map << "keys.failureCode = this.data.failureReason; " if has_failure_reasons
       map << "keys.iosVersion = this.data.iosVersion; " if has_ios_version
+      #map << "keys.uid = this.uid; " 
       map << %Q{
         var device_models = JSON.parse('#{deviceJson}');
         keys.deviceInfo = device_models[this.data.deviceInfo] || "Unknown device info";
@@ -143,6 +144,7 @@ module Sync
         tmpArray << "iOS version" if has_ios_version
         tmpArray << "Device model" if has_device_infos
         tmpArray << "Last command" if showLastCommand
+        #tmpArray << "User Id"
         tmpArray << "Number of failures"
         tmpArray << "Failure rate"
         result << tmpArray
@@ -159,6 +161,7 @@ module Sync
             lastCommand = entry["_id"]["lastCommand"].nil? ? "Last command is nil" : entry["_id"]["lastCommand"].empty? ? "Last command is empty" : entry["_id"]["lastCommand"]
             tmpArray << lastCommand
           end
+          tmpArray << entry["_id"]["uid"]
           tmpArray << failures
           tmpArray << percentage
           result << tmpArray
@@ -183,12 +186,14 @@ module Sync
       if statisticsFromLogs.count > 1
         count = statisticsFromLogs.first.count
         i = 0
+        #result << "Total users: " + (statisticsFromLogs.count - 1).to_s + "<\/br\>"
         statisticsFromLogs.each do |entry|
           temp = entry.join("\t")
           temp += i == 0 ? "<\/br\>" : "\%\<\/br\>"
           i += 1
           result << temp
         end 
+        result 
       end
       result
     end

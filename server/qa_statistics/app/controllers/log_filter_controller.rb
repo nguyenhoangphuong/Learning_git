@@ -27,6 +27,6 @@ class LogFilterController < ApplicationController
 	end
 
   @logs = Sync::Log.calculate_statistics_by_criteria(0, startTime, endTime, appVersion, syncMode, iosVersions, errorCodes ? errorCodes.map(&:to_i) : nil, 
-  								deviceInfos ? Sync::Log::DEVICE_INFOS.slice(*deviceInfos).values.flatten : nil, firmware)
+  								deviceInfos ? Sync::Log::DEVICE_INFOS.slice(*deviceInfos).values.flatten : nil, firmware, false)
    end
 end
