@@ -32,31 +32,31 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 	
 	public void e_init() {
 		
-//		// sign up
-//		String email = PrometheusHelper.signUpDefaultProfile();
-//		String token = MVPApi.signIn(email, "qwerty1").token;
-//		
-//		// create 2 goals in the past
-//		BackendHelper.completeGoalInPast(token, 1);
-//		BackendHelper.completeGoalInPast(token, 2);
-//				
-//		// create a personal best record
-//		BackendHelper.setPersonalBest(token, 1000);
-//		
-//		// get new data from server
-//		HomeScreen.pullToRefresh();
-//		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
+		// sign up
+		String email = PrometheusHelper.signUpDefaultProfile();
+		String token = MVPApi.signIn(email, "qwerty1").token;
+		
+		// create 2 goals in the past
+		BackendHelper.completeGoalInPast(token, 1);
+		BackendHelper.completeGoalInPast(token, 2);
+				
+		// create a personal best record
+		BackendHelper.setPersonalBest(token, 1000);
+		
+		// get new data from server
+		HomeScreen.pullToRefresh();
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 	
 	public void e_inputActivityAndFinishTutorial() {
 		
-//		// input first activity
-//		HomeScreen.tapOpenManualInput();
-//		HomeScreen.enterManualActivity(new String[] {"1", "00", "AM"}, mins, steps);
-//		HomeScreen.tapSave();
-//		
-//		// handle tutorial	
-//		Timeline.dragUpTimelineAndHandleTutorial();		
+		// input first activity
+		HomeScreen.tapOpenManualInput();
+		HomeScreen.enterManualActivity(new String[] {"1", "00", "AM"}, mins, steps);
+		HomeScreen.tapSave();
+		
+		// handle tutorial	
+		Timeline.dragUpTimelineAndHandleTutorial();	
 	}
 	
 	public void e_holdToEditActivity() {

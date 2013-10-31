@@ -126,7 +126,8 @@ public class StreakMilestoneAPI extends ModelAPI {
 		for(int i = 0; i < dayDiff; i++)
 			Gui.swipeUp(1000);
 
-		String title = (mins / 60) + ":" + String.format("%02d", mins % 60 + 10) + "am";
+		//String title = (mins / 60) + ":" + String.format("%02d", mins % 60 + 10) + "am";
+		String title = (dayDiff + 1) + "";
 		boolean pass = false;
 		for (int i = 0; i < 3; i++) {
 			Timeline.openTile(title);
