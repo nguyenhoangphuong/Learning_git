@@ -8,7 +8,7 @@ class User
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :recoverable
+  # devise :database_authenticatable, :recoverable
 
   ## Database authenticatable
   field :email,              type: String, default: ""
@@ -23,6 +23,11 @@ class User
 
 
   has_many :goals, class_name: "Sync::Goal", dependent: :destroy
-  has_many :logs, class_name: "Sync::Log", dependent: :destroy
+  has_many :logs, class_name: "Sync::Log", dependent: :destroyuser
+
+  def self.search_emails_by_ids(ids) 
+    result = self.only(:email).where(:_id.in => ids).map(&:email)
+    result
+  end 
 
 end

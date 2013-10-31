@@ -161,7 +161,7 @@ module Sync
             lastCommand = entry["_id"]["lastCommand"].nil? ? "Last command is nil" : entry["_id"]["lastCommand"].empty? ? "Last command is empty" : entry["_id"]["lastCommand"]
             tmpArray << lastCommand
           end
-          tmpArray << entry["_id"]["uid"]
+          # tmpArray << entry["_id"]["uid"]
           tmpArray << failures
           tmpArray << percentage
           result << tmpArray
