@@ -171,8 +171,8 @@ public class DefaultStrings {
 	public static String _8HourSleep = "8-hour sleep";
 	public static String RemoveSleepButton = "Remove Sleep";
 	
-	public static String BatteryLowTitle = "Your battery is low";
-	public static String BatteryLowMessage = "Please replace your battery. Tap this to show how to replace.";
+	public static String BatteryLowTitle = "Your battery is low!";
+	public static String BatteryLowMessage = "Please replace the battery on Shine within the next few days to prevent data loss.";
 	public static String DismissButton = "Dismiss";
 	public static String ShowMeHowButton = "Show Me How";
 	

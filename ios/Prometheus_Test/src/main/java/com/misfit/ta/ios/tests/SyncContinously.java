@@ -10,10 +10,12 @@ import org.graphwalker.exceptions.StopConditionException;
 import org.testng.annotations.Test;
 
 import com.misfit.ios.ViewUtils;
+import com.misfit.ta.Gui;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.sync.SyncDebugLog;
-import com.misfit.ta.gui.InstrumentHelper;
+import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.report.TRS;
@@ -22,7 +24,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SyncContinously extends AutomationTest {
 
-	private static int NUMBER_OF_SYNC = 100;
+	private static int NUMBER_OF_SYNC = 50;
 
 	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "QuietSync", "SyncContinously" })
 	public void QuietSyncContinously() {
@@ -41,11 +43,9 @@ public class SyncContinously extends AutomationTest {
 			// so we must wait about 15s for app to be fully loaded
 			instrument.start();
 			ShortcutsTyper.delayTime(15000);
-			
 			// do whatever you want here: connect Nu, check for views...
 			// currently we just do wait for quiet sync to finish
 			ShortcutsTyper.delayTime(30 * 1000);
-			
 			// kill app
 			instrument.stop();
 			instrument.kill();
@@ -57,9 +57,9 @@ public class SyncContinously extends AutomationTest {
 	public void ManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
 
 		
-		String email = "v14@qa.com";
-		String password = "test12";
-		String serialNumber = "XXXXXV0014";
+		String email = "science018@qa.com";
+		String password = "qqqqqq";
+		String serialNumber = "science018";
 		
 		// set up: link shine v14 to v14 account	
 		Long now = System.currentTimeMillis() / 1000;
@@ -72,7 +72,7 @@ public class SyncContinously extends AutomationTest {
 		pedo.setLinkedTime(now);
 		pedo.setUpdatedAt(now);
 		MVPApi.updatePedometer(token, pedo);
-
+		
 		// create sync folder if not exist
 		File sync = new File("sync");
 		if (!sync.isDirectory())
@@ -88,6 +88,7 @@ public class SyncContinously extends AutomationTest {
 		boolean[] statusPassed = new boolean[NUMBER_OF_SYNC];
 
 		// start test
+		ShortcutsTyper.delayTime(2000);
 		try {
 			long begin = System.currentTimeMillis() / 1000 - 720;
 
@@ -108,12 +109,18 @@ public class SyncContinously extends AutomationTest {
 					ShortcutsTyper.delayTime(100);
 				}
 				end = System.currentTimeMillis();
-
-				if (Sync.hasAlert()) {
-					failedSyncCount++;
-					Sync.tapOK();
-					passed = false;
-				} else {
+				
+				int j = 0;
+				while (Sync.hasAlert()) {
+					if (Gui.getPopupTitle().equals(DefaultStrings.BatteryLowTitle)) {
+						PrometheusHelper.handleBatteryLowPopup();
+					} else {
+						failedSyncCount++;
+						Sync.tapOK();
+						passed = false;
+					}
+				}
+				if (passed) {
 					successfulSyncCount++;
 				}
 
