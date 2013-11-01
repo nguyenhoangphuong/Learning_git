@@ -213,14 +213,6 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 	
 	private void checkNewTileAndProgress(int newPoint) {
 		
-		// check tile updated and progress
-		Timeline.openTile("1:00am - 1:50am");
-		Timeline.openTile("1:00am");
-		capture();
-		Assert.assertTrue(Timeline.isActivityTileCorrect("1:00am", "1:50am", mins, newPoint, null),
-				"Activity updated correctly");
-		Timeline.closeCurrentTile();
-
 		// check progress circle
 		Timeline.dragDownTimeline();
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", newPoint + ""), "Total points updated correctly");
