@@ -110,7 +110,6 @@ public class SyncContinously extends AutomationTest {
 				}
 				end = System.currentTimeMillis();
 				
-				int j = 0;
 				while (Sync.hasAlert()) {
 					if (Gui.getPopupTitle().equals(DefaultStrings.BatteryLowTitle)) {
 						PrometheusHelper.handleBatteryLowPopup();
@@ -131,13 +130,15 @@ public class SyncContinously extends AutomationTest {
 				uiEndTime[i] = end / 1000;
 				statusPassed[i] = passed;
 				syncLogs[i] = new SyncDebugLog(log);
+				
+
+				// result 
+				System.out.println("Sync passed: " + successfulSyncCount);
+				System.out.println("Sync falied: " + failedSyncCount);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
-		System.out.println("Sync passed: " + successfulSyncCount);
-		System.out.println("Sync falied: " + failedSyncCount);
 
 		// write the result in detail to excel file
 		File file = writeResult("sync/sync_result_detail.xls", failedSyncCount, successfulSyncCount, 
@@ -175,15 +176,19 @@ public class SyncContinously extends AutomationTest {
 					successfulSyncCount++;
 				}
 
+				
 				// parse sync log and store the record
 				ShortcutsTyper.delayTime(5000);
+				
+				
+				// print result
+				System.out.println("-----------------------------------------------");
+				System.out.println("Sync passed: " + successfulSyncCount);
+				System.out.println("Sync falied: " + failedSyncCount);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
-		System.out.println("Sync passed: " + successfulSyncCount);
-		System.out.println("Sync falied: " + failedSyncCount);
 	}
 
 	private File writeResult(String filepath, int failedSyncCount, int successfulSyncCount, SyncDebugLog[] syncLogs, long[] uiStartTime, long[] uiEndTime, boolean[] statusPassed) {
