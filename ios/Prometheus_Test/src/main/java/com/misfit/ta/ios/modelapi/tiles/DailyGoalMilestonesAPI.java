@@ -4,6 +4,7 @@ import java.io.File;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
@@ -21,11 +22,13 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	}
 	
 	int hour = 6;
-
+	String email = MVPApi.generateUniqueEmail();
+	String password = "qwerty1";
+	int i = 0;
 	public void e_init() {
 		
 		// sign up with goal = 1000 pts
-		PrometheusHelper.signUpDefaultProfile();
+		PrometheusHelper.signUpDefaultProfile(email, password);
 	}
 	
 	public void e_inputHalfGoal() {
@@ -53,21 +56,21 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	}
 	
 	public void v_HomeScreen100() {
-	
+		ShortcutsTyper.delayTime(5000);
 		checkActivityTile();
 		checkGoalTile(1000, Timeline.DailyGoalMessagesFor100Percent);
 	}
 	
 	public void v_HomeScreen150() {
-		
+		ShortcutsTyper.delayTime(5000);
 		checkActivityTile();
 		checkGoalTile(1500, Timeline.DailyGoalMessagesFor150Percent);
 	}
 	
 	public void v_HomeScreen200() {
-		
 		ShortcutsTyper.delayTime(5000);
-		Gui.swipeUp(1000);
+		int swipeUp = i == 0 ? 1000 : 2000;
+		Gui.swipeUp(swipeUp);
 		checkActivityTile();
 		checkGoalTile(2000, Timeline.DailyGoalMessagesFor200Percent);
 	}
@@ -85,13 +88,27 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	}
 	
 	public void checkGoalTile(int points, String[] messages) {
-		
+		System.out.println("DEBUG check goal tile Hour: " + hour);
 		String time = hour + ":50am";
-		
-		Timeline.openTile(time);
+		System.out.println("DEBUG check goal tile Time: " + time);
+		Timeline.openNotableEventTile(time);
 		Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(time, points, messages),
 				"Daily goal milestone tile is displayed correctly");
 		Timeline.closeCurrentTile();
+	}
+	
+	public void e_SignOut() {
+		PrometheusHelper.signOut();
+	}
+	 
+	public void e_SignIn() {
+		PrometheusHelper.signIn(email, password);
+		ShortcutsTyper.delayTime(2000);
+		i = 1;
+	}
+	
+	public void v_LaunchScreen() {
+		
 	}
 	
 }

@@ -264,14 +264,19 @@ public class PrometheusHelper {
 	}
 
 	public static String signUpDefaultProfile() {
+		String email = MVPApi.generateUniqueEmail();
+		String password = "qwerty1";
 		
+		return signUpDefaultProfile(email, password);
+	}
+
+	public static String signUpDefaultProfile(String email, String password) {
 		LaunchScreen.launch();
 		ShortcutsTyper.delayOne();
 
 		// email and password
-		String email = MVPApi.generateUniqueEmail();
 		SignUp.tapSignUp();
-		SignUp.enterEmailPassword(email, "qwerty1");
+		SignUp.enterEmailPassword(email, password);
 		waitForView("UILabel", DefaultStrings.SignUpProfileTitle);
 
 		// profile
