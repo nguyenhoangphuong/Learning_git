@@ -24,7 +24,6 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	int hour = 6;
 	String email = MVPApi.generateUniqueEmail();
 	String password = "qwerty1";
-	int i = 0;
 	public void e_init() {
 		
 		// sign up with goal = 1000 pts
@@ -69,8 +68,7 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	
 	public void v_HomeScreen200() {
 		ShortcutsTyper.delayTime(5000);
-		int swipeUp = i == 0 ? 1000 : 2000;
-		Gui.swipeUp(swipeUp);
+		Gui.swipeUp(1000);
 		checkActivityTile();
 		checkGoalTile(2000, Timeline.DailyGoalMessagesFor200Percent);
 	}
@@ -104,7 +102,7 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	public void e_SignIn() {
 		PrometheusHelper.signIn(email, password);
 		ShortcutsTyper.delayTime(2000);
-		i = 1;
+		Timeline.dragUpTimelineAndHandleTutorial();
 	}
 	
 	public void v_LaunchScreen() {
