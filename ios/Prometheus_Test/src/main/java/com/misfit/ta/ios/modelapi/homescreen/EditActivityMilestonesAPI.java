@@ -19,6 +19,7 @@ import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class EditActivityMilestonesAPI extends ModelAPI {
 	
@@ -26,15 +27,15 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
-	
+	private String email = PrometheusHelper.signUpDefaultProfile();
+	private String password = "qwerty1";
 	private int steps = 5000;
 	private int mins = 50;
 	
 	public void e_init() {
 		
 		// sign up
-		String email = PrometheusHelper.signUpDefaultProfile();
-		String token = MVPApi.signIn(email, "qwerty1").token;
+		String token = MVPApi.signIn(email, password).token;
 		
 		// create 2 goals in the past
 		BackendHelper.completeGoalInPast(token, 1);
@@ -102,6 +103,22 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		checkNewTileAndProgress(newPoint);
 	}
 	
+	public void e_SignOut() {
+		PrometheusHelper.signOut();
+	}
+	 
+	public void e_SignIn() {
+		PrometheusHelper.signIn(email, password);
+		ShortcutsTyper.delayTime(2000);
+	}
+	
+	public void e_Stay() {
+		
+	}
+	
+	public void v_LaunchScreen() {
+		
+	}
 	
 	
 	private void capture() {
