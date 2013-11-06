@@ -99,7 +99,7 @@ public class MVPApi {
 
 	// generators
 	public static String generateUniqueEmail() {
-		return "test" + System.currentTimeMillis() + TextTool.getRandomString(6, 6) + "@qa.com";
+		return "test" + System.currentTimeMillis() + TextTool.getRandomString(6, 6) + "@misfitqa.com";
 	}
 
 	public static String generateLocalId()
