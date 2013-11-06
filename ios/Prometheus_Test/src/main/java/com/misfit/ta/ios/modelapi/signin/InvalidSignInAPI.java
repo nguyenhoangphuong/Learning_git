@@ -6,6 +6,7 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.gui.LaunchScreen;
@@ -82,6 +83,7 @@ public class InvalidSignInAPI extends ModelAPI {
     }
 
     public void v_ForgotPassword() {
+    	ShortcutsTyper.delayOne();
         Assert.assertTrue(SignIn.isForgotPasswordView(), "This is not forgot password view.");
     }
 
