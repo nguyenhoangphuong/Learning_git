@@ -1,4 +1,4 @@
-# class LogFilterController < ApplicationController
+class LogFilterController < ApplicationController
   def index
   	endTime = DateTime.new(Time.now.year, Time.now.month, Time.now.day, 0, 0, 0).to_i #current day, at 12am, timezone GMT+0
   	dt = Time.now - (7 * 24 * 60 * 60) #1 week ago
@@ -41,7 +41,11 @@
 
   # @logs = Sync::Log.calculate_statistics_by_criteria(0, startTime, endTime, appVersion, syncMode, iosVersions, errorCodes ? errorCodes.map(&:to_i) : nil, 
   # 								deviceInfos ? Sync::Log::DEVICE_INFOS.slice(*deviceInfos).values.flatten : nil, firmware, false)
-
-  @logs = Sync::Log.calculate_statistics_by_criteria(statistics_params)
-   end
+    if action == "Search"
+      @logs = Sync::Log.calculate_statistics_by_criteria(statistics_params)
+    elsif action == "Export"
+     Sync::Log.export_statistics_by_criteria(statistics_params)
+     @logs = "File is exported!"
+    end
+  end
 end
