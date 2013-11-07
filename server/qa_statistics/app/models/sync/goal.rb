@@ -40,7 +40,6 @@ module Sync
       }
 
       mr_result = goals.map_reduce(map, reduce).out(inline: true).to_a
-      # debugger
       result = []
       mr_result.each do |entry|
         sum = entry["value"].to_i
@@ -49,8 +48,6 @@ module Sync
         tmp << sum.to_s 
         result << tmp
       end
-      # debugger
-      # result.join("\n")
       result
     end
 

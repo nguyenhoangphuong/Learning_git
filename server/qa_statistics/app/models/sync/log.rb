@@ -111,7 +111,6 @@ module Sync
       map << "keys.lastCommand = this.data.lastCommand; " if showLastCommand
       map << "keys.failureCode = this.data.failureReason; " if has_failure_reasons
       map << "keys.iosVersion = this.data.iosVersion; " if has_ios_version
-      #map << "keys.uid = this.uid; " 
       map << %Q{
         var device_models = JSON.parse('#{deviceJson}');
         keys.deviceInfo = device_models[this.data.deviceInfo] || "Unknown device info";
@@ -151,7 +150,6 @@ module Sync
         tmpArray << "iOS version" if has_ios_version
         tmpArray << "Device model" if has_device_infos
         tmpArray << "Last command" if showLastCommand
-        #tmpArray << "User Id"
         tmpArray << "Number of failures"
         tmpArray << "Failure rate"
         result << tmpArray
@@ -168,7 +166,6 @@ module Sync
             lastCommand = entry["_id"]["lastCommand"].nil? ? "Last command is nil" : entry["_id"]["lastCommand"].empty? ? "Last command is empty" : entry["_id"]["lastCommand"]
             tmpArray << lastCommand
           end
-          # tmpArray << entry["_id"]["uid"]
           tmpArray << failures
           tmpArray << percentage
           result << tmpArray
@@ -178,25 +175,26 @@ module Sync
     end 
 
     def self.calculate_statistics_by_criteria(statistics_params)
-       total_logs = search_logs_by_criteria(statistics_params["isok"], statistics_params["fromTime"], statistics_params["toTime"], 
-          statistics_params["appVersion"], statistics_params["syncMode"], statistics_params["iosVersions"], statistics_params["errorCodes"], 
-          statistics_params["deviceInfos"], statistics_params["firmware"])
-       total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !statistics_params["iosVersions"].nil?, !statistics_params["errorCodes"].nil?, !statistics_params["deviceInfos"].nil?, statistics_params["showLastCommand"])
-       arrayResult = []
-       arrayResult << "Total failures: " + total_failures.to_s + "\<\/br\>"
-       arrayResult << build_statistics_result(statisticsFromLogs)
-       result = arrayResult.join("\n")
+      total_logs = search_logs_by_criteria(statistics_params["isok"], statistics_params["fromTime"], statistics_params["toTime"], 
+        statistics_params["appVersion"], statistics_params["syncMode"], statistics_params["iosVersions"], statistics_params["errorCodes"], 
+        statistics_params["deviceInfos"], statistics_params["firmware"])
+      total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !statistics_params["iosVersions"].nil?, !statistics_params["errorCodes"].nil?, !statistics_params["deviceInfos"].nil?, statistics_params["showLastCommand"])
+      arrayResult = []
+      arrayResult << "Total failures: " + total_failures.to_s + "\<\/br\>"
+      arrayResult << build_statistics_result(statisticsFromLogs)
+      result = arrayResult.join("\n")
     end 
 
     def self.export_statistics_by_criteria(statistics_params)
-       total_logs = search_logs_by_criteria(statistics_params["isok"], statistics_params["fromTime"], statistics_params["toTime"], 
+      total_logs = search_logs_by_criteria(statistics_params["isok"], statistics_params["fromTime"], statistics_params["toTime"], 
           statistics_params["appVersion"], statistics_params["syncMode"], statistics_params["iosVersions"], statistics_params["errorCodes"], 
-          statistics_params["deviceInfos"], statistics_params["firmware"])
-       total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !statistics_params["iosVersions"].nil?, !statistics_params["errorCodes"].nil?, !statistics_params["deviceInfos"].nil?, statistics_params["showLastCommand"])
-       row = []
-       row << "Total failures: "
-       row << total_failures.to_s
-      CSV.open("sync_statistics.csv", "wb") do |csv|
+        statistics_params["deviceInfos"], statistics_params["firmware"])
+      total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !statistics_params["iosVersions"].nil?, !statistics_params["errorCodes"].nil?, !statistics_params["deviceInfos"].nil?, statistics_params["showLastCommand"])
+      row = []
+      row << "Total failures: "
+      row << total_failures.to_s
+      fileName = "failed_sync_statistics_" + Time.now.to_i.to_s + ".csv"
+      CSV.open(fileName, "wb") do |csv|
         csv << row
         statisticsFromLogs.each do |entry|
           csv << entry
@@ -211,7 +209,6 @@ module Sync
       if statisticsFromLogs.count > 1
         count = statisticsFromLogs.first.count
         i = 0
-        #result << "Total users: " + (statisticsFromLogs.count - 1).to_s + "<\/br\>"
         statisticsFromLogs.each do |entry|
           temp = entry.join("\t")
           temp += i == 0 ? "<\/br\>" : "\%\<\/br\>"

@@ -22,7 +22,6 @@ class LogFilterController < ApplicationController
   	deviceInfos = !deviceInfos.nil? && !(deviceInfos.count ==1 && deviceInfos.first.empty?) ? deviceInfos : nil
   	iosVersions = !iosVersions.nil? && !(iosVersions.count ==1 && iosVersions.first.empty?) ? iosVersions : nil
   	
-    # debugger
   	params.each do |key,value|
   		Rails.logger.warn "Param #{key}: #{value}"
 	  end
@@ -39,8 +38,6 @@ class LogFilterController < ApplicationController
     statistics_params["firmware"] = firmware
     statistics_params["showLastCommand"] = false
 
-  # @logs = Sync::Log.calculate_statistics_by_criteria(0, startTime, endTime, appVersion, syncMode, iosVersions, errorCodes ? errorCodes.map(&:to_i) : nil, 
-  # 								deviceInfos ? Sync::Log::DEVICE_INFOS.slice(*deviceInfos).values.flatten : nil, firmware, false)
     if action == "Search"
       @logs = Sync::Log.calculate_statistics_by_criteria(statistics_params)
     elsif action == "Export"
