@@ -96,7 +96,7 @@ module Sync
       result
     end
 
-    def self.calculate_statistics_from_logs(sync_logs, has_ios_version, has_failure_reasons, has_device_infos, showLastCommand)
+    def self.build_map_reduce_query(sync_logs, has_ios_version, has_failure_reasons, has_device_infos, showLastCommand)
       deviceJson = DEVICE_INFOS.map { |k, v| v.map {|model| {model => k} } }.flatten.inject(&:merge).to_json
 
       # This is what deviceJson looks like
@@ -124,6 +124,12 @@ module Sync
       }
 
       mr_result = sync_logs.map_reduce(map, reduce).out(inline: true).to_a
+      mr_result
+    end
+
+    def self.calculate_statistics_from_logs(sync_logs, has_ios_version, has_failure_reasons, has_device_infos, showLastCommand)
+
+      mr_result = build_map_reduce_query(sync_logs, has_ios_version, has_failure_reasons, has_device_infos, showLastCommand)
 
       # each entry of mr_result is a json like this 
       # {"_id"=>{"failureCode" => -8, failureReason"=>"Disconnected by user", "iosVersion"=>"6.1.2", "deviceInfo"=>"iPod 5"}, "value"=>1.0}
@@ -170,14 +176,21 @@ module Sync
       return total_failures, result
     end 
 
-    def self.calculate_statistics_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos, firmware, showLastCommand)
-       total_logs = search_logs_by_criteria(isok, from_time, to_time, app_version, sync_mode, ios_versions, failure_reasons, device_infos, firmware)
-       total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !ios_versions.nil?, !failure_reasons.nil?, !device_infos.nil?, showLastCommand)
+    def self.calculate_statistics_by_criteria(statistics_params)
+       total_logs = search_logs_by_criteria(statistics_params["isok"], statistics_params["fromTime"], statistics_params["toTime"], 
+          statistics_params["appVersion"], statistics_params["syncMode"], statistics_params["iosVersions"], statistics_params["errorCodes"], 
+          statistics_params["deviceInfos"], statistics_params["firmware"])
+       total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs(total_logs, !ios_versions.nil?, !failure_reasons.nil?, !device_infos.nil?, statistics_params["showLastCommand"])
        arrayResult = []
        arrayResult << "Total failures: " + total_failures.to_s + "\<\/br\>"
        arrayResult << build_statistics_result(statisticsFromLogs)
        result = arrayResult.join("\n")
     end 
+
+    def self.export_statistics_by_criteria(statistics_params)
+      CSV.open("sync_statistics.csv", "wb") do |csv|
+      end 
+    end
 
     def self.build_statistics_result(statisticsFromLogs)
       # each entry of statisticsFromLogs is an array like this [-8, "Disconnected by user","6.1.2","iPod 5",1,0.28], 
