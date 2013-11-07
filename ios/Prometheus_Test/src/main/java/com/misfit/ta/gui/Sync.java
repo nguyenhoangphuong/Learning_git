@@ -27,7 +27,7 @@ public class Sync {
 
 	public static void openSyncView() {
 		PrometheusHelper.handleUpdateFirmwarePopup();
-		Gui.touchAVIew("UILabel", DefaultStrings.MenuButton);
+		Gui.touchAVIew("UIButton", DefaultStrings.MenuButton);
 		ShortcutsTyper.delayTime(3000);
 	}
 

@@ -10,7 +10,7 @@ public class HomeScreen {
 	/* Navigation */
 	public static void tapOpenSettingsTray() {
 		PrometheusHelper.handleUpdateFirmwarePopup();
-		Gui.touchAVIew("UILabel", DefaultStrings.MenuButton);
+		Gui.touchAVIew("UIButton", DefaultStrings.MenuButton);
 	}
 
 	public static void tapSettings() {
