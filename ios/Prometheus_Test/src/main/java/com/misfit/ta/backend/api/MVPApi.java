@@ -45,7 +45,7 @@ public class MVPApi {
 	public static String HTTP_PUT = "PUT";
 	
 	public static int CACHE_TRY_TIME = 10;
-	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.49r";
+	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.50r";
 
 	// request helpers
 	static private ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
