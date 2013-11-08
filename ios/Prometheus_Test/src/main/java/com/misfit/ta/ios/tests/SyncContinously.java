@@ -105,7 +105,7 @@ public class SyncContinously extends AutomationTest {
 				Sync.tapToSync();
 				start = System.currentTimeMillis();
 
-				while (!(ViewUtils.isExistedView("UILabel", "Today") && ViewUtils.isExistedView("UILabel", "Week"))) {
+				while (!(ViewUtils.isExistedView("UILabel", "Last synced just now"))) {
 					ShortcutsTyper.delayTime(100);
 				}
 				end = System.currentTimeMillis();
