@@ -53,7 +53,7 @@ public class SyncContinously extends AutomationTest {
 		}
 	}
 	
-	@Test(groups = { "iOS", "Prometheus", "Syncing", "iOSAutomation", "ContinuousSyncing", "SyncContinously" })
+//	@Test(groups = { "iOS", "Prometheus", "Syncing", "iOSAutomation", "ContinuousSyncing", "SyncContinously" })
 	public void ManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
 
 		
@@ -92,7 +92,7 @@ public class SyncContinously extends AutomationTest {
 		try {
 			long begin = System.currentTimeMillis() / 1000 - 720;
 
-			Sync.signIn(email, password);
+//			Sync.signIn(email, password);
 			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 				
 				TRS.instance().addStep("Sync number: " + (i + 1), null);
@@ -105,7 +105,7 @@ public class SyncContinously extends AutomationTest {
 				Sync.tapToSync();
 				start = System.currentTimeMillis();
 
-				while (!(ViewUtils.isExistedView("UILabel", "Last synced just now"))) {
+				while (!(ViewUtils.isExistedView("UILabel", "Last synced just now") || Sync.hasAlert())) {
 					ShortcutsTyper.delayTime(100);
 				}
 				end = System.currentTimeMillis();
@@ -148,7 +148,7 @@ public class SyncContinously extends AutomationTest {
 		TRS.instance().addFileToCurrentTest(file.getAbsolutePath(), null);
 	}
 	
-	@Test
+//	@Test
 	public void QuickManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
 
 		// tracking
