@@ -26,7 +26,7 @@ public class HomeScreen {
 	}
 
 	public static void tapOpenManualInput() {
-		Gui.touchAVIew("UIButtonLabel", "Manual");
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.ManualButton);
 	}
 
 	public static void tapProgressCircle() {

@@ -179,4 +179,5 @@ public class DefaultStrings {
 	public static String SyncLaterButton = "Sync Later";
 	public static String SyncNowButton = "Sync Now";
 	public static String ChangeTagButton = "Change Tag";
+	public static String ManualButton = "M";
 }
