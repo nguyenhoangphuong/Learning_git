@@ -1,5 +1,8 @@
 package com.misfit.ta.ios.tests;
 
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.testng.Assert;
@@ -18,9 +21,10 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-		Gui.init("192.168.1.115");
-		
-		Timeline.openTile("3");
+		FileUtils.deleteQuietly(new File("apps"));
+//		Gui.init("192.168.1.115");
+//		
+//		Timeline.openTile("3");
 
 	}
 }

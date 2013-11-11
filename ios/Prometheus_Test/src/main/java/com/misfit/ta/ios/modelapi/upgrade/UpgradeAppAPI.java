@@ -37,12 +37,14 @@ public class UpgradeAppAPI extends ModelAPI {
 		"apps/mvp17.1/Prometheus.ipa",
 		"apps/mvp18.1/Prometheus.ipa",
 		"apps/mvp19/Prometheus.ipa",
+		"apps/mvp20/Prometheus.ipa",
 	};
 	
 	public static int MVP_16_1 = 0;
 	public static int MVP_17_1 = 1;
 	public static int MVP_18_1 = 2;
 	public static int MVP_19 = 3;
+	public static int MVP_20 = 4;
 	
 	
 	// fields
