@@ -10,19 +10,19 @@ public class HomeScreen {
 	/* Navigation */
 	public static void tapOpenSettingsTray() {
 //		PrometheusHelper.handleUpdateFirmwarePopup();
-		Gui.touchAVIew("UIButton", DefaultStrings.MenuButton);
+		Gui.touchAVIew("UIButton", DefaultStrings.MenuButtonId);
 	}
 
 	public static void tapSettings() {
-		Gui.touchAVIew("UILabel", DefaultStrings.SettingsButton);
+		Gui.touchAVIew("PTListItemView", DefaultStrings.SettingsButtonId);
 	}
 
 	public static void tapAdjustGoal() {
-		Gui.touchAVIew("UILabel", DefaultStrings.MyGoalButton);
+		Gui.touchAVIew("PTListItemView", DefaultStrings.MyGoalButtonId);
 	}
 
 	public static void tapMyShine() {
-		Gui.touchAVIew("UILabel", DefaultStrings.MyShineButton);
+		Gui.touchAVIew("PTListItemView", DefaultStrings.MyShineButtonId);
 	}
 
 	public static void tapOpenManualInput() {

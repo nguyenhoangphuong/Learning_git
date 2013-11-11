@@ -7,6 +7,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
@@ -103,7 +104,7 @@ public class UnitSettingsAPI extends ModelAPI {
 	}
 
 	public void v_ProfileView() {
-		
+		ShortcutsTyper.delayTime(3000);
 		String weight = isWeightUSUnit ? weightDefaultInUS : weightDefaultInSI;
 		String height = isDistanceUSUnit ? heightDefaultInUS : heightDefaultInSI;
 
@@ -114,7 +115,7 @@ public class UnitSettingsAPI extends ModelAPI {
 	}
 
 	public void v_SettingsView() {
-		
+		ShortcutsTyper.delayTime(3000);
 		boolean currentDistanceUSUnit = Gui.getProperty("UIButton", DefaultStrings.MileLabel,
 				"isSelected").equals("1") ? true : false;
 		boolean currentWeightUSUnit = Gui.getProperty("UIButton", DefaultStrings.LbsLabel,

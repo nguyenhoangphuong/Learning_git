@@ -54,7 +54,7 @@ public class DefaultStrings {
 	public static String ForgotPasswordCancelButton = "CANCEL";
 
 	// home screen
-	public static int MenuButton = 16;
+	public static int MenuButtonId = 15;
 	public static String TodayTitle = "Today";
 	public static String YesterdayTitle = "Yesterday";
 	public static String WeekButton = "Week";
@@ -62,9 +62,12 @@ public class DefaultStrings {
 	public static String ThisWeekTitle = "This week";
 	public static String LastWeekTitle = "Last week";
 	public static String SettingsButton = "Settings";
+	public static int SettingsButtonId = 2;
 	public static String MyShineButton = "My Shine";
+	public static int MyShineButtonId = 1;
 	public static String MyShineTitle = "My Shine";
 	public static String MyGoalButton = "My Goal";
+	public static int MyGoalButtonId = 0;
 	public static String NoActivityLabel = "No activity yet.";
 	public static String EndTutorialButton = "OK, I GOT IT";
 	public static String TutorialFirstPageLabel = "_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.";
