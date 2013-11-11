@@ -54,7 +54,7 @@ public class DefaultStrings {
 	public static String ForgotPasswordCancelButton = "CANCEL";
 
 	// home screen
-	public static int MenuButton = 14;
+	public static int MenuButton = 16;
 	public static String TodayTitle = "Today";
 	public static String YesterdayTitle = "Yesterday";
 	public static String WeekButton = "Week";
@@ -128,7 +128,7 @@ public class DefaultStrings {
 	public static String NewGoalInstruction = "Sync to update your new goal on your Shine.";
 	public static String[] WearingLocations = { "Head", "Upper Arm", "Chest",
 			"Wrist", "Waist", "Ankle/Foot" };
-	public static String UpdateFirmwareMessage = "We've made your Shine even better! Sync now to get the latest features";
+	public static String UpdateFirmwareMessage = "OTA update available, tap to update";
 	public static String UpdateFirmwareLaterButton = "Later";
 
 	public static String[] WalkingLevel = { "KINDA ACTIVE", "PRETTY ACTIVE",
