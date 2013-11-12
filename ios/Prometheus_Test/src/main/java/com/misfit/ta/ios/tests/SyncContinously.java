@@ -11,26 +11,25 @@ import org.testng.annotations.Test;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.Gui;
+import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.sync.SyncDebugLog;
 import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.InstrumentHelper;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Sync;
-import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class SyncContinously extends AutomationTest {
+public class SyncContinously {
 
 	private static int NUMBER_OF_SYNC = 50;
+	private InstrumentHelper instrument = new InstrumentHelper();
 
 	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "QuietSync", "SyncContinously" })
 	public void QuietSyncContinously() {
-	
-		instrument.stop();
-		instrument.kill();
 		
 		for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 
@@ -43,9 +42,11 @@ public class SyncContinously extends AutomationTest {
 			// so we must wait about 15s for app to be fully loaded
 			instrument.start();
 			ShortcutsTyper.delayTime(15000);
+			
 			// do whatever you want here: connect Nu, check for views...
 			// currently we just do wait for quiet sync to finish
-			ShortcutsTyper.delayTime(30 * 1000);
+			ShortcutsTyper.delayTime(10 * 1000);
+			
 			// kill app
 			instrument.stop();
 			instrument.kill();
@@ -53,15 +54,19 @@ public class SyncContinously extends AutomationTest {
 		}
 	}
 	
-//	@Test(groups = { "iOS", "Prometheus", "Syncing", "iOSAutomation", "ContinuousSyncing", "SyncContinously" })
+	@Test(groups = { "iOS", "Prometheus", "Syncing", "iOSAutomation", "ContinuousSyncing", "SyncContinously" })
 	public void ManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
 
+		// connect Nu
+		// NOTE: you have to open app by yourself
+		Gui.init(Settings.getParameter("DeviceIP"));
 		
+		// user info
 		String email = "science018@qa.com";
 		String password = "qqqqqq";
 		String serialNumber = "science018";
 		
-		// set up: link shine v14 to v14 account	
+		// set up: link shine to account	
 		Long now = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signIn(email, password).token;	
 		Pedometer pedo = MVPApi.getPedometer(token);
@@ -92,7 +97,7 @@ public class SyncContinously extends AutomationTest {
 		try {
 			long begin = System.currentTimeMillis() / 1000 - 720;
 
-//			Sync.signIn(email, password);
+			Sync.signIn(email, password);
 			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 				
 				TRS.instance().addStep("Sync number: " + (i + 1), null);
@@ -148,9 +153,13 @@ public class SyncContinously extends AutomationTest {
 		TRS.instance().addFileToCurrentTest(file.getAbsolutePath(), null);
 	}
 	
-//	@Test
+	@Test
 	public void QuickManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
 
+		// connect Nu
+		// NOTE: you have to open app first
+		Gui.init(Settings.getParameter("DeviceIP"));
+		
 		// tracking
 		int successfulSyncCount = 0;
 		int failedSyncCount = 0;
