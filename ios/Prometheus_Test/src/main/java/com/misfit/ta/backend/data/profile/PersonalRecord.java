@@ -33,8 +33,8 @@ public class PersonalRecord {
 	public static PersonalRecord fromJson(JSONObject json) {
 		PersonalRecord obj = new PersonalRecord();
 		try {
-			double points = json.getDouble("personalBestRecordsInPoint");
-			obj.setPersonalBestRecordsInPoint(points);
+			if (!json.isNull("localId"))
+				obj.setPersonalBestRecordsInPoint(json.getDouble("personalBestRecordsInPoint"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
