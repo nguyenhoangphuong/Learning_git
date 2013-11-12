@@ -85,8 +85,6 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 	
 	
 	public void v_HomeScreen() {
-
-		PrometheusHelper.handleUpdateFirmwarePopup();
 		Assert.assertTrue(HomeScreen.isToday(), "Current screen is HomeScreen - Today");
 	}
 
