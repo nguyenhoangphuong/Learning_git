@@ -248,8 +248,6 @@ public class PrometheusHelper {
 		// tutorial
 		PrometheusHelper.handleTutorial();
 		
-		// firmware popup
-		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 
 	public static String signUp() {
@@ -297,9 +295,6 @@ public class PrometheusHelper {
 		
 		// tutorial
 		PrometheusHelper.handleTutorial();
-		
-		// firmware popup
-		PrometheusHelper.handleUpdateFirmwarePopup();
 		
 		return email;
 	}
