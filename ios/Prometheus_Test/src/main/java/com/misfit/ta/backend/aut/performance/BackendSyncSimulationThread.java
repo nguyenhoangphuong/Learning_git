@@ -20,7 +20,7 @@ import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.goal.ProgressData;
-import com.misfit.ta.backend.data.goal.TrippleTapData;
+import com.misfit.ta.backend.data.goal.TripleTapData;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
@@ -253,7 +253,7 @@ public class BackendSyncSimulationThread implements Runnable {
         ProgressData progressData = new ProgressData(300, 5000, 1200, 500);
         sCreateGoal= System.currentTimeMillis();
         GoalsResult goalResult = MVPApi.createGoal(token, 2500, now, now + 8400, 
-        		0, progressData, new ArrayList<TrippleTapData>(), "mylocalid", now);
+        		0, progressData, new ArrayList<TripleTapData>(), "mylocalid", now);
         sCreateGoal1 = System.currentTimeMillis();
         ResultLogger.totalTime += sCreateGoal1 - sCreateGoal;
 //        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
@@ -272,7 +272,7 @@ public class BackendSyncSimulationThread implements Runnable {
         
         sUpdateGoal= System.currentTimeMillis();
         goalResult = MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 
-        		2500, now, now + 8400, 0, progressData, new ArrayList<TrippleTapData>(), "mylocalid");
+        		2500, now, now + 8400, 0, progressData, new ArrayList<TripleTapData>(), "mylocalid");
         sUpdateGoal1 = System.currentTimeMillis();
         ResultLogger.totalTime += sUpdateGoal1 - sUpdateGoal;
 //        Assert.assertTrue(goalResult.isExisted(), "Status code is not 210: " + goalResult.statusCode);

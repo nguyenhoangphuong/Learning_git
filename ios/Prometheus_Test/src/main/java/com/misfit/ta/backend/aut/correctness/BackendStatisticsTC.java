@@ -36,8 +36,8 @@ public class BackendStatisticsTC extends BackendAutomation {
 
 		Assert.assertEquals(r2.statusCode, 210, "Status code");
 		Assert.assertEquals(stats1.getServerId(), stats2.getServerId(), "Server Id is the same");
-		Assert.assertEquals(stats2.getPersonalRecords().getPersonalBestRecordsInPoint(), 
-				defaultStatistics.getPersonalRecords().getPersonalBestRecordsInPoint(),
+		Assert.assertEquals(stats2.getPersonalRecords().getPersonalBestRecordsInPoint().getPoint(), 
+				defaultStatistics.getPersonalRecords().getPersonalBestRecordsInPoint().getPoint(),
 				"Personal best in point is the same");
 
 	}
@@ -51,7 +51,8 @@ public class BackendStatisticsTC extends BackendAutomation {
 		MVPApi.createStatistics(token, src);
 
 		// update
-		src.getPersonalRecords().setPersonalBestRecordsInPoint(5000d);
+		src.getPersonalRecords().getPersonalBestRecordsInPoint().setPoint(5000d);
+		src.getPersonalRecords().getPersonalBestRecordsInPoint().setTimestamp(System.currentTimeMillis() / 1000);
 		BaseResult r = MVPApi.updateStatistics(token, src);
 		Statistics stats = Statistics.fromResponse(r.response);
 
@@ -69,7 +70,8 @@ public class BackendStatisticsTC extends BackendAutomation {
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
 
 		// update
-		src.getPersonalRecords().setPersonalBestRecordsInPoint(5000d);
+		src.getPersonalRecords().getPersonalBestRecordsInPoint().setPoint(5000d);
+		src.getPersonalRecords().getPersonalBestRecordsInPoint().setTimestamp(System.currentTimeMillis() / 1000);
 		BaseResult r = MVPApi.updateStatistics(token, src);
 		Statistics stats = Statistics.fromResponse(r.response);
 

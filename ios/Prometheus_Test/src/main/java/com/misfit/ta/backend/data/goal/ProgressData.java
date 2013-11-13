@@ -5,14 +5,17 @@ import com.google.resting.json.JSONObject;
 
 public class ProgressData {
 
+	// fields
 	private Integer seconds;
 	private Integer steps;
+	private Double calorie;
 	private Integer fullBmrCalorie;
 	private Double points;
 	private Double distanceMiles;
 
+	
+	// constructor
 	public ProgressData() {
-
 	}
 
 	public ProgressData(int seconds, int steps, int fullBmrCalorie, double points) {
@@ -22,38 +25,48 @@ public class ProgressData {
 		this.points = points;
 	}
 
-	public double getPoints() {
-		return points;
-	}
-
-	public void setPoints(double points) {
-		this.points = points;
-	}
-
-	public int getSteps() {
-		return steps;
-	}
-
-	public void setSteps(int steps) {
-		this.steps = steps;
-	}
-
-	public int getSeconds() {
+	
+	// getters setters
+	public Integer getSeconds() {
 		return seconds;
 	}
 
-	public void setSeconds(int seconds) {
+	public void setSeconds(Integer seconds) {
 		this.seconds = seconds;
 	}
 
-	public int getFullBmrCalorie() {
-		return this.fullBmrCalorie;
+	public Integer getSteps() {
+		return steps;
 	}
 
-	public void setFullBmrCalorie(int bmr) {
-		this.fullBmrCalorie = bmr;
+	public void setSteps(Integer steps) {
+		this.steps = steps;
 	}
-	
+
+	public Double getCalorie() {
+		return calorie;
+	}
+
+	public void setCalorie(Double calorie) {
+		this.calorie = calorie;
+	}
+
+	public Integer getFullBmrCalorie() {
+		return fullBmrCalorie;
+	}
+
+	public void setFullBmrCalorie(Integer fullBmrCalorie) {
+		this.fullBmrCalorie = fullBmrCalorie;
+	}
+
+	public Double getPoints() {
+		return points;
+	}
+
+	public void setPoints(Double points) {
+		this.points = points;
+	}
+
 	public Double getDistanceMiles() {
 		return distanceMiles;
 	}
@@ -62,6 +75,8 @@ public class ProgressData {
 		this.distanceMiles = distanceMiles;
 	}
 
+	
+	// methods
 	public JSONObject toJson() {
 		try {
 			JSONObject object = new JSONObject();
@@ -71,6 +86,8 @@ public class ProgressData {
 			object.accumulate("seconds", this.seconds);
 			object.accumulate("fullBmrCalorie", this.fullBmrCalorie);
 			object.accumulate("distanceMiles", this.distanceMiles);
+			object.accumulate("calorie", this.calorie);
+			
 			return object;
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -95,6 +112,9 @@ public class ProgressData {
 			
 			if(!obj.isNull("distanceMiles"))
 				data.setDistanceMiles(obj.getDouble("distanceMiles"));
+			
+			if(!obj.isNull("calorie"))
+				data.setCalorie(obj.getDouble("calorie"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

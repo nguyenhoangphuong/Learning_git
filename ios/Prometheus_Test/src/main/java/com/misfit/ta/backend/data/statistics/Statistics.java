@@ -3,7 +3,6 @@ package com.misfit.ta.backend.data.statistics;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
-import com.misfit.ta.backend.data.profile.PersonalRecord;
 
 public class Statistics {
 
@@ -13,33 +12,31 @@ public class Statistics {
 	private Long updatedAt;
 	private PersonalRecord personalRecords;
 	private Double lifetimeDistance;
+	private Integer bestStreak;
+	private Integer totalGoalHit;
 
+	
 	// constructors
 	public Statistics() {
-
 	}
 
-	public Statistics(String serverId, String localId, Long updatedAt, PersonalRecord personalRecords) {
-		this.serverId = serverId;
-		this.localId = localId;
-		this.updatedAt = updatedAt;
-		this.personalRecords = personalRecords;
-	}
-
+	
 	// methods
 	public JSONObject toJson() {
 		try {
+			
 			JSONObject obj = new JSONObject();
-			if (serverId != null)
-				obj.accumulate("serverId", serverId);
-			if (localId != null)
-				obj.accumulate("localId", localId);
-			if (updatedAt != null)
-				obj.accumulate("updatedAt", updatedAt);
+			
+			obj.accumulate("serverId", serverId);
+			obj.accumulate("localId", localId);
+			obj.accumulate("updatedAt", updatedAt);
+			
 			if (personalRecords != null)
 				obj.accumulate("personalRecords", personalRecords.toJson());
-			if (lifetimeDistance != null)
-				obj.accumulate("lifetimeDistance", lifetimeDistance);
+			
+			obj.accumulate("lifetimeDistance", lifetimeDistance);
+			obj.accumulate("bestStreak", bestStreak);
+			obj.accumulate("totalGoalHit", totalGoalHit);
 
 			return obj;
 		} catch (JSONException e) {
@@ -51,16 +48,28 @@ public class Statistics {
 	public static Statistics fromJson(JSONObject json) {
 		Statistics obj = new Statistics();
 		try {
+			
 			if (!json.isNull("serverId"))
 				obj.setServerId(json.getString("serverId"));
+			
 			if (!json.isNull("localId"))
 				obj.setLocalId(json.getString("localId"));
+			
 			if (!json.isNull("updatedAt"))
 				obj.setUpdatedAt(json.getLong("updatedAt"));
+			
 			if (!json.isNull("personalRecords"))
 				obj.setPersonalRecords(PersonalRecord.fromJson(json.getJSONObject("personalRecords")));
+			
 			if (!json.isNull("lifetimeDistance"))
 				obj.setLifetimeDistance(json.getDouble("lifetimeDistance"));
+			
+			if (!json.isNull("bestStreak"))
+				obj.setBestStreak(json.getInt("bestStreak"));
+			
+			if (!json.isNull("totalGoalHit"))
+				obj.setTotalGoalHit(json.getInt("totalGoalHit"));
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -79,6 +88,7 @@ public class Statistics {
 		}
 	}
 
+	
 	// getters setters
 	public String getServerId() {
 		return serverId;
@@ -119,4 +129,21 @@ public class Statistics {
 	public void setLifetimeDistance(Double lifetimeDistance) {
 		this.lifetimeDistance = lifetimeDistance;
 	}
+	
+	public Integer getBestStreak() {
+		return bestStreak;
+	}
+
+	public void setBestStreak(Integer bestStreak) {
+		this.bestStreak = bestStreak;
+	}
+
+	public Integer getTotalGoalHit() {
+		return totalGoalHit;
+	}
+
+	public void setTotalGoalHit(Integer totalGoalHit) {
+		this.totalGoalHit = totalGoalHit;
+	}
+
 }

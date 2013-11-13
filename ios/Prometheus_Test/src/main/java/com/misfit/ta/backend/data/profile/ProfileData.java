@@ -1,7 +1,10 @@
 package com.misfit.ta.backend.data.profile;
 
+import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
+import com.misfit.ta.backend.data.statistics.PersonalRecord;
+import com.misfit.ta.backend.data.statistics.Statistics;
 
 public class ProfileData {
 
@@ -21,31 +24,19 @@ public class ProfileData {
 	protected String wearingPosition;
 	protected PersonalRecord personalRecords;
 	protected DisplayUnit displayedUnits;
-
+	
+	protected String handle;
+	protected String description;
+	protected String avatar;
+	protected String email;
+	protected String authToken;
+	
 	// constructor
 	public ProfileData() {
 
 	}
-	
-	public ProfileData(String serverId, Long updatedAt, String localId, Double weight, Double height, 
-			Integer gender, Long dateOfBirth, String name, Integer goalLevel, String latestVersion, 
-			String wearingPosition, PersonalRecord personalRecords, DisplayUnit displayedUnits) {
-		super();
-		this.serverId = serverId;
-		this.updatedAt = updatedAt;
-		this.localId = localId;
-		this.weight = weight;
-		this.height = height;
-		this.gender = gender;
-		this.dateOfBirth = dateOfBirth;
-		this.name = name;
-		this.goalLevel = goalLevel;
-		this.latestVersion = latestVersion;
-		this.wearingPosition = wearingPosition;
-		this.personalRecords = personalRecords;
-		this.displayedUnits = displayedUnits;
-	}
 
+	
 	// methods
 	public JSONObject toJson() {
 		try {
@@ -67,13 +58,15 @@ public class ProfileData {
 
 			if (personalRecords != null)
 				object.accumulate("personalRecords", personalRecords.toJson());
-			else
-				object.accumulate("personalRecords", null);
 			
 			if (displayedUnits != null)
 				object.accumulate("displayedUnits", displayedUnits.toJson());
-			else
-				object.accumulate("displayedUnits", null);
+			
+			object.accumulate("handle", handle);
+			object.accumulate("description", description);
+			object.accumulate("avatar", avatar);
+			object.accumulate("email", email);
+			object.accumulate("authToken", authToken);
 
 			return object;
 		} catch (JSONException e) {
@@ -82,42 +75,6 @@ public class ProfileData {
 		}
 	}
 	
-	public JSONObject toJsonIncludeNull() {
-		
-		try {
-			JSONObject object = new JSONObject();
-
-			object.accumulate("localId", localId == null ? JSONObject.NULL : localId);
-			object.accumulate("serverId", serverId == null ? JSONObject.NULL : serverId);
-			object.accumulate("updatedAt", updatedAt == null ? JSONObject.NULL : updatedAt);
-
-			object.accumulate("weight", weight == null ? JSONObject.NULL : weight);
-			object.accumulate("height", height == null ? JSONObject.NULL : height);
-			object.accumulate("gender", gender == null ? JSONObject.NULL : gender);
-			object.accumulate("dateOfBirth", dateOfBirth == null ? JSONObject.NULL : dateOfBirth);
-			object.accumulate("name", name == null ? JSONObject.NULL : serverId);
-
-			object.accumulate("goalLevel", goalLevel == null ? JSONObject.NULL : goalLevel);
-			object.accumulate("latestVersion", latestVersion == null ? JSONObject.NULL : latestVersion);
-			object.accumulate("wearingPosition", wearingPosition == null ? JSONObject.NULL : wearingPosition);
-
-			if (personalRecords != null)
-				object.accumulate("personalRecords", personalRecords.toJson());
-			else
-				object.accumulate("personalRecords", JSONObject.NULL);
-			
-			if (displayedUnits != null)
-				object.accumulate("displayedUnits", displayedUnits.toJson());
-			else
-				object.accumulate("displayedUnits", JSONObject.NULL);
-
-			return object;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	public static ProfileData fromJson(JSONObject json) {
 		ProfileData obj = new ProfileData();
 		try {
@@ -159,6 +116,21 @@ public class ProfileData {
 
 			if (!json.isNull("displayedUnits"))
 				obj.setDisplayedUnits(DisplayUnit.fromJson(json.getJSONObject("displayedUnits")));
+			
+			if (!json.isNull("handle"))
+				obj.setHandle(json.getString("handle"));
+
+			if (!json.isNull("description"))
+				obj.setDescription(json.getString("description"));
+
+			if (!json.isNull("avatar"))
+				obj.setAvatar(json.getString("avatar"));
+
+			if (!json.isNull("authToken"))
+				obj.setAuthToken(json.getString("authToken"));
+
+			if (!json.isNull("email"))
+				obj.setEmail(json.getString("email"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -167,6 +139,18 @@ public class ProfileData {
 		return obj;
 	}
 
+	public static ProfileData fromResponse(ServiceResponse response) {
+		try {
+			JSONObject jsonResponse = new JSONObject(response.getResponseString());
+			JSONObject jsonItem = jsonResponse.getJSONObject("profile");
+
+			return ProfileData.fromJson(jsonItem);
+		} catch (JSONException e) {
+			return null;
+		}
+	}
+	
+	
 	// getters setters
 	public String getServerId() {
 		return serverId;
@@ -270,6 +254,46 @@ public class ProfileData {
 
 	public void setDisplayedUnits(DisplayUnit displayedUnits) {
 		this.displayedUnits = displayedUnits;
+	}
+	
+	public String getHandle() {
+		return handle;
+	}
+
+	public void setHandle(String handle) {
+		this.handle = handle;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAuthToken() {
+		return authToken;
+	}
+
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
 	}
 
 }

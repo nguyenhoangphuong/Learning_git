@@ -41,9 +41,16 @@ public class DisplayUnit {
 	public static DisplayUnit fromJson(JSONObject json) {
 		DisplayUnit obj = new DisplayUnit();
 		try {
-			obj.setWeightUnit(json.getInt("weightUnit"));
-			obj.setHeightUnit(json.getInt("heightUnit"));
-			obj.setTemperatureScale(json.getInt("temperatureScale"));
+			
+			if(!json.isNull("weightUnit"))
+				obj.setWeightUnit(json.getInt("weightUnit"));
+			
+			if(!json.isNull("heightUnit"))
+				obj.setHeightUnit(json.getInt("heightUnit"));
+			
+			if(!json.isNull("temperatureScale"))
+				obj.setTemperatureScale(json.getInt("temperatureScale"));
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

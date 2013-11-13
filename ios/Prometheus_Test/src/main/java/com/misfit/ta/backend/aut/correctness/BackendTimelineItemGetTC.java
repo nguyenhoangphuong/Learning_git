@@ -10,8 +10,8 @@ import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.timeline.TimelineData;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.CustomTimelineItemData;
 
 public class BackendTimelineItemGetTC extends BackendAutomation {
 
@@ -65,8 +65,8 @@ public class BackendTimelineItemGetTC extends BackendAutomation {
 		Assert.assertNotNull(getitem, "Timeline item is not null");
 		Assert.assertEquals(getitem.getItemType(), item.getItemType(), "ItemType is the same");
 		
-		TimelineData getdata = (TimelineData) getitem.getData();
-		TimelineData postdata = (TimelineData) item.getData();
+		CustomTimelineItemData getdata = (CustomTimelineItemData) getitem.getData();
+		CustomTimelineItemData postdata = (CustomTimelineItemData) item.getData();
 		Assert.assertEquals(postdata.getValue("Random"), getdata.getValue("Random"), "Random data is the same");
 	}
 	

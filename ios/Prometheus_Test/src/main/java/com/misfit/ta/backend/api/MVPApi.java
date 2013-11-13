@@ -25,8 +25,12 @@ import com.misfit.ta.backend.data.goal.*;
 import com.misfit.ta.backend.data.graph.*;
 import com.misfit.ta.backend.data.profile.*;
 import com.misfit.ta.backend.data.pedometer.*;
+import com.misfit.ta.backend.data.statistics.PersonalRecord;
 import com.misfit.ta.backend.data.statistics.Statistics;
+import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.data.timeline.*;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.backend.data.*;
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.TextTool;
@@ -153,21 +157,50 @@ public class MVPApi {
 	}
 
 	public static TimelineItem generateActivitySessionItem(long tmp) {
-		ActivitySessionItem session = new ActivitySessionItem(tmp, 2222, 22, tmp, 22, 2, 22, 22);
-		TimelineItem tmpItem = new TimelineItem(TimelineItemBase.TYPE_SESSION, tmp, tmp, session, TextTool.getRandomString(19, 20), null, null);
+		ActivitySessionItem session = new ActivitySessionItem();
+
+        session.setDuration(2222);
+        session.setDistance(2d);
+        session.setCalories(22d);
+        session.setActivityType(2);
+        session.setPoint(22);
+        session.setSteps(22);
+        
+		TimelineItem tmpItem = new TimelineItem();
+		
+		tmpItem.setItemType(TimelineItemDataBase.TYPE_SESSION);
+		tmpItem.setUpdatedAt(tmp);
+		tmpItem.setTimestamp(tmp);
+		tmpItem.setData(session);
+		tmpItem.setLocalId(TextTool.getRandomString(20, 20));
+		
 		return tmpItem;
 	}
 
 	public static TimelineItem generateWeatherTimelineItem(long tmp) {
-		WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
-		TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_WEATHER, tmp, tmp, weather, TextTool.getRandomString(19, 20), null, null);
-		return timeline;
+//		WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
+		TimelineItem tmpItem = new TimelineItem();
+		
+//		tmpItem.setItemType(TimelineItemDataBase.TYPE_WEATHER);
+		tmpItem.setUpdatedAt(tmp);
+		tmpItem.setTimestamp(tmp);
+//		tmpItem.setData(weather);
+		tmpItem.setLocalId(TextTool.getRandomString(20, 20));
+		
+		return tmpItem;
 	}
 
 	public static TimelineItem generateNotableEventItem(long tmp, int value) {
-		NotableEventItem notableEventItem = new NotableEventItem(tmp, null, null, value, 1);
-		TimelineItem timeline = new TimelineItem(TimelineItemBase.TYPE_NOTABLE, tmp, tmp, notableEventItem, TextTool.getRandomString(19, 20), null, null);
-		return timeline;
+//		NotableEventItem notableEventItem = new NotableEventItem(tmp, null, null, value, 1);
+		TimelineItem tmpItem = new TimelineItem();
+		
+//		tmpItem.setItemType(TimelineItemDataBase.TYPE_NOTABLE);
+		tmpItem.setUpdatedAt(tmp);
+		tmpItem.setTimestamp(tmp);
+//		tmpItem.setData(notableEventItem);
+		tmpItem.setLocalId(TextTool.getRandomString(20, 20));
+		
+		return tmpItem;
 	}
 
 	public static String generateSyncLog() {
@@ -278,8 +311,21 @@ public class MVPApi {
 	static private BaseParams createProfileParams(String token, String name, Double weight, Double height, Integer gender, Long dateOfBirth, Integer goalLevel, String latestVersion, String wearingPosition, PersonalRecord personalRecords, DisplayUnit displayedUnits, String localId, Long updatedAt) {
 
 		// build json object string
-		ProfileData profile = new ProfileData(null, updatedAt, localId, weight, height, gender, dateOfBirth, name, goalLevel, latestVersion, wearingPosition, personalRecords, displayedUnits);
+		ProfileData profile = new ProfileData();
 
+		profile.setUpdatedAt(updatedAt);
+		profile.setLocalId(localId);
+		profile.setWeight(weight);
+		profile.setHeight(height);
+		profile.setGender(gender);
+		profile.setDateOfBirth(dateOfBirth);
+		profile.setName(name);
+		profile.setGoalLevel(goalLevel);
+		profile.setLatestVersion(latestVersion);
+		profile.setWearingPosition(wearingPosition);
+		profile.setPersonalRecords(personalRecords);
+		profile.setDisplayedUnits(displayedUnits);
+		
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
 		requestInf.addParam("profile", profile.toJson().toString());
@@ -350,11 +396,20 @@ public class MVPApi {
 	}
 
 	// goal apis
-	static private BaseParams createGoalParams(String token, Double goalValue, Long startTime, Long endTime, Integer timeZoneOffsetInSeconds, ProgressData progressData, List<TrippleTapData> trippleTapTypeChanges, String localId, Long updatedAt) {
+	static private BaseParams createGoalParams(String token, Double goalValue, Long startTime, Long endTime, Integer timeZoneOffsetInSeconds, ProgressData progressData, List<TripleTapData> tripleTapTypeChanges, String localId, Long updatedAt) {
 
 		// build json object string
-		Goal goal = new Goal(goalValue, startTime, endTime, timeZoneOffsetInSeconds, progressData, trippleTapTypeChanges, localId, updatedAt);
+		Goal goal = new Goal();
 
+		goal.setValue(goalValue);
+		goal.setStartTime(startTime);
+		goal.setEndTime(endTime);
+		goal.setTimeZoneOffsetInSeconds(timeZoneOffsetInSeconds);
+		goal.setProgressData(progressData);
+		goal.setTripleTapTypeChanges(tripleTapTypeChanges);
+		goal.setLocalId(localId);
+		goal.setUpdatedAt(updatedAt);
+		
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
 		requestInf.addParam("goal", goal.toJson().toString());
@@ -395,7 +450,7 @@ public class MVPApi {
 		return result;
 	}
 
-	public static GoalsResult createGoal(String token, double goalValue, long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, List<TrippleTapData> trippleTapTypeChanges, String localId, long updatedAt) {
+	public static GoalsResult createGoal(String token, double goalValue, long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, List<TripleTapData> trippleTapTypeChanges, String localId, long updatedAt) {
 
 		// prepare
 		String url = baseAddress + "goals";
@@ -414,7 +469,7 @@ public class MVPApi {
 		return createGoal(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), goal.getTimeZoneOffsetInSeconds(), goal.getProgressData(), goal.getTripleTapTypeChanges(), goal.getLocalId(), goal.getUpdatedAt());
 	}
 
-	public static GoalsResult updateGoal(String token, long updatedAt, String serverId, double goalValue, long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, List<TrippleTapData> trippleTapTypeChanges, String localId) {
+	public static GoalsResult updateGoal(String token, long updatedAt, String serverId, double goalValue, long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, List<TripleTapData> trippleTapTypeChanges, String localId) {
 
 		// prepare
 		String url = baseAddress + "goals/" + serverId;
@@ -733,6 +788,19 @@ public class MVPApi {
 		logger.info("Sync log status code: " + response.getStatusCode());
 
 		return response;
+	}
+	
+	public static BaseResult pushSyncLog(String token, SyncLog syncLog) {
+		
+		String url = baseAddress + "sync_logs";
+		BaseParams request = new BaseParams();
+		request.addHeader("auth_token", token);
+		request.addParam("log", syncLog.toJson().toString());
+
+		ServiceResponse response = MVPApi.post(url, port, request);
+		logger.info("Sync log status code: " + response.getStatusCode());
+
+		return new BaseResult(response);
 	}
 
 	public static String getStagingDebugSyncLog(String email, String serialNumber, Long timestamp) {

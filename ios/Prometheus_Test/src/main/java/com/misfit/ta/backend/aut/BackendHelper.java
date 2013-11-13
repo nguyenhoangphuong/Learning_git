@@ -66,7 +66,8 @@ public class BackendHelper {
 		
 		// create first
 		Statistics statistics = DefaultValues.RandomStatistic();
-		statistics.getPersonalRecords().setPersonalBestRecordsInPoint((double)points * 2.5);
+		statistics.getPersonalRecords().getPersonalBestRecordsInPoint().setPoint((double)points * 2.5);
+		statistics.getPersonalRecords().getPersonalBestRecordsInPoint().setTimestamp(System.currentTimeMillis() / 1000);
 		statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
 		BaseResult result = MVPApi.createStatistics(token, statistics);
 
@@ -74,7 +75,8 @@ public class BackendHelper {
 		if(result.isExisted()) {
 
 			statistics = Statistics.fromResponse(result.response);
-			statistics.getPersonalRecords().setPersonalBestRecordsInPoint((double)points * 2.5);
+			statistics.getPersonalRecords().getPersonalBestRecordsInPoint().setPoint((double)points * 2.5);
+			statistics.getPersonalRecords().getPersonalBestRecordsInPoint().setTimestamp(System.currentTimeMillis() / 1000);
 			statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
 			MVPApi.updateStatistics(token, statistics);
 		}
@@ -112,7 +114,7 @@ public class BackendHelper {
 		
 		Goal blank = goals[0];
 		blank.getProgressData().setDistanceMiles(0d);
-		blank.getProgressData().setPoints(0);
+		blank.getProgressData().setPoints(0d);
 		blank.getProgressData().setFullBmrCalorie(0);
 		blank.getProgressData().setSteps(0);
 		blank.getProgressData().setSeconds(0);
