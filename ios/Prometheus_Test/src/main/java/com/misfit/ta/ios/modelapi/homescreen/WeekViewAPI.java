@@ -50,7 +50,8 @@ public class WeekViewAPI extends ModelAPI {
 		if (day % 2 == 0) {
 			diff *= -1;
 		}
-		currentGoal = currentGoal + diff;
+		int temp = currentGoal + diff;
+		currentGoal = temp < 100 ? 100 : temp;
 		HomeSettings.setSpinnerGoal(currentGoal, oldGoal);
 		System.out.println("DEBUG: current goal " + currentGoal);
 		ShortcutsTyper.delayTime(300);
@@ -139,14 +140,15 @@ public class WeekViewAPI extends ModelAPI {
 
 	public void v_Today() {
 		PrometheusHelper.handleBatteryLowPopup();
-		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 
 	public void e_ChangeDayView() {
+		ShortcutsTyper.delayTime(2000);
 		HomeScreen.changeToDayView();
 	}
 
 	public void e_ChangeWeekView() {
+		ShortcutsTyper.delayTime(2000);
 		HomeScreen.changeToWeekView();
 	}
 
@@ -174,6 +176,7 @@ public class WeekViewAPI extends ModelAPI {
 			}
 		}
 		System.out.println("DEBUG: Total goal " + totalGoal);
+		ShortcutsTyper.delayOne();
 		Assert.assertTrue(
 				ViewUtils.isExistedView("UILabel",
 						String.format(DefaultStrings.PointsDisplay, totalGoal)),
@@ -188,9 +191,6 @@ public class WeekViewAPI extends ModelAPI {
 		return timeStamp;
 	}
 
-	public void v_UpdatedTodayGoal() {
-
-	}
 
 	public Integer calculateImprovement() {
 		int day = now.get(Calendar.DAY_OF_WEEK);

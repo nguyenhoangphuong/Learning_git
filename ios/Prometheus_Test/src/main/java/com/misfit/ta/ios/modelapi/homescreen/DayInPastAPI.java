@@ -22,7 +22,6 @@ public class DayInPastAPI extends ModelAPI {
 	
 	public void e_Init() {
 		
-		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 
 	public void e_BackToADayInPast() {

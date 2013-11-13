@@ -99,10 +99,10 @@ public class HomeSettings {
 	}
 
 	public static void tapOKAtNewGoalPopup() {
-		Gui.touchPopupButton(0);
+		Gui.touchPopupButton(DefaultStrings.OKButton);
 	}
 
-	public static boolean hasDontForgetMessage() {
+	public static boolean hasNewGoalInstructionMessage() {
 		return Gui.getPopupContent().equals(DefaultStrings.NewGoalInstruction);
 	}
 

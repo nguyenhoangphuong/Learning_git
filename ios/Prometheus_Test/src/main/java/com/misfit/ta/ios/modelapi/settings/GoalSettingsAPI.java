@@ -127,7 +127,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void v_NewGoalConfirmation() {
 		
 		// check alert content
-		Assert.assertTrue(HomeSettings.hasDontForgetMessage(),
+		Assert.assertTrue(HomeSettings.hasNewGoalInstructionMessage(),
 				"Alert message is correct");
 	}
 

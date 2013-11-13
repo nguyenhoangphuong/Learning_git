@@ -54,11 +54,11 @@ public class DefaultStrings {
 	public static String ForgotPasswordCancelButton = "CANCEL";
 
 	// home screen
+	public static String OKButton = "OK";
 	public static int MenuButtonId = 15;
 	public static String TodayTitle = "Today";
 	public static String YesterdayTitle = "Yesterday";
-	public static String WeekButton = "Week";
-	public static String TodayButton = "Day";
+	public static int WeekDayButtonId = 16;
 	public static String ThisWeekTitle = "This week";
 	public static String LastWeekTitle = "Last week";
 	public static String SettingsButton = "Settings";

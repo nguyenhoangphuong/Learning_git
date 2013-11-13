@@ -185,8 +185,6 @@ public class UpgradeAppAPI extends ModelAPI {
 	}
 	
 	public void v_HomeScreen() {
-		
-		PrometheusHelper.handleUpdateFirmwarePopup();
 		Assert.assertTrue(HomeScreen.isToday(), "Current view is Homescreen - Today");
 	}
 	

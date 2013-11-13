@@ -106,22 +106,6 @@ SWITCH_MODEL
         </y:GenericNode>
       </data>
     </node>
-    <node id="n6">
-      <data key="d6">
-        <y:GenericNode configuration="BevelNode3">
-          <y:Geometry height="44.0" width="179.0" x="-146.0" y="137.0"/>
-          <y:Fill color="#FF9900" transparent="false"/>
-          <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="126.53125" x="26.234375" y="12.93359375">v_UpdatedTodayGoal<y:LabelModel>
-              <y:SmartNodeLabelModel distance="4.0"/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-            </y:ModelParameter>
-          </y:NodeLabel>
-        </y:GenericNode>
-      </data>
-    </node>
     <edge id="e0" source="n0" target="n5">
       <data key="d10">
         <y:PolyLineEdge>
@@ -157,7 +141,6 @@ SWITCH_MODEL
       </data>
     </edge>
     <edge id="e2" source="n1" target="n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-26.833333333333314" sy="18.0" tx="-45.5" ty="-17.0">
@@ -179,7 +162,6 @@ SWITCH_MODEL
       </data>
     </edge>
     <edge id="e3" source="n3" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="45.5" sy="-17.0" tx="-80.49999999999997" ty="18.0">
@@ -201,7 +183,6 @@ SWITCH_MODEL
       </data>
     </edge>
     <edge id="e4" source="n4" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="45.5" sy="-17.0" tx="26.833333333333343" ty="18.0">
@@ -223,7 +204,6 @@ SWITCH_MODEL
       </data>
     </edge>
     <edge id="e5" source="n1" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="134.16666666666666" sy="18.0" tx="40.09375" ty="-22.0">
@@ -245,7 +225,6 @@ SWITCH_MODEL
       </data>
     </edge>
     <edge id="e6" source="n5" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -266,7 +245,6 @@ SWITCH_MODEL
       </data>
     </edge>
     <edge id="e7" source="n1" target="n5">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -284,35 +262,15 @@ SWITCH_MODEL
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e8" source="n1" target="n6">
-      <data key="d9"/>
+    <edge id="e8" source="n1" target="n3">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="-160.9765625" sy="-1.0" tx="0.0" ty="0.0">
+          <y:Path sx="-160.9765625" sy="-1.0" tx="42.47848950662359" ty="16.967393596013096">
             <y:Point x="-56.5" y="-37.0"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="124.755859375" x="-234.80645751953125" y="-39.066406250000014">e_ChangeGoal[i==0]<y:LabelModel>
-              <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:SmartEdgeLabelModelParameter angle="0.0" distance="30.0" distanceToCenter="true" position="right" ratio="0.5" segment="0"/>
-            </y:ModelParameter>
-            <y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
-          </y:EdgeLabel>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e9" source="n6" target="n3">
-      <data key="d9"/>
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="118.57421875" x="-43.89996268207382" y="37.787914364711526">e_ChangeWeekView<y:LabelModel>
               <y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/>
             </y:LabelModel>
             <y:ModelParameter>

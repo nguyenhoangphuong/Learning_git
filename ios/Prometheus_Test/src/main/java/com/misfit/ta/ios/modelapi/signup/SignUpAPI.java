@@ -125,7 +125,6 @@ public class SignUpAPI extends ModelAPI {
 		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 		
 		PrometheusHelper.handleTutorial();
-		PrometheusHelper.handleUpdateFirmwarePopup();
     }
  
    

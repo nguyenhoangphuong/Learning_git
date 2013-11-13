@@ -213,11 +213,11 @@ public class HomeScreen {
 	}
 
 	public static void changeToDayView() {
-		Gui.touchAVIew("UILabel", DefaultStrings.TodayButton);
+		Gui.touchAVIew("UIButton", DefaultStrings.WeekDayButtonId);
 	}
 
 	public static void changeToWeekView() {
-		Gui.touchAVIew("UILabel", DefaultStrings.WeekButton);
+		Gui.touchAVIew("UIButton", DefaultStrings.WeekDayButtonId);
 	}
 
 }

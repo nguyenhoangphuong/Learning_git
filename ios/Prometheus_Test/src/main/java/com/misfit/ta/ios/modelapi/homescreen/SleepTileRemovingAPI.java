@@ -136,7 +136,6 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_Today() {
-		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 
 	/**
