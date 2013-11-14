@@ -58,7 +58,7 @@ public class BackendStatisticsTC extends BackendAutomation {
 
 		Assert.assertEquals(r.statusCode, 210, "Status code");
 		Assert.assertTrue(stats.getServerId() != null, "Server Id is not null");
-		Assert.assertEquals(stats.getPersonalRecords().getPersonalBestRecordsInPoint(), 5000d, "Personal best in points is updated");
+		Assert.assertEquals(stats.getPersonalRecords().getPersonalBestRecordsInPoint().getPoint(), 5000d, "Personal best in points is updated");
 
 	}
 

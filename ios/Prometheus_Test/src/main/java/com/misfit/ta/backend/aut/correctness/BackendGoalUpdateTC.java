@@ -54,9 +54,9 @@ public class BackendGoalUpdateTC extends BackendAutomation {
 				continue;
 			}
 
-			if (p.getProgressData().getFullBmrCalorie() != defaultGoal.getProgressData().getFullBmrCalorie() ||
-				p.getProgressData().getSeconds() != defaultGoal.getProgressData().getSeconds() ||	
-				p.getProgressData().getSteps() != defaultGoal.getProgressData().getSteps() )
+			if (!p.getProgressData().getFullBmrCalorie().equals(defaultGoal.getProgressData().getFullBmrCalorie()) ||
+				!p.getProgressData().getSeconds().equals(defaultGoal.getProgressData().getSeconds()) ||	
+				!p.getProgressData().getSteps().equals(defaultGoal.getProgressData().getSteps()) )
 				count++;
 		}
 

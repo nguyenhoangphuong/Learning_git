@@ -25,7 +25,7 @@ public class BackendHelper {
 		Pedometer pedo = MVPApi.createPedometer(token, serialNumber, MVPApi.LATEST_FIRMWARE_VERSION_STRING, 
 				now, null, now, localId, null, now);
 		
-		if(pedo.getLocalId().equals(localId))
+		if(pedo.getLocalId() != null && pedo.getLocalId().equals(localId))
 			return;
 		
 		// if server return another pedo, use update instead

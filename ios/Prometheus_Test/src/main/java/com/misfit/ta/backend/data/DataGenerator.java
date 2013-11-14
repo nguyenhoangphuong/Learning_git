@@ -579,7 +579,7 @@ public class DataGenerator {
 
 		
 		// create sync logs
-		syncLogNumber = Math.max(syncLogNumber, 10);
+		syncLogNumber = Math.min(syncLogNumber, 10);
 		for(int i = numberOfGoal; i > 0; i--) {
 			
 			long goalTimestamp = timestamp - 3600 * 24 * i;
