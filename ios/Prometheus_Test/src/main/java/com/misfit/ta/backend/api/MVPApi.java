@@ -38,7 +38,7 @@ import com.misfit.ta.utils.TextTool;
 public class MVPApi {
 
 	// logger
-	private static Logger logger = Util.setupLogger(MVPApi.class);
+	protected static Logger logger = Util.setupLogger(MVPApi.class);
 
 	// fields
 	public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
@@ -52,7 +52,7 @@ public class MVPApi {
 	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.50r";
 
 	// request helpers
-	static private ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
+	static protected ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
 		
 		// log address
 		logger.info(type.toUpperCase() + ": " + url + " - port: " + port);
@@ -89,15 +89,15 @@ public class MVPApi {
 		return response;
 	}
 
-	static private ServiceResponse post(String url, int port, BaseParams requestInf) {
+	static protected ServiceResponse post(String url, int port, BaseParams requestInf) {
 		return request("post", url, port, requestInf);
 	}
 
-	static private ServiceResponse get(String url, int port, BaseParams requestInf) {
+	static protected ServiceResponse get(String url, int port, BaseParams requestInf) {
 		return request("get", url, port, requestInf);
 	}
 
-	static private ServiceResponse put(String url, int port, BaseParams requestInf) {
+	static protected ServiceResponse put(String url, int port, BaseParams requestInf) {
 		return request("put", url, port, requestInf);
 	}
 
