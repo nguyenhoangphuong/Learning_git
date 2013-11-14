@@ -26,10 +26,11 @@ public class ProfileData {
 	protected DisplayUnit displayedUnits;
 	
 	protected String handle;
-	protected String description;
+	protected String privacy;
 	protected String avatar;
 	protected String email;
 	protected String authToken;
+	
 	
 	// constructor
 	public ProfileData() {
@@ -63,7 +64,7 @@ public class ProfileData {
 				object.accumulate("displayedUnits", displayedUnits.toJson());
 			
 			object.accumulate("handle", handle);
-			object.accumulate("description", description);
+			object.accumulate("privacy", privacy);
 			object.accumulate("avatar", avatar);
 			object.accumulate("email", email);
 			object.accumulate("authToken", authToken);
@@ -121,7 +122,7 @@ public class ProfileData {
 				obj.setHandle(json.getString("handle"));
 
 			if (!json.isNull("description"))
-				obj.setDescription(json.getString("description"));
+				obj.setPrivacy(json.getString("privacy"));
 
 			if (!json.isNull("avatar"))
 				obj.setAvatar(json.getString("avatar"));
@@ -131,6 +132,9 @@ public class ProfileData {
 
 			if (!json.isNull("email"))
 				obj.setEmail(json.getString("email"));
+			
+			if (!json.isNull("privacy"))
+                obj.setPrivacy(json.getString("privacy"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -264,12 +268,12 @@ public class ProfileData {
 		this.handle = handle;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getPrivacy() {
+		return privacy;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setPrivacy(String privacy) {
+		this.privacy = privacy;
 	}
 
 	public String getAvatar() {

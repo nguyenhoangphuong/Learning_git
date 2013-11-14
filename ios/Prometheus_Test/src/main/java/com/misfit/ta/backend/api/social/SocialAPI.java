@@ -1,9 +1,11 @@
 package com.misfit.ta.backend.api.social;
 
+
 import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.account.AccountResult;
 
 public class SocialAPI extends MVPApi {
 
@@ -125,5 +127,30 @@ public class SocialAPI extends MVPApi {
 		
 		return result;
 	}
+	
+	
+    public static AccountResult connectFacebook(String email, String accessToken, String accessTokenSecret) {
+
+        String url = baseAddress + "connect_facebook";
+        BaseParams request = new BaseParams();
+        ServiceResponse response;
+
+        request.addParam("access_token", accessToken);
+        request.addParam("access_token_secret", accessTokenSecret);
+        request.addParam("email", email);
+
+        response = MVPApi.post(url, port, request);
+
+        AccountResult result = new AccountResult(response);
+
+        return result;
+    }
+
+    public static AccountResult linkFacebook(String email, String accessToken, String accessTokenSecret) {
+
+        // TODO
+        // return result;
+        return null;
+    }
 
 }

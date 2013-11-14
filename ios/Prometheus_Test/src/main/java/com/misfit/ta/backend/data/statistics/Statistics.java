@@ -67,8 +67,8 @@ public class Statistics {
 			if (!json.isNull("bestStreak"))
 				obj.setBestStreak(json.getInt("bestStreak"));
 			
-			if (!json.isNull("totalGoalHit"))
-				obj.setTotalGoalHit(json.getInt("totalGoalHit"));
+			if (!json.isNull("totalGoalsHit"))
+				obj.setTotalGoalHit(json.getInt("totalGoalsHit"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

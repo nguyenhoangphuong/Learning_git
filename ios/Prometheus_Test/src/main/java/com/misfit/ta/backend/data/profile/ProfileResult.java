@@ -3,11 +3,14 @@ package com.misfit.ta.backend.data.profile;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.statistics.Statistics;
 
 public class ProfileResult extends BaseResult {
 
 	// fields
 	public ProfileData profile = new ProfileData();
+	public Statistics statistics = new Statistics();
+
 
 	// constructor
 	public ProfileResult(ServiceResponse response) {
@@ -30,6 +33,10 @@ public class ProfileResult extends BaseResult {
 		try {
 			JSONObject proJSON = json.getJSONObject("profile");
 			profile = ProfileData.fromJson(proJSON);
+			
+			JSONObject statisticsObj = json.getJSONObject("statistics");
+            statistics = Statistics.fromJson(statisticsObj);
+			
 		} catch (Exception e) {
 		}
 	}

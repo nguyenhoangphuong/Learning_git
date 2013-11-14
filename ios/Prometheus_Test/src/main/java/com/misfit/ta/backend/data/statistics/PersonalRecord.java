@@ -7,12 +7,17 @@ public class PersonalRecord {
 
 	// fields
 	protected Record personalBestRecordsInPoint;
+	protected Record default_;
 	protected Record Swimming;
 	protected Record Cycling;
 	protected Record Tennis;
 	protected Record Basketball;
 	protected Record Soccer;
-
+	
+	
+	   public int bestStreak =0 ;
+	    public int totalGoalsHit =0 ;
+	    public float lifeTimeDistance = 0;
 	
 	// constructors
 	public PersonalRecord() {
@@ -56,6 +61,9 @@ public class PersonalRecord {
 			
 			if (!json.isNull("personalBestRecordsInPoint"))
 				obj.setPersonalBestRecordsInPoint(Record.fromJson(json.getJSONObject("personalBestRecordsInPoint")));
+			
+			if (!json.isNull("default"))
+                obj.setDefault(Record.fromJson(json.getJSONObject("default")));
 
 			if (!json.isNull("Swimming"))
 				obj.setSwimming(Record.fromJson(json.getJSONObject("Swimming")));
@@ -121,6 +129,10 @@ public class PersonalRecord {
 	public void setSoccer(Record soccer) {
 		Soccer = soccer;
 	}
+	
+	public void setDefault(Record default_) {
+        this.default_ = default_;
+    }
 
 	public Record getPersonalBestRecordsInPoint() {
 		return personalBestRecordsInPoint;

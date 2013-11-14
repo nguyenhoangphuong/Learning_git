@@ -941,6 +941,12 @@ public class MVPApi {
 	
 	// test
 	public static void main(String[] args) throws JSONException {
+	    AccountResult result = MVPApi.signIn("thinh@misfitwearables.com", "misfit1");
+	    ProfileResult profile = MVPApi.getProfile(result.token);
+	    System.out.println("LOG [MVPApi.main]: goals " + profile.statistics.getTotalGoalHit());
+	    System.out.println("LOG [MVPApi.main]: " + profile.profile.getHandle());
+	    
+	    
 	}
 
 }
