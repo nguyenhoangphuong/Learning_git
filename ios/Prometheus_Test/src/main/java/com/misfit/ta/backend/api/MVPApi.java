@@ -15,6 +15,7 @@ import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
+import com.google.resting.method.delete.DeleteHelper;
 import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
@@ -47,6 +48,7 @@ public class MVPApi {
 	public static String HTTP_POST = "POST";
 	public static String HTTP_GET = "GET";
 	public static String HTTP_PUT = "PUT";
+	public static String HTTP_DELETE = "DELETE";
 	
 	public static int CACHE_TRY_TIME = 10;
 	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.50r";
@@ -73,6 +75,8 @@ public class MVPApi {
 			response = Resting.get(url, port, requestInf.params, UTF8, requestInf.headers);
 		else if (type.equalsIgnoreCase(MVPApi.HTTP_PUT))
 			response = PutHelper.put(url, UTF8, port, requestInf.params, requestInf.headers);
+		else if (type.equalsIgnoreCase(MVPApi.HTTP_DELETE))
+			response = DeleteHelper.delete(url, port, requestInf.params, UTF8, requestInf.headers);
 
 		// log result
 		IContentData rawData = response.getContentData();
@@ -101,6 +105,10 @@ public class MVPApi {
 		return request("put", url, port, requestInf);
 	}
 
+	static protected ServiceResponse delete(String url, int port, BaseParams requestInf) {
+		return request("put", url, port, requestInf);
+	}
+	
 	// generators
 	public static String generateUniqueEmail() {
 		return "test" + System.currentTimeMillis() + TextTool.getRandomString(6, 6) + "@misfitqa.com";
