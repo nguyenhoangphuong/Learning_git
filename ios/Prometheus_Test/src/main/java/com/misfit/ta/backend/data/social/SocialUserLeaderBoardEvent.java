@@ -5,7 +5,7 @@ import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 
-public class SocialUserOnLeaderBoard extends SocialUserBase {
+public class SocialUserLeaderBoardEvent extends SocialUserBase {
 
 	// fields
 	protected Integer points;
@@ -59,7 +59,7 @@ public class SocialUserOnLeaderBoard extends SocialUserBase {
 		}
 	}
 
-	public SocialUserOnLeaderBoard fromJson(JSONObject json) {
+	public SocialUserLeaderBoardEvent fromJson(JSONObject json) {
 				
 		try {
 			
@@ -81,15 +81,15 @@ public class SocialUserOnLeaderBoard extends SocialUserBase {
 		return this;
 	}
 
-	public static SocialUserOnLeaderBoard[] usersFromResponse(ServiceResponse response) {
+	public static SocialUserLeaderBoardEvent[] usersFromResponse(ServiceResponse response) {
 		try {
 			
 			JSONObject jsonResponse = new JSONObject(response.getResponseString());
 			JSONArray jsonUsers = jsonResponse.getJSONArray("users");
-			SocialUserOnLeaderBoard[] users = new SocialUserOnLeaderBoard[jsonUsers.length()];
+			SocialUserLeaderBoardEvent[] users = new SocialUserLeaderBoardEvent[jsonUsers.length()];
 			
 			for(int i = 0; i < jsonUsers.length(); i++) {
-				users[i] = new SocialUserOnLeaderBoard();
+				users[i] = new SocialUserLeaderBoardEvent();
 				users[i].fromJson(jsonUsers.getJSONObject(i));
 			}
 			

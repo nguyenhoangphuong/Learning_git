@@ -5,7 +5,7 @@ import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 
-public class SocialUserEvent extends SocialUserBase {
+public class SocialUserWorldEvent extends SocialUserBase {
 
 	// fields
 	protected String message;
@@ -49,7 +49,7 @@ public class SocialUserEvent extends SocialUserBase {
 		}
 	}
 
-	public SocialUserEvent fromJson(JSONObject json) {
+	public SocialUserWorldEvent fromJson(JSONObject json) {
 				
 		try {
 			
@@ -68,15 +68,15 @@ public class SocialUserEvent extends SocialUserBase {
 		return this;
 	}
 
-	public static SocialUserEvent[] usersFromResponse(ServiceResponse response) {
+	public static SocialUserWorldEvent[] usersFromResponse(ServiceResponse response) {
 		try {
 			
 			JSONObject jsonResponse = new JSONObject(response.getResponseString());
 			JSONArray jsonUsers = jsonResponse.getJSONArray("events");
-			SocialUserEvent[] users = new SocialUserEvent[jsonUsers.length()];
+			SocialUserWorldEvent[] users = new SocialUserWorldEvent[jsonUsers.length()];
 			
 			for(int i = 0; i < jsonUsers.length(); i++) {
-				users[i] = new SocialUserEvent();
+				users[i] = new SocialUserWorldEvent();
 				users[i].fromJson(jsonUsers.getJSONObject(i));
 			}
 			

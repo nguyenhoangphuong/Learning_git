@@ -153,4 +153,32 @@ public class SocialAPI extends MVPApi {
         return null;
     }
 
+    
+	public static BaseResult getLeaderboardInfo(String token) {
+		
+		String url = baseAddress + "leaderboard";
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		ServiceResponse response = get(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult getWorldInfo(String token) {
+		
+		String url = baseAddress + "world";
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		ServiceResponse response = get(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
 }
+

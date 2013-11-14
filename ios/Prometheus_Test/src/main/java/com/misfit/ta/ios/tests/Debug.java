@@ -18,8 +18,11 @@ import com.misfit.ta.backend.api.social.SocialAPI;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.social.Leaderboard;
 import com.misfit.ta.backend.data.social.SocialUserBase;
+import com.misfit.ta.backend.data.social.SocialUserLeaderBoardEvent;
 import com.misfit.ta.backend.data.social.SocialUserWithStatus;
+import com.misfit.ta.backend.data.social.SocialUserWorldEvent;
 import com.misfit.ta.backend.data.sync.SyncFileData;
 import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.seed.GenerateUserSeed;
@@ -56,6 +59,16 @@ public class Debug {
 		
 		BaseResult result = null;
 		
+		logger.info("GET LEADERBOARD INFO API ============");
+		result = SocialAPI.getLeaderboardInfo(thyToken);
+		Leaderboard leaderboard = Leaderboard.fromResponse(result.response);
+		printUsers(leaderboard.getToday().toArray(new SocialUserLeaderBoardEvent[leaderboard.getToday().size()]));
+		printUsers(leaderboard.getYesterday().toArray(new SocialUserLeaderBoardEvent[leaderboard.getYesterday().size()]));
+		
+		logger.info("GET WORLD INFO API ============");
+		result = SocialAPI.getWorldInfo(thyToken);
+		printUsers(SocialUserWorldEvent.usersFromResponse(result.response));
+		Assert.fail();
 		
 		// thy send requests to hai and thinh
 		logger.info("SEND FRIEND REQUEST API ============");
