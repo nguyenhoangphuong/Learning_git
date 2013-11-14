@@ -19,7 +19,7 @@ import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.social.SocialUserBase;
-import com.misfit.ta.backend.data.social.SocialUserFromSearchResult;
+import com.misfit.ta.backend.data.social.SocialUserWithStatus;
 import com.misfit.ta.backend.data.sync.SyncFileData;
 import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.seed.GenerateUserSeed;
@@ -56,44 +56,52 @@ public class Debug {
 		
 		BaseResult result = null;
 		
+		
 		// thy send requests to hai and thinh
 		logger.info("SEND FRIEND REQUEST API ============");
 		result = SocialAPI.sendFriendRequest(thyToken, thinh);
 		result = SocialAPI.sendFriendRequest(thyToken, hai);
+		result = SocialAPI.sendFriendRequest(thinhToken, thy);
+		result = SocialAPI.sendFriendRequest(haiToken, thy);
 
 		
-		// get apis
-		logger.info("GET FRIENDS API ============");
-		result = SocialAPI.getFriends(thyToken);
-		printUsers(SocialUserBase.usersFromResponse(result.response));
+//		// get apis
+//		logger.info("GET FRIENDS API ============");
+//		result = SocialAPI.getFriends(thyToken);
+//		printUsers(SocialUserBase.usersFromResponse(result.response));
 		
 		logger.info("GET FRIENS REQUESTS FROM ME API ============");
 		result = SocialAPI.getFriendRequestsFromMe(thyToken);
-		printUsers(SocialUserBase.usersFromResponse(result.response));
+		printUsers(SocialUserWithStatus.usersFromResponse(result.response));
 		
 		logger.info("GET FRIEND REQUESTS TO ME API ============");
 		result = SocialAPI.getFriendRequestsToMe(thyToken);
-		printUsers(SocialUserBase.usersFromResponse(result.response));
+		printUsers(SocialUserWithStatus.usersFromResponse(result.response));
 		
-		logger.info("GET FACEBOOK FRIENDS API ============");
-		result = SocialAPI.getFacebookFriends(thyToken);
-		printUsers(SocialUserFromSearchResult.usersFromResponse(result.response));
-		
-		logger.info("SEARCH SOCIAL USERS API ============");
-		result = SocialAPI.searchSocialUsers(thyToken, "thinh");
-		printUsers(SocialUserFromSearchResult.usersFromResponse(result.response));
+//		logger.info("GET FACEBOOK FRIENDS API ============");
+//		result = SocialAPI.getFacebookFriends(thyToken);
+//		printUsers(SocialUserFromSearchResult.usersFromResponse(result.response));
+//		
+//		logger.info("SEARCH SOCIAL USERS API ============");
+//		result = SocialAPI.searchSocialUsers(thyToken, "thinh");
+//		printUsers(SocialUserFromSearchResult.usersFromResponse(result.response));
 
 				
-		// thinh accepts then deletes
+		// thinh accepts
 		logger.info("ACCEPT FRIEND REQUEST API ============");
 		result = SocialAPI.acceptFriendRequest(thinhToken, thy);
 		
+		
+		// delete friends
 		logger.info("DELETE FRIEND API ============");
 		result = SocialAPI.deleteFriend(thinhToken, thy);
 		
-		// hai ignores
+			
+		// hai and thy ignore
 		logger.info("IGNORE FRIEND REQEST API ============");
 		result = SocialAPI.ignoreFriendRequest(haiToken, thy);
+		result = SocialAPI.ignoreFriendRequest(thyToken, thinh);
+		result = SocialAPI.ignoreFriendRequest(thyToken, hai);
 			
 	}
 	

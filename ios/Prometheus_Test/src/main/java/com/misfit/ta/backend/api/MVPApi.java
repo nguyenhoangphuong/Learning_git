@@ -106,7 +106,7 @@ public class MVPApi {
 	}
 
 	static protected ServiceResponse delete(String url, int port, BaseParams requestInf) {
-		return request("put", url, port, requestInf);
+		return request("delete", url, port, requestInf);
 	}
 	
 	// generators

@@ -5,7 +5,7 @@ import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 
-public class SocialUserFromSearchResult extends SocialUserBase {
+public class SocialUserWithStatus extends SocialUserBase {
 
 	// fields
 	protected Integer status;
@@ -39,7 +39,7 @@ public class SocialUserFromSearchResult extends SocialUserBase {
 		}
 	}
 
-	public SocialUserFromSearchResult fromJson(JSONObject json) {
+	public SocialUserWithStatus fromJson(JSONObject json) {
 			
 		try {
 			super.fromJson(json);
@@ -54,15 +54,15 @@ public class SocialUserFromSearchResult extends SocialUserBase {
 		return this;
 	}
 
-	public static SocialUserFromSearchResult[] usersFromResponse(ServiceResponse response) {
+	public static SocialUserWithStatus[] usersFromResponse(ServiceResponse response) {
 		try {
 			
 			JSONObject jsonResponse = new JSONObject(response.getResponseString());
 			JSONArray jsonUsers = jsonResponse.getJSONArray("users");
-			SocialUserFromSearchResult[] users = new SocialUserFromSearchResult[jsonUsers.length()];
+			SocialUserWithStatus[] users = new SocialUserWithStatus[jsonUsers.length()];
 			
 			for(int i = 0; i < jsonUsers.length(); i++) {
-				users[i] = new SocialUserFromSearchResult();
+				users[i] = new SocialUserWithStatus();
 				users[i].fromJson(jsonUsers.getJSONObject(i));
 			}
 			

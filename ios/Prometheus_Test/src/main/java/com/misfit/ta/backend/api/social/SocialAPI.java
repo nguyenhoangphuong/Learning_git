@@ -73,6 +73,7 @@ public class SocialAPI extends MVPApi {
 		return result;
 	}
 	
+	
 	public static BaseResult sendFriendRequest(String token, String friendUserId) {
 		
 		String url = baseAddress + "friend_requests/" + friendUserId;
@@ -124,7 +125,5 @@ public class SocialAPI extends MVPApi {
 		
 		return result;
 	}
-	
-	
-	
+
 }
