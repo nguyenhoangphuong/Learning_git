@@ -8,7 +8,15 @@ import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;
 
 public class SocialAPI extends MVPApi {
-
+	
+	public static final Integer STATUS_NOT_REQUESTED = 0;
+	public static final Integer STATUS_REQUESTED_FROM_ME = 1;
+	public static final Integer STATUS_REQUESTED_TO_ME = 2;
+	public static final Integer STATUS_APPROVED = 3;
+	public static final Integer STATUS_IGNORED = 4;
+	public static final Integer STATUS_REJECTED = 5;
+	
+	
 	public static BaseResult getFriends(String token) {
 		
 		String url = baseAddress + "friends";
@@ -35,6 +43,21 @@ public class SocialAPI extends MVPApi {
 		return result;
 	}
 	
+	public static BaseResult searchSocialUsers(String token, String keyword) {
+		
+		String url = baseAddress + "users/search";
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("keyword", keyword);
+
+		ServiceResponse response = get(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+
 	public static BaseResult getFriendRequestsToMe(String token) {
 		
 		String url = baseAddress + "friend_requests/to_me";
@@ -54,20 +77,6 @@ public class SocialAPI extends MVPApi {
 
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
-
-		ServiceResponse response = get(url, port, requestInf);
-		BaseResult result = new BaseResult(response);
-		
-		return result;
-	}
-	
-	public static BaseResult searchSocialUsers(String token, String keyword) {
-		
-		String url = baseAddress + "users/search";
-
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("keyword", keyword);
 
 		ServiceResponse response = get(url, port, requestInf);
 		BaseResult result = new BaseResult(response);
