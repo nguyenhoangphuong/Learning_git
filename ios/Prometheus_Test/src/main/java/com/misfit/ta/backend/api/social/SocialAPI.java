@@ -56,7 +56,7 @@ public class SocialAPI extends MVPApi {
 		
 		return result;
 	}
-	
+
 
 	public static BaseResult getFriendRequestsToMe(String token) {
 		

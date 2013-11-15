@@ -207,6 +207,7 @@ public class SocialFriendsAPIsTC extends BackendAutomation {
 		
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
 	public void GetFacebookFriendsTest() {
 		
 		TRS.instance().addStep("==================== GET FRIENDS ====================", null);
@@ -214,6 +215,7 @@ public class SocialFriendsAPIsTC extends BackendAutomation {
 		// query friends
 		BaseResult result = SocialAPI.getFacebookFriends(misfitToken);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
+		SocialTestHelpers.printUsers(friends);
 
 		// make sure the result only contains only users who use Shine app
 		for(SocialUserBase friend : friends) {
@@ -231,7 +233,6 @@ public class SocialFriendsAPIsTC extends BackendAutomation {
 		}
 
 		// check detail of return values
-		SocialTestHelpers.printUsers(friends);
 		for(SocialUserWithStatus friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
 				Assert.assertEquals(friend.getAvatar(), "http://graph.facebook.com/100007032820465/picture", "Avatar");
@@ -254,6 +255,7 @@ public class SocialFriendsAPIsTC extends BackendAutomation {
 		// query
 		result = SocialAPI.getFacebookFriends(misfitToken);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
+		SocialTestHelpers.printUsers(friends);
 		
 		// check status of tung and thy
 		boolean tungStatusIsCorrect = false;
@@ -282,6 +284,7 @@ public class SocialFriendsAPIsTC extends BackendAutomation {
 		// query
 		result = SocialAPI.getFacebookFriends(misfitToken);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
+		SocialTestHelpers.printUsers(friends);
 
 		// check status of tung and thy
 		tungStatusIsCorrect = false;
@@ -299,15 +302,27 @@ public class SocialFriendsAPIsTC extends BackendAutomation {
 
 		Assert.assertTrue(tungStatusIsCorrect && thyStatusIsCorrect, "Both 'tung' and 'thy' statuses are correct");
 		
-		// check status from tung's side
-		result = SocialAPI.getFacebookFriends(tungToken);
-		friends = SocialUserWithStatus.usersFromResponse(result.response);
-		
-		Assert.assertTrue(friends[0].getStatus().equals(SocialAPI.STATUS_IGNORED), "Status from 'tung' to 'misfit'");
-		
 		// TODO: work around to remove ignored request between misfit - tung
 		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
 		SocialAPI.deleteFriend(tungToken, misfitUid);
+		
+		// now tung send request and misfit ignore, check status from misfit's side
+		SocialAPI.sendFriendRequest(tungToken, misfitUid);
+		SocialAPI.ignoreFriendRequest(misfitToken, tungUid);
+		
+		result = SocialAPI.getFacebookFriends(misfitToken);
+		friends = SocialUserWithStatus.usersFromResponse(result.response);
+		SocialTestHelpers.printUsers(friends);
+
+		for(SocialUserWithStatus friend : friends) {
+			
+			if(friend.getUid().equals(tungUid))
+				tungStatusIsCorrect = friend.getStatus().equals(SocialAPI.STATUS_IGNORED);
+		}
+		
+		// TODO: work around to remove ignored request between misfit - tung
+		SocialAPI.acceptFriendRequest(misfitToken, tungUid);
+		SocialAPI.deleteFriend(misfitToken, tungUid);
 		
 
 		TRS.instance().addStep("==================== DELETE FRIENDS ====================", null);
@@ -334,6 +349,25 @@ public class SocialFriendsAPIsTC extends BackendAutomation {
 
 		Assert.assertTrue(tungStatusIsCorrect && thyStatusIsCorrect, "Both 'tung' and 'thy' statuses are correct");
 
+	}
+
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SearchUsersAPI" })
+	public void SearchUsersTest() {
+		
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFriendRequestsAPI" })
+	public void GetFriendRequestsTest() {
+		
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "PostFriendRequestsAPI" })
+	public void PostFriendRequestsTest() {
+		
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "DeleteFriendsAPI" })
+	public void DeleteFriendsTest() {
 		
 	}
 	
