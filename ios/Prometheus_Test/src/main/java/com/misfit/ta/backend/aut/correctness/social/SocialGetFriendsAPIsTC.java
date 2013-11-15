@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.aut.correctness;
+package com.misfit.ta.backend.aut.correctness.social;
 
 import java.util.ArrayList;
 import java.util.HashMap;
