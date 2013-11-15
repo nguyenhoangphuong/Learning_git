@@ -146,7 +146,7 @@ public class SocialAPI extends MVPApi {
         return result;
     }
 
-    public static BaseResult linkFacebook(String email, String accessToken, String accessTokenSecret) {
+    public static BaseResult linkFacebook(String email, String accessToken) {
 
         String url = baseAddress + "link_facebook";
         BaseParams request = new BaseParams();
