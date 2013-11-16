@@ -18,6 +18,7 @@ import com.misfit.ta.backend.api.social.SocialAPI;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.social.Leaderboard;
 import com.misfit.ta.backend.data.social.SocialUserBase;
 import com.misfit.ta.backend.data.social.SocialUserLeaderBoardEvent;
@@ -41,7 +42,7 @@ public class Debug {
 	public static void main(String[] args) {
 				
 //		Gui.init("192.168.1.144");
-//		String token = MVPApi.signIn("qa140@a.a", "qqqqqq").token;
+		String token = MVPApi.signIn("mfwcqa.social@gmail.com", "qqqqqq").token;
 //		BackendHelper.completeGoalInPast(token, 1);
 //		BackendHelper.completeGoalInPast(token, 2);
 //		BackendHelper.setPersonalBest(token, 500);
@@ -49,73 +50,10 @@ public class Debug {
 //		MVPApi.getGraphItems(token, 0, Integer.MAX_VALUE, 0);
 //		MVPApi.userInfo(token);
 		
-		String thyToken = MVPApi.signIn("thy@misfitwearables.com", "test12").token;
-		String thinhToken = MVPApi.signIn("thinh@misfitwearables.com", "misfit1").token;
-		String haiToken = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
-		
-		String thy = "519facf09f12e57a7b0000d3";
-		String thinh = "51b1d2c35138106d210000d8";
-		String hai = "51cd11d95138105d0300066d";
-		
-		BaseResult result = null;
-		
-		logger.info("GET LEADERBOARD INFO API ============");
-		result = SocialAPI.getLeaderboardInfo(thyToken);
-		Leaderboard leaderboard = Leaderboard.fromResponse(result.response);
-		printUsers(leaderboard.getToday().toArray(new SocialUserLeaderBoardEvent[leaderboard.getToday().size()]));
-		printUsers(leaderboard.getYesterday().toArray(new SocialUserLeaderBoardEvent[leaderboard.getYesterday().size()]));
-		
-		logger.info("GET WORLD INFO API ============");
-		result = SocialAPI.getWorldInfo(thyToken);
-		printUsers(SocialUserWorldEvent.usersFromResponse(result.response));
-		Assert.fail();
-		
-		// thy send requests to hai and thinh
-		logger.info("SEND FRIEND REQUEST API ============");
-		result = SocialAPI.sendFriendRequest(thyToken, thinh);
-		result = SocialAPI.sendFriendRequest(thyToken, hai);
-		result = SocialAPI.sendFriendRequest(thinhToken, thy);
-		result = SocialAPI.sendFriendRequest(haiToken, thy);
-
-		
-//		// get apis
-//		logger.info("GET FRIENDS API ============");
-//		result = SocialAPI.getFriends(thyToken);
-//		printUsers(SocialUserBase.usersFromResponse(result.response));
-		
-		logger.info("GET FRIENS REQUESTS FROM ME API ============");
-		result = SocialAPI.getFriendRequestsFromMe(thyToken);
-		printUsers(SocialUserWithStatus.usersFromResponse(result.response));
-		
-		logger.info("GET FRIEND REQUESTS TO ME API ============");
-		result = SocialAPI.getFriendRequestsToMe(thyToken);
-		printUsers(SocialUserWithStatus.usersFromResponse(result.response));
-		
-//		logger.info("GET FACEBOOK FRIENDS API ============");
-//		result = SocialAPI.getFacebookFriends(thyToken);
-//		printUsers(SocialUserFromSearchResult.usersFromResponse(result.response));
-//		
-//		logger.info("SEARCH SOCIAL USERS API ============");
-//		result = SocialAPI.searchSocialUsers(thyToken, "thinh");
-//		printUsers(SocialUserFromSearchResult.usersFromResponse(result.response));
-
-				
-		// thinh accepts
-		logger.info("ACCEPT FRIEND REQUEST API ============");
-		result = SocialAPI.acceptFriendRequest(thinhToken, thy);
-		
-		
-		// delete friends
-		logger.info("DELETE FRIEND API ============");
-		result = SocialAPI.deleteFriend(thinhToken, thy);
-		
-			
-		// hai and thy ignore
-		logger.info("IGNORE FRIEND REQEST API ============");
-		result = SocialAPI.ignoreFriendRequest(haiToken, thy);
-		result = SocialAPI.ignoreFriendRequest(thyToken, thinh);
-		result = SocialAPI.ignoreFriendRequest(thyToken, hai);
-			
+		ProfileData profile = MVPApi.getProfile(token).profile;
+		profile.setName("Misfit Social");
+		profile.setHandle("misfit.social.misfit");
+		MVPApi.updateProfile(token, profile, profile.getServerId());
 	}
 	
 	public static void printUsers(SocialUserBase[] users) {
