@@ -1,65 +1,19 @@
 package com.misfit.ta.backend.aut.correctness.social;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-import org.graphwalker.Util;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
-import com.misfit.ta.backend.aut.BackendAutomation;
+import com.misfit.ta.backend.aut.SocialAutomationBase;
+import com.misfit.ta.backend.aut.SocialTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.social.SocialUserBase;
 import com.misfit.ta.backend.data.social.SocialUserWithStatus;
 import com.misfit.ta.report.TRS;
 
-public class SocialFriendsAPIsTC extends BackendAutomation {
-
-	protected static Logger logger = Util.setupLogger(SocialFriendsAPIsTC.class);
-	
-	protected String misfitToken;
-	protected String tungToken;
-	protected String thyToken;
-	
-	protected String misfitUid;
-	protected String tungUid;
-	protected String thyUid;
-	
-	protected Map<String, HashMap<String, Object>> mapNameData;
-	protected List<String> mapNames;
-	
-	
-	// set up and clean up
-	@BeforeClass(alwaysRun = true)
-	public void setUp() {
-		
-		// get social test data
-		mapNameData = SocialTestHelpers.getSocialInitialTestData();
-		
-		misfitToken = (String) mapNameData.get("misfit").get("token");
-		tungToken = (String) mapNameData.get("tung").get("token");
-		thyToken = (String) mapNameData.get("thy").get("token");
-		
-		misfitUid = (String) mapNameData.get("misfit").get("fuid");
-		tungUid = (String) mapNameData.get("tung").get("fuid");
-		thyUid = (String) mapNameData.get("thy").get("fuid");
-		
-		
-		// map key set
-		Iterator<String> iterator = mapNameData.keySet().iterator();
-		mapNames = new ArrayList<String>();
-		while(iterator.hasNext())
-			mapNames.add(iterator.next());
-	}
-	
+public class SocialGetFriendTC extends SocialAutomationBase {
 	
 	// test methods
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFriendAPI" })
@@ -552,20 +506,5 @@ public class SocialFriendsAPIsTC extends BackendAutomation {
 		Assert.assertEquals(friends[0].getName(), tungOldName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
 	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFriendRequestsAPI" })
-	public void GetFriendRequestsTest() {
-		
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "PostFriendRequestsAPI" })
-	public void PostFriendRequestsTest() {
-		
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "DeleteFriendsAPI" })
-	public void DeleteFriendsTest() {
-		
-	}
-	
+
 }
