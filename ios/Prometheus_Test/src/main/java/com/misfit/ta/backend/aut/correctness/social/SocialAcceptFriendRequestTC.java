@@ -8,16 +8,6 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 	
 	// test methods
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "AcceptFriend" })
-	public void AcceptFriend_WithoutUidParam() {
-
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "AcceptFriend" })
-	public void AcceptFriend_WithNullUidParam() {
-
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "AcceptFriend" })
 	public void AcceptFriend_WithInvalidUid() {
 
 	}

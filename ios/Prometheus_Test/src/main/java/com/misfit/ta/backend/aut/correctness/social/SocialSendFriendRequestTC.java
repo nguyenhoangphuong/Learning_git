@@ -2,21 +2,12 @@ package com.misfit.ta.backend.aut.correctness.social;
 
 import org.testng.annotations.Test;
 
+import com.misfit.ta.backend.api.social.SocialAPI;
 import com.misfit.ta.backend.aut.SocialAutomationBase;
 
 public class SocialSendFriendRequestTC extends SocialAutomationBase {
 	
-	// test methods
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
-	public void SendFriendRequest_WithoutUidParam() {
-
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
-	public void SendFriendRequest_WithNullUidParam() {
-
-	}
-	
+	// test methods	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
 	public void SendFriendRequest_WithInvalidUid() {
 

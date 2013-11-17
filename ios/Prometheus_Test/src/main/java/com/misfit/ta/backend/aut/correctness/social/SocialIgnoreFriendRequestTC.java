@@ -8,16 +8,6 @@ public class SocialIgnoreFriendRequestTC extends SocialAutomationBase {
 
 	// test methods
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "IgnoreFriend" })
-	public void IgnoreFriend_WithoutUidParam() {
-
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "IgnoreFriend" })
-	public void IgnoreFriend_WithNullUidParam() {
-
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "IgnoreFriend" })
 	public void IgnoreFriend_WithInvalidUid() {
 
 	}

@@ -8,16 +8,6 @@ public class SocialDeleteFriendTC extends SocialAutomationBase {
 	
 	// test methods
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "DeleteFriend" })
-	public void DeleteFriend_WithoutUidParam() {
-
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "DeleteFriend" })
-	public void DeleteFriend_WithNullUid() {
-
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "DeleteFriend" })
 	public void DeleteFriend_WithInvalidUid() {
 
 	}
