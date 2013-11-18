@@ -409,7 +409,8 @@ public class DataGenerator {
 	
 	// create user with data
 	public static void createUserWithRandomData(String email, String password, int numberOfGoal, 
-			int minimumSessionTileNumber, int maximumSessionTileNumber, int syncLogNumber) {
+			int minimumSessionTileNumber, int maximumSessionTileNumber, int syncLogNumber,
+			boolean includeSyncBinary) {
 		
 		// current timestamp
 		long timestamp = System.currentTimeMillis() / 1000;
@@ -593,6 +594,15 @@ public class DataGenerator {
 
 				long syncLogTimestamp = goalStartTime + interval * j + 1;
 				SyncLog syncLog = DataGenerator.generateRandomSyncLog(syncLogTimestamp, 1, totalMinute, null);
+				
+				// if don't include binary
+				syncLog.setLog("");
+				if(!includeSyncBinary) {
+					for(SyncFileData file : syncLog.getData().getFileData()) {
+						file.setRawData("");
+					}
+				}
+				
 				syncLog.setSerialNumberString(pedometer.getSerialNumberString());
 				MVPApi.pushSyncLog(token, syncLog);
 			}
