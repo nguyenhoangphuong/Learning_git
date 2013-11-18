@@ -175,7 +175,7 @@ public class SyncContinously {
 				Sync.openSyncView();
 				Sync.tapToSync();
 
-				while (Gui.getProperty("PTAECASyncAnimationView", 0, "alpha") == "0") {
+				while (Gui.getProperty("PTAECASyncAnimationView", 0, "alpha") == "1") {
 					ShortcutsTyper.delayTime(100);
 				}
 				ShortcutsTyper.delayOne();

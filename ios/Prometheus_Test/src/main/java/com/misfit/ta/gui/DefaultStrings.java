@@ -55,7 +55,7 @@ public class DefaultStrings {
 
 	// home screen
 	public static String OKButton = "OK";
-	public static int MenuButtonId = 15;
+	public static int MenuButtonId = 16;
 	public static String TodayTitle = "Today";
 	public static String YesterdayTitle = "Yesterday";
 	public static int WeekDayButtonId = 16;
