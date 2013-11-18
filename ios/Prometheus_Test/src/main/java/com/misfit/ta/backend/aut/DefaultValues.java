@@ -50,6 +50,12 @@ public class DefaultValues {
 	
 	static public int AlreadyRequestedCode = 302;
 	static public String AlreadyRequestedMessage = "Already requested";
+	
+	static public int FriendRequestNotExistCode = 305;
+	static public String FriendReqeustNotExistMessage = "Friend request not existed";
+	
+	static public int NotFriendYetCode = 306;
+	static public String NotFriendYetMessage = "Not friend yet";
 
 	// profile
 	static public ProfileData DefaultProfile() {

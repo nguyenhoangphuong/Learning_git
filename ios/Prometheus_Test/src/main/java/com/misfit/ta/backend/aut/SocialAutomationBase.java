@@ -27,9 +27,9 @@ public class SocialAutomationBase extends BackendAutomation {
 	
 	
 	// set up and clean up
-	@BeforeClass(alwaysRun = true)
-	public void setUp() {
-		
+    @BeforeClass(alwaysRun = true)
+    public void beforeClass() {
+			
 		// get social test data
 		mapNameData = SocialTestHelpers.getSocialInitialTestData();
 		

@@ -27,7 +27,7 @@ public class Goal {
 	public Goal() {
 
 	}
-
+	
 	
 	// methods
 	public JSONObject toJson() {

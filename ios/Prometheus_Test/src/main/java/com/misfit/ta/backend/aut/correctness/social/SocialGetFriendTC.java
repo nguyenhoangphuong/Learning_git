@@ -246,7 +246,6 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 
 		for(SocialUserWithStatus friend : friends) {
 
-			// TODO: A - B, if B ignore, status of A is still from_me, may change in the future
 			if(friend.getUid().equals(tungUid))
 				tungStatusIsCorrect = friend.getStatus().equals(SocialAPI.STATUS_REQUESTED_FROM_ME);
 
@@ -257,7 +256,7 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		Assert.assertTrue(tungStatusIsCorrect && thyStatusIsCorrect, "Both 'tung' and 'thy' statuses are correct");
 		
 		// remove ignored request between misfit - tung
-		SocialTestHelpers.deleteFriendRequest(tungToken, misfitUid);
+		SocialAPI.cancelFriendRequest(misfitToken, tungUid);
 		
 		// now tung send request and misfit ignore, check status from misfit's side
 		SocialAPI.sendFriendRequest(tungToken, misfitUid);
@@ -274,7 +273,7 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		}
 		
 		// remove ignored request between misfit - tung
-		SocialTestHelpers.deleteFriendRequest(misfitToken, tungUid);
+		SocialAPI.cancelFriendRequest(tungToken, misfitUid);
 		
 		
 		TRS.instance().addStep("==================== FRIENDS CHANGE PROFILE ====================", "subcase");
@@ -368,9 +367,9 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		result = SocialAPI.searchSocialUsers(misfitToken, "misfit.social.misfit");
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 		
-		// no result
-		// TODO: ask if this is right
-//		Assert.assertEquals(friends.length, 0, "Number of users");
+		// can found yourself
+		Assert.assertEquals(friends.length, 1, "Number of users");
+		Assert.assertEquals(friends[0].getName(), "Misfit Socia", "User's name");
 		
 		
 		TRS.instance().addStep("==================== VALID KEYWORD ====================", "subcase");
@@ -420,7 +419,6 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");
 		Assert.assertEquals(friends[0].getName(), "Tung Social", "Name");
-		// TODO: misfit was rejected by tung, status remains from_me, may change in the future
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_REQUESTED_FROM_ME, "Status");
 
 		// tung searchs misfit

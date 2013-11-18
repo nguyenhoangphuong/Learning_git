@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.api.social.SocialAPI;
 import com.misfit.ta.backend.data.social.SocialUserBase;
 
 public class SocialTestHelpers {
@@ -80,12 +79,4 @@ public class SocialTestHelpers {
 		// TODO:
 	}
 
-	public static void deleteFriendRequest(String toUserToken, String fromUserUid) {
-		
-		// TODO: work around to remove a pending / ignored request
-		// accept first then delete
-		SocialAPI.acceptFriendRequest(toUserToken, fromUserUid);
-		SocialAPI.deleteFriend(toUserToken, fromUserUid);
-	}
-	
 }

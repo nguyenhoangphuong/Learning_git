@@ -124,6 +124,19 @@ public class SocialAPI extends MVPApi {
 		return result;
 	}
 	
+	public static BaseResult cancelFriendRequest(String token, String friendUserId) {
+		
+		String url = baseAddress + "friend_requests/" + friendUserId;
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		ServiceResponse response = delete(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
 	public static BaseResult deleteFriend(String token, String friendUserId) {
 		
 		String url = baseAddress + "friends/" + friendUserId;
