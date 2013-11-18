@@ -29,6 +29,7 @@ public class BaseResult {
 	public Map<String, Object> pairResult = new HashMap<String, Object>();
 	public int statusCode;
 	public String errorMessage;
+	public int errorCode;
 
 	// constructor
 	public BaseResult(ServiceResponse response) {
@@ -48,6 +49,15 @@ public class BaseResult {
 				try {
                     this.errorMessage = json.getString("error_message");
                     this.pairResult.put("error_message", this.errorMessage);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+			}
+			
+			if (!json.isNull("error_code")) {
+				try {
+                    this.errorCode = Integer.valueOf(json.getString("error_code"));
+                    this.pairResult.put("error_code", this.errorCode);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

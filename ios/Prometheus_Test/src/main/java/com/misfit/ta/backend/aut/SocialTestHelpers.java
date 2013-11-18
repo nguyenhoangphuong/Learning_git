@@ -69,8 +69,8 @@ public class SocialTestHelpers {
 		
 		
 		// delete all 'auto friends' from mfwcqa.social
-		SocialAPI.deleteFriend(misfitToken, (String) tungData.get("fuid"));
-		SocialAPI.deleteFriend(misfitToken, (String) thyData.get("fuid"));
+//		SocialAPI.deleteFriend(misfitToken, (String) tungData.get("fuid"));
+//		SocialAPI.deleteFriend(misfitToken, (String) thyData.get("fuid"));
 		
 		return mapNameData;
 	}

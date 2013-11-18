@@ -42,8 +42,14 @@ public class DefaultValues {
 	static public String DeviceUnlinkedSuccessfully = "Unlink device successfully";
 	
 	// social error messages
-	static public String FriendRequestExisted = "Friend request already exist";
-	static public String AlreadyAreFriends = "";
+	static public int UserNotFoundCode = 2;
+	static public String UserNotFoundMessage = "User not found";
+	
+	static public int AlreadyAreFriendsCode = 303;
+	static public String AlreadyAreFriendsMessage = "Already friended";
+	
+	static public int AlreadyRequestedCode = 302;
+	static public String AlreadyRequestedMessage = "Already requested";
 
 	// profile
 	static public ProfileData DefaultProfile() {
