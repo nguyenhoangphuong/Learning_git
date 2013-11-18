@@ -43,7 +43,7 @@ public class Debug {
 				
 		Gui.init("192.168.1.115");
 		while(true) {
-			ViewUtils.isExistedView("PTAECAQuietSyncAnimationView", 0);
+			Gui.getProperty("PTAECASyncAnimationView", 0, "alpha");
 		}
 		
 //		String token = MVPApi.signIn("mfwcqa.social@gmail.com", "qqqqqq").token;
