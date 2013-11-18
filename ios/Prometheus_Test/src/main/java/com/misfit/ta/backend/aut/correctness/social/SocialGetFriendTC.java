@@ -256,9 +256,8 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 
 		Assert.assertTrue(tungStatusIsCorrect && thyStatusIsCorrect, "Both 'tung' and 'thy' statuses are correct");
 		
-		// TODO: work around to remove ignored request between misfit - tung
-		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
-		SocialAPI.deleteFriend(tungToken, misfitUid);
+		// remove ignored request between misfit - tung
+		SocialTestHelpers.deleteFriendRequest(tungToken, misfitUid);
 		
 		// now tung send request and misfit ignore, check status from misfit's side
 		SocialAPI.sendFriendRequest(tungToken, misfitUid);
@@ -274,9 +273,8 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 				tungStatusIsCorrect = friend.getStatus().equals(SocialAPI.STATUS_IGNORED);
 		}
 		
-		// TODO: work around to remove ignored request between misfit - tung
-		SocialAPI.acceptFriendRequest(misfitToken, tungUid);
-		SocialAPI.deleteFriend(misfitToken, tungUid);
+		// remove ignored request between misfit - tung
+		SocialTestHelpers.deleteFriendRequest(misfitToken, tungUid);
 		
 		
 		TRS.instance().addStep("==================== FRIENDS CHANGE PROFILE ====================", "subcase");
@@ -433,8 +431,7 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		Assert.assertEquals(friends[0].getName(), "Misfit Social", "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_IGNORED, "Status");
 		
-		// TODO: work around to remove ignored request
-		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
+		// remove ignored request from misfit to tung
 		SocialAPI.deleteFriend(tungToken, misfitUid);
 		
 		

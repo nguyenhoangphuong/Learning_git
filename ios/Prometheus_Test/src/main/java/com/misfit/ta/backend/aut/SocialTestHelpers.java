@@ -79,5 +79,13 @@ public class SocialTestHelpers {
 		
 		// TODO:
 	}
+
+	public static void deleteFriendRequest(String toUserToken, String fromUserUid) {
+		
+		// TODO: work around to remove a pending / ignored request
+		// accept first then delete
+		SocialAPI.acceptFriendRequest(toUserToken, fromUserUid);
+		SocialAPI.deleteFriend(toUserToken, fromUserUid);
+	}
 	
 }

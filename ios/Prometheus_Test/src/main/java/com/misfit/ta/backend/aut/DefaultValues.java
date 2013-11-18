@@ -40,6 +40,10 @@ public class DefaultValues {
 	static public String DeviceNotLinkToAnyAccount = "Device is not linked to any account yet";
 	static public String DeviceNotLinkToThisAccount = "This device doesn't link to any device";
 	static public String DeviceUnlinkedSuccessfully = "Unlink device successfully";
+	
+	// social error messages
+	static public String FriendRequestExisted = "Friend request already exist";
+	static public String AlreadyAreFriends = "";
 
 	// profile
 	static public ProfileData DefaultProfile() {
