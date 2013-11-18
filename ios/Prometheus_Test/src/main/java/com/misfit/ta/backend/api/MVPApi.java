@@ -20,6 +20,7 @@ import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.aut.ResultLogger;
+import com.misfit.ta.backend.aut.correctness.social.LeaderBoardTC;
 import com.misfit.ta.backend.aws.AWSHelper;
 import com.misfit.ta.backend.data.account.*;
 import com.misfit.ta.backend.data.goal.*;
@@ -941,10 +942,6 @@ public class MVPApi {
 	
 	// test
 	public static void main(String[] args) throws JSONException {
-	    AccountResult result = MVPApi.signIn("thinh@misfitwearables.com", "misfit1");
-	    ProfileResult profile = MVPApi.getProfile(result.token);
-	    System.out.println("LOG [MVPApi.main]: goals " + profile.statistics.getTotalGoalHit());
-	    System.out.println("LOG [MVPApi.main]: " + profile.profile.getHandle());
 	    
 	    
 	}
