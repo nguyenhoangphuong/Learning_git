@@ -110,10 +110,11 @@ public class SyncContinously {
 				Sync.tapToSync();
 				start = System.currentTimeMillis();
 
-				while (!(ViewUtils.isExistedView("UILabel", "Last synced just now") || Sync.hasAlert())) {
+				while (Gui.getProperty("PTAECASyncAnimationView", 0, "alpha") == "0") {
 					ShortcutsTyper.delayTime(100);
 				}
 				end = System.currentTimeMillis();
+				ShortcutsTyper.delayOne();
 				
 				while (Sync.hasAlert()) {
 					if (Gui.getPopupTitle().equals(DefaultStrings.BatteryLowTitle)) {
@@ -174,9 +175,10 @@ public class SyncContinously {
 				Sync.openSyncView();
 				Sync.tapToSync();
 
-				while (!(ViewUtils.isExistedView("UILabel", "Today") && ViewUtils.isExistedView("UILabel", "Week"))) {
+				while (Gui.getProperty("PTAECASyncAnimationView", 0, "alpha") == "0") {
 					ShortcutsTyper.delayTime(100);
 				}
+				ShortcutsTyper.delayOne();
 
 				if (Sync.hasAlert()) {
 					failedSyncCount++;

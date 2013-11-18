@@ -41,8 +41,12 @@ public class Debug {
 	
 	public static void main(String[] args) {
 				
-//		Gui.init("192.168.1.144");
-		String token = MVPApi.signIn("mfwcqa.social@gmail.com", "qqqqqq").token;
+		Gui.init("192.168.1.115");
+		while(true) {
+			ViewUtils.isExistedView("PTAECAQuietSyncAnimationView", 0);
+		}
+		
+//		String token = MVPApi.signIn("mfwcqa.social@gmail.com", "qqqqqq").token;
 //		BackendHelper.completeGoalInPast(token, 1);
 //		BackendHelper.completeGoalInPast(token, 2);
 //		BackendHelper.setPersonalBest(token, 500);
@@ -50,10 +54,6 @@ public class Debug {
 //		MVPApi.getGraphItems(token, 0, Integer.MAX_VALUE, 0);
 //		MVPApi.userInfo(token);
 		
-		ProfileData profile = MVPApi.getProfile(token).profile;
-		profile.setName("Misfit Social");
-		profile.setHandle("misfit.social.misfit");
-		MVPApi.updateProfile(token, profile, profile.getServerId());
 	}
 	
 	public static void printUsers(SocialUserBase[] users) {
