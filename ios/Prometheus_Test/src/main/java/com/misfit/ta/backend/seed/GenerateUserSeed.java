@@ -32,7 +32,7 @@ public class GenerateUserSeed extends SeedThread {
 	
 	// static fields
 	public static ServerResultSummary summary = new ServerResultSummary();
-	public static ResultLogger resultLogger = ResultLogger.getLogger("user_generate_seed");
+	public static ResultLogger resultLogger = ResultLogger.getLogger("user_generate_seed_" + System.nanoTime());
 	public static int numberOfUserFullyCreated = 0;
 	public static int numberOfUserCreated = 0;
 	
