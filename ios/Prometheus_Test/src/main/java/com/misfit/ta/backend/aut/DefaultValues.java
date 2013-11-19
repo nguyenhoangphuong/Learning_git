@@ -56,6 +56,10 @@ public class DefaultValues {
 	
 	static public int NotFriendYetCode = 306;
 	static public String NotFriendYetMessage = "Not friend yet";
+	
+	static public int InvalidParameterCode = 1;
+	static public String InvalidParameterMessage = "Invalid parameters";
+	
 
 	// profile
 	static public ProfileData DefaultProfile() {

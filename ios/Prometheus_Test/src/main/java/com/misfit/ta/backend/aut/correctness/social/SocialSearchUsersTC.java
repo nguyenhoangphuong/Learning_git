@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
+import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.SocialAutomationBase;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.profile.ProfileData;
@@ -19,11 +20,11 @@ public class SocialSearchUsersTC extends SocialAutomationBase {
 		
 		// query friends
 		BaseResult result = SocialAPI.searchSocialUsers(misfitToken, null);
-		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		// no result
-		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(friends.length, 0, "Number of users found");
+		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.errorMessage, DefaultValues.InvalidParameterMessage, "Error message");
+		Assert.assertEquals(result.errorCode, DefaultValues.InvalidParameterCode, "Error code");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SearchUsersAPI" })
