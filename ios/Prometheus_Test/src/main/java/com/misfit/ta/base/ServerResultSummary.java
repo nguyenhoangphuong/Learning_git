@@ -43,6 +43,8 @@ public class ServerResultSummary {
 	public void printSummary() {
 		
 		Collections.sort(statusCodes);
+		
+		logger.info("Number of status codes: " + statusCodes.size());
 		logger.info("---------------------------------------------------------------------------");	
 		for(Integer statusCode : statusCodes)
 			logger.info(statusCode + ": " + statusCodeCountMap.get(statusCode));

@@ -38,9 +38,7 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 		SocialAPI.ignoreFriendRequest(tungToken, misfitUid);
 		
 		// now tung changes his mind and accept misfit
-		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
-		BaseResult result = SocialAPI.acceptFriendRequest(tungToken, misfitUid);
-		
+		BaseResult result = SocialAPI.acceptFriendRequest(tungToken, misfitUid);		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		
 		// tung and misfit should be friends now
@@ -73,7 +71,7 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 		
 		// TODO: return message is correct.. but not very clear, may ask backend team for an improvement
 		Assert.assertEquals(result.errorMessage, DefaultValues.FriendRequestNotExistMessage, "Error message");
-		Assert.assertEquals(result.errorCode, DefaultValues.FriendRequestNotExistMessage, "Error code");
+		Assert.assertEquals(result.errorCode, DefaultValues.FriendRequestNotExistCode, "Error code");
 		
 		// delete friend
 		SocialAPI.deleteFriend(misfitToken, tungUid);
@@ -82,6 +80,9 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "AcceptFriend" })
 	public void AcceptFriend_WithValidUid() {
 
+		// delete friend (set up)
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+				
 		// misfit --> tung, tung -v- misfit
 		SocialAPI.sendFriendRequest(misfitToken, tungUid);
 		BaseResult result = SocialAPI.acceptFriendRequest(tungToken, misfitUid);

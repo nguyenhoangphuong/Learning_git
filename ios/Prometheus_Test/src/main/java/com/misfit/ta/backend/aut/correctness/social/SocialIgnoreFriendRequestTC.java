@@ -62,7 +62,7 @@ public class SocialIgnoreFriendRequestTC extends SocialAutomationBase {
 		
 		// TODO: return message is correct.. but not very clear, may ask backend team for an improvement
 		Assert.assertEquals(result.errorMessage, DefaultValues.FriendRequestNotExistMessage, "Error message");
-		Assert.assertEquals(result.errorCode, DefaultValues.FriendRequestNotExistMessage, "Error code");
+		Assert.assertEquals(result.errorCode, DefaultValues.FriendRequestNotExistCode, "Error code");
 		
 		// delete friend
 		SocialAPI.deleteFriend(misfitToken, tungUid);
@@ -71,6 +71,9 @@ public class SocialIgnoreFriendRequestTC extends SocialAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "IgnoreFriend" })
 	public void IgnoreFriend_WithValidUid() {
 
+		// delete friend (set up)
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+		
 		// misfit --> tung, tung -v- misfit
 		SocialAPI.sendFriendRequest(misfitToken, tungUid);
 		BaseResult result = SocialAPI.ignoreFriendRequest(tungToken, misfitUid);

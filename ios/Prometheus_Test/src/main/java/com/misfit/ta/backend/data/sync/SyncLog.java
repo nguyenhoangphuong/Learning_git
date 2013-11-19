@@ -29,7 +29,7 @@ public class SyncLog {
             object.accumulate("log", log);
             
 			if (data != null) 			
-				object.accumulate("data", data.toJson());
+				object.accumulate("xdata", data.toJson());
             
             return object;
         }
