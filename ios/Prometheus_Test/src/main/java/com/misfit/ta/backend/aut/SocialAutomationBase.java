@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.testng.annotations.BeforeClass;
 
+import com.misfit.ta.backend.api.social.SocialAPI;
+
 public class SocialAutomationBase extends BackendAutomation {
 
 	protected static Logger logger = Util.setupLogger(SocialAutomationBase.class);
@@ -47,5 +49,10 @@ public class SocialAutomationBase extends BackendAutomation {
 		mapNames = new ArrayList<String>();
 		while(iterator.hasNext())
 			mapNames.add(iterator.next());
+		
+		
+		// delete friends
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+		SocialAPI.deleteFriend(misfitToken, thyUid);
 	}
 }

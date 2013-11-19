@@ -1,36 +1,19 @@
 package com.misfit.ta.backend.aut.correctness.social;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import org.apache.log4j.Logger;
-import org.graphwalker.Util;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.google.resting.json.JSONException;
-import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
-import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.SocialAutomationBase;
 import com.misfit.ta.backend.aut.SocialTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.social.Leaderboard;
-import com.misfit.ta.backend.data.social.SocialUserBase;
 import com.misfit.ta.backend.data.social.SocialUserLeaderBoardEvent;
-import com.misfit.ta.backend.data.social.SocialUserWithStatus;
-import com.misfit.ta.report.TRS;
 
 public class LeaderBoardTC extends SocialAutomationBase {
 

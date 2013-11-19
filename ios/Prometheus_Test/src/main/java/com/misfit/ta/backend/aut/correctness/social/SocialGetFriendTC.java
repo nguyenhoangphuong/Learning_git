@@ -74,7 +74,6 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		SocialTestHelpers.printUsers(friends);
 		for(SocialUserBase friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getAvatar(), "http://graph.facebook.com/100007032820465/picture", "Avatar");
 				Assert.assertEquals(friend.getHandle(), "tung.social.misfit", "Handle");
 				Assert.assertEquals(friend.getName(), "Tung Social", "Name");
 				break;
@@ -101,7 +100,6 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		SocialTestHelpers.printUsers(friends);
 		for(SocialUserBase friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getAvatar(), "http://graph.facebook.com/100007032820465/picture", "Avatar");
 				Assert.assertEquals(friend.getHandle(), "tung.social.misfit", "Handle");
 				Assert.assertEquals(friend.getName(), tungProfile.getName(), "Name");
 				break;
@@ -123,7 +121,6 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		SocialTestHelpers.printUsers(friends);
 		for(SocialUserBase friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getAvatar(), "http://graph.facebook.com/100007032820465/picture", "Avatar");
 				Assert.assertEquals(friend.getHandle(), "tung.social.misfit", "Handle");
 				Assert.assertEquals(friend.getName(), tungOldName, "Name");
 				break;
@@ -189,7 +186,6 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		// check detail of return values
 		for(SocialUserWithStatus friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getAvatar(), "http://graph.facebook.com/100007032820465/picture", "Avatar");
 				Assert.assertEquals(friend.getHandle(), "tung.social.misfit", "Handle");
 				Assert.assertEquals(friend.getName(), "Tung Social", "Name");
 				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
@@ -292,7 +288,6 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		SocialTestHelpers.printUsers(friends);
 		for(SocialUserWithStatus friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getAvatar(), "http://graph.facebook.com/100007032820465/picture", "Avatar");
 				Assert.assertEquals(friend.getHandle(), "tung.social.misfit", "Handle");
 				Assert.assertEquals(friend.getName(), tungProfile.getName(), "Name");
 				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
@@ -312,7 +307,6 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		SocialTestHelpers.printUsers(friends);
 		for(SocialUserWithStatus friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getAvatar(), "http://graph.facebook.com/100007032820465/picture", "Avatar");
 				Assert.assertEquals(friend.getHandle(), "tung.social.misfit", "Handle");
 				Assert.assertEquals(friend.getName(), tungOldName, "Name");
 				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
@@ -382,7 +376,6 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		Assert.assertEquals(friends.length, 1, "Number of users found");
 		
 		// check detail of return values
-		Assert.assertEquals(friends[0].getAvatar(), "http://graph.facebook.com/100007032820465/picture", "Avatar");
 		Assert.assertEquals(friends[0].getHandle(), "tung.social.misfit", "Handle");
 		Assert.assertEquals(friends[0].getName(), "Tung Social", "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
