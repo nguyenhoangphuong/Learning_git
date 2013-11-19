@@ -71,12 +71,11 @@ public class ParallelThreadExecutor {
     
     public void printSummary() {
     	
-    	logger.info(
-        		"------------------------------------------------------------------\n" +
-        		"Start time: " + this.startTime + "\n" +
-        		"End time: " + this.endTime + "\n" +
-        		"Total running time: " + this.totalTime +
-        		"------------------------------------------------------------------\n");
+    	logger.info("------------------------------------------------------------------");
+    	logger.info("Start time: " + this.startTime);
+    	logger.info("End time: " + this.endTime);
+    	logger.info("Total running time: " + this.totalTime);
+    	logger.info("------------------------------------------------------------------");
     }
 
 }

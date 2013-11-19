@@ -2,6 +2,7 @@ package com.misfit.ta.backend.aut.correctness.social;
 
 import java.util.List;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -102,11 +103,26 @@ public class LeaderBoardTC extends SocialAutomationBase {
 		misfitYesterdayGoal = getOrCreateEmptyGoalForYesterday(misfitToken);
 		tungYesterdayGoal = getOrCreateEmptyGoalForYesterday(tungToken);
 		thyYesterdayGoal = getOrCreateEmptyGoalForYesterday(thyToken);
+		
+		// add friends
+		SocialAPI.sendFriendRequest(misfitToken, tungUid);
+		SocialAPI.sendFriendRequest(misfitToken, thyUid);
+		
+		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
+		SocialAPI.acceptFriendRequest(thyToken, misfitUid);
+	}
+	
+	@AfterClass(alwaysRun = true)
+	public void afterClass() {
+		
+		// delete friends
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+		SocialAPI.deleteFriend(misfitToken, thyUid);
 	}
 	
 	
     // test methods
-    @Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFriendAPI" })
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "Leaderboard", "TodayEvents" })
     public void LeaderBoardTodayTest() {
 
         // set point to misfit (500), tung (300) and thy (100)
@@ -159,6 +175,36 @@ public class LeaderBoardTC extends SocialAutomationBase {
         Assert.assertEquals(records[2].getName(), "Misfit Social", "3rd user's name");
         Assert.assertEquals(records[2].getUid(), misfitUid, "3rd user's uid");
         Assert.assertEquals(records[2].getPoints(), (Integer)500, "3rd user's point");
+    }
+    
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "Leaderboard", "YesterdayEvents" })
+    public void LeaderBoardYesterdayTest() {
+
+        // set point to misfit (500), tung (300) and thy (100)
+    	updateGoalWithNewPoint(misfitToken, misfitYesterdayGoal, 500);
+    	updateGoalWithNewPoint(tungToken, tungYesterdayGoal, 300);
+    	updateGoalWithNewPoint(thyToken, thyYesterdayGoal, 100);
+
+        // query leaderboard
+        BaseResult result = SocialAPI.getLeaderboardInfo(misfitToken);
+        Leaderboard board = Leaderboard.fromResponse(result.response);
+
+        List<SocialUserLeaderBoardEvent> yesterday = board.getYesterday();
+        SocialUserLeaderBoardEvent[] records = yesterday.toArray(new SocialUserLeaderBoardEvent[yesterday.size()]);
+        SocialTestHelpers.printUsers(records);
+        
+        // check leaderboard detail
+        Assert.assertEquals(records[0].getName(), "Misfit Social", "1st user's name");
+        Assert.assertEquals(records[0].getUid(), misfitUid, "1st user's uid");
+        Assert.assertEquals(records[0].getPoints(), (Integer)500, "1st user's point");
+        
+        Assert.assertEquals(records[1].getName(), "Tung Social", "2nd user's name");
+        Assert.assertEquals(records[1].getUid(), tungUid, "2nd user's uid");
+        Assert.assertEquals(records[1].getPoints(), (Integer)300, "2nd user's point");
+        
+        Assert.assertEquals(records[2].getName(), "Thy Social", "3rd user's name");
+        Assert.assertEquals(records[2].getUid(), thyUid, "3rd user's uid");
+        Assert.assertEquals(records[2].getPoints(), (Integer)100, "3rd user's point");
     }
 
 }

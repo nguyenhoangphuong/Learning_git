@@ -17,33 +17,31 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 	
 	// test methods
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFriendAPI" })
-	public void GetFriendsTest() {
+	public void GetFriends_EmptyFriendList() {
 		
-		TRS.instance().addStep("==================== NO FRIEND ====================", "subcase");
-		
-		// query friends
+		// get misfit's friends
 		BaseResult result = SocialAPI.getFriends(misfitToken);
 		SocialUserBase[] friends = SocialUserBase.usersFromResponse(result.response);
-				
+
 		// total number of friend is 0
 		Assert.assertEquals(friends.length, 0, "Number of friends");
-		
-		
-		
-		TRS.instance().addStep("==================== ADD NEW FRIENDS ====================", "subcase");
-		
-		// misfit sends friend request to tung and thy
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFriendAPI" })
+	public void GetFriends_AfterAddNewFriends() {
+				
+		// misfit --> thy, misfit --> tung
 		SocialAPI.sendFriendRequest(misfitToken, tungUid);
 		SocialAPI.sendFriendRequest(misfitToken, thyUid);
 		
 		// query again
-		result = SocialAPI.getFriends(misfitToken);
-		friends = SocialUserBase.usersFromResponse(result.response);
+		BaseResult result = SocialAPI.getFriends(misfitToken);
+		SocialUserBase[] friends = SocialUserBase.usersFromResponse(result.response);
 				
 		// total number of friend is still 0
 		Assert.assertEquals(friends.length, 0, "Number of friends");
 		
-		// tung and thy accept friend requests
+		// tung -v- misfit, thy -v- misfit
 		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
 		SocialAPI.acceptFriendRequest(thyToken, misfitUid);
 		
@@ -80,18 +78,30 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 			}
 		}
 		
+		// delete friends
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+		SocialAPI.deleteFriend(misfitToken, thyUid);
+	}
+
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFriendAPI" })
+	public void GetFriends_AfterFriendsChangeProfile() {
 		
-		TRS.instance().addStep("==================== FRIENDS CHANGE PROFILE ====================", "subcase");
+		// misfit --> tung, misfit--> thy
+		// tung -v- misfit, thy -v- misfit
+		SocialAPI.sendFriendRequest(misfitToken, tungUid);
+		SocialAPI.sendFriendRequest(misfitToken, thyUid);
+		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
+		SocialAPI.acceptFriendRequest(thyToken, misfitUid);
 		
-		// now tung change his name
+		// now tung changes his name
 		ProfileData tungProfile = MVPApi.getProfile(tungToken).profile;
 		String tungOldName = tungProfile.getName();
 		tungProfile.setName("Tung - " + System.nanoTime());
 		MVPApi.updateProfile(tungToken, tungProfile, tungProfile.getServerId());
 		
 		// query again
-		result = SocialAPI.getFriends(misfitToken);
-		friends = SocialUserBase.usersFromResponse(result.response);
+		BaseResult result = SocialAPI.getFriends(misfitToken);
+		SocialUserBase[] friends = SocialUserBase.usersFromResponse(result.response);
 
 		// total number of friend should be 2
 		Assert.assertEquals(friends.length, 2, "Number of friends");
@@ -127,36 +137,70 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 			}
 		}
 		
+		// delete friends
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+		SocialAPI.deleteFriend(misfitToken, thyUid);
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFriendAPI" })
+	public void GetFriends_AfterRemoveFriends() {
 		
-		TRS.instance().addStep("==================== REMOVE FRIENDS ====================", "subcase");
-		
+		// misfit --> tung, misfit--> thy
+		// tung -v- misfit, thy -v- misfit
+		SocialAPI.sendFriendRequest(misfitToken, tungUid);
+		SocialAPI.sendFriendRequest(misfitToken, thyUid);
+		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
+		SocialAPI.acceptFriendRequest(thyToken, misfitUid);
+
 		// now misfit delete tung
 		SocialAPI.deleteFriend(misfitToken, tungUid);
-		
+
 		// query again
-		result = SocialAPI.getFriends(misfitToken);
-		friends = SocialUserBase.usersFromResponse(result.response);
+		BaseResult result = SocialAPI.getFriends(misfitToken);
+		SocialUserBase[] friends = SocialUserBase.usersFromResponse(result.response);
+
+		// total number of friend should be 1
+		Assert.assertEquals(friends.length, 1, "Number of friends");
+
+		// make sure the result only contains only thy
+		Assert.assertEquals(friends[0].getUid(), thyUid);
+
+		// delete friends
+		SocialAPI.deleteFriend(misfitToken, thyUid);
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFriendAPI" })
+	public void GetFriends_AfterBeingRemovedByFriends() {
 		
+		// misfit --> tung, misfit--> thy
+		// tung -v- misfit, thy -v- misfit
+		SocialAPI.sendFriendRequest(misfitToken, tungUid);
+		SocialAPI.sendFriendRequest(misfitToken, thyUid);
+		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
+		SocialAPI.acceptFriendRequest(thyToken, misfitUid);
+
+		// now thy delete misfit
+		SocialAPI.deleteFriend(thyToken, misfitUid);
+
+		// query again
+		BaseResult result = SocialAPI.getFriends(misfitToken);
+		SocialUserBase[] friends = SocialUserBase.usersFromResponse(result.response);
+
 		// total number of friend should be 1
 		Assert.assertEquals(friends.length, 1, "Number of friends");
 		
-		// make sure the result only contains only thy
-		Assert.assertEquals(friends[0].getUid(), thyUid);
-		
-		
-		TRS.instance().addStep("==================== BE REMOVED BY FRIENDS ====================", "subcase");
-		
-		// now thy delete misfit
-		SocialAPI.deleteFriend(thyToken, misfitUid);
-		
-		// query again
-		result = SocialAPI.getFriends(misfitToken);
-		friends = SocialUserBase.usersFromResponse(result.response);
-		
-		// total number of friend should be 0
-		Assert.assertEquals(friends.length, 0, "Number of friends");
+		// make sure the result only contains only tung
+		Assert.assertEquals(friends[0].getUid(), tungUid);
+				
+		// delete friends
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+	}
+
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
+	public void GetFacebookFriends_NormalCase() {
 		
 	}
+	
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
 	public void GetFacebookFriendsTest() {
@@ -342,6 +386,7 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 
 	}
 
+	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SearchUsersAPI" })
 	public void SearchUsersTest() {
 		
@@ -363,7 +408,7 @@ public class SocialGetFriendTC extends SocialAutomationBase {
 		
 		// can found yourself
 		Assert.assertEquals(friends.length, 1, "Number of users");
-		Assert.assertEquals(friends[0].getName(), "Misfit Socia", "User's name");
+		Assert.assertEquals(friends[0].getName(), "Misfit Social", "User's name");
 		
 		
 		TRS.instance().addStep("==================== VALID KEYWORD ====================", "subcase");

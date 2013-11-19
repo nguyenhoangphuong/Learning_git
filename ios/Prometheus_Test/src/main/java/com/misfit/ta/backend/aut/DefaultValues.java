@@ -52,7 +52,7 @@ public class DefaultValues {
 	static public String AlreadyRequestedMessage = "Already requested";
 	
 	static public int FriendRequestNotExistCode = 305;
-	static public String FriendReqeustNotExistMessage = "Friend request not existed";
+	static public String FriendRequestNotExistMessage = "Friend request not existed";
 	
 	static public int NotFriendYetCode = 306;
 	static public String NotFriendYetMessage = "Not friend yet";

@@ -26,7 +26,7 @@ public class SocialIgnoreFriendRequestTC extends SocialAutomationBase {
 
 		BaseResult result = SocialAPI.ignoreFriendRequest(misfitToken, tungUid);
 		Assert.assertEquals(result.statusCode, 400, "Status code");
-		Assert.assertEquals(result.errorMessage, DefaultValues.FriendReqeustNotExistMessage, "Error message");
+		Assert.assertEquals(result.errorMessage, DefaultValues.FriendRequestNotExistMessage, "Error message");
 		Assert.assertEquals(result.errorCode, DefaultValues.FriendRequestNotExistCode, "Error code");
 	}
 	
@@ -42,7 +42,7 @@ public class SocialIgnoreFriendRequestTC extends SocialAutomationBase {
 		BaseResult result = SocialAPI.ignoreFriendRequest(tungToken, misfitUid);
 
 		Assert.assertEquals(result.statusCode, 400, "Status code");
-		Assert.assertEquals(result.errorMessage, DefaultValues.FriendReqeustNotExistMessage, "Error message");
+		Assert.assertEquals(result.errorMessage, DefaultValues.FriendRequestNotExistMessage, "Error message");
 		Assert.assertEquals(result.errorCode, DefaultValues.FriendRequestNotExistCode, "Error code");
 		
 		// delete friend
@@ -61,8 +61,8 @@ public class SocialIgnoreFriendRequestTC extends SocialAutomationBase {
 		Assert.assertEquals(result.statusCode, 400, "Status code");
 		
 		// TODO: return message is correct.. but not very clear, may ask backend team for an improvement
-		Assert.assertEquals(result.errorMessage, DefaultValues.FriendReqeustNotExistMessage, "Error message");
-		Assert.assertEquals(result.errorCode, DefaultValues.FriendReqeustNotExistMessage, "Error code");
+		Assert.assertEquals(result.errorMessage, DefaultValues.FriendRequestNotExistMessage, "Error message");
+		Assert.assertEquals(result.errorCode, DefaultValues.FriendRequestNotExistMessage, "Error code");
 		
 		// delete friend
 		SocialAPI.deleteFriend(misfitToken, tungUid);

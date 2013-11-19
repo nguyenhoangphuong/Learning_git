@@ -20,7 +20,6 @@ import com.google.resting.method.post.PostHelper;
 import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.aut.ResultLogger;
-import com.misfit.ta.backend.aut.correctness.social.LeaderBoardTC;
 import com.misfit.ta.backend.aws.AWSHelper;
 import com.misfit.ta.backend.data.account.*;
 import com.misfit.ta.backend.data.goal.*;

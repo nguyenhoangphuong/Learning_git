@@ -21,5 +21,6 @@ public class BackendLargeDataGenerator {
 		ParallelThreadExecutor executor = new ParallelThreadExecutor(seed, numberOfSeed, numberOfThread);
 		executor.execute();
 		executor.printSummary();
+		GenerateUserSeed.printSummary();
 	}
 }

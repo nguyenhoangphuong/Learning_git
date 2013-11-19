@@ -54,5 +54,6 @@ public class SocialAutomationBase extends BackendAutomation {
 		// delete friends
 		SocialAPI.deleteFriend(misfitToken, tungUid);
 		SocialAPI.deleteFriend(misfitToken, thyUid);
+		SocialAPI.deleteFriend(tungToken, thyUid);
 	}
 }

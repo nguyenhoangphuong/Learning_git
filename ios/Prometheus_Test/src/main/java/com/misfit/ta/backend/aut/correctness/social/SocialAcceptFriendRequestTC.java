@@ -26,7 +26,7 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 
 		BaseResult result = SocialAPI.acceptFriendRequest(misfitToken, tungUid);
 		Assert.assertEquals(result.statusCode, 400, "Status code");
-		Assert.assertEquals(result.errorMessage, DefaultValues.FriendReqeustNotExistMessage, "Error message");
+		Assert.assertEquals(result.errorMessage, DefaultValues.FriendRequestNotExistMessage, "Error message");
 		Assert.assertEquals(result.errorCode, DefaultValues.FriendRequestNotExistCode, "Error code");
 	}
 	
@@ -41,12 +41,23 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
 		BaseResult result = SocialAPI.acceptFriendRequest(tungToken, misfitUid);
 		
-		Assert.assertEquals(result.statusCode, 400, "Status code");
-		Assert.assertEquals(result.errorMessage, DefaultValues.FriendReqeustNotExistMessage, "Error message");
-		Assert.assertEquals(result.errorCode, DefaultValues.FriendRequestNotExistCode, "Error code");
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		
+		// tung and misfit should be friends now
+		result = SocialAPI.getFriends(misfitToken);
+		SocialUserBase[] friends = SocialUserBase.usersFromResponse(result.response);
+		
+		Assert.assertEquals(friends.length, 1, "Number of friends of misfit");
+		Assert.assertEquals(friends[0].getName(), "Tung Social", "Name of tung");
+		
+		result = SocialAPI.getFriends(tungToken);
+		friends = SocialUserBase.usersFromResponse(result.response);
+		
+		Assert.assertEquals(friends.length, 1, "Number of friends of tung");
+		Assert.assertEquals(friends[0].getName(), "Misfit Social", "Name of misfit");
 
-		// cancel friend request
-		SocialAPI.cancelFriendRequest(misfitToken, tungUid);
+		// delete friends
+		SocialAPI.deleteFriend(misfitToken, tungUid);
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "AcceptFriend" })
@@ -61,8 +72,8 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 		Assert.assertEquals(result.statusCode, 400, "Status code");
 		
 		// TODO: return message is correct.. but not very clear, may ask backend team for an improvement
-		Assert.assertEquals(result.errorMessage, DefaultValues.FriendReqeustNotExistMessage, "Error message");
-		Assert.assertEquals(result.errorCode, DefaultValues.FriendReqeustNotExistMessage, "Error code");
+		Assert.assertEquals(result.errorMessage, DefaultValues.FriendRequestNotExistMessage, "Error message");
+		Assert.assertEquals(result.errorCode, DefaultValues.FriendRequestNotExistMessage, "Error code");
 		
 		// delete friend
 		SocialAPI.deleteFriend(misfitToken, tungUid);
