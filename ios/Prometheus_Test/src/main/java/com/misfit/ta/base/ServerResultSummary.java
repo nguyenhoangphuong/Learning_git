@@ -50,5 +50,5 @@ public class ServerResultSummary {
 			logger.info(statusCode + ": " + statusCodeCountMap.get(statusCode));
 		logger.info("---------------------------------------------------------------------------");
 	}
-	
+
 }

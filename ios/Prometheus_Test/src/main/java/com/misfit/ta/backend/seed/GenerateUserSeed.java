@@ -8,6 +8,7 @@ import org.graphwalker.Util;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
@@ -31,6 +32,7 @@ public class GenerateUserSeed extends SeedThread {
 	
 	// static fields
 	public static ServerResultSummary summary = new ServerResultSummary();
+	public static ResultLogger resultLogger = ResultLogger.getLogger("user_generate_seed");
 	public static int numberOfUserFullyCreated = 0;
 	public static int numberOfUserCreated = 0;
 	
@@ -285,7 +287,7 @@ public class GenerateUserSeed extends SeedThread {
 		if(hasError == false)
 			numberOfUserFullyCreated++;
 		
-		printSummary();
+		resultLogger.log("User: " + email + " - Error: " + (hasError ? 1 : 0));
 	}
 
 	public static void printSummary() {
