@@ -37,7 +37,7 @@ public class ServerResultSummary {
 			statusCodes.add(result.statusCode);
 		}
 		
-		statusCodeCountMap.put(result.statusCode, count++);
+		statusCodeCountMap.put(result.statusCode, ++count);
 	}
 	
 	public void printSummary() {

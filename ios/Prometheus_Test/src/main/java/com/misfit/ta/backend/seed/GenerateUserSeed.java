@@ -69,7 +69,7 @@ public class GenerateUserSeed extends SeedThread {
 		BaseResult result = MVPApi.signUp(email, password);
 		String token = ((AccountResult)result).token;
 		summary.addBaseResult(result);
-		hasError = (result.errorCode != 200);
+		hasError = (result.errorCode >= 300);
 		
 		
 		// create profile
@@ -79,21 +79,21 @@ public class GenerateUserSeed extends SeedThread {
 		
 		result = MVPApi.createProfile(token, profile);
 		summary.addBaseResult(result);
-		hasError = (result.errorCode != 200);
+		hasError = (result.errorCode >= 300);
 		
 		
 		// create pedometer
 		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
 		result = MVPApi.createPedometer(token, pedometer);
 		summary.addBaseResult(result);
-		hasError = (result.errorCode != 200);
+		hasError = (result.errorCode >= 300);
 		
 		
 		// create statistics
 		Statistics statistics = DataGenerator.generateRandomStatistics(timestamp, null);
 		result = MVPApi.createStatistics(token, statistics);
 		summary.addBaseResult(result);
-		hasError = (result.errorCode != 200);
+		hasError = (result.errorCode >= 300);
 		
 		
 		// create goals
@@ -104,7 +104,7 @@ public class GenerateUserSeed extends SeedThread {
 			result = MVPApi.createGoal(token, goal);
 			
 			summary.addBaseResult(result);
-			hasError = (result.errorCode != 200);
+			hasError = (result.errorCode >= 300);
 		}
 		
 		
@@ -238,12 +238,14 @@ public class GenerateUserSeed extends SeedThread {
 		
 		// send requests
 		ServiceResponse response = MVPApi.createGraphItems(token, graphItems);
-		summary.addBaseResult(new BaseResult(response));
-		hasError = (result.errorCode != 200);
+		result = new BaseResult(response);
+		summary.addBaseResult(result);
+		hasError = (result.errorCode >= 300);
 		
 		response = MVPApi.createTimelineItems(token, timelineItems);
-		summary.addBaseResult(new BaseResult(response));
-		hasError = (result.errorCode != 200);
+		result = new BaseResult(response);
+		summary.addBaseResult(result);
+		hasError = (result.errorCode >= 300);
 
 		
 		// create sync logs
@@ -274,7 +276,7 @@ public class GenerateUserSeed extends SeedThread {
 				result = MVPApi.pushSyncLog(token, syncLog);
 				
 				summary.addBaseResult(result);
-				hasError = (result.errorCode != 200);
+				hasError = (result.errorCode >= 300);
 			}
 		}
 		
