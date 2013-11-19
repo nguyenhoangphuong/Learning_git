@@ -49,14 +49,14 @@ public class SocialAPI extends MVPApi {
 
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("keyword", keyword);
+		if(keyword != null)
+			requestInf.addParam("keyword", keyword);
 
 		ServiceResponse response = get(url, port, requestInf);
 		BaseResult result = new BaseResult(response);
 		
 		return result;
 	}
-
 
 	public static BaseResult getFriendRequestsToMe(String token) {
 		

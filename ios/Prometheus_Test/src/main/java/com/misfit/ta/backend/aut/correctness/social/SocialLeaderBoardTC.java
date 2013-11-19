@@ -16,7 +16,7 @@ import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.social.Leaderboard;
 import com.misfit.ta.backend.data.social.SocialUserLeaderBoardEvent;
 
-public class LeaderBoardTC extends SocialAutomationBase {
+public class SocialLeaderBoardTC extends SocialAutomationBase {
 
 
 	// fields
@@ -87,7 +87,7 @@ public class LeaderBoardTC extends SocialAutomationBase {
 		MVPApi.updateGoal(token, goal);
 	}
 	
-	
+
 	// set up / clean up test
 	@Override
 	@BeforeClass(alwaysRun = true)
@@ -120,10 +120,10 @@ public class LeaderBoardTC extends SocialAutomationBase {
 		SocialAPI.deleteFriend(misfitToken, thyUid);
 	}
 	
-	
+
     // test methods
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "Leaderboard", "TodayEvents" })
-    public void LeaderBoardTodayTest() {
+    public void LeaderBoard_TodayTest() {
 
         // set point to misfit (500), tung (300) and thy (100)
     	updateGoalWithNewPoint(misfitToken, misfitTodayGoal, 500);
@@ -178,7 +178,7 @@ public class LeaderBoardTC extends SocialAutomationBase {
     }
     
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "Leaderboard", "YesterdayEvents" })
-    public void LeaderBoardYesterdayTest() {
+    public void LeaderBoard_YesterdayTest() {
 
         // set point to misfit (500), tung (300) and thy (100)
     	updateGoalWithNewPoint(misfitToken, misfitYesterdayGoal, 500);
@@ -206,5 +206,5 @@ public class LeaderBoardTC extends SocialAutomationBase {
         Assert.assertEquals(records[2].getUid(), thyUid, "3rd user's uid");
         Assert.assertEquals(records[2].getPoints(), (Integer)100, "3rd user's point");
     }
-
+  
 }
