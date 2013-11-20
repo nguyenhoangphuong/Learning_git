@@ -16,8 +16,8 @@ public class ResultLogger {
 	private static File file;
 	private static FileWriter writer;
 	private static Map<Integer, Integer> errors;
-	private static int request;
-	private static int response;
+	private static int request = 0;
+	private static int response = 0;
 
 	// We track total time of request which doesn't have response missing
 	public static long totalTime;
@@ -56,10 +56,13 @@ public class ResultLogger {
 	}
 
 	public void log(String message) {
-		try {
+		
+	    try {
+		    
 			writer.write(message + "\n");
 			writer.flush();
 		} catch (IOException e) {
+		    System.out.println("LOG [ResultLogger.log]:  exception: " + e);
 		}
 
 	}
@@ -123,8 +126,8 @@ public class ResultLogger {
 		}
 		buf.append("-------------------\n");
 		buf.append("Total: \t" + count + "\n");
-		buf.append("Total time of requests: " + totalTestRunTime + "\n");
-		buf.append("Average time: " + (totalTime / request) + "\n");
+		buf.append("Total time of requests: " + totalTestRunTime + "ms\n");
+		buf.append("Average time per request: " + (totalTime / request) + "ms\n");
 		buf.append("Requests/second: " + request / (totalTestRunTime / 1000));
 		System.out.println("LOG [ResultLogger.logErrorSummary]: " + buf.toString());
 		logger.log(buf.toString());

@@ -3,6 +3,8 @@ package com.misfit.ta.base;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.nt.NTEventLogAppender;
+
 public class Clock {
 
     public static String DETEMITER = "\t";
@@ -57,10 +59,14 @@ public class Clock {
 	
 	public String getTimeInteval() {
 	    StringBuffer buf = new StringBuffer();
+	    
         for(int i=0; i< startTimes.size(); i++) {
             buf.append((endTimes.get(i) - startTimes.get(i)) + DETEMITER);
         }
+        
         return buf.toString();
+        
+        
 	}
 	
 	public long getSumIntervals() {

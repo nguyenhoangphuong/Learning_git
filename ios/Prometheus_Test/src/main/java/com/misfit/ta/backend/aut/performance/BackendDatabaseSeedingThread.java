@@ -65,52 +65,53 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		
 		token = r.token;
 
-
 		int operation = Settings.getInt("OPERATION");
 		if (randomized) {
 			Random rand = new Random(System.currentTimeMillis());
 			operation = (randomized) ? rand.nextInt(6) : -1;
 			System.out.println("LOG [BackendDatabaseSeedingThread.run]: random:  " + operation);
 		}
-
 		System.out.println("LOG [BackendDatabaseSeedingThread.run]: operation: " + operation + " : " + (operation == 0 || operation <= -1));
 
 		countRequest = 1;
 		if (operation == 0 || operation <= -1) {
 			doAccountOperation(email);
 		}
-		
 		if (operation == 1 || operation <= -1) {
 			doProfileOperation();
 		}
-
 		if (operation == 2 || operation <= -1) {
 			doPedometerOperations();
 		}
-
 		if (operation == 3 || operation <= -1) {
 			doLinkinOperation();
 		}
-
 		if (operation == 4 || operation <= -1) {
 			doGoalOperation();
 		}
-
 		if (operation == 5 || operation <= -1) {
 			doTimelineOperation();
 		}
-
-
+		
+		if (operation == 6 || operation <= -1) {
+            doSyncOperation();
+        }
+		
+		if (operation == 7 || operation <= -1) {
+            doSocialOperation();
+        }
+		
 		System.out.println("LOG [BackendStressTestThread.run]: ------------------------------------ DONE");
-
 		userRequestTime = clock.getSumIntervals();
+		
+		ResultLogger.totalTime += clock.getSumIntervals();
 
-		rlog.log((userCount + 1) + clock.getTimeInteval()
+        rlog.log((userCount + 1) +"\t"+ clock.getTimeInteval()
                 + email + "\t" 
                 + userRequestTime + "\t"
                 + countRequest + "\t"
                 + (String.valueOf(userRequestTime/countRequest))
-				);
+                );
 	}
 
 
@@ -243,6 +244,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		clock.tick("push_sync_log");
 		MVPApi.pushSyncLog(token, log);
 		clock.tock();
+		countRequest += 1;
 	}
 
 	public void doSocialOperation() {
@@ -251,7 +253,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		String tungToken = MVPApi.signIn("tung.social.misfit@gmail.com", "qqqqqq").token;
 		String mfwcqaUid = "519ed8979f12e53fe40001c0";
 		String tungUid = "5285e6f6513810db3e0002d7";
-		String tungHandle = "tung.social.misfit";
+		String tungHandle = "tung_social_misfit";
 
 		// connect and get facebook token
 		clock.tick("connect_facebook");
@@ -312,6 +314,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		clock.tick("get_world_info");
 		SocialAPI.getWorldInfo(mfwcqaToken);
 		clock.tock();
+		countRequest += 12;
 	}
 
 }

@@ -14,6 +14,7 @@ import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
+import com.misfit.ta.base.Clock;
 
 public class BackendDatabaseSeeding {
 
@@ -46,28 +47,44 @@ public class BackendDatabaseSeeding {
                 + "\n" + "NUMBER_OF_ITEMS_PER_DAY: " + NUMBER_OF_ITEMS_PER_DAY + "\n" + "NUMBER_OF_THREADS: "
                 + NUMBER_OF_THREADS + "\n");
 
+        Clock.addEvents("signup"); 
+        Clock.addEvents("signout");
+        Clock.addEvents("signin");
+        Clock.addEvents("createProfile");
+        Clock.addEvents("getProfile");
+        Clock.addEvents("updateProfile");
+        Clock.addEvents("createPedo");
+        Clock.addEvents("getPedo");
+        Clock.addEvents("updatePedo");
+        Clock.addEvents("getLinkingDevice");
+        Clock.addEvents("unlink");
+        Clock.addEvents("createGoal");
+        Clock.addEvents("getGoal");
+        Clock.addEvents("searchGoal");
+        Clock.addEvents("updateGoal");
+        Clock.addEvents("createTimeline");
+        Clock.addEvents("createGraphItem");
+        Clock.addEvents("sync");
+        Clock.addEvents("connectFacebook");
+        Clock.addEvents("sendFriendReq");
+        Clock.addEvents("ignoreFriendReq");
+        Clock.addEvents("getMyReceivedFriendReq");
+        Clock.addEvents("getMySentFriendReq");
+        Clock.addEvents("acceptFriendReq");
+        Clock.addEvents("getFriendList");
+        Clock.addEvents("deleteFriend");
+        Clock.addEvents("searchFbFriends");
+        Clock.addEvents("searchSocialUsers");
+        Clock.addEvents("getLeaderBoard");
+        Clock.addEvents("getWorldInfo");
+        
         ResultLogger rlog = ResultLogger.getLogger("stress_test_" 
                     + NUMBER_OF_THREADS+"thread_" 
                     + (NUMBER_OF_ITEMS_PER_DAY * NUMBER_OF_DAYS) + "record_" + NUMBER_OF_USERS + "user");
        
         rlog.log("Number of try\t" 
-                + "signUpTime\t" 
-                + "signOut\t"
-                + "signIn\t"
-                + "createProfile\t"
-                + "getProfile\t"
-                + "updateProfile\t"
-                + "createPedo\t"
-                + "showPedo\t"
-                + "updatePedo\t"
-                + "getLinkedDevice\t"
-                + "unlinkDevice\t"
-                + "createGoal\t"
-                + "getGoal\t"
-                + "updateGoal\t"
-                + "searchGoal\t"
-                + "addTimelineItems\t" 
-                + "addGraphItems\t" + "email\t" + "userRequestTime\t" + "countRequest\t" + "timePerRequest");
+                + Clock.getEventNamesAsString()
+                + "email\t" + "userRequestTime\t" + "countRequest\t" + "timePerRequest");
 
         long start = System.currentTimeMillis();
         
