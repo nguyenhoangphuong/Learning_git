@@ -57,9 +57,9 @@ public class MVPApi {
 	static protected ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
 		
 		// log address
-		logger.debug(type.toUpperCase() + ": " + url + " - port: " + port);
-		logger.debug("Request headers: " + requestInf.getHeadersAsJsonString());
-		logger.debug("Request params: " + requestInf.getParamsAsJsonString());
+		logger.info(type.toUpperCase() + ": " + url + " - port: " + port);
+		logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
+		logger.info("Request params: " + requestInf.getParamsAsJsonString());
 
 		// send to TRS
 		TRS.instance().addStep(type.toUpperCase() + ": " + url + " - port: " + port, null);
@@ -80,11 +80,11 @@ public class MVPApi {
 
 		// log result
 		IContentData rawData = response.getContentData();
-		logger.debug("Response raw Data: " + rawData);
+		logger.info("Response raw Data: " + rawData);
 		ResultLogger.registerResponse();
 		int error = response.getStatusCode();
 		ResultLogger.addErrorCode(error);
-		logger.debug("Response code: " + error + "\n\n");
+		logger.info("Response code: " + error + "\n\n");
 
 		// send to TRS
 		TRS.instance().addCode("Response raw Data: " + rawData, null);

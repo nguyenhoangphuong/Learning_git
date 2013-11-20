@@ -1,28 +1,19 @@
 package com.misfit.ta.backend.aut.performance;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
-import org.testng.Assert;
-
-import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
-import com.misfit.ta.backend.data.BaseParams;
-import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
+import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
-import com.misfit.ta.backend.data.goal.ProgressData;
-import com.misfit.ta.backend.data.goal.TripleTapData;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
@@ -33,7 +24,6 @@ import com.misfit.ta.utils.TextTool;
 public class BackendDatabaseSeedingThread implements Runnable {
 
 	private String password = "misfit1";
-	private String udid;
 
 	private int userCount = 0;
 	private JSONArray timelineItems;
@@ -125,143 +115,148 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
 
 	public void doAccountOperation(String email) {
-		// // sign out then
-		clock.tick("signout");
-		BaseResult br = MVPApi.signOut(token);
-		clock.tock();
-		//        Assert.assertTrue(br.isOK(), "Status code is not 200: " + br.statusCode);
 
-		// // sign in
+		// sign out then
+		clock.tick("signout");
+		MVPApi.signOut(token);
+		clock.tock();
+
+		// sign in
 		clock.tick("signin");
 		AccountResult r = MVPApi.signIn(email, "misfit1");
 		clock.tock();
+		
 		token = r.token;
 		countRequest += 2;
-		//       Assert.assertTrue(r.isOK(), "Status code is not 200: " + r.statusCode);
 	}
 
 	public void doProfileOperation() {
+		
 		ProfileData profile = DefaultValues.DefaultProfile();
+		
 		// createProfile
 		clock.tick("createProfile");
 		ProfileResult result = MVPApi.createProfile(token, profile);
 		clock.tock();
-		//        Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
-
 
 		// get Profile
 		clock.tick("getProfile");
 		result = MVPApi.getProfile(token);
 		clock.tock();
-		//        Assert.assertTrue(result.isOK(), "Status code is not 200: " + result.statusCode);
 
 		// update profile
 		ProfileData newProfile = result.profile;
 		newProfile.setWeight(profile.getWeight() + 1);
-		//       newProfile.updatedAt += 100;
+		
 		clock.tick("update profile");
 		result = MVPApi.updateProfile(token, newProfile, profile.getServerId());
 		clock.tock();
+		
 		countRequest += 3;
-		//       Assert.assertTrue(result.isExisted(), "Status code is not 210: " + result.statusCode);
 	}
 
 	public void doPedometerOperations() {
+		
 		long now = System.currentTimeMillis()/1000;
+		
+		// create pedometer
 		clock.tick("createPedo");
 		Pedometer pedo = MVPApi.createPedometer(token, mySerial, "hw1234", now, now, now, "localId", null, now);
 		clock.tock();
-		//        Assert.assertTrue(pedo != null, "Pedometer can not be created");
 
-
+		// get pedometer
 		clock.tick("getPedo");
 		pedo = MVPApi.showPedometer(token);
 		clock.tock();
-		//         Assert.assertTrue(pedo != null, "Can not get pedometer");
 
-
+		// update pedometer
 		pedo.setUpdatedAt(System.currentTimeMillis()/1000);
+		pedo.setLastSuccessfulTime(System.currentTimeMillis() / 1000);
 		clock.tick("updatePedo");
 		pedo = MVPApi.updatePedometer(token, mySerial, "hw1234", now, now, now, "localId", null, now);
 		clock.tock();
-		//         Assert.assertTrue(pedo != null, "Pedometer can not be updated");
+
 		countRequest += 3;
 	}
 
 	public void doLinkinOperation() {
+		
+		// get link status
 	    clock.tick("getLinkingDevice");
-		String status = MVPApi.getDeviceLinkingStatus(token,mySerial);
+		MVPApi.getDeviceLinkingStatus(token,mySerial);
 		clock.tock();
-		//         Assert.assertTrue(status != null, "Can not get linking status");
 
+		// unlink
 		clock.tick("unlink");
-		status = MVPApi.unlinkDevice(token);
+		MVPApi.unlinkDevice(token);
 		clock.tock();
-		//         Assert.assertTrue(status != null, "Can not unlink device");
+
 		countRequest += 2;
 	}
 
 	public void doGoalOperation() {
-		long now = System.currentTimeMillis();
-		ProgressData progressData = new ProgressData(300, 5000, 1200, 500);
+		
+		// create goal
 		clock.tick("createGoal");
-		GoalsResult goalResult = MVPApi.createGoal(token, 2500, now, now + 8400, 
-				0, progressData, new ArrayList<TripleTapData>(), "mylocalid", now);
+		Goal goal = DataGenerator.generateRandomGoal(System.currentTimeMillis() / 1000, null);
+		GoalsResult goalResult = MVPApi.createGoal(token, goal);
 		clock.tock();
-		//        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
 
+		// get goal
 		clock.tick("getGoal");
 		goalResult = MVPApi.getGoal(token, goalResult.goals[0].getServerId());
 		clock.tock();
-		//        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
 
+		// search goal
 		clock.tick("searchGoal");
-		goalResult = MVPApi.searchGoal(token, now, now + 8400, now);
+		goalResult = MVPApi.searchGoal(token, 0, Integer.MAX_VALUE, 0);
 		clock.tock();
-		//        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
 
+		// update goal
 		clock.tick("updateGoal");
-		goalResult = MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 
-				2500, now, now + 8400, 0, progressData, new ArrayList<TripleTapData>(), "mylocalid");
+		goal.getProgressData().setPoints(goal.getProgressData().getPoints() + 1);
+		goalResult = MVPApi.updateGoal(token, goal);
 		clock.tock();
-		//        Assert.assertTrue(goalResult.isExisted(), "Status code is not 210: " + goalResult.statusCode);
-
 
 		countRequest += 4;
 	}
 
 	public void doTimelineOperation() {
 
-		// create timeline items and graph items
 		// generate timeline items
 	    clock.tick("createTimeline");
-		ServiceResponse response = MVPApi.createTimelineItems(token, timelineItems);
+		MVPApi.createTimelineItems(token, timelineItems);
 		clock.tock();
-		//        Assert.assertTrue(response.getStatusCode() <= 210, "Status code is > 210: " + response.getStatusCode());
 
+		// generate graph items
 		clock.tick("createGraphItem");
-		response = MVPApi.createGraphItems(token, graphItems);
+		MVPApi.createGraphItems(token, graphItems);
+		clock.tock();
+		
 		countRequest += 2;
-		//        Assert.assertTrue(response.getStatusCode() <= 210, "Status code is > 210: " + response.getStatusCode());
-
 	}
 
 	public void doSyncOperation() {
 
 		SyncLog log = DataGenerator.generateRandomSyncLog(System.currentTimeMillis() / 1000, 1, 60, null);
+		
+		clock.tick("push_sync_log");
 		MVPApi.pushSyncLog(token, log);
+		clock.tock();
 	}
 
 	public void doSocialOperation() {
 
-		String mfwcqaAccessToken = "";
+		String mfwcqaAccessToken = "CAAG661ngu9YBADeNMl7jiCAZChVFWvIyPId8ZBweDaqMudhr6Uke0Yjty13DW8hdqEzzz2r6EXoXjVqI06biVxZBZCfgtY6q7pJZAsGHNGQMR5fLmnxlkLBfYSZBbU9PGm7OXpjMroOD1UJ5h7op2sfLRuH58Fr12nd1mIAF4ACYUr8xwCJUZAR0Eco65s25DveAqpjaxS4n5ANInS2dwG5T153pS6JIhHv1YEylDBZCWwZDZD";
 		String tungToken = MVPApi.signIn("tung.social.misfit@gmail.com", "qqqqqq").token;
-		String mfwcqaUid = "";
+		String mfwcqaUid = "519ed8979f12e53fe40001c0";
 		String tungUid = "5285e6f6513810db3e0002d7";
 		String tungHandle = "tung.social.misfit";
 
-		// get facebook token
+		// connect and get facebook token
+		clock.tick("connect_facebook");
 		String mfwcqaToken = SocialAPI.connectFacebook("mfwcqa@gmail.com", mfwcqaAccessToken,"").token;
+		clock.tock();
 				
 		// send friend request
 		clock.tick("send_friend_request");
@@ -317,7 +312,6 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		clock.tick("get_world_info");
 		SocialAPI.getWorldInfo(mfwcqaToken);
 		clock.tock();
-
 	}
 
 }
