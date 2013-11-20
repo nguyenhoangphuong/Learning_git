@@ -59,7 +59,7 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "AcceptFriend" })
-	public void AcceptFriend_WhoYouAlreadyIsYourFriend() {
+	public void AcceptFriend_WhoAlreadyIsYourFriend() {
 
 		// misfit --> tung, tung -v- misfit
 		SocialAPI.sendFriendRequest(misfitToken, tungUid);
