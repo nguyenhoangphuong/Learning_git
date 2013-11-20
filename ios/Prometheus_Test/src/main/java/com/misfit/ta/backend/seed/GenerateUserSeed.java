@@ -22,7 +22,7 @@ import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.LifetimeDistanceItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
-import com.misfit.ta.base.ClockCounter;
+import com.misfit.ta.base.Clock;
 import com.misfit.ta.base.SeedThread;
 import com.misfit.ta.base.ServerResultSummary;
 import com.misfit.ta.common.MVPCommon;

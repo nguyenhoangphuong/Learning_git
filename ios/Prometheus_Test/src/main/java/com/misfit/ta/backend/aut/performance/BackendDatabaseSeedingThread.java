@@ -24,7 +24,7 @@ import com.misfit.ta.backend.data.goal.TripleTapData;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
-import com.misfit.ta.base.ClockCounter;
+import com.misfit.ta.base.Clock;
 import com.misfit.ta.utils.TextTool;
 
 public class BackendDatabaseSeedingThread implements Runnable {
@@ -62,7 +62,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
 	public void run() {
 
-		ClockCounter clock = new ClockCounter();
+		Clock clock = new Clock();
 
 		logger.info(" ===============  User " + userCount + " =================");
 		String email = MVPApi.generateUniqueEmail();
