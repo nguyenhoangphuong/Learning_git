@@ -22,8 +22,6 @@ public class Clock {
 		
 		lastStartTime = 0l;
 		lastEndTime = 0l;
-		
-		
 	}
 	
 	public static void addEvents(String name) {
@@ -60,9 +58,17 @@ public class Clock {
 	public String getTimeInteval() {
 	    StringBuffer buf = new StringBuffer();
         for(int i=0; i< startTimes.size(); i++) {
-            buf.append((endTimes.get(i) - startTimes.get(i))/1000 + DETEMITER);
+            buf.append((endTimes.get(i) - startTimes.get(i)) + DETEMITER);
         }
         return buf.toString();
+	}
+	
+	public long getSumIntervals() {
+	    long sum =0;
+        for(int i=0; i< startTimes.size(); i++) {
+            sum +=(endTimes.get(i) - startTimes.get(i));
+        }
+        return sum;
 	}
 	
 }
