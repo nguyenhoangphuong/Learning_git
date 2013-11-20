@@ -22,6 +22,7 @@ import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.LifetimeDistanceItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
+import com.misfit.ta.base.ClockCounter;
 import com.misfit.ta.base.SeedThread;
 import com.misfit.ta.base.ServerResultSummary;
 import com.misfit.ta.common.MVPCommon;
@@ -31,7 +32,6 @@ public class GenerateUserSeed extends SeedThread {
 	protected static Logger logger = Util.setupLogger(MVPApi.class);
 	
 	// static fields
-	public static ServerResultSummary summary = new ServerResultSummary();
 	public static ResultLogger resultLogger = ResultLogger.getLogger("user_generate_seed_" + System.nanoTime());
 	public static int numberOfUserFullyCreated = 0;
 	public static int numberOfUserCreated = 0;
@@ -64,6 +64,7 @@ public class GenerateUserSeed extends SeedThread {
 		
 		boolean hasError = false;
 		
+		
 		// current timestamp
 		long timestamp = System.currentTimeMillis() / 1000;
 		
@@ -71,7 +72,6 @@ public class GenerateUserSeed extends SeedThread {
 		// sign up new user
 		BaseResult result = MVPApi.signUp(email, password);
 		String token = ((AccountResult)result).token;
-		summary.addBaseResult(result);
 		hasError = (result.statusCode >= 300);
 		
 		
@@ -81,21 +81,18 @@ public class GenerateUserSeed extends SeedThread {
 		profile.setAuthToken(token);
 		
 		result = MVPApi.createProfile(token, profile);
-		summary.addBaseResult(result);
 		hasError = (result.statusCode >= 300);
 		
 		
 		// create pedometer
 		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
 		result = MVPApi.createPedometer(token, pedometer);
-		summary.addBaseResult(result);
 		hasError = (result.statusCode >= 300);
 		
 		
 		// create statistics
 		Statistics statistics = DataGenerator.generateRandomStatistics(timestamp, null);
 		result = MVPApi.createStatistics(token, statistics);
-		summary.addBaseResult(result);
 		hasError = (result.statusCode >= 300);
 		
 		
@@ -106,7 +103,6 @@ public class GenerateUserSeed extends SeedThread {
 			Goal goal = DataGenerator.generateRandomGoal(goalTimestamp, null);
 			result = MVPApi.createGoal(token, goal);
 			
-			summary.addBaseResult(result);
 			hasError = (result.statusCode >= 300);
 		}
 		
@@ -242,12 +238,10 @@ public class GenerateUserSeed extends SeedThread {
 		// send requests
 		ServiceResponse response = MVPApi.createGraphItems(token, graphItems);
 		result = new BaseResult(response);
-		summary.addBaseResult(result);
 		hasError = (result.statusCode >= 300);
 		
 		response = MVPApi.createTimelineItems(token, timelineItems);
 		result = new BaseResult(response);
-		summary.addBaseResult(result);
 		hasError = (result.statusCode >= 300);
 
 		
@@ -278,7 +272,6 @@ public class GenerateUserSeed extends SeedThread {
 				syncLog.setSerialNumberString(pedometer.getSerialNumberString());
 				result = MVPApi.pushSyncLog(token, syncLog);
 				
-				summary.addBaseResult(result);
 				hasError = (result.statusCode >= 300);
 			}
 		}
@@ -287,14 +280,18 @@ public class GenerateUserSeed extends SeedThread {
 		if(hasError == false)
 			numberOfUserFullyCreated++;
 		
-		resultLogger.log("User: " + email + " - Error: " + (hasError ? 1 : 0));
+		resultLogger.log(email + "\t" + 
+				hasError + "\t" + 
+				numberOfUserCreated + "\t" + 
+				numberOfUserFullyCreated + "\t");
 	}
 
 	public static void printSummary() {
 		
-		summary.printSummary();
+		logger.info("-----------------------------------------------");
 		logger.info("Total user created: " + numberOfUserCreated);
 		logger.info("Total user created without error: " + numberOfUserFullyCreated);
+		logger.info("-----------------------------------------------");
 	}
 	
 	

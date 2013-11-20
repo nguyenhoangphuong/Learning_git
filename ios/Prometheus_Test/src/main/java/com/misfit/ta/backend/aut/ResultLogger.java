@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 
-import com.misfit.ta.report.TRS;
-
 public class ResultLogger {
 
 	private static ResultLogger logger;
