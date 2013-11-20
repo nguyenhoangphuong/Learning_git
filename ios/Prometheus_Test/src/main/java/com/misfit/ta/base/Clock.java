@@ -30,7 +30,7 @@ public class Clock {
 	    eventNames.add(name);
 	}
 	
-	public void tick() {
+	public void tick(String name) {
 	   
 		startTimes.add(System.currentTimeMillis());
 	}
