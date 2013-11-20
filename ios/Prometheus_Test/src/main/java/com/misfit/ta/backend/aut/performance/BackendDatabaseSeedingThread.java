@@ -49,7 +49,6 @@ public class BackendDatabaseSeedingThread implements Runnable {
 	private long countRequest;
 	private String mySerial = TextTool.getRandomString(5, 6) + System.currentTimeMillis();
 
-	private Clock clock;
 
 	Logger logger = Util.setupLogger(BackendDatabaseSeedingThread.class);
 
