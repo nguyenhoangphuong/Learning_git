@@ -36,6 +36,9 @@ public class GenerateUserSeed extends SeedThread {
 	public static int numberOfUserFullyCreated = 0;
 	public static int numberOfUserCreated = 0;
 	
+	public static long globalStartTime = 0;
+	public static long globalEndTime = 0;
+	
 	
 	// fields
 	protected int numberOfGoal;
@@ -65,6 +68,8 @@ public class GenerateUserSeed extends SeedThread {
 			boolean includeSyncBinary) {
 		
 		boolean hasError = false;
+		if(globalStartTime <= 0)
+			globalStartTime = System.currentTimeMillis() / 1000;
 		
 		
 		// current timestamp
@@ -76,7 +81,7 @@ public class GenerateUserSeed extends SeedThread {
 		String token = ((AccountResult)result).token;
 		hasError = (result.statusCode >= 300);
 		summary.addBaseResult(result);
-		
+		numberOfUserCreated++;
 		
 		// create profile
 		ProfileData profile = DataGenerator.generateRandomProfile(timestamp, null);
@@ -138,6 +143,9 @@ public class GenerateUserSeed extends SeedThread {
 			long goalStartTime = MVPApi.getDayStartEpoch(goalTimestamp);
 			long goalEndTime = MVPApi.getDayEndEpoch(goalTimestamp);
 			long numberOfItem = MVPCommon.randInt(minimumSessionTileNumber, maximumSessionTileNumber);
+			if(numberOfItem <= 0)
+				continue;
+				
 			long step = (goalEndTime - goalStartTime) / numberOfItem;
 						
 			for(long t = goalStartTime; t <= goalEndTime; t += step) {
@@ -286,15 +294,17 @@ public class GenerateUserSeed extends SeedThread {
 			}
 		}
 		
-		numberOfUserCreated++;
 		if(hasError == false)
 			numberOfUserFullyCreated++;
+		
+		globalEndTime = System.currentTimeMillis() / 1000;
 		
 		resultLogger.log(email + "\t" + 
 				hasError + "\t" + 
 				numberOfUserCreated + "\t" + 
 				numberOfUserFullyCreated + "\t" +
-				summary.errorCodeCountAsString());
+				summary.errorCodeCountAsString() + "\t" + 
+				(globalEndTime - globalStartTime));
 	}
 
 	public static void printSummary() {
@@ -315,7 +325,7 @@ public class GenerateUserSeed extends SeedThread {
 				numberOfSyncLog, includeSyncBinary);
 		long end = System.currentTimeMillis() / 1000;
 		
-		System.out.println("Running time: " + (end - start));
+		System.out.println("Running time of this seed: " + (end - start));
 	}
 	
 	public SeedThread duplicate() {
