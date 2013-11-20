@@ -51,4 +51,13 @@ public class ServerResultSummary {
 		logger.info("---------------------------------------------------------------------------");
 	}
 
+
+	public String errorCodeCountAsString() {
+		
+		String result = "";
+		for(Integer statusCode : statusCodes)
+			result += (", " + statusCode + ": " + statusCodeCountMap.get(statusCode));
+		return result.substring(2);
+	}
+	
 }

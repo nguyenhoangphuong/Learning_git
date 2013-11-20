@@ -211,21 +211,6 @@ public class MVPApi {
 		return tmpItem;
 	}
 
-	public static String generateSyncLog() {
-
-		return generateSyncLog(TextTool.getRandomString(10), System.currentTimeMillis() / 1000);
-	}
-	
-	public static String generateSyncLog(String serialNumber, Long timestamp) {
-		String log = "{\"startTime\": " + timestamp 
-				+ ", \"endTime\": " + (timestamp + 10000) 
-				+ ", \"timestamp\": " + timestamp
-				+ ", \"serialNumberString\": \"" + serialNumber
-				+ "\", \"isSuccessful\": 1, \"data\": {\"fileData\": [ {\"rawData\": \"0101010101\", \"timestampDifference\": 1 } ], \"hardwareLog\": \"misfit\" }, \"log\": \"misfit\"}";
-	
-		return log;
-	}
-
 	// utilities
 	public static long getDayStartEpoch() {
 		return getDayStartEpoch(System.currentTimeMillis() / 1000);

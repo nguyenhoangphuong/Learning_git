@@ -13,10 +13,12 @@ import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.social.SocialAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.goal.ProgressData;
@@ -24,6 +26,7 @@ import com.misfit.ta.backend.data.goal.TripleTapData;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
+import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.base.Clock;
 import com.misfit.ta.utils.TextTool;
 
@@ -38,6 +41,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 	private ResultLogger rlog;
 
 	private String token;
+	private Clock clock = new Clock();
 
 
 	private boolean randomized = false;
@@ -48,6 +52,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 	private Clock clock;
 
 	Logger logger = Util.setupLogger(BackendDatabaseSeedingThread.class);
+
 
 	public BackendDatabaseSeedingThread(int userCount, JSONArray timelineItems, JSONArray graphItems, ResultLogger rlog, boolean randomized) {
 		this.userCount = userCount;
@@ -119,6 +124,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 				);
 	}
 
+
 	public void doAccountOperation(String email) {
 		// // sign out then
 		clock.tick("signout");
@@ -134,6 +140,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		countRequest += 2;
 		//       Assert.assertTrue(r.isOK(), "Status code is not 200: " + r.statusCode);
 	}
+
 	public void doProfileOperation() {
 		ProfileData profile = DefaultValues.DefaultProfile();
 		// createProfile
@@ -241,8 +248,77 @@ public class BackendDatabaseSeedingThread implements Runnable {
 	}
 
 	public void doSyncOperation() {
-	    clock.tick("sync");
-		MVPApi.syncLog(token, MVPApi.generateSyncLog());
-		clock.tock();
+
+		SyncLog log = DataGenerator.generateRandomSyncLog(System.currentTimeMillis() / 1000, 1, 60, null);
+		MVPApi.pushSyncLog(token, log);
 	}
+
+	public void doSocialOperation() {
+
+		String mfwcqaAccessToken = "";
+		String tungToken = MVPApi.signIn("tung.social.misfit@gmail.com", "qqqqqq").token;
+		String mfwcqaUid = "";
+		String tungUid = "5285e6f6513810db3e0002d7";
+		String tungHandle = "tung.social.misfit";
+
+		// get facebook token
+		String mfwcqaToken = SocialAPI.connectFacebook("mfwcqa@gmail.com", mfwcqaAccessToken,"").token;
+				
+		// send friend request
+		clock.tick("send_friend_request");
+		SocialAPI.sendFriendRequest(mfwcqaToken, tungUid);
+		clock.tock();
+
+		// ignore friend request
+		clock.tick("ignore_friend_request");
+		SocialAPI.ignoreFriendRequest(tungToken, mfwcqaUid);
+		clock.tock();
+
+		// get friend requests from me
+		clock.tick("get_friend_request_to_me");
+		SocialAPI.getFriendRequestsFromMe(mfwcqaToken);
+		clock.tock();
+
+		// get friend requests to me
+		clock.tick("get_friend_request_from_me");
+		SocialAPI.getFriendRequestsToMe(tungToken);
+		clock.tock();
+
+		// accept friend request
+		clock.tick("accep_friend_request");
+		SocialAPI.acceptFriendRequest(tungToken, mfwcqaUid);
+		clock.tock();
+
+		// get friend list
+		clock.tick("get_friend_list");
+		SocialAPI.getFriends(mfwcqaToken);
+		clock.tock();
+
+		// delete friend
+		clock.tick("delete_friend");
+		SocialAPI.deleteFriend(mfwcqaToken, tungUid);
+		clock.tock();
+
+		// search facebook friends
+		clock.tick("search_facebook_friends");
+		SocialAPI.getFacebookFriends(mfwcqaToken);
+		clock.tock();
+
+		// search social users
+		clock.tick("search_social_users");
+		SocialAPI.searchSocialUsers(mfwcqaToken, tungHandle);
+		clock.tock();
+
+		// get leaderboard info
+		clock.tick("get_leaderboard_info");
+		SocialAPI.getLeaderboardInfo(mfwcqaToken);
+		clock.tock();
+
+		// get world info
+		clock.tick("get_world_info");
+		SocialAPI.getWorldInfo(mfwcqaToken);
+		clock.tock();
+
+	}
+
 }

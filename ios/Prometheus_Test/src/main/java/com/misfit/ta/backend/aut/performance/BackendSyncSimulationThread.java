@@ -17,6 +17,7 @@ import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.goal.ProgressData;
@@ -24,6 +25,7 @@ import com.misfit.ta.backend.data.goal.TripleTapData;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
+import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.utils.TextTool;
 
 public class BackendSyncSimulationThread implements Runnable {
@@ -301,8 +303,10 @@ public class BackendSyncSimulationThread implements Runnable {
     }
     
     public void doSyncOperation() {
+  
         sSyncLog = System.currentTimeMillis();
-        MVPApi.syncLog(token, MVPApi.generateSyncLog());
+        SyncLog log = DataGenerator.generateRandomSyncLog(System.currentTimeMillis() / 1000, 1, 60, null);
+		MVPApi.pushSyncLog(token, log);
         sSyncLog1 = System.currentTimeMillis();
         countRequest += 1;
     }

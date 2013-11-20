@@ -3,10 +3,11 @@ package com.misfit.ta.backend.aut.correctness;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
-import com.misfit.ta.utils.TextTool;
+import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.sync.SyncLog;
 
 public class BackendSyncLogTC extends BackendAutomation {
 
@@ -14,12 +15,11 @@ public class BackendSyncLogTC extends BackendAutomation {
 	public void PushSyncLog() {
 		
 		String email = MVPApi.generateUniqueEmail();
-		String serialNumber = TextTool.getRandomString(10);
-		Long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qwerty1").token;
 
-		ServiceResponse r = MVPApi.syncLog(token, MVPApi.generateSyncLog(serialNumber, timestamp));
+		SyncLog log = DataGenerator.generateRandomSyncLog(System.currentTimeMillis() / 1000, 1, 60, null);
+		BaseResult result = MVPApi.pushSyncLog(token, log);
 		
-		Assert.assertEquals(r.getStatusCode(), 200, "Status code is 200");
+		Assert.assertEquals(result.statusCode, 200, "Status code");
 	}
 }

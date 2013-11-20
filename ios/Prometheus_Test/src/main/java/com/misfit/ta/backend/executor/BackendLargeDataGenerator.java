@@ -13,8 +13,9 @@ public class BackendLargeDataGenerator {
 		int tileMax = Settings.getInt("GENERATE_USER_SEED_TILE_MAX");
 		int logCount = Settings.getInt("GENERATE_USER_SEED_SYNCLOG_COUNT");
 		boolean includeBinary = Settings.getInt("GENERATE_USER_SEED_SYNCLOG_BINARY") == 1;
+		int graphItemInterval = Settings.getInt("GENERATE_USER_SEED_GRAPHITEM_INTERVAL");
 		
-		GenerateUserSeed seed = new GenerateUserSeed(goalCount, tileMin, tileMax, logCount, includeBinary);
+		GenerateUserSeed seed = new GenerateUserSeed(goalCount, tileMin, tileMax, graphItemInterval, logCount, includeBinary);
 		int numberOfSeed = Settings.getInt("NUMBER_OF_GENERATE_USER_SEED");
 		int numberOfThread = Settings.getInt("NUMBER_OF_GENERATE_USER_THREAD");
 		
