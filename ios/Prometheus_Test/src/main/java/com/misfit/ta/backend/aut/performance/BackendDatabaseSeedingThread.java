@@ -249,11 +249,33 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
 	public void doSocialOperation() {
 
-		String mfwcqaAccessToken = "CAAG661ngu9YBADeNMl7jiCAZChVFWvIyPId8ZBweDaqMudhr6Uke0Yjty13DW8hdqEzzz2r6EXoXjVqI06biVxZBZCfgtY6q7pJZAsGHNGQMR5fLmnxlkLBfYSZBbU9PGm7OXpjMroOD1UJ5h7op2sfLRuH58Fr12nd1mIAF4ACYUr8xwCJUZAR0Eco65s25DveAqpjaxS4n5ANInS2dwG5T153pS6JIhHv1YEylDBZCWwZDZD";
+		int index = (Settings.getParameter("MVPBackendEnviroment") == "Staging" ? 0 : 1);
+		String[] mfwcqaAccessTokens = new String[] 
+				{
+					"CAAG661ngu9YBADeNMl7jiCAZChVFWvIyPId8ZBweDaqMudhr6Uke0Yjty13DW8hdqEzzz2r6EXoXjVqI06biVxZBZCfgtY6q7pJZAsGHNGQMR5fLmnxlkLBfYSZBbU9PGm7OXpjMroOD1UJ5h7op2sfLRuH58Fr12nd1mIAF4ACYUr8xwCJUZAR0Eco65s25DveAqpjaxS4n5ANInS2dwG5T153pS6JIhHv1YEylDBZCWwZDZD",
+					"CAAG661ngu9YBAIamkuIVGygSZBufVPgbTSiVWYAZA9rfWqcpN7NrYmSvevyifoTUDiU6ZBdfdDfOGJnIJvHrvY4EuxW8h37CHzcrsTLqRC6HWAyXd7138dwb9bhG2rcMr1Rj4IU8rGRmhnPYq6PFnjTndboGbI77Qf3AQw4a0rkCFZCqyq1ZAsJqBHZAWrjCIkwYIttZBl6NhbKpB1cWyOH"
+				};
+		String[] mfwcqaUids = new String[]
+				{
+					"519ed8979f12e53fe40001c0",
+					"528ca3d65c44ae996604abab"
+				};
+		String[] tungUids = new String[]
+				{
+					"5285e6f6513810db3e0002d7",
+					"528d71805c44ae1e1e117c1c"
+				};
+		String[] tungHandles = new String[]
+				{
+					"tung.social.misfit",
+					"tung_social_misfit"
+				};
+		
+		String mfwcqaAccessToken = mfwcqaAccessTokens[index]; 
 		String tungToken = MVPApi.signIn("tung.social.misfit@gmail.com", "qqqqqq").token;
-		String mfwcqaUid = "519ed8979f12e53fe40001c0";
-		String tungUid = "5285e6f6513810db3e0002d7";
-		String tungHandle = "tung_social_misfit";
+		String mfwcqaUid = mfwcqaUids[index];
+		String tungUid = tungUids[index];
+		String tungHandle = tungHandles[index];
 
 		// connect and get facebook token
 		clock.tick("connect_facebook");
