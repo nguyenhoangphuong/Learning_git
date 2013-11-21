@@ -17,8 +17,11 @@ import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
+import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.sync.SyncLog;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.base.Clock;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.utils.TextTool;
 
 public class BackendDatabaseSeedingThread implements Runnable {
@@ -155,6 +158,10 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		result = MVPApi.updateProfile(token, newProfile, profile.getServerId());
 		clock.tock();
 		
+		// create statistic
+		Statistics statistics = DataGenerator.generateRandomStatistics(System.currentTimeMillis() / 1000, null);
+		MVPApi.createStatistics(token, statistics);
+		
 		countRequest += 3;
 	}
 
@@ -236,6 +243,14 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		clock.tick("createGraphItem");
 		MVPApi.createGraphItems(token, graphItems);
 		clock.tock();
+		
+		// create today's milestone items
+		long goalStartTime = MVPApi.getDayStartEpoch(System.currentTimeMillis() / 1000);
+		MVPApi.createTimelineItem(token, DataGenerator.generateRandomMilestoneItem(goalStartTime + MVPCommon.randLong(3600, 80000), TimelineItemDataBase.EVENT_TYPE_100_GOAL, null));
+		MVPApi.createTimelineItem(token, DataGenerator.generateRandomMilestoneItem(goalStartTime + MVPCommon.randLong(3600, 80000), TimelineItemDataBase.EVENT_TYPE_150_GOAL, null));
+		MVPApi.createTimelineItem(token, DataGenerator.generateRandomMilestoneItem(goalStartTime + MVPCommon.randLong(3600, 80000), TimelineItemDataBase.EVENT_TYPE_200_GOAL, null));
+		MVPApi.createTimelineItem(token, DataGenerator.generateRandomMilestoneItem(goalStartTime + MVPCommon.randLong(3600, 80000), TimelineItemDataBase.EVENT_TYPE_PERSONAL_BEST, null));
+		MVPApi.createTimelineItem(token, DataGenerator.generateRandomMilestoneItem(goalStartTime + MVPCommon.randLong(3600, 80000), TimelineItemDataBase.EVENT_TYPE_STREAK, null));
 		
 		countRequest += 2;
 	}

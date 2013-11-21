@@ -26,11 +26,9 @@ import com.misfit.ta.backend.data.goal.*;
 import com.misfit.ta.backend.data.graph.*;
 import com.misfit.ta.backend.data.profile.*;
 import com.misfit.ta.backend.data.pedometer.*;
-import com.misfit.ta.backend.data.statistics.PersonalRecord;
 import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.data.timeline.*;
-import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.backend.data.*;
 import com.misfit.ta.common.MVPCommon;
@@ -166,6 +164,7 @@ public class MVPApi {
 			}
 		}
 		
+		
 		// data for a number of days
 		JSONArray timelineItemsJsonArr = new JSONArray();
 		JSONArray graphItemsJsonArr = new JSONArray();
@@ -182,7 +181,7 @@ public class MVPApi {
 		array[1] = graphItemsJsonArr;
 		return array;
 	}
-
+	
 	// utilities
 	public static long getDayStartEpoch() {
 		return getDayStartEpoch(System.currentTimeMillis() / 1000);
@@ -485,6 +484,7 @@ public class MVPApi {
 	}
 
 	public static ServiceResponse createTimelineItems(String token, JSONArray items) {
+		
 		// prepare
 		String url = baseAddress + "timeline_items/batch_insert";
 
