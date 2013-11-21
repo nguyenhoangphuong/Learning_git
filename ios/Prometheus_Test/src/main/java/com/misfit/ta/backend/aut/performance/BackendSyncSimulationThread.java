@@ -251,32 +251,32 @@ public class BackendSyncSimulationThread implements Runnable {
     }
     
     public void doGoalOperation() {
-        long now = System.currentTimeMillis();
-        ProgressData progressData = new ProgressData(300, 5000, 1200, 500);
-        sCreateGoal= System.currentTimeMillis();
-        GoalsResult goalResult = MVPApi.createGoal(token, 2500, now, now + 8400, 
-        		0, progressData, new ArrayList<TripleTapData>(), "mylocalid", now);
-        sCreateGoal1 = System.currentTimeMillis();
-        ResultLogger.totalTime += sCreateGoal1 - sCreateGoal;
-//        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
-        
-        sGetGoal= System.currentTimeMillis();
-//        goalResult = MVPApi.getGoal(token, goalResult.goals[0].getServerId());
-        sGetGoal1 = System.currentTimeMillis();
-        ResultLogger.totalTime += sGetGoal1 - sGetGoal;
-//        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
-        
-        sSearchGoal= System.currentTimeMillis();
-//        goalResult = MVPApi.searchGoal(token, now, now + 8400, now);
-        sSearchGoal1 = System.currentTimeMillis();
-        ResultLogger.totalTime += sSearchGoal1 - sSearchGoal;
-//        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
-        
-        sUpdateGoal= System.currentTimeMillis();
-        goalResult = MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 
-        		2500, now, now + 8400, 0, progressData, new ArrayList<TripleTapData>(), "mylocalid");
-        sUpdateGoal1 = System.currentTimeMillis();
-        ResultLogger.totalTime += sUpdateGoal1 - sUpdateGoal;
+//        long now = System.currentTimeMillis();
+//        ProgressData progressData = new ProgressData(300, 5000, 1200, 500);
+////        sCreateGoal= System.currentTimeMillis();
+////        GoalsResult goalResult = MVPApi.createGoal(token, 2500, now, now + 8400, 
+////        		0, progressData, new ArrayList<TripleTapData>(), "mylocalid", now);
+//        sCreateGoal1 = System.currentTimeMillis();
+//        ResultLogger.totalTime += sCreateGoal1 - sCreateGoal;
+////        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
+//        
+//        sGetGoal= System.currentTimeMillis();
+////        goalResult = MVPApi.getGoal(token, goalResult.goals[0].getServerId());
+//        sGetGoal1 = System.currentTimeMillis();
+//        ResultLogger.totalTime += sGetGoal1 - sGetGoal;
+////        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
+//        
+//        sSearchGoal= System.currentTimeMillis();
+////        goalResult = MVPApi.searchGoal(token, now, now + 8400, now);
+//        sSearchGoal1 = System.currentTimeMillis();
+//        ResultLogger.totalTime += sSearchGoal1 - sSearchGoal;
+////        Assert.assertTrue(goalResult.isOK(), "Status code is not 200: " + goalResult.statusCode);
+//        
+//        sUpdateGoal= System.currentTimeMillis();
+//        goalResult = MVPApi.updateGoal(token, now + 234, goalResult.goals[0].getServerId(), 
+//        		2500, now, now + 8400, 0, progressData, new ArrayList<TripleTapData>(), "mylocalid");
+//        sUpdateGoal1 = System.currentTimeMillis();
+//        ResultLogger.totalTime += sUpdateGoal1 - sUpdateGoal;
 //        Assert.assertTrue(goalResult.isExisted(), "Status code is not 210: " + goalResult.statusCode);
         
         

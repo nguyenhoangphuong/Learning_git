@@ -273,36 +273,13 @@ public class MVPApi {
 	}
 
 	// profile apis
-	static private BaseParams createProfileParams(String token, String name, Double weight, Double height, Integer gender, Long dateOfBirth, Integer goalLevel, String latestVersion, String wearingPosition, PersonalRecord personalRecords, DisplayUnit displayedUnits, String localId, Long updatedAt) {
-
-		// build json object string
-		ProfileData profile = new ProfileData();
-
-		profile.setUpdatedAt(updatedAt);
-		profile.setLocalId(localId);
-		profile.setWeight(weight);
-		profile.setHeight(height);
-		profile.setGender(gender);
-		profile.setDateOfBirth(dateOfBirth);
-		profile.setName(name);
-		profile.setGoalLevel(goalLevel);
-		profile.setLatestVersion(latestVersion);
-		profile.setWearingPosition(wearingPosition);
-		profile.setPersonalRecords(personalRecords);
-		profile.setDisplayedUnits(displayedUnits);
-		
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("profile", profile.toJson().toString());
-
-		return requestInf;
-	}
-
 	public static ProfileResult createProfile(String token, ProfileData data) {
 
 		// prepare
 		String url = baseAddress + "profile";
-		BaseParams requestInf = createProfileParams(token, data.getName(), data.getWeight(), data.getHeight(), data.getGender(), data.getDateOfBirth(), data.getGoalLevel(), data.getLatestVersion(), data.getWearingPosition(), data.getPersonalRecords(), data.getDisplayedUnits(), data.getLocalId(), data.getUpdatedAt());
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("profile", data.toJson().toString());
 
 		// post and receive raw data
 		ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -332,8 +309,10 @@ public class MVPApi {
 
 		// prepare
 		String url = baseAddress + "profile";
-		BaseParams requestInf = createProfileParams(token, data.getName(), data.getWeight(), data.getHeight(), data.getGender(), data.getDateOfBirth(), data.getGoalLevel(), data.getLatestVersion(), data.getWearingPosition(), data.getPersonalRecords(), data.getDisplayedUnits(), data.getLocalId(), data.getUpdatedAt());
 
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("profile", data.toJson().toString());
 		requestInf.addParam("id", serverId);
 
 		// post and recieve raw data
@@ -361,27 +340,6 @@ public class MVPApi {
 	}
 
 	// goal apis
-	static private BaseParams createGoalParams(String token, Double goalValue, Long startTime, Long endTime, Integer timeZoneOffsetInSeconds, ProgressData progressData, List<TripleTapData> tripleTapTypeChanges, String localId, Long updatedAt) {
-
-		// build json object string
-		Goal goal = new Goal();
-
-		goal.setValue(goalValue);
-		goal.setStartTime(startTime);
-		goal.setEndTime(endTime);
-		goal.setTimeZoneOffsetInSeconds(timeZoneOffsetInSeconds);
-		goal.setProgressData(progressData);
-		goal.setTripleTapTypeChanges(tripleTapTypeChanges);
-		goal.setLocalId(localId);
-		goal.setUpdatedAt(updatedAt);
-		
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("goal", goal.toJson().toString());
-
-		return requestInf;
-	}
-
 	public static GoalsResult searchGoal(String token, long startTime, long endTime, long modifiedSince) {
 		// prepare
 		String url = baseAddress + "goals";
@@ -415,12 +373,14 @@ public class MVPApi {
 		return result;
 	}
 
-	public static GoalsResult createGoal(String token, double goalValue, long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, List<TripleTapData> trippleTapTypeChanges, String localId, long updatedAt) {
+	public static GoalsResult createGoal(String token, Goal goal) {
 
 		// prepare
 		String url = baseAddress + "goals";
-
-		BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, timeZoneOffsetInSeconds, progressData, trippleTapTypeChanges, localId, updatedAt);
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("goal", goal.toJson().toString());
 
 		// post and receive raw data
 		ServiceResponse response = MVPApi.post(url, port, requestInf);
@@ -430,33 +390,14 @@ public class MVPApi {
 		return result;
 	}
 
-	public static GoalsResult createGoal(String token, Goal goal) {
-		return createGoal(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), goal.getTimeZoneOffsetInSeconds(), goal.getProgressData(), goal.getTripleTapTypeChanges(), goal.getLocalId(), goal.getUpdatedAt());
-	}
-
-	public static GoalsResult updateGoal(String token, long updatedAt, String serverId, double goalValue, long startTime, long endTime, int timeZoneOffsetInSeconds, ProgressData progressData, List<TripleTapData> trippleTapTypeChanges, String localId) {
-
-		// prepare
-		String url = baseAddress + "goals/" + serverId;
-
-		BaseParams requestInf = createGoalParams(token, goalValue, startTime, endTime, timeZoneOffsetInSeconds, progressData, trippleTapTypeChanges, localId, updatedAt);
-
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.put(url, port, requestInf);
-
-		if (response.getStatusCode() != 200 && response.getStatusCode() != 210) {
-			return null;
-		}
-		GoalsResult result = new GoalsResult(response);
-		return result;
-	}
-
 	public static GoalsResult updateGoal(String token, Goal goal) {
 
 		// prepare
 		String url = baseAddress + "goals/" + goal.getServerId();
-
-		BaseParams requestInf = createGoalParams(token, goal.getValue(), goal.getStartTime(), goal.getEndTime(), goal.getTimeZoneOffsetInSeconds(), goal.getProgressData(), goal.getTripleTapTypeChanges(), goal.getLocalId(), goal.getUpdatedAt());
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("goal", goal.toJson().toString());
 
 		// post and recieve raw data
 		ServiceResponse response = MVPApi.put(url, port, requestInf);
