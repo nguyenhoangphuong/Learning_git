@@ -10,6 +10,7 @@ import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
+import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.goal.Goal;
@@ -17,6 +18,7 @@ import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
+import com.misfit.ta.backend.data.social.SocialUserBase;
 import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
@@ -278,36 +280,41 @@ public class BackendDatabaseSeedingThread implements Runnable {
 					"519ed8979f12e53fe40001c0",
 					"528ca3d65c44ae996604abab"
 				};
-		String[] tungUids = new String[]
-				{
-					"5285e6f6513810db3e0002d7",
-					"528d71805c44ae1e1e117c1c"
-				};
-		String[] tungHandles = new String[]
-				{
-					"tung_social_misfit",
-					"tung_social_misfit"
-				};
-		
+
 		String mfwcqaAccessToken = mfwcqaAccessTokens[index]; 
-		String tungToken = MVPApi.signIn("tung.social.misfit@gmail.com", "qqqqqq").token;
 		String mfwcqaUid = mfwcqaUids[index];
-		String tungUid = tungUids[index];
-		String tungHandle = tungHandles[index];
+
+		
+		// create a friend
+		String friendToken = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+		String handle = TextTool.getRandomString(4, 8) + System.nanoTime();
+		
+		ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
+		profile.setPrivacy(1);
+		profile.setName(TextTool.getRandomString(6, 12));
+		profile.setHandle(handle);
+		
+		MVPApi.createProfile(friendToken, profile);
 
 		// connect and get facebook token
 		clock.tick("connect_facebook");
 		String mfwcqaToken = SocialAPI.connectFacebook("mfwcqa@gmail.com", mfwcqaAccessToken,"").token;
 		clock.tock();
+		
+		// search social users
+		clock.tick("search_social_users");
+		BaseResult result = SocialAPI.searchSocialUsers(mfwcqaToken, handle);
+		clock.tock();
 				
 		// send friend request
+		SocialUserBase user = SocialUserBase.usersFromResponse(result.response)[0];
 		clock.tick("send_friend_request");
-		SocialAPI.sendFriendRequest(mfwcqaToken, tungUid);
+		SocialAPI.sendFriendRequest(mfwcqaToken, user.getUid());
 		clock.tock();
 
 		// ignore friend request
 		clock.tick("ignore_friend_request");
-		SocialAPI.ignoreFriendRequest(tungToken, mfwcqaUid);
+		SocialAPI.ignoreFriendRequest(friendToken, mfwcqaUid);
 		clock.tock();
 
 		// get friend requests from me
@@ -317,12 +324,12 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
 		// get friend requests to me
 		clock.tick("get_friend_request_from_me");
-		SocialAPI.getFriendRequestsToMe(tungToken);
+		SocialAPI.getFriendRequestsToMe(friendToken);
 		clock.tock();
 
 		// accept friend request
 		clock.tick("accep_friend_request");
-		SocialAPI.acceptFriendRequest(tungToken, mfwcqaUid);
+		SocialAPI.acceptFriendRequest(friendToken, mfwcqaUid);
 		clock.tock();
 
 		// get friend list
@@ -332,17 +339,12 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
 		// delete friend
 		clock.tick("delete_friend");
-		SocialAPI.deleteFriend(mfwcqaToken, tungUid);
+		SocialAPI.deleteFriend(mfwcqaToken, user.getUid());
 		clock.tock();
 
 		// search facebook friends
 		clock.tick("search_facebook_friends");
 		SocialAPI.getFacebookFriends(mfwcqaToken);
-		clock.tock();
-
-		// search social users
-		clock.tick("search_social_users");
-		SocialAPI.searchSocialUsers(mfwcqaToken, tungHandle);
 		clock.tock();
 
 		// get leaderboard info
