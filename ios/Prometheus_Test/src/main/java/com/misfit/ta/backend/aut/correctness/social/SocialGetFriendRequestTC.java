@@ -133,13 +133,13 @@ public class SocialGetFriendRequestTC extends SocialAutomationBase {
 		
 		// tung and misfit change their profile
 		ProfileData misfitProfile = MVPApi.getProfile(misfitToken).profile;
-		String misfitOldName = misfitProfile.getName();
-		misfitProfile.setName("Misfit Social - " + System.nanoTime());
+		String misfitOldName = "Misfit Social";
+		misfitProfile.setName("Misfit - " + System.nanoTime());
 		MVPApi.updateProfile(misfitToken, misfitProfile, misfitProfile.getServerId());
 		
 		ProfileData tungProfile = MVPApi.getProfile(tungToken).profile;
-		String tungOldName = tungProfile.getName();
-		tungProfile.setName("Tung Social - " + System.nanoTime());
+		String tungOldName = "Tung Social";
+		tungProfile.setName("Tung - " + System.nanoTime());
 		MVPApi.updateProfile(tungToken, tungProfile, tungProfile.getServerId());
 		
 		// get requests from misfit

@@ -147,7 +147,9 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
 		// update profile
 		ProfileData newProfile = result.profile;
-		newProfile.setWeight(profile.getWeight() + 1);
+		newProfile.setPrivacy(1);
+		newProfile.setName(TextTool.getRandomString(6, 12));
+		newProfile.setName(TextTool.getRandomString(4, 8) + System.nanoTime());
 		
 		clock.tick("update profile");
 		result = MVPApi.updateProfile(token, newProfile, profile.getServerId());
@@ -216,7 +218,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		// update goal
 		clock.tick("updateGoal");
 		goal.setServerId(goalResult.goals[0].getServerId());
-		goal.getProgressData().setPoints(goal.getProgressData().getPoints() + 1);
+		goal.getProgressData().setPoints(goal.getValue() * 2);
 		goalResult = MVPApi.updateGoal(token, goal);
 		clock.tock();
 
@@ -268,7 +270,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 				};
 		String[] tungHandles = new String[]
 				{
-					"tung.social.misfit",
+					"tung_social_misfit",
 					"tung_social_misfit"
 				};
 		

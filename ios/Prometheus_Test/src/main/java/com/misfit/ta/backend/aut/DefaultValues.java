@@ -57,6 +57,9 @@ public class DefaultValues {
 	static public int NotFriendYetCode = 306;
 	static public String NotFriendYetMessage = "Not friend yet";
 	
+	static public int UserNotUseSocialCode = 307;
+	static public String UserNotUseSocialMessage = "User did not join social";
+	
 	static public int InvalidParameterCode = 1;
 	static public String InvalidParameterMessage = "Invalid parameters";
 	

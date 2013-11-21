@@ -33,6 +33,9 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "AcceptFriend" })
 	public void AcceptFriend_WhoYouIgnored() {
 
+		// delete friends
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+				
 		// misfit --> tung, tung -x- misfit
 		SocialAPI.sendFriendRequest(misfitToken, tungUid);
 		SocialAPI.ignoreFriendRequest(tungToken, misfitUid);
@@ -46,13 +49,13 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 		SocialUserBase[] friends = SocialUserBase.usersFromResponse(result.response);
 		
 		Assert.assertEquals(friends.length, 1, "Number of friends of misfit");
-		Assert.assertEquals(friends[0].getName(), "Tung Social", "Name of tung");
+		Assert.assertEquals(friends[0].getUid(), tungUid, "Uid of tung");
 		
 		result = SocialAPI.getFriends(tungToken);
 		friends = SocialUserBase.usersFromResponse(result.response);
 		
 		Assert.assertEquals(friends.length, 1, "Number of friends of tung");
-		Assert.assertEquals(friends[0].getName(), "Misfit Social", "Name of misfit");
+		Assert.assertEquals(friends[0].getUid(), misfitUid, "Uid of misfit");
 
 		// delete friends
 		SocialAPI.deleteFriend(misfitToken, tungUid);
@@ -61,6 +64,9 @@ public class SocialAcceptFriendRequestTC extends SocialAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "AcceptFriend" })
 	public void AcceptFriend_WhoAlreadyIsYourFriend() {
 
+		// delete friends
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+				
 		// misfit --> tung, tung -v- misfit
 		SocialAPI.sendFriendRequest(misfitToken, tungUid);
 		SocialAPI.acceptFriendRequest(tungToken, misfitUid);

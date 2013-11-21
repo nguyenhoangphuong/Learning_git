@@ -4,7 +4,6 @@ import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.data.statistics.PersonalRecord;
-import com.misfit.ta.backend.data.statistics.Statistics;
 
 public class ProfileData {
 
@@ -26,7 +25,7 @@ public class ProfileData {
 	protected DisplayUnit displayedUnits;
 	
 	protected String handle;
-	protected String privacy;
+	protected Integer privacy;
 	protected String avatar;
 	protected String email;
 	protected String authToken;
@@ -121,9 +120,6 @@ public class ProfileData {
 			if (!json.isNull("handle"))
 				obj.setHandle(json.getString("handle"));
 
-			if (!json.isNull("description"))
-				obj.setPrivacy(json.getString("privacy"));
-
 			if (!json.isNull("avatar"))
 				obj.setAvatar(json.getString("avatar"));
 
@@ -134,7 +130,7 @@ public class ProfileData {
 				obj.setEmail(json.getString("email"));
 			
 			if (!json.isNull("privacy"))
-                obj.setPrivacy(json.getString("privacy"));
+                obj.setPrivacy(json.getInt("privacy"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -268,11 +264,11 @@ public class ProfileData {
 		this.handle = handle;
 	}
 
-	public String getPrivacy() {
+	public Integer getPrivacy() {
 		return privacy;
 	}
 
-	public void setPrivacy(String privacy) {
+	public void setPrivacy(Integer privacy) {
 		this.privacy = privacy;
 	}
 

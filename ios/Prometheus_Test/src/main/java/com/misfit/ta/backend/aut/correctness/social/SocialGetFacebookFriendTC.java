@@ -22,6 +22,16 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		BaseResult result = SocialAPI.getFacebookFriends(misfitToken);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 		SocialTestHelpers.printUsers(friends);
+		
+		int count = -1;
+		for(String key : mapNames) {
+			
+			boolean isUsingApp = (Boolean) mapNameData.get(key).get("isUsingApp");
+			if(isUsingApp)
+				count++;
+		}
+		
+		Assert.assertEquals(friends.length, count, "Number of facebook users");
 
 		// make sure the result only contains only users who use Shine app
 		for(SocialUserBase friend : friends) {
@@ -41,7 +51,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		// check detail of return values
 		for(SocialUserWithStatus friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getHandle(), "tung.social.misfit", "Handle");
+				Assert.assertEquals(friend.getHandle(), "tung_social_misfit", "Handle");
 				Assert.assertEquals(friend.getName(), "Tung Social", "Name");
 				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
 				break;
@@ -129,7 +139,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		
 		// now tung change his name
 		ProfileData tungProfile = MVPApi.getProfile(tungToken).profile;
-		String tungOldName = tungProfile.getName();
+		String tungOldName = "Tung Social";
 		tungProfile.setName("Tung - " + System.nanoTime());
 		MVPApi.updateProfile(tungToken, tungProfile, tungProfile.getServerId());
 
@@ -141,7 +151,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		SocialTestHelpers.printUsers(friends);
 		for(SocialUserWithStatus friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getHandle(), "tung.social.misfit", "Handle");
+				Assert.assertEquals(friend.getHandle(), "tung_social_misfit", "Handle");
 				Assert.assertEquals(friend.getName(), tungProfile.getName(), "Name");
 				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
 				break;
@@ -160,7 +170,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		SocialTestHelpers.printUsers(friends);
 		for(SocialUserWithStatus friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getHandle(), "tung.social.misfit", "Handle");
+				Assert.assertEquals(friend.getHandle(), "tung_social_misfit", "Handle");
 				Assert.assertEquals(friend.getName(), tungOldName, "Name");
 				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
 				break;

@@ -33,6 +33,7 @@ import com.misfit.ta.backend.data.timeline.*;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.backend.data.*;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.TextTool;
 
@@ -129,86 +130,57 @@ public class MVPApi {
 
 	public static JSONArray[] generateTimelineItemsAndGraphItems(int numberOfDays, int numberOfItemsPerDay) {
 
-		JSONArray timelineItems = new JSONArray();
-		JSONArray graphItems = new JSONArray();
-		// DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		long timestamp = System.currentTimeMillis() / 1000;
+				
+		// create graph items
+		List<GraphItem> graphItems = new ArrayList<GraphItem>();
+		for(int i = 0; i < numberOfDays; i++) {
 
-		long now = System.currentTimeMillis() / 1000;
-		// data for a number of days
-		long period = 86400 / numberOfItemsPerDay;
-		for (int k = 0; k < numberOfDays; k++) {
-			long tmp = now - (k * period * 24);
-			// one weather per day
-			TimelineItem timeline = generateWeatherTimelineItem(tmp);
-			timelineItems.put(timeline.toJson());
+			long goalTimestamp = timestamp - 3600 * 24 * i;
+			long goalStartTime = MVPApi.getDayStartEpoch(goalTimestamp);
+			long goalEndTime = MVPApi.getDayEndEpoch(goalTimestamp);
+			long graphItemInterval = (goalEndTime - goalStartTime) / Math.max(numberOfItemsPerDay, 1);
 
-			for (int j = 0; j < numberOfItemsPerDay; j++) {
-				// one timeline item per hour
-				tmp -= 3600;
+			for(long t = goalStartTime; t <= goalEndTime; t += graphItemInterval) {
 
-				// df.format(new Date(tmp));
-
-				TimelineItem tmpItem = generateActivitySessionItem(tmp);
-				timelineItems.put(tmpItem.toJson());
-
-				// one graph item per hour
-				// TODO: one graph item per 2020s
-				GraphItem graphItem = new GraphItem(tmp, 1, tmp);
-				graphItems.put(graphItem.toJson());
+				GraphItem graphItem = DataGenerator.generateRandomGraphItem(t, null);
+				graphItems.add(graphItem);
 			}
 		}
 
+
+		// create activity session timeline items
+		List<TimelineItem> timelineItems = new ArrayList<TimelineItem>();
+		for(int i = 0; i < numberOfDays; i++) {
+
+			long goalTimestamp = timestamp - 3600 * 24 * i;
+			long goalStartTime = MVPApi.getDayStartEpoch(goalTimestamp);
+			long goalEndTime = MVPApi.getDayEndEpoch(goalTimestamp);
+			long numberOfItem = Math.max(1, numberOfItemsPerDay);
+			long step = (goalEndTime - goalStartTime) / numberOfItem;
+
+			for(long t = goalStartTime; t <= goalEndTime; t += step) {
+
+				TimelineItem activityTile = DataGenerator.generateRandomActivitySessionTimelineItem(t, null);
+				timelineItems.add(activityTile);
+			}
+		}
+		
+		// data for a number of days
+		JSONArray timelineItemsJsonArr = new JSONArray();
+		JSONArray graphItemsJsonArr = new JSONArray();
+		
+		for(TimelineItem item: timelineItems)
+			timelineItemsJsonArr.put(item.toJson());
+		
+		for(GraphItem item: graphItems)
+			graphItemsJsonArr.put(item.toJson());
+		
+
 		JSONArray[] array = new JSONArray[2];
-		array[0] = timelineItems;
-		array[1] = graphItems;
+		array[0] = timelineItemsJsonArr;
+		array[1] = graphItemsJsonArr;
 		return array;
-	}
-
-	public static TimelineItem generateActivitySessionItem(long tmp) {
-		ActivitySessionItem session = new ActivitySessionItem();
-
-        session.setDuration(2222);
-        session.setDistance(2d);
-        session.setCalories(22d);
-        session.setActivityType(2);
-        session.setPoint(22);
-        session.setSteps(22);
-        
-		TimelineItem tmpItem = new TimelineItem();
-		
-		tmpItem.setItemType(TimelineItemDataBase.TYPE_SESSION);
-		tmpItem.setUpdatedAt(tmp);
-		tmpItem.setTimestamp(tmp);
-		tmpItem.setData(session);
-		tmpItem.setLocalId(TextTool.getRandomString(20, 20));
-		
-		return tmpItem;
-	}
-
-	public static TimelineItem generateWeatherTimelineItem(long tmp) {
-//		WeatherItem weather = new WeatherItem(tmp, 100, 200, "Stockholm");
-		TimelineItem tmpItem = new TimelineItem();
-		
-//		tmpItem.setItemType(TimelineItemDataBase.TYPE_WEATHER);
-		tmpItem.setUpdatedAt(tmp);
-		tmpItem.setTimestamp(tmp);
-//		tmpItem.setData(weather);
-		tmpItem.setLocalId(TextTool.getRandomString(20, 20));
-		
-		return tmpItem;
-	}
-
-	public static TimelineItem generateNotableEventItem(long tmp, int value) {
-//		NotableEventItem notableEventItem = new NotableEventItem(tmp, null, null, value, 1);
-		TimelineItem tmpItem = new TimelineItem();
-		
-//		tmpItem.setItemType(TimelineItemDataBase.TYPE_NOTABLE);
-		tmpItem.setUpdatedAt(tmp);
-		tmpItem.setTimestamp(tmp);
-//		tmpItem.setData(notableEventItem);
-		tmpItem.setLocalId(TextTool.getRandomString(20, 20));
-		
-		return tmpItem;
 	}
 
 	// utilities

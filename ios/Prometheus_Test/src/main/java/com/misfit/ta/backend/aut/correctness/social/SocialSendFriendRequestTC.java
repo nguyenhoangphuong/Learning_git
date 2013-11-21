@@ -4,7 +4,6 @@ package com.misfit.ta.backend.aut.correctness.social;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.SocialAutomationBase;
@@ -39,17 +38,14 @@ public class SocialSendFriendRequestTC extends SocialAutomationBase {
 	public void SendFriendRequest_ToUserWhoDontUseSocial() {
 		
 		BaseResult result = SocialAPI.sendFriendRequest(misfitToken, nonSocialUserUid);
-		
-		// TODO: remove these 2 lines when api is fixed
-		SocialAPI.acceptFriendRequest(MVPApi.signIn(nonSocialEmail, "qwerty1").token, misfitUid);
-		SocialAPI.deleteFriend(misfitToken, nonSocialUserUid);
 				
 		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.errorCode, DefaultValues.UserNotUseSocialCode, "Error code");
+		Assert.assertEquals(result.errorMessage, DefaultValues.UserNotUseSocialMessage, "Error message");
 		
 		result = SocialAPI.getFriendRequestsFromMe(misfitToken);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
-		SocialTestHelpers.printUsers(friends);
-		
+
 		Assert.assertEquals(friends.length, 0, "Number of friend requests");
 	}
 
