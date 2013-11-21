@@ -132,8 +132,19 @@ public class BackendDatabaseSeeding {
         ResultLogger.logErrorSummary();
     }
 
+    
     public static void main(String[] args) {
         BackendDatabaseSeeding test = new BackendDatabaseSeeding();
+        
+        if(args.length == 2) {
+        	int numberOfUsers = Integer.valueOf(args[0]);
+        	int numberOfThreads = Integer.valueOf(args[1]);
+        	int numberOfDays = Settings.getInt("NUMBER_OF_DAYS");
+        	int numberOfItemsPerDay = Settings.getInt("NUMBER_OF_ITEMS_PER_DAY");
+        	
+        	test.setParameters(numberOfUsers, numberOfThreads, numberOfDays, numberOfItemsPerDay);
+        }
+        
         test.signupOneMillionUsers(false);
     }
 

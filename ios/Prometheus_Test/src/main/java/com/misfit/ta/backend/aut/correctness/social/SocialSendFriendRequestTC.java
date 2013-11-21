@@ -114,17 +114,30 @@ public class SocialSendFriendRequestTC extends SocialAutomationBase {
 		// now misfit --> tung
 		BaseResult result = SocialAPI.sendFriendRequest(misfitToken, tungUid);
 
-		// clean up test: cancel all requests
-		SocialAPI.cancelFriendRequest(tungToken, misfitUid);
-		SocialAPI.cancelFriendRequest(misfitToken, tungUid);
-		
-		Assert.assertEquals(result.statusCode, 400, "Status code");
+		// now tung and misfit are friends, fuck
+		// TODO: may change in the future, when we have cancel friend requests
+		Assert.assertEquals(result.statusCode, 200, "Status code");
 
-		// check friend request list
-		result = SocialAPI.getFriendRequestsFromMe(misfitToken);
+		// check friend request list from tung
+		result = SocialAPI.getFriendRequestsFromMe(tungToken);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 
-		Assert.assertEquals(friends.length, 0, "Number of friend requests from me");
+		Assert.assertEquals(friends.length, 0, "Number of friend requests from tung");
+		
+		// check friend request list to misfit
+		result = SocialAPI.getFriendRequestsToMe(misfitToken);
+		friends = SocialUserWithStatus.usersFromResponse(result.response);
+
+		Assert.assertEquals(friends.length, 0, "Number of friend requests to misfit");
+		
+		// check friend list
+		result = SocialAPI.getFriends(misfitToken);
+		friends = SocialUserWithStatus.usersFromResponse(result.response);
+
+		Assert.assertEquals(friends.length, 1, "Number of friends of misfit");
+		
+		// delete friend
+		SocialAPI.deleteFriend(misfitToken, tungUid);
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })

@@ -205,16 +205,17 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
 		// get goal
 		clock.tick("getGoal");
-		goalResult = MVPApi.getGoal(token, goalResult.goals[0].getServerId());
+		MVPApi.getGoal(token, goalResult.goals[0].getServerId());
 		clock.tock();
 
 		// search goal
 		clock.tick("searchGoal");
-		goalResult = MVPApi.searchGoal(token, 0, Integer.MAX_VALUE, 0);
+		MVPApi.searchGoal(token, 0, Integer.MAX_VALUE, 0);
 		clock.tock();
 
 		// update goal
 		clock.tick("updateGoal");
+		goal.setServerId(goalResult.goals[0].getServerId());
 		goal.getProgressData().setPoints(goal.getProgressData().getPoints() + 1);
 		goalResult = MVPApi.updateGoal(token, goal);
 		clock.tock();
