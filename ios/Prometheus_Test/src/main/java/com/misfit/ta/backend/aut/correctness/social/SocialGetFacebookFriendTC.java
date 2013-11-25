@@ -62,6 +62,10 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
 	public void GetFacebookFriends_ChangeRequestStatus() {
 		
+		// set up
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+		SocialAPI.deleteFriend(thyToken, misfitUid);
+		
 		// misfit--> tung, thy --> misfit
 		SocialAPI.sendFriendRequest(misfitToken, tungUid);
 		SocialAPI.sendFriendRequest(thyToken, misfitUid);

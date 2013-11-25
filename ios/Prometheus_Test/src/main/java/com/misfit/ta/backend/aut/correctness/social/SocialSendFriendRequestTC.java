@@ -142,11 +142,9 @@ public class SocialSendFriendRequestTC extends SocialAutomationBase {
 		// misfit --> misfit
 		BaseResult result = SocialAPI.sendFriendRequest(misfitToken, misfitUid);
 		
-		// TODO: api sucks, work around
-		SocialAPI.cancelFriendRequest(misfitToken, misfitUid);
-		SocialAPI.cancelFriendRequest(misfitToken, misfitUid);
-		
 		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.errorCode, DefaultValues.CannotSendRequestToYourSelfCode, "Error code");
+		Assert.assertEquals(result.errorMessage, DefaultValues.CannotSendRequestToYourSelfMessage, "Error message");
 
 		// check friend request list
 		result = SocialAPI.getFriendRequestsFromMe(misfitToken);

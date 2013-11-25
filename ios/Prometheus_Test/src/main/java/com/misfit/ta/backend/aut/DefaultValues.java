@@ -42,14 +42,20 @@ public class DefaultValues {
 	static public String DeviceUnlinkedSuccessfully = "Unlink device successfully";
 	
 	// social error messages
+	static public int InvalidParameterCode = 1;
+	static public String InvalidParameterMessage = "Invalid parameters";
+	
 	static public int UserNotFoundCode = 2;
 	static public String UserNotFoundMessage = "User not found";
+	
+	static public int AlreadyRequestedCode = 302;
+	static public String AlreadyRequestedMessage = "Already requested";
 	
 	static public int AlreadyAreFriendsCode = 303;
 	static public String AlreadyAreFriendsMessage = "Already friended";
 	
-	static public int AlreadyRequestedCode = 302;
-	static public String AlreadyRequestedMessage = "Already requested";
+	static public int CannotSendRequestToYourSelfCode = 304;
+	static public String CannotSendRequestToYourSelfMessage = "Cannot request yourself";
 	
 	static public int FriendRequestNotExistCode = 305;
 	static public String FriendRequestNotExistMessage = "Friend request not existed";
@@ -59,9 +65,6 @@ public class DefaultValues {
 	
 	static public int UserNotUseSocialCode = 307;
 	static public String UserNotUseSocialMessage = "User did not join social";
-	
-	static public int InvalidParameterCode = 1;
-	static public String InvalidParameterMessage = "Invalid parameters";
 	
 
 	// profile

@@ -42,8 +42,7 @@ public class Debug {
 	
 	public static void main(String[] args) {
 			
-		String qaToken = SocialAPI.connectFacebook("mfwcqa@gmail.com", "CAAG661ngu9YBAIamkuIVGygSZBufVPgbTSiVWYAZA9rfWqcpN7NrYmSvevyifoTUDiU6ZBdfdDfOGJnIJvHrvY4EuxW8h37CHzcrsTLqRC6HWAyXd7138dwb9bhG2rcMr1Rj4IU8rGRmhnPYq6PFnjTndboGbI77Qf3AQw4a0rkCFZCqyq1ZAsJqBHZAWrjCIkwYIttZBl6NhbKpB1cWyOH","").token;
-		for(int i = 0; i < 50; i++) {
+		for(int i = 0; i < 10; i++) {
 			
 			String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
 			String handle = TextTool.getRandomString(4, 8) + System.nanoTime();
@@ -55,15 +54,11 @@ public class Debug {
 			
 			MVPApi.createProfile(token, profile);
 			
-			String qaUid = "528ca3d65c44ae996604abab";
-			BaseResult result = SocialAPI.searchSocialUsers(qaToken, handle);
-			SocialUserBase user = SocialUserBase.usersFromResponse(result.response)[0];
 			
-			SocialAPI.sendFriendRequest(qaToken, user.getUid());
-			SocialAPI.acceptFriendRequest(token, qaUid);
+			SocialAPI.sendFriendRequest(token, "51cd11d95138105d0300066d");
+//			SocialAPI.sendFriendRequest(token, "519facf09f12e57a7b0000d3");
+//			SocialAPI.sendFriendRequest(token, "51a41ac89f12e53f79000001");
 		}
-		
-		SocialAPI.getFriends(qaToken);
 	}
 	
 	public static void printUsers(SocialUserBase[] users) {
