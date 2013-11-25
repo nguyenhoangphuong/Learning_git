@@ -140,6 +140,7 @@ public class WeekViewAPI extends ModelAPI {
 
 	public void v_Today() {
 		PrometheusHelper.handleBatteryLowPopup();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 
 	public void e_ChangeDayView() {

@@ -125,12 +125,9 @@ public class SignUpAPI extends ModelAPI {
 		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 		
 		PrometheusHelper.handleTutorial();
+		PrometheusHelper.handleUpdateFirmwarePopup();
     }
  
-   
-    
-    
-
     public void v_InitialView() {
     	Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
     }
@@ -144,6 +141,7 @@ public class SignUpAPI extends ModelAPI {
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileActivitiesLabel), "Activities tile is displayed");
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileSleepLabel), "Sleep tile is displayed");
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileMilestonesLabel), "Milestones tile is displayed");
+    	Timeline.dragDownTimeline();
     }
 
     public void v_SignUpAccount() {

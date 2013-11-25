@@ -26,7 +26,7 @@ public class DefaultStrings {
 	public static String SignOutAtProfileViewButton = "Sign out";
 	public static String SignInTitle = "Sign in";
 	public static String SignUpTitle = "Sign up";
-	public static String SignUpProfileTitle = "Profile";
+	public static String SignUpProfileTitle = "My Info";
 	public static String SignUpSetYourGoalTitle = "Set your goal";
 	public static String SignUpLinkShineTitle = "Link Shine";
 	public static String FinishSetUpButton = "FINISH SETUP";
@@ -55,7 +55,7 @@ public class DefaultStrings {
 
 	// home screen
 	public static String OKButton = "OK";
-	public static int MenuButtonId = 16;
+	public static int MenuButtonId = 15;
 	public static String TodayTitle = "Today";
 	public static String YesterdayTitle = "Yesterday";
 	public static int WeekDayButtonId = 16;
@@ -100,7 +100,7 @@ public class DefaultStrings {
 	public static String MetreLabel = "m";
 	public static String MyGoalTitle = "My Goal";
 	public static String EditProfileTitle = "Edit Profile";
-	public static String CaptializedShineOutButton = "SHINE OUT";
+	public static String CaptializedShineOutButton = "Shine Out";
 	public static String ShineOutButton = "Shine out";
 	public static String LinkButton = "Link";
 	public static String UnlinkButton = "Unlink";
@@ -131,9 +131,9 @@ public class DefaultStrings {
 	public static String NewGoalInstruction = "Sync to update your new goal on your Shine.";
 	public static String[] WearingLocations = { "Head", "Upper Arm", "Chest",
 			"Wrist", "Waist", "Ankle/Foot" };
-	public static String UpdateFirmwareMessage = "OTA update available, tap to update";
-	public static String UpdateFirmwareLaterButton = "Later";
-
+	public static String UpdateFirmwareMessage = "We've made Shine even better! Tap menu and place Shine on the circle to update.";
+	public static int FirmwareMessageTurnOffButtonId = 17;
+	
 	public static String[] WalkingLevel = { "KINDA ACTIVE", "PRETTY ACTIVE",
 			"VERY ACTIVE" };
 	public static String[] SwimmingLevel = { "MILD SWIMMING",

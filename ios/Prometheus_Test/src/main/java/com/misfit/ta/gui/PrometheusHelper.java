@@ -216,7 +216,7 @@ public class PrometheusHelper {
 	
 	public static void handleUpdateFirmwarePopup() {
 		if (ViewUtils.isExistedView("UILabel", DefaultStrings.UpdateFirmwareMessage)) {
-			Gui.touchAVIew("UILabel", DefaultStrings.UpdateFirmwareMessage);
+			Gui.touchAVIew("UIButton", DefaultStrings.FirmwareMessageTurnOffButtonId);
 		}
 	}
 
@@ -248,6 +248,9 @@ public class PrometheusHelper {
 		// tutorial
 		PrometheusHelper.handleTutorial();
 		
+		// firmware popup
+		PrometheusHelper.handleUpdateFirmwarePopup();
+		
 	}
 
 	public static String signUp() {
@@ -257,7 +260,6 @@ public class PrometheusHelper {
 		String w1 = "120";
 		String w2 = ".0";
 		PrometheusHelper.signUp(email, "qwerty1", true, 16, 9, 1991, true, h1, h2, w1, w2, 1);
-
 		return email;
 	}
 
@@ -309,10 +311,9 @@ public class PrometheusHelper {
 	}
 	
 	public static void signOut() {
-		
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapOpenSettingsTray();
 		HomeScreen.tapSettings();
-		Gui.swipeUp(1000);
 		HomeSettings.tapSignOut();
 		HomeSettings.chooseSignOut();
 	}
@@ -405,7 +406,7 @@ public class PrometheusHelper {
 	}
 	
 	public static void main(String[] args) {
-		Gui.init("192.168.1.162");
+		Gui.init("192.168.1.144");
 		Gui.shutdown();
 	}
 

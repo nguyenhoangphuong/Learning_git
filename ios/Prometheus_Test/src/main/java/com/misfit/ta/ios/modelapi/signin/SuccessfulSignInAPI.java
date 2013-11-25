@@ -36,6 +36,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
 		SignIn.enterEmailPassword("nhhai16991@gmail.com", "qqqqqq");
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.SignInTitle);
 		PrometheusHelper.handleTutorial();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 
 	
