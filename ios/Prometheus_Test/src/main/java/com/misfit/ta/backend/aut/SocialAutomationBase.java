@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import com.misfit.ta.backend.api.social.SocialAPI;
@@ -55,5 +56,16 @@ public class SocialAutomationBase extends BackendAutomation {
 		SocialAPI.deleteFriend(misfitToken, tungUid);
 		SocialAPI.deleteFriend(misfitToken, thyUid);
 		SocialAPI.deleteFriend(tungToken, thyUid);
+		
+		
+		// cancel requests
+		SocialAPI.cancelFriendRequest(misfitToken, tungUid);
+		SocialAPI.cancelFriendRequest(misfitToken, thyUid);
+		SocialAPI.cancelFriendRequest(tungToken, misfitUid);
+		SocialAPI.cancelFriendRequest(tungToken, thyUid);
+		SocialAPI.cancelFriendRequest(thyToken, misfitUid);
+		SocialAPI.cancelFriendRequest(thyToken, tungUid);
+
 	}
+    
 }

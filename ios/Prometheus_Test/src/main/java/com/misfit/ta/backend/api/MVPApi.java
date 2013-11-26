@@ -29,9 +29,7 @@ import com.misfit.ta.backend.data.pedometer.*;
 import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.data.timeline.*;
-import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.backend.data.*;
-import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.TextTool;
 
@@ -50,7 +48,7 @@ public class MVPApi {
 	public static String HTTP_DELETE = "DELETE";
 	
 	public static int CACHE_TRY_TIME = 10;
-	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.50r";
+	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.52r";
 
 	// request helpers
 	static protected ServiceResponse request(String type, String url, int port, BaseParams requestInf) {

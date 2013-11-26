@@ -26,8 +26,11 @@ import com.misfit.ta.backend.data.social.SocialUserWithStatus;
 import com.misfit.ta.backend.data.social.SocialUserWorldEvent;
 import com.misfit.ta.backend.data.sync.SyncFileData;
 import com.misfit.ta.backend.data.sync.SyncLog;
+import com.misfit.ta.backend.data.timeline.TimelineItem;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.backend.seed.GenerateUserSeed;
 import com.misfit.ta.base.ParallelThreadExecutor;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
@@ -42,23 +45,41 @@ public class Debug {
 	
 	public static void main(String[] args) {
 			
-		for(int i = 0; i < 10; i++) {
-			
-			String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
-			String handle = TextTool.getRandomString(4, 8) + System.nanoTime();
-			
-			ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
-			profile.setPrivacy(1);
-			profile.setName(TextTool.getRandomString(6, 12));
-			profile.setHandle(handle);
-			
-			MVPApi.createProfile(token, profile);
-			
-			
-			SocialAPI.sendFriendRequest(token, "51cd11d95138105d0300066d");
-//			SocialAPI.sendFriendRequest(token, "519facf09f12e57a7b0000d3");
-//			SocialAPI.sendFriendRequest(token, "51a41ac89f12e53f79000001");
-		}
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+		String handle = "qatester_" + TextTool.getRandomString(5, 5);
+		
+		ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
+		profile.setPrivacy(1);
+		profile.setName("QA Tester " + handle);
+		profile.setHandle(handle);
+		
+		MVPApi.createProfile(token, profile);
+		
+		List<TimelineItem> items = new ArrayList<TimelineItem>();
+		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 400, TimelineItemDataBase.EVENT_TYPE_100_GOAL, null));
+		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 300, TimelineItemDataBase.EVENT_TYPE_150_GOAL, null));
+		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 200, TimelineItemDataBase.EVENT_TYPE_200_GOAL, null));
+		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 100, TimelineItemDataBase.EVENT_TYPE_PERSONAL_BEST, null));
+		
+		MVPApi.createTimelineItems(token, items);
+		
+//		for(int i = 0; i < 10; i++) {
+//			
+//			String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+//			String handle = TextTool.getRandomString(4, 8) + System.nanoTime();
+//			
+//			ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
+//			profile.setPrivacy(1);
+//			profile.setName(TextTool.getRandomString(6, 12));
+//			profile.setHandle(handle);
+//			
+//			MVPApi.createProfile(token, profile);
+//			
+//			
+//			SocialAPI.sendFriendRequest(token, "51cd11d95138105d0300066d");
+////			SocialAPI.sendFriendRequest(token, "519facf09f12e57a7b0000d3");
+////			SocialAPI.sendFriendRequest(token, "51a41ac89f12e53f79000001");
+//		}
 	}
 	
 	public static void printUsers(SocialUserBase[] users) {
