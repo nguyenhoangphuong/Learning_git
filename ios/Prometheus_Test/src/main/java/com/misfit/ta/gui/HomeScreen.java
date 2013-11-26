@@ -10,7 +10,7 @@ public class HomeScreen {
 	/* Navigation */
 	public static void tapOpenSettingsTray() {
 		PrometheusHelper.handleUpdateFirmwarePopup();
-		Gui.touchAVIew("UIButton", DefaultStrings.MenuButtonId);
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.MenuButtonTag);
 	}
 
 	public static void tapSettings() {
@@ -95,13 +95,13 @@ public class HomeScreen {
 	/* Timeline */
 	public static void goToPreviousDays(int days) {
 		for (int i = 0; i < days; i++) {
-			Gui.touchAVIew("UIButton", 4);
+			Gui.touchAVIew("UIButtonLabel", "<");
 		}
 	}
 
 	public static void goToNextDays(int days) {
 		for (int i = 0; i < days; i++) {
-			Gui.touchAVIew("UIButton", 5);
+			Gui.touchAVIew("UIButtonLabel", ">");
 		}
 	}
 	
@@ -214,11 +214,11 @@ public class HomeScreen {
 	}
 
 	public static void changeToDayView() {
-		Gui.touchAVIew("UIButton", DefaultStrings.WeekDayButtonId);
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.WeekDayButtonTag);
 	}
 
 	public static void changeToWeekView() {
-		Gui.touchAVIew("UIButton", DefaultStrings.WeekDayButtonId);
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.WeekDayButtonTag);
 	}
 
 }

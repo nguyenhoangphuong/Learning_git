@@ -55,10 +55,10 @@ public class DefaultStrings {
 
 	// home screen
 	public static String OKButton = "OK";
-	public static int MenuButtonId = 20;
+	public static String MenuButtonTag = "MenuSync";
 	public static String TodayTitle = "Today";
 	public static String YesterdayTitle = "Yesterday";
-	public static int WeekDayButtonId = 16;
+	public static String WeekDayButtonTag = "MenuProfile";
 	public static String ThisWeekTitle = "This week";
 	public static String LastWeekTitle = "Last week";
 	public static String SettingsButton = "Settings";
@@ -73,6 +73,9 @@ public class DefaultStrings {
 	public static String TutorialFirstPageLabel = "_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.";
 	public static String TileTimeTravelLabel = "TIME TRAVEL";
 	public static String MisfitLabsButton = "Misfit Labs";
+	public static String LeaderBoardButtonTag = "MenuFriendLeaderBoard";
+	public static String MenuProgressButtonTag = "MenuProgress";
+	public static String WorldViewButtonTag = "MenuWorldFeed";
 	
 	public static String TutorialForUpdateActivityTag = "Hold down on an activity highlight to change the tag. You can only do this on the current day.";
 	public static String TutorialForDeleteSleepTile = "Hold down on a sleep highlight to remove it. You can only do this on the current day.";
@@ -88,7 +91,7 @@ public class DefaultStrings {
 	public static String TileMilestonesLabel = "Milestones";
 
 	// settings
-	public static String MyProfileButton = "My Profile";
+	public static String MyProfileButton = "My Info";
 	public static String SettingsTitle = "Settings";
 	public static String FahrenheitLabel = "°F";
 	public static String CelciusLabel = "°C";
@@ -99,7 +102,7 @@ public class DefaultStrings {
 	public static String InchesLabel = "ft in";
 	public static String MetreLabel = "m";
 	public static String MyGoalTitle = "My Goal";
-	public static String EditProfileTitle = "Edit Profile";
+	public static String EditProfileTitle = "Edit My Info";
 	public static String CaptializedShineOutButton = "Shine Out";
 	public static String ShineOutButton = "Shine out";
 	public static String LinkButton = "Link";
@@ -133,6 +136,7 @@ public class DefaultStrings {
 			"Wrist", "Waist", "Ankle/Foot" };
 	public static String UpdateFirmwareMessage = "We've made Shine even better! Tap menu and place Shine on the circle to update.";
 	public static int FirmwareMessageTurnOffButtonId = 17;
+	public static String FirmwareMessageTurnOffButtonTag = "CalloutCloseButton";
 	
 	public static String[] WalkingLevel = { "KINDA ACTIVE", "PRETTY ACTIVE",
 			"VERY ACTIVE" };

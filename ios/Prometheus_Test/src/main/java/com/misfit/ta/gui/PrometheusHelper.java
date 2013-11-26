@@ -216,7 +216,7 @@ public class PrometheusHelper {
 	
 	public static void handleUpdateFirmwarePopup() {
 		if (ViewUtils.isExistedView("UILabel", DefaultStrings.UpdateFirmwareMessage)) {
-			Gui.touchAVIew("UIButton", DefaultStrings.FirmwareMessageTurnOffButtonId);
+			Gui.touchAVIew("UIButtonLabel", DefaultStrings.FirmwareMessageTurnOffButtonTag);
 		}
 	}
 

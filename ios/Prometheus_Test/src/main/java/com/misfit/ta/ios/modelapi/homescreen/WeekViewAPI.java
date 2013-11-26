@@ -59,6 +59,7 @@ public class WeekViewAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(5000);
 		HomeSettings.tapOKAtNewGoalPopup();
 		ShortcutsTyper.delayTime(200);
+		HomeScreen.changeToWeekView();
 	}
 
 	/**
