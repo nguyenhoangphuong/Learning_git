@@ -113,7 +113,7 @@ public class MVPApi {
 
 	public static String generateLocalId()
 	{
-		return System.nanoTime() + "-" + TextTool.getRandomString(10);
+		return System.nanoTime() + "-" + TextTool.getRandomString(10, 10);
 	}
 	
 	public static JSONArray[] generateTimelineItemsAndGraphItems() {
