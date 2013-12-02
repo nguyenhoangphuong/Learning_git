@@ -44,24 +44,27 @@ public class Debug {
 	protected static Logger logger = Util.setupLogger(Debug.class);
 	
 	public static void main(String[] args) {
-			
-		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
-		String handle = "qatester_" + TextTool.getRandomString(5, 5);
 		
-		ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
-		profile.setPrivacy(1);
-		profile.setName("QA Tester " + handle);
-		profile.setHandle(handle);
+		String token = MVPApi.signIn("nhhai16991@gmail.com", "wwwwww").token;
+		SocialAPI.linkFacebook(token, "nhhai16991@gmail.com", "CAAG661ngu9YBACLh3hWQmqS496aRd2Kt8gQjfjQntG1kThAPbm08Jfa0ikw4I4GVu08jxkVBDANDmm7ZC0ZAsmsZC6ZC8iq0pRiBZAMGVokZBzitmxZAYkO9ZCxZCy038QPZBMOJd6F4xqbZBWPq7eimYMIZCtlbbrPd0NkHQYWCwoZCZCELHOmw3ISFdASgrNXsrolPLu7TCOIDVshXai0ZAMOXJjockVCcnETplzPJ1r3jyjc4gZDZD");
 		
-		MVPApi.createProfile(token, profile);
-		
-		List<TimelineItem> items = new ArrayList<TimelineItem>();
-		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 400, TimelineItemDataBase.EVENT_TYPE_100_GOAL, null));
-		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 300, TimelineItemDataBase.EVENT_TYPE_150_GOAL, null));
-		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 200, TimelineItemDataBase.EVENT_TYPE_200_GOAL, null));
-		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 100, TimelineItemDataBase.EVENT_TYPE_PERSONAL_BEST, null));
-		
-		MVPApi.createTimelineItems(token, items);
+//		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+//		String handle = "qatester_" + TextTool.getRandomString(5, 5);
+//		
+//		ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
+//		profile.setPrivacy(1);
+//		profile.setName("QA Tester " + handle);
+//		profile.setHandle(handle);
+//		
+//		MVPApi.createProfile(token, profile);
+//		
+//		List<TimelineItem> items = new ArrayList<TimelineItem>();
+//		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 400, TimelineItemDataBase.EVENT_TYPE_100_GOAL, null));
+//		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 300, TimelineItemDataBase.EVENT_TYPE_150_GOAL, null));
+//		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 200, TimelineItemDataBase.EVENT_TYPE_200_GOAL, null));
+//		items.add(DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - 100, TimelineItemDataBase.EVENT_TYPE_PERSONAL_BEST, null));
+//		
+//		MVPApi.createTimelineItems(token, items);
 		
 //		for(int i = 0; i < 10; i++) {
 //			
