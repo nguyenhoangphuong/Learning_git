@@ -48,7 +48,7 @@ public class SocialTestHelpers {
 		misfitData.put("isUsingApp", true);
 		
 		HashMap<String, Object> tungData = new HashMap<String, Object>();
-		tungData.put("fuid", "5285e6f6513810db3e0002d7");
+		tungData.put("fuid", "52971eed513810839d000249");
 		tungData.put("email", tungEmail);
 		tungData.put("token", tungToken);
 		tungData.put("isUsingApp", true);

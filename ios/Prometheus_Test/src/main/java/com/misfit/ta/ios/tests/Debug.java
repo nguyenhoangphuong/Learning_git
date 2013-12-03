@@ -45,8 +45,10 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-		String token = MVPApi.signIn("nhhai16991@gmail.com", "wwwwww").token;
-		SocialAPI.linkFacebook(token, "nhhai16991@gmail.com", "CAAG661ngu9YBACLh3hWQmqS496aRd2Kt8gQjfjQntG1kThAPbm08Jfa0ikw4I4GVu08jxkVBDANDmm7ZC0ZAsmsZC6ZC8iq0pRiBZAMGVokZBzitmxZAYkO9ZCxZCy038QPZBMOJd6F4xqbZBWPq7eimYMIZCtlbbrPd0NkHQYWCwoZCZCELHOmw3ISFdASgrNXsrolPLu7TCOIDVshXai0ZAMOXJjockVCcnETplzPJ1r3jyjc4gZDZD");
+		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
+		MVPApi.userInfo(token);
+//		BackendHelper.unlink("nhhai16991@gmail.com", "qqqqqq");
+//		BackendHelper.link("nhhai16991@gmail.com", "qqqqqq", "science018");
 		
 //		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
 //		String handle = "qatester_" + TextTool.getRandomString(5, 5);

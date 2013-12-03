@@ -301,8 +301,7 @@ public class MVPApi {
 		return result;
 	}
 
-	public static ProfileResult updateProfile(String token, ProfileData data, String serverId) {
-		logger.info("Id: " + serverId + ", Updated at: " + data.getUpdatedAt());
+	public static ProfileResult updateProfile(String token, ProfileData data) {
 
 		// prepare
 		String url = baseAddress + "profile";
@@ -310,7 +309,6 @@ public class MVPApi {
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
 		requestInf.addParam("profile", data.toJson().toString());
-		requestInf.addParam("id", serverId);
 
 		// post and recieve raw data
 		ServiceResponse response = MVPApi.put(url, port, requestInf);

@@ -145,7 +145,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		ProfileData tungProfile = MVPApi.getProfile(tungToken).profile;
 		String tungOldName = "Tung Social";
 		tungProfile.setName("Tung - " + System.nanoTime());
-		MVPApi.updateProfile(tungToken, tungProfile, tungProfile.getServerId());
+		MVPApi.updateProfile(tungToken, tungProfile);
 
 		// query again
 		BaseResult result = SocialAPI.getFriends(misfitToken);
@@ -164,7 +164,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 
 		// now tung change back his name (must do this if you want to run this test again)
 		tungProfile.setName(tungOldName);
-		MVPApi.updateProfile(tungToken, tungProfile, tungProfile.getServerId());
+		MVPApi.updateProfile(tungToken, tungProfile);
 
 		// query again
 		result = SocialAPI.getFriends(misfitToken);

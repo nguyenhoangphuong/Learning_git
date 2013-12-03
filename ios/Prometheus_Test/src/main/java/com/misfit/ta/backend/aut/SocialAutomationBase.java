@@ -8,10 +8,11 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
+import com.misfit.ta.backend.data.profile.ProfileData;
 
 public class SocialAutomationBase extends BackendAutomation {
 
@@ -65,7 +66,24 @@ public class SocialAutomationBase extends BackendAutomation {
 		SocialAPI.cancelFriendRequest(tungToken, thyUid);
 		SocialAPI.cancelFriendRequest(thyToken, misfitUid);
 		SocialAPI.cancelFriendRequest(thyToken, tungUid);
-
+		
+		
+		// update profile
+		ProfileData misfitProfile = new ProfileData();
+		misfitProfile.setName("Misfit Social");
+		misfitProfile.setHandle("misfit_social_misfit");
+		
+		ProfileData tungProfile = new ProfileData();
+		tungProfile.setName("Tung Social");
+		tungProfile.setHandle("tung_social_misfit");
+		
+		ProfileData thyProfile = new ProfileData();
+		thyProfile.setName("Thy Social");
+		thyProfile.setHandle("thy_social_misfit");
+		
+		MVPApi.updateProfile(tungToken, tungProfile);
+		MVPApi.updateProfile(thyToken, thyProfile);
+		
 	}
     
 }

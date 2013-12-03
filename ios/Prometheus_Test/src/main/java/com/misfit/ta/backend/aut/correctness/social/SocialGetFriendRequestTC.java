@@ -135,12 +135,12 @@ public class SocialGetFriendRequestTC extends SocialAutomationBase {
 		ProfileData misfitProfile = MVPApi.getProfile(misfitToken).profile;
 		String misfitOldName = "Misfit Social";
 		misfitProfile.setName("Misfit - " + System.nanoTime());
-		MVPApi.updateProfile(misfitToken, misfitProfile, misfitProfile.getServerId());
+		MVPApi.updateProfile(misfitToken, misfitProfile);
 		
 		ProfileData tungProfile = MVPApi.getProfile(tungToken).profile;
 		String tungOldName = "Tung Social";
 		tungProfile.setName("Tung - " + System.nanoTime());
-		MVPApi.updateProfile(tungToken, tungProfile, tungProfile.getServerId());
+		MVPApi.updateProfile(tungToken, tungProfile);
 		
 		// get requests from misfit
 		result = SocialAPI.getFriendRequestsFromMe(misfitToken);
@@ -156,10 +156,10 @@ public class SocialGetFriendRequestTC extends SocialAutomationBase {
 		
 		// change profile back to original version
 		misfitProfile.setName(misfitOldName);
-		MVPApi.updateProfile(misfitToken, misfitProfile, misfitProfile.getServerId());
+		MVPApi.updateProfile(misfitToken, misfitProfile);
 		
 		tungProfile.setName(tungOldName);
-		MVPApi.updateProfile(tungToken, tungProfile, tungProfile.getServerId());
+		MVPApi.updateProfile(tungToken, tungProfile);
 		
 		// get requests from misfit
 		result = SocialAPI.getFriendRequestsFromMe(misfitToken);

@@ -1,6 +1,5 @@
 package com.misfit.ta.backend.aut;
 
-import com.google.resting.json.JSONException;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.goal.Goal;
@@ -9,16 +8,20 @@ import com.misfit.ta.backend.data.statistics.Statistics;
 
 public class BackendHelper {
 
+	public static void unlink(String token) {
+		
+		MVPApi.unlinkDevice(token);
+	}
+	
 	public static void unlink(String email, String password) {
 
 		String token = MVPApi.signIn(email, password).token;
-		MVPApi.unlinkDevice(token);
+		unlink(token);
 	}
 
-	public static void link(String email, String password, String serialNumber) {
-
+	public static void link(String token, String serialNumber) {
+		
 		Long now = System.currentTimeMillis() / 1000;
-		String token = MVPApi.signIn(email, password).token;
 		
 		// create first
 		String localId = "pedometer-" + System.nanoTime();
@@ -38,6 +41,14 @@ public class BackendHelper {
 		pedo.setUpdatedAt(now);
 		MVPApi.updatePedometer(token, pedo);
 	}
+	
+	public static void link(String email, String password, String serialNumber) {
+
+		
+		String token = MVPApi.signIn(email, password).token;
+		link(token, serialNumber);
+	}
+
 	
 	public static void setLifetimeDistance(String token, double miles) {
 		
@@ -88,6 +99,7 @@ public class BackendHelper {
 		setPersonalBest(token, points);
 	}
 	
+	
 	public static void completeGoalInPast(String token, int diffFromToday) {
 		
 		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * diffFromToday;
@@ -128,14 +140,4 @@ public class BackendHelper {
 		clearLatestGoal(token);
 	}
 	
-	
-	public static void main(String[] args) throws JSONException {
-		
-		String email = "qa092@a.a";
-		String password = "qqqqqq";
-		completeGoalInPast(email, password, 1);
-		completeGoalInPast(email, password, 2);
-		setPersonalBest(email, password, 1800);
-	}
-
 }

@@ -44,7 +44,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		data.setGoalLevel(2);
 		data.setDisplayedUnits(new DisplayUnit(1, 1, 1));
 
-		ProfileResult r = MVPApi.updateProfile(token, data, defaultProfile.getServerId());
+		ProfileResult r = MVPApi.updateProfile(token, data);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isExisted(), "Status code is OK: 210");
@@ -81,7 +81,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		// sign up and update profile without creating it
 		ProfileData data = DefaultValues.DefaultProfile();
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
-		ProfileResult r = MVPApi.updateProfile(token, data, "");
+		ProfileResult r = MVPApi.updateProfile(token, data);
 		
 		Assert.assertEquals(r.statusCode, 400, "Status code");
 	}
@@ -100,7 +100,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		data.setName("Dandelion" + System.nanoTime());
 		data.setWeight(defaultProfile.getWeight() + 1);
 
-		ProfileResult r = MVPApi.updateProfile(token, data, defaultProfile.getServerId());
+		ProfileResult r = MVPApi.updateProfile(token, data);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isAuthInvalid(), "Status code is 401");
@@ -120,7 +120,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		data.setName("Dandelion" + System.nanoTime());
 		data.setWeight(defaultProfile.getWeight() + 1);
 
-		ProfileResult r = MVPApi.updateProfile(DefaultValues.ArbitraryToken, data, defaultProfile.getServerId());
+		ProfileResult r = MVPApi.updateProfile(DefaultValues.ArbitraryToken, data);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isAuthInvalid(), "Status code is 401");

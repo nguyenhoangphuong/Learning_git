@@ -3,6 +3,7 @@ package com.misfit.ta.backend.data.goal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
@@ -63,9 +64,9 @@ public class Goal {
 		}
 	}
 
-	public static Goal fromJson(JSONObject objJson) {
+	public Goal fromJson(JSONObject objJson) {
 		
-		Goal goal = new Goal();
+		Goal goal = this;
 		try {
 			if (!objJson.isNull("goalValue"))
 				goal.setValue(objJson.getDouble("goalValue"));
@@ -108,6 +109,55 @@ public class Goal {
 		}
 
 		return goal;
+	}
+	
+	public static Goal[] getGoals(ServiceResponse response) {
+
+		try {
+			
+			Goal[] goals = null;
+			JSONObject json = new JSONObject(response.getResponseString());
+			
+			if (!json.isNull("goals")) {
+				
+				JSONArray arrJson;
+				arrJson = json.getJSONArray("goals");
+				goals = new Goal[arrJson.length()];
+
+				for (int i = 0; i < goals.length; i++) {
+					JSONObject objJson;
+					objJson = arrJson.getJSONObject(i);
+					goals[i] = new Goal();
+					goals[i].fromJson(objJson);
+				}
+			}
+			
+			return goals;
+
+		} catch (JSONException e2) {
+			return null;
+		}	
+	}
+		
+	public static Goal getGoal(ServiceResponse response) {
+
+		try {
+			
+			JSONObject json = new JSONObject(response.getResponseString());
+			Goal goal = new Goal();
+			
+			if (!json.isNull("goal"))
+				return goal.fromJson(json.getJSONObject("goal"));
+			else if(!json.isNull("latest_goal"))
+				return goal.fromJson(json.getJSONObject("latest_goal"));
+			
+			return null;
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 	
 	

@@ -78,7 +78,9 @@ public class GoalsResult extends BaseResult {
 	}
 
 	private Goal formatResult(JSONObject objJson) {
-		return Goal.fromJson(objJson);
+		
+		Goal goal = new Goal();		
+		return goal.fromJson(objJson);
 	}
 
 }

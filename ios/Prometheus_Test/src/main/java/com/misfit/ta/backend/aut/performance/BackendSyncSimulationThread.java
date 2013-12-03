@@ -203,7 +203,7 @@ public class BackendSyncSimulationThread implements Runnable {
        newProfile.setWeight(profile.getWeight() + 1);
 //       newProfile.updatedAt += 100;
        s11 = System.currentTimeMillis();
-       result = MVPApi.updateProfile(token, newProfile, profile.getServerId());
+       result = MVPApi.updateProfile(token, newProfile);
        s12 = System.currentTimeMillis();
        ResultLogger.totalTime += s12 - s11;
        countRequest += 3;

@@ -19,6 +19,7 @@ public class BaseParams {
 	public BaseParams() {
 		// api key
 		this.addHeader("api_key", "76801581");
+		this.addHeader("platform", "ios");
 	}
 
 	// public functions to add params/headers

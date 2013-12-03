@@ -157,7 +157,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		newProfile.setHandle(TextTool.getRandomString(4, 8) + System.nanoTime());
 		
 		clock.tick("update profile");
-		result = MVPApi.updateProfile(token, newProfile, profile.getServerId());
+		result = MVPApi.updateProfile(token, newProfile);
 		clock.tock();
 		
 		// create statistic
