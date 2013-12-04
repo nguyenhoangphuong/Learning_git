@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.social.SocialUserBase;
 
 public class SocialTestHelpers {
@@ -30,12 +32,19 @@ public class SocialTestHelpers {
 		
 		// connect facebook
 		String misfitEmail = "mfwcqa.social@gmail.com";
-		String tungEmail = "tung.social.misfit@gmail.com";
-		String thyEmail = "thy.social.misfit@gmail.com";
+		String tungEmail = MVPApi.generateUniqueEmail();
+		String thyEmail = MVPApi.generateUniqueEmail();
 				
 		String misfitToken = MVPApi.signIn(misfitEmail, "qqqqqq").token;
-		String tungToken = MVPApi.signIn(tungEmail, "qqqqqq").token;
-		String thyToken = MVPApi.signIn(thyEmail, "qqqqqq").token;
+		String tungToken = MVPApi.signUp(tungEmail, "qqqqqq").token;
+		String thyToken = MVPApi.signUp(thyEmail, "qqqqqq").token;
+		
+		
+		// create profile
+		ProfileData tungProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis(), null);
+		ProfileData thyProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis(), null);
+		MVPApi.createProfile(tungToken, tungProfile);
+		MVPApi.createProfile(thyToken, thyProfile);
 
 		
 		// prepare test data
@@ -48,13 +57,13 @@ public class SocialTestHelpers {
 		misfitData.put("isUsingApp", true);
 		
 		HashMap<String, Object> tungData = new HashMap<String, Object>();
-		tungData.put("fuid", "529da91851381070cf003068");
+		tungData.put("fuid", MVPApi.getUserId(tungToken));
 		tungData.put("email", tungEmail);
 		tungData.put("token", tungToken);
 		tungData.put("isUsingApp", true);
 		
 		HashMap<String, Object> thyData = new HashMap<String, Object>();
-		thyData.put("fuid", "529da94a51381070cf003073");
+		thyData.put("fuid", MVPApi.getUserId(thyToken));
 		thyData.put("email", thyEmail);
 		thyData.put("token", thyToken);
 		thyData.put("isUsingApp", true);
@@ -65,12 +74,7 @@ public class SocialTestHelpers {
 		mapNameData.put("misfit", misfitData);
 		mapNameData.put("tung", tungData);
 		mapNameData.put("thy", thyData);
-		
-		
-		// delete all 'auto friends' from mfwcqa.social
-//		SocialAPI.deleteFriend(misfitToken, (String) tungData.get("fuid"));
-//		SocialAPI.deleteFriend(misfitToken, (String) thyData.get("fuid"));
-		
+				
 		return mapNameData;
 	}
 

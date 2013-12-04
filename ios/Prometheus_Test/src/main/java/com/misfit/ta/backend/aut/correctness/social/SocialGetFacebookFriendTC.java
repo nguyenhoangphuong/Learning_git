@@ -15,7 +15,7 @@ import com.misfit.ta.backend.data.social.SocialUserWithStatus;
 public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 	
 	// test methods
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "Excluded" })
 	public void GetFacebookFriends_NormalCase() {
 		
 		// query friends
@@ -59,7 +59,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		}
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "Excluded" })
 	public void GetFacebookFriends_ChangeRequestStatus() {
 		
 		// set up
@@ -138,7 +138,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		SocialAPI.deleteFriend(misfitToken, thyUid);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "Excluded" })
 	public void GetFacebookFriends_AfterFriendsChangeTheirProfiles() {	
 		
 		// now tung change his name
@@ -182,7 +182,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		}
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "Excluded" })
 	public void GetFacebookFriends_AfterDeleteFriends() {		
 		
 

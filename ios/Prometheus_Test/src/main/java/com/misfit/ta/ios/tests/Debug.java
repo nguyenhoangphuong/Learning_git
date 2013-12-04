@@ -46,16 +46,16 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-		int numberOfGoals = 7;
+		int numberOfGoals = 17;
 		
 		String[] emails = new String[] 
 				{
-					"nhhai16991@gmail.com",
+					"thinh@misfitwearables.com",
 				};
 		
 		String[] passwords = new String[]
 				{
-					"qqqqqq",
+					"misfit1",
 				};
 		
 		
@@ -69,7 +69,7 @@ public class Debug {
 			logger.info("GOAL OF USER: " + emails[i]);
 			logger.info("====================================================================================");
 			for(Goal goal : goals)
-				logger.info(goal.toJson());
+				logger.info("Points: " + goal.getProgressData().getPoints());
 			logger.info("====================================================================================\n\n");
 		}
 		

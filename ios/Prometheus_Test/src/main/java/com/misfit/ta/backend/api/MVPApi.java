@@ -334,6 +334,20 @@ public class MVPApi {
 		return result;
 	}
 
+	public static String getUserId(String token) {
+		
+		BaseResult result = userInfo(token);
+		try {
+			JSONObject json = new JSONObject(result.response.getResponseString());
+			return json.getJSONObject("user").getString("id");
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	// goal apis
 	public static GoalsResult searchGoal(String token, long startTime, long endTime, long modifiedSince) {
 		// prepare
