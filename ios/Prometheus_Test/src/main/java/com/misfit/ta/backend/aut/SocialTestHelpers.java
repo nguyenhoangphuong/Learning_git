@@ -31,18 +31,35 @@ public class SocialTestHelpers {
 		// all other accounts make friend with only mfwcqa.social
 		
 		// connect facebook
-		String misfitEmail = "mfwcqa.social@gmail.com";
+		String misfitEmail = MVPApi.generateUniqueEmail();
 		String tungEmail = MVPApi.generateUniqueEmail();
 		String thyEmail = MVPApi.generateUniqueEmail();
-				
-		String misfitToken = MVPApi.signIn(misfitEmail, "qqqqqq").token;
+						
+		String misfitToken = MVPApi.signUp(misfitEmail, "qqqqqq").token;
 		String tungToken = MVPApi.signUp(tungEmail, "qqqqqq").token;
 		String thyToken = MVPApi.signUp(thyEmail, "qqqqqq").token;
 		
+		String misfitUid = MVPApi.getUserId(misfitToken);
+		String tungUid = MVPApi.getUserId(tungToken);
+		String thyUid = MVPApi.getUserId(thyToken);
+		
+		String misfitHandle = "misfit_social_misfit_" + System.nanoTime();
+		String tungHandle = "tung_social_misfit_" + System.nanoTime();
+		String thyHandle = "thy_social_misfit_" + System.nanoTime();
+		
 		
 		// create profile
+		ProfileData misfitProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis(), null);
 		ProfileData tungProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis(), null);
 		ProfileData thyProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis(), null);
+		misfitProfile.setHandle(misfitHandle);
+		misfitProfile.setName("Misfit Social");
+		tungProfile.setHandle(tungHandle);
+		tungProfile.setName("Tung Social");
+		thyProfile.setHandle(thyHandle);
+		thyProfile.setName("Thy Social");
+		
+		MVPApi.createProfile(misfitToken, misfitProfile);
 		MVPApi.createProfile(tungToken, tungProfile);
 		MVPApi.createProfile(thyToken, thyProfile);
 
@@ -51,21 +68,27 @@ public class SocialTestHelpers {
 		HashMap<String, HashMap<String, Object>> mapNameData = new HashMap<String, HashMap<String,Object>>();
 		
 		HashMap<String, Object> misfitData = new HashMap<String, Object>();
-		misfitData.put("fuid", "528590845138104fa4000338");
+		misfitData.put("fuid", misfitUid);
 		misfitData.put("email", misfitEmail);
 		misfitData.put("token", misfitToken);
+		misfitData.put("handle", misfitHandle);
+		misfitData.put("name", "Misfit Social");
 		misfitData.put("isUsingApp", true);
 		
 		HashMap<String, Object> tungData = new HashMap<String, Object>();
-		tungData.put("fuid", MVPApi.getUserId(tungToken));
+		tungData.put("fuid", tungUid);
 		tungData.put("email", tungEmail);
 		tungData.put("token", tungToken);
+		tungData.put("handle", tungHandle);
+		tungData.put("name", "Tung Social");
 		tungData.put("isUsingApp", true);
 		
 		HashMap<String, Object> thyData = new HashMap<String, Object>();
-		thyData.put("fuid", MVPApi.getUserId(thyToken));
+		thyData.put("fuid", thyUid);
 		thyData.put("email", thyEmail);
 		thyData.put("token", thyToken);
+		thyData.put("handle", thyHandle);
+		thyData.put("name", "Thy Social");
 		thyData.put("isUsingApp", true);
 	
 		

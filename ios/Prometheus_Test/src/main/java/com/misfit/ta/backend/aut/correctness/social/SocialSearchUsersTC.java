@@ -43,7 +43,7 @@ public class SocialSearchUsersTC extends SocialAutomationBase {
 	public void SearchUsers_KeywordEqualsToSelfHandle() {
 		
 		// query self
-		BaseResult result = SocialAPI.searchSocialUsers(misfitToken, "misfit_social_misfit");
+		BaseResult result = SocialAPI.searchSocialUsers(misfitToken, misfitHandle);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		// cannot found yourself
@@ -54,15 +54,15 @@ public class SocialSearchUsersTC extends SocialAutomationBase {
 	public void SearchUsers_ValidKeyword() {
 		
 		// query friends
-		BaseResult result = SocialAPI.searchSocialUsers(misfitToken, "tung_social_misfit");
+		BaseResult result = SocialAPI.searchSocialUsers(misfitToken, tungHandle);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		// found 1
 		Assert.assertEquals(friends.length, 1, "Number of users found");
 
 		// check detail of return values
-		Assert.assertEquals(friends[0].getHandle(), "tung_social_misfit", "Handle");
-		Assert.assertEquals(friends[0].getName(), "Tung Social", "Name");
+		Assert.assertEquals(friends[0].getHandle(), tungHandle, "Handle");
+		Assert.assertEquals(friends[0].getName(), tungName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
 	}
 	
@@ -75,19 +75,19 @@ public class SocialSearchUsersTC extends SocialAutomationBase {
 		SocialAPI.sendFriendRequest(misfitToken, tungUid);
 
 		// misfit searchs tung
-		BaseResult result = SocialAPI.searchSocialUsers(misfitToken, "tung_social_misfit");
+		BaseResult result = SocialAPI.searchSocialUsers(misfitToken, tungHandle);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");
-		Assert.assertEquals(friends[0].getName(), "Tung Social", "Name");
+		Assert.assertEquals(friends[0].getName(), tungName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_REQUESTED_FROM_ME, "Status");
 
 		// tung searchs misfit
-		result = SocialAPI.searchSocialUsers(tungToken, "misfit_social_misfit");
+		result = SocialAPI.searchSocialUsers(tungToken, misfitHandle);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");
-		Assert.assertEquals(friends[0].getName(), "Misfit Social", "Name");
+		Assert.assertEquals(friends[0].getName(), misfitName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_REQUESTED_TO_ME, "Status");
 
 
@@ -97,19 +97,19 @@ public class SocialSearchUsersTC extends SocialAutomationBase {
 		SocialAPI.ignoreFriendRequest(tungToken, misfitUid);
 
 		// misfit searchs tung
-		result = SocialAPI.searchSocialUsers(misfitToken, "tung_social_misfit");
+		result = SocialAPI.searchSocialUsers(misfitToken, tungHandle);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");
-		Assert.assertEquals(friends[0].getName(), "Tung Social", "Name");
+		Assert.assertEquals(friends[0].getName(), tungName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_REQUESTED_FROM_ME, "Status");
 
 		// tung searchs misfit
-		result = SocialAPI.searchSocialUsers(tungToken, "misfit_social_misfit");
+		result = SocialAPI.searchSocialUsers(tungToken, misfitHandle);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");
-		Assert.assertEquals(friends[0].getName(), "Misfit Social", "Name");
+		Assert.assertEquals(friends[0].getName(), misfitName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_IGNORED, "Status");
 
 		// cancel request misfit --> tung
@@ -123,19 +123,19 @@ public class SocialSearchUsersTC extends SocialAutomationBase {
 		SocialAPI.acceptFriendRequest(thyToken, misfitUid);
 
 		// misfit searchs thy
-		result = SocialAPI.searchSocialUsers(misfitToken, "thy_social_misfit");
+		result = SocialAPI.searchSocialUsers(misfitToken, thyHandle);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");
-		Assert.assertEquals(friends[0].getName(), "Thy Social", "Name");
+		Assert.assertEquals(friends[0].getName(), thyName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_APPROVED, "Status");
 
 		// thy searchs misfit
-		result = SocialAPI.searchSocialUsers(thyToken, "misfit_social_misfit");
+		result = SocialAPI.searchSocialUsers(thyToken, misfitHandle);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");
-		Assert.assertEquals(friends[0].getName(), "Misfit Social", "Name");
+		Assert.assertEquals(friends[0].getName(), misfitName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_APPROVED, "Status");
 
 		
@@ -145,19 +145,19 @@ public class SocialSearchUsersTC extends SocialAutomationBase {
 		SocialAPI.deleteFriend(thyToken, misfitUid);
 
 		// misfit searchs thy
-		result = SocialAPI.searchSocialUsers(misfitToken, "thy_social_misfit");
+		result = SocialAPI.searchSocialUsers(misfitToken, thyHandle);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");
-		Assert.assertEquals(friends[0].getName(), "Thy Social", "Name");
+		Assert.assertEquals(friends[0].getName(), thyName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
 
 		// thy searchs misfit
-		result = SocialAPI.searchSocialUsers(thyToken, "misfit_social_misfit");
+		result = SocialAPI.searchSocialUsers(thyToken, misfitHandle);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");
-		Assert.assertEquals(friends[0].getName(), "Misfit Social", "Name");
+		Assert.assertEquals(friends[0].getName(), misfitName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
 	}
 
@@ -166,12 +166,12 @@ public class SocialSearchUsersTC extends SocialAutomationBase {
 		
 		// now tung changes his name
 		ProfileData tungProfile = MVPApi.getProfile(tungToken).profile;
-		String tungOldName = "Tung Social";
+		String tungOldName = tungName;
 		tungProfile.setName("Tung - " + System.nanoTime());
 		MVPApi.updateProfile(tungToken, tungProfile);
 
 		// misfit searchs tung
-		BaseResult result = SocialAPI.searchSocialUsers(misfitToken, "tung_social_misfit");
+		BaseResult result = SocialAPI.searchSocialUsers(misfitToken, tungHandle);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");
@@ -183,7 +183,7 @@ public class SocialSearchUsersTC extends SocialAutomationBase {
 		MVPApi.updateProfile(tungToken, tungProfile);
 		
 		// misfit searchs tung
-		result = SocialAPI.searchSocialUsers(misfitToken, "tung_social_misfit");
+		result = SocialAPI.searchSocialUsers(misfitToken, tungHandle);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of users found");

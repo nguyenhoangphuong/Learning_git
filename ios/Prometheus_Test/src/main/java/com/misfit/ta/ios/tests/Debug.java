@@ -46,32 +46,34 @@ public class Debug {
 	
 	public static void main(String[] args) {
 		
-		int numberOfGoals = 17;
+//		int numberOfGoals = 17;
+//		
+//		String[] emails = new String[] 
+//				{
+//					"thinh@misfitwearables.com",
+//				};
+//		
+//		String[] passwords = new String[]
+//				{
+//					"misfit1",
+//				};
+//		
+//		
+//		for(int i = 0; i < emails.length; i++) {
+//			
+//			long startTime = MVPApi.getDayStartEpoch(System.currentTimeMillis() / 1000 - numberOfGoals * 3600 * 24);
+//			String token = MVPApi.signIn(emails[i], passwords[i]).token;
+//			
+//			Goal[] goals = MVPApi.searchGoal(token, startTime, Integer.MAX_VALUE, 0).goals;
+//			
+//			logger.info("GOAL OF USER: " + emails[i]);
+//			logger.info("====================================================================================");
+//			for(Goal goal : goals)
+//				logger.info("Points: " + goal.getProgressData().getPoints());
+//			logger.info("====================================================================================\n\n");
+//		}
 		
-		String[] emails = new String[] 
-				{
-					"thinh@misfitwearables.com",
-				};
-		
-		String[] passwords = new String[]
-				{
-					"misfit1",
-				};
-		
-		
-		for(int i = 0; i < emails.length; i++) {
-			
-			long startTime = MVPApi.getDayStartEpoch(System.currentTimeMillis() / 1000 - numberOfGoals * 3600 * 24);
-			String token = MVPApi.signIn(emails[i], passwords[i]).token;
-			
-			Goal[] goals = MVPApi.searchGoal(token, startTime, Integer.MAX_VALUE, 0).goals;
-			
-			logger.info("GOAL OF USER: " + emails[i]);
-			logger.info("====================================================================================");
-			for(Goal goal : goals)
-				logger.info("Points: " + goal.getProgressData().getPoints());
-			logger.info("====================================================================================\n\n");
-		}
+		logger.info(MVPApi.getUserId(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token));
 		
 	}
 }

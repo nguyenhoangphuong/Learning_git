@@ -2,16 +2,15 @@ package com.misfit.ta.backend.aut.correctness.social;
 
 import java.util.List;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
-import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.SocialAutomationBase;
 import com.misfit.ta.backend.aut.SocialTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.social.Leaderboard;
 import com.misfit.ta.backend.data.social.SocialUserLeaderBoardEvent;
@@ -33,12 +32,13 @@ public class SocialLeaderBoardTC extends SocialAutomationBase {
 	protected Goal getOrCreateEmptyGoal(String token, long timestamp) {
 		
 		long startDayEpoch = MVPApi.getDayStartEpoch(timestamp);
-		Goal[] goals = MVPApi.searchGoal(token, startDayEpoch, Integer.MAX_VALUE, 0).goals;
+		long endDayEpoch = MVPApi.getDayEndEpoch(timestamp);
+		Goal[] goals = MVPApi.searchGoal(token, startDayEpoch, endDayEpoch, 0).goals;
 		
 		// if no result, create one with progress == 0
 		if(goals == null || goals.length == 0) {
 			
-			Goal goal = DefaultValues.DefaultGoal();
+			Goal goal = DataGenerator.generateRandomGoal(timestamp, null);
 			goal.setValue(1000 * 2.5d);
 			goal.getProgressData().setPoints(0d);
 			goal.getProgressData().setCalorie(0d);
@@ -112,14 +112,6 @@ public class SocialLeaderBoardTC extends SocialAutomationBase {
 		SocialAPI.acceptFriendRequest(thyToken, misfitUid);
 	}
 	
-	@AfterClass(alwaysRun = true)
-	public void afterClass() {
-		
-		// delete friends
-		SocialAPI.deleteFriend(misfitToken, tungUid);
-		SocialAPI.deleteFriend(misfitToken, thyUid);
-	}
-	
 
     // test methods
     @Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "Leaderboard", "TodayEvents" })
@@ -139,15 +131,15 @@ public class SocialLeaderBoardTC extends SocialAutomationBase {
         SocialTestHelpers.printUsers(records);
         
         // check leaderboard detail
-        Assert.assertEquals(records[0].getName(), "Misfit Social", "1st user's name");
+        Assert.assertEquals(records[0].getName(), misfitName, "1st user's name");
         Assert.assertEquals(records[0].getUid(), misfitUid, "1st user's uid");
         Assert.assertEquals(records[0].getPoints(), (Integer)500, "1st user's point");
         
-        Assert.assertEquals(records[1].getName(), "Tung Social", "2nd user's name");
+        Assert.assertEquals(records[1].getName(), tungName, "2nd user's name");
         Assert.assertEquals(records[1].getUid(), tungUid, "2nd user's uid");
         Assert.assertEquals(records[1].getPoints(), (Integer)300, "2nd user's point");
         
-        Assert.assertEquals(records[2].getName(), "Thy Social", "3rd user's name");
+        Assert.assertEquals(records[2].getName(), thyName, "3rd user's name");
         Assert.assertEquals(records[2].getUid(), thyUid, "3rd user's uid");
         Assert.assertEquals(records[2].getPoints(), (Integer)100, "3rd user's point");
         
@@ -164,15 +156,15 @@ public class SocialLeaderBoardTC extends SocialAutomationBase {
         SocialTestHelpers.printUsers(records);
         
         // check leaderboard detail
-        Assert.assertEquals(records[0].getName(), "Tung Social", "1st user's name");
+        Assert.assertEquals(records[0].getName(), tungName, "1st user's name");
         Assert.assertEquals(records[0].getUid(), tungUid, "1st user's uid");
         Assert.assertEquals(records[0].getPoints(), (Integer)601, "1st user's point");
         
-        Assert.assertEquals(records[1].getName(), "Thy Social", "2nd user's name");
+        Assert.assertEquals(records[1].getName(), thyName, "2nd user's name");
         Assert.assertEquals(records[1].getUid(), thyUid, "2nd user's uid");
         Assert.assertEquals(records[1].getPoints(), (Integer)600, "2nd user's point");
         
-        Assert.assertEquals(records[2].getName(), "Misfit Social", "3rd user's name");
+        Assert.assertEquals(records[2].getName(), misfitName, "3rd user's name");
         Assert.assertEquals(records[2].getUid(), misfitUid, "3rd user's uid");
         Assert.assertEquals(records[2].getPoints(), (Integer)500, "3rd user's point");
     }
@@ -184,6 +176,9 @@ public class SocialLeaderBoardTC extends SocialAutomationBase {
     	updateGoalWithNewPoint(misfitToken, misfitYesterdayGoal, 500);
     	updateGoalWithNewPoint(tungToken, tungYesterdayGoal, 300);
     	updateGoalWithNewPoint(thyToken, thyYesterdayGoal, 100);
+    	
+    	// update today goal to trigger leaderboard update
+        updateGoalWithNewPoint(misfitToken, misfitTodayGoal, 100);
 
         // query leaderboard
         BaseResult result = SocialAPI.getLeaderboardInfo(misfitToken);
@@ -194,15 +189,15 @@ public class SocialLeaderBoardTC extends SocialAutomationBase {
         SocialTestHelpers.printUsers(records);
         
         // check leaderboard detail
-        Assert.assertEquals(records[0].getName(), "Misfit Social", "1st user's name");
+        Assert.assertEquals(records[0].getName(), misfitName, "1st user's name");
         Assert.assertEquals(records[0].getUid(), misfitUid, "1st user's uid");
         Assert.assertEquals(records[0].getPoints(), (Integer)500, "1st user's point");
         
-        Assert.assertEquals(records[1].getName(), "Tung Social", "2nd user's name");
+        Assert.assertEquals(records[1].getName(), tungName, "2nd user's name");
         Assert.assertEquals(records[1].getUid(), tungUid, "2nd user's uid");
         Assert.assertEquals(records[1].getPoints(), (Integer)300, "2nd user's point");
         
-        Assert.assertEquals(records[2].getName(), "Thy Social", "3rd user's name");
+        Assert.assertEquals(records[2].getName(), thyName, "3rd user's name");
         Assert.assertEquals(records[2].getUid(), thyUid, "3rd user's uid");
         Assert.assertEquals(records[2].getPoints(), (Integer)100, "3rd user's point");
     }

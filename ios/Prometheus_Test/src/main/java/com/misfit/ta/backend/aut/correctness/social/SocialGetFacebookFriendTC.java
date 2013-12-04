@@ -51,8 +51,8 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		// check detail of return values
 		for(SocialUserWithStatus friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getHandle(), "tung_social_misfit", "Handle");
-				Assert.assertEquals(friend.getName(), "Tung Social", "Name");
+				Assert.assertEquals(friend.getHandle(), tungHandle, "Handle");
+				Assert.assertEquals(friend.getName(), tungName, "Name");
 				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
 				break;
 			}
@@ -143,7 +143,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		
 		// now tung change his name
 		ProfileData tungProfile = MVPApi.getProfile(tungToken).profile;
-		String tungOldName = "Tung Social";
+		String tungOldName = tungName;
 		tungProfile.setName("Tung - " + System.nanoTime());
 		MVPApi.updateProfile(tungToken, tungProfile);
 
@@ -155,7 +155,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		SocialTestHelpers.printUsers(friends);
 		for(SocialUserWithStatus friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getHandle(), "tung_social_misfit", "Handle");
+				Assert.assertEquals(friend.getHandle(), tungHandle, "Handle");
 				Assert.assertEquals(friend.getName(), tungProfile.getName(), "Name");
 				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
 				break;
@@ -174,7 +174,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		SocialTestHelpers.printUsers(friends);
 		for(SocialUserWithStatus friend : friends) {
 			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getHandle(), "tung_social_misfit", "Handle");
+				Assert.assertEquals(friend.getHandle(), tungHandle, "Handle");
 				Assert.assertEquals(friend.getName(), tungOldName, "Name");
 				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
 				break;
