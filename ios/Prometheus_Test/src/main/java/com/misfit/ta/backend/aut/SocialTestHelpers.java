@@ -48,13 +48,13 @@ public class SocialTestHelpers {
 		misfitData.put("isUsingApp", true);
 		
 		HashMap<String, Object> tungData = new HashMap<String, Object>();
-		tungData.put("fuid", "52971eed513810839d000249");
+		tungData.put("fuid", "529da91851381070cf003068");
 		tungData.put("email", tungEmail);
 		tungData.put("token", tungToken);
 		tungData.put("isUsingApp", true);
 		
 		HashMap<String, Object> thyData = new HashMap<String, Object>();
-		thyData.put("fuid", "5285e645513810db3e0002cc");
+		thyData.put("fuid", "529da94a51381070cf003073");
 		thyData.put("email", thyEmail);
 		thyData.put("token", thyToken);
 		thyData.put("isUsingApp", true);
