@@ -73,7 +73,8 @@ public class Debug {
 //			logger.info("====================================================================================\n\n");
 //		}
 		
-		logger.info(MVPApi.getUserId(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token));
+//		logger.info(MVPApi.getUserId(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token));
+		BackendHelper.link(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token, "science020");
 		
 	}
 }

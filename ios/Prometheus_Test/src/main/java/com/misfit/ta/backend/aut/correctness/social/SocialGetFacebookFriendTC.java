@@ -1,65 +1,84 @@
 package com.misfit.ta.backend.aut.correctness.social;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
-import com.misfit.ta.backend.aut.SocialAutomationBase;
+import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.SocialTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.profile.ProfileData;
-import com.misfit.ta.backend.data.social.SocialUserBase;
 import com.misfit.ta.backend.data.social.SocialUserWithStatus;
 
-public class SocialGetFacebookFriendTC extends SocialAutomationBase {
+public class SocialGetFacebookFriendTC extends BackendAutomation {
+	
+	// fields
+	protected String misfitToken;
+	protected String tungToken;
+	protected String thyToken;
+	
+	protected String misfitUid;
+	protected String tungUid;
+	protected String thyUid;
+	
+	protected String misfitHandle;
+	protected String tungHandle;
+	protected String thyHandle;
+	
+	protected String misfitName;
+	protected String tungName;
+	protected String thyName;
+	
+	
+	// set up class
+	@BeforeClass(alwaysRun = true)
+    public void beforeClass() {
+		
+		misfitToken = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
+		tungToken = MVPApi.signIn("tung+1@misfitwearables.com", "qqqqqq").token;
+		thyToken = MVPApi.signIn("mfwcqa@gmail.com", "qqqqqq").token;
+		
+		misfitUid = MVPApi.getUserId(misfitToken);
+		tungUid = MVPApi.getUserId(tungToken);
+		thyUid = MVPApi.getUserId(thyToken);
+		
+		misfitHandle = "nhhai";
+		tungHandle = "tung_plus1";
+		thyHandle = "mfwcqa";
+		
+		misfitName = "NHHai";
+		tungName = "Tung+1";
+		thyName = "mfwcqa";
+	}
+	
 	
 	// test methods
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
 	public void GetFacebookFriends_NormalCase() {
 		
 		// query friends
 		BaseResult result = SocialAPI.getFacebookFriends(misfitToken);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 		SocialTestHelpers.printUsers(friends);
-		
-		int count = -1;
-		for(String key : mapNames) {
 			
-			boolean isUsingApp = (Boolean) mapNameData.get(key).get("isUsingApp");
-			if(isUsingApp)
-				count++;
-		}
-		
-		Assert.assertEquals(friends.length, count, "Number of facebook users");
+		Assert.assertEquals(friends.length, 2, "Number of facebook users");
 
 		// make sure the result only contains only users who use Shine app
-		for(SocialUserBase friend : friends) {
-			for(String key : mapNames) {
-
-				String uid = (String) mapNameData.get(key).get("fuid");
-				boolean isUsingApp = (Boolean) mapNameData.get(key).get("isUsingApp");
-
-				if(friend.getUid().equals(uid)) {
-					Assert.assertTrue(isUsingApp, "User '" + key + "' is using app");
-					break;
-				}
-
-			}
-		}
-
-		// check detail of return values
-		for(SocialUserWithStatus friend : friends) {
-			if(friend.getUid().equals(tungUid)) {
-				Assert.assertEquals(friend.getHandle(), tungHandle, "Handle");
-				Assert.assertEquals(friend.getName(), tungName, "Name");
-				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
-				break;
-			}
-		}
+		Assert.assertEquals(friends[0].getUid(), thyUid, "Handle");
+		Assert.assertEquals(friends[0].getHandle(), thyHandle, "Handle");
+		Assert.assertEquals(friends[0].getName(), thyName, "Name");
+		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
+		
+		Assert.assertEquals(friends[1].getUid(), tungUid, "Handle");
+		Assert.assertEquals(friends[1].getHandle(), tungHandle, "Handle");
+		Assert.assertEquals(friends[1].getName(), tungName, "Name");
+		Assert.assertEquals(friends[1].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
+		
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
 	public void GetFacebookFriends_ChangeRequestStatus() {
 		
 		// set up
@@ -138,7 +157,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		SocialAPI.deleteFriend(misfitToken, thyUid);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
 	public void GetFacebookFriends_AfterFriendsChangeTheirProfiles() {	
 		
 		// now tung change his name
@@ -151,6 +170,10 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		BaseResult result = SocialAPI.getFriends(misfitToken);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 
+		// now tung change back his name (must do this if you want to run this test again)
+		tungProfile.setName(tungOldName);
+		MVPApi.updateProfile(tungToken, tungProfile);
+				
 		// check updated result
 		SocialTestHelpers.printUsers(friends);
 		for(SocialUserWithStatus friend : friends) {
@@ -161,10 +184,6 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 				break;
 			}
 		}
-
-		// now tung change back his name (must do this if you want to run this test again)
-		tungProfile.setName(tungOldName);
-		MVPApi.updateProfile(tungToken, tungProfile);
 
 		// query again
 		result = SocialAPI.getFriends(misfitToken);
@@ -182,7 +201,7 @@ public class SocialGetFacebookFriendTC extends SocialAutomationBase {
 		}
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
 	public void GetFacebookFriends_AfterDeleteFriends() {		
 		
 

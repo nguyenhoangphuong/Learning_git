@@ -13,7 +13,6 @@ import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.profile.ProfileData;
 
 public class SocialBadWordsCheckingTC extends BackendAutomation {
-
 	
 	// test methods
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "BadWordsChecking" })
@@ -85,4 +84,5 @@ public class SocialBadWordsCheckingTC extends BackendAutomation {
 		Assert.assertEquals(notSoBadWordsFailed.size(), 0, "Number of not so bad words that were not allowed");
 		
 	}
+
 }

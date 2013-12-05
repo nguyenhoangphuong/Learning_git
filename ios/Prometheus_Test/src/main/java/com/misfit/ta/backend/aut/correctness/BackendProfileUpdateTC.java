@@ -5,12 +5,14 @@ import org.graphwalker.Util;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.profile.DisplayUnit;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
 import com.misfit.ta.backend.api.*;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
+import com.misfit.ta.utils.TextTool;
 
 public class BackendProfileUpdateTC extends BackendAutomation {
 
@@ -25,7 +27,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		// sign up and create profile
 		email = MVPApi.generateUniqueEmail();
 		String token = MVPApi.signUp(email, password).token;
-		defaultProfile = DefaultValues.DefaultProfile();
+		defaultProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis(), null);
 		MVPApi.createProfile(token, defaultProfile);
 	}
 
@@ -126,4 +128,42 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		Assert.assertTrue(r.isAuthInvalid(), "Status code is 401");
 	}
 
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
+	public void UpdateProfileWithInvalidName() {
+		
+		// empty name
+		String token = MVPApi.signIn(email, password).token;
+		defaultProfile.setName("");
+		
+		ProfileResult r = MVPApi.updateProfile(token, defaultProfile);
+		r.printKeyPairsValue();
+
+		Assert.assertEquals(r.statusCode, 400, "Status code");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
+	public void UpdateNewProfileWithInvalidHandle() {
+
+		// empty handle
+		String token = MVPApi.signIn(email, password).token;
+		defaultProfile.setHandle("");
+		
+		ProfileResult r = MVPApi.updateProfile(token, defaultProfile);
+		r.printKeyPairsValue();
+
+		Assert.assertEquals(r.statusCode, 400, "Status code");
+		
+		// short handle
+		defaultProfile.setHandle("short");
+
+		r = MVPApi.updateProfile(token, defaultProfile);
+		r.printKeyPairsValue();
+		
+		// update profile in case of server allows "short" (to run regression test)
+		defaultProfile.setHandle(TextTool.getRandomString(7, 10));
+		MVPApi.updateProfile(token, defaultProfile);
+
+		Assert.assertEquals(r.statusCode, 400, "Status code");
+	}
+	
 }

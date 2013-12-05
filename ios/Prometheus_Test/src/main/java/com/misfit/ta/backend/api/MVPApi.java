@@ -48,7 +48,7 @@ public class MVPApi {
 	public static String HTTP_DELETE = "DELETE";
 	
 	public static int CACHE_TRY_TIME = 10;
-	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.52r";
+	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.53r";
 
 	// request helpers
 	static protected ServiceResponse request(String type, String url, int port, BaseParams requestInf) {

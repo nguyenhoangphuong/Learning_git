@@ -3,19 +3,21 @@ package com.misfit.ta.backend.aut.correctness;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
 import com.misfit.ta.backend.api.*;
 import com.misfit.ta.backend.aut.BackendAutomation;
-import com.misfit.ta.backend.aut.DefaultValues;
+import com.misfit.ta.utils.TextTool;
 
 public class BackendProfileCreateTC extends BackendAutomation {
 
 	String password = "qwerty1";
-	ProfileData defaultProfile = DefaultValues.DefaultProfile();
+	ProfileData defaultProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
 	public void CreateNewProfile() {
+		
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
 		ProfileResult r = MVPApi.createProfile(token, defaultProfile);
 		r.printKeyPairsValue();
@@ -53,4 +55,45 @@ public class BackendProfileCreateTC extends BackendAutomation {
 		Assert.assertTrue(r.isAuthInvalid(), "Status code is 401");
 	}
 
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
+	public void CreateNewProfileWithInvalidName() {
+		
+		ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
+		profile.setName("");
+		
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		ProfileResult r = MVPApi.createProfile(token, profile);
+		r.printKeyPairsValue();
+
+		Assert.assertEquals(r.statusCode, 400, "Status code");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
+	public void CreateNewProfileWithInvalidHandle() {
+
+		// empty handle
+		ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
+		profile.setHandle("");
+		
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		ProfileResult r = MVPApi.createProfile(token, profile);
+		r.printKeyPairsValue();
+
+		Assert.assertEquals(r.statusCode, 400, "Status code");
+		
+		// short handle
+		profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
+		profile.setHandle("short");
+		
+		token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		r = MVPApi.createProfile(token, profile);
+		r.printKeyPairsValue();
+		
+		// update profile in case of server allows "short" (to run regression test)
+		profile.setHandle(TextTool.getRandomString(7, 10));
+		MVPApi.updateProfile(token, profile);
+
+		Assert.assertEquals(r.statusCode, 400, "Status code");
+	}
+	
 }
