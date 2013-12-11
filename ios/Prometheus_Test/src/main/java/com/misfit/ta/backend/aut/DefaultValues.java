@@ -1,14 +1,9 @@
 package com.misfit.ta.backend.aut;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Random;
 
 import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.backend.data.goal.ProgressData;
-import com.misfit.ta.backend.data.goal.TripleTapData;
 import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.DisplayUnit;
@@ -19,7 +14,6 @@ import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.CustomTimelineItemData;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
-import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.utils.TextTool;
 
 public class DefaultValues {
@@ -89,41 +83,7 @@ public class DefaultValues {
 		return p;
 	}
 
-	// goal
-	static public Goal CreateGoal(long timestamp) {
-		
-		ProgressData progressData = new ProgressData();
-		progressData.setFullBmrCalorie(1500);
-		List<TripleTapData> tripleTaps = new ArrayList<TripleTapData>();
-		tripleTaps.add(new TripleTapData(timestamp, MVPEnums.ACTIVITY_SLEEPING));
-		Goal g = new Goal();
-
-		g.setLocalId("goal-" + MVPApi.generateLocalId());
-		g.setUpdatedAt(timestamp);
-
-		g.setValue(1000.0);
-		g.setStartTime(MVPApi.getDayStartEpoch(timestamp));
-		g.setEndTime(MVPApi.getDayEndEpoch(timestamp));
-		g.setTimeZoneOffsetInSeconds(7 * 3600);
-		g.setProgressData(progressData);
-		g.setTripleTapTypeChanges(tripleTaps);
-
-		return g;
-	}
 	
-	static public Goal DefaultGoal() {
-
-		return CreateGoal(System.currentTimeMillis() / 1000);
-	}
-	
-	static public Goal GoalForDate(int date, int month, int year) {
-
-		Calendar cal = Calendar.getInstance();
-		cal.set(year, month, date);
-
-		return CreateGoal(cal.getTimeInMillis() / 1000);
-	}
-
 	// pedomeer
 	static public Pedometer RandomPedometer() {
 		

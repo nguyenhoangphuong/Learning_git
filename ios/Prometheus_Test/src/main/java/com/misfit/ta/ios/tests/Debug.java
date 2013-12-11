@@ -1,6 +1,7 @@
 package com.misfit.ta.ios.tests;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import com.misfit.ta.backend.data.social.SocialUserWithStatus;
 import com.misfit.ta.backend.data.social.SocialUserWorldEvent;
 import com.misfit.ta.backend.data.sync.SyncFileData;
 import com.misfit.ta.backend.data.sync.SyncLog;
+import com.misfit.ta.backend.data.sync.SyncRawData;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.backend.seed.GenerateUserSeed;
@@ -37,6 +39,7 @@ import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timeline;
+import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.TextTool;
 import com.sun.jna.platform.unix.X11.XClientMessageEvent.Data;
 
@@ -44,7 +47,16 @@ public class Debug {
 	
 	protected static Logger logger = Util.setupLogger(Debug.class);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		
+
+		File file= Files.getFile("rawdata/0101");
+		String rawData = FileUtils.readFileToString(file);
+		SyncRawData syncRawData = new SyncRawData(rawData);
+		
+		logger.info(rawData.equals(syncRawData.toRawDataString()));
+		logger.info(syncRawData.toRawDataString());
+		
 		
 //		int numberOfGoals = 17;
 //		
@@ -74,7 +86,7 @@ public class Debug {
 //		}
 		
 //		logger.info(MVPApi.getUserId(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token));
-		BackendHelper.link(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token, "science020");
+//		BackendHelper.link(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token, "science020");
 		
 	}
 }

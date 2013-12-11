@@ -338,8 +338,8 @@ public class DataGenerator {
 		data.setFileData(fileData);
 
 		SyncLog syncLog = new SyncLog();
-		syncLog.setStartTime(timestamp);
-		syncLog.setEndTime(timestamp + 20);
+		syncLog.setStartTime(timestamp - 20);
+		syncLog.setEndTime(timestamp);
 		syncLog.setFirmwareRevisionString(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
 		syncLog.setSerialNumberString(TextTool.getRandomString(10, 10));
 		syncLog.setLog("AUTO GENRATED SYNCLOG");

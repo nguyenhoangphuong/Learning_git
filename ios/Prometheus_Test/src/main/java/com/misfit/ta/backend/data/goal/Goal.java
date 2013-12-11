@@ -1,12 +1,16 @@
 package com.misfit.ta.backend.data.goal;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
+import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.common.MVPEnums;
 
 public class Goal {
 
@@ -158,6 +162,35 @@ public class Goal {
 			return null;
 		}
 
+	}
+	
+	public static Goal getDefaultGoal() {
+		
+		return getDefaultGoal(System.currentTimeMillis() / 1000);
+	}
+	
+	public static Goal getDefaultGoal(long timestamp) {
+		
+		TimeZone tz = TimeZone.getDefault();
+		Date now = new Date();
+		int offsetFromUtc = tz.getOffset(now.getTime()) / 1000;
+		
+		List<TripleTapData> tripleTapTypeChanges = new ArrayList<TripleTapData>();
+		TripleTapData tripleTapDefault = new TripleTapData();
+		tripleTapDefault.setActivityType(MVPEnums.ACTIVITY_SLEEPING);
+		tripleTapDefault.setTimestamp(timestamp);
+		tripleTapTypeChanges.add(tripleTapDefault);
+		
+		Goal goal = new Goal();
+		goal.setLocalId("goal-" + MVPApi.generateLocalId());
+		goal.setValue(1000 * 2.5);
+		goal.setStartTime(MVPApi.getDayStartEpoch(timestamp));
+		goal.setEndTime(MVPApi.getDayEndEpoch(timestamp));
+		goal.setTimeZoneOffsetInSeconds(offsetFromUtc);
+		goal.setProgressData(ProgressData.getDefaultProgressData());
+		goal.setTripleTapTypeChanges(tripleTapTypeChanges);		
+		
+		return goal;
 	}
 	
 	

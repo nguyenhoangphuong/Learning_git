@@ -3,6 +3,7 @@ package com.misfit.ta.backend.data.statistics;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
+import com.misfit.ta.backend.api.MVPApi;
 
 public class Statistics {
 
@@ -86,6 +87,18 @@ public class Statistics {
 		} catch (JSONException e) {
 			return null;
 		}
+	}
+
+	public static Statistics getDefaultStatistics() {
+		
+		Statistics statistics = new Statistics();
+		statistics.setLifetimeDistance(0d);
+		statistics.setBestStreak(0);
+		statistics.setLocalId("statistics-" + MVPApi.generateLocalId());
+		statistics.setTotalGoalHit(0);
+		statistics.setPersonalRecords(new PersonalRecord());
+		
+		return statistics;
 	}
 
 	

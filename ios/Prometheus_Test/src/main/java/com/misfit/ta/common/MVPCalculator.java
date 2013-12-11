@@ -30,7 +30,7 @@ public class MVPCalculator {
     	factorCalculationMap.put(MVPEnums.ACTIVITY_SOCCER, PPS_SOCCER);
     }
     
-	public static double calculateMiles(int steps, int mins, float heightInInches) {
+	public static double calculateMiles(int steps, int mins, double heightInInches) {
 
 		double SR = steps * 1d / mins;
 		double RSL = (SR < 80 ? 0.33d : (SR <= 140 ? 0.002 * (SR - 80) + 0.33d : (SR <= 186 ? 0.0085 * (SR - 140) + 0.45 : 0.001 * (SR - 186) + 0.841)));

@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
-import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.goal.Goal;
@@ -27,7 +26,7 @@ public class BackendGoalOTF extends BackendAutomation {
 	public void UpdateGoalInsufficientParams() {
 		
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
-		Goal goal = MVPApi.createGoal(token, DefaultValues.DefaultGoal()).goals[0];
+		Goal goal = MVPApi.createGoal(token, Goal.getDefaultGoal()).goals[0];
 		BaseParams params = new BaseParams();
 		params.addHeader("auth_token", token);
 		

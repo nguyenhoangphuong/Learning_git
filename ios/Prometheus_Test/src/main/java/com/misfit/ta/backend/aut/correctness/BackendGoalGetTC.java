@@ -1,5 +1,7 @@
 package com.misfit.ta.backend.aut.correctness;
 
+import java.util.Calendar;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -21,8 +23,12 @@ public class BackendGoalGetTC extends BackendAutomation {
 	public void setUp() {
 		// sign up and create goals
 		String token = MVPApi.signUp(email, password).token;
-		for(int i = 1; i <= 5; i++)
-			MVPApi.createGoal(token, DefaultValues.GoalForDate(i, month, year));
+		for(int i = 1; i <= 5; i++) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, month, i);
+			long timestamp = calendar.getTimeInMillis() / 1000;
+			MVPApi.createGoal(token, Goal.getDefaultGoal(timestamp));
+		}
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "goal" })

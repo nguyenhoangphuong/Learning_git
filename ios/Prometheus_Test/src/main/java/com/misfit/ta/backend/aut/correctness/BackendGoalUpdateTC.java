@@ -15,7 +15,7 @@ public class BackendGoalUpdateTC extends BackendAutomation {
 
 	String email = MVPApi.generateUniqueEmail();
 	String password = "qwerty1";
-	Goal defaultGoal = DefaultValues.DefaultGoal();
+	Goal defaultGoal = Goal.getDefaultGoal();
 
 	@BeforeClass(alwaysRun = true)
 	public void setUp() {
@@ -94,7 +94,7 @@ public class BackendGoalUpdateTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "goal" })
 	public void UpdateGoalNoneExisted() {
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
-		Goal g = DefaultValues.DefaultGoal();
+		Goal g = Goal.getDefaultGoal();
 		g.setUpdatedAt(defaultGoal.getUpdatedAt() + 1);
 		g.setProgressData(new ProgressData(600, 8000, 5000, 800));
 		g.setLocalId("noneexistgoal");

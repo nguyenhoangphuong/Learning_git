@@ -416,6 +416,25 @@ public class MVPApi {
 		return result;
 	}
 
+	public static BaseResult pushRawData(String token, String goalId, GoalRawData rawData, int offsetMinute) {
+		
+		// prepare
+		String url = baseAddress + "goals/" + goalId + "/raw_data";
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addHeader("platform", "android");
+		requestInf.addParam("minute_offset", offsetMinute + "");
+		requestInf.addParam("data", rawData.toJson().toString());
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.post(url, port, requestInf);
+
+		// format data
+		GoalsResult result = new GoalsResult(response);
+		return result;
+	}
+	
 	// graph apis
 	public static BaseResult createGraphItem(String token, GraphItem item) {
 
@@ -708,9 +727,19 @@ public class MVPApi {
 	
 	public static BaseResult pushSyncLog(String token, SyncLog syncLog) {
 		
+		return pushSyncLog(token, syncLog, null);
+	}
+
+	public static BaseResult pushSyncLog(String token, SyncLog syncLog, String platform) {
+		
 		String url = baseAddress + "sync_logs";
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
+		if(platform != null) {
+			request.removeHeader("platform");
+			request.addHeader("platform", platform);
+		}
+			
 		request.addParam("log", syncLog.toJson().toString());
 
 		ServiceResponse response = MVPApi.post(url, port, request);
@@ -718,7 +747,7 @@ public class MVPApi {
 
 		return new BaseResult(response);
 	}
-
+	
 	public static String getStagingDebugSyncLog(String email, String serialNumber, Long timestamp) {
 		
 		Calendar cal = Calendar.getInstance();
@@ -838,6 +867,13 @@ public class MVPApi {
 		return result;
 	}
 
+	public static Statistics getStatistics(String token) {
+		
+		BaseResult result = userInfo(token);
+		return Statistics.fromResponse(result.response);
+	}
+	
+	
 	// others
 	public static BaseResult customRequest(String shortUrl, String verb, BaseParams params) {
 		
