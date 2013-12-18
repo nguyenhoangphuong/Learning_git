@@ -154,6 +154,7 @@ public class Pedometer {
 			object.accumulate("linkedTime", linkedTime);
 			object.accumulate("unlinkedTime", unlinkedTime);
 			object.accumulate("lastSyncedTime", lastSyncedTime);
+			object.accumulate("lastSuccessfulTime", lastSuccessfulTime);
 			return object;
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -175,6 +176,7 @@ public class Pedometer {
 			object.accumulate("linkedTime", linkedTime != null ? linkedTime : JSONObject.NULL);
 			object.accumulate("unlinkedTime", unlinkedTime != null ? unlinkedTime : JSONObject.NULL);
 			object.accumulate("lastSyncedTime", lastSyncedTime != null ? lastSyncedTime : JSONObject.NULL);
+			object.accumulate("lastSuccessfulTime", lastSuccessfulTime != null ? lastSuccessfulTime : JSONObject.NULL);
 			return object;
 		} catch (JSONException e) {
 			e.printStackTrace();

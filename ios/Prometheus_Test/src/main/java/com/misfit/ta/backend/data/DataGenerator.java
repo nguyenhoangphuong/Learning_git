@@ -48,6 +48,7 @@ public class DataGenerator {
 		p.setGender(MVPCommon.randInt(0, 1));
 		p.setDateOfBirth((long) MVPCommon.randInt(685000000, 686000000));
 		p.setName(TextTool.getRandomString(7, 10));
+		p.setGoalLevel(1);
 
 		p.setLatestVersion("0.21.1.4228");
 		p.setDisplayedUnits(new DisplayUnit());

@@ -11,6 +11,8 @@ import com.google.resting.component.impl.json.JSONRequestParams;
 
 public class BaseParams {
 	
+	public static String CurrentLocale = "en";
+	
 	// fields: params and headers
 	public List<Header> headers = new Vector<Header>();
 	public JSONRequestParams params = new JSONRequestParams();
@@ -20,6 +22,7 @@ public class BaseParams {
 		
 		// api key
 		this.addHeader("api_key", "76801581");
+		this.addHeader("locale", CurrentLocale);
 	}
 
 	// public functions to add params/headers
