@@ -65,7 +65,7 @@ public class BackendSignOutTC extends BackendAutomation {
 		profile.setName("Dandelion" + System.nanoTime());
 		profile.setWeight(profile.getWeight() + 1);
 
-		ProfileResult pr = MVPApi.updateProfile(token2, profile, profile.getServerId());
+		ProfileResult pr = MVPApi.updateProfile(token2, profile);
 		pr.printKeyPairsValue();
 
 		Assert.assertTrue(pr.statusCode == 210, "Status code: 210 - Force client update (ignorable)");

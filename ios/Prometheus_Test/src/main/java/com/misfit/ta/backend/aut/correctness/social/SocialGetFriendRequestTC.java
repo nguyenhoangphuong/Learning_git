@@ -39,7 +39,7 @@ public class SocialGetFriendRequestTC extends SocialAutomationBase {
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 		
 		Assert.assertEquals(friends.length, 1, "Number of requests from misfit");
-		Assert.assertEquals(friends[0].getName(), "Tung Social", "Name");
+		Assert.assertEquals(friends[0].getName(), tungName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_REQUESTED_FROM_ME, "Status");
 		Assert.assertEquals(friends[0].getUid(), tungUid, "Uid");
 		
@@ -48,7 +48,7 @@ public class SocialGetFriendRequestTC extends SocialAutomationBase {
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 		
 		Assert.assertEquals(friends.length, 1, "Number of requests to tung");
-		Assert.assertEquals(friends[0].getName(), "Misfit Social", "Name");
+		Assert.assertEquals(friends[0].getName(), misfitName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_REQUESTED_TO_ME, "Status");
 		Assert.assertEquals(friends[0].getUid(), misfitUid, "Uid");
 		
@@ -91,7 +91,7 @@ public class SocialGetFriendRequestTC extends SocialAutomationBase {
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		Assert.assertEquals(friends.length, 1, "Number of requests from misfit");
-		Assert.assertEquals(friends[0].getName(), "Tung Social", "Name");
+		Assert.assertEquals(friends[0].getName(), tungName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_REQUESTED_FROM_ME, "Status");
 		Assert.assertEquals(friends[0].getUid(), tungUid, "Uid");
 
@@ -116,7 +116,7 @@ public class SocialGetFriendRequestTC extends SocialAutomationBase {
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 		
 		Assert.assertEquals(friends.length, 1, "Number of requests from misfit");
-		Assert.assertEquals(friends[0].getName(), "Tung Social", "Name");
+		Assert.assertEquals(friends[0].getName(), tungName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_REQUESTED_FROM_ME, "Status");
 		Assert.assertEquals(friends[0].getUid(), tungUid, "Uid");
 		
@@ -125,7 +125,7 @@ public class SocialGetFriendRequestTC extends SocialAutomationBase {
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
 		
 		Assert.assertEquals(friends.length, 1, "Number of requests to tung");
-		Assert.assertEquals(friends[0].getName(), "Misfit Social", "Name");
+		Assert.assertEquals(friends[0].getName(), misfitName, "Name");
 		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_REQUESTED_TO_ME, "Status");
 		Assert.assertEquals(friends[0].getUid(), misfitUid, "Uid");
 		
@@ -133,14 +133,14 @@ public class SocialGetFriendRequestTC extends SocialAutomationBase {
 		
 		// tung and misfit change their profile
 		ProfileData misfitProfile = MVPApi.getProfile(misfitToken).profile;
-		String misfitOldName = "Misfit Social";
+		String misfitOldName = misfitName;
 		misfitProfile.setName("Misfit - " + System.nanoTime());
-		MVPApi.updateProfile(misfitToken, misfitProfile, misfitProfile.getServerId());
+		MVPApi.updateProfile(misfitToken, misfitProfile);
 		
 		ProfileData tungProfile = MVPApi.getProfile(tungToken).profile;
-		String tungOldName = "Tung Social";
+		String tungOldName = tungName;
 		tungProfile.setName("Tung - " + System.nanoTime());
-		MVPApi.updateProfile(tungToken, tungProfile, tungProfile.getServerId());
+		MVPApi.updateProfile(tungToken, tungProfile);
 		
 		// get requests from misfit
 		result = SocialAPI.getFriendRequestsFromMe(misfitToken);
@@ -156,10 +156,10 @@ public class SocialGetFriendRequestTC extends SocialAutomationBase {
 		
 		// change profile back to original version
 		misfitProfile.setName(misfitOldName);
-		MVPApi.updateProfile(misfitToken, misfitProfile, misfitProfile.getServerId());
+		MVPApi.updateProfile(misfitToken, misfitProfile);
 		
 		tungProfile.setName(tungOldName);
-		MVPApi.updateProfile(tungToken, tungProfile, tungProfile.getServerId());
+		MVPApi.updateProfile(tungToken, tungProfile);
 		
 		// get requests from misfit
 		result = SocialAPI.getFriendRequestsFromMe(misfitToken);

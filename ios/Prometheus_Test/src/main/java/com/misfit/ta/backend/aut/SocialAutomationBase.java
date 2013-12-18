@@ -8,10 +8,11 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
+import com.misfit.ta.backend.data.profile.ProfileData;
 
 public class SocialAutomationBase extends BackendAutomation {
 
@@ -24,6 +25,14 @@ public class SocialAutomationBase extends BackendAutomation {
 	protected String misfitUid;
 	protected String tungUid;
 	protected String thyUid;
+	
+	protected String misfitHandle;
+	protected String tungHandle;
+	protected String thyHandle;
+	
+	protected String misfitName;
+	protected String tungName;
+	protected String thyName;
 	
 	protected Map<String, HashMap<String, Object>> mapNameData;
 	protected List<String> mapNames;
@@ -44,28 +53,20 @@ public class SocialAutomationBase extends BackendAutomation {
 		tungUid = (String) mapNameData.get("tung").get("fuid");
 		thyUid = (String) mapNameData.get("thy").get("fuid");
 		
+		misfitHandle = (String) mapNameData.get("misfit").get("handle");
+		tungHandle = (String) mapNameData.get("tung").get("handle");
+		thyHandle = (String) mapNameData.get("thy").get("handle");
+		
+		misfitName = (String) mapNameData.get("misfit").get("name");
+		tungName = (String) mapNameData.get("tung").get("name");
+		thyName = (String) mapNameData.get("thy").get("name");
+		
 		
 		// map key set
 		Iterator<String> iterator = mapNameData.keySet().iterator();
 		mapNames = new ArrayList<String>();
 		while(iterator.hasNext())
-			mapNames.add(iterator.next());
-		
-		
-		// delete friends
-		SocialAPI.deleteFriend(misfitToken, tungUid);
-		SocialAPI.deleteFriend(misfitToken, thyUid);
-		SocialAPI.deleteFriend(tungToken, thyUid);
-		
-		
-		// cancel requests
-		SocialAPI.cancelFriendRequest(misfitToken, tungUid);
-		SocialAPI.cancelFriendRequest(misfitToken, thyUid);
-		SocialAPI.cancelFriendRequest(tungToken, misfitUid);
-		SocialAPI.cancelFriendRequest(tungToken, thyUid);
-		SocialAPI.cancelFriendRequest(thyToken, misfitUid);
-		SocialAPI.cancelFriendRequest(thyToken, tungUid);
-
+			mapNames.add(iterator.next());		
 	}
     
 }

@@ -48,7 +48,7 @@ public class MVPApi {
 	public static String HTTP_DELETE = "DELETE";
 	
 	public static int CACHE_TRY_TIME = 10;
-	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.52r";
+	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.53r";
 
 	// request helpers
 	static protected ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
@@ -113,7 +113,7 @@ public class MVPApi {
 
 	public static String generateLocalId()
 	{
-		return System.nanoTime() + "-" + TextTool.getRandomString(10);
+		return System.nanoTime() + "-" + TextTool.getRandomString(10, 10);
 	}
 	
 	public static JSONArray[] generateTimelineItemsAndGraphItems() {
@@ -301,8 +301,7 @@ public class MVPApi {
 		return result;
 	}
 
-	public static ProfileResult updateProfile(String token, ProfileData data, String serverId) {
-		logger.info("Id: " + serverId + ", Updated at: " + data.getUpdatedAt());
+	public static ProfileResult updateProfile(String token, ProfileData data) {
 
 		// prepare
 		String url = baseAddress + "profile";
@@ -310,7 +309,6 @@ public class MVPApi {
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
 		requestInf.addParam("profile", data.toJson().toString());
-		requestInf.addParam("id", serverId);
 
 		// post and recieve raw data
 		ServiceResponse response = MVPApi.put(url, port, requestInf);
@@ -336,6 +334,20 @@ public class MVPApi {
 		return result;
 	}
 
+	public static String getUserId(String token) {
+		
+		BaseResult result = userInfo(token);
+		try {
+			JSONObject json = new JSONObject(result.response.getResponseString());
+			return json.getJSONObject("user").getString("id");
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	// goal apis
 	public static GoalsResult searchGoal(String token, long startTime, long endTime, long modifiedSince) {
 		// prepare

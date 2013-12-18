@@ -82,7 +82,7 @@ public class BackendPerformanceTest extends BackendAutomation {
 		newProfile.setName(profile.getName() + "_new");
 		newProfile.setUpdatedAt(newProfile.getUpdatedAt() + 100);
 		long s11 = System.currentTimeMillis();
-		result = MVPApi.updateProfile(token, newProfile, profile.getServerId());
+		result = MVPApi.updateProfile(token, newProfile);
 		long s12 = System.currentTimeMillis();
 		Assert.assertTrue(result.isExisted(), "Status code is not 210: " + result.statusCode);
 

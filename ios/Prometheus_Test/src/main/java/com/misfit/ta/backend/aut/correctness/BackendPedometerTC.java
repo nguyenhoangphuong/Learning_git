@@ -7,6 +7,7 @@ import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.utils.TextTool;
@@ -16,8 +17,44 @@ import org.testng.Assert;
 public class BackendPedometerTC extends BackendAutomation {
 
 	private String password = "test12";
-	private String firmwareRevisionString = MVPApi.LATEST_FIRMWARE_VERSION_STRING;
 
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
+	public void CreateDuplicatePedometer() {
+		
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+		Pedometer pedo = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
+		
+		BaseResult result = MVPApi.createPedometer(token, pedo);
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		
+		pedo.setLastSuccessfulTime(System.currentTimeMillis() / 1000 + 1);
+		pedo.setUnlinkedTime(System.currentTimeMillis() / 1000 + 2);
+		result = MVPApi.createPedometer(token, pedo);
+		Pedometer spedo = Pedometer.getPedometer(result.response);
+		
+		Assert.assertEquals(result.statusCode, 210, "Status code");
+		Assert.assertEquals(pedo.getLocalId(), spedo.getLocalId(), "Local id");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
+	public void UpdatePedometerFullParam() {
+		
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+		Pedometer pedo = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
+		
+		BaseResult result = MVPApi.createPedometer(token, pedo);
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		
+		pedo.setLastSuccessfulTime(System.currentTimeMillis() / 1000 + 1);
+		pedo.setUnlinkedTime(System.currentTimeMillis() / 1000 + 2);
+		result = MVPApi.updatePedometer(token, pedo);
+		Pedometer spedo = Pedometer.getPedometer(result.response);
+		
+		Assert.assertEquals(result.statusCode, 210, "Status code");
+		Assert.assertEquals(pedo.getLocalId(), spedo.getLocalId(), "Local id");
+		
+	}
+	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void LinkOneAccountToOneShine() {
 		
@@ -27,11 +64,11 @@ public class BackendPedometerTC extends BackendAutomation {
 		// link new account to a new device
 		String newAccToken = createNewAccount(email);
 		Pedometer pedometer = createNewPedometer(newAccToken, serialNumberString);
-		Assert.assertFalse(StringUtils.isEmpty(pedometer.getServerId()), "Failed to create new pedometer!");
+		Assert.assertFalse(StringUtils.isEmpty(pedometer.getServerId()), "ServerId is not empty");
 		
 		// check linking status
 		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken, serialNumberString);
-		Assert.assertTrue(DefaultValues.DeviceLinkedToYourAccount.equals(linkingStatus), "Failed to link account and device!");
+		Assert.assertEquals(linkingStatus, DefaultValues.DeviceLinkedToYourAccount, "Linking status");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
@@ -44,19 +81,19 @@ public class BackendPedometerTC extends BackendAutomation {
 		// link new account to a new device
 		String newAccToken = createNewAccount(email);
 		Pedometer pedometer = createNewPedometer(newAccToken, serialNumberString);
-		Assert.assertFalse(StringUtils.isEmpty(pedometer.getServerId()), "ServerId is not null");
+		Assert.assertFalse(StringUtils.isEmpty(pedometer.getServerId()), "ServerId is not empty");
 		
 		// check linking status
 		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken, serialNumberString);
-		Assert.assertTrue(DefaultValues.DeviceLinkedToYourAccount.equals(linkingStatus), "Failed to link account and device!");
+		Assert.assertEquals(linkingStatus, DefaultValues.DeviceLinkedToYourAccount, "Linking status");
 		
 		// link this account to another device
 		Pedometer pedometer2 = createNewPedometer(newAccToken, serialNumberString2);
-		Assert.assertEquals(pedometer2.getServerId(), pedometer.getServerId(), "Server forces client update with same serverId pedometer");
+		Assert.assertEquals(pedometer2.getServerId(), pedometer.getServerId(), "Server id of second request");
 		
 		// check linking status
 		linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken, serialNumberString2);
-		Assert.assertEquals(linkingStatus, DefaultValues.DeviceNotLinkToAnyAccount, "Device not link to any account");
+		Assert.assertEquals(linkingStatus, DefaultValues.DeviceNotLinkToAnyAccount, "Linking status after second request");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
@@ -72,7 +109,9 @@ public class BackendPedometerTC extends BackendAutomation {
 		String newAccToken2 = createNewAccount(email2);
 		
 		// account 2 steals device
-		createNewPedometer(newAccToken2, serialNumberString);
+		Pedometer pedo = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
+		pedo.setSerialNumberString(serialNumberString);
+		MVPApi.createPedometer(newAccToken2, pedo);
 		
 		// check linking status
 		String linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken1, serialNumberString);
@@ -230,9 +269,13 @@ public class BackendPedometerTC extends BackendAutomation {
 	
 	// helpers
 	private Pedometer createNewPedometer(String token, String serialNumberString) {
+		
 		long timestamp = System.currentTimeMillis();
-		Pedometer pedometer = MVPApi.createPedometer(token, serialNumberString, firmwareRevisionString, timestamp, null, timestamp, TextTool.getRandomString(19, 20), null, timestamp);
-		return pedometer;
+		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
+		pedometer.setSerialNumberString(serialNumberString);
+		
+		BaseResult result = MVPApi.createPedometer(token, pedometer);
+		return Pedometer.getPedometer(result.response);
 	}
 
 	private String createNewAccount(String email) {

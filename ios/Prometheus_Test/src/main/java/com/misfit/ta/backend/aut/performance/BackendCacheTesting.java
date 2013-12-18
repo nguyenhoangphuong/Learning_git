@@ -49,7 +49,7 @@ public class BackendCacheTesting {
         // update profile
         ProfileData newProfile = result.profile;
         newProfile.setName(profile.getName() + "_new");
-        result = MVPApi.updateProfile(token, newProfile, profile.getServerId());
+        result = MVPApi.updateProfile(token, newProfile);
 
         change(SERVER1);
         // get Profile

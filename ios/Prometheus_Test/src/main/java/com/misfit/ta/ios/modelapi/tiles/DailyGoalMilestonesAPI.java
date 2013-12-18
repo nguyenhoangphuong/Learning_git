@@ -24,6 +24,8 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	int hour = 6;
 	String email = MVPApi.generateUniqueEmail();
 	String password = "qwerty1";
+	
+	
 	public void e_init() {
 		
 		// sign up with goal = 1000 pts
@@ -40,7 +42,17 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 		PrometheusHelper.inputManualRecord(times, 50, 5000);
 		HomeScreen.tapSave();
 		Timeline.dragUpTimelineAndHandleTutorial();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(5000);
+	}
+	
+	public void e_signOutAndSignInAgain() {
+		
+		PrometheusHelper.signOut();
+		PrometheusHelper.signIn(email, password);
+		
+		// wait for sync data
+		ShortcutsTyper.delayTime(5000);
+		Timeline.dragUpTimelineAndHandleTutorial();
 	}
 	
 	
@@ -55,23 +67,36 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	}
 	
 	public void v_HomeScreen100() {
-		ShortcutsTyper.delayTime(5000);
+		
 		checkActivityTile();
 		checkGoalTile(1000, Timeline.DailyGoalMessagesFor100Percent);
 	}
 	
 	public void v_HomeScreen150() {
-		ShortcutsTyper.delayTime(5000);
+		
 		checkActivityTile();
 		checkGoalTile(1500, Timeline.DailyGoalMessagesFor150Percent);
 	}
 	
 	public void v_HomeScreen200() {
-		ShortcutsTyper.delayTime(5000);
+		
 		Gui.swipeUp(1000);
 		checkActivityTile();
 		checkGoalTile(2000, Timeline.DailyGoalMessagesFor200Percent);
 	}
+	
+	public void v_HomeScreenAfterSignInAgain() {
+		
+		hour = 8;
+		v_HomeScreen100();
+		
+		hour = 9;
+		v_HomeScreen150();
+		
+		hour = 10;
+		v_HomeScreen200();
+	}
+	
 	
 	public void checkActivityTile() {
 		
@@ -93,20 +118,6 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 		Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(time, points, messages),
 				"Daily goal milestone tile is displayed correctly");
 		Timeline.closeCurrentTile();
-	}
-	
-	public void e_SignOut() {
-		PrometheusHelper.signOut();
-	}
-	 
-	public void e_SignIn() {
-		PrometheusHelper.signIn(email, password);
-		ShortcutsTyper.delayTime(2000);
-		Timeline.dragUpTimelineAndHandleTutorial();
-	}
-	
-	public void v_LaunchScreen() {
-		
 	}
 	
 }

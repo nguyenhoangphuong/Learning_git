@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.social.SocialUserBase;
 
 public class SocialTestHelpers {
@@ -29,34 +31,64 @@ public class SocialTestHelpers {
 		// all other accounts make friend with only mfwcqa.social
 		
 		// connect facebook
-		String misfitEmail = "mfwcqa.social@gmail.com";
-		String tungEmail = "tung.social.misfit@gmail.com";
-		String thyEmail = "thy.social.misfit@gmail.com";
-				
-		String misfitToken = MVPApi.signIn(misfitEmail, "qqqqqq").token;
-		String tungToken = MVPApi.signIn(tungEmail, "qqqqqq").token;
-		String thyToken = MVPApi.signIn(thyEmail, "qqqqqq").token;
+		String misfitEmail = MVPApi.generateUniqueEmail();
+		String tungEmail = MVPApi.generateUniqueEmail();
+		String thyEmail = MVPApi.generateUniqueEmail();
+						
+		String misfitToken = MVPApi.signUp(misfitEmail, "qqqqqq").token;
+		String tungToken = MVPApi.signUp(tungEmail, "qqqqqq").token;
+		String thyToken = MVPApi.signUp(thyEmail, "qqqqqq").token;
+		
+		String misfitUid = MVPApi.getUserId(misfitToken);
+		String tungUid = MVPApi.getUserId(tungToken);
+		String thyUid = MVPApi.getUserId(thyToken);
+		
+		String misfitHandle = "misfit_social_misfit_" + System.nanoTime();
+		String tungHandle = "tung_social_misfit_" + System.nanoTime();
+		String thyHandle = "thy_social_misfit_" + System.nanoTime();
+		
+		
+		// create profile
+		ProfileData misfitProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis(), null);
+		ProfileData tungProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis(), null);
+		ProfileData thyProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis(), null);
+		misfitProfile.setHandle(misfitHandle);
+		misfitProfile.setName("Misfit Social");
+		tungProfile.setHandle(tungHandle);
+		tungProfile.setName("Tung Social");
+		thyProfile.setHandle(thyHandle);
+		thyProfile.setName("Thy Social");
+		
+		MVPApi.createProfile(misfitToken, misfitProfile);
+		MVPApi.createProfile(tungToken, tungProfile);
+		MVPApi.createProfile(thyToken, thyProfile);
 
 		
 		// prepare test data
 		HashMap<String, HashMap<String, Object>> mapNameData = new HashMap<String, HashMap<String,Object>>();
 		
 		HashMap<String, Object> misfitData = new HashMap<String, Object>();
-		misfitData.put("fuid", "528590845138104fa4000338");
+		misfitData.put("fuid", misfitUid);
 		misfitData.put("email", misfitEmail);
 		misfitData.put("token", misfitToken);
+		misfitData.put("handle", misfitHandle);
+		misfitData.put("name", "Misfit Social");
 		misfitData.put("isUsingApp", true);
 		
 		HashMap<String, Object> tungData = new HashMap<String, Object>();
-		tungData.put("fuid", "5285e6f6513810db3e0002d7");
+		tungData.put("fuid", tungUid);
 		tungData.put("email", tungEmail);
 		tungData.put("token", tungToken);
+		tungData.put("handle", tungHandle);
+		tungData.put("name", "Tung Social");
 		tungData.put("isUsingApp", true);
 		
 		HashMap<String, Object> thyData = new HashMap<String, Object>();
-		thyData.put("fuid", "5285e645513810db3e0002cc");
+		thyData.put("fuid", thyUid);
 		thyData.put("email", thyEmail);
 		thyData.put("token", thyToken);
+		thyData.put("handle", thyHandle);
+		thyData.put("name", "Thy Social");
 		thyData.put("isUsingApp", true);
 	
 		
@@ -65,12 +97,7 @@ public class SocialTestHelpers {
 		mapNameData.put("misfit", misfitData);
 		mapNameData.put("tung", tungData);
 		mapNameData.put("thy", thyData);
-		
-		
-		// delete all 'auto friends' from mfwcqa.social
-//		SocialAPI.deleteFriend(misfitToken, (String) tungData.get("fuid"));
-//		SocialAPI.deleteFriend(misfitToken, (String) thyData.get("fuid"));
-		
+				
 		return mapNameData;
 	}
 

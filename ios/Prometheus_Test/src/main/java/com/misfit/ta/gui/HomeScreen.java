@@ -95,13 +95,13 @@ public class HomeScreen {
 	/* Timeline */
 	public static void goToPreviousDays(int days) {
 		for (int i = 0; i < days; i++) {
-			Gui.touchAVIew("UIButtonLabel", "<");
+			Gui.touchAVIew("UIButton", 4);
 		}
 	}
 
 	public static void goToNextDays(int days) {
 		for (int i = 0; i < days; i++) {
-			Gui.touchAVIew("UIButtonLabel", ">");
+			Gui.touchAVIew("UIButton", 5);
 		}
 	}
 	
