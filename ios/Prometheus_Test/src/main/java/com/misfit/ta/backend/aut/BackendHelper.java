@@ -103,7 +103,7 @@ public class BackendHelper {
 	public static void completeGoalInPast(String token, int diffFromToday) {
 		
 		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * diffFromToday;
-		Goal goal = DefaultValues.CreateGoal(timestamp);
+		Goal goal = Goal.getDefaultGoal(timestamp);
 		goal.setValue(2500d);
 		goal.getProgressData().setPoints(2500d);
 		goal.getProgressData().setDistanceMiles(2d);

@@ -12,7 +12,7 @@ import com.misfit.ta.backend.data.goal.GoalsResult;
 public class BackendGoalCreateTC extends BackendAutomation {
 
 	String password = "qwerty1";
-	Goal defaultGoal = DefaultValues.DefaultGoal();
+	Goal defaultGoal = Goal.getDefaultGoal();
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "goal" })
 	public void CreateNewGoal() {
@@ -29,8 +29,9 @@ public class BackendGoalCreateTC extends BackendAutomation {
 	public void CreateMultipleGoals() {
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
 
-		for (int i = 1; i <= 5; i++) {
-			GoalsResult r = MVPApi.createGoal(token, DefaultValues.GoalForDate(i, 9, 2013));
+		for (int i = 0; i < 5; i++) {
+			long timestamp = System.currentTimeMillis() / 1000 - i * 3600 * 24; 
+			GoalsResult r = MVPApi.createGoal(token, Goal.getDefaultGoal(timestamp));
 			r.printKeyPairsValue();
 
 			Assert.assertTrue(r.isOK(), "Status code is OK");

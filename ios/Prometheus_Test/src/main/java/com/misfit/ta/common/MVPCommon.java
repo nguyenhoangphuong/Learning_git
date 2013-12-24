@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class MVPCommon {
 
-	// helpers
+	// random
 	public static int randInt(int includeFrom, int includeTo) {
 		
 		Random r = new Random();
@@ -24,7 +24,9 @@ public class MVPCommon {
 		
 		return System.nanoTime() % 2 == 0;
 	}
-
+	
+	
+	// conver number / bytes array to little endian string
 	public static String toLittleEndianString(Integer number) {
 		
 		Integer reversed = Integer.reverseBytes(number);
@@ -49,6 +51,8 @@ public class MVPCommon {
 		return r;
 	}
 	
+	
+	// LE and BE string utilities
 	public static List<Byte> hexStringToByteArray(String s) {
 		
 	    int len = s.length();
@@ -61,5 +65,33 @@ public class MVPCommon {
 	    }
 	    return bytes;
 	}
+
+	public static String convertLEtoBEString(String littleEndianString) {
+		
+		if(littleEndianString.length() % 2 != 0)
+			return null;
+		
+		StringBuffer bigEndianStringBuffer = new StringBuffer();
+		for(int i = 0; i < littleEndianString.length(); i += 2) {
+			String byteString = littleEndianString.substring(i, i + 2);
+			bigEndianStringBuffer.insert(0, byteString);
+		}
+		
+		return bigEndianStringBuffer.toString();
+	}
+
 	
+	// convert little endian string to number
+	public static long litteEndianStringToLong(String LEString) {
+		
+		String BEString = convertLEtoBEString(LEString);
+		return Long.parseLong(BEString, 16);
+	}
+	
+	public static int litteEndianStringToInteger(String LEString) {
+		
+		String BEString = convertLEtoBEString(LEString);
+		return Integer.parseInt(BEString, 16);
+	}
+
 }

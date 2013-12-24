@@ -25,6 +25,19 @@ public class ProgressData {
 		this.points = points;
 	}
 
+	public static ProgressData getDefaultProgressData() {
+		
+		ProgressData progress = new ProgressData();
+		progress.setSeconds(0);
+		progress.setSteps(0);
+		progress.setFullBmrCalorie(0);
+		progress.setCalorie(0d);
+		progress.setPoints(0d);
+		progress.setDistanceMiles(0d);
+		
+		return progress;
+	}
+	
 	
 	// getters setters
 	public Integer getSeconds() {

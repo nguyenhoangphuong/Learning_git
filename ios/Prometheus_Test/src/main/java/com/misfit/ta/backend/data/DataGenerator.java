@@ -48,6 +48,7 @@ public class DataGenerator {
 		p.setGender(MVPCommon.randInt(0, 1));
 		p.setDateOfBirth((long) MVPCommon.randInt(685000000, 686000000));
 		p.setName(TextTool.getRandomString(7, 10));
+		p.setGoalLevel(1);
 
 		p.setLatestVersion("0.21.1.4228");
 		p.setDisplayedUnits(new DisplayUnit());
@@ -338,8 +339,8 @@ public class DataGenerator {
 		data.setFileData(fileData);
 
 		SyncLog syncLog = new SyncLog();
-		syncLog.setStartTime(timestamp);
-		syncLog.setEndTime(timestamp + 20);
+		syncLog.setStartTime(timestamp - 20);
+		syncLog.setEndTime(timestamp);
 		syncLog.setFirmwareRevisionString(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
 		syncLog.setSerialNumberString(TextTool.getRandomString(10, 10));
 		syncLog.setLog("AUTO GENRATED SYNCLOG");

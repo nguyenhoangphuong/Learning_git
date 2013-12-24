@@ -35,7 +35,7 @@ public class SyncFileData {
             return null;
         }
     }
-	
+  
 	
 	// getters setters
 	public Long getFileTimestamp() {

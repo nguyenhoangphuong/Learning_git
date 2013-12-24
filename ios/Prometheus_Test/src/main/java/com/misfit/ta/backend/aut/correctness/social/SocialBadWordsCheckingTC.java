@@ -16,7 +16,7 @@ public class SocialBadWordsCheckingTC extends BackendAutomation {
 	
 	// test methods
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "BadWordsChecking" })
-	public void GetFacebookFriends_NormalCase() {
+	public void CheckBadWordsInHandle() {
 
 		// create account
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
@@ -32,7 +32,7 @@ public class SocialBadWordsCheckingTC extends BackendAutomation {
 		};
 		
 		String[] notSoBadWords = {
-			"eyeglass", "afucker", "amadamna",
+			"eyeglass", "afucker", "amadamna", "son_of_a_beach",
 		};
 		
 		for(String word : badWords) {
