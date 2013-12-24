@@ -734,7 +734,6 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		MVPApi.updateProfile(token, profile);
 	}
 
-	
 	private GoalRawData generateSessionRawData(int totalSteps, int totalPoints, int duration)  {
 
 		int stepPerMinute = totalSteps / duration;
@@ -764,7 +763,6 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		return rawdata;
 	}
 
-	
 	private GoalRawData generateEmptyRawData(int duration) {
 
 		int[] steps = new int[duration];
@@ -783,14 +781,12 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		return rawdata;
 	}
 
-	
 	private GoalRawData generateEmptyRawData(int includeStartOffsetMinute, int excludeEndOffsetMinute) {
 
 		int duration = excludeEndOffsetMinute - includeStartOffsetMinute;
 		return generateEmptyRawData(duration);
 	}
 
-	
 	private GoalRawData generateGapData(int stepPerMinute, int pointPerMinute, int activeInterval, int idleInterval, int duration) {
 
 		int gapCount = duration / (idleInterval + activeInterval);
@@ -854,9 +850,6 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		return count;
 	}
 
-
-
-	
 	
 	
 	private boolean hasSessionTileWithData(List<TimelineItem> items, Goal goal, int offsetMinute, int minutes, int points) {
@@ -879,8 +872,6 @@ public class BackendServerCalculationTest extends BackendAutomation {
 
 		return false;
 	}
-
-
 
 	private boolean hasDailyGoalMilestone(List<TimelineItem> items, Goal goal, int offsetMinute, int eventType, int points) {
 
@@ -909,8 +900,6 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		return false;
 	}
 
-
-
 	private boolean hasStreakMilestone(List<TimelineItem> items, Goal goal, int offsetMinute, int streakNumber) {
 
 		long goalStartTime = goal.getStartTime();
@@ -931,8 +920,6 @@ public class BackendServerCalculationTest extends BackendAutomation {
 
 		return false;
 	}
-
-
 
 	private boolean hasPersonalBestMilestone(List<TimelineItem> items, Goal goal, int offsetMinute, int points, int extendedAmount) {
 
@@ -955,8 +942,6 @@ public class BackendServerCalculationTest extends BackendAutomation {
 
 		return false;
 	}
-
-
 
 	private boolean hasLifeTimeDistanceTile(List<TimelineItem> items, Goal goal, int offsetMinute, int marathonNumber, int unit) {
 
