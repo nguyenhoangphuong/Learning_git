@@ -1,5 +1,7 @@
 package com.misfit.ta.backend.data.goal;
 
+import org.apache.commons.lang.ArrayUtils;
+
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
@@ -14,7 +16,13 @@ public class GoalRawData {
 	
 	
 	// constructor
-	public GoalRawData() {}
+	public GoalRawData() {
+		
+		points = new int[0];
+		steps = new int[0];
+		variances = new int[0];
+		triple_tap_minutes = new int[0];
+	}
 	
 	
 	// methods
@@ -94,8 +102,28 @@ public class GoalRawData {
 		}
 	}
 	
+	public GoalRawData appendGoalRawData(GoalRawData data) {
+		
+		int[] steps1 = this.getSteps();
+		int[] points1 = this.getPoints();
+		int[] variances1 = this.getVariances();
+		int[] tripleTapMinutes1 = this.getTriple_tap_minutes();
+		
+		int[] steps2 = data.getSteps();
+		int[] points2 = data.getPoints();
+		int[] variances2 = data.getVariances();
+		int[] tripleTapMinutes2 = data.getTriple_tap_minutes();
+		
+		this.steps = ArrayUtils.addAll(steps1, steps2);
+		this.points = ArrayUtils.addAll(points1, points2);
+		this.variances = ArrayUtils.addAll(variances1, variances2);
+		this.triple_tap_minutes = ArrayUtils.addAll(tripleTapMinutes1, tripleTapMinutes2);
+				
+		return this;
+	}
 	
-	// getters setters
+	
+	// getters setters	
 	public int[] getPoints() {
 		return points;
 	}

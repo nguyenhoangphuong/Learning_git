@@ -41,7 +41,7 @@ public class LifetimeDistanceItem extends TimelineItemDataBase {
 				obj.setMilestoneType(json.getInt("milestoneType"));
 			
 			if (!json.isNull("unitSystem"))
-				obj.setMilestoneType(json.getInt("unitSystem"));
+				obj.setUnitSystem(json.getInt("unitSystem"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

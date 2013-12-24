@@ -8,6 +8,7 @@ import org.graphwalker.Util;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.BaseParams;
+import com.misfit.ta.common.MVPCalculator;
 
 public class Debug {
 	
@@ -15,6 +16,7 @@ public class Debug {
 	
 	public static void main(String[] args) throws IOException {
 		
+		logger.info(MVPCalculator.calculateMiles(21270, 150, 64));
 //		BaseParams.CurrentLocale = "ja";
 //		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
 		
@@ -57,7 +59,7 @@ public class Debug {
 //		}
 		
 //		logger.info(MVPApi.getUserId(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token));
-		BackendHelper.link(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token, "science019");
+//		BackendHelper.link(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token, "science019");
 		
 	}
 }

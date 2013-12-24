@@ -38,6 +38,15 @@ public class MVPCalculator {
 		return DPM * mins * 0.000189394;
 	}
 
+	public static double calculateMiles(int[] steps, double heightInInches) {
+		
+		double miles = 0d;
+		for(int step : steps)
+			miles += calculateMiles(step, 1, heightInInches);
+		
+		return miles;
+	}
+	
 	public static double calculatePoint(int steps, int minutes, int activityType) {
 
 		// Manual input: real activity points should be floor down before
@@ -53,6 +62,15 @@ public class MVPCalculator {
 			isWalking = true;
 		}
 		return isWalking ? result : Math.min(result, MIN_POINT_PER_MINUTE * minutes) / 2.5f;
+	}
+	
+	public static double calculatePoint(int[] steps, int activityType) {
+		
+		double points = 0d;
+		for(int step : steps)
+			points += calculatePoint(step, 1, activityType);
+		
+		return points;
 	}
 
 	public static double calculateFullBMR(float weightInLbs, float heightInInches, int age, boolean isMale) {
