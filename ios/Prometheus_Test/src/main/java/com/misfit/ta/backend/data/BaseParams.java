@@ -11,15 +11,18 @@ import com.google.resting.component.impl.json.JSONRequestParams;
 
 public class BaseParams {
 	
+	public static String CurrentLocale = "en";
+	
 	// fields: params and headers
 	public List<Header> headers = new Vector<Header>();
 	public JSONRequestParams params = new JSONRequestParams();
 
 	// constructor
 	public BaseParams() {
+		
 		// api key
 		this.addHeader("api_key", "76801581");
-		this.addHeader("platform", "ios");
+		this.addHeader("locale", CurrentLocale);
 	}
 
 	// public functions to add params/headers
@@ -40,6 +43,17 @@ public class BaseParams {
 		params.add(key, json.toString());
 	}
 
+	public void removeHeader(String key) {
+		
+		for(Header header : headers) {
+			
+			if(header.getName().equals(key)) {
+				headers.remove(header);
+				return;
+			}
+		}
+	}
+	
 	public String getParamsAsJsonString() {
 		JSONBuilder json = new JSONBuilder();
 		List<NameValuePair> pairs = params.getRequestParams();

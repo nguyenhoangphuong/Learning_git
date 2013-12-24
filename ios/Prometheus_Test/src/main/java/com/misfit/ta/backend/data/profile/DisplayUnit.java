@@ -7,19 +7,19 @@ public class DisplayUnit {
 
 	// fields
 	private Integer weightUnit;
-	private Integer heightUnit;
+	private Integer distanceUnit;
 	private Integer temperatureScale;
 
 	// constructors
 	public DisplayUnit() {
 		this.weightUnit = 0;
-		this.heightUnit = 0;
+		this.distanceUnit = 0;
 		this.temperatureScale = 0;
 	}
 
 	public DisplayUnit(int weightUnit, int heightUnit, int temperatureScale) {
 		this.weightUnit = weightUnit;
-		this.heightUnit = heightUnit;
+		this.distanceUnit = heightUnit;
 		this.temperatureScale = temperatureScale;
 	}
 
@@ -28,7 +28,7 @@ public class DisplayUnit {
 		try {
 			JSONObject obj = new JSONObject();
 			obj.accumulate("weightUnit", weightUnit);
-			obj.accumulate("heightUnit", heightUnit);
+			obj.accumulate("distanceUnit", distanceUnit);
 			obj.accumulate("temperatureScale", temperatureScale);
 
 			return obj;
@@ -45,8 +45,8 @@ public class DisplayUnit {
 			if(!json.isNull("weightUnit"))
 				obj.setWeightUnit(json.getInt("weightUnit"));
 			
-			if(!json.isNull("heightUnit"))
-				obj.setHeightUnit(json.getInt("heightUnit"));
+			if(!json.isNull("distanceUnit"))
+				obj.setDistanceUnit(json.getInt("distanceUnit"));
 			
 			if(!json.isNull("temperatureScale"))
 				obj.setTemperatureScale(json.getInt("temperatureScale"));
@@ -67,12 +67,12 @@ public class DisplayUnit {
 		this.weightUnit = weightUnit;
 	}
 
-	public int getHeightUnit() {
-		return heightUnit;
+	public int getDistanceUnit() {
+		return distanceUnit;
 	}
 
-	public void setHeightUnit(int heightUnit) {
-		this.heightUnit = heightUnit;
+	public void setDistanceUnit(int distanceUnit) {
+		this.distanceUnit = distanceUnit;
 	}
 
 	public int getTemperatureScale() {

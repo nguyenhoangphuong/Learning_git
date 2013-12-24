@@ -17,7 +17,7 @@ public class TimelineItem {
 
 	// fields
 	private Integer itemType;
-	private Boolean state;
+	private Integer state;
 	private Long timestamp;
 	private TimelineItemDataBase data;
 	
@@ -66,7 +66,7 @@ public class TimelineItem {
 				item.setItemType(jsonItem.getInt("itemType"));
 			
 			if (!jsonItem.isNull("state"))
-				item.setState(jsonItem.getBoolean("state"));
+				item.setState(jsonItem.getInt("state"));
 			
 			if (!jsonItem.isNull("timestamp"))
 				item.setTimestamp(jsonItem.getLong("timestamp"));
@@ -158,11 +158,11 @@ public class TimelineItem {
 		this.itemType = itemType;
 	}
 
-	public Boolean getState() {
+	public Integer getState() {
 		return state;
 	}
 
-	public void setState(Boolean state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 

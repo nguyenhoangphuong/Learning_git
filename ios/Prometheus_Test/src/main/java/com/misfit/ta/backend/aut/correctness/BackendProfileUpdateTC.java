@@ -53,7 +53,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		Assert.assertEquals(name, r.profile.getName(), "Name has changed");
 		Assert.assertEquals(defaultProfile.getWeight() + 1, r.profile.getWeight(), "Weight has changed");
 		Assert.assertEquals((Integer)2, r.profile.getGoalLevel(), "GoalLevel has changed");
-		Assert.assertEquals(r.profile.getDisplayedUnits().getHeightUnit(), 1, "HeightUnit has changed");
+		Assert.assertEquals(r.profile.getDisplayedUnits().getDistanceUnit(), 1, "HeightUnit has changed");
 		Assert.assertEquals(r.profile.getDisplayedUnits().getWeightUnit(), 1, "WeightUnit has changed");
 		Assert.assertEquals(r.profile.getDisplayedUnits().getTemperatureScale(), 1, "TemperatureScale has changed");
 		

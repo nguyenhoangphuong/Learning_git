@@ -1,50 +1,35 @@
 package com.misfit.ta.ios.tests;
 
-import java.io.File;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
-import org.testng.Assert;
 
-import com.misfit.ios.NuRemoteClient;
-import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.api.social.SocialAPI;
 import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.DataGenerator;
-import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.backend.data.profile.ProfileData;
-import com.misfit.ta.backend.data.social.Leaderboard;
-import com.misfit.ta.backend.data.social.SocialUserBase;
-import com.misfit.ta.backend.data.social.SocialUserLeaderBoardEvent;
-import com.misfit.ta.backend.data.social.SocialUserWithStatus;
-import com.misfit.ta.backend.data.social.SocialUserWorldEvent;
-import com.misfit.ta.backend.data.sync.SyncFileData;
-import com.misfit.ta.backend.data.sync.SyncLog;
-import com.misfit.ta.backend.data.timeline.TimelineItem;
-import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
-import com.misfit.ta.backend.seed.GenerateUserSeed;
-import com.misfit.ta.base.ParallelThreadExecutor;
-import com.misfit.ta.common.MVPCommon;
-import com.misfit.ta.gui.DefaultStrings;
-import com.misfit.ta.gui.Gui;
-import com.misfit.ta.gui.HomeScreen;
-import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.gui.Timeline;
-import com.misfit.ta.utils.TextTool;
-import com.sun.jna.platform.unix.X11.XClientMessageEvent.Data;
+import com.misfit.ta.backend.data.BaseParams;
+import com.misfit.ta.common.MVPCalculator;
 
 public class Debug {
 	
 	protected static Logger logger = Util.setupLogger(Debug.class);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		
+		logger.info(MVPCalculator.calculateMiles(21270, 150, 64));
+//		BaseParams.CurrentLocale = "ja";
+//		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
+		
+//		TimelineItem item = DataGenerator.generateRandomMilestoneItem(System.currentTimeMillis() / 1000 - MVPCommon.randInt(3000, 10000), TimelineItemDataBase.EVENT_TYPE_STREAK, null);
+//		MilestoneItem milestone = (MilestoneItem) item.getData();
+//		milestone.getInfo().setStreakNumber(10);
+//		MVPApi.createTimelineItem(token, item);
+
+//		Pedometer pedo = new Pedometer();
+//		pedo.setBatteryLevel(10);
+//		pedo.setLastSyncedTime(System.currentTimeMillis() / 1000);
+//		pedo.setLastSuccessfulTime(System.currentTimeMillis() / 1000);
+//		MVPApi.updatePedometer(token, pedo);
 		
 //		int numberOfGoals = 17;
 //		
@@ -74,7 +59,7 @@ public class Debug {
 //		}
 		
 //		logger.info(MVPApi.getUserId(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token));
-		BackendHelper.link(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token, "science020");
+//		BackendHelper.link(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token, "science019");
 		
 	}
 }

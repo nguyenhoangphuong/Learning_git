@@ -15,10 +15,6 @@ public class PersonalRecord {
 	protected Record Soccer;
 	
 	
-	   public int bestStreak =0 ;
-	    public int totalGoalsHit =0 ;
-	    public float lifeTimeDistance = 0;
-	
 	// constructors
 	public PersonalRecord() {
 	}
