@@ -40,8 +40,8 @@ public class BackendServerCalculationTest extends BackendAutomation {
 
 		// sign up new account
 		boolean testPassed = true;
-//		String email = MVPApi.generateUniqueEmail();
-		String email = "sc042@a.a";
+		String email = MVPApi.generateUniqueEmail();
+//		String email = "sc042@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
@@ -546,8 +546,8 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		
 		// sign up new account
 		boolean testPassed = true;
-		//String email = MVPApi.generateUniqueEmail();
-		String email = "sc041@a.a";
+		String email = MVPApi.generateUniqueEmail();
+//		String email = "sc041@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 

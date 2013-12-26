@@ -11,6 +11,7 @@ import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.report.TRS;
 
 public class SocialBadWordsCheckingTC extends BackendAutomation {
 	
@@ -59,8 +60,10 @@ public class SocialBadWordsCheckingTC extends BackendAutomation {
 			
 			logger.info("Bad words that were allowed: ");
 			logger.info("==============================================");
-			for(String word : badWordsFailed)
+			for(String word : badWordsFailed) {
 				logger.info(word);
+				TRS.instance().addCode("Bad word that were allowed: " + word, null);
+			}
 			logger.info("==============================================");
 		}
 		
@@ -68,8 +71,10 @@ public class SocialBadWordsCheckingTC extends BackendAutomation {
 			
 			logger.info("Not so bad words that were not allowed: ");
 			logger.info("==============================================");
-			for(String word : notSoBadWordsFailed)
+			for(String word : notSoBadWordsFailed) {
 				logger.info(word);
+				TRS.instance().addCode("Not so bad word that were not allowed: " + word, null);
+			}
 			logger.info("==============================================");
 		}
 		
