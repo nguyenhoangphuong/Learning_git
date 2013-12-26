@@ -5,10 +5,15 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.BaseParams;
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.common.MVPCalculator;
+import com.misfit.ta.gui.Gui;
+import com.misfit.ta.gui.HomeScreen;
+import com.misfit.ta.gui.Timeline;
 
 public class Debug {
 	
@@ -16,7 +21,12 @@ public class Debug {
 	
 	public static void main(String[] args) throws IOException {
 		
-		logger.info(MVPCalculator.calculateMiles(21270, 150, 64));
+		Gui.init("192.168.1.115");
+		Timeline.openTile("5:59am ");
+
+		// api: update statistics to set best point to 400 pts
+//		BackendHelper.setPersonalBest(token, 400);
+		
 //		BaseParams.CurrentLocale = "ja";
 //		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
 		

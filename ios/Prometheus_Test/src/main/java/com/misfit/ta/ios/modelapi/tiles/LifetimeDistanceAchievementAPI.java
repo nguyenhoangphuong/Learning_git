@@ -24,6 +24,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 
+	private String email;
 	private int hour = 0;
 	private String token = "";
 	private Goal blankGoal;
@@ -34,7 +35,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 	public void e_init() {
 
 		// sign up with default unit = us
-		String email = PrometheusHelper.signUpDefaultProfile();
+		email = PrometheusHelper.signUpDefaultProfile();
 
 		// store the token and newly created goal for later use
 		token = MVPApi.signIn(email, "qwerty1").token;
@@ -82,6 +83,12 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 
+	public void e_signOutAndSignInAgain() {
+		
+		PrometheusHelper.signOut();
+		PrometheusHelper.signIn(email, "qwerty1");
+	}
+	
 	
 	
 	public void v_HomeScreen() {
@@ -91,47 +98,76 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 
 	public void v_2MarathonsInUSMetric() {
 
-		checkBadgesTile(true, 11, 2);
+		Timeline.dragUpTimelineAndHandleTutorial();
+		Gui.swipeUp(1000);
+		checkBadgesTile(true, hour, 11, 2);
+		Timeline.dragDownTimeline();
 	}
 	
 	public void v_6MarathonsInUSMetric() {
 
-		checkBadgesTile(true, 11, 6);
+		Timeline.dragUpTimelineAndHandleTutorial();
+		Gui.swipeUp(1000);
+		checkBadgesTile(true, hour, 11, 6);
+		Timeline.dragDownTimeline();
 	}
 	
 	public void v_12MarathonsInUSMetric() {
 
-		checkBadgesTile(true, 22, 12);
+		Timeline.dragUpTimelineAndHandleTutorial();
+		Gui.swipeUp(1000);
+		checkBadgesTile(true, hour, 22, 12);
+		Timeline.dragDownTimeline();
 	}
 
 	public void v_2MarathonsInSIMetric() {
 
-		checkBadgesTile(false, 11, 2);
+		Timeline.dragUpTimelineAndHandleTutorial();
+		Gui.swipeUp(1000);
+		checkBadgesTile(false, hour, 11, 2);
+		Timeline.dragDownTimeline();
 	}
 	
 	public void v_6MarathonsInSIMetric() {
 
-		checkBadgesTile(false, 7, 6);
+		Timeline.dragUpTimelineAndHandleTutorial();
+		Gui.swipeUp(1000);
+		checkBadgesTile(false, hour, 7, 6);
+		Timeline.dragDownTimeline();
 	}
 	
 	public void v_12MarathonsInSIMetric() {
 
-		checkBadgesTile(false, 14, 12);
-	}
-
-	
-	
-	private void checkBadgesTile(boolean usUnit, int hitAchievementMinute, int marathonsNumber) {
-
 		Timeline.dragUpTimelineAndHandleTutorial();
 		Gui.swipeUp(1000);
+		checkBadgesTile(false, hour, 14, 12);
+		Timeline.dragDownTimeline();
+	}
+
+	public void v_HomeScreenAfterSignInAgain() {
+		
+		Timeline.dragUpTimelineAndHandleTutorial();
+		checkBadgesTile(true, 1, 11, 2);
+		
+		Gui.swipeUp(100);
+		checkBadgesTile(true, 2, 11, 6);
+		checkBadgesTile(true, 3, 22, 22);
+		
 		Gui.swipeUp(1000);
-		Gui.swipeUp(1000);
+		checkBadgesTile(false, 4, 11, 2);
+		checkBadgesTile(false, 5, 7, 6);
+		checkBadgesTile(false, 6, 14, 12);
+		Timeline.dragDownTimeline();
+	}
+	
+	
+	
+	private void checkBadgesTile(boolean usUnit, int hitAchievementHour, int hitAchievementMinute, int marathonsNumber) {
 		
 		int i = -1;
 		for(i = -1; i <= 1; i++) {
 
-			String title = String.format("%d:%02dam", hour, hitAchievementMinute + i);
+			String title = String.format("%d:%02dam", hitAchievementHour, hitAchievementMinute + i);
 			if(!Timeline.isTileExisted(title))
 				continue;
 
@@ -142,7 +178,6 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 			Gui.captureScreen("streaktile-" + System.nanoTime());
 			Assert.assertTrue(Timeline.isLifetimeDistanceBadgeTileCorrect(title, marathonsNumber, message));
 			Timeline.closeCurrentTile();
-			Timeline.dragDownTimeline();
 			return;
 		}
 		

@@ -87,7 +87,6 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
     
-
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "EditTag" })
     public void EditActivityTagMilestones() throws InterruptedException, StopConditionException, IOException
     {
@@ -109,4 +108,5 @@ public class HomeScreenTest extends AutomationTest
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
     }
+
 }

@@ -32,6 +32,8 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 	private int steps = 5000;
 	private int mins = 50;
 	
+	
+	
 	public void e_init() {
 		
 		// sign up
@@ -40,7 +42,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		// create 2 goals in the past
 		BackendHelper.completeGoalInPast(token, 1);
 		BackendHelper.completeGoalInPast(token, 2);
-				
+
 		// create a personal best record
 		BackendHelper.setPersonalBest(token, 1000);
 		
@@ -76,6 +78,19 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		Sync.tapPopupSyncLater();
 	}
 	
+	public void e_SignOut() {
+		PrometheusHelper.signOut();
+	}
+	 
+	public void e_SignIn() {
+		PrometheusHelper.signIn(email, password);
+		ShortcutsTyper.delayTime(2000);
+	}
+	
+	public void e_Stay() {
+		
+	}
+	
 	
 	
 	public void v_HomeScreen() {
@@ -103,22 +118,10 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		checkNewTileAndProgress(newPoint);
 	}
 	
-	public void e_SignOut() {
-		PrometheusHelper.signOut();
-	}
-	 
-	public void e_SignIn() {
-		PrometheusHelper.signIn(email, password);
-		ShortcutsTyper.delayTime(2000);
-	}
-	
-	public void e_Stay() {
-		
-	}
-	
 	public void v_LaunchScreen() {
 		
 	}
+	
 	
 	
 	private void capture() {

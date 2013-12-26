@@ -15,6 +15,7 @@ public class Timeline {
 	public static String LabelMarathon = "MARATHONS";
 	public static String LabelAchievement = "ACHIEVEMENT";
 	public static String LabelTimeTravel = "TIME TRAVEL";
+	public static String LabelSleep = "SLEEP";
 
 	public static String PersonalBestOutdidMessage = "You outdid your previous record by %d points!";
 
@@ -119,11 +120,15 @@ public class Timeline {
 	}
 
 	public static boolean isTileExisted(String title) {
-		return ViewUtils.isExistedView("PTTimelineItemSessionView", title);
+		
+		return ViewUtils.isExistedView("UILabel", title) || 
+				ViewUtils.isExistedView("PTTimelineItemSessionView", title) ||
+				ViewUtils.isExistedView("PTTimelineItemSleepSessionView", title) ||
+				ViewUtils.isExistedView("PTTimelineItemNotableEventView", title);
 	}
 
 	public static void openTile(String title) {
-		Gui.touchAVIew("PTTimelineItemSessionView", title);
+		Gui.touchAVIew("UILabel", title);
 	}
 	
 	public static void openNotableEventTile(String title) {
@@ -205,6 +210,15 @@ public class Timeline {
 				&& isDynamicMessageDisplayed(messages);
 	}
 
+	public static boolean isSleepTileCorrect(String timeToTime, String totalDuration, String deepSleepDuration, String quality) {
+		
+		return ViewUtils.isExistedView("UILabel", timeToTime)
+				&& ViewUtils.isExistedView("UILabel", String.valueOf(totalDuration))
+				&& ViewUtils.isExistedView("UILabel", String.valueOf(deepSleepDuration))
+				&& ViewUtils.isExistedView("UILabel", String.valueOf(quality))
+				&& ViewUtils.isExistedView("UILabel", LabelSleep);
+	}
+	
 	public static boolean isDynamicMessageDisplayed(String[] availableMessages) {
 
 		for (String message : availableMessages)

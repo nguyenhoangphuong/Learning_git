@@ -100,6 +100,14 @@ public class BackendHelper {
 	}
 	
 	
+	public static void createGoalInPast(String token, int diffFromToday) {
+		
+		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * diffFromToday;
+		Goal goal = Goal.getDefaultGoal(timestamp);
+
+		MVPApi.createGoal(token, goal);
+	}
+	
 	public static void completeGoalInPast(String token, int diffFromToday) {
 		
 		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * diffFromToday;

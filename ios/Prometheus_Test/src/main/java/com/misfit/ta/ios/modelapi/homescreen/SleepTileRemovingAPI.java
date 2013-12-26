@@ -1,152 +1,127 @@
 package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.data.timeline.TimelineItem;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SleepTileRemovingAPI extends ModelAPI {
 	public SleepTileRemovingAPI(AutomationTest automation, File model,
 			boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
-	private String token;
+	
+	private String email;
 	private String currentTitle;
-	private boolean isRemoved;
-	// dev team hard-codes these 2 value
-	private String _8hrSleepStartTimeTitle = "10:01pm";
-	private String _8hrSleepEndTimeTitle = "5:59am";
+	private int sleepTileCount = 0;
+	private List<String> allSleepTileTitles = new ArrayList<String>();
 	
-	private int hour = 10;
-	/**
-	 * This method implements the Edge 'e_CheckEnd'
-	 * 
-	 */
-	public void e_CheckEnd() {
-	}
 
-
-	/**
-	 * This method implements the Edge 'e_Init'
-	 * 
-	 */
-	public void e_Init() {
-		String email = "milestone@qa.com";
-		String password = "test12";
-		Sync.signIn(email, password);
-		ShortcutsTyper.delayTime(2000);
-		token = MVPApi.signIn(email, password).token;
-	}
-
-	/**
-	 * This method implements the Edge 'e_InputActivity'
-	 * 
-	 */
-	public void e_InputActivity() {
-		HomeScreen.tapOpenManualInput();
-		HomeScreen.enterManualActivity(new String[] {"1", "00", "AM"}, 8, 600);
-		HomeScreen.tapSave();
-	}
-
-	/**
-	 * This method implements the Edge 'e_RemoveSleepTile'
-	 * 
-	 */
-	public void e_RemoveSleepTile() {
-		Timeline.dragUpTimelineAndHandleTutorial();
-		Timeline.holdAndPressTile(currentTitle);
-		Gui.touchAVIew("UILabel", DefaultStrings.RemoveSleepButton);
-		isRemoved = true;
-		Timeline.dragDownTimeline();
+	public void e_init() {
+		
+		email = PrometheusHelper.signUpDefaultProfile();
 	}
 	
-	public void e_CancelRemoveSleepTile() {
-		Timeline.dragUpTimelineAndHandleTutorial();
-		Timeline.holdAndPressTile(currentTitle);
-		Gui.touchAVIew("UILabel", DefaultStrings.CancelButton);
-		isRemoved = false;
-		Timeline.dragDownTimeline();
-	}
-
-	/**
-	 * This method implements the Edge 'e_SleepAfterMidnight'
-	 * 
-	 */
-	public void e_SleepAfterMidnight() {
-		HomeScreen.tapOpenManualInput();
-		String[] time = { String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour), "00", hour < 12 ? "AM" : "PM" };
-		currentTitle = String.format("%d", hour > 12 ? hour - 12 : hour == 0 ? 12 : hour) + ":01" + (hour < 12 ? "am" : "pm");
-		PrometheusHelper.manualInputTime(time);
-		HomeScreen.tap180MinNap();
-		HomeScreen.tapSave();
-		hour++;
-	}
-
-	/**
-	 * This method implements the Edge 'e_SleepBeforeMidnight'
-	 * 
-	 */
-	public void e_SleepBeforeMidnight() {
+	public void e_inputSleep() {
+		
+		currentTitle = "5:59am ";
+		sleepTileCount++;
+		allSleepTileTitles.add(currentTitle);
+		
 		HomeScreen.tapOpenManualInput();
 		HomeScreen.tap8HourSleep();
 		HomeScreen.tapSave();
-		currentTitle = _8hrSleepEndTimeTitle;
-	}
-
-	/**
-	 * This method implements the Edge 'e_Stay'
-	 * 
-	 */
-	public void e_Stay() {
-		// TODO:
-	}
-
-	/**
-	 * This method implements the Vertex 'v_EndInput'
-	 * 
-	 */
-	public void v_EndInput() {
-		// TODO:
-	}
-
-	/**
-	 * This method implements the Vertex 'v_Timeline'
-	 * 
-	 */
-	public void v_Timeline() {
 		Timeline.dragUpTimelineAndHandleTutorial();
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", currentTitle), "Expected tile is dislplayed with current title " + currentTitle);
-		Timeline.dragDownTimeline();
 	}
-
-	/**
-	 * This method implements the Vertex 'v_Today'
-	 * 
-	 */
-	public void v_Today() {
-		PrometheusHelper.handleUpdateFirmwarePopup();
-	}
-
-	/**
-	 * This method implements the Vertex 'v_UpdatedTimeline'
-	 * 
-	 */
-	public void v_UpdatedTimeline() {
+	
+	public void e_inputNap() {
+		
+		currentTitle = "5:00pm ";
+		sleepTileCount++;
+		allSleepTileTitles.add(currentTitle);
+		
+		HomeScreen.tapOpenManualInput();
+		PrometheusHelper.manualInputTime(new String[] {"2", "00", "PM"});
+		HomeScreen.tap180MinNap();
+		HomeScreen.tapSave();
 		Timeline.dragUpTimelineAndHandleTutorial();
-		Assert.assertTrue(!ViewUtils.isExistedView("UILabel", currentTitle), "Tile with current title " + currentTitle + " is removed");
-		Timeline.dragDownTimeline();
+	}
+	
+	public void e_removeSleepTile() {
+		
+		Timeline.holdAndPressTile(currentTitle);
+	}
+	
+	public void e_cancelRemove() {
+		
+		Gui.touchAVIew("UILabel", DefaultStrings.CancelButton);
+	}
+	
+	public void e_confirmRemove() {
+		
+		Gui.touchAVIew("UILabel", DefaultStrings.RemoveSleepButton);
+	}
+	
+	public void e_signOutAndSignInAgain() {
+		
+		PrometheusHelper.signOut();
+		PrometheusHelper.signIn(email, "qwerty1");
+		Timeline.dragUpTimelineAndHandleTutorial();
+	}
+
+
+
+	public void v_HomeScreen() {
+		
+		Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen - Today");
+	}
+	
+	public void v_HomeScreenWithSleepTile() {
+		
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", currentTitle), "Current sleep tile is existed");
+	}
+	
+	public void v_RemoveSleepConfirm() {
+		
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.RemoveSleepButton) &&
+				ViewUtils.isExistedView("UILabel", DefaultStrings.CancelButton), 
+				"Action sheet confirmation is shown");		
+	}
+	
+	public void v_HomeScreenAfterRemoveSleep() {
+		
+		// make sure the no sleep tile is displayed on app
+		Assert.assertTrue(!ViewUtils.isExistedView("UILabel", currentTitle), "There's no sleep tile");
+	}
+	
+	public void v_HomeScreenAfterSignInAgain() {
+
+		for(String title : allSleepTileTitles)
+			Assert.assertTrue(!ViewUtils.isExistedView("UILabel", title), "There's no sleep tile");
+		
+		// make sure the tile is stored on server with state = deleted
+		List<TimelineItem> items = MVPApi.getTimelineItems(MVPApi.signIn(email, "qwerty1").token, 0, Integer.MAX_VALUE, 0);
+		int numberOfDeletedSleepTile = 0;
+		for(TimelineItem item : items) {
+			if(item.getItemType().equals(TimelineItemDataBase.TYPE_SLEEP) && item.getState() != null && item.getState() == 1)
+				numberOfDeletedSleepTile++;
+		}
+		
+		Assert.assertEquals(numberOfDeletedSleepTile, sleepTileCount, "Number of items with state = 1 (deleted) on server");
 	}
 
 }

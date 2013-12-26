@@ -1,6 +1,7 @@
 package com.misfit.ta.ios.modelapi.tiles;
 
 import java.io.File;
+
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
@@ -15,6 +16,8 @@ import com.misfit.ta.modelAPI.ModelAPI;
 
 public class PersonalBestMilestoneAPI extends ModelAPI {
 
+	private String email;
+	
 	public PersonalBestMilestoneAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
@@ -24,14 +27,11 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 	public void e_init() {
 		
 		// sign up with goal = 1000 pts
-		String email = PrometheusHelper.signUpDefaultProfile();
+		email = PrometheusHelper.signUpDefaultProfile();
 		String token = MVPApi.signIn(email, "qwerty1").token;
 		
 		// api: create yesterday's goal
-		BackendHelper.completeGoalInPast(token, 1);
-		
-		// api: update statistics to set best point to 400 pts
-		BackendHelper.setPersonalBest(token, 400);
+		BackendHelper.createGoalInPast(token, 1);
 		
 		// pull to refresh to make sure local db is latest
 		HomeScreen.pullToRefresh();
@@ -46,8 +46,14 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(times, 50, 5000);
 		HomeScreen.tapSave();
-		Timeline.dragUpTimelineAndHandleTutorial();
 	}
+	
+	public void e_signOutAndSignInAgain() {
+		
+		PrometheusHelper.signOut();
+		PrometheusHelper.signIn(email, "qwerty1");
+	}
+	
 	
 	
 	public void v_HomeScreen() {
@@ -57,11 +63,13 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 	
 	public void v_PersonalBest() {
 		
+		Timeline.dragUpTimelineAndHandleTutorial();
 		String time = "7:50am";
 		Timeline.openTile(time);
 		Assert.assertTrue(Timeline.isPersonalBestTileCorrect(time, 500, 400, Timeline.PersonalBestMessages),
 				"Personal best displayed correctly");
 		Timeline.closeCurrentTile();
+		Timeline.dragDownTimeline();
 		
 	}
 
