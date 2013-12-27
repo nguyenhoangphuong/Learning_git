@@ -9,6 +9,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.gui.DefaultStrings;
@@ -26,6 +27,8 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	}
 	
 	private String email;
+	private String token;
+	
 	private String currentTitle;
 	private int sleepTileCount = 0;
 	private List<String> allSleepTileTitles = new ArrayList<String>();
@@ -34,12 +37,19 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	public void e_init() {
 		
 		email = PrometheusHelper.signUpDefaultProfile();
+		token = MVPApi.signIn(email, "qwerty1").token;
+		
+		// set personal best to 500pts
+		BackendHelper.setPersonalBest(token, 500);
+		
+		// pull to refresh
+		HomeScreen.pullToRefresh();
 	}
 	
 	public void e_inputSleep() {
 		
 		currentTitle = "5:59am ";
-		sleepTileCount++;
+		sleepTileCount += 2;
 		allSleepTileTitles.add(currentTitle);
 		
 		HomeScreen.tapOpenManualInput();
@@ -50,7 +60,7 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	
 	public void e_inputNap() {
 		
-		currentTitle = "5:00pm ";
+		currentTitle = "2:00pm ";
 		sleepTileCount++;
 		allSleepTileTitles.add(currentTitle);
 		
@@ -74,6 +84,7 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	public void e_confirmRemove() {
 		
 		Gui.touchAVIew("UILabel", DefaultStrings.RemoveSleepButton);
+		Timeline.dragDownTimeline();
 	}
 	
 	public void e_signOutAndSignInAgain() {
@@ -114,7 +125,7 @@ public class SleepTileRemovingAPI extends ModelAPI {
 			Assert.assertTrue(!ViewUtils.isExistedView("UILabel", title), "There's no sleep tile");
 		
 		// make sure the tile is stored on server with state = deleted
-		List<TimelineItem> items = MVPApi.getTimelineItems(MVPApi.signIn(email, "qwerty1").token, 0, Integer.MAX_VALUE, 0);
+		List<TimelineItem> items = MVPApi.getTimelineItems(token, 0, Integer.MAX_VALUE, 0);
 		int numberOfDeletedSleepTile = 0;
 		for(TimelineItem item : items) {
 			if(item.getItemType().equals(TimelineItemDataBase.TYPE_SLEEP) && item.getState() != null && item.getState() == 1)

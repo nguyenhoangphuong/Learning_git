@@ -21,8 +21,8 @@ public class Debug {
 	
 	public static void main(String[] args) throws IOException {
 		
-		Gui.init("192.168.1.115");
-		Timeline.openTile("5:59am ");
+		Gui.init("192.168.1.227");
+		Gui.touchAVIew("UILabel", "I HAVE A SHINE");
 
 		// api: update statistics to set best point to 400 pts
 //		BackendHelper.setPersonalBest(token, 400);

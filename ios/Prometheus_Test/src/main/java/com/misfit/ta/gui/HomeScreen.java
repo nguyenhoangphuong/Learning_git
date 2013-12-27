@@ -95,23 +95,23 @@ public class HomeScreen {
 	/* Timeline */
 	public static void goToPreviousDays(int days) {
 		for (int i = 0; i < days; i++) {
-			Gui.touchAVIew("UIButton", 4);
+			Gui.touchAVIew("UIButton", "<");
 		}
 	}
 
 	public static void goToNextDays(int days) {
 		for (int i = 0; i < days; i++) {
-			Gui.touchAVIew("UIButton", 5);
+			Gui.touchAVIew("UIButton", ">");
 		}
 	}
 	
 	public static void goToLastWeek() {
-		Gui.touchAVIew("UIButton", 4);
+		Gui.touchAVIew("UIButton", "<");
 	}
 	
 	public static void goToThisWeek() {
 		// from last week to this week
-		Gui.touchAVIew("UIButton", 5);
+		Gui.touchAVIew("UIButton", ">");
 	}
 
 	public static void sync() {
@@ -162,8 +162,9 @@ public class HomeScreen {
 	}
 
 	public static boolean isPointEarnedProgessCircle() {
-		String text = Gui.getProperty("UILabel", 3, "text");
-		return text.matches("^of .* points$");
+//		String text = Gui.getProperty("UILabel", 3, "text");
+//		return text.matches("^of .* points$");
+		return !isSummaryProgressCircle();
 	}
 
 	public static boolean isSummaryProgressCircle() {

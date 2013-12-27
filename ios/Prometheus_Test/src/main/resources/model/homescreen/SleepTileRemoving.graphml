@@ -59,7 +59,7 @@
     <node id="n3">
       <data key="d6">
         <y:GenericNode configuration="BevelNode3">
-          <y:Geometry height="36.0" width="199.8000000000004" x="131.73690476190455" y="438.45325365823413"/>
+          <y:Geometry height="36.0" width="199.8000000000004" x="164.3738095238093" y="446.61247984871034"/>
           <y:Fill color="#FF9900" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="139.92578125" x="29.937109375000205" y="8.93359375">v_RemoveSleepConfirm<y:LabelModel>
@@ -75,7 +75,7 @@
     <node id="n4">
       <data key="d6">
         <y:GenericNode configuration="BevelNode3">
-          <y:Geometry height="36.0" width="207.8000000000004" x="321.6797619047617" y="573.0842455667164"/>
+          <y:Geometry height="36.0" width="207.8000000000004" x="321.6797619047617" y="573.0843184213791"/>
           <y:Fill color="#FF9900" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="194.001953125" x="6.899023437500205" y="8.93359375">v_HomeScreenAfterRemoveSleep<y:LabelModel>
@@ -155,13 +155,13 @@
         <y:PolyLineEdge>
           <y:Path sx="-49.9500000000001" sy="18.0" tx="-49.9500000000001" ty="-18.0">
             <y:Point x="111.36031746031736" y="330.3680261036706"/>
-            <y:Point x="69.07335999503968" y="377.1670549665178"/>
-            <y:Point x="69.07335999503968" y="395.29986746651787"/>
-            <y:Point x="181.68690476190466" y="423.45325365823413"/>
+            <y:Point x="71.49359809027777" y="377.77211449032734"/>
+            <y:Point x="71.49359809027777" y="395.9049269903274"/>
+            <y:Point x="214.32380952380942" y="431.61247984871034"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="111.818359375" x="-42.286961049882194" y="56.79904349190849">e_removeSleepTile<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="111.818359375" x="-39.8667229546441" y="57.404103015717965">e_removeSleepTile<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -172,14 +172,14 @@
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="49.9500000000001" sy="-18.0" tx="49.9500000000001" ty="18.0">
-            <y:Point x="281.58690476190486" y="428.45325365823413"/>
-            <y:Point x="378.4564329117064" y="395.29986746651787"/>
-            <y:Point x="378.4564329117064" y="377.1670549665178"/>
+            <y:Point x="314.2238095238096" y="436.61247984871034"/>
+            <y:Point x="380.87667100694443" y="395.9049269903274"/>
+            <y:Point x="380.87667100694443" y="377.77211449032734"/>
             <y:Point x="211.26031746031757" y="335.3680261036706"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="167.564453125" x="-70.69493427579363" y="-61.24712960379463">e_cancelRemove/cont=true;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="167.564453125" x="-100.91159803602432" y="-68.80131080264135">e_cancelRemove/cont=true;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
@@ -190,12 +190,12 @@
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="18.0" tx="-51.9500000000001" ty="-18.0">
-            <y:Point x="231.63704427083331" y="522.5860661582342"/>
-            <y:Point x="373.6297619047618" y="558.0842455667163"/>
+            <y:Point x="264.2736576140873" y="530.7452923487103"/>
+            <y:Point x="373.6297619047618" y="558.084318421379"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="215.892578125" x="1.4241536456438553E-4" y="30.00000658792169">e_confirmRemove[cont==true]/i++;<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="183.255859375" x="-1.4609685018740493E-4" y="29.999992055741586">e_confirmRemove[cont==true]<y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/>
           </y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
