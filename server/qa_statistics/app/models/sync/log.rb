@@ -16,10 +16,17 @@ module Sync
     field :x_st,  as: :extracting_status, type: Integer
     field :s3_p,  as: :s3_folder_path, type: String
     field :ip,    as: :ip_address, type: String
+    field :plf,   as: :platform, type: String
 
     field :uid, as: :user_id
     belongs_to :user, foreign_key: :uid, index: true
 
+    PENDING_STATUS = 0
+    EXTRACTING_STATUS = 1
+    EXTRACTED_STATUS = 2
+    FAILED_STATUS = 3
+    DEBUG_LOG_FILENAME = 'debug_log.txt'
+    HARDWARE_LOG_FILENAME = 'hardware_log'
   
     SYNC_FAILED_ERRORS = {
       -1 => "Unknown",
@@ -79,7 +86,7 @@ module Sync
       "5.1", "5.1.1", 
       "6.0", "6.0.1", "6.0.2", 
       "6.1", "6.1.1", "6.1.2", "6.1.3", "6.1.4", 
-      "7.0", "7.0.1", "7.0.2", "7.0.3", 
+      "7.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4",
       "7.1"
     ]
 
@@ -95,6 +102,37 @@ module Sync
       result = result.in(:'data.failureReason' => failure_reasons) if failure_reasons.present?
       result = result.in(:'data.deviceInfo' => device_infos) if device_infos.present?
       result
+    end
+
+    def self.search_logs_by_criteria_android(isok, from_time, to_time, android_app_version, android_os_version, android_phone_model, android_phone_manufacturer, android_sdk, firmware)
+      # build search criteria
+      result = self.where(isok: isok)
+      result = result.and(:start_time.gte => from_time) if from_time.present?
+      result = result.and(:start_time.lte => to_time) if to_time.present?
+      result = result.and(:firmware_revision_string => firmware) if firmware.present?
+      result = result.and(:'data.androidAppVersion' => android_app_version) if android_app_version.present?
+      result = result.in(:'data.androidOSVersion' => android_os_version) if android_os_version.present?
+      result = result.in(:'data.androidPhoneModel' => android_phone_model) if android_phone_model.present?
+      result = result.and(:'data.androidPhoneManufacturer' => android_phone_manufacturer) if android_phone_manufacturer.present?
+      result = result.in(:'data.androidSdk' => android_sdk) if android_sdk.present?
+      result
+    end
+
+    def self.build_map_reduce_query_android(sync_logs, has_android_os_version, has_android_phone_model, has_android_sdk)
+      map = "function() { var keys = new Object(); "
+      map << "keys.androidOSVersion = this.data.androidOSVersion; " if has_android_os_version
+      map << "keys.androidPhoneModel = this.data.androidPhoneModel;" if has_android_phone_model
+      map << "keys.androidSdk = this.data.androidSdk;" if has_android_sdk
+      map << "emit(keys, 1); }"
+
+      reduce = %Q{
+        function(key, values) {
+          return Array.sum(values);
+        }
+      }
+
+      mr_result = sync_logs.map_reduce(map, reduce).out(inline: true).to_a
+      mr_result
     end
 
     def self.build_map_reduce_query(sync_logs, has_ios_version, has_failure_reasons, has_device_infos, showLastCommand)
@@ -125,6 +163,18 @@ module Sync
 
       mr_result = sync_logs.map_reduce(map, reduce).out(inline: true).to_a
       mr_result
+    end
+
+    def self.calculate_statistics_from_logs_android(sync_logs, has_android_os_version, has_android_phone_model, has_android_sdk)
+      mr_result = build_map_reduce_query_android(sync_logs, has_android_os_version, has_android_phone_model, has_android_sdk)
+
+      result = []
+      total_failures = 0
+      mr_result.each do |entry|
+        total_failures += entry["value"].to_i
+      end
+
+      
     end
 
     def self.calculate_statistics_from_logs(sync_logs, has_ios_version, has_failure_reasons, has_device_infos, showLastCommand)

@@ -36,7 +36,7 @@ class LogFilterController < ApplicationController
     statistics_params["errorCodes"] = errorCodes ? errorCodes.map(&:to_i) : nil
     statistics_params["deviceInfos"] = deviceInfos ? Sync::Log::DEVICE_INFOS.slice(*deviceInfos).values.flatten : nil
     statistics_params["firmware"] = firmware
-    statistics_params["showLastCommand"] = true
+    statistics_params["showLastCommand"] = false
 
     if action == "Search"
       @logs = Sync::Log.calculate_statistics_by_criteria(statistics_params)
