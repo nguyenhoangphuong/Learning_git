@@ -143,6 +143,11 @@ public class PrometheusHelper {
 		return Gui.getPopupContent().equals(DefaultStrings.SignUpDuplicatedEmailMessage) && Gui.getPopupTitle().equals(DefaultStrings.Title);
 	}
 	
+	public static boolean hasAlert(String message, String title) {
+		
+		return Gui.getPopupContent().equals(message) && (title == null || Gui.getPopupTitle().equals(title));
+	}
+	
 	/* Utilities */
 	public static int randInt(int includeFrom, int excludeTo) {
 		Random r = new Random();

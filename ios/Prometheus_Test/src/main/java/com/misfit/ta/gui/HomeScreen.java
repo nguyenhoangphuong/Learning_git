@@ -33,6 +33,26 @@ public class HomeScreen {
 		Gui.touchAVIew("PTGoalCircleView", 0);
 	}
 
+	public static void tapArrowButtonToday() {
+		Gui.touchAVIew("UIButton", 0);
+	}
+	
+	public static void tapMyProgress() {
+		Gui.touchAVIew("UIButton", DefaultStrings.MenuProgressButtonTag);
+	}
+	
+	public static void tapLeaderboard() {
+		Gui.touchAVIew("UIButton", DefaultStrings.LeaderBoardButtonTag);
+	}
+	
+	public static void tapWordView() {
+		Gui.touchAVIew("UIButton", DefaultStrings.WorldViewButtonTag);
+	}
+	
+	public static void tapSocialProfile() {
+		Gui.touchAVIew("UIButton", DefaultStrings.SocialProfileButtonTag);
+	}
+	
 	public static void chooseSleep() {
 		Gui.touchAVIew("UILabel", DefaultStrings.SleepLabel);
 	}
@@ -56,10 +76,6 @@ public class HomeScreen {
 
 	public static void chooseBasketball() {
 		Gui.touchAVIew("UILabel", DefaultStrings.BasketballLabel);
-	}
-
-	public static void tapArrowButtonToday() {
-		Gui.touchAVIew("UIButton", 0);
 	}
 
 	/* Manual input */

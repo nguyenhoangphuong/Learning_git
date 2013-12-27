@@ -8,6 +8,7 @@ public class DefaultStrings {
 	public static String SaveButton = "Save";
 	public static String DoneButton = "Done";
 	public static String CancelButton = "Cancel";
+	public static String EditButton = "Edit";
 	public static String MaleLabel = "Male";
 	public static String FemaleLabel = "Female";
 	public static String LoadingLabel = "Loading";
@@ -76,6 +77,7 @@ public class DefaultStrings {
 	public static String LeaderBoardButtonTag = "MenuFriendLeaderBoard";
 	public static String MenuProgressButtonTag = "MenuProgress";
 	public static String WorldViewButtonTag = "MenuWorldFeed";
+	public static String SocialProfileButtonTag = "MenuProfile";
 	
 	public static String TutorialForUpdateActivityTag = "Hold down on an activity highlight to change the tag. You can only do this on the current day.";
 	public static String TutorialForDeleteSleepTile = "Hold down on a sleep highlight to remove it. You can only do this on the current day.";
@@ -187,4 +189,32 @@ public class DefaultStrings {
 	public static String SyncNowButton = "Sync Now";
 	public static String ChangeTagButton = "Change Tag";
 	public static String ManualButton = "M";
+	
+	// social
+	public static String EmptyAvatarMessage = "You didn't add a photo. Add one so your friends can see you!";
+	public static String EmptyNameMessage = "You didn't enter your name";
+	public static String EmptyHandleMessage = "You didn't enter a username";
+	public static String InvalidHandleMessage = "Usernames can only contain letters, digits and underscores and should be at least 6 characters.";
+	public static String DuplicatedHandleMessage = "Someone's already snagged that username! Try something else?";
+	public static String SocialProfileNoFriendMessage = "No friends yet? Tap here to add Facebook friends or search by username";
+	public static String LeaderboardNoFriendMessage = "Let us show you around."; 
+	
+	public static String ProfilePreviewViewTitle = "Profile Preview";
+	public static String SocialProfileViewTitle = "Profile";
+	public static String ShineWithFriendsTitle = "Shine with friends!";
+	
+	public static String ChooseFromLibrary = "Choose From Library";
+	public static String TakePhotoButton = "Take Photo";
+	public static String RetakeButton = "RETAKE";
+	public static String UsePhotoButton = "USE_PHOTO";
+	public static String EditAvatarButtonTag = "SelectAvatarPhoto";
+	public static String SearchFriendButtonTag = "SearchFriendButton";
+	public static String AcceptButton = "ACCEPT";
+	public static String IgnoreButton = "IGNORE";
+	public static String RemoveFriendButton = "Remove Friend";
+	public static String DontHaveFacebookButton = "Don't have Facebook?";
+	public static String ConnectWithFacebookButton = "Connect with Facebook";
+	public static String GetStartedButton = "Get Started";
+	public static String OKGotItButton = "OK, got it";
+	
 }
