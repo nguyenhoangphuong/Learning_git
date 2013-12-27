@@ -122,8 +122,7 @@ public class TaggingActivityAPI extends ModelAPI {
 		
 	public void v_HomeScreen() {
 		
-		Assert.assertTrue(isNoActivity ? HomeScreen.isTodayDefault() : HomeScreen.isToday(),
-				"Current view is HomeScreen - Today " + (isNoActivity ? "No Activity" : ""));
+		Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen - Today");
 	}
 	
 	public void v_UpdatedCyclingTimeline() {

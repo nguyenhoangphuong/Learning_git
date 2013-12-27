@@ -21,8 +21,12 @@ public class Debug {
 	
 	public static void main(String[] args) throws IOException {
 		
-		Gui.init("192.168.1.227");
-		Gui.touchAVIew("UILabel", "I HAVE A SHINE");
+		String token = MVPApi.signIn("qa253@a.a", "qqqqqq").token;
+		for(int i = 15; i >= 1; i--)
+			BackendHelper.completeGoalInPast(token, i);
+		
+//		Gui.init("192.168.1.227");
+//		Gui.touchAVIew("UILabel", "I HAVE A SHINE");
 
 		// api: update statistics to set best point to 400 pts
 //		BackendHelper.setPersonalBest(token, 400);
