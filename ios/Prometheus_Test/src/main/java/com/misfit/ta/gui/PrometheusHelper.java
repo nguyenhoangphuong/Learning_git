@@ -145,7 +145,7 @@ public class PrometheusHelper {
 	
 	public static boolean hasAlert(String message, String title) {
 		
-		return Gui.getPopupContent().equals(message) && (title == null || Gui.getPopupTitle().equals(title));
+		return (message == null || Gui.getPopupContent().equals(message)) && (title == null || Gui.getPopupTitle().equals(title));
 	}
 	
 	/* Utilities */

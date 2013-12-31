@@ -1,6 +1,5 @@
 package com.misfit.ta.gui.social;
 
-import javax.crypto.NullCipher;
 
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
@@ -22,7 +21,7 @@ public class LeaderboardView {
 	
 	public static void tapToCloseCurrentUser() {
 		
-		String cmd = "((ViewUtils findViewWithViewName: @\"PTSocialDetailPopup\" andIndex:0) dismissPopup)";
+		String cmd = "((ViewUtils findViewWithViewName: @\"PTSocialProfileDetailPopup\" andIndex:0) dismissPopup)";
 		NuRemoteClient.sendToServer(cmd);
 	}
 	

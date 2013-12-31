@@ -55,9 +55,21 @@ public class WorldFeedView {
 		Gui.touchAVIew("UIButton", 14);
 	}
 	
+	
+	
 	public static boolean isWelcomeView() {
 		
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.ShineWithFriendsTitle);
+	}
+	
+	public static boolean isWorldViewDefault() {
+		
+		return !isWelcomeView();
+	}
+	
+	public static boolean hasOptionPanel() {
+		
+		return ViewUtils.isExistedView("UIButton", DefaultStrings.SaveButton);
 	}
 	
 }

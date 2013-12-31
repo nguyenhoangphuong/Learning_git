@@ -192,8 +192,8 @@ public class DefaultStrings {
 	
 	// social
 	public static String EmptyAvatarMessage = "You didn't add a photo. Add one so your friends can see you!";
-	public static String EmptyNameMessage = "You didn't enter your name";
-	public static String EmptyHandleMessage = "You didn't enter a username";
+	public static String EmptyNameMessage = "You didn't enter your name.";
+	public static String EmptyHandleMessage = "You didn't enter a username.";
 	public static String InvalidHandleMessage = "Usernames can only contain letters, digits and underscores and should be at least 6 characters.";
 	public static String DuplicatedHandleMessage = "Someone's already snagged that username! Try something else?";
 	public static String SocialProfileNoFriendMessage = "No friends yet? Tap here to add Facebook friends or search by username";
@@ -207,6 +207,8 @@ public class DefaultStrings {
 	public static String TakePhotoButton = "Take Photo";
 	public static String RetakeButton = "RETAKE";
 	public static String UsePhotoButton = "USE_PHOTO";
+	public static String CameraRollButton = "CAMERA_ROLL";
+	public static String ChoosePhotoButton = "CHOOSE_PHOTO_BUTTON";
 	public static String EditAvatarButtonTag = "SelectAvatarPhoto";
 	public static String SearchFriendButtonTag = "SearchFriendButton";
 	public static String AcceptButton = "ACCEPT";

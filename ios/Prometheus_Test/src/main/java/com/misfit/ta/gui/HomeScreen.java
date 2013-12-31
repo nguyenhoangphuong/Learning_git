@@ -146,6 +146,10 @@ public class HomeScreen {
 	}
 
 	/* Visible checking */
+	public static boolean isHomeScreen() {
+		return ViewUtils.isExistedView("UIButton", DefaultStrings.LeaderBoardButtonTag);
+	}
+	
 	public static boolean isToday() {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.TodayTitle);
 	}

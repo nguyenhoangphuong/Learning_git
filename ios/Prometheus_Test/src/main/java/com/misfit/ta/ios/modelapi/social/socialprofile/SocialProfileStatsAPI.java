@@ -1,12 +1,16 @@
-package com.misfit.ta.ios.modelapi.social;
+package com.misfit.ta.ios.modelapi.social.socialprofile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
+import org.testng.Assert;
+
+import com.misfit.ta.Settings;
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.utils.Files;
 import com.misfit.ta.ios.AutomationTest;
 
 public class SocialProfileStatsAPI extends ModelAPI {
@@ -17,6 +21,7 @@ public class SocialProfileStatsAPI extends ModelAPI {
 			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
+
 
 	public void e_installAndLaunchAppWithoutSocialFeature() {
 		

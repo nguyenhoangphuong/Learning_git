@@ -58,7 +58,11 @@ public class SocialProfileView {
 	
 	static public void tapEditAvatarButton() {
 		
-		Gui.touchAVIew("UIImageView", 0);
+		if(isProfileReviewView())
+			Gui.touchAVIew("UIImageView", 0);
+		else
+			Gui.touchAVIew("UIImageView", 9);
+		
 	}
 	
 	static public void tapChooseFromLibrary() {
@@ -107,6 +111,21 @@ public class SocialProfileView {
 		Gui.touchPopupButton(0);
 	}
 	
+	static public void tapCameraRoll() {
+		
+		Gui.touchAVIew("UILabel", DefaultStrings.CameraRollButton);
+	}
+	
+	static public void tapAlbumImage(int index) {
+		
+		Gui.touchAVIew("PUPhotoView", index);
+	}
+	
+	static public void tapChoosePhoto() {
+		
+		Gui.touchAVIew("UIButton", DefaultStrings.ChoosePhotoButton);
+	}
+	
 	
 	
 	static public boolean hasEmptyNameAlert() {
@@ -131,15 +150,21 @@ public class SocialProfileView {
 	
 	static public boolean hasDuplicatedHandleAlert() {
 		
-		return PrometheusHelper.hasAlert(DefaultStrings.DuplicatedHandleMessage, null);
+		return PrometheusHelper.hasAlert(null, DefaultStrings.DuplicatedHandleMessage);
 	}
 
 	
 	
 	static public void inputName(String name) {
 		
-		Gui.touchAVIew("UITextField", 1);
-		Gui.setText("UITextField", 1, name);
+		if(isProfileReviewView()) {
+			Gui.touchAVIew("UITextField", 1);
+			Gui.setText("UITextField", 1, name);
+		}
+		else {
+			Gui.touchAVIew("UITextField", 5);
+			Gui.setText("UITextField", 5, name);
+		}
 	}
 	
 	static public void inputHandle(String handle) {

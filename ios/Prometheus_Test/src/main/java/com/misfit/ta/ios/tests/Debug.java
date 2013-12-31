@@ -18,7 +18,9 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.gui.social.LeaderboardView;
 import com.misfit.ta.gui.social.SocialProfileView;
+import com.misfit.ta.gui.social.WorldFeedView;
 import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.utils.TextTool;
 
 public class Debug {
 	
@@ -27,13 +29,8 @@ public class Debug {
 	public static void main(String[] args) throws IOException {
 		
 		
-		Gui.init("192.168.1.115");
-//		LeaderboardView.tapYesterday();
-//		LeaderboardView.tapToday();
-//		LeaderboardView.tapUserWithHandle("misterfit");
-//		LeaderboardView.tapToCloseCurrentUser();
-//		LeaderboardView.tapUserWithHandle("fiducid");
-		LeaderboardView.pullToRefresh();
+		Gui.init("192.168.1.115");		
+		SocialProfileView.tapAlbumImage(0);
 	}
 }
 	
