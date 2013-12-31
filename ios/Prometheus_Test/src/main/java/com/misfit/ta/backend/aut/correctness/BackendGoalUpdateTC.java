@@ -23,6 +23,7 @@ public class BackendGoalUpdateTC extends BackendAutomation {
 		String token = MVPApi.signUp(email, password).token;
 		Goal goal = MVPApi.createGoal(token, defaultGoal).goals[0];
 		defaultGoal.setServerId(goal.getServerId());
+		defaultGoal.setUpdatedAt(goal.getUpdatedAt());
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "goal" })

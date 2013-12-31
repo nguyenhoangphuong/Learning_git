@@ -498,7 +498,7 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		data.appendGoalRawData(generateSessionRawData(3000, 300, 30));
 		data.appendGoalRawData(generateEmptyRawData(13 * 60 + 30, 15 * 60));
 
-		data.appendGoalRawData(generateGapData(100, 25, 2, 4, 60));
+		data.appendGoalRawData(generateGapData(100, 10, 2, 4, 60));
 		data.appendGoalRawData(generateEmptyRawData(15 * 60 + 60, 17 * 60));
 
 		data.appendGoalRawData(generateSessionRawData(4000, 400, 40));
@@ -640,91 +640,7 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 	
-	public void ServerCalculation_ChangeActivityTagging() {
-		
-		// sign up new account
-		boolean testPassed = true;
-		//String email = MVPApi.generateUniqueEmail();
-		String email = "sc033@a.a";
-		long timestamp = System.currentTimeMillis() / 1000;
-		String token = MVPApi.signUp(email, "qqqqqq").token;
 
-
-		// create profile / pedometer / statistics
-		ProfileData profile = DataGenerator.generateRandomProfile(timestamp, null);
-		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
-		Statistics statistics = Statistics.getDefaultStatistics();
-
-		MVPApi.createProfile(token, profile);
-		MVPApi.createPedometer(token, pedometer);
-		MVPApi.createStatistics(token, statistics);
-
-
-		// create goal for today
-		Goal goal = Goal.getDefaultGoal();
-		GoalsResult result = MVPApi.createGoal(token, goal);
-
-		goal.setServerId(result.goals[0].getServerId());
-		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
-
-
-		// story:
-		// - session: 2000 steps - 20 minutes (200 pts) at 0:00am
-		// - session: 4000 steps - 40 minutes (400 pts) at 1:00am
-		// - session: 4000 steps - 40 minutes (400 pts) at 2:00am
-		// - session: 1000 steps - 10 minutes (100 pts) at 3:00am
-		// - session: 1000 steps - 10 minutes (100 pts) at 4:00am
-		// - session: 2000 steps - 20 minutes (200 pts) at 5:00am
-		// - change tag of 0:00am session to swimming
-		// expect:
-		// - before edit tag: 
-		//   + only 100% at 2:40am
-		//	 + progress is 1400pts
-		// - after edit tag:
-		//   + 100% at 1:20am
-		//   + 150% at 2:10am
-		//   + 200% at 5:20am
-		//   + progress is 2000pts
-		GoalRawData data = new GoalRawData();
-		data.appendGoalRawData(generateSessionRawData(2000, 200, 20));
-		data.appendGoalRawData(generateEmptyRawData(0 * 60 + 20, 1 * 60));
-
-		data.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data.appendGoalRawData(generateEmptyRawData(1 * 60 + 40, 2 * 60));
-		
-		data.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data.appendGoalRawData(generateEmptyRawData(2 * 60 + 40, 3 * 60));
-		
-		data.appendGoalRawData(generateSessionRawData(1000, 100, 10));
-		data.appendGoalRawData(generateEmptyRawData(3 * 60 + 10, 4 * 60));
-		
-		data.appendGoalRawData(generateSessionRawData(1000, 100, 10));
-		data.appendGoalRawData(generateEmptyRawData(4 * 60 + 10, 5 * 60));
-		
-		data.appendGoalRawData(generateSessionRawData(2000, 200, 20));
-		data.appendGoalRawData(generateEmptyRawData(5 * 60 + 20, 24 * 60));
-		
-		
-		// push to server
-		MVPApi.pushRawData(token, goal.getServerId(), data, 0);
-		ShortcutsTyper.delayTime(3000);
-		
-		
-		// get server data
-//		List<TimelineItem> timelineitemsA = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0);
-//		Goal goalA = MVPApi.getGoal(token, goal.getServerId()).goals[0];
-		
-		
-		// change activity tagging
-		// NOT AVAILABLE, SERVER HAVEN'T HAD ANY API TO CHANGE TAG YET
-
-
-		Assert.assertTrue(testPassed, "All asserts are passed");
-				
-	}
-	
-	
-	
 	// helpers
 	private void changeDistanceUnit(String token, int unit) {
 
@@ -803,8 +719,8 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		for(int i = 0; i < gapCount; i++) {
 
 			for(int j = 0; j < activeInterval; j++) {
-				steps[index] = (int)(stepPerMinute * 2.5);
-				points[index] = pointPerMinute;
+				steps[index] = stepPerMinute;
+				points[index] = (int)(pointPerMinute * 2.5);
 				index++;
 			}
 
