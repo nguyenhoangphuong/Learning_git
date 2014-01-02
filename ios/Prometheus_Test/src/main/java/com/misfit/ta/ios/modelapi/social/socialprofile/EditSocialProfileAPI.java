@@ -42,7 +42,7 @@ public class EditSocialProfileAPI extends ModelAPI {
 		String token = MVPApi.signIn(email, "qwerty1").token;
 		
 		ProfileData profile = new ProfileData();
-		handle = TextTool.getRandomString(4, 5) + System.nanoTime();
+		handle = TextTool.getRandomString(4, 5).toLowerCase() + System.nanoTime();
 		profile.setHandle(handle);
 		profile.setName(TextTool.getRandomString(5, 10));
 		
