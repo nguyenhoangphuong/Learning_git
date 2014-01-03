@@ -29,8 +29,9 @@ public class Debug {
 	public static void main(String[] args) throws IOException {
 		
 		
-		Gui.init("192.168.1.115");		
-		SocialProfileView.tapAlbumImage(0);
+//		Gui.init("192.168.1.115");		
+//		SocialProfileView.tapAlbumImage(0);
+		BackendHelper.link("nhhai16991@gmail.com", "qqqqqq", "science019");
 	}
 }
 	

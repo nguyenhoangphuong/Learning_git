@@ -32,7 +32,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class BackendServerCalculationTest extends BackendAutomation {
 
 
-	protected int delayTime = 10000;
+	protected int delayTime = 30000;
 
 	// test cases
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation" })
@@ -639,7 +639,7 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
-	
+
 
 	// helpers
 	private void changeDistanceUnit(String token, int unit) {
@@ -830,7 +830,8 @@ public class BackendServerCalculationTest extends BackendAutomation {
 
 				MilestoneItem milestone = (MilestoneItem) item.getData();
 				MilestoneItemInfo milestoneInfo = milestone.getInfo();
-				return milestone.getEventType().equals(TimelineItemDataBase.EVENT_TYPE_STREAK) && milestoneInfo.getStreakNumber().equals(streakNumber);
+				if(milestone.getEventType().equals(TimelineItemDataBase.EVENT_TYPE_STREAK))
+					return  milestoneInfo.getStreakNumber().equals(streakNumber);
 			}
 		}
 
