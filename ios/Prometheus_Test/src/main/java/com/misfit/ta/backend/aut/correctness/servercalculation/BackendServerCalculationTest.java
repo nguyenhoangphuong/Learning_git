@@ -640,7 +640,88 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
+	public void runPerformance() {
+		
+		String email = MVPApi.generateUniqueEmail();
+		long timestamp = System.currentTimeMillis() / 1000;
+		String token = MVPApi.signUp(email, "qqqqqq").token;
 
+		// create profile (height = 64") / pedometer / statistics
+		ProfileData profile = DataGenerator.generateRandomProfile(timestamp, null);
+		Statistics statistics = Statistics.getDefaultStatistics();
+
+		MVPApi.createProfile(token, profile);
+		MVPApi.createStatistics(token, statistics);
+
+
+		// create goal for today
+		Goal[] goals = new Goal[6];
+		for(int i = 0; i < 6; i++) {
+
+			long goalTimestamp = timestamp - i * 3600 * 24;
+			Goal goal = Goal.getDefaultGoal(goalTimestamp);
+			GoalsResult result = MVPApi.createGoal(token, goal);
+
+			goal.setServerId(result.goals[0].getServerId());
+			goal.setUpdatedAt(result.goals[0].getUpdatedAt());
+
+			goals[i] = goal;
+		}
+
+
+		GoalRawData data5 = new GoalRawData();
+		data5.appendGoalRawData(generateSessionRawData(63720, 3600, 360));
+		data5.appendGoalRawData(generateEmptyRawData(0 * 60 + 360, 24 * 60));
+
+		GoalRawData data4a = new GoalRawData();
+		data4a.appendGoalRawData(generateSessionRawData(1900, 200, 20));
+		data4a.appendGoalRawData(generateEmptyRawData(0 * 60 + 20, 1 * 60));
+
+		GoalRawData data4b = new GoalRawData();
+		data4b.appendGoalRawData(generateSessionRawData(2560, 200, 20));
+		data4b.appendGoalRawData(generateEmptyRawData(1 * 60 + 20, 24 * 60));
+
+		GoalRawData data3 = new GoalRawData();
+		data3.appendGoalRawData(generateSessionRawData(127440, 7200, 720));
+		data3.appendGoalRawData(generateEmptyRawData(0 * 60 + 720, 24 * 60));
+
+		GoalRawData data2a = new GoalRawData();
+		data2a.appendGoalRawData(generateSessionRawData(4260, 300, 30));
+		data2a.appendGoalRawData(generateEmptyRawData(0 * 60 + 30, 1 * 60));
+
+		GoalRawData data2b = new GoalRawData();
+		data2b.appendGoalRawData(generateSessionRawData(12780, 900, 90));
+		data2b.appendGoalRawData(generateEmptyRawData(1 * 60 + 90, 6 * 60));
+
+		data2b.appendGoalRawData(generateSessionRawData(60840, 3600, 360));
+		data2b.appendGoalRawData(generateEmptyRawData(6 * 60 + 360, 24 * 60));
+
+		GoalRawData data1 = new GoalRawData();
+		data1.appendGoalRawData(generateSessionRawData(126000, 7200, 720));
+		data1.appendGoalRawData(generateEmptyRawData(0 * 60 + 720, 24 * 60));
+
+		GoalRawData data0a = new GoalRawData();
+		data0a.appendGoalRawData(generateSessionRawData(21300, 1500, 150));
+		data0a.appendGoalRawData(generateEmptyRawData(0 * 60 + 150, 6 * 60));
+
+		GoalRawData data0b = new GoalRawData();
+		data0b.appendGoalRawData(generateSessionRawData(21300, 1500, 150));
+		data0b.appendGoalRawData(generateEmptyRawData(6 * 60 + 150, 24 * 60));
+
+
+		// push to server
+		MVPApi.pushRawData(token, goals[5].getServerId(), data5, 0);
+		MVPApi.pushRawData(token, goals[4].getServerId(), data4a, 0);
+		MVPApi.pushRawData(token, goals[4].getServerId(), data4b, 1 * 60);
+		MVPApi.pushRawData(token, goals[3].getServerId(), data3, 0);
+		MVPApi.pushRawData(token, goals[2].getServerId(), data2a, 0);
+		MVPApi.pushRawData(token, goals[2].getServerId(), data2b, 1 * 60);
+		MVPApi.pushRawData(token, goals[1].getServerId(), data1, 0);
+		MVPApi.pushRawData(token, goals[0].getServerId(), data0a, 0);
+		MVPApi.pushRawData(token, goals[0].getServerId(), data0b, 6 * 60);
+	}
+
+	
 	// helpers
 	private void changeDistanceUnit(String token, int unit) {
 
