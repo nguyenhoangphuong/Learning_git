@@ -32,7 +32,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class BackendServerCalculationTest extends BackendAutomation {
 
 
-	protected int delayTime = 30000;
+	protected int delayTime = 20000;
 
 	// test cases
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation" })
