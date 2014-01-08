@@ -63,12 +63,9 @@ public class DefaultStrings {
 	public static String ThisWeekTitle = "This week";
 	public static String LastWeekTitle = "Last week";
 	public static String SettingsButton = "Settings";
-	public static int SettingsButtonId = 2;
 	public static String MyShineButton = "My Shine";
-	public static int MyShineButtonId = 1;
 	public static String MyShineTitle = "My Shine";
 	public static String MyGoalButton = "My Goal";
-	public static int MyGoalButtonId = 0;
 	public static String NoActivityLabel = "No activity yet.";
 	public static String EndTutorialButton = "OK, I GOT IT";
 	public static String TutorialFirstPageLabel = "_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.";
@@ -78,6 +75,7 @@ public class DefaultStrings {
 	public static String MenuProgressButtonTag = "MenuProgress";
 	public static String WorldViewButtonTag = "MenuWorldFeed";
 	public static String SocialProfileButtonTag = "MenuProfile";
+	public static String ProgressCircleTutorial = "tap for steps, calories and distance";
 	
 	public static String TutorialForUpdateActivityTag = "Hold down on an activity highlight to change the tag. You can only do this on the current day.";
 	public static String TutorialForDeleteSleepTile = "Hold down on a sleep highlight to remove it. You can only do this on the current day.";

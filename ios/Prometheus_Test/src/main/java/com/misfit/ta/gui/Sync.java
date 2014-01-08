@@ -4,19 +4,6 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class Sync {
 	
-	public static void signIn() {
-		signIn("v14@qa.com", "test12");
-	}
-	
-	public static void signIn(String email, String password) {
-		LaunchScreen.launch();
-		SignIn.tapLogIn();
-		ShortcutsTyper.delayTime(1000);
-		SignIn.enterEmailPassword(email, password);
-		// wait for sync data
-		ShortcutsTyper.delayTime(25000);
-	}
-
 	public static void tapToSync() {
 		Gui.tapToSync();
 	}
@@ -52,6 +39,7 @@ public class Sync {
 		
 		return Gui.getPopupContent().equals(DefaultStrings.ShineOutOfSyncMessage) && Gui.getPopupTitle().equals(DefaultStrings.ShineOutOfSyncTitle);
 	}
+	
 	
 	public static void tapOK() {
 		// popup error message

@@ -15,7 +15,6 @@ import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
@@ -24,8 +23,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class WeekViewAPI extends ModelAPI {
 	private static final int SevenDaysDiff = 604800;
 
-	public WeekViewAPI(AutomationTest automation, File model, boolean efsm,
-			PathGenerator generator, boolean weight) {
+	public WeekViewAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
 
@@ -34,130 +32,77 @@ public class WeekViewAPI extends ModelAPI {
 	private Calendar now = Calendar.getInstance();
 	private String token;
 
-	/**
-	 * This method implements the Edge 'e_ChangeGoal'
-	 * 
-	 */
-	public void e_ChangeGoal() {
-		HomeScreen.tapOpenSettingsTray();
-		ShortcutsTyper.delayTime(200);
-		HomeScreen.tapAdjustGoal();
-		ShortcutsTyper.delayTime(300);
-		currentGoal = HomeSettings.getSpinnerGoal();
-		int oldGoal = currentGoal;
-		diff = PrometheusHelper.randInt(1, 5) * 100;
-		int day = now.get(Calendar.DAY_OF_WEEK);
-		if (day % 2 == 0) {
-			diff *= -1;
-		}
-		int temp = currentGoal + diff;
-		currentGoal = temp < 100 ? 100 : temp;
-		HomeSettings.setSpinnerGoal(currentGoal, oldGoal);
-		System.out.println("DEBUG: current goal " + currentGoal);
-		ShortcutsTyper.delayTime(300);
-		HomeSettings.tapDoneAtNewGoal();
-		ShortcutsTyper.delayTime(5000);
-		HomeSettings.tapOKAtNewGoalPopup();
-		ShortcutsTyper.delayTime(200);
-		HomeScreen.changeToWeekView();
-	}
-
-	/**
-	 * This method implements the Edge 'e_CheckGoal'
-	 * 
-	 */
-	public void e_CheckGoal() {
-		Timeline.dragUpTimelineAndHandleTutorial();
-		Integer improvement = calculateImprovement();
-		if (improvement != null) {
-			String message = improvement > 0 ? DefaultStrings.MoreImprovmentMessage
-					: DefaultStrings.LessImprovmentMessage;
-			Assert.assertTrue(ViewUtils.isExistedView("UILabel",
-					String.format("%d%%", Math.abs(improvement)))
-					&& ViewUtils.isExistedView("UILabel", message), "Improvement is displayed OK");
-		}
-		Timeline.dragDownTimeline();
-	}
-
-	/**
-	 * This method implements the Edge 'e_GoToLastWeek'
-	 * 
-	 */
-	public void e_GoToLastWeek() {
-		HomeScreen.goToLastWeek();
-	}
-
-	/**
-	 * This method implements the Edge 'e_GoToThisWeek'
-	 * 
-	 */
-	public void e_GoToThisWeek() {
-		HomeScreen.goToThisWeek();
-	}
-
-	/**
-	 * This method implements the Edge 'e_Init'
-	 * 
-	 */
+	
+	
 	public void e_Init() {
+		
 		String email = "thy@misfitwearables.com";
 		String password = "test12";
-		Sync.signIn(email, password);
-		ShortcutsTyper.delayTime(2000);
 		token = MVPApi.signIn(email, password).token;
+		PrometheusHelper.signIn(email, password);
 	}
-
-	/**
-	 * This method implements the Edge 'e_Stay'
-	 * 
-	 */
-	public void e_Stay() {
-		// TODO:
-	}
-
-	/**
-	 * This method implements the Vertex 'v_EndInput'
-	 * 
-	 */
-	public void v_EndInput() {
-		// TODO:
-	}
-
-	/**
-	 * This method implements the Vertex 'v_LastWeekView'
-	 * 
-	 */
-	public void v_LastWeek() {
-		Assert.assertTrue(HomeScreen.isLastWeek(), "This is last week view");
-	}
-
-	/**
-	 * This method implements the Vertex 'v_ThisWeek'
-	 * 
-	 */
-	public void v_ThisWeek() {
-		Assert.assertTrue(HomeScreen.isThisWeek(), "This is this week view");
-	}
-
-	public void v_Today() {
-		PrometheusHelper.handleBatteryLowPopup();
-		PrometheusHelper.handleUpdateFirmwarePopup();
-	}
-
+	
 	public void e_ChangeDayView() {
-		ShortcutsTyper.delayTime(2000);
+		
+		ShortcutsTyper.delayOne();
 		HomeScreen.changeToDayView();
 	}
 
 	public void e_ChangeWeekView() {
-		ShortcutsTyper.delayTime(2000);
+		
+		ShortcutsTyper.delayOne();
 		HomeScreen.changeToWeekView();
 	}
+	
+	public void e_ChangeGoal() {
+		
+		HomeScreen.tapOpenSettingsTray();
+		ShortcutsTyper.delayTime(1000);
+		HomeScreen.tapAdjustGoal();
+		ShortcutsTyper.delayTime(3000);
+				
+		int oldGoal = HomeSettings.getSpinnerGoal();
+		diff = 100;
+		currentGoal = oldGoal + diff * (System.nanoTime() % 2 == 0 ? 1 : -1);
+		if(currentGoal == oldGoal)
+			currentGoal = oldGoal + 100;
+		
+		// change goal
+		HomeSettings.setSpinnerGoal(currentGoal, oldGoal);
+		HomeSettings.tapDoneAtNewGoal();
+		PrometheusHelper.waitForAlert();
+		
+		// dismiss alert
+		HomeSettings.tapOKAtNewGoalPopup();
+		HomeScreen.changeToWeekView();
+	}
+	
+	public void e_GoToLastWeek() {
+		HomeScreen.goToLastWeek();
+	}
 
-	/**
-	 * This method implements the Vertex 'v_UpdatedWeekGoal'
-	 * 
-	 */
+	public void e_GoToThisWeek() {
+		HomeScreen.goToThisWeek();
+	}
+
+	
+
+	public void v_Today() {
+		
+		PrometheusHelper.handleBatteryLowPopup();
+		PrometheusHelper.handleUpdateFirmwarePopup();
+	}
+
+	public void v_ThisWeek() {
+		
+		Assert.assertTrue(HomeScreen.isThisWeek(), "This is this week view");
+	}
+	
+	public void v_LastWeek() {
+		
+		Assert.assertTrue(HomeScreen.isLastWeek(), "This is last week view");
+	}
+	
 	public void v_UpdatedWeekGoal() {
 		int day = now.get(Calendar.DAY_OF_WEEK);
 		// day -- > Monday: 2; Tuesday: 3; Wednesday: 4; Thursday: 5; Friday: 6;
@@ -167,8 +112,7 @@ public class WeekViewAPI extends ModelAPI {
 		if (index > 0) {
 			long startTimeStamp = getTimeStampOfPreviousDay(index);
 			long endTimeStamp = getTimeStampOfPreviousDay(1);
-			Goal[] goals = MVPApi.searchGoal(token, startTimeStamp,
-					endTimeStamp, 0).goals;
+			Goal[] goals = MVPApi.searchGoal(token, startTimeStamp, endTimeStamp, 0).goals;
 			System.out.println("DEBUG: start timestamp " + startTimeStamp);
 			System.out.println("DEBUG: end timestamp " + endTimeStamp);
 			for (int i = 0; i < goals.length; i++) {
@@ -179,68 +123,64 @@ public class WeekViewAPI extends ModelAPI {
 		}
 		System.out.println("DEBUG: Total goal " + totalGoal);
 		ShortcutsTyper.delayOne();
-		Assert.assertTrue(
-				ViewUtils.isExistedView("UILabel",
-						String.format(DefaultStrings.PointsDisplay, totalGoal)),
-				"Week goal is correct");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format(DefaultStrings.PointsDisplay, totalGoal)), "Week goal is correct");
 	}
-
+	
+	public void v_ThisWeekImprovement() {
+		
+		Timeline.dragUpTimelineAndHandleTutorial();
+		Integer improvement = calculateImprovement();
+		if (improvement != null) {
+			for(int i = -1; i <= 1; i++) {
+				String message = improvement > 0 ? DefaultStrings.MoreImprovmentMessage : DefaultStrings.LessImprovmentMessage;
+				Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d%%", Math.abs(improvement + i))) && ViewUtils.isExistedView("UILabel", message), "Improvement is displayed OK");
+			}
+		}
+		Timeline.dragDownTimeline();
+	}
+	
+	
+	
 	private long getTimeStampOfPreviousDay(int index) {
 		Calendar dayBefore = Calendar.getInstance();
 		dayBefore.add(Calendar.DATE, -(index));
-		long timeStamp = MVPApi.getDayStartEpoch(dayBefore.get(Calendar.DATE),
-				dayBefore.get(Calendar.MONTH), dayBefore.get(Calendar.YEAR));
+		long timeStamp = MVPApi.getDayStartEpoch(dayBefore.get(Calendar.DATE), dayBefore.get(Calendar.MONTH), dayBefore.get(Calendar.YEAR));
 		return timeStamp;
 	}
-
-
-	public Integer calculateImprovement() {
+	
+	private Integer calculateImprovement() {
+		
+		// search goals from monday to current day of this week and last week
 		int day = now.get(Calendar.DAY_OF_WEEK);
 		int index = day != 1 ? day - 2 : 6;
-		Goal[] thisWeekGoals = {};
-		Goal[] lastWeekGoals = {};
-		long startTimeStamp = index > 0 ? getTimeStampOfPreviousDay(index)
-				: MVPApi.getDayStartEpoch();
-		// get this week goals
-		// if today is Thursday, we only search goal from Monday to Thursday
-		thisWeekGoals = MVPApi.searchGoal(token, startTimeStamp,
-				MVPApi.getDayStartEpoch(), 0).goals;
-		// get last week goals
-		// only search goal from last Monday to last Thursday
-		lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - SevenDaysDiff,
-				MVPApi.getDayStartEpoch() - SevenDaysDiff, 0).goals;
-		// create a map with timestamp and last week points
-		Map<Long, Double> lastWeekPointsWithTimestampMap = new HashMap<Long, Double>(
-				(int) (lastWeekGoals.length / 0.75) + 1);
-		for (int i = 0; i < lastWeekGoals.length; i++) {
-			lastWeekPointsWithTimestampMap.put(lastWeekGoals[i].getStartTime(),
-					lastWeekGoals[i].getProgressData().getPoints());
-		}
-
+		long startTimeStamp = index > 0 ? getTimeStampOfPreviousDay(index) : MVPApi.getDayStartEpoch();
+		
+		Goal[] thisWeekGoals = MVPApi.searchGoal(token, startTimeStamp, MVPApi.getDayStartEpoch(), 0).goals;
+		Goal[] lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - SevenDaysDiff, MVPApi.getDayStartEpoch() - SevenDaysDiff, 0).goals;
+		
+		// calculate the difference in points between each day
 		int deltaProgress = 0;
 		int lastWeekProgress = 0;
 		for (int i = 0; i < thisWeekGoals.length; i++) {
-			// find the corresponding day in last week, 7 days ago
-			long lastWeekDayTimestamp = thisWeekGoals[i].getStartTime() - SevenDaysDiff;
-			if (lastWeekPointsWithTimestampMap
-					.containsKey(lastWeekDayTimestamp)) {
-				int lastWeekDayPoints = (int) Math
-						.floor(lastWeekPointsWithTimestampMap
-								.get(lastWeekDayTimestamp) / 2.5);
 
-				deltaProgress += (int) Math.floor(thisWeekGoals[i]
-						.getProgressData().getPoints() / 2.5)
-						- lastWeekDayPoints;
-				lastWeekProgress += lastWeekDayPoints;
-			}
+			Double lastWeekDayRawPoints = lastWeekGoals[i].getProgressData().getPoints();
+			Double thisWeekDayRawPoints = thisWeekGoals[i].getProgressData().getPoints();
+			int lastWeekDayPoints = (int) Math.floor( (lastWeekDayRawPoints == null ? 0 : lastWeekDayRawPoints) / 2.5);
+			int thisWeekDayPoints = (int) Math.floor( (thisWeekDayRawPoints == null ? 0 : thisWeekDayRawPoints) / 2.5);
+			
+			deltaProgress += (thisWeekDayPoints - lastWeekDayPoints);
+			lastWeekProgress += lastWeekDayPoints;
 		}
+		
 		System.out.println("DEBUG: deltaProgress" + deltaProgress);
 		System.out.println("DEBUG: lastWeekProgress" + lastWeekProgress);
+		
 		Integer improvement = null;
 		if (lastWeekProgress != 0) {
-			improvement = Integer.valueOf((int) Math
-					.round((deltaProgress * 1d / lastWeekProgress) * 100d));
+			improvement = Integer.valueOf((int) Math.round((deltaProgress * 1d / lastWeekProgress) * 100d));
 		}
+
 		return improvement;
 	}
+
 }

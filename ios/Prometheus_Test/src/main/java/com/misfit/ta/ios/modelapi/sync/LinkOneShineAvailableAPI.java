@@ -34,16 +34,13 @@ public class LinkOneShineAvailableAPI extends ModelAPI {
 
 		// sign in
 		LaunchScreen.launch();
-		Sync.signIn();
-		ShortcutsTyper.delayTime(1000);
+		PrometheusHelper.signIn("v14@qa.com", "test12");
 		Sync.openSyncView();
-		ShortcutsTyper.delayTime(1000);
 	}
 
 	public void e_triggerLink() {
-		ShortcutsTyper.delayTime(1000);
+
 		Sync.tapLinkShine();
-		ShortcutsTyper.delayTime(2000);
 		Sync.tapToSync();
 
 		int totalTime = 0;

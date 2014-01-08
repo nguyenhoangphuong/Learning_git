@@ -1,0 +1,101 @@
+package com.misfit.ta.gui;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import com.misfit.ta.Settings;
+import com.misfit.ta.utils.Files;
+import com.misfit.ta.utils.ShortcutsTyper;
+
+public class AppInstaller {
+
+	private static String[] MVPAppPaths = new String[] {
+		"apps/mvp16.1/Prometheus.ipa",
+		"apps/mvp17.1/Prometheus.ipa",
+		"apps/mvp18.1/Prometheus.ipa",
+		"apps/mvp19/Prometheus.ipa",
+		"apps/mvp20/Prometheus.ipa",
+	};
+	
+	public static int MVP_16_1 = 0;
+	public static int MVP_17_1 = 1;
+	public static int MVP_18_1 = 2;
+	public static int MVP_19 = 3;
+	public static int MVP_20 = 4;
+	public static int MVP_21 = 5;
+	public static int MVP_22 = 6;
+	
+	public boolean checkAppsExist(int fromMVP) {
+		
+		// make sure old app file exist
+		if(fromMVP < 0 || fromMVP >= MVPAppPaths.length)
+			return false;
+
+		String pathToApp = MVPAppPaths[fromMVP];
+		try {
+			Files.getFile(pathToApp);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		File f = new File(pathToApp);
+		if(!f.exists())
+			return false;
+		
+		pathToApp = f.getAbsolutePath();
+		
+		// make sure new app file exist
+		String pathToNewApp = Settings.getParameter("appPath");
+		if(pathToNewApp == null)
+			return false;
+		
+		File f2 = new File(pathToNewApp);
+		if(!f2.exists())
+			return false;
+		
+		return true;
+	}
+
+	public void killInstrument() {
+		
+		InstrumentHelper instrument = new InstrumentHelper();
+		instrument.kill();
+	}
+	
+	public void launchInstrument() {
+		
+		InstrumentHelper instrument = new InstrumentHelper();
+        instrument.start();
+		ShortcutsTyper.delayTime(15000);
+    	Gui.init(Settings.getParameter("DeviceIP"));
+	}
+	
+	
+	public void installApp(int mvp) {
+		
+		// check app before doing anything
+		if(!checkAppsExist(mvp))
+			return;
+
+		// install app
+		String pathToApp = MVPAppPaths[mvp];
+		killInstrument();
+		Gui.uninstall(Gui.getUdids().get(0));
+		Gui.install(Gui.getUdids().get(0), pathToApp);
+	}
+	
+	public void installAndLaunchApp(int mvp) {
+		
+		// check app before doing anything
+		if(!checkAppsExist(mvp))
+			return;
+		
+		// install app
+		String pathToApp = MVPAppPaths[mvp];
+		killInstrument();
+		Gui.uninstall(Gui.getUdids().get(0));
+		Gui.install(Gui.getUdids().get(0), pathToApp);
+		launchInstrument();
+	}
+	
+}

@@ -30,7 +30,7 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	}
 
 	private String name = "Social " + System.nanoTime();
-	private String handle = TextTool.getRandomString(5, 8) + System.nanoTime();
+	private String handle = TextTool.getRandomString(5, 8).toLowerCase() + System.nanoTime();
 	
 	
 	
@@ -66,6 +66,7 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	public void e_addAvatar() {
 		
 		SocialProfileView.tapAddPhotoAlert();
+		ShortcutsTyper.delayOne();
 		SocialProfileView.tapTakePhoto();
 		ShortcutsTyper.delayTime(5000);
 		SocialProfileView.tapCapturePhoto();

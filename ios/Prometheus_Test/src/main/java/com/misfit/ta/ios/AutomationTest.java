@@ -37,11 +37,12 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
         {
     		AppHelper.cleanCache();
     		ShortcutsTyper.delayTime(3000);
+    		
+    		instrument.kill();
+            instrument.start();
+            ShortcutsTyper.delayTime(15000);
         }
         
-        instrument.kill();
-        instrument.start();
-        ShortcutsTyper.delayTime(15000);
     	Gui.init(Settings.getParameter("DeviceIP"), 10);
     }
 

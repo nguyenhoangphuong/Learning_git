@@ -11,6 +11,7 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.social.LeaderboardView;
@@ -50,9 +51,11 @@ public class EditSocialProfileAPI extends ModelAPI {
 		
 		// pull to refresh
 		HomeScreen.pullToRefresh();
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 		
-		// go to social profile view
+		// set up gui
 		HomeScreen.tapLeaderboard();
+		LeaderboardView.tapGotIt();
 		HomeScreen.tapSocialProfile();
 		
 	}
@@ -97,6 +100,11 @@ public class EditSocialProfileAPI extends ModelAPI {
 		SocialProfileView.tapEditAvatarButton();
 		SocialProfileView.tapTakePhoto();
 		ShortcutsTyper.delayTime(5000);
+		
+		if(Gui.hasAlert()) {
+			Gui.touchPopupButton("OK");
+		}
+		
 		SocialProfileView.tapCapturePhoto();
 		ShortcutsTyper.delayTime(2000);
 		SocialProfileView.tapUsePhoto();
@@ -111,6 +119,11 @@ public class EditSocialProfileAPI extends ModelAPI {
 		// input new avatar by choosing from camera roll
 		SocialProfileView.tapEditAvatarButton();
 		SocialProfileView.tapChooseFromLibrary();
+		
+		if(Gui.hasAlert()) {
+			Gui.touchPopupButton("OK");
+		}
+		
 		SocialProfileView.tapCameraRoll();
 		SocialProfileView.tapAlbumImage(0);
 		SocialProfileView.tapChoosePhoto();

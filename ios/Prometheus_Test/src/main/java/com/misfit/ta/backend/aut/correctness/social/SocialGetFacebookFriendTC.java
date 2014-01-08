@@ -63,19 +63,28 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 		SocialTestHelpers.printUsers(friends);
 			
-		Assert.assertEquals(friends.length, 2, "Number of facebook users");
 
 		// make sure the result only contains only users who use Shine app
-		Assert.assertEquals(friends[0].getUid(), thyUid, "Handle");
-		Assert.assertEquals(friends[0].getHandle(), thyHandle, "Handle");
-		Assert.assertEquals(friends[0].getName(), thyName, "Name");
-		Assert.assertEquals(friends[0].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
+		int count = 0;
+		for(SocialUserWithStatus friend : friends) {
+			if(friend.getUid().equals(thyUid)) {
+				count++;
+				Assert.assertEquals(friend.getHandle(), thyHandle, "Handle");
+				Assert.assertEquals(friend.getName(), thyName, "Name");
+				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
+			}
+		}
 		
-		Assert.assertEquals(friends[1].getUid(), tungUid, "Handle");
-		Assert.assertEquals(friends[1].getHandle(), tungHandle, "Handle");
-		Assert.assertEquals(friends[1].getName(), tungName, "Name");
-		Assert.assertEquals(friends[1].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
+		for(SocialUserWithStatus friend : friends) {
+			if(friend.getUid().equals(tungUid)) {
+				count++;
+				Assert.assertEquals(friend.getHandle(), tungHandle, "Handle");
+				Assert.assertEquals(friend.getName(), tungName, "Name");
+				Assert.assertEquals(friend.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status");
+			}
+		}
 		
+		Assert.assertEquals(count, 2, "Number of friends found");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })

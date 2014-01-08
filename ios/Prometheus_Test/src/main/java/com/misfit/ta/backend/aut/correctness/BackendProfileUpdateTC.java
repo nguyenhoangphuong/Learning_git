@@ -127,39 +127,20 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 
 		Assert.assertTrue(r.isAuthInvalid(), "Status code is 401");
 	}
-
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
-	public void UpdateProfileWithInvalidName() {
-		
-		// empty name
-		String token = MVPApi.signIn(email, password).token;
-		defaultProfile.setName("");
-		
-		ProfileResult r = MVPApi.updateProfile(token, defaultProfile);
-		r.printKeyPairsValue();
-
-		Assert.assertEquals(r.statusCode, 400, "Status code");
-	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "profile" })
 	public void UpdateNewProfileWithInvalidHandle() {
-
-		// empty handle
-		String token = MVPApi.signIn(email, password).token;
-		defaultProfile.setHandle("");
 		
-		ProfileResult r = MVPApi.updateProfile(token, defaultProfile);
-		r.printKeyPairsValue();
-
-		Assert.assertEquals(r.statusCode, 400, "Status code");
+		String token = MVPApi.signIn(email, password).token;
 		
 		// short handle
-		defaultProfile.setHandle("short");
+		String handle = TextTool.getRandomString(3, 5);
+		defaultProfile.setHandle(handle);
 
-		r = MVPApi.updateProfile(token, defaultProfile);
+		ProfileResult r = MVPApi.updateProfile(token, defaultProfile);
 		r.printKeyPairsValue();
 		
-		// update profile in case of server allows "short" (to run regression test)
+		// update profile in case of server allows short handles (to run regression test)
 		defaultProfile.setHandle(TextTool.getRandomString(7, 10));
 		MVPApi.updateProfile(token, defaultProfile);
 

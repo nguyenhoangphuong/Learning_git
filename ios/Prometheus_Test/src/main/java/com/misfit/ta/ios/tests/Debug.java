@@ -14,7 +14,10 @@ import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
+import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.gui.SignIn;
+import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.gui.social.LeaderboardView;
 import com.misfit.ta.gui.social.SocialProfileView;
@@ -29,9 +32,8 @@ public class Debug {
 	public static void main(String[] args) throws IOException {
 		
 		
-//		Gui.init("192.168.1.115");		
-//		SocialProfileView.tapAlbumImage(0);
-		BackendHelper.link("nhhai16991@gmail.com", "qqqqqq", "science019");
+		Gui.init("192.168.1.115");
+		HomeScreen.pullToRefresh();
 	}
 }
 	

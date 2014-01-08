@@ -64,7 +64,4 @@ public class ChangeTimezoneBackwardDifferentDaysAPI extends ModelAPI {
 		// check goal start time and end time
 		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime, delta, beforeOffset, false);
 	}
-
-	public void e_stay() {
-	}
 }

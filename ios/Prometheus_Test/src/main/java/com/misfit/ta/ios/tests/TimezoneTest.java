@@ -55,4 +55,5 @@ public class TimezoneTest extends AutomationTest {
 		String actualResult = getModelhandler().getStatistics();
 		System.out.println(actualResult);
 	}
+
 }

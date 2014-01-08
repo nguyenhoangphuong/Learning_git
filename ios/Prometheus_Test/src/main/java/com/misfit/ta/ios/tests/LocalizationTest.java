@@ -20,7 +20,7 @@ public class LocalizationTest extends AutomationTest
 	
 	// this test will be run daily to make sure
 	// our script is up to date
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "LocalizeDebug" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "LocalizeDebug", "ProductionOnly" })
     public void Localization()
     {
    		testLocalizationForLanguage("ru");

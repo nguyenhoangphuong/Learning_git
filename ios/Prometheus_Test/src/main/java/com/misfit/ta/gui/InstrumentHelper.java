@@ -27,7 +27,8 @@ public class InstrumentHelper implements Runnable
     {
     	Thread interrupter = instrument;
     	instrument = null;
-    	interrupter.interrupt();
+    	if(interrupter != null)
+    		interrupter.interrupt();
     }
     
 	public void run() 

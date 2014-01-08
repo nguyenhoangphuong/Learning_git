@@ -601,7 +601,6 @@ public class BackendServerCalculationTest extends BackendAutomation {
 		data2.appendGoalRawData(generateEmptyRawData(1 * 60 + 50 + 20, 2 * 60 + 50));
 
 		data2.appendGoalRawData(generateSessionRawData(6000, 600, 60));
-		data2.appendGoalRawData(generateEmptyRawData(2 * 60 + 50 + 60, 24 * 60));
 		
 		
 		// push to server

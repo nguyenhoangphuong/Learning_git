@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class MVPCalculator {
 
-	private static double ALPHA = 0.15d;
-	private static double BETA = 1.3d;
+	private static double ALPHA = 0.145d;
+	private static double BETA = 1.26d;
 	private static double DELTA = 0.925d;
 	private static double GAMMA = 0.5d;
 

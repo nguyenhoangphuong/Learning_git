@@ -45,14 +45,14 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 		beforeEndTime = goal.getEndTime();
 		beforeStartTime = goal.getStartTime();
 		beforeOffset = goal.getTimeZoneOffsetInSeconds();
+		
 		this.previousTimezone = this.currentTimezone;
 		this.currentTimezone = this.currentTimezone + delta;
+		
 		Timezone.changeTimezone(currentTimezone);
 		logger.info("Change timezone from " + this.previousTimezone + " to " + this.currentTimezone);
 	}
-
-	public void e_checkEnd() {
-	}
+	
 
 	// vertex
 	public void v_HomeScreen() {
@@ -67,11 +67,5 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 		
 		// check goal start time and end time
 		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime, delta, beforeOffset, true);
-	}
-
-	public void v_End() {
-	}
-
-	public void e_stay() {
 	}
 }

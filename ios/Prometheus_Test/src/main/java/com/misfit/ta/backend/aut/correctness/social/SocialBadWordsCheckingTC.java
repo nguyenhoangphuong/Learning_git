@@ -16,7 +16,7 @@ import com.misfit.ta.report.TRS;
 public class SocialBadWordsCheckingTC extends BackendAutomation {
 	
 	// test methods
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "BadWordsChecking" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "BadWordsChecking", "Excluded" })
 	public void CheckBadWordsInHandle() {
 
 		// create account
@@ -56,6 +56,15 @@ public class SocialBadWordsCheckingTC extends BackendAutomation {
 				notSoBadWordsFailed.add(word);
 		}
 		
+		
+		// update profile again
+		ProfileData profile = new ProfileData();
+		profile.setHandle("valid_" + System.nanoTime());
+		MVPApi.updateProfile(token, profile);
+		
+		
+		// check result
+		TRS.instance().addStep("Result", null);
 		if(badWordsFailed.size() != 0) {
 			
 			logger.info("Bad words that were allowed: ");
@@ -76,14 +85,7 @@ public class SocialBadWordsCheckingTC extends BackendAutomation {
 				TRS.instance().addCode("Not so bad word that were not allowed: " + word, null);
 			}
 			logger.info("==============================================");
-		}
-		
-		
-		// update profile again
-		ProfileData profile = new ProfileData();
-		profile.setHandle("valid_" + System.nanoTime());
-		MVPApi.updateProfile(token, profile);
-		
+		}	
 		
 		Assert.assertEquals(badWordsFailed.size(), 0, "Number of bad words that were allowed");
 		Assert.assertEquals(notSoBadWordsFailed.size(), 0, "Number of not so bad words that were not allowed");

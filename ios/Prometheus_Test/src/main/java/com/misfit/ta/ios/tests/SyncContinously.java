@@ -97,7 +97,7 @@ public class SyncContinously {
 		try {
 			long begin = System.currentTimeMillis() / 1000 - 720;
 
-			Sync.signIn(email, password);
+			PrometheusHelper.signIn(email, password);
 			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 				
 				TRS.instance().addStep("Sync number: " + (i + 1), null);

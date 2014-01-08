@@ -112,6 +112,8 @@ public class DayProgressAPI extends ModelAPI {
 	}
 
 	public void v_UpdatedToday() {
+		
+
 
 		// check summary through process circle
 		for (int i = 0; i < 2; i++) {
@@ -119,6 +121,15 @@ public class DayProgressAPI extends ModelAPI {
 			// progress circle display point earned => check total point
 			if (HomeScreen.isPointEarnedProgessCircle()) {
 
+				// check tutorial in progress circle
+				if(HomeScreen.isTutorialProgressCircle()) {
+					
+					HomeScreen.tapProgressCircle();
+					HomeScreen.tapProgressCircle();
+					HomeScreen.tapProgressCircle();
+					HomeScreen.tapProgressCircle();
+				}
+				
 				// check total point
 				Assert.assertTrue(
 						ViewUtils.isExistedView("UILabel", String.format("%d", (int) Math.floor(this.totalPoints))) || 
@@ -129,7 +140,7 @@ public class DayProgressAPI extends ModelAPI {
 				if (1000 > this.totalPoints) {
 					
 					int remainMins = MVPCalculator.calculateNearestTimeRemainInMinute(1000 - (int) this.totalPoints, MVPEnums.ACTIVITY_WALKING);
-					String remainTimeString = Gui.getProperty("PTRichTextLabel", 0, "text");
+					String remainTimeString = Gui.getProperty("PTBottomHalfCircleLabel", 0, "text");
 					remainTimeString = remainTimeString.substring(remainTimeString.indexOf('_') + 1, remainTimeString.lastIndexOf('_'));
 
 					Assert.assertEquals(remainTimeString, MVPCalculator.convertNearestTimeInMinuteToString(remainMins), "Remain time displayed correctly");
@@ -151,13 +162,10 @@ public class DayProgressAPI extends ModelAPI {
 						"Total steps displayed correctly");
 
 				// check total burned calories
-				Calendar now = Calendar.getInstance();
-				float fullBMR = PrometheusHelper.calculateFullBMR(weight, height, now.get(Calendar.YEAR) - year, isMale);
 				String caloriesText = Gui.getProperty("PTRichTextLabel", 1, "text");
+				Calendar now = Calendar.getInstance();
+				float fullBMR = PrometheusHelper.calculateFullBMR(weight, height, now.get(Calendar.YEAR) - year, isMale);			
 				float calories = Float.valueOf(StringUtils.substring(caloriesText, 1, caloriesText.lastIndexOf("_")));
-				
-				float minTotalCalories = PrometheusHelper.calculateCalories(this.totalPoints, weight, fullBMR, now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE) - 10);
-				float maxTotalCalories = PrometheusHelper.calculateCalories(this.totalPoints, weight, fullBMR, now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE) + 10);
 				float result = PrometheusHelper.calculateCalories(this.totalPoints, weight, fullBMR, now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE));
 
 				System.out.println("NOW: " + now);
@@ -165,12 +173,10 @@ public class DayProgressAPI extends ModelAPI {
 				System.out.println("MINUTE:" + now.get(Calendar.MINUTE));
 				System.out.println("HOUR:" + now.get(Calendar.HOUR_OF_DAY));
 				System.out.println("DEBUG: Calories text " + calories);
-				System.out.println("DEBUG: Min calories " + minTotalCalories);
-				System.out.println("DEBUG: Max calories " + maxTotalCalories);
 				System.out.println("DEBUG: Calculated Calories " + result);
 				
-				if (calories < minTotalCalories || calories > maxTotalCalories) {
-					Assert.assertTrue(false, "Calories calculation is not correct");
+				if (Math.abs(calories - result) > 30f) {
+					Assert.fail("Calories calculation is not correct");
 				}
 				
 				// check total distance

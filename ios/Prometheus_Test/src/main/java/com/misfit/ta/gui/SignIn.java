@@ -6,11 +6,13 @@ public class SignIn {
 
 	/* lauch screen */
     public static void tapLogIn() {
-        Gui.touchAVIew("PTRichTextLabel", DefaultStrings.LogInButton);
+//        Gui.touchAVIew("PTRichTextLabel", DefaultStrings.LogInButton);
+    	Gui.touchAVIew("UIButton", 2);
     }
 
     public static void tapLogInWithFacebook() {
-        Gui.touchAVIew("UIButtonLabel", DefaultStrings.LogInFacebookButton);
+//        Gui.touchAVIew("UIButtonLabel", DefaultStrings.LogInFacebookButton);
+    	Gui.touchAVIew("UIButton", 1);
     }
 
     

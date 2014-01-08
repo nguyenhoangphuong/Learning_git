@@ -14,15 +14,15 @@ public class HomeScreen {
 	}
 
 	public static void tapSettings() {
-		Gui.touchAVIew("PTListItemView", DefaultStrings.SettingsButtonId);
+		Gui.touchAVIew("PTListItemView", DefaultStrings.SettingsButton);
 	}
 
 	public static void tapAdjustGoal() {
-		Gui.touchAVIew("PTListItemView", DefaultStrings.MyGoalButtonId);
+		Gui.touchAVIew("PTListItemView", DefaultStrings.MyGoalButton);
 	}
 
 	public static void tapMyShine() {
-		Gui.touchAVIew("PTListItemView", DefaultStrings.MyShineButtonId);
+		Gui.touchAVIew("PTListItemView", DefaultStrings.MyShineButton);
 	}
 
 	public static void tapOpenManualInput() {
@@ -135,14 +135,11 @@ public class HomeScreen {
 	}
 
 	public static void pullToRefresh() {
-		
-		// TODO: use something generic, currently we have to call dev code directly
-		// swipe works on iOS6 but doesn't on iOS7
-		
-		//Gui.swipeLeft(1000);
-		NuRemoteClient.sendToServer("((ViewUtils findViewWithViewName:@\"PTGoalCircleHorizontalScrollView\" andIndex:0) animateToWaitingPositionBeforeSyncingFinish)");
-		NuRemoteClient.sendToServer("((ViewUtils findViewWithViewName:@\"PTGoalCircleHorizontalScrollView\" andIndex:0) startLoadingAnimation)");
-		NuRemoteClient.sendToServer("((PTClientServerSyncService sharedService) startSyncing)");
+				
+		Gui.swipeLeft(1000);
+//		NuRemoteClient.sendToServer("((ViewUtils findViewWithViewName:@\"PTGoalCircleHorizontalScrollView\" andIndex:0) animateToWaitingPositionBeforeSyncingFinish)");
+//		NuRemoteClient.sendToServer("((ViewUtils findViewWithViewName:@\"PTGoalCircleHorizontalScrollView\" andIndex:0) startLoadingAnimation)");
+//		NuRemoteClient.sendToServer("((PTClientServerSyncService sharedService) startSyncing)");
 	}
 
 	/* Visible checking */
@@ -192,6 +189,12 @@ public class HomeScreen {
 		return text.matches(".* steps$");
 	}
 
+	public static boolean isTutorialProgressCircle() {
+		
+		String text = Gui.getProperty("PTBottomHalfCircleLabel", 0, "text");
+		return text.contains("tap for steps");
+	}
+	
 	public static boolean isTodayDefault() {
 		return ViewUtils.isExistedView("UILabel",
 				DefaultStrings.NoActivityLabel);
