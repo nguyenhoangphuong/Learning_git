@@ -265,9 +265,11 @@ public class TaggingActivityAPI extends ModelAPI {
 		// check timeline items
 		Timeline.dragUpTimelineAndHandleTutorial();
 		if (this.lastPoints >= 50f) {
+			
+			Gui.swipeUp(1000);
 			tilesCount++;
 			if (tilesCount > 9) {
-				Gui.swipeUp(((int) (tilesCount / 9) + 1) * 500);
+				Gui.swipeUp( (int) (tilesCount / 9) * 1000 );
 			}
 			
 			// check activity record is saved

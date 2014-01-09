@@ -130,12 +130,20 @@ public class WeekViewAPI extends ModelAPI {
 		
 		Timeline.dragUpTimelineAndHandleTutorial();
 		Integer improvement = calculateImprovement();
+		boolean pass = false;
+		
 		if (improvement != null) {
 			for(int i = -1; i <= 1; i++) {
 				String message = improvement > 0 ? DefaultStrings.MoreImprovmentMessage : DefaultStrings.LessImprovmentMessage;
-				Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("%d%%", Math.abs(improvement + i))) && ViewUtils.isExistedView("UILabel", message), "Improvement is displayed OK");
+				if (ViewUtils.isExistedView("UILabel", String.format("%d%%", Math.abs(improvement + i))) && 
+					ViewUtils.isExistedView("UILabel", message)) {
+					pass = true;
+					break;
+				}
 			}
 		}
+		
+		Assert.assertTrue(pass, "Improvement displays correctly");
 		Timeline.dragDownTimeline();
 	}
 	

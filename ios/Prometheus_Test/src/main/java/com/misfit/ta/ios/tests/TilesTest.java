@@ -18,7 +18,7 @@ import com.misfit.ta.utils.Files;
 
 public class TilesTest extends AutomationTest {
 
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone", "PersonalBestTile" })
     public void PersonalBestMilestone() throws InterruptedException, StopConditionException, IOException 
     {    	
         ModelHandler model = getModelhandler();
@@ -31,7 +31,7 @@ public class TilesTest extends AutomationTest {
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone", "DailyGoalTile" })
     public void DailyGoalMilestones() throws InterruptedException, StopConditionException, IOException 
     {    	
         ModelHandler model = getModelhandler();
@@ -44,7 +44,7 @@ public class TilesTest extends AutomationTest {
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone", "StreakTile" })
     public void StreakMilestone() throws InterruptedException, StopConditionException, IOException 
     {    	
         ModelHandler model = getModelhandler();
@@ -57,7 +57,7 @@ public class TilesTest extends AutomationTest {
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone", "LifetimeDistanceTile" })
     public void LifetimeDistanceAchievement() throws InterruptedException, StopConditionException, IOException 
     {    	
         ModelHandler model = getModelhandler();
