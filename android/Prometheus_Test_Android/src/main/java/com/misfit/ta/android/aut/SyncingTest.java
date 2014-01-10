@@ -21,22 +21,33 @@ public class SyncingTest {
 		Gui.init();
 		int height = Gui.getScreenHeight();
 		int width = Gui.getScreenWidth();
+		boolean firstFailedSync = true;
 		System.out.println("Full screen height: " + height);
 		System.out.println("Full screen width: " + width);
 		
 		int popupHeight = 0;
 		int popupWidth = 0;
+		
 		for (int i = 0; i < NUMBER_OF_SYNC; i++) {
-			
+			System.out.println("Start syncing #" + i);
 			Gui.touchAView("ImageButton", "mID", "id/menu_sync");
-			ShortcutsTyper.delayTime(2000);
+			while(ViewUtils.findView("TextView", "mText", "Syncing", 0) != null) {
+				System.out.println("Still Syncing");
+				ShortcutsTyper.delayTime(300);
+				Gui.setInvalidView();
+			}
+			
+			ShortcutsTyper.delayTime(300);
+			
 			if (hasFailedSyncPopup()) {
-				if (i == 0) {
+				if (firstFailedSync) {
 					popupHeight = Gui.getHeight();
 					popupWidth = Gui.getWidth();
+					firstFailedSync = false;
 				}
 				System.out.println("Popup height: " + popupHeight);
 				System.out.println("Popup width: " + popupWidth);
+				System.out.println("Ooops sync failed");
 				ViewNode okButton = ViewUtils.findView("TextView", "mText", "OK", 0);
 		        Gui.touchViewOnPopup(height, width, popupHeight, popupWidth, okButton);
 		        countFailedSync++;
@@ -45,7 +56,7 @@ public class SyncingTest {
 			}
 			
 			// Magic line which makes ViewServer reload views after we dismiss popup  
-			ShortcutsTyper.delayTime(20);
+			ShortcutsTyper.delayTime(50);
 		}
 		System.out.println("Total successful syncs: " + countSuccessfulSync);
 		System.out.println("Total failed syncs: " + countFailedSync);
