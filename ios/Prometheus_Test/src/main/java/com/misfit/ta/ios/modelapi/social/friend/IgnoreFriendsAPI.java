@@ -86,8 +86,7 @@ public class IgnoreFriendsAPI extends ModelAPI {
 		
 		HomeScreen.tapWordView();
 		HomeScreen.tapSocialProfile();
-		while(SocialProfileView.isSocialProfileViewNoFriend())
-			ShortcutsTyper.delayOne();
+		SocialProfileView.waitForNoFriendToDissapear();
 	}
 	
 	public void e_goToSearchFriendView() {

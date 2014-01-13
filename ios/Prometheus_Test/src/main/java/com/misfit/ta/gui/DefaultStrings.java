@@ -12,6 +12,7 @@ public class DefaultStrings {
 	public static String MaleLabel = "Male";
 	public static String FemaleLabel = "Female";
 	public static String LoadingLabel = "Loading";
+	public static String LoadingEtcLabel = "Loading...";
 	
 	// sign in / sign up
 	public static String Title = "Oops...";

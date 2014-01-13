@@ -18,7 +18,6 @@ import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.gui.social.SearchFriendView;
 import com.misfit.ta.gui.social.SocialProfileView;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
@@ -90,8 +89,7 @@ public class DeleteFriendsAPI extends ModelAPI {
 		
 		HomeScreen.tapWordView();
 		HomeScreen.tapSocialProfile();
-		while(SocialProfileView.isSocialProfileViewNoFriend())
-			ShortcutsTyper.delayOne();
+		SocialProfileView.waitForNoFriendToDissapear();
 	}
 	
 	public void e_deleteB() {

@@ -1,10 +1,13 @@
 package com.misfit.ta.gui.social;
 
+import java.util.concurrent.Callable;
+
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SocialProfileView {
 
@@ -197,6 +200,19 @@ public class SocialProfileView {
 		while(!ViewUtils.isExistedView("UILabel", handle)) {
 			Gui.swipeUp(10);
 		}
+	}
+	
+	static public void waitForNoFriendToDissapear() {
+	
+
+		Callable<Boolean> condition = new Callable<Boolean>() {
+
+			public Boolean call() {
+				return !SocialProfileView.isSocialProfileViewNoFriend();
+			}
+		};
+		
+		PrometheusHelper.waitForCondition(condition);
 	}
 	
 	

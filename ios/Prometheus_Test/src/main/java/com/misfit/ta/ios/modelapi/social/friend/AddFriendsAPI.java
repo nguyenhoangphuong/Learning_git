@@ -88,8 +88,7 @@ public class AddFriendsAPI extends ModelAPI {
 		
 		HomeScreen.tapWordView();
 		HomeScreen.tapSocialProfile();
-		while(SocialProfileView.isSocialProfileViewNoFriend())
-			ShortcutsTyper.delayOne();
+		SocialProfileView.waitForNoFriendToDissapear();
 	}
 	
 	public void e_goToSearchFriendView() {
@@ -119,8 +118,7 @@ public class AddFriendsAPI extends ModelAPI {
 		
 		SocialProfileView.tapBack();
 		HomeScreen.tapLeaderboard();
-		while(LeaderboardView.isNoFriendView())
-			ShortcutsTyper.delayOne();
+		LeaderboardView.waitForNoFriendToDissapear();
 	}
 	
 	public void e_signOut() {

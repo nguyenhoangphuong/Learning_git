@@ -1,10 +1,14 @@
 package com.misfit.ta.gui.social;
 
 
+import java.util.concurrent.Callable;
+
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
+import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class LeaderboardView {
 
@@ -50,9 +54,22 @@ public class LeaderboardView {
 		Gui.touchAVIew("UILabel", DefaultStrings.GetStartedButton);
 	}
 	
+	
 	public static void pullToRefresh() {
 		
 		Gui.swipeDown(1000);
+	}
+	
+	public static void waitForNoFriendToDissapear() {
+				
+		Callable<Boolean> condition = new Callable<Boolean>() {
+
+			public Boolean call() {
+				return !LeaderboardView.isNoFriendView();
+			}
+		};
+		
+		PrometheusHelper.waitForCondition(condition);
 	}
 	
 	
@@ -69,6 +86,35 @@ public class LeaderboardView {
 	public static boolean isDefaultView() {
 		
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.YesterdayTitle);
+	}
+	
+	
+	public static String getRankOfUser(String handle) {
+		
+		String parentView = String.format("((ViewUtils findViewWithViewName: @\"%s\" andTitle: @\"%s\") superview)", 
+				"UILabel", handle);
+		String view = String.format("(ViewUtils findViewWithViewName: @\"%s\" andIndex: @\"%d\" inView: %s)",
+				"UILabel", 0, parentView);
+		String cmd = String.format("(Gui getValueWithPropertyName: @\"%s\" inView: %s)",
+				"text", view);
+
+		NuRemoteClient.sendToServer(cmd);
+		String lastMsg = NuRemoteClient.getLastMessage();
+		return lastMsg;
+	}
+		
+	public static String getPointOfUser(String handle) {
+	
+		String parentView = String.format("((ViewUtils findViewWithViewName: @\"%s\" andTitle: @\"%s\") superview)", 
+				"UILabel", handle);
+		String view = String.format("(ViewUtils findViewWithViewName: @\"%s\" andIndex: @\"%d\" inView: %s)",
+				"UILabel", 1, parentView);
+		String cmd = String.format("(Gui getValueWithPropertyName: @\"%s\" inView: %s)",
+				"text", view);
+
+		NuRemoteClient.sendToServer(cmd);
+		String lastMsg = NuRemoteClient.getLastMessage();
+		return lastMsg;
 	}
 	
 }

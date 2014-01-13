@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
+import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.social.SocialAPI;
@@ -16,6 +17,7 @@ import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Sync;
+import com.misfit.ta.gui.social.LeaderboardView;
 import com.misfit.ta.gui.social.SearchFriendView;
 import com.misfit.ta.gui.social.SocialProfileView;
 import com.misfit.ta.utils.TextTool;
@@ -36,11 +38,11 @@ public class Debug {
 //			SocialAPI.sendFriendRequest(token, uid);
 //		}
 		
-//		Gui.init("192.168.1.111");
-//		logger.info(SocialProfileView.isSocialProfileViewNoFriend());
-		
-		BackendHelper.link("nhhai16991@gmail.com", "qqqqqq", "science019");
-		
+		Gui.init("192.168.1.111");
+		String cmd1 = "(Gui clearStackAndGoToViewController:@\"PTSigninSignupViewController\" nibName:@\"PTSigninSignupViewController\")";
+		String cmd2 = "(Gui resetUserPreferences)";
+		NuRemoteClient.sendToServer(cmd1);
+		NuRemoteClient.sendToServer(cmd2);
 	}
 }
 	

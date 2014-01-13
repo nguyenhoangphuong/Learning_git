@@ -12,6 +12,7 @@ import com.misfit.ta.backend.aut.SocialTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.social.Leaderboard;
 import com.misfit.ta.backend.data.social.SocialUserLeaderBoardEvent;
 
@@ -38,15 +39,7 @@ public class SocialLeaderBoardTC extends SocialAutomationBase {
 		// if no result, create one with progress == 0
 		if(goals == null || goals.length == 0) {
 			
-			Goal goal = DataGenerator.generateRandomGoal(timestamp, null);
-			goal.setValue(1000 * 2.5d);
-			goal.getProgressData().setPoints(0d);
-			goal.getProgressData().setCalorie(0d);
-			goal.getProgressData().setDistanceMiles(0d);
-			goal.getProgressData().setFullBmrCalorie(0);
-			goal.getProgressData().setSeconds(0);
-			goal.getProgressData().setSteps(0);
-			
+			Goal goal = Goal.getDefaultGoal(timestamp);
 			Goal goal_meta = MVPApi.createGoal(token, goal).goals[0];
 			goal.setServerId(goal_meta.getServerId());
 			
@@ -55,16 +48,9 @@ public class SocialLeaderBoardTC extends SocialAutomationBase {
 		
 		// else update current goal with progress == 0
 		Goal goal = goals[0];
-		goal.setValue(1000 * 2.5d);
-		goal.getProgressData().setPoints(0d);
-		goal.getProgressData().setCalorie(0d);
-		goal.getProgressData().setDistanceMiles(0d);
-		goal.getProgressData().setFullBmrCalorie(0);
-		goal.getProgressData().setSeconds(0);
-		goal.getProgressData().setSteps(0);
-		
-		Goal goal_meta = MVPApi.createGoal(token, goal).goals[0];
-		goal.setServerId(goal_meta.getServerId());
+		goal.setProgressData(ProgressData.getDefaultProgressData());
+
+		MVPApi.updateGoal(token, goal);
 		
 		return goal;
 	}
