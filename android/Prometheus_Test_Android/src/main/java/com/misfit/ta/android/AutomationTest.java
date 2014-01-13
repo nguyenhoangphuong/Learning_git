@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
+import org.graphwalker.multipleModels.ModelHandler;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -57,15 +58,13 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     logger.info("*****************************************************");
     logger.info("***** Start of test case: " + method.getName());
     logger.info("*****************************************************");
-
+    this.modelhandler = new ModelHandler();
     Gui.init();
-    // Gui.pressHome();
+   
     ScreenShooter.resetShotQueue();
     Gui.cleanCache();
     Gui.start("com.misfitwearables.prometheus/.MainActivity");
-    
-    System.out.print(Gui.getScreenWidth());
-    System.out.print(Gui.getScreenHeight());
+
   }
 
 
