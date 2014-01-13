@@ -7,7 +7,6 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SocialProfileView {
 
@@ -195,6 +194,18 @@ public class SocialProfileView {
 		Gui.setText("UITextField", 0, handle);
 	}
 
+	static public void switchPrivacyOn() {
+
+		String cmd = "((ViewUtils findViewWithViewName:@\"UISwitch\" andIndex: 0) setOn:1 animated:1)";
+		NuRemoteClient.sendToServer(cmd);
+	}
+	
+	static public void switchPrivacyOff() {
+
+		String cmd = "((ViewUtils findViewWithViewName:@\"UISwitch\" andIndex: 0) setOn:0 animated:1)";
+		NuRemoteClient.sendToServer(cmd);
+	}
+	
 	static public void scrollUntilCellIsVisible(String handle) {
 		
 		while(!ViewUtils.isExistedView("UILabel", handle)) {
@@ -213,6 +224,15 @@ public class SocialProfileView {
 		};
 		
 		PrometheusHelper.waitForCondition(condition);
+	}
+	
+	static public boolean getPrivacySwitchStatus() {
+		
+		String cmd = "((ViewUtils findViewWithViewName:@\"UISwitch\" andIndex: 0) isOn)";
+		NuRemoteClient.sendToServer(cmd);
+		String lastMsg = NuRemoteClient.getLastMessage();
+		
+		return lastMsg.equals("0") ? false : true;
 	}
 	
 	

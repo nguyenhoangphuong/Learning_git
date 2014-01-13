@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.social.board.LeaderboardAPI;
+import com.misfit.ta.ios.modelapi.social.board.WorldFeedAPI;
 import com.misfit.ta.ios.modelapi.social.friend.AddFriendsAPI;
 import com.misfit.ta.ios.modelapi.social.friend.DeleteFriendsAPI;
 import com.misfit.ta.ios.modelapi.social.friend.IgnoreFriendsAPI;
@@ -101,6 +102,18 @@ public class SocialFeatureTest extends AutomationTest
         model.add("Leaderboard", new LeaderboardAPI(this, Files.getFile("model/social/board/Leaderboard.graphml"),
                 true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("Leaderboard");
+        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+        String actualResult = getModelhandler().getStatistics();
+        System.out.println(actualResult);
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "WorldFeed" })
+    public void WorldFeedTest() throws InterruptedException, StopConditionException, IOException
+    {
+        ModelHandler model = getModelhandler();
+        model.add("WorldFeed", new WorldFeedAPI(this, Files.getFile("model/social/board/WorldFeed.graphml"),
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("WorldFeed");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);

@@ -39,10 +39,7 @@ public class Debug {
 //		}
 		
 		Gui.init("192.168.1.111");
-		String cmd1 = "(Gui clearStackAndGoToViewController:@\"PTSigninSignupViewController\" nibName:@\"PTSigninSignupViewController\")";
-		String cmd2 = "(Gui resetUserPreferences)";
-		NuRemoteClient.sendToServer(cmd1);
-		NuRemoteClient.sendToServer(cmd2);
+		logger.info(SocialProfileView.getPrivacySwitchStatus());
 	}
 }
 	

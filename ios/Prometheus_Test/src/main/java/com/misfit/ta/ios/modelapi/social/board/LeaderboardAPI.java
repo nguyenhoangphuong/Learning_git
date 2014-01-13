@@ -15,8 +15,6 @@ import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.social.LeaderboardView;
-import com.misfit.ta.gui.social.SearchFriendView;
-import com.misfit.ta.gui.social.SocialProfileView;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
@@ -139,8 +137,7 @@ public class LeaderboardAPI extends ModelAPI {
 	public void e_goToLeaderboard() {
 		
 		HomeScreen.tapLeaderboard();
-		while(LeaderboardView.isNoFriendView())
-			ShortcutsTyper.delayOne();
+		LeaderboardView.waitForNoFriendToDissapear();
 	}
 	
 	public void e_inputActivityForB() {
