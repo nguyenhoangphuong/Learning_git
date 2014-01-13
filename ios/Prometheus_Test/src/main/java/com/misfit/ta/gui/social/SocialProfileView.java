@@ -31,23 +31,42 @@ public class SocialProfileView {
 	
 	static public void tapSearchFriend() {
 		
-		Gui.touchAVIew("UILabel", DefaultStrings.SearchFriendButtonTag);
+//		Gui.touchAVIew("UILabel", DefaultStrings.SearchFriendButtonTag);
+		String parentView = String.format("((ViewUtils findViewWithViewName: @\"%s\" andTitle: @\"%s\") superview)", 
+				"UILabel", DefaultStrings.FriendsLabel);
+		String cmd = String.format("(Gui touchAView: (ViewUtils findViewWithViewName: @\"%s\" andIndex: @\"%d\" inView: %s))",
+				"UIButton", 0, parentView);
+		
+		NuRemoteClient.sendToServer(cmd);
 	}
 	
-	static public void tapAccept() {
+	static public void tapAccept(String friendHandle) {
+
+		String parentView = String.format("((ViewUtils findViewWithViewName: @\"%s\" andTitle: @\"%s\") superview)", 
+				"UILabel", friendHandle);
+		String cmd = String.format("(Gui touchAView: (ViewUtils findViewWithViewName: @\"%s\" andTitle: @\"%s\" inView: %s))",
+				"UIButton", DefaultStrings.AcceptButton, parentView);
 		
-		Gui.touchAVIew("UILabel", DefaultStrings.AcceptButton);
+		NuRemoteClient.sendToServer(cmd);
 	}
 	
-	static public void tapIgnore() {
+	static public void tapIgnore(String friendHandle) {
+
+		String parentView = String.format("((ViewUtils findViewWithViewName: @\"%s\" andTitle: @\"%s\") superview)", 
+				"UILabel", friendHandle);
+		String cmd = String.format("(Gui touchAView: (ViewUtils findViewWithViewName: @\"%s\" andTitle: @\"%s\" inView: %s))",
+				"UIButton", DefaultStrings.IgnoreButton, parentView);
 		
-		Gui.touchAVIew("UILabel", DefaultStrings.IgnoreButton);
+		NuRemoteClient.sendToServer(cmd);
 	}
 	
-	static public void tapDeleteFriend(int index) {
+	static public void tapDeleteFriend(String friendHandle) {
 		
-		String cmd = "(Gui touchAView: (ViewUtils findViewWithViewName: @\"UIButton\" andIndex: 0 inView: (ViewUtils findViewWithViewName: @\"PTSocialFriendInfoCell\" andIndex: %index%)))";
-		cmd = cmd.replace("%index%", index + "");
+		String parentView = String.format("((ViewUtils findViewWithViewName: @\"%s\" andTitle: @\"%s\") superview)", 
+				"UILabel", friendHandle);
+		String cmd = String.format("(Gui touchAView: (ViewUtils findViewWithViewName: @\"%s\" andIndex: %d inView: %s))",
+				"UIButton", 0, parentView);
+
 		NuRemoteClient.sendToServer(cmd);
 	}
 	
@@ -173,6 +192,13 @@ public class SocialProfileView {
 		Gui.setText("UITextField", 0, handle);
 	}
 
+	static public void scrollUntilCellIsVisible(String handle) {
+		
+		while(!ViewUtils.isExistedView("UILabel", handle)) {
+			Gui.swipeUp(10);
+		}
+	}
+	
 	
 	
 	static public boolean isProfileReviewView() {

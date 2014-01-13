@@ -345,6 +345,23 @@ public class PrometheusHelper {
 		waitForCondition(condition, timeout);
 	}
 	
+	public static void waitForView(final String viewType, final int index) {
+		
+		waitForView(viewType, index, DEFAULT_TIMEOUT);
+	}
+	
+	public static void waitForView(final String viewType, final int index, int timeout) {
+		
+		Callable<Boolean> condition = new Callable<Boolean>() {
+
+			public Boolean call() {
+				return ViewUtils.isExistedView(viewType, index);
+			}
+		};
+		
+		waitForCondition(condition, timeout);
+	}
+	
 	public static void waitForView(String viewType, String title) {
 		
 		waitForView(viewType, title, DEFAULT_TIMEOUT);
@@ -373,6 +390,23 @@ public class PrometheusHelper {
 
 			public Boolean call() {
 				return !ViewUtils.isExistedView(viewType, title);
+			}
+		};
+		
+		waitForCondition(condition);
+	}
+	
+	public static void waitForThrobberToDissappear() {
+		
+		waitForThrobberToDissappear(DEFAULT_TIMEOUT);
+	}
+	
+	public static void waitForThrobberToDissappear(int timeout) {
+		
+		Callable<Boolean> condition = new Callable<Boolean>() {
+
+			public Boolean call() {
+				return !ViewUtils.isExistedView("UIActivityIndicatorView", 0);
 			}
 		};
 		

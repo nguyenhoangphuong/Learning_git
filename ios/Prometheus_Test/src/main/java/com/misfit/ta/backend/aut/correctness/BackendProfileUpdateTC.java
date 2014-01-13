@@ -135,7 +135,7 @@ public class BackendProfileUpdateTC extends BackendAutomation {
 		
 		// short handle
 		String handle = TextTool.getRandomString(3, 5);
-		defaultProfile.setHandle(handle);
+		defaultProfile.setHandle(handle);	
 
 		ProfileResult r = MVPApi.updateProfile(token, defaultProfile);
 		r.printKeyPairsValue();

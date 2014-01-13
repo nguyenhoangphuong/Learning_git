@@ -10,28 +10,28 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class AppInstaller {
 
 	private static String[] MVPAppPaths = new String[] {
-		"apps/mvp16.1/Prometheus.ipa",
 		"apps/mvp17.1/Prometheus.ipa",
 		"apps/mvp18.1/Prometheus.ipa",
 		"apps/mvp19/Prometheus.ipa",
 		"apps/mvp20/Prometheus.ipa",
+		"apps/mvp21/Prometheus.ipa",
+		"apps/mvp22/Prometheus.ipa",
 	};
 	
-	public static int MVP_16_1 = 0;
-	public static int MVP_17_1 = 1;
-	public static int MVP_18_1 = 2;
-	public static int MVP_19 = 3;
-	public static int MVP_20 = 4;
-	public static int MVP_21 = 5;
-	public static int MVP_22 = 6;
+	public static int MVP_17_1 = 0;
+	public static int MVP_18_1 = 1;
+	public static int MVP_19 = 2;
+	public static int MVP_20 = 3;
+	public static int MVP_21 = 4;
+	public static int MVP_22 = 5;
 	
-	public boolean checkAppsExist(int fromMVP) {
+	static public boolean checkAppsExist(int mvp) {
 		
 		// make sure old app file exist
-		if(fromMVP < 0 || fromMVP >= MVPAppPaths.length)
+		if(mvp < 0 || mvp >= MVPAppPaths.length)
 			return false;
 
-		String pathToApp = MVPAppPaths[fromMVP];
+		String pathToApp = MVPAppPaths[mvp];
 		try {
 			Files.getFile(pathToApp);
 		} catch (FileNotFoundException e) {
@@ -56,13 +56,13 @@ public class AppInstaller {
 		return true;
 	}
 
-	public void killInstrument() {
+	static public void killInstrument() {
 		
 		InstrumentHelper instrument = new InstrumentHelper();
 		instrument.kill();
 	}
 	
-	public void launchInstrument() {
+	static public void launchInstrument() {
 		
 		InstrumentHelper instrument = new InstrumentHelper();
         instrument.start();
@@ -71,11 +71,7 @@ public class AppInstaller {
 	}
 	
 	
-	public void installApp(int mvp) {
-		
-		// check app before doing anything
-		if(!checkAppsExist(mvp))
-			return;
+	static public void installApp(int mvp) {
 
 		// install app
 		String pathToApp = MVPAppPaths[mvp];
@@ -84,11 +80,7 @@ public class AppInstaller {
 		Gui.install(Gui.getUdids().get(0), pathToApp);
 	}
 	
-	public void installAndLaunchApp(int mvp) {
-		
-		// check app before doing anything
-		if(!checkAppsExist(mvp))
-			return;
+	static public void installAndLaunchApp(int mvp) {
 		
 		// install app
 		String pathToApp = MVPAppPaths[mvp];

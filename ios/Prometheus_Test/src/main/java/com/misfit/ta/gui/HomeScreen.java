@@ -2,7 +2,6 @@ package com.misfit.ta.gui;
 
 import java.util.Calendar;
 
-import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 
 public class HomeScreen {

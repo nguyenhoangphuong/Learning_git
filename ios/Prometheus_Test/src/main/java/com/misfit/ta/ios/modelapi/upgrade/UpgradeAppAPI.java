@@ -1,27 +1,24 @@
 package com.misfit.ta.ios.modelapi.upgrade;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.Settings;
+import com.misfit.ta.aut.AutomationTest;
+import com.misfit.ta.backend.aut.BackendHelper;
+import com.misfit.ta.gui.AppInstaller;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
-import com.misfit.ta.gui.InstrumentHelper;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timeline;
-import com.misfit.ta.aut.AutomationTest;
-import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.report.TRS;
-import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
@@ -30,28 +27,12 @@ public class UpgradeAppAPI extends ModelAPI {
 	public UpgradeAppAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
-	
-	// static
-	private static String[] MVPAppPaths = new String[] {
-		"apps/mvp16.1/Prometheus.ipa",
-		"apps/mvp17.1/Prometheus.ipa",
-		"apps/mvp18.1/Prometheus.ipa",
-		"apps/mvp19/Prometheus.ipa",
-		"apps/mvp20/Prometheus.ipa",
-	};
-	
-	public static int MVP_16_1 = 0;
-	public static int MVP_17_1 = 1;
-	public static int MVP_18_1 = 2;
-	public static int MVP_19 = 3;
-	public static int MVP_20 = 4;
-	
-	
+
 	// fields
 	public int fromMVP = -1;
-	private String pathToOldApp = null;
 	public boolean willCheckProfile = false;
-	 	
+	 
+	// test parameters
 	private String email = "";
 	private int numberOfActivity = 1;
 	private int totalPoint = numberOfActivity * (numberOfActivity + 1) / 2 * 100;
@@ -59,60 +40,14 @@ public class UpgradeAppAPI extends ModelAPI {
 	private float totalMile = numberOfActivity * (numberOfActivity + 1) / 2 * 0.4f;
 	
 	
-	private void checkAppsExist() {
-		
-		// make sure old app file exist
-		if(fromMVP < 0 || fromMVP >= MVPAppPaths.length)
-			Assert.fail("Path to old app is not set");
-
-		pathToOldApp = MVPAppPaths[fromMVP];
-		try {
-			Files.getFile(pathToOldApp);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		File f = new File(pathToOldApp);
-		if(!f.exists())
-			Assert.fail("Path to old app not exist");
-		
-		pathToOldApp = f.getAbsolutePath();
-		
-		// make sure new app file exist
-		String pathToNewApp = Settings.getParameter("appPath");
-		if(pathToNewApp == null)
-			Assert.fail("Path to new app is not set");
-		
-		File f2 = new File(pathToNewApp);
-		if(!f2.exists())
-			Assert.fail("Path to new app not exist");
-	}
-	
-	private void killInstrument() {
-		
-		InstrumentHelper instrument = new InstrumentHelper();
-		instrument.kill();
-	}
-	
-	private void launchInstrument() {
-		
-		InstrumentHelper instrument = new InstrumentHelper();
-        instrument.start();
-		ShortcutsTyper.delayTime(15000);
-    	Gui.init(Settings.getParameter("DeviceIP"));
-	}
-	
-	
 	public void e_installAndLaunchOldApp() {
 		
 		// check app before doing anything
-		checkAppsExist();
+		if(!AppInstaller.checkAppsExist(fromMVP))
+			Assert.fail("App .ipa file doesn't exist");
 		
 		// install old app
-		killInstrument();
-		Gui.uninstall(Gui.getUdids().get(0));
-		Gui.install(Gui.getUdids().get(0), pathToOldApp);
-		launchInstrument();
+		AppInstaller.installAndLaunchApp(fromMVP);
 	}
 	
 	public void e_signUp() {
@@ -138,16 +73,13 @@ public class UpgradeAppAPI extends ModelAPI {
 	
 	public void e_signOut() {
 		
-		if(fromMVP == MVP_16_1)
-			Gui.touchAVIew("UILabel", "Today");
-				
 		PrometheusHelper.signOut();
 	}
 	
 	public void e_installAndLaunchLatestApp() {
 		
 		// kill app
-		killInstrument();
+		AppInstaller.killInstrument();
 		
 		// install and launch new app
 		AppHelper.install();
@@ -155,7 +87,7 @@ public class UpgradeAppAPI extends ModelAPI {
 		// because install happen in new thread, 
 		// make sure it finish before launching instrument
 		ShortcutsTyper.delayTime(15000);
-		launchInstrument();
+		AppInstaller.launchInstrument();
 	}
 	
 	public void e_logIn() {

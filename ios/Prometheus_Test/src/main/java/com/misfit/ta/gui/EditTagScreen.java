@@ -3,12 +3,7 @@ package com.misfit.ta.gui;
 import com.misfit.ios.ViewUtils;
 
 public class EditTagScreen {
-	
-	public static void tapBack() {
 		
-		Gui.touchAVIew("UIButtonLabel", DefaultStrings.BackButton);
-	}
-	
 	public static void tapSave() {
 		
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SaveButton);

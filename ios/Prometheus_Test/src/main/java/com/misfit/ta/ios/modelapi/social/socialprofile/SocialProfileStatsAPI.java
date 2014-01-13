@@ -8,6 +8,8 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.gui.AppInstaller;
+import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.ios.AutomationTest;
 
 public class SocialProfileStatsAPI extends ModelAPI {
@@ -22,10 +24,15 @@ public class SocialProfileStatsAPI extends ModelAPI {
 
 	public void e_installAndLaunchAppWithoutSocialFeature() {
 		
+		if(!AppInstaller.checkAppsExist(AppInstaller.MVP_19))
+			Assert.fail("Try to install MVP19 but cannot find the app");
 		
+		AppInstaller.installAndLaunchApp(AppInstaller.MVP_19);
 	}
 	
 	public void e_signUpAndInputStats() {
+		
+		PrometheusHelper.signUpDefaultProfile();
 		
 	}
 	

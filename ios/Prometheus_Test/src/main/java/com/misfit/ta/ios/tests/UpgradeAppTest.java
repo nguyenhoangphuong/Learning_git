@@ -7,12 +7,13 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.graphwalker.conditions.EdgeCoverage;
 import org.graphwalker.exceptions.StopConditionException;
-import org.graphwalker.generators.*;
+import org.graphwalker.generators.NonOptimizedShortestPath;
 import org.graphwalker.multipleModels.ModelHandler;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.aut.AutomationTest;
+import com.misfit.ta.gui.AppInstaller;
 import com.misfit.ta.ios.modelapi.upgrade.UpgradeAppAPI;
 import com.misfit.ta.utils.Files;
 
@@ -22,61 +23,63 @@ public class UpgradeAppTest extends AutomationTest
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP17.1", "ProductionOnly" })
     public void UpgradeFromMVP17_1WithoutSignOut() throws InterruptedException, StopConditionException, IOException
     {
-    	int mvp = UpgradeAppAPI.MVP_17_1;
+    	int mvp = AppInstaller.MVP_17_1;
     	testUpgradeFromApp("UpradeAppFromMVP17.1WithoutSignOut", mvp, false);
     }
     
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP17.1", "ProductionOnly" })
     public void UpgradeFromMVP17_1AfterSignOut() throws InterruptedException, StopConditionException, IOException
     {
-    	int mvp = UpgradeAppAPI.MVP_17_1;
+    	int mvp = AppInstaller.MVP_17_1;
         testUpgradeFromApp("UpradeAppFromMVP17.1AfterSignOut", mvp, true);
     }
-        
-    
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP18.1", "ProductionOnly" })
-    public void UpgradeFromMVP18_1WithoutSignOut() throws InterruptedException, StopConditionException, IOException
-    {
-    	int mvp = UpgradeAppAPI.MVP_18_1;
-    	testUpgradeFromApp("UpradeAppFromMVP18.1WithoutSignOut", mvp, false);
-    }
-    
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP18.1", "ProductionOnly" })
-    public void UpgradeFromMVP18_1AfterSignOut() throws InterruptedException, StopConditionException, IOException
-    {
-    	int mvp = UpgradeAppAPI.MVP_18_1;
-        testUpgradeFromApp("UpradeAppFromMVP18.1AfterSignOut", mvp, true);
-    }
-    
-    
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP19", "ProductionOnly" })
-    public void UpgradeFromMVP19WithoutSignOut() throws InterruptedException, StopConditionException, IOException
-    {
-    	int mvp = UpgradeAppAPI.MVP_19;
-    	testUpgradeFromApp("UpradeAppFromMVP19WithoutSignOut", mvp, false);
-    }
-    
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP19", "ProductionOnly" })
-    public void UpgradeFromMVP19AfterSignOut() throws InterruptedException, StopConditionException, IOException
-    {
-    	int mvp = UpgradeAppAPI.MVP_19;
-        testUpgradeFromApp("UpradeAppFromMVP19AfterSignOut", mvp, true);
-    }
 
+    
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP20", "ProductionOnly" })
     public void UpgradeFromMVP20WithoutSignOut() throws InterruptedException, StopConditionException, IOException
     {
-    	int mvp = UpgradeAppAPI.MVP_20;
+    	int mvp = AppInstaller.MVP_20;
     	testUpgradeFromApp("UpradeAppFromMVP20WithoutSignOut", mvp, false);
     }
     
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP20", "ProductionOnly" })
     public void UpgradeFromMVP20AfterSignOut() throws InterruptedException, StopConditionException, IOException
     {
-    	int mvp = UpgradeAppAPI.MVP_20;
+    	int mvp = AppInstaller.MVP_20;
         testUpgradeFromApp("UpradeAppFromMVP20AfterSignOut", mvp, true);
     }
+
     
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP20", "ProductionOnly" })
+    public void UpgradeFromMVP21WithoutSignOut() throws InterruptedException, StopConditionException, IOException
+    {
+    	int mvp = AppInstaller.MVP_21;
+    	testUpgradeFromApp("UpradeAppFromMVP21WithoutSignOut", mvp, false);
+    }
+    
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP20", "ProductionOnly" })
+    public void UpgradeFromMVP21AfterSignOut() throws InterruptedException, StopConditionException, IOException
+    {
+    	int mvp = AppInstaller.MVP_21;
+        testUpgradeFromApp("UpradeAppFromMVP21AfterSignOut", mvp, true);
+    }
+    
+    
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP20", "ProductionOnly" })
+    public void UpgradeFromMVP22WithoutSignOut() throws InterruptedException, StopConditionException, IOException
+    {
+    	int mvp = AppInstaller.MVP_22;
+    	testUpgradeFromApp("UpradeAppFromMVP22WithoutSignOut", mvp, false);
+    }
+    
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "Upgrade", "UpgradeMVP20", "ProductionOnly" })
+    public void UpgradeFromMVP22AfterSignOut() throws InterruptedException, StopConditionException, IOException
+    {
+    	int mvp = AppInstaller.MVP_22;
+        testUpgradeFromApp("UpradeAppFromMVP22AfterSignOut", mvp, true);
+    }
+
+   
     // test helpers
     public void testUpgradeFromApp(String modelName, int fromMVP, boolean willSignOutBeforeUpgrade)
     	throws FileNotFoundException, StopConditionException, InterruptedException {

@@ -76,6 +76,8 @@ public class DefaultStrings {
 	public static String WorldViewButtonTag = "MenuWorldFeed";
 	public static String SocialProfileButtonTag = "MenuProfile";
 	public static String ProgressCircleTutorial = "tap for steps, calories and distance";
+	public static String SyncingLabel = "Syncing...";
+	
 	
 	public static String TutorialForUpdateActivityTag = "Hold down on an activity highlight to change the tag. You can only do this on the current day.";
 	public static String TutorialForDeleteSleepTile = "Hold down on a sleep highlight to remove it. You can only do this on the current day.";
@@ -200,6 +202,7 @@ public class DefaultStrings {
 	public static String ProfilePreviewViewTitle = "Profile Preview";
 	public static String SocialProfileViewTitle = "Profile";
 	public static String ShineWithFriendsTitle = "Shine with friends!";
+	public static String SearchFriendTitle = "Add Friends";
 	
 	public static String ChooseFromLibrary = "Choose From Library";
 	public static String TakePhotoButton = "Take Photo";
@@ -211,10 +214,16 @@ public class DefaultStrings {
 	public static String SearchFriendButtonTag = "SearchFriendButton";
 	public static String AcceptButton = "ACCEPT";
 	public static String IgnoreButton = "IGNORE";
+	public static String AddButton = "ADD";
+	public static String PendingButton = "PENDING";
 	public static String RemoveFriendButton = "Remove Friend";
 	public static String DontHaveFacebookButton = "Don't have Facebook?";
 	public static String ConnectWithFacebookButton = "Connect with Facebook";
 	public static String GetStartedButton = "Get Started";
 	public static String OKGotItButton = "OK, got it";
+	public static String FriendsLabel = "Friends";
+	public static String SearchingLabel = "Searching...";
+	public static String NoMatchesFoundLabel = "No matches found";
+	public static String InvalidParametersMessage = "Invalid parameters";
 	
 }

@@ -159,7 +159,7 @@ public class SyncContinously {
 
 		// connect Nu
 		// NOTE: you have to open app first
-		Gui.init(Settings.getParameter("DeviceIP"));
+		Gui.init("192.168.1.144");
 		
 		// tracking
 		int successfulSyncCount = 0;
