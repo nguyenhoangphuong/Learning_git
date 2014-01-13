@@ -11,7 +11,7 @@ import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SyncingTest {
-	private static int NUMBER_OF_SYNC = 10;
+	private static int NUMBER_OF_SYNC = 30;
 	
 	@Test(groups = { "Android", "Prometheus", "Syncing", "AndroidAutomation", "ContinuousSyncing", "ManualSyncing" })
 	public void ManualSyncContinously() throws InterruptedException, StopConditionException, IOException {

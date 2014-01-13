@@ -2,38 +2,39 @@ package com.misfit.ta.android.gui;
 
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
+import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SignIn {
 
 	public static void chooseSignIn() {
-		Gui.touchAView("Button", "mID", "id/buttonHaveAccount");
+		Gui.touchAView("TextView", "mID", DefaultStrings.SignInButtonTextId);
 	}
 
 	public static void pressBack() {
-		Gui.touchAView("ImageButton", "mID", "id/buttonPrevious");
+		Gui.touchAView("ImageButton", "mID", DefaultStrings.ImageBackButtonId);
 	}
 
 	public static boolean isInitViewVisible() {
 		ShortcutsTyper.delayTime(1000);
-		return ViewUtils.findView("Button", "mID", "id/buttonHaveAccount", 0) != null;
+		return ViewUtils.findView("TextView", "mID", DefaultStrings.SignInButtonTextId, 0) != null;
 	}
 
 	public static boolean isSignInVisible() {
 		ShortcutsTyper.delayTime(1000);
-		return ViewUtils.findView("EditText", "mID", "id/editPassword", 0) != null;
+		return ViewUtils.findView("EditText", "mID", DefaultStrings.SignInEmailTextViewId, 0) != null;
 	}
 
 	public static void fillSignIn(String email, String password) {
-		Gui.touchAView("EditText", "mID", "id/editEmail");
+		Gui.touchAView("EditText", "mID", DefaultStrings.SignInEmailTextViewId);
 		Gui.type(email);
-		Gui.touchAView("EditText", "mID", "id/editPassword");
+		Gui.touchAView("EditText", "mID", DefaultStrings.SignInPasswordTextViewId);
 		Gui.type(password);
 		Gui.pressBack();
 	}
 
 	public static void pressNext() {
-		Gui.touchAView("ImageButton", "mID", "id/buttonNext");
+		Gui.touchAView("ImageButton", "mID", DefaultStrings.ImageNextButtonId);
 	}
 
 	public static boolean hasInvalidEmailMessage() {
