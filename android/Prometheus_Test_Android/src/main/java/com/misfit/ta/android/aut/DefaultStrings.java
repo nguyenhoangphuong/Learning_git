@@ -21,4 +21,6 @@ public class DefaultStrings {
 	
 	public static String SignInEmailTextViewId = "id/sign_in_email_edit";
 	public static String SignInPasswordTextViewId = "id/sign_in_pwd_edit";
+	
+	public static String IncorrectSignInMessage = "Incorrect email or password, please check and try again.";
 }

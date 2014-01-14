@@ -14,6 +14,7 @@ import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.gui.HomeScreen;
 import com.misfit.ta.android.gui.Settings;
+import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.android.modelapi.signin.InvalidSignInAPI;
 import com.misfit.ta.android.modelapi.signin.SuccessfulSignInAPI;
 import com.misfit.ta.utils.Files;
@@ -21,24 +22,25 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SigninTest extends AutomationTest {
 
-	@Test(groups = { "android", "Prometheus", "signin" })
+	@Test(groups = { "Android", "Prometheus", "signin", "invalidSignIn" })
     public void invalidSignInTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
-        model.add("invalidSignin", new InvalidSignInAPI(this, Files.getFile("model/signin/InvalidSignIn.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.add("invalidSignin", new InvalidSignInAPI(this, Files.getFile("model/signin/InvalidSignIn.graphml"), true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("invalidSignin");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
     }
     
-   // @Test(groups = { "android", "Prometheus", "signin" })
+    @Test(groups = { "Android", "Prometheus", "signin", "succesfulSignIn" })
     public void successfulSignInTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
-        model.add("successfulSignin", new SuccessfulSignInAPI(this, Files.getFile("model/signin/SuccessfulSignIn.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.add("successfulSignin", new SuccessfulSignInAPI(this, Files.getFile("model/signin/SuccessfulSignIn.graphml"), true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("successfulSignin");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
     }
+    
 
 }

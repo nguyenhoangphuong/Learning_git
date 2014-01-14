@@ -3,6 +3,7 @@ package com.misfit.ta.android.gui;
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
+import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SignIn {
@@ -47,8 +48,8 @@ public class SignIn {
 		return ViewUtils.findView("TextView", "mID", "id/textErrorMessage", 0).text.equals("\\nSorry, the password should have at least 6 characters, at least 1 digit and 1 letter");
 	}
 	public static boolean hasIncorrectEmailPasswordMessage() {
-		ShortcutsTyper.delayTime(500);
-		return ViewUtils.findView("TextView", "mID", "id/textErrorMessage", 0).text.equals("Error\\nIncorrect email or password");
+		 ViewNode node = ViewUtils.findView("TextView", "mText", DefaultStrings.IncorrectSignInMessage, 0);
+		 return node != null;
 	}
 	
 	public static void tapForgotPassword() {
