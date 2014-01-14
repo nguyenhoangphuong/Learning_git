@@ -10,6 +10,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.ios.AutomationTest;
+import com.misfit.ta.ios.modelapi.social.averageuser.AverageUserAutoFriendAPI;
+import com.misfit.ta.ios.modelapi.social.averageuser.AverageUserChangeGenderAPI;
+import com.misfit.ta.ios.modelapi.social.averageuser.AverageUserDeleteAndAddAgainAPI;
 import com.misfit.ta.ios.modelapi.social.board.LeaderboardAPI;
 import com.misfit.ta.ios.modelapi.social.board.WorldFeedAPI;
 import com.misfit.ta.ios.modelapi.social.friend.AddFriendsAPI;
@@ -114,6 +117,46 @@ public class SocialFeatureTest extends AutomationTest
         model.add("WorldFeed", new WorldFeedAPI(this, Files.getFile("model/social/board/WorldFeed.graphml"),
                 true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("WorldFeed");
+        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+        String actualResult = getModelhandler().getStatistics();
+        System.out.println(actualResult);
+    }
+	
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AverageUserAutoFriend" })
+    public void AverageUserAutoFriend() throws InterruptedException, StopConditionException, IOException
+    {
+        ModelHandler model = getModelhandler();
+        model.add("AverageUserAutoFriend", new AverageUserAutoFriendAPI(this, 
+        		Files.getFile("model/social/averageuser/AverageUserAutoFriend.graphml"),
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("AverageUserAutoFriend");
+        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+        String actualResult = getModelhandler().getStatistics();
+        System.out.println(actualResult);
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AverageUserChangeGender" })
+    public void AverageUserChangeGender() throws InterruptedException, StopConditionException, IOException
+    {
+        ModelHandler model = getModelhandler();
+        model.add("AverageUserChangeGender", new AverageUserChangeGenderAPI(this, 
+        		Files.getFile("model/social/averageuser/AverageUserChangeGender.graphml"),
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("AverageUserChangeGender");
+        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+        String actualResult = getModelhandler().getStatistics();
+        System.out.println(actualResult);
+    }
+	
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AverageUserDeleteAndAddAgain" })
+    public void AverageUserDeleteAndAddAgain() throws InterruptedException, StopConditionException, IOException
+    {
+        ModelHandler model = getModelhandler();
+        model.add("AverageUserDeleteAndAddAgain", new AverageUserDeleteAndAddAgainAPI(this, 
+        		Files.getFile("model/social/averageuser/AverageUserDeleteAndAddAgain.graphml"),
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("AverageUserDeleteAndAddAgain");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);

@@ -7,8 +7,8 @@ import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
+import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class LeaderboardView {
 
@@ -25,8 +25,7 @@ public class LeaderboardView {
 	
 	public static void tapToCloseCurrentUser() {
 		
-		String cmd = "((ViewUtils findViewWithViewName: @\"PTSocialProfileDetailPopup\" andIndex:0) dismissPopup)";
-		NuRemoteClient.sendToServer(cmd);
+		HomeScreen.tapSocialProfile();
 	}
 	
 	public static void tapToday() {

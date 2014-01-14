@@ -17,7 +17,6 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.social.LeaderboardView;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class LeaderboardAPI extends ModelAPI {
 	

@@ -15,6 +15,7 @@ import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.gui.Gui;
+import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.social.LeaderboardView;
@@ -39,7 +40,7 @@ public class Debug {
 //		}
 		
 		Gui.init("192.168.1.111");
-		logger.info(SocialProfileView.getPrivacySwitchStatus());
+		HomeScreen.tapSocialProfile();
 	}
 }
 	

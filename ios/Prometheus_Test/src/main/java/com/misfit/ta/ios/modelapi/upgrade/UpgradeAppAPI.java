@@ -43,7 +43,7 @@ public class UpgradeAppAPI extends ModelAPI {
 	public void e_installAndLaunchOldApp() {
 		
 		// check app before doing anything
-		if(!AppInstaller.checkAppsExist(fromMVP))
+		if(!AppInstaller.checkAppsExist(fromMVP) || !AppInstaller.checkLatestAppExist())
 			Assert.fail("App .ipa file doesn't exist");
 		
 		// install old app
@@ -78,16 +78,7 @@ public class UpgradeAppAPI extends ModelAPI {
 	
 	public void e_installAndLaunchLatestApp() {
 		
-		// kill app
-		AppInstaller.killInstrument();
-		
-		// install and launch new app
-		AppHelper.install();
-		
-		// because install happen in new thread, 
-		// make sure it finish before launching instrument
-		ShortcutsTyper.delayTime(15000);
-		AppInstaller.launchInstrument();
+		AppInstaller.installAndLaunchLatestAppWithoutUninstall();
 	}
 	
 	public void e_logIn() {

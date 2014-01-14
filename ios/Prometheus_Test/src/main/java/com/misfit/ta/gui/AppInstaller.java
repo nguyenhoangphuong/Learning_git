@@ -3,6 +3,7 @@ package com.misfit.ta.gui;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import com.misfit.ios.AppHelper;
 import com.misfit.ta.Settings;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
@@ -41,14 +42,17 @@ public class AppInstaller {
 		File f = new File(pathToApp);
 		if(!f.exists())
 			return false;
+
+		return true;
+	}
+	
+	static public boolean checkLatestAppExist() {
 		
-		pathToApp = f.getAbsolutePath();
-		
-		// make sure new app file exist
+		// check app in appPath
 		String pathToNewApp = Settings.getParameter("appPath");
 		if(pathToNewApp == null)
 			return false;
-		
+
 		File f2 = new File(pathToNewApp);
 		if(!f2.exists())
 			return false;
@@ -70,23 +74,26 @@ public class AppInstaller {
     	Gui.init(Settings.getParameter("DeviceIP"));
 	}
 	
-	
-	static public void installApp(int mvp) {
+		
+	static public void installAndLaunchApp(int mvp) {
 
 		// install app
 		String pathToApp = MVPAppPaths[mvp];
 		killInstrument();
 		Gui.uninstall(Gui.getUdids().get(0));
 		Gui.install(Gui.getUdids().get(0), pathToApp);
+		launchInstrument();
 	}
-	
-	static public void installAndLaunchApp(int mvp) {
+
+	static public void installAndLaunchLatestAppWithoutUninstall() {
+
+		String pathToNewApp = Settings.getParameter("appPath");
+		File f2 = new File(pathToNewApp);
+		pathToNewApp = f2.getAbsolutePath();
 		
 		// install app
-		String pathToApp = MVPAppPaths[mvp];
 		killInstrument();
-		Gui.uninstall(Gui.getUdids().get(0));
-		Gui.install(Gui.getUdids().get(0), pathToApp);
+		Gui.install(Gui.getUdids().get(0), pathToNewApp);
 		launchInstrument();
 	}
 	
