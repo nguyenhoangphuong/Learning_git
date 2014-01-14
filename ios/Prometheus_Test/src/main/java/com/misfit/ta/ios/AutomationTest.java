@@ -24,12 +24,12 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
         String isDebug = Settings.getParameter("MVPDebug");
         debug = (isDebug != null && isDebug.equalsIgnoreCase("true"));
     }
-
+    
     @Override
     @BeforeMethod(alwaysRun = true)
-    public void setUpTest(Method method) 
+    public void beforeMethod(Method method) 
     {
-        super.setUpTest(method);
+        super.beforeMethod(method);
 
         Files.delete("instrumentscli0.trace");
 
@@ -48,13 +48,13 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 
     @Override
     @AfterMethod(alwaysRun = true)
-    public void cleanUpTest(Method method, ITestResult tr)
+    public void afterMethod(Method method, ITestResult tr)
     {
     	Gui.shutdown();
     	instrument.stop();
     	instrument.kill();
     	
-        super.cleanUpTest(method, tr);
+        super.afterMethod(method, tr);
     }
 
 }

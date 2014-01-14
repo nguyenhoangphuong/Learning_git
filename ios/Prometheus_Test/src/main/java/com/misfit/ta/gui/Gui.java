@@ -986,6 +986,15 @@ public class Gui {
     		return false;
     	return "1".equals(result) ? true : false;
     }
+
+    // misc
+    public static void resetApp() {
+    	
+    	String cmd1 = "(Gui clearStackAndGoToViewController:@\"PTSigninSignupViewController\" nibName:@\"PTSigninSignupViewController\")";
+		String cmd2 = "(Gui resetUserPreferences)";
+		NuRemoteClient.sendToServer(cmd1);
+		NuRemoteClient.sendToServer(cmd2);
+    }
     
 }
 

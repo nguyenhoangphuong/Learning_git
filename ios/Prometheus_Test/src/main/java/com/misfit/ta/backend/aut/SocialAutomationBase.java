@@ -10,9 +10,6 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.testng.annotations.BeforeClass;
 
-import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.api.social.SocialAPI;
-import com.misfit.ta.backend.data.profile.ProfileData;
 
 public class SocialAutomationBase extends BackendAutomation {
 
