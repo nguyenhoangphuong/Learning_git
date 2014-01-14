@@ -28,8 +28,8 @@ public class BackendPerformanceTest extends BackendAutomation {
 
 	@Override
 	@BeforeMethod(alwaysRun = true)
-	public void setUpTest(Method method) {
-		super.setUpTest(method);
+	public void beforeMethod(Method method) {
+		super.beforeMethod(method);
 	}
 
 	@Test(groups = { "performance" })
