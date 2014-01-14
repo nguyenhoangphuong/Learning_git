@@ -187,7 +187,7 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	public void v_WorldView() {
 	
 		Assert.assertTrue(WorldFeedView.isWorldViewDefault(), "Current view is World Feed with records");
-		Assert.assertTrue(WorldFeedView.hasOptionPanel(), "Include option is prompted");
+		Assert.assertTrue(WorldFeedView.hasPrivacyOptionPanel(), "Include option is prompted");
 	}
 
 	public void v_LeaderboardNoFriend() {
