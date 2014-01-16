@@ -32,23 +32,22 @@ public class LifetimeDistanceItem extends TimelineItemDataBase {
         }
     }
     
-	public static LifetimeDistanceItem fromJson(JSONObject json) {
+	public LifetimeDistanceItem fromJson(JSONObject json) {
 		
-		LifetimeDistanceItem obj = new LifetimeDistanceItem();
 		try {
 			
 			if (!json.isNull("milestoneType"))
-				obj.setMilestoneType(json.getInt("milestoneType"));
+				this.setMilestoneType(json.getInt("milestoneType"));
 			
 			if (!json.isNull("unitSystem"))
-				obj.setUnitSystem(json.getInt("unitSystem"));
+				this.setUnitSystem(json.getInt("unitSystem"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return obj;
+		return this;
 	}
 	
 	

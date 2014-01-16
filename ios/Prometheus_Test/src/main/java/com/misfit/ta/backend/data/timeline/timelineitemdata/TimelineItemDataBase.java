@@ -10,7 +10,10 @@ public abstract class TimelineItemDataBase {
     public static final int TYPE_LIFETIME_DISTANCE = 3;
     public static final int TYPE_MILESTONE = 4;   
     public static final int TYPE_SLEEP = 5;
-    public static final int TYPE_END = 6;
+    public static final int TYPE_TIMEZONE = 6;
+    public static final int TYPE_GAP = 7;
+    public static final int TYPE_FOOD = 8;
+    public static final int TYPE_END = 9;
     
     
     // enum for event type (in milestone item)

@@ -3,15 +3,17 @@ package com.misfit.ta.backend.data.timeline;
 import java.util.List;
 import java.util.Vector;
 
-import com.amazonaws.services.simpleworkflow.flow.annotations.Activities;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.FoodTrackingItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.LifetimeDistanceItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItem;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.SleepSessionItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.TimezoneChangeItem;
 
 public class TimelineItem {
 
@@ -20,6 +22,8 @@ public class TimelineItem {
 	private Integer state;
 	private Long timestamp;
 	private TimelineItemDataBase data;
+	private String attachedImageUrl;
+	private String attachedImage;
 	
 	private String localId;
 	private String serverId;
@@ -44,6 +48,8 @@ public class TimelineItem {
 			
 			if(data != null)
 				object.accumulate("data", data.toJson());
+			object.accumulate("attachedImageUrl", attachedImageUrl);
+			object.accumulate("attachedImage", attachedImage);
 			
 			object.accumulate("localId", localId);
 			object.accumulate("serverId", serverId);
@@ -56,12 +62,12 @@ public class TimelineItem {
 		}
 	}
 
-	public static TimelineItem fromJson(JSONObject jsonItem) {
+	public TimelineItem fromJson(JSONObject jsonItem) {
 		
 		try {
 						
 			// timeline item
-			TimelineItem item = new TimelineItem();
+			TimelineItem item = this;
 			if (!jsonItem.isNull("itemType"))
 				item.setItemType(jsonItem.getInt("itemType"));
 			
@@ -80,6 +86,11 @@ public class TimelineItem {
 			if (!jsonItem.isNull("updatedAt"))
 				item.setUpdatedAt(jsonItem.getLong("updatedAt"));
 			
+			if (!jsonItem.isNull("attachedImageUrl"))
+				item.setAttachedImageUrl(jsonItem.getString("attachedImageUrl"));
+			
+			if (!jsonItem.isNull("attachedImage"))
+				item.setAttachedImage(jsonItem.getString("attachedImage"));
 			
 			// parse data depends on the itemType
 			if (!jsonItem.isNull("data") && item.itemType != null) {
@@ -89,18 +100,40 @@ public class TimelineItem {
 				
 				switch (item.itemType) {
 				
+					case TimelineItemDataBase.TYPE_GAP:
 					case TimelineItemDataBase.TYPE_SESSION: {
-						data = ActivitySessionItem.fromJson(jsonData);
+						ActivitySessionItem sessionData = new ActivitySessionItem();
+						data = sessionData.fromJson(jsonData);
 						break;
 					}
 	
 					case TimelineItemDataBase.TYPE_LIFETIME_DISTANCE: {
-						data = LifetimeDistanceItem.fromJson(jsonData);
+						LifetimeDistanceItem lifetimeData = new LifetimeDistanceItem();
+						data = lifetimeData.fromJson(jsonData);
 						break;
 					}
 	
 					case TimelineItemDataBase.TYPE_MILESTONE: {
-						data = MilestoneItem.fromJson(jsonData);
+						MilestoneItem milestoneData = new MilestoneItem();
+						data = milestoneData.fromJson(jsonData);
+						break;
+					}
+					
+					case TimelineItemDataBase.TYPE_TIMEZONE: {
+						TimezoneChangeItem timezoneData = new TimezoneChangeItem();
+						data = timezoneData.fromJson(jsonData);
+						break;
+					}
+					
+					case TimelineItemDataBase.TYPE_SLEEP: {
+						SleepSessionItem sleepData = new SleepSessionItem();
+						data = sleepData.fromJson(jsonData);
+						break;
+					}
+					
+					case TimelineItemDataBase.TYPE_FOOD: {
+						FoodTrackingItem foodData = new FoodTrackingItem();
+						data = foodData.fromJson(jsonData);
 						break;
 					}
 				}
@@ -120,8 +153,9 @@ public class TimelineItem {
 		try {
 			JSONObject responseBody = new JSONObject(response.getResponseString());
 			JSONObject jsonItem = responseBody.getJSONObject("timeline_item");
-
-			return TimelineItem.fromJson(jsonItem);
+			TimelineItem item = new TimelineItem();
+			
+			return item.fromJson(jsonItem);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -138,7 +172,9 @@ public class TimelineItem {
 			List<TimelineItem> items = new Vector<TimelineItem>();
 			for (int i = 0; i < jsonItems.length(); i++) {
 				JSONObject jsonItem = jsonItems.getJSONObject(i);
-				items.add(TimelineItem.fromJson(jsonItem));
+				TimelineItem item = new TimelineItem();
+				item.fromJson(jsonItem);
+				items.add(item);
 			}
 
 			return items;
@@ -206,4 +242,28 @@ public class TimelineItem {
 		this.updatedAt = updatedAt;
 	}
 
+
+	
+	public String getAttachedImageUrl() {
+		return attachedImageUrl;
+	}
+	
+
+
+	public void setAttachedImageUrl(String attachedImageUrl) {
+		this.attachedImageUrl = attachedImageUrl;
+	}
+	
+
+
+	public String getAttachedImage() {
+		return attachedImage;
+	}
+	
+
+
+	public void setAttachedImage(String attachedImage) {
+		this.attachedImage = attachedImage;
+	}
+	
 }

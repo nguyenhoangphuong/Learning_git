@@ -1,6 +1,9 @@
 package com.misfit.ta.backend.api.social;
 
 
+import org.apache.log4j.Logger;
+import org.graphwalker.Util;
+
 import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.BaseParams;
@@ -8,6 +11,8 @@ import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;
 
 public class SocialAPI extends MVPApi {
+	
+	protected static Logger logger = Util.setupLogger(SocialAPI.class);
 	
 	public static final Integer STATUS_NOT_REQUESTED = 0;
 	public static final Integer STATUS_REQUESTED_FROM_ME = 1;

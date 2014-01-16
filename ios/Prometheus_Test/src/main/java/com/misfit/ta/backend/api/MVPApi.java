@@ -29,6 +29,7 @@ import com.misfit.ta.backend.data.pedometer.*;
 import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.data.timeline.*;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.backend.data.*;
 import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.TextTool;
@@ -504,6 +505,8 @@ public class MVPApi {
 	public static BaseResult createTimelineItem(String token, TimelineItem item) {
 
 		String url = baseAddress + "timeline_items";
+		if(item.getItemType() == TimelineItemDataBase.TYPE_FOOD)
+			url += "?attached_image=true";
 		BaseParams request = new BaseParams();
 
 		request.addHeader("auth_token", token);

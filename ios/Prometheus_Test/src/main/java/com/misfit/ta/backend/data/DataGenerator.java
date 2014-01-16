@@ -1,5 +1,6 @@
 package com.misfit.ta.backend.data;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItemTypeChangeRecord;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.FoodTrackingItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.LifetimeDistanceItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItemInfo;
@@ -30,6 +32,7 @@ import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.MVPEnums;
+import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.TextTool;
 
 public class DataGenerator {
@@ -240,7 +243,25 @@ public class DataGenerator {
 
 		return item;
 	}
+	
+	public static TimelineItem generateRandomFoodTimelineItem(long timestamp, Map<String, Object> options) {
 
+		FoodTrackingItem data = new FoodTrackingItem();
+		
+		String filePath = "images/1mb/" + MVPCommon.randInt(1, 4) + ".jpg";
+		String base64 = MVPCommon.readFileAsBase64String(filePath);
+
+		TimelineItem item = new TimelineItem();
+		item.setLocalId("timelineitem-" + MVPApi.generateLocalId());
+		item.setUpdatedAt(timestamp);
+		item.setTimestamp(timestamp);
+		item.setItemType(TimelineItemDataBase.TYPE_FOOD);
+		item.setAttachedImage(base64);
+		item.setData(data);
+
+		return item;
+	}
+	
 	public static GraphItem generateRandomGraphItem(long timestamp, Map<String, Object> options) {
 		
 		GraphItem item = new GraphItem();

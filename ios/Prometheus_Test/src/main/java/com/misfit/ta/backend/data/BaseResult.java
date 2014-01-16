@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-
+import org.apache.http.Header;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
@@ -116,4 +116,16 @@ public class BaseResult {
 				this.errorMessage.isEmpty();
 	}
 
+	public String getHeaderValue(String key) {
+		
+		Header[] headers = response.getResponseHeaders();
+		for(Header header: headers) {
+			
+			if(header.getName().equals(key))
+				return header.getValue();
+		}
+		
+		return null;
+	}
+	
 }

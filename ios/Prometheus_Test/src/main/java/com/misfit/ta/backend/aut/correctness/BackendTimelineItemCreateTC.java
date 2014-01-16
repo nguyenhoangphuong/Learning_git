@@ -11,7 +11,9 @@ import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
+import com.misfit.ta.utils.TextTool;
 
 public class BackendTimelineItemCreateTC  extends BackendAutomation {
 
@@ -107,6 +109,30 @@ public class BackendTimelineItemCreateTC  extends BackendAutomation {
 		for(TimelineItem ritem : ritems) {
 			Assert.assertNotNull(ritem.getServerId(), "ServerId is not null");
 		}
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "timeline_item" })
+	public void CreateFoodItemWithValidImageData() {
+		
+		TimelineItem fooditem = DataGenerator.generateRandomFoodTimelineItem(System.currentTimeMillis() / 1000, null);
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		BaseResult r = MVPApi.createTimelineItem(token, fooditem);
+		TimelineItem item = TimelineItem.getTimelineItem(r.response);
+
+		Assert.assertTrue(r.isOK(), "Status code is 200");
+		Assert.assertTrue(item.getServerId() != null, "Server Id is not null");
+		Assert.assertTrue(item.getAttachedImageUrl() != null, "Attached Image Url is not null");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "timeline_item" })
+	public void CreateFoodItemWithInvalidImageData() {
+		
+		TimelineItem fooditem = DataGenerator.generateRandomFoodTimelineItem(System.currentTimeMillis() / 1000, null);
+		fooditem.setAttachedImage(TextTool.getRandomString(500, 1000) + "   ?! SDA()_");
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		BaseResult r = MVPApi.createTimelineItem(token, fooditem);
+
+		Assert.assertNotEquals(r.statusCode, 200, "Status code");
 	}
 	
 }

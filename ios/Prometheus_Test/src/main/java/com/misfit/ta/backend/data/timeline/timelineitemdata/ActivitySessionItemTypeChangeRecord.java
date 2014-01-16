@@ -34,21 +34,21 @@ public class ActivitySessionItemTypeChangeRecord {
 		}
 	}
 
-	public static ActivitySessionItemTypeChangeRecord fromJson(JSONObject json) {
-		ActivitySessionItemTypeChangeRecord obj = new ActivitySessionItemTypeChangeRecord();
+	public ActivitySessionItemTypeChangeRecord fromJson(JSONObject json) {
+		
 		try {
 			
 			if (!json.isNull("act"))
-				obj.setAct(json.getInt("act"));
+				this.setAct(json.getInt("act"));
 			
 			if (!json.isNull("ts"))
-				obj.setTs(json.getLong("ts"));
+				this.setTs(json.getLong("ts"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		return obj;
+		return this;
 	}
 
 	// getters setters

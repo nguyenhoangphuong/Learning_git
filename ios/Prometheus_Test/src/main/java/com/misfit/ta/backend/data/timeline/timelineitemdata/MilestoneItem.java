@@ -34,23 +34,24 @@ public class MilestoneItem extends TimelineItemDataBase {
         }
     }
     
-	public static MilestoneItem fromJson(JSONObject json) {
+	public MilestoneItem fromJson(JSONObject json) {
 		
-		MilestoneItem obj = new MilestoneItem();
 		try {
 			
 			if (!json.isNull("eventType"))
-				obj.setEventType(json.getInt("eventType"));
+				this.setEventType(json.getInt("eventType"));
 			
-			if (!json.isNull("info"))
-				obj.setInfo(MilestoneItemInfo.fromJson(json.getJSONObject("info")));
+			if (!json.isNull("info")) {
+				MilestoneItemInfo info = new MilestoneItemInfo();
+				this.setInfo(info.fromJson(json.getJSONObject("info")));
+			}
 			
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		return obj;
+		return this;
 	}
     
     

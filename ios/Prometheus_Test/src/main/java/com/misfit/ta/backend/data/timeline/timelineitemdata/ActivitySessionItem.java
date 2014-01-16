@@ -53,51 +53,52 @@ public class ActivitySessionItem extends TimelineItemDataBase {
         }
     }
     
-	public static ActivitySessionItem fromJson(JSONObject json) {
+	public ActivitySessionItem fromJson(JSONObject json) {
 		
-		ActivitySessionItem obj = new ActivitySessionItem();
 		try {
 			
 			if (!json.isNull("point"))
-				obj.setPoint(json.getInt("point"));
+				this.setPoint(json.getInt("point"));
 			
 			if (!json.isNull("distance"))
-				obj.setDistance(json.getDouble("distance"));
+				this.setDistance(json.getDouble("distance"));
 			
 			if (!json.isNull("rawPoint"))
-				obj.setRawPoint(json.getInt("rawPoint"));
+				this.setRawPoint(json.getInt("rawPoint"));
 			
 			if (!json.isNull("isBestRecord"))
-				obj.setIsBestRecord(json.getBoolean("isBestRecord"));
+				this.setIsBestRecord(json.getBoolean("isBestRecord"));
 			
 			if (!json.isNull("calories"))
-				obj.setCalories(json.getDouble("calories"));
+				this.setCalories(json.getDouble("calories"));
 			
 			if (!json.isNull("activityType"))
-				obj.setActivityType(json.getInt("activityType"));
+				this.setActivityType(json.getInt("activityType"));
 			
 			if (!json.isNull("typeChanges")) {
 				
 				JSONArray arr = json.getJSONArray("typeChanges");
 				ActivitySessionItemTypeChangeRecord[] records = new ActivitySessionItemTypeChangeRecord[arr.length()];
 				
-				for(int i = 0; i < arr.length(); i++)
-					records[i] = ActivitySessionItemTypeChangeRecord.fromJson(arr.getJSONObject(i));
+				for(int i = 0; i < arr.length(); i++) {
+					records[i] = new ActivitySessionItemTypeChangeRecord();
+					records[i].fromJson(arr.getJSONObject(i));
+				}
 				
-				obj.setTypeChanges(records);
+				this.setTypeChanges(records);
 			}
 			
 			if (!json.isNull("duration"))
-				obj.setDuration(json.getInt("duration"));
+				this.setDuration(json.getInt("duration"));
 			
 			if (!json.isNull("steps"))
-				obj.setSteps(json.getInt("steps"));
+				this.setSteps(json.getInt("steps"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		return obj;
+		return this;
 	}
 
     

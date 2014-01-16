@@ -1,9 +1,17 @@
 package com.misfit.ta.common;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
+
+import com.misfit.ta.utils.Files;
 
 public class MVPCommon {
 
@@ -94,4 +102,20 @@ public class MVPCommon {
 		return Integer.parseInt(BEString, 16);
 	}
 
+	
+	// encoding
+	public static String readFileAsBase64String(String filePath) {
+		
+		try {
+			File file = Files.getFile(filePath);
+			byte[] bytes = FileUtils.readFileToByteArray(file);
+			return Base64.encodeBase64String(bytes);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 }

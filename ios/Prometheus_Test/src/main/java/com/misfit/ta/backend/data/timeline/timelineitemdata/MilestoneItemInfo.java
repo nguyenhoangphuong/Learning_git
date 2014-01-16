@@ -34,26 +34,25 @@ public class MilestoneItemInfo {
         }
     }
     
-	public static MilestoneItemInfo fromJson(JSONObject json) {
+	public MilestoneItemInfo fromJson(JSONObject json) {
 		
-		MilestoneItemInfo obj = new MilestoneItemInfo();
 		try {
 			
 			if (!json.isNull("point"))
-				obj.setPoint(json.getInt("point"));
+				this.setPoint(json.getInt("point"));
 			
 			if (!json.isNull("exceededAmount"))
-				obj.setExceededAmount(json.getInt("exceededAmount"));
+				this.setExceededAmount(json.getInt("exceededAmount"));
 			
 			if (!json.isNull("streakNumber"))
-				obj.setStreakNumber(json.getInt("streakNumber"));
+				this.setStreakNumber(json.getInt("streakNumber"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return obj;
+		return this;
 	}
     
     
