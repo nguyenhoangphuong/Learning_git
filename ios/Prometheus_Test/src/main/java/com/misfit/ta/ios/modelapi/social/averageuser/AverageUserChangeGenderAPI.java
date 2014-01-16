@@ -86,17 +86,14 @@ public class AverageUserChangeGenderAPI extends ModelAPI {
 		
 		Assert.assertTrue(LeaderboardView.isDefaultView(), "Current view is leaderboard view");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "misterfit"), "misterfit is visible");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "Mr. Average Misfit"), "Mr. Average Misfit is visible");
 	}	
 	
 	public void v_LeaderboardUpdated() {
 		
 		Assert.assertTrue(LeaderboardView.isDefaultView(), "Current view is leaderboard view");
 		Assert.assertTrue(!ViewUtils.isExistedView("UILabel", "misterfit"), "misterfit is not visible");
-		Assert.assertTrue(!ViewUtils.isExistedView("UILabel", "Mr. Average Misfit"), "Mr. Average Misfit is not visible");
 		
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "missfit"), "missfit is visible");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "Ms. Average Misfit"), "Ms. Average Misfit is visible");
 	}
 	
 }

@@ -120,6 +120,7 @@ public class EditSocialProfileAPI extends ModelAPI {
 		SocialProfileView.tapEditAvatarButton();
 		SocialProfileView.tapChooseFromLibrary();
 		
+		ShortcutsTyper.delayTime(3000);
 		if(Gui.hasAlert()) {
 			Gui.touchPopupButton("OK");
 		}

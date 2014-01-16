@@ -101,14 +101,12 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		
 		Assert.assertTrue(LeaderboardView.isDefaultView(), "Current view is leaderboard view");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "misterfit"), "Average user's handle is visible");
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "Mr. Average Misfit"), "Average user's name is visible");
 	}	
 	
 	public void v_LeaderboardDeleted() {
 		
 		Assert.assertTrue(LeaderboardView.isDefaultView(), "Current view is leaderboard view");
 		Assert.assertTrue(!ViewUtils.isExistedView("UILabel", "misterfit"), "Average user's handle is not visible");
-		Assert.assertTrue(!ViewUtils.isExistedView("UILabel", "Mr. Average Misfit"), "Average user's name is not visible");
 	}
 	
 }

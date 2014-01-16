@@ -18,6 +18,7 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class DayProgressAPI extends ModelAPI {
@@ -174,8 +175,11 @@ public class DayProgressAPI extends ModelAPI {
 				System.out.println("HOUR:" + now.get(Calendar.HOUR_OF_DAY));
 				System.out.println("DEBUG: Calories text " + calories);
 				System.out.println("DEBUG: Calculated Calories " + result);
-				
-				if (Math.abs(calories - result) > 30f) {
+								
+				if (Math.abs(calories - result) > 50f) {
+					TRS.instance().addCode("Calories text: " + calories, null);
+					TRS.instance().addCode("Calculated Calories: " + result, null);
+					
 					Assert.fail("Calories calculation is not correct");
 				}
 				

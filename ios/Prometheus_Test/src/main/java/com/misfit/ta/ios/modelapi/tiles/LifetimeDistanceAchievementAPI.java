@@ -151,7 +151,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		
 		Gui.swipeUp(100);
 		checkBadgesTile(true, 2, 11, 6);
-		checkBadgesTile(true, 3, 22, 22);
+		checkBadgesTile(true, 3, 22, 12);
 		
 		Gui.swipeUp(1000);
 		checkBadgesTile(false, 4, 11, 2);
