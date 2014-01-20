@@ -20,7 +20,7 @@ function PrometheusAlertHandler(_alert) {
 
 	if (name == AllowLocationMsg || message == AllowLocationMsg ||
 		name.indexOf("Current Location") >= 0 || message.indexOf("Current Location") >= 0 ||
-		name.indexOf("Facebook") >=0 || message.indexOf("Facebook") >= 0) ||
+		name.indexOf("Facebook") >=0 || message.indexOf("Facebook") >= 0 ||
 		name.indexOf("Access Your Photos") >= 0 || message.indexOf("Access Your Photos") >= 0)
 	{
 		UIALogger.logDebug("Alert title: " + name);
@@ -31,7 +31,7 @@ function PrometheusAlertHandler(_alert) {
 	}
 
 	UIALogger.logDebug("Do not do anything");
-	target.delay(5);
+	target.delay(2);
 	return true;
 
 }

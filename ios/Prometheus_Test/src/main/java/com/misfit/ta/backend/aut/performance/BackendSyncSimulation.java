@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 
 import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
 
 public class BackendSyncSimulation {

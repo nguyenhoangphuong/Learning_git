@@ -6,7 +6,7 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;

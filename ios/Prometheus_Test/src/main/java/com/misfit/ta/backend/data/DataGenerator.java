@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.goal.TripleTapData;

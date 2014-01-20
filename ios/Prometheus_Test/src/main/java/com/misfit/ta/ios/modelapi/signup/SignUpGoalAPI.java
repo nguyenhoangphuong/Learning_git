@@ -6,7 +6,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.ios.AutomationTest;

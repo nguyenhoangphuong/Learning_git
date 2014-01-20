@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.Gui;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.sync.SyncDebugLog;
 import com.misfit.ta.gui.DefaultStrings;

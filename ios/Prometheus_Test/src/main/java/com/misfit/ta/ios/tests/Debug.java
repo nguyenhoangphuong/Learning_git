@@ -1,27 +1,23 @@
 package com.misfit.ta.ios.tests;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ios.NuRemoteClient;
-import com.misfit.ios.ViewUtils;
-import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.api.social.SocialAPI;
+import com.misfit.ta.backend.api.RequestHelper;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.backend.data.DataGenerator;
-import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.backend.data.pedometer.Pedometer;
-import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.backend.data.BaseParams;
+import com.misfit.ta.backend.data.timeline.TimelineItem;
+import com.misfit.ta.gui.AppInstaller;
 import com.misfit.ta.gui.Gui;
-import com.misfit.ta.gui.HomeScreen;
-import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.gui.Sync;
-import com.misfit.ta.gui.social.LeaderboardView;
-import com.misfit.ta.gui.social.SearchFriendView;
-import com.misfit.ta.gui.social.SocialProfileView;
+import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
+import com.sun.jersey.api.container.httpserver.HttpServerFactory;
+import com.sun.jersey.api.core.PackagesResourceConfig;
+import com.sun.jersey.api.core.ResourceConfig;
 
 public class Debug {
 	
@@ -30,17 +26,45 @@ public class Debug {
 	
 	public static void main(String[] args) throws IOException {
 		
-//		String uid = MVPApi.getUserId(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token);
-//		for(int i = 0; i < 3; i++) {
-//			String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
-//			ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
-//			profile.setHandle(TextTool.getRandomString(5, 10));
-//			MVPApi.createProfile(token, profile);
-//			SocialAPI.sendFriendRequest(token, uid);
+//		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
+//		List<TimelineItem> items = MVPApi.getTimelineItems(token, System.currentTimeMillis() / 1000 - 3600 * 24 * 15, Integer.MAX_VALUE, 0);
+//		for(TimelineItem item : items) {
+//			logger.info(item.toJson());
 //		}
+//		Gui.init("192.168.1.111");
+//		Gui.hasAlert();
+//		Gui.touchPopupButton("OK");
 		
-		Gui.init("192.168.1.111");
-		HomeScreen.tapSocialProfile();
+		AppInstaller.launchInstrument();
+		
+//		Thread server1Thread = new Thread(new Runnable() {
+//			public void run() {
+//				ResourceConfig rc = new PackagesResourceConfig("com.misfit.ta.backend.aut.server.server1");
+//				try {
+//					HttpServerFactory.create("http://localhost:9999/", rc).start();
+//				} catch (IllegalArgumentException e) {
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//		
+//		Thread server2Thread = new Thread(new Runnable() {
+//			public void run() {
+//				ResourceConfig rc = new PackagesResourceConfig("com.misfit.ta.backend.aut.server.server2");
+//				try {
+//					HttpServerFactory.create("http://localhost:9998/", rc).start();
+//				} catch (IllegalArgumentException e) {
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//        
+//		server1Thread.start();
+//		server2Thread.start();
+        
 	}
 }
-	

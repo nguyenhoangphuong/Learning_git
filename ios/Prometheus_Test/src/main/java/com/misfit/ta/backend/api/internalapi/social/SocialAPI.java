@@ -1,11 +1,11 @@
-package com.misfit.ta.backend.api.social;
+package com.misfit.ta.backend.api.internalapi.social;
 
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.google.resting.component.impl.ServiceResponse;
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;

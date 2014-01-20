@@ -4,7 +4,7 @@ import java.io.File;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;

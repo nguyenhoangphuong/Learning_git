@@ -8,7 +8,7 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;

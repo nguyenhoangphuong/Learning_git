@@ -3,7 +3,7 @@ package com.misfit.ta.backend.aut.performance.social;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.aut.correctness.servercalculation.BackendServerCalculationTest;
 import com.misfit.ta.base.SeedThread;

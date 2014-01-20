@@ -5,6 +5,7 @@ import org.testng.annotations.*;
 
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.api.*;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 

@@ -1,6 +1,7 @@
 package com.misfit.ta.backend.aut;
 
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
@@ -146,6 +147,19 @@ public class BackendHelper {
 		
 		String token = MVPApi.signIn(email, password).token;
 		clearLatestGoal(token);
+	}
+
+	
+	public static void subscribeNotificationToAResource(String clientKey, String clientSecret, String endpoint, String resourceToSubscribe) {
+		
+		BaseResult result = OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, resourceToSubscribe);
+		String subcriptionUrl = OpenAPI.getConfirmSubscriptionUrl(result);
+		OpenAPI.confirmSubcription(subcriptionUrl);
+	}
+	
+	public static void unsubscibeNotificationToAResource(String clientKey, String clientSecret, String resourceToSubscribe) {
+		
+		OpenAPI.unsubscribeNotification(clientKey, clientSecret, resourceToSubscribe);
 	}
 	
 }

@@ -2,7 +2,7 @@ package com.misfit.ta.gui;
 
 import org.testng.Assert;
 
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 

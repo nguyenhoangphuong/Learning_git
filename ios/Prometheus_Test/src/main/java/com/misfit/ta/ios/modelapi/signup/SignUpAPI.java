@@ -12,7 +12,7 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
 
 import com.misfit.ta.ios.AutomationTest;
-import com.misfit.ta.backend.api.MVPApi;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;

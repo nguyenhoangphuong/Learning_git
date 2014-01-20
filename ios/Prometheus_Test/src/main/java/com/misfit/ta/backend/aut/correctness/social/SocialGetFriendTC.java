@@ -3,8 +3,8 @@ package com.misfit.ta.backend.aut.correctness.social;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.misfit.ta.backend.api.MVPApi;
-import com.misfit.ta.backend.api.social.SocialAPI;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
 import com.misfit.ta.backend.aut.SocialAutomationBase;
 import com.misfit.ta.backend.aut.SocialTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;

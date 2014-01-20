@@ -11,12 +11,11 @@ import org.graphwalker.Util;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
-import com.misfit.ta.backend.api.MVPApi;
 
 
 public class BaseResult {
 	// logger
-	protected static Logger logger = Util.setupLogger(MVPApi.class);
+	protected static Logger logger = Util.setupLogger(BaseResult.class);
 
 	// fields: these field normally transparent to users, just store in case of
 	// someone want do complex things
@@ -116,6 +115,7 @@ public class BaseResult {
 				this.errorMessage.isEmpty();
 	}
 
+	
 	public String getHeaderValue(String key) {
 		
 		Header[] headers = response.getResponseHeaders();
@@ -123,6 +123,20 @@ public class BaseResult {
 			
 			if(header.getName().equals(key))
 				return header.getValue();
+		}
+		
+		return null;
+	}
+	
+	public Object getJsonResponseValue(String key) {
+		
+		if(json == null)
+			return null;
+		
+		try {
+			return json.get(key);
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 		
 		return null;

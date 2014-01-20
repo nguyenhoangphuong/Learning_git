@@ -1,6 +1,4 @@
-package com.misfit.ta.backend.api;
-
-import static com.google.resting.component.EncodingTypes.UTF8;
+package com.misfit.ta.backend.api.internalapi;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,17 +7,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.google.resting.Resting;
-import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
-import com.google.resting.method.delete.DeleteHelper;
-import com.google.resting.method.post.PostHelper;
-import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.aut.ResultLogger;
+import com.misfit.ta.backend.api.RequestHelper;
 import com.misfit.ta.backend.aws.AWSHelper;
 import com.misfit.ta.backend.data.account.*;
 import com.misfit.ta.backend.data.goal.*;
@@ -31,10 +24,9 @@ import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.data.timeline.*;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.backend.data.*;
-import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.TextTool;
 
-public class MVPApi {
+public class MVPApi extends RequestHelper {
 
 	// logger
 	protected static Logger logger = Util.setupLogger(MVPApi.class);
@@ -42,71 +34,10 @@ public class MVPApi {
 	// fields
 	public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
 	public static int port = Integer.parseInt(Settings.getValue("MVPBackendPort"));
-	
-	public static String HTTP_POST = "POST";
-	public static String HTTP_GET = "GET";
-	public static String HTTP_PUT = "PUT";
-	public static String HTTP_DELETE = "DELETE";
-	
+		
 	public static int CACHE_TRY_TIME = 10;
 	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.60r";
 
-	// request helpers
-	static protected ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
-		
-		// log address
-		logger.info(type.toUpperCase() + ": " + url + " - port: " + port);
-		logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
-		logger.info("Request params: " + requestInf.getParamsAsJsonString());
-
-		// send to TRS
-		TRS.instance().addStep(type.toUpperCase() + ": " + url + " - port: " + port, null);
-		TRS.instance().addCode("Request headers: " + requestInf.getHeadersAsJsonString(), null);
-		TRS.instance().addCode("Request params: " + requestInf.getParamsAsJsonString(), null);
-
-		// wrapper send request
-		ServiceResponse response = null;
-		ResultLogger.registerRequest();
-		if (type.equalsIgnoreCase(MVPApi.HTTP_POST))
-			response = PostHelper.post(url, port, UTF8, requestInf.params, requestInf.headers);
-		else if (type.equalsIgnoreCase(MVPApi.HTTP_GET))
-			response = Resting.get(url, port, requestInf.params, UTF8, requestInf.headers);
-		else if (type.equalsIgnoreCase(MVPApi.HTTP_PUT))
-			response = PutHelper.put(url, UTF8, port, requestInf.params, requestInf.headers);
-		else if (type.equalsIgnoreCase(MVPApi.HTTP_DELETE))
-			response = DeleteHelper.delete(url, port, requestInf.params, UTF8, requestInf.headers);
-
-		// log result
-		IContentData rawData = response.getContentData();
-		logger.info("Response raw Data: " + rawData);
-		ResultLogger.registerResponse();
-		int error = response.getStatusCode();
-		ResultLogger.addErrorCode(error);
-		logger.info("Response code: " + error + "\n\n");
-
-		// send to TRS
-		TRS.instance().addCode("Response raw Data: " + rawData, null);
-		TRS.instance().addCode("Response code: " + error + "\n\n", null);
-
-		return response;
-	}
-
-	static protected ServiceResponse post(String url, int port, BaseParams requestInf) {
-		return request("post", url, port, requestInf);
-	}
-
-	static protected ServiceResponse get(String url, int port, BaseParams requestInf) {
-		return request("get", url, port, requestInf);
-	}
-
-	static protected ServiceResponse put(String url, int port, BaseParams requestInf) {
-		return request("put", url, port, requestInf);
-	}
-
-	static protected ServiceResponse delete(String url, int port, BaseParams requestInf) {
-		return request("delete", url, port, requestInf);
-	}
-	
 	// generators
 	public static String generateUniqueEmail() {
 		return "test" + System.currentTimeMillis() + TextTool.getRandomString(6, 6) + "@misfitqa.com";
