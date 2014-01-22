@@ -40,27 +40,19 @@ public class BaseResult {
 		if (!this.rawData.trim().isEmpty()) {
 		    try {
                 json = new JSONObject(this.rawData.toString());
+                
+                if (!json.isNull("error_message")) {
+                	this.errorMessage = json.getString("error_message");
+                	this.pairResult.put("error_message", this.errorMessage);
+                }
+                
+                if (!json.isNull("error_code")) {
+                	this.errorCode = Integer.valueOf(json.getString("error_code"));
+                	this.pairResult.put("error_code", this.errorCode);
+                }
+
             } catch (JSONException e1) {
             }
-
-			// middle level data
-			if (!json.isNull("error_message")) {
-				try {
-                    this.errorMessage = json.getString("error_message");
-                    this.pairResult.put("error_message", this.errorMessage);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-			}
-			
-			if (!json.isNull("error_code")) {
-				try {
-                    this.errorCode = Integer.valueOf(json.getString("error_code"));
-                    this.pairResult.put("error_code", this.errorCode);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-			}
 		}
 
 		this.statusCode = response.getStatusCode();
