@@ -21,6 +21,21 @@ public class DefaultStrings {
 	
 	public static String SignInEmailTextViewId = "id/sign_in_email_edit";
 	public static String SignInPasswordTextViewId = "id/sign_in_pwd_edit";
+	public static String SignUpEmailTextViewId = "id/sign_up_email_edit";
+	public static String SignUpPasswordTextViewId = "id/sign_up_pwd_edit";
+	public static String SignUpMaleButtonId = "id/male_radio_btn";
+	public static String SignUpFemaleButtonId = "id/female_radio_btn";
+	public static String SignUpUSButtonId = "id/us_radio_btn";
+	public static String SignUpMetricButtonId = "id/us_radio_btn";
+	public static String SignUpHeightTextViewId = "id/edit_height_tv";
+	public static String SignUpWeightTextViewId = "id/edit_weight_tv";
+	public static String SignUpBirthdayTextViewId = "id/edit_birthday_tv";
+	public static String SignUpLinkShineTextViewId = "id/tap_to_link_tv";
+	
+	public static String OKText = "OK";
+	public static String CancelText = "Cancel";
+	public static String SignOutText = "Sign out";
+	public static String SetText = "Set";
 	
 	public static String IncorrectSignInMessage = "Incorrect email or password, please check and try again.";
 }

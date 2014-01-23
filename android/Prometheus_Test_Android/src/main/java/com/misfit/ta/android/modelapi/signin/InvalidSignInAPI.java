@@ -120,7 +120,7 @@ public class InvalidSignInAPI extends ModelAPI {
 	public void e_DismissPopup() {
 		popupHeight = Gui.getHeight();
 		popupWidth = Gui.getWidth();
-		ViewNode okButton = ViewUtils.findView("TextView", "mText", "OK", 0);
+		ViewNode okButton = ViewUtils.findView("TextView", "mText", DefaultStrings.OKText, 0);
 		Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth, popupHeight,
 				popupWidth, okButton);
 		// Magic line which makes ViewServer reload views after we dismiss popup

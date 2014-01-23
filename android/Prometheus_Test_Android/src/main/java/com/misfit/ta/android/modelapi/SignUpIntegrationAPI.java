@@ -76,7 +76,7 @@ public class SignUpIntegrationAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_submitProfile() {
-		SignUp.inputSex(sex);
+		SignUp.inputSex(true);
 		SignUp.inputBirthday(birthday[0], birthday[1], birthday[2]);
 		SignUp.inputWeight(weight, isUS);
 		SignUp.inputHeight(height, isUS);

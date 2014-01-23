@@ -79,11 +79,8 @@ public class SignUpStep2API extends ModelAPI {
 	 * This method implements the Edge 'e_inputSex'
 	 * 
 	 */
-	public void e_inputSex() 
-	{
-		String[] genders = { "Male", "Female" };
-		sex = genders[(int) (System.currentTimeMillis() % 2)];
-		SignUp.inputSex(sex);
+	public void e_inputSex() {
+		SignUp.inputSex(true);
 	}
 
 	/**

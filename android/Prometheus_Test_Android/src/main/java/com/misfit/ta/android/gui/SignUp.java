@@ -4,9 +4,12 @@ import java.util.HashMap;
 
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
+import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.android.chimpchat.core.TouchPressType;
 import com.misfit.ta.android.gui.Helper.Helper;
 import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
+import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.utils.TextTool;
 
 public class SignUp {
 
@@ -16,15 +19,15 @@ public class SignUp {
 	 */
 
 	public static void chooseSignUp() {
-		Gui.touchAView("Button", "mID", "id/buttonNotHaveAccount");
+		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpButtonTextId);
 	}
 
 	public static void pressBack() {
-		Gui.touchAView("ImageButton", "mID", "id/buttonPrevious");
+		Gui.touchAView("ImageButton", "mID", DefaultStrings.ImageBackButtonId);
 	}
 
 	public static void pressNext() {
-		Gui.touchAView("ImageButton", "mID", "id/buttonNext");
+		Gui.touchAView("ImageButton", "mID", DefaultStrings.ImageNextButtonId);
 	}
 
 	public static String getAlertMessage() {
@@ -72,10 +75,11 @@ public class SignUp {
 	public static void fillSignUpForm(String email, String password) {
 		if (email != null) {
 			ViewNode emailNode = ViewUtils.findView("EditText", "mID",
-					"id/editEmail", 0);
+					DefaultStrings.SignUpEmailTextViewId, 0);
 			emailNode.text = "";
 
-			Gui.touchAView("EditText", "mID", "id/editEmail");
+			Gui.touchAView("EditText", "mID",
+					DefaultStrings.SignUpEmailTextViewId);
 			Gui.clearTextbox(emailNode);
 			Gui.type(email);
 			Gui.pressBack();
@@ -83,10 +87,11 @@ public class SignUp {
 
 		if (password != null) {
 			ViewNode passwordNode = ViewUtils.findView("EditText", "mID",
-					"id/editPassword", 0);
+					DefaultStrings.SignUpPasswordTextViewId, 0);
 			passwordNode.text = "";
 
-			Gui.touchAView("EditText", "mID", "id/editPassword");
+			Gui.touchAView("EditText", "mID",
+					DefaultStrings.SignUpPasswordTextViewId);
 			Gui.clearTextbox(passwordNode);
 			Gui.type(password);
 			Gui.pressBack();
@@ -105,19 +110,19 @@ public class SignUp {
 	 * Step 2: input profile TODO: edit fillProfileForm and getProfileForm
 	 * methods to edit fields and get fields' values
 	 */
-	 public static void fillProfileForm(String sex, String weight,
+	public static void fillProfileForm(Boolean isMale, String weight,
 			String height, Integer[] birthday) {
-		if (sex != null) {
-			if (sex.equalsIgnoreCase("male"))
-				Gui.touchAView("RadioButton", "mID", "id/userinfo_maleButton");
-			else
-				Gui.touchAView("RadioButton", "mID", "id/userinfo_femaleButton");
+		if (isMale != null) {
+			inputSex(isMale);
 		}
 
 		// TODO: add logic code here
 	}
 	
-	
+	public static void linkShine() {
+		 Gui.longTouchAView("TextView", "mID", DefaultStrings.SignUpLinkShineTextViewId);
+	}
+
 	public static String getProfileForm(String what) {
 		// to do: add logic code here
 
@@ -149,15 +154,22 @@ public class SignUp {
 	}
 
 	public static String formatHeightString(float height, boolean isUS) {
-		if (isUS)
+		if (isUS) {
 			return String.format("%d", height / 12) + "'"
 					+ String.format("%d", height % 12) + "\"";
+		}
 
 		return String.format("%.2f", height) + " m";
 	}
 
-	public static void inputSex(String sex) {
-		fillProfileForm(sex, null, null, null);
+	public static void inputSex(Boolean isMale) {
+		if (isMale) {
+			Gui.touchAView("RadioButton", "mID",
+					DefaultStrings.SignUpMaleButtonId);
+		} else {
+			Gui.touchAView("RadioButton", "mID",
+					DefaultStrings.SignUpFemaleButtonId);
+		}
 	}
 
 	public static void inputBirthday(int date, int month, int year) {
@@ -173,6 +185,48 @@ public class SignUp {
 	public static void inputHeight(float height, boolean isUS) {
 		String formatedHeight = formatHeightString(height, isUS);
 		fillProfileForm(null, formatedHeight, null, null);
+	}
+
+	public static void inputUnits(boolean isUS) {
+		if (isUS)
+			Gui.touchAView("RadioButton", "mID",
+					DefaultStrings.SignUpUSButtonId);
+		else {
+			Gui.touchAView("RadioButton", "mID",
+					DefaultStrings.SignUpMetricButtonId);
+		}
+	}
+
+	public static void chooseDefaultHeightValue(int fullScreenHeight,
+			int fullScreenWidth) {
+		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpHeightTextViewId);
+		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
+	}
+
+	public static void tapToSignOutAtProfilePage(int fullScreenHeight, int fullScreenWidth){
+		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SignOutText);
+	}
+	public static void dismissPopup(int fullScreenHeight, int fullScreenWidth, String buttonText) {
+		int popupHeight = Gui.getHeight();
+		int popupWidth = Gui.getWidth();
+		ViewNode okButton = ViewUtils.findView("TextView", "mText",
+				buttonText, 0);
+		Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth, popupHeight,
+				popupWidth, okButton);
+		// Magic line which makes ViewServer reload views after we dismiss popup
+		ShortcutsTyper.delayTime(50);
+	}
+
+	public static void chooseDefaultWeightValue(int fullScreenHeight,
+			int fullScreenWidth) {
+		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpWeightTextViewId);
+		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
+	}
+	
+	public static void chooseDefaultBirthdate(int fullScreenHeight,
+			int fullScreenWidth) {
+		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpBirthdayTextViewId);
+		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
 	}
 
 	public static String getSex() {
@@ -222,22 +276,6 @@ public class SignUp {
 		return info;
 	}
 
-	/*
-	 * ----- OLD LOGIC CODE public static void setGoalUp(int steps) { for (int i
-	 * = 0; i < steps; i++) { Gui.touchAView("Button", 1); } }
-	 * 
-	 * public static void setGoalDown(int steps) { for (int i = 0; i < steps;
-	 * i++) { Gui.touchAView("Button", 0); } }
-	 * 
-	 * public static void tapLevelMild() { Helper.tapLevelMild(); }
-	 * 
-	 * public static void tapLevelDormant() { Helper.tapLevelDormant(); }
-	 * 
-	 * public static void tapLevelModerate() { Helper.tapLevelModerate(); }
-	 * 
-	 * public static void tapLevelActive() { Helper.tapLevelActive(); }
-	 */
-
 	/**
 	 * Step 4: set up device
 	 */
@@ -266,36 +304,26 @@ public class SignUp {
 	public static boolean hasDectectedPassMessage() {
 		return false;
 	}
-	
+
 	/**
 	 * New Goal
 	 */
 	public static void chooseActive() {
 		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() / 2 - 350);
 	}
-	
+
 	public static void chooseVeryActive() {
 		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() / 2);
 	}
 
 	public static void chooseSuperActive() {
 		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() / 2 + 350);
-		
+
 	}
-	/*
-	 * OLD LOGIC public static void tapBuyYourShine() { Gui.touchAView("Button",
-	 * "mID", "id/buttonDeviceSetupAskForBuyingShine"); }
-	 * 
-	 * public static boolean hasBuyingInstruction() { return
-	 * ViewUtils.findView("Button", "mID",
-	 * "id/buttonDeviceSetupAskForBuyingShine", 0) != null &&
-	 * ViewUtils.findView("TextView", "mID",
-	 * "id/textViewDeviceSetupAskForBuyingShine", 0) != null; }
-	 * 
-	 * public static boolean hasSyncInstruction() { return
-	 * ViewUtils.findView("Button", "mID", "id/textViewDeviceSetupTitle", 0) !=
-	 * null && ViewUtils.findView("TextView", "mID",
-	 * "id/textViewDeviceSetupSyncInstruction", 0) != null; }
-	 */
+
+	public static String generateUniqueEmail() {
+		return "test" + System.currentTimeMillis()
+				+ TextTool.getRandomString(6, 6) + "@misfitqa.com";
+	}
 
 }
