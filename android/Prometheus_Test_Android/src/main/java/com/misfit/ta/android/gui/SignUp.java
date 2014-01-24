@@ -13,11 +13,6 @@ import com.misfit.ta.utils.TextTool;
 
 public class SignUp {
 
-	/*
-	 * navigation and visible checking methods TODO: add visible checking method
-	 * for step 2 3 4
-	 */
-
 	public static void chooseSignUp() {
 		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpButtonTextId);
 	}
@@ -30,48 +25,6 @@ public class SignUp {
 		Gui.touchAView("ImageButton", "mID", DefaultStrings.ImageNextButtonId);
 	}
 
-	public static String getAlertMessage() {
-		ViewNode node = ViewUtils.findView("TextView", "mID", "id/message", 0);
-		return node == null ? null : node.text;
-	}
-
-	public static void closeAlert() {
-		ViewNode btn = ViewUtils.findView("Button", "mID", "id/button1", 0);
-		ViewNode msg = ViewUtils.findView("TextView", "mID", "id/message", 0);
-		if (btn != null) {
-			int[] p = Helper.getTouchPointOnPopup(btn, msg.width / 2,
-					btn.height / 2);
-			Gui.touch(p[0], p[1]);
-			Helper.wait1();
-			Gui.getCurrentViews();
-		} else
-			Gui.makeToast("Error: alert should be shown");
-
-	}
-
-	public static boolean isAtStep1() {
-		return ViewUtils.findView("EditText", "mID",
-				"id/userinfo_passwordEdit", 0) != null;
-	}
-
-	public static boolean isAtStep2() {
-		// to do: add logic code here
-		return true;
-	}
-
-	public static boolean isAtStep3() {
-		// to do: add logic code here
-		return true;
-	}
-
-	public static boolean isAtStep4() {
-		// to do: add logic code here
-		return true;
-	}
-
-	/*
-	 * Step 1: fill email and password
-	 */
 	public static void fillSignUpForm(String email, String password) {
 		if (email != null) {
 			ViewNode emailNode = ViewUtils.findView("EditText", "mID",
@@ -118,27 +71,10 @@ public class SignUp {
 
 		// TODO: add logic code here
 	}
-	
+
 	public static void linkShine() {
-		 Gui.longTouchAView("TextView", "mID", DefaultStrings.SignUpLinkShineTextViewId);
-	}
-
-	public static String getProfileForm(String what) {
-		// to do: add logic code here
-
-		if (what == "sex")
-			return null;
-
-		if (what == "birthday")
-			return null;
-
-		if (what == "weight")
-			return null;
-
-		if (what == "height")
-			return null;
-
-		return null;
+		Gui.longTouchAView("TextView", "mID",
+				DefaultStrings.SignUpLinkShineTextViewId);
 	}
 
 	public static String formatDateString(int date, int month, int year) {
@@ -173,25 +109,19 @@ public class SignUp {
 	}
 
 	public static void inputBirthday(int date, int month, int year) {
-		Integer[] birthday = { date, month, year };
-		fillProfileForm(null, null, null, birthday);
 	}
 
 	public static void inputWeight(float weight, boolean isUS) {
-		String formatedWeight = formatWeightString(weight, isUS);
-		fillProfileForm(null, formatedWeight, null, null);
 	}
 
 	public static void inputHeight(float height, boolean isUS) {
-		String formatedHeight = formatHeightString(height, isUS);
-		fillProfileForm(null, formatedHeight, null, null);
 	}
 
 	public static void inputUnits(boolean isUS) {
-		if (isUS)
+		if (isUS) {
 			Gui.touchAView("RadioButton", "mID",
 					DefaultStrings.SignUpUSButtonId);
-		else {
+		} else {
 			Gui.touchAView("RadioButton", "mID",
 					DefaultStrings.SignUpMetricButtonId);
 		}
@@ -203,14 +133,18 @@ public class SignUp {
 		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
 	}
 
-	public static void tapToSignOutAtProfilePage(int fullScreenHeight, int fullScreenWidth){
-		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SignOutText);
+	public static void tapToSignOutAtProfilePage(int fullScreenHeight,
+			int fullScreenWidth) {
+		dismissPopup(fullScreenHeight, fullScreenWidth,
+				DefaultStrings.SignOutText);
 	}
-	public static void dismissPopup(int fullScreenHeight, int fullScreenWidth, String buttonText) {
+
+	public static void dismissPopup(int fullScreenHeight, int fullScreenWidth,
+			String buttonText) {
 		int popupHeight = Gui.getHeight();
 		int popupWidth = Gui.getWidth();
-		ViewNode okButton = ViewUtils.findView("TextView", "mText",
-				buttonText, 0);
+		ViewNode okButton = ViewUtils.findView("TextView", "mText", buttonText,
+				0);
 		Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth, popupHeight,
 				popupWidth, okButton);
 		// Magic line which makes ViewServer reload views after we dismiss popup
@@ -222,103 +156,12 @@ public class SignUp {
 		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpWeightTextViewId);
 		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
 	}
-	
+
 	public static void chooseDefaultBirthdate(int fullScreenHeight,
 			int fullScreenWidth) {
-		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpBirthdayTextViewId);
+		Gui.touchAView("TextView", "mID",
+				DefaultStrings.SignUpBirthdayTextViewId);
 		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
-	}
-
-	public static String getSex() {
-		return getProfileForm("sex");
-	}
-
-	public static String getBirthday() {
-		return getProfileForm("birthday");
-	}
-
-	public static String getWeight() {
-		return getProfileForm("weight");
-	}
-
-	public static String getHeight() {
-		return getProfileForm("height");
-	}
-
-	/**
-	 * Step 3: set goal
-	 * 
-	 * @param type
-	 *            : 0 = Active, 1 = Very Active, 2 = Highly Active
-	 */
-	public static void setGoal(int type) {
-		// to do: add logic code here
-
-		if (type == 0) {
-		}
-
-		if (type == 1) {
-		}
-
-		if (type == 2) {
-		}
-	}
-
-	public static HashMap<String, Object> getCurrentGoalInfo() {
-		// to do: add logic code here
-
-		HashMap<String, Object> info = new HashMap<String, Object>();
-		info.put("title", null);
-		info.put("activity", null);
-		info.put("point", null);
-		info.put("step", null);
-
-		return info;
-	}
-
-	/**
-	 * Step 4: set up device
-	 */
-	public static void startSyncing() {
-		Gui.touch(Gui.getCoordinators("ImageButton", "mID", "id/buttonSetup"),
-				TouchPressType.DOWN);
-	}
-
-	public static void stopSyncing() {
-		Gui.touch(Gui.getCoordinators("ImageButton", "mID", "id/buttonSetup"),
-				TouchPressType.UP);
-	}
-
-	public static boolean hasGetYoursNowButton() {
-		return true;
-	}
-
-	public static boolean hasMagicHappening() {
-		return ViewUtils.findView("Button", "mText", "MAGIC HAPPENING NOW", 0) != null;
-	}
-
-	public static boolean hasDetectedFailMessage() {
-		return false;
-	}
-
-	public static boolean hasDectectedPassMessage() {
-		return false;
-	}
-
-	/**
-	 * New Goal
-	 */
-	public static void chooseActive() {
-		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() / 2 - 350);
-	}
-
-	public static void chooseVeryActive() {
-		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() / 2);
-	}
-
-	public static void chooseSuperActive() {
-		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() / 2 + 350);
-
 	}
 
 	public static String generateUniqueEmail() {

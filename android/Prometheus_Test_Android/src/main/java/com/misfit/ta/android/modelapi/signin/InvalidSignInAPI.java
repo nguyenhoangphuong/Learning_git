@@ -143,10 +143,4 @@ public class InvalidSignInAPI extends ModelAPI {
 	public void v_SignInVisible() {
 		Assert.assertTrue(SignIn.isSignInVisible(), "Sign in is visible");
 	}
-
-	private boolean hasIncorrectSignInPopup() {
-		ViewNode node = ViewUtils.findView("TextView", "mText",
-				DefaultStrings.IncorrectSignInMessage, 0);
-		return node != null;
-	}
 }
