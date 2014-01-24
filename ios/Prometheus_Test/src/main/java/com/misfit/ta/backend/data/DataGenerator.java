@@ -246,7 +246,7 @@ public class DataGenerator {
 
 		FoodTrackingItem data = new FoodTrackingItem();
 		
-		String filePath = "images/1mb/" + MVPCommon.randInt(1, 4) + ".jpg";
+		String filePath = "images/1mb/" + MVPCommon.randInt(1, 10) + ".jpg";
 		String base64 = MVPCommon.readFileAsBase64String(filePath);
 
 		TimelineItem item = new TimelineItem();
