@@ -114,7 +114,8 @@ public class InvalidSignInAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_InvalidEmail() {
-		// Assert.assertTrue(SignIn.hasInvalidEmailMessage(), "Invalid Email");
+		ShortcutsTyper.delayTime(500);
+		Assert.assertTrue(hasDisabledNextButton(), "Next button should be disabled");
 	}
 
 	public void e_DismissPopup() {
@@ -132,8 +133,8 @@ public class InvalidSignInAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_InvalidPassword() {
-		// Assert.assertTrue(SignIn.hasInvalidPasswordMessage(),
-		// "Invalid Password");
+		ShortcutsTyper.delayTime(500);
+		Assert.assertTrue(SignIn.isSignInVisible(), "Sign in is visible");
 	}
 
 	/**
@@ -142,5 +143,10 @@ public class InvalidSignInAPI extends ModelAPI {
 	 */
 	public void v_SignInVisible() {
 		Assert.assertTrue(SignIn.isSignInVisible(), "Sign in is visible");
+	}
+	
+	private boolean hasDisabledNextButton() {
+		ViewNode view = ViewUtils.findView("ImageButton", "mID", DefaultStrings.ImageNextButtonId, 0);
+		return !ViewUtils.isEnabled(view);
 	}
 }

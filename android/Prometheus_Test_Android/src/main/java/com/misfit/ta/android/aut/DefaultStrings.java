@@ -36,6 +36,8 @@ public class DefaultStrings {
 	public static String CancelText = "Cancel";
 	public static String SignOutText = "Sign out";
 	public static String SetText = "Set";
+	public static String SignInText = "Sign In";
+	public static String SignUpText = "Sign Up";
 	
 	public static String IncorrectSignInMessage = "Incorrect email or password, please check and try again.";
 }
