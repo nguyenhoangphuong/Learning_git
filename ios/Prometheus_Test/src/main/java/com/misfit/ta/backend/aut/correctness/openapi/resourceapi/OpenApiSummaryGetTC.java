@@ -156,9 +156,9 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		OpenAPISummary summary = OpenAPISummary.fromResponse(result5.response);
 		
 		Assert.assertEquals(result5.statusCode, 200, "Status code");
-		Assert.assertEquals(summary.getCalories(), 0, "Calories");
-		Assert.assertEquals(summary.getDistance(), 0, "Distance");
-		Assert.assertEquals(summary.getPoints(), 0, "Points");
+		Assert.assertEquals(summary.getCalories(), 0.0, "Calories");
+		Assert.assertEquals(summary.getDistance(), 0.0, "Distance");
+		Assert.assertEquals(summary.getPoints(), 0.0, "Points");
 		Assert.assertEquals((int)summary.getSteps(), 0, "Steps");
 	}
 	
