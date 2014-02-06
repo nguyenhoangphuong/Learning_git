@@ -17,8 +17,12 @@ public class OpenAPI extends RequestHelper {
 	public static String RESPONSE_TYPE_CODE = "code";
 	public static String RESPONSE_TYPE_TOKEN = "token";
 	
-	public static String RESOURCE_DEVICES = "Devices";
+	public static String RESOURCE_DEVICE = "Device";
 	public static String RESOURCE_PROFILE = "Profile";
+	public static String RESOURCE_SUMMARY = "Summary";
+	public static String RESOURCE_GOAL = "Goal";
+	public static String RESOURCE_SESSION = "Session";
+	public static String RESOURCE_SLEEP = "Sleep";
 	
 	
 	// fields

@@ -1,7 +1,6 @@
 package com.misfit.ta.common;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +10,7 @@ import java.util.Random;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.utils.Files;
 
 public class MVPCommon {
@@ -103,6 +103,14 @@ public class MVPCommon {
 	}
 
 	
+	// number
+	public static double round(double number, int decimalDigit) {
+		
+		double k = Math.pow(10, decimalDigit);
+		return Math.round(number * k) / k;
+	}
+	
+	
 	// encoding
 	public static String readFileAsBase64String(String filePath) {
 		
@@ -119,4 +127,37 @@ public class MVPCommon {
 		return null;
 	}
 	
+	
+	// mvp related
+	public static String getActivityName(int activityType) {
+		
+		switch(activityType) {
+		
+		case MVPEnums.ACTIVITY_WALKING:
+			return DefaultStrings.WalkingLabel;
+			
+		case MVPEnums.ACTIVITY_RUNNING:
+			return DefaultStrings.RunningLabel;
+			
+		case MVPEnums.ACTIVITY_CYCLING:
+			return DefaultStrings.CyclingLabel;
+			
+		case MVPEnums.ACTIVITY_SOCCER:
+			return DefaultStrings.SoccerLabel;
+			
+		case MVPEnums.ACTIVITY_SWIMMING:
+			return DefaultStrings.SwimmingLabel;
+			
+		case MVPEnums.ACTIVITY_TENNIS:
+			return DefaultStrings.TennisLabel;
+			
+		case MVPEnums.ACTIVITY_BASKETBALL:
+			return DefaultStrings.BasketballLabel;
+			
+		case MVPEnums.ACTIVITY_SLEEPING:
+			return DefaultStrings.SleepLabel;
+		}
+		
+		return null;
+	}
 }

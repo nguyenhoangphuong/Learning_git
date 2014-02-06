@@ -28,6 +28,7 @@ public class BaseResult {
 	public Map<String, Object> pairResult = new HashMap<String, Object>();
 	public int statusCode;
 	public String errorMessage;
+	public String message;
 	public int errorCode;
 
 	// constructor
@@ -44,6 +45,11 @@ public class BaseResult {
                 if (!json.isNull("error_message")) {
                 	this.errorMessage = json.getString("error_message");
                 	this.pairResult.put("error_message", this.errorMessage);
+                }
+                
+                if (!json.isNull("message")) {
+                	this.message = json.getString("message");
+                	this.pairResult.put("message", this.message);
                 }
                 
                 if (!json.isNull("error_code")) {

@@ -112,6 +112,8 @@ public class DefaultStrings {
 	public static String UnlinkButton = "Unlink";
 	public static String LinkShineButton = "Link Shine";
 	public static String SleepLabel = "Sleep";
+	public static String WalkingLabel = "Walking";
+	public static String RunningLabel = "Running";
 	public static String CyclingLabel = "Cycling";
 	public static String SwimmingLabel = "Swimming";
 	public static String TennisLabel = "Tennis";

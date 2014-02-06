@@ -1,8 +1,11 @@
 package com.misfit.ta.ios.tests;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -17,6 +20,7 @@ import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.server.ServerHelper;
 import com.misfit.ta.common.MVPCalculator;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.gui.AppInstaller;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.report.TRS;
@@ -60,8 +64,16 @@ public class Debug {
 	
 	public static void main(String[] args) throws IOException {
 
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(1391671554 * 1000);
 		
+		TimeZone tz = TimeZone.getTimeZone("UTC");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
+		df.setTimeZone(tz);
+		
+		logger.info(df.format(cal.getTime()));
 //		runTest(6);
+//		OpenAPI.getAccessToken("nhhai16991@gmail.com", "qqqqqq", "public", "mWmljFBCUHQDmgke", "index");
 
 //		runTest(Integer.parseInt(args[0]));
 //		if(args[0].equals("food"))

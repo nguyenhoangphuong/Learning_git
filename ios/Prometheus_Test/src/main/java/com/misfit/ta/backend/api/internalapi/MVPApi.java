@@ -40,7 +40,7 @@ public class MVPApi extends RequestHelper {
 
 	// generators
 	public static String generateUniqueEmail() {
-		return "test" + System.currentTimeMillis() + TextTool.getRandomString(6, 6) + "@misfitqa.com";
+		return "test" + System.currentTimeMillis() + TextTool.getRandomString(6, 6).toLowerCase() + "@misfitqa.com";
 	}
 
 	public static String generateLocalId()
