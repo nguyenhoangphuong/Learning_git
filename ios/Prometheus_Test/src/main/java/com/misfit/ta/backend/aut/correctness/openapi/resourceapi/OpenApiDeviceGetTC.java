@@ -97,6 +97,7 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 
 	/*
 	 * TODO:
+	 * - Get an unlinked shine (serial number == UNLINKED)
 	 * - Get a resource using expired token
 	 * - Get a resource with only selected fields
 	 * - Get a resource from authorized and unauthorized user using app id and app secret

@@ -62,7 +62,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 	}
 	
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
 	public void GetSleepsUsingInvalidAccessToken() {
 		
 		// empty access token
@@ -76,7 +76,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
 	public void GetSleepsWithValidAccessToken() {
 		
 		// use "me" route
@@ -124,7 +124,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		}
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps", "Excluded" })
 	public void GetSleepsWithoutPermission() {
 		
 		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "/");
@@ -134,7 +134,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
 	public void GetSleepsOfOtherUser() {
 		
 		// from other authorized user
@@ -148,7 +148,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
 	public void GetSleepsInvalidParameters() {
 		
 		// invalid and missing parameters
@@ -178,6 +178,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 	
 	/*
 	 * TODO:
+	 * - Get a deleted sleep tile (state == 1)
 	 * - Get a resource using expired token
 	 * - Get a resource with only selected fields
 	 * - Get a resource from authorized and unauthorized user using app id and app secret

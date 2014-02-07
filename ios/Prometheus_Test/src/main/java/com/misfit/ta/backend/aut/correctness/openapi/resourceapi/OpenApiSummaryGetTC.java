@@ -45,7 +45,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 	}
 	
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary" })
 	public void GetSummaryUsingInvalidAccessToken() {
 		
 		// empty access token
@@ -59,7 +59,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary" })
 	public void GetSummaryWithValidAccessToken() {
 		
 		// use "me" route
@@ -108,7 +108,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals((int)summary.getSteps(), steps, "Steps");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary", "Excluded" })
 	public void GetSummaryWithoutPermission() {
 		
 		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "/");
@@ -118,7 +118,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary" })
 	public void GetSummaryOfOtherUser() {
 		
 		// from other authorized user
@@ -132,7 +132,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary" })
 	public void GetSummaryInvalidParameters() {
 		
 		// invalid and missing parameters

@@ -67,7 +67,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 	}
 	
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
 	public void GetSessionsUsingInvalidAccessToken() {
 		
 		// empty access token
@@ -81,7 +81,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
 	public void GetSessionsWithValidAccessToken() {
 		
 		// use "me" route
@@ -126,7 +126,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		}
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions", "Excluded" })
 	public void GetSessionsWithoutPermission() {
 		
 		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "/");
@@ -136,7 +136,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
 	public void GetSessionsOfOtherUser() {
 		
 		// from other authorized user
@@ -150,7 +150,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
 	public void GetSessionsInvalidParameters() {
 		
 		// invalid and missing parameters

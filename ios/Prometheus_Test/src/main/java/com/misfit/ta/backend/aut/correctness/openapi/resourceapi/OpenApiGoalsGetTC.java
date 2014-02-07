@@ -45,7 +45,7 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 	}
 	
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_goals" })
 	public void GetGoalsUsingInvalidAccessToken() {
 		
 		// empty access token
@@ -59,7 +59,7 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_goals" })
 	public void GetGoalsWithValidAccessToken() {
 		
 		// use "me" route
@@ -107,7 +107,7 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(rgoals.get(0).getPoint(), goals.get(0).getValue() / 2.5d, "goals[0] value");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_goals", "Excluded" })
 	public void GetGoalsWithoutPermission() {
 		
 		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "/");
@@ -117,7 +117,7 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_goals" })
 	public void GetGoalsOfOtherUser() {
 		
 		// from other authorized user
@@ -131,7 +131,7 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_goals" })
 	public void GetGoalsInvalidParameters() {
 		
 		// invalid and missing parameters

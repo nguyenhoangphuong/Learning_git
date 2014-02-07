@@ -2,9 +2,12 @@ package com.misfit.ta.backend.data;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.http.Header;
+import org.apache.http.NameValuePair;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
@@ -140,4 +143,16 @@ public class BaseResult {
 		return null;
 	}
 	
+	public String getHeadersAsJsonString() {
+		
+		Header[] headers = response.getResponseHeaders();
+		JSONBuilder json = new JSONBuilder();
+		
+		for(Header header: headers) {
+			json.addValue(header.getName(), header.getValue());
+		}
+
+		return json.toJSONString();
+	}
+
 }
