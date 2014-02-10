@@ -31,6 +31,7 @@ public class DefaultStrings {
 	public static String SignUpWeightTextViewId = "id/edit_weight_tv";
 	public static String SignUpBirthdayTextViewId = "id/edit_birthday_tv";
 	public static String SignUpLinkShineTextViewId = "id/tap_to_link_tv";
+	public static String ManualActionMenuItemViewId = "id/menu_manual";
 	
 	public static String OKText = "OK";
 	public static String CancelText = "Cancel";
@@ -40,4 +41,5 @@ public class DefaultStrings {
 	public static String SignUpText = "Sign Up";
 	
 	public static String IncorrectSignInMessage = "Incorrect email or password, please check and try again.";
+	public static String WalkingLeftText = "of walking left";
 }

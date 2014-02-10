@@ -1,12 +1,8 @@
 package com.misfit.ta.android.gui;
 
-import java.util.HashMap;
-
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
-import com.misfit.ta.android.chimpchat.core.TouchPressType;
-import com.misfit.ta.android.gui.Helper.Helper;
 import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
@@ -163,10 +159,4 @@ public class SignUp {
 				DefaultStrings.SignUpBirthdayTextViewId);
 		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
 	}
-
-	public static String generateUniqueEmail() {
-		return "test" + System.currentTimeMillis()
-				+ TextTool.getRandomString(6, 6) + "@misfitqa.com";
-	}
-
 }

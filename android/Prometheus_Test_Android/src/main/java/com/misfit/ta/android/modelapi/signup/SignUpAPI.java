@@ -1,4 +1,4 @@
-package com.misfit.ta.android.modelapi;
+package com.misfit.ta.android.modelapi.signup;
 
 import java.io.File;
 
@@ -6,6 +6,7 @@ import org.graphwalker.generators.PathGenerator;
 
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.AutomationTest;
+import com.misfit.ta.android.gui.PrometheusHelper;
 import com.misfit.ta.android.gui.SignUp;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
@@ -94,7 +95,7 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_SubmitValidEmailPassword() {
-		String email = SignUp.generateUniqueEmail();
+		String email = PrometheusHelper.generateUniqueEmail();
 		String password = "test12";
 		SignUp.fillSignUpForm(email, password);
 		SignUp.pressNext();

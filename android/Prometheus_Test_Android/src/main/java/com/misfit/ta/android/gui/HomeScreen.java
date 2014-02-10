@@ -2,6 +2,7 @@ package com.misfit.ta.android.gui;
 
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
+import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.android.chimpchat.core.TouchPressType;
 import com.misfit.ta.android.gui.Helper.Helper;
 
@@ -23,16 +24,9 @@ public class HomeScreen {
 	 * Manual Goal
 	 */
 	public static void tapManual() {
-		Gui.touchAView("ActionMenuItemView", "mID", "id/manual_input");
+		Gui.touchAView("ActionMenuItemView", "mID", DefaultStrings.ManualActionMenuItemViewId);
 	}
 
-	public static void chooseRandomManual() {
-		Gui.touchAView("Button", "mText", "Random");
-	}
-
-	public static void chooseDormantManual() {
-		Gui.touchAView("Button", "mText", "Dormant");
-	}
 
 	public static void saveManual() {
 		Gui.touchAView("Button", "mText", "Save");
@@ -53,43 +47,15 @@ public class HomeScreen {
 				TouchPressType.DOWN);
 	}
 
-	/**
-	 * See the hints
-	 */
-	public static void tapLevelMild() {
-		Helper.tapLevelMild();
+	public static void inputManualTime(String hour, String minute) {
+		Gui.touchAView("NumberPicker$CustomEditText", 0);
+		if (hour != null) {
+			Gui.type(hour);
+		}
+		Gui.touchAView("NumberPicker$CustomEditText", 1);
+		if (minute != null) {
+			Gui.type(minute);
+		}
+		Gui.pressEnter();
 	}
-
-	public static void tapLevelDormant() {
-		Helper.tapLevelDormant();
-	}
-
-	public static void tapLevelModerate() {
-		Helper.tapLevelModerate();
-	}
-
-	public static void tapLevelActive() {
-		Helper.tapLevelActive();
-	}
-
-	/**
-	 * Choose time context like TODAY, WEEK, MONTH
-	 */
-	public static void changeTimeContext() {
-		Gui.touchAView("CheckedTextView", "mID", "id/text1");
-	}
-
-	public static void chooseToday() {
-		Gui.touch(TIME_CONTEXT_WIDTH, TIME_CONTEXT_HEIGHT);
-	}
-
-	public static void chooseWeek() {
-		Gui.touch(TIME_CONTEXT_WIDTH, TIME_CONTEXT_HEIGHT + TIME_CONTEXT_INC);
-	}
-
-	public static void chooseMonth() {
-		Gui.touch(TIME_CONTEXT_WIDTH, TIME_CONTEXT_HEIGHT + TIME_CONTEXT_INC
-				* 2);
-	}
-
 }
