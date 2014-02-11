@@ -470,6 +470,17 @@ public class MVPApi extends RequestHelper {
 		return createTimelineItems(token, jsonItems);
 	}
 
+	public static BaseResult updateTimelineItem(String token, TimelineItem item) {
+		
+		String url = baseAddress + "timeline_items/" + item.getServerId(); 
+		BaseParams request = new BaseParams();
+
+		request.addHeader("auth_token", token);
+		request.addParam("timeline_item", item.toJson().toString());
+
+		return new BaseResult(MVPApi.put(url, port, request));
+	}
+	
 	public static TimelineItem getTimelineItem(String token, String serverId) {
 
 		// prepare

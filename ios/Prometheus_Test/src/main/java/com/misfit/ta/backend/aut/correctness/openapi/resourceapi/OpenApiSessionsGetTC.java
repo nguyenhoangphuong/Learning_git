@@ -71,7 +71,8 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 	public void GetSessionsUsingInvalidAccessToken() {
 		
 		// empty access token
-		BaseResult result = OpenAPI.getSessions(null, "me", fromDate, toDate);
+		String nullString = null;
+		BaseResult result = OpenAPI.getSessions(nullString, "me", fromDate, toDate);
 		Assert.assertEquals(result.statusCode, 401, "Status code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
@@ -177,12 +178,29 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(sessions.size(), 0, "Number of sessions");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
+	public void GetSessionsUsingAppCredential() {
+		
+		// authorized user
+		BaseResult result = OpenAPI.getSessions(ClientApp, myUid, fromDate, toDate);
+		List<OpenAPISession> rsessions = OpenAPISession.getSessionsFromResponse(result.response);
+		
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(rsessions.size(), 9, "Number of sessions in response");
+				
+		
+		// unauthorized user
+		result = OpenAPI.getSessions(ClientApp, strangerUid, fromDate, toDate);
+		
+		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+	}
+	
 	
 	/*
 	 * TODO:
 	 * - Get a resource using expired token
 	 * - Get a resource with only selected fields
-	 * - Get a resource from authorized and unauthorized user using app id and app secret
 	 */
 
 }

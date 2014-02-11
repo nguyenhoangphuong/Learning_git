@@ -1,7 +1,6 @@
 package com.misfit.ta.backend.aut;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
@@ -9,6 +8,8 @@ import com.misfit.ta.backend.data.statistics.Statistics;
 
 public class BackendHelper {
 
+	
+	// link / unlink
 	public static void unlink(String token) {
 		
 		MVPApi.unlinkDevice(token);
@@ -50,7 +51,8 @@ public class BackendHelper {
 		link(token, serialNumber);
 	}
 
-	
+
+	// statistics
 	public static void setLifetimeDistance(String token, double miles) {
 		
 		// create first
@@ -101,6 +103,7 @@ public class BackendHelper {
 	}
 	
 	
+	// progress
 	public static void createGoalInPast(String token, int diffFromToday) {
 		
 		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * diffFromToday;
@@ -148,5 +151,4 @@ public class BackendHelper {
 		String token = MVPApi.signIn(email, password).token;
 		clearLatestGoal(token);
 	}
-	
 }

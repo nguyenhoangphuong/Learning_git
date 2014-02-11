@@ -37,7 +37,8 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 	public void GetDeviceUsingInvalidAccessToken() {
 		
 		// without access token
-		BaseResult result = OpenAPI.getDevice(null, "me");
+		String nullString = null;
+		BaseResult result = OpenAPI.getDevice(nullString, "me");
 		Assert.assertEquals(result.statusCode, 401, "Status code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
@@ -95,11 +96,31 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_device" })
+	public void GetDeviceUsingAppCredential() {
+		
+		// get from authorized user
+		BaseResult result = OpenAPI.getDevice(ClientApp, myUid);
+		OpenAPIDevice rdevice = OpenAPIDevice.fromResponse(result.response);
+		
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(rdevice.getDeviceType(), "shine", "Device's type");
+		Assert.assertEquals(rdevice.getSerialNumber(), pedometer.getSerialNumberString(), "Device's serial number");
+		Assert.assertEquals(rdevice.getFirmwareVersion(), pedometer.getFirmwareRevisionString(), "Device's firmware version");
+		Assert.assertEquals(rdevice.getBatteryLevel(), pedometer.getBatteryLevel(), "Device's battery level");
+		
+		
+		// get from unauthorized user
+		result = OpenAPI.getDevice(ClientApp, strangerUid);
+		
+		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+	}
+	
 	/*
 	 * TODO:
 	 * - Get an unlinked shine (serial number == UNLINKED)
 	 * - Get a resource using expired token
 	 * - Get a resource with only selected fields
-	 * - Get a resource from authorized and unauthorized user using app id and app secret
 	 */
 }

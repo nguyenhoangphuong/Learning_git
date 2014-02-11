@@ -49,7 +49,8 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 	public void GetGoalsUsingInvalidAccessToken() {
 		
 		// empty access token
-		BaseResult result = OpenAPI.getGoals(null, "me", fromDate, toDate);
+		String nullString = null;
+		BaseResult result = OpenAPI.getGoals(nullString, "me", fromDate, toDate);
 		Assert.assertEquals(result.statusCode, 401, "Status code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
@@ -158,12 +159,37 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(goals.size(), 0, "Number of goals");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_goals" })
+	public void GetGoalsUsingAppCredential() {
+		
+		// authorized user
+		BaseResult result = OpenAPI.getGoals(ClientApp, myUid, fromDate, toDate);
+		List<OpenAPIGoal> rgoals = OpenAPIGoal.getGoalsFromResponse(result.response);
+		Collections.reverse(rgoals);
+		
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(rgoals.size(), 3, "Number of goals in response");
+		
+		Assert.assertEquals(rgoals.get(0).getDate(), getDateString(goals.get(0).getStartTime()), "goals[0] date");
+		Assert.assertEquals(rgoals.get(1).getDate(), getDateString(goals.get(1).getStartTime()), "goals[1] date");
+		Assert.assertEquals(rgoals.get(2).getDate(), getDateString(goals.get(2).getStartTime()), "goals[2] date");
+		
+		Assert.assertEquals(rgoals.get(0).getPoint(), goals.get(0).getValue() / 2.5d, "goals[0] value");
+		Assert.assertEquals(rgoals.get(1).getPoint(), goals.get(1).getValue() / 2.5d, "goals[1] value");
+		Assert.assertEquals(rgoals.get(2).getPoint(), goals.get(2).getValue() / 2.5d, "goals[2] value");
+		
+				
+		// unauthorized user
+		result = OpenAPI.getGoals(ClientApp, strangerUid, fromDate, toDate);
+		
+		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+	}
 	
 	/*
 	 * TODO:
 	 * - Get a resource using expired token
 	 * - Get a resource with only selected fields
-	 * - Get a resource from authorized and unauthorized user using app id and app secret
 	 */
 
 }

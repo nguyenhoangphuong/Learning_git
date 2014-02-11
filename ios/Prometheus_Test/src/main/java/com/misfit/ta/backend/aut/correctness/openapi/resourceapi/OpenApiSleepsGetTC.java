@@ -66,7 +66,8 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 	public void GetSleepsUsingInvalidAccessToken() {
 		
 		// empty access token
-		BaseResult result = OpenAPI.getSleeps(null, "me", fromDate, toDate);
+		String nullString = null;
+		BaseResult result = OpenAPI.getSleeps(nullString, "me", fromDate, toDate);
 		Assert.assertEquals(result.statusCode, 401, "Status code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
@@ -175,13 +176,29 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(sessions.size(), 0, "Number of sessions");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
+	public void GetSleepsUsingAppCredential() {
+		
+		// authorized user
+		BaseResult result = OpenAPI.getSleeps(ClientApp, myUid, fromDate, toDate);
+		List<OpenAPISleep> rsleeps = OpenAPISleep.getSleepsFromResponse(result.response);
+		
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(rsleeps.size(), 3, "Number of sleeps in response");
+				
+		
+		// unauthorized user
+		result = OpenAPI.getSleeps(ClientApp, strangerUid, fromDate, toDate);
+		
+		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+	}
 	
 	/*
 	 * TODO:
 	 * - Get a deleted sleep tile (state == 1)
 	 * - Get a resource using expired token
 	 * - Get a resource with only selected fields
-	 * - Get a resource from authorized and unauthorized user using app id and app secret
 	 */
 
 }

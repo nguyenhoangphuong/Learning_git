@@ -2,12 +2,9 @@ package com.misfit.ta.backend.data;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.http.Header;
-import org.apache.http.NameValuePair;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
@@ -25,6 +22,7 @@ public class BaseResult {
 	public ServiceResponse response;
 	public String rawData;
 	protected JSONObject json;
+	public String cookie;
 
 	// fileds: these fields too, should transparent to users, simplize at middle
 	// level, inherit class should add result to pairResult
@@ -155,4 +153,13 @@ public class BaseResult {
 		return json.toJSONString();
 	}
 
+	public String appendCookie(String cookieString) {
+		
+		if(this.cookie == null || this.cookie.isEmpty())
+			this.cookie = cookieString;
+		
+		this.cookie = this.cookie + ";" + cookieString;
+		
+		return this.cookie;
+	}
 }

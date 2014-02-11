@@ -79,6 +79,20 @@ public class OpenAPISleep {
 		return this;
 	}
 
+	public static OpenAPISleep getSleepFromResponse(ServiceResponse response) {
+		
+		try {
+			JSONObject objJson = new JSONObject(response.getResponseString());
+			OpenAPISleep sleep = new OpenAPISleep();
+			return sleep.fromJson(objJson);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
 	public static List<OpenAPISleep> getSleepsFromResponse(ServiceResponse response) {
 		
 		try {

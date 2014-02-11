@@ -53,7 +53,6 @@ public class NotificationMessage {
 
 		return this;
 	}
-
 	
 	// getters setters
 	public String getType() {

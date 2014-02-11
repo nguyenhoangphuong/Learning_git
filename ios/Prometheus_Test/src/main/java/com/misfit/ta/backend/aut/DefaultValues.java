@@ -63,8 +63,10 @@ public class DefaultValues {
 	// open api messages
 	static public String InvalidAccessToken = "Invalid authentication token";
 	static public String ResourceForbidden = "Forbidden";
+	static public String UnauthorizedAccess = "Unauthorized access";
 	static public String MissingParameters = "Missing parameters";
 	static public String InvalidParameters = "Invalid parameters";
+	static public String ObjectNotFound = "Object not found";
 	
 
 	// profile

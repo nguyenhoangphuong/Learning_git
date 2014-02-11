@@ -36,7 +36,8 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 	public void GetProfileUsingInvalidAccessToken() {
 		
 		// empty access token
-		BaseResult result = OpenAPI.getProfile(null, "me");
+		String nullString = null;
+		BaseResult result = OpenAPI.getProfile(nullString, "me");
 		Assert.assertEquals(result.statusCode, 401, "Status code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
@@ -55,7 +56,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(data.getBirthday(), getDateString(profile.getDateOfBirth()), "Profile birthday");
-		Assert.assertEquals(data.getEmail(), profile.getEmail(), "Profile email");
+		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");
 		Assert.assertEquals(data.getId(), myUid, "Profile user id");
@@ -67,7 +68,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(data.getBirthday(), getDateString(profile.getDateOfBirth()), "Profile birthday");
-		Assert.assertEquals(data.getEmail(), profile.getEmail(), "Profile email");
+		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");
 		Assert.assertEquals(data.getId(), myUid, "Profile user id");
@@ -97,11 +98,32 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile" })
+	public void GetProfileUsingAppCredential() {
+		
+		// authorized user
+		BaseResult result = OpenAPI.getProfile(ClientApp, myUid);
+		OpenAPIProfile data = OpenAPIProfile.fromResponse(result.response);
+		
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(data.getBirthday(), getDateString(profile.getDateOfBirth()), "Profile birthday");
+		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
+		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
+		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");
+		Assert.assertEquals(data.getId(), myUid, "Profile user id");
+		
+		
+		// unauthorized user
+		result = OpenAPI.getProfile(ClientApp, strangerUid);
+		
+		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+	}
+	
 	/*
 	 * TODO:
 	 * - Get a resource using expired token
 	 * - Get a resource with only selected fields
-	 * - Get a resource from authorized and unauthorized user using app id and app secret
 	 */
 
 }

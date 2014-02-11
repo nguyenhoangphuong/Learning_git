@@ -30,10 +30,9 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 	public void AuthorizeUserAfterLoggedOut() {
 			
 		// log in then log out
-		BaseResult result = OpenAPI.logInForm();
-		String cookie = result.getHeaderValue("Set-Cookie");
-		OpenAPI.loginUserSession("nhhai16991@gmail.com", "qqqqqq", cookie);
-		OpenAPI.logoutUserSession(cookie);
+		BaseResult result = OpenAPI.logIn("nhhai16991@gmail.com", "qqqqqq");
+		String cookie = result.cookie;
+		OpenAPI.logOut(cookie);
 		
 		
 		// get authorize dialog
@@ -48,9 +47,8 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 	public void AuthorizeUserMissingParameters() {
 			
 		// log in user first
-		BaseResult result = OpenAPI.logInForm();
-		String cookie = result.getHeaderValue("Set-Cookie");
-		OpenAPI.loginUserSession("nhhai16991@gmail.com", "qqqqqq", cookie);
+		BaseResult result = OpenAPI.logIn("nhhai16991@gmail.com", "qqqqqq");
+		String cookie = result.cookie;
 		
 		
 		// without response type / client key / redirect uri / scopes
@@ -72,9 +70,8 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 	public void AuthorizeUserInvalidParameters() {
 			
 		// log in user first
-		BaseResult result = OpenAPI.logInForm();
-		String cookie = result.getHeaderValue("Set-Cookie");
-		OpenAPI.loginUserSession("nhhai16991@gmail.com", "qqqqqq", cookie);
+		BaseResult result = OpenAPI.logIn("nhhai16991@gmail.com", "qqqqqq");
+		String cookie = result.cookie;
 		
 		
 		// response type != code or token / random client key / random scopes / 
@@ -99,10 +96,12 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 	public void AuthorizeUserUsingToken() {
 		
 		String returnUrl = "http://www.misfitwearables.com/";
-		BaseResult result0 = OpenAPI.logInForm();
-		String cookie = result0.getHeaderValue("Set-Cookie");
 		
-		OpenAPI.loginUserSession("nhhai16991@gmail.com", "qqqqqq", cookie);
+		// log in user
+		BaseResult result = OpenAPI.logIn("nhhai16991@gmail.com", "qqqqqq");
+		String cookie = result.cookie;
+		
+		// call authorize dialog and confirm
 		BaseResult result2 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, 
 				returnUrl, OpenAPI.RESOURCE_PROFILE, null, cookie);
 		BaseResult result3 = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result2), cookie);
@@ -121,10 +120,12 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 	public void AuthorizeUserUsingCode() {
 		
 		String returnUrl = "http://www.misfitwearables.com/";
-		BaseResult result0 = OpenAPI.logInForm();
-		String cookie = result0.getHeaderValue("Set-Cookie");
 		
-		OpenAPI.loginUserSession("nhhai16991@gmail.com", "qqqqqq", cookie);
+		// log in user
+		BaseResult result = OpenAPI.logIn("nhhai16991@gmail.com", "qqqqqq");
+		String cookie = result.cookie;
+		
+		// call authorize dialog and confirm
 		BaseResult result2 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_CODE, clientKey, 
 				returnUrl, OpenAPI.RESOURCE_PROFILE, null, cookie);
 		BaseResult result3 = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result2), cookie);
@@ -143,10 +144,10 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 	public void AuthorizeUserWihoutGivingPermissions() {
 		
 		String returnUrl = "http://www.misfitwearables.com/";
-		BaseResult result0 = OpenAPI.logInForm();
-		String cookie = result0.getHeaderValue("Set-Cookie");
 		
-		OpenAPI.loginUserSession("nhhai16991@gmail.com", "qqqqqq", cookie);
+		// log in user
+		BaseResult result = OpenAPI.logIn("nhhai16991@gmail.com", "qqqqqq");
+		String cookie = result.cookie;
 		
 		// using code
 		BaseResult result2 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_CODE, clientKey, 

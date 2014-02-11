@@ -49,7 +49,8 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 	public void GetSummaryUsingInvalidAccessToken() {
 		
 		// empty access token
-		BaseResult result = OpenAPI.getSummary(null, "me", fromDate, toDate);
+		String nullString = null;
+		BaseResult result = OpenAPI.getSummary(nullString, "me", fromDate, toDate);
 		Assert.assertEquals(result.statusCode, 401, "Status code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
@@ -161,13 +162,32 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(summary.getPoints(), 0.0, "Points");
 		Assert.assertEquals((int)summary.getSteps(), 0, "Steps");
 	}
-	
+
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary" })
+	public void GetSummaryUsingAppCredential() {
+		
+		// authorized user
+		BaseResult result = OpenAPI.getSummary(ClientApp, myUid, toDate, toDate);
+		OpenAPISummary summary = OpenAPISummary.fromResponse(result.response);
+		
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(summary.getCalories(), MVPCommon.round(goals.get(0).getProgressData().getCalorie(), 1), "Calories");
+		Assert.assertEquals(summary.getDistance(), MVPCommon.round(goals.get(0).getProgressData().getDistanceMiles(), 1), "Distance");
+		Assert.assertEquals(summary.getPoints(), goals.get(0).getProgressData().getPoints() / 2.5, "Points");
+		Assert.assertEquals(summary.getSteps(), goals.get(0).getProgressData().getSteps(), "Steps");
+		
+				
+		// unauthorized user
+		result = OpenAPI.getSummary(ClientApp, strangerUid, toDate, toDate);
+		
+		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+	}
 	
 	/*
 	 * TODO:
 	 * - Get a resource using expired token
 	 * - Get a resource with only selected fields
-	 * - Get a resource from authorized and unauthorized user using app id and app secret
 	 */
 
 }

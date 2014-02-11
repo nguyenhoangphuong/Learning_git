@@ -29,6 +29,7 @@ import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItemInfo;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.SleepSessionItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.TimezoneChangeItem;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.MVPEnums;
@@ -306,6 +307,23 @@ public class DataGenerator {
 
 		return item;
 	}
+	
+	public static TimelineItem generateRandomTimezoneTimelineItem(long timestamp, Map<String, Object> options) {
+
+		TimezoneChangeItem data = new TimezoneChangeItem();
+		data.setBeforeTimeZoneOffset((MVPCommon.randInt(0, 24) - 12) * 3600);
+		data.setAfterTimeZoneOffset((MVPCommon.randInt(0, 24) - 12) * 3600);
+
+		TimelineItem item = new TimelineItem();
+		item.setLocalId("timelineitem-" + MVPApi.generateLocalId());
+		item.setUpdatedAt(timestamp);
+		item.setTimestamp(timestamp);
+		item.setItemType(TimelineItemDataBase.TYPE_SLEEP);
+		item.setData(data);
+
+		return item;
+	}
+	
 	
 	
 	public static GraphItem generateRandomGraphItem(long timestamp, Map<String, Object> options) {

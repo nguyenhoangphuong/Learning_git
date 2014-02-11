@@ -12,8 +12,9 @@ public class OpenAPIGoal {
 
 	
 	// fields
+	private String id;
 	private String date;
-	private Integer point;
+	private Double point;
 	
 	
 	// methods
@@ -22,6 +23,7 @@ public class OpenAPIGoal {
 		try {
 			JSONObject object = new JSONObject();
 
+			object.accumulate("id", id);
 			object.accumulate("date", date);
 			object.accumulate("point", point);
 			return object;
@@ -35,17 +37,34 @@ public class OpenAPIGoal {
 	public OpenAPIGoal fromJson(JSONObject objJson) {
 		
 		try {
+			if (!objJson.isNull("id"))
+				this.setId(objJson.getString("id"));
+			
 			if (!objJson.isNull("date"))
 				this.setDate(objJson.getString("date"));
 			
 			if (!objJson.isNull("point"))
-				this.setPoint(objJson.getInt("point"));
+				this.setPoint(objJson.getDouble("point"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
 		return this;
+	}
+	
+	public static OpenAPIGoal getGoalFromResponse(ServiceResponse response) {
+		
+		try {
+			JSONObject objJson = new JSONObject(response.getResponseString());
+			OpenAPIGoal goal = new OpenAPIGoal();
+			return goal.fromJson(objJson);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 	public static List<OpenAPIGoal> getGoalsFromResponse(ServiceResponse response) {
@@ -75,6 +94,14 @@ public class OpenAPIGoal {
 	
 	
 	// get set
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public String getDate() {
 		return date;
 	}
@@ -83,11 +110,11 @@ public class OpenAPIGoal {
 		this.date = date;
 	}
 
-	public Integer getPoint() {
+	public Double getPoint() {
 		return point;
 	}
 
-	public void setPoint(Integer point) {
+	public void setPoint(Double point) {
 		this.point = point;
 	}
 	

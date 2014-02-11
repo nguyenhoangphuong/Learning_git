@@ -72,6 +72,20 @@ public class OpenAPISession {
 
 		return this;
 	}
+	
+	public static OpenAPISession getSessionFromResponse(ServiceResponse response) {
+		
+		try {
+			JSONObject objJson = new JSONObject(response.getResponseString());
+			OpenAPISession session = new OpenAPISession();
+			return session.fromJson(objJson);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 	public static List<OpenAPISession> getSessionsFromResponse(ServiceResponse response) {
 		

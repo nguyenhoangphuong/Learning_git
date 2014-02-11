@@ -1,5 +1,7 @@
 package com.misfit.ta.backend.api.openapi;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
@@ -8,6 +10,7 @@ import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.RequestHelper;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.openapi.OpenAPIThirdPartyApp;
 
 public class OpenAPI extends RequestHelper {
 	
@@ -26,6 +29,12 @@ public class OpenAPI extends RequestHelper {
 	public static String RESOURCE_SESSION = "Session";
 	public static String RESOURCE_SLEEP = "Sleep";
 	
+	public static String NOTIFICATION_RESOURCE_PROFILE = "profiles";
+	public static String NOTIFICATION_RESOURCE_DEVICE = "devices";
+	public static String NOTIFICATION_RESOURCE_GOAL = "goals";
+	public static String NOTIFICATION_RESOURCE_SESSION = "sessions";
+	public static String NOTIFICATION_RESOURCE_SLEEP = "sleeps";
+	
 	
 	// fields
 	public static String resourceServerBaseAddress = Settings.getValue("MVPOpenAPIResourceServerBaseAddress");
@@ -38,8 +47,8 @@ public class OpenAPI extends RequestHelper {
 	public static int authenticateServerPort = Integer.parseInt(Settings.getValue("MVPOpenAPIAuthenticateServerPort"));
 	
 	
-	// authentication and athorization
-	public static BaseResult logInForm() {
+	// dev portal
+	public static BaseResult getLogInForm() {
 		
 		String url = authenticateServerBaseAddress + "login";
 		
@@ -51,24 +60,34 @@ public class OpenAPI extends RequestHelper {
 		return result;
 	}
 	
-	public static BaseResult loginUserSession(String email, String password, String cookie) {
+	public static BaseResult submitLogInForm(String email, String password, String cookie) {
 		
 		String url = authenticateServerBaseAddress + "users/session";
 		
 		BaseParams requestInf = new BaseParams();
 		requestInf.addParam("email", email);
 		requestInf.addParam("password", password);
-		
-		if(cookie != null)
-			requestInf.addHeader("Cookie", cookie);
+		requestInf.addHeader("Cookie", cookie);
 
 		ServiceResponse response = post(url, authenticateServerPort, requestInf);
 		BaseResult result = new BaseResult(response);
+		result.appendCookie(cookie);
 		
 		return result;
 	}
 	
-	public static BaseResult logoutUserSession(String cookie) {
+	public static BaseResult logIn(String email, String password) {
+		
+		// get log in form to start new session
+		BaseResult result = getLogInForm();
+		String cookie = result.getHeaderValue("Set-Cookie");
+		
+		
+		// get the cookie and store it, fill log in form and submit
+		return submitLogInForm(email, password, cookie);
+	}
+		
+	public static BaseResult logOut(String cookie) {
 		
 		String url = authenticateServerBaseAddress + "logout";
 		
@@ -83,6 +102,83 @@ public class OpenAPI extends RequestHelper {
 		return result;
 	}
 	
+	public static BaseResult signUpForm() {
+		
+		String url = authenticateServerBaseAddress + "signup";
+		
+		BaseParams requestInf = new BaseParams();
+
+		ServiceResponse response = get(url, authenticateServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult submitSignUpForm(String email, String password, String cookie) {
+		
+		String url = authenticateServerBaseAddress + "users";
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addParam("email", email);
+		requestInf.addParam("password", password);
+		requestInf.addHeader("Cookie", cookie);
+
+		ServiceResponse response = post(url, authenticateServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		result.appendCookie(cookie);
+		
+		return result;
+	}
+	
+	public static BaseResult signUp(String email, String password) {
+		
+		// get sign up form to start a new session
+		BaseResult result = signUpForm();
+		String cookie = result.getHeaderValue("Set-Cookie");
+		
+		
+		// store cookie, fill the form and submit
+		return submitSignUpForm(email, password, cookie);
+	}
+	
+	public static BaseResult registerAppForm(String cookie) {
+		
+		String url = authenticateServerBaseAddress + "login";
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("Cookie", cookie);
+
+		ServiceResponse response = get(url, authenticateServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult submitRegisterAppForm(OpenAPIThirdPartyApp app, String cookie) {
+		
+		String url = authenticateServerBaseAddress + "clients";
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("Cookie", cookie);
+		requestInf.addParam("name", app.getName());
+		
+		ServiceResponse response = post(url, authenticateServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult registerApp(OpenAPIThirdPartyApp app, String cookie) {
+		
+		// get register app form
+		registerAppForm(cookie);
+		
+		// fill the form
+		return submitRegisterAppForm(app, cookie);
+	}
+	
+	
+	// authentication and athorization	
 	public static BaseResult authorizationDialog(String responseType, String clientKey, 
 			String redirectUrl, String scope, String state, String cookie) {
 		
@@ -223,28 +319,63 @@ public class OpenAPI extends RequestHelper {
 	}
 	
 	
+	// helpers
 	public static String getAccessToken(String username, String password, String scope, String clientKey, String returnUrl) {
 		
-		BaseResult result0 = logInForm();
-		loginUserSession(username, password, result0.getHeaderValue("Set-Cookie"));
-		BaseResult result2 = authorizationDialog(RESPONSE_TYPE_TOKEN, clientKey, returnUrl, scope, null, result0.getHeaderValue("Set-Cookie"));
-		BaseResult result3 = authorizationConfirm(parseTransactionId(result2), result0.getHeaderValue("Set-Cookie"));
+		BaseResult result = OpenAPI.logIn(username, password);
+		String cookie = result.cookie;
+		
+		BaseResult result2 = authorizationDialog(RESPONSE_TYPE_TOKEN, clientKey, returnUrl, scope, null, cookie);
+		BaseResult result3 = authorizationConfirm(parseTransactionId(result2), cookie);
 		
 		return parseAccessToken(result3);
 	}
 	
 	public static String getCode(String username, String password, String scope, String clientKey, String returnUrl) {
 		
-		BaseResult result0 = logInForm();
-		loginUserSession(username, password, result0.getHeaderValue("Set-Cookie"));
-		BaseResult result2 = authorizationDialog(RESPONSE_TYPE_CODE, clientKey, returnUrl, scope, null, result0.getHeaderValue("Set-Cookie"));
-		BaseResult result3 = authorizationConfirm(parseTransactionId(result2), result0.getHeaderValue("Set-Cookie"));
+		BaseResult result = OpenAPI.logIn(username, password);
+		String cookie = result.cookie;
+		
+		BaseResult result2 = authorizationDialog(RESPONSE_TYPE_CODE, clientKey, returnUrl, scope, null, cookie);
+		BaseResult result3 = authorizationConfirm(parseTransactionId(result2), cookie);
 		
 		return parseCode(result3);
 	}
 	
+	public static OpenAPIThirdPartyApp getApp(String appId) {
+		
+		// get all apps
+		String url = authenticateServerBaseAddress + "clients";
+		
+		BaseParams requestInf = new BaseParams();
+
+		ServiceResponse response = get(url, authenticateServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		// find app with same id and return
+		List<OpenAPIThirdPartyApp> apps = OpenAPIThirdPartyApp.getAppsFromResponse(result.response);
+		
+		for(OpenAPIThirdPartyApp app : apps) {
+			if(app.getId().equals(appId))
+				return app;
+		}
+		
+		return null;
+	}
 	
-	// resource apis
+	
+	// resource apis using access token
+	public static String allScopesAsString() {
+		
+		return String.format("%s,%s,%s,%s,%s,%s", 
+				RESOURCE_DEVICE,
+				RESOURCE_PROFILE,
+				RESOURCE_SUMMARY,
+				RESOURCE_GOAL,
+				RESOURCE_SLEEP,
+				RESOURCE_SESSION);
+	}
+	
 	public static BaseResult getProfile(String accessToken, String userId) {
 		
 		String url = resourceServerBaseAddress + "user/" + userId + "/profile";
@@ -289,6 +420,20 @@ public class OpenAPI extends RequestHelper {
 		return result;
 	}
 	
+	public static BaseResult getGoal(String accessToken, String userId, String objectId) {
+		
+		String url = resourceServerBaseAddress + "user/" + userId + "/activity/goals/" + objectId;
+
+		BaseParams requestInf = new BaseParams();
+		if(accessToken != null)
+			requestInf.addHeader("access_token", accessToken);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
 	public static BaseResult getSummary(String accessToken, String userId, String startDay, String endDate) {
 		
 		String url = resourceServerBaseAddress + "user/" + userId + "/activity/summary?" +
@@ -321,6 +466,20 @@ public class OpenAPI extends RequestHelper {
 		return result;
 	}
 	
+	public static BaseResult getSession(String accessToken, String userId, String objectId) {
+		
+		String url = resourceServerBaseAddress + "user/" + userId + "/activity/sessions/" + objectId;
+
+		BaseParams requestInf = new BaseParams();
+		if(accessToken != null)
+			requestInf.addHeader("access_token", accessToken);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
 	public static BaseResult getSleeps(String accessToken, String userId, String startDay, String endDate) {
 		
 		String url = resourceServerBaseAddress + "user/" + userId + "/activity/sleeps?" +
@@ -336,7 +495,201 @@ public class OpenAPI extends RequestHelper {
 		
 		return result;
 	}
+
+	public static BaseResult getSleep(String accessToken, String userId, String objectId) {
+		
+		String url = resourceServerBaseAddress + "user/" + userId + "/activity/sleeps/" + objectId;
+
+		BaseParams requestInf = new BaseParams();
+		if(accessToken != null)
+			requestInf.addHeader("access_token", accessToken);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
 	
+	
+	// resource apis using app secret and app id
+	public static BaseResult getProfile(OpenAPIThirdPartyApp app, String userId) {
+		
+		String url = resourceServerBaseAddress + "user/" + userId + "/profile";
+		String clientId = app.getClientKey();
+		String clientSecret = app.getClientSecret();
+
+		BaseParams requestInf = new BaseParams();
+		if(clientId != null)
+			requestInf.addHeader("app_id", clientId);
+		
+		if(clientSecret != null)
+			requestInf.addHeader("app_secret", clientSecret);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult getDevice(OpenAPIThirdPartyApp app, String userId) {
+		
+		String clientId = app.getClientKey();
+		String clientSecret = app.getClientSecret();
+		String url = resourceServerBaseAddress + "user/" + userId + "/device";
+
+		BaseParams requestInf = new BaseParams();
+		if(clientId != null)
+			requestInf.addHeader("app_id", clientId);
+		
+		if(clientSecret != null)
+			requestInf.addHeader("app_secret", clientSecret);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult getGoals(OpenAPIThirdPartyApp app, String userId, String startDay, String endDate) {
+		
+		String clientId = app.getClientKey();
+		String clientSecret = app.getClientSecret();
+		String url = resourceServerBaseAddress + "user/" + userId + "/activity/goals?" +
+				(startDay == null ? "" : ("start_date=" + startDay)) +
+				(endDate == null ? "" : ("&end_date=" + endDate));
+
+		BaseParams requestInf = new BaseParams();
+		if(clientId != null)
+			requestInf.addHeader("app_id", clientId);
+		
+		if(clientSecret != null)
+			requestInf.addHeader("app_secret", clientSecret);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult getGoal(OpenAPIThirdPartyApp app, String userId, String objectId) {
+		
+		String clientId = app.getClientKey();
+		String clientSecret = app.getClientSecret();
+		String url = resourceServerBaseAddress + "user/" + userId + "/activity/goals/" + objectId;
+
+		BaseParams requestInf = new BaseParams();
+		if(clientId != null)
+			requestInf.addHeader("app_id", clientId);
+		
+		if(clientSecret != null)
+			requestInf.addHeader("app_secret", clientSecret);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult getSummary(OpenAPIThirdPartyApp app, String userId, String startDay, String endDate) {
+		
+		String clientId = app.getClientKey();
+		String clientSecret = app.getClientSecret();
+		String url = resourceServerBaseAddress + "user/" + userId + "/activity/summary?" +
+				(startDay == null ? "" : ("start_date=" + startDay)) +
+				(endDate == null ? "" : ("&end_date=" + endDate));
+
+		BaseParams requestInf = new BaseParams();
+		if(clientId != null)
+			requestInf.addHeader("app_id", clientId);
+		
+		if(clientSecret != null)
+			requestInf.addHeader("app_secret", clientSecret);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult getSessions(OpenAPIThirdPartyApp app, String userId, String startDay, String endDate) {
+		
+		String clientId = app.getClientKey();
+		String clientSecret = app.getClientSecret();
+		String url = resourceServerBaseAddress + "user/" + userId + "/activity/sessions?" +
+				(startDay == null ? "" : ("start_date=" + startDay)) +
+				(endDate == null ? "" : ("&end_date=" + endDate));
+
+		BaseParams requestInf = new BaseParams();
+		if(clientId != null)
+			requestInf.addHeader("app_id", clientId);
+		
+		if(clientSecret != null)
+			requestInf.addHeader("app_secret", clientSecret);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult getSession(OpenAPIThirdPartyApp app, String userId, String objectId) {
+		
+		String clientId = app.getClientKey();
+		String clientSecret = app.getClientSecret();
+		String url = resourceServerBaseAddress + "user/" + userId + "/activity/sessions/" + objectId;
+
+		BaseParams requestInf = new BaseParams();
+		if(clientId != null)
+			requestInf.addHeader("app_id", clientId);
+		
+		if(clientSecret != null)
+			requestInf.addHeader("app_secret", clientSecret);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult getSleeps(OpenAPIThirdPartyApp app, String userId, String startDay, String endDate) {
+		
+		String clientId = app.getClientKey();
+		String clientSecret = app.getClientSecret();
+		String url = resourceServerBaseAddress + "user/" + userId + "/activity/sleeps?" +
+				(startDay == null ? "" : ("start_date=" + startDay)) +
+				(endDate == null ? "" : ("&end_date=" + endDate));
+
+		BaseParams requestInf = new BaseParams();
+		if(clientId != null)
+			requestInf.addHeader("app_id", clientId);
+		
+		if(clientSecret != null)
+			requestInf.addHeader("app_secret", clientSecret);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+
+	public static BaseResult getSleep(OpenAPIThirdPartyApp app, String userId, String objectId) {
+		
+		String clientId = app.getClientKey();
+		String clientSecret = app.getClientSecret();
+		String url = resourceServerBaseAddress + "user/" + userId + "/activity/sleeps/" + objectId;
+
+		BaseParams requestInf = new BaseParams();
+		if(clientId != null)
+			requestInf.addHeader("app_id", clientId);
+		
+		if(clientSecret != null)
+			requestInf.addHeader("app_secret", clientSecret);
+
+		ServiceResponse response = get(url, resourceServerPort, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
 	
 	
 	// notification apis
@@ -345,9 +698,8 @@ public class OpenAPI extends RequestHelper {
 		String url = subscribeServerBaseAddress + "subscriptions/" + resourceToSubscribe;
 
 		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("access_key_id", clientKey);
-		requestInf.addHeader("access_secret", clientSecret);
-		requestInf.addHeader("access_token", clientKey+"|"+clientSecret);
+		requestInf.addHeader("app_id", clientKey);
+		requestInf.addHeader("app_secret", clientSecret);
 		
 		requestInf.addParam("endpoint", endpoint);
 
@@ -362,9 +714,8 @@ public class OpenAPI extends RequestHelper {
 		String url = subscribeServerBaseAddress + "subscriptions/" + resourceToSubscribe;
 
 		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("access_key_id", clientKey);
-		requestInf.addHeader("access_secret", clientSecret);
-		requestInf.addHeader("access_token", clientKey+"|"+clientSecret);
+		requestInf.addHeader("app_id", clientKey);
+		requestInf.addHeader("app_secret", clientSecret);
 
 		ServiceResponse response = delete(url, subscribeServerPort, requestInf);
 		BaseResult result = new BaseResult(response);
