@@ -5,38 +5,31 @@ import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.android.chimpchat.core.TouchPressType;
 import com.misfit.ta.android.gui.Helper.Helper;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeScreen {
 
-	// These values are used in test with device Galaxy Nexus, other devices may
-	// need adaption.
-	private static final int TIME_CONTEXT_WIDTH = 70;
-	private static final int TIME_CONTEXT_HEIGHT = 210;
-	private static final int TIME_CONTEXT_INC = 90;
-
-	
-	public static boolean isHomeScreenVisible()
-	{
-		return ViewUtils.findView("ImageButton", "mID", "id/overflow", 0) != null;
+	public static boolean isHomeScreenVisible() {
+		return ViewUtils.findView("ActionMenuItemView", "mID", DefaultStrings.SettingsActionMenuItemViewId, 0) != null;
 	}
-	
+
 	/**
 	 * Manual Goal
 	 */
 	public static void tapManual() {
-		Gui.touchAView("ActionMenuItemView", "mID", DefaultStrings.ManualActionMenuItemViewId);
+		Gui.touchAView("ActionMenuItemView", "mID",
+				DefaultStrings.ManualActionMenuItemViewId);
 	}
-
 
 	public static void saveManual() {
-		Gui.touchAView("Button", "mText", "Save");
+		Gui.touchAView("Button", "mText", DefaultStrings.SaveText);
 	}
-	
+
 	/**
 	 * Go to Settings screens
 	 */
 	public static void tapSettingsMenu() {
-		Gui.touchAView("ImageButton", "mID", "id/overflow");
+		Gui.touchAView("ActionMenuItemView", "mID", DefaultStrings.SettingsActionMenuItemViewId);
 	}
 
 	/**
@@ -56,6 +49,25 @@ public class HomeScreen {
 		if (minute != null) {
 			Gui.type(minute);
 		}
-		Gui.pressEnter();
+		Gui.pressBack();
+	}
+	
+	public static void intputActivity(String duration, String steps) {
+		Gui.longTouchAView("EditText", "mID", DefaultStrings.DurationEditTextId);
+		Gui.type(duration);
+		Gui.pressBack();
+		
+		ShortcutsTyper.delayOne();
+		Gui.longTouchAView("EditText", "mID", DefaultStrings.StepsEditTextId);
+		Gui.type(steps);
+		Gui.pressBack();
+	}
+	
+	public static void cancelManual() {
+		Gui.touchAView("Button", "mText", DefaultStrings.CancelText);
+	}
+	
+	public static void sleepManual() {
+		Gui.touchAView("Button", "mText", DefaultStrings.SleepText);
 	}
 }

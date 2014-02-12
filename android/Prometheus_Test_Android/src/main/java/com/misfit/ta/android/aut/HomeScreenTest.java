@@ -19,9 +19,8 @@ public class HomeScreenTest extends AutomationTest {
     public void dayProgressTest() throws InterruptedException, StopConditionException, IOException {
 		ModelHandler model = getModelhandler();
        
-        model.add("successfulSignin", new SuccessfulSignInAPI(this, Files.getFile("model/signin/SuccessfulSignIn.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
-        model.add("dayProgress", new DayProgressAPI(this, Files.getFile("model/homescreen/DayProgress.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
-        model.execute("successfulSignin");
+        model.add("dayProgress", new DayProgressAPI(this, Files.getFile("model/homescreen/DayProgress.graphml"), true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("dayProgress");
 
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();

@@ -5,66 +5,60 @@ import java.io.File;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
-import com.misfit.ta.Gui;
 import com.misfit.ta.android.AutomationTest;
 import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
+import com.misfit.ta.android.gui.HomeScreen;
 import com.misfit.ta.android.gui.PrometheusHelper;
+import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
+import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class DayProgressAPI extends ModelAPI {
 	public DayProgressAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
-	private int days = PrometheusHelper.randInt(1, 10);
+
+	private int lastDuration = 0;
+	private int lastSteps = 0;
+	private int hour = 6;
 	
+	private float lastPoints = 0f;
+	private float lastMiles = 0f;
+	private int totalSteps = 0;
+	private float totalPoints = 0f;
+	private float totalMiles = 0f;
+	private float height = 64f; //5'4""
+	
+
 	/**
 	 * This method implements the Edge 'e_Init'
 	 * 
 	 */
 	public void e_Init() {
-		// TODO:
-	}
-
-	/**
-	 * This method implements the Edge 'e_Keep'
-	 * 
-	 */
-	public void e_Keep() {
-		// TODO:
+		ShortcutsTyper.delayOne();
+		PrometheusHelper.signUp();
+		ShortcutsTyper.delayOne();
 	}
 
 	/**
 	 * This method implements the Edge 'e_SetActivity'
 	 * 
 	 */
-	public void e_SetActivity() {
-		// TODO:
-	}
+	public void e_inputActivity() {
+		HomeScreen.tapManual();
+		// input record
+		HomeScreen.inputManualTime(hour >= 10 ? String.valueOf(hour) : String.format("%02d", hour), "00");
 
-	/**
-	 * This method implements the Edge 'e_ViewPreviousDay'
-	 * 
-	 */
-	public void e_ViewPreviousDay() {
-		Gui.swipeRight(days);
-	}
-
-	/**
-	 * This method implements the Edge 'e_ViewToday'
-	 * 
-	 */
-	public void e_ViewToday() {
-		Gui.swipeLeft(days);
-	}
-
-	/**
-	 * This method implements the Vertex 'v_PreviousDay'
-	 * 
-	 */
-	public void v_PreviousDay() {
-		Assert.assertTrue(!isTodayView(), "This is not Today view");
+		this.lastDuration = PrometheusHelper.randInt(5, 9);
+		this.lastSteps = this.lastDuration * PrometheusHelper.randInt(10, 180);
+		
+		HomeScreen.intputActivity(String.valueOf(this.lastDuration), String.valueOf(this.lastSteps));
+		HomeScreen.saveManual();
+		calculateTotalProgressInfo();
+		this.hour += 1;
 	}
 
 	/**
@@ -79,11 +73,36 @@ public class DayProgressAPI extends ModelAPI {
 	 * This method implements the Vertex 'v_UpdateToday'
 	 * 
 	 */
-	public void v_UpdateToday() {
-		// TODO:
+	public void v_UpdatedToday() {
+		ViewNode view = ViewUtils.findView("TextView", "mID", DefaultStrings.PointsHomeScreenTextViewId, 0);
+		System.out.println("Display: " + view.text);
+		System.out.println("Total Points: " + totalPoints);
+		System.out.println("Last Points: " + lastPoints);
+		Assert.assertTrue(view.text.equals(String.format("%d", (int) Math.floor(this.totalPoints))), "Total points value is correct");
+	}
+
+	private boolean isTodayView() {
+		return ViewUtils.findView("TextView", "mText",
+				DefaultStrings.WalkingLeftText, 0) != null;
+	}
+
+	public void v_EndInput() {
+
 	}
 	
-	private boolean isTodayView() {
-		return ViewUtils.findView("TextView", "mText", DefaultStrings.WalkingLeftText, 0) != null;
+	private void calculateTotalProgressInfo() {
+
+		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps, this.lastDuration, MVPEnums.ACTIVITY_SLEEPING);
+		this.lastMiles = PrometheusHelper.calculateMiles(lastSteps, lastDuration, height);
+
+		System.out.println("DEBUG: Last steps " + this.lastSteps);
+		System.out.println("DEBUG: Last duration " + this.lastDuration);
+		System.out.println("DEBUG: Last points " + this.lastPoints);
+		System.out.println("DEBUG: Last miles " + this.lastMiles);
+
+		// calculate total progress info
+		this.totalSteps += this.lastSteps;
+		this.totalPoints += this.lastPoints;
+		this.totalMiles += this.lastMiles;
 	}
 }

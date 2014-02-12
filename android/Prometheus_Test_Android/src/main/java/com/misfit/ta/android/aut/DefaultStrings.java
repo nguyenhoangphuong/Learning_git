@@ -32,13 +32,25 @@ public class DefaultStrings {
 	public static String SignUpBirthdayTextViewId = "id/edit_birthday_tv";
 	public static String SignUpLinkShineTextViewId = "id/tap_to_link_tv";
 	public static String ManualActionMenuItemViewId = "id/menu_manual";
+	public static String SettingsActionMenuItemViewId = "id/0x0";
+	public static String DurationEditTextId = "id/manual_duration_edit_text";
+	public static String StepsEditTextId = "id/manual_steps_edit_text";
+	
+	public static String PointsHomeScreenTextViewId = "id/home_points_win";
+	public static String GoalHomeScreenTextViewId = "id/home_points_goal";
+	public static String TimeRemainingHomeScreenTextViewId = "id/home_time_left";
+	public static String StepsHomeScreenTextViewId = "id/home_activity_steps";
+	public static String MilesHomeScreenTextViewId = "id/home_activity_mile";
+	public static String CaloriesHomeScreenTextViewId = "id/home_activity_calories";
 	
 	public static String OKText = "OK";
 	public static String CancelText = "Cancel";
+	public static String SaveText = "Save";
 	public static String SignOutText = "Sign out";
 	public static String SetText = "Set";
 	public static String SignInText = "Sign In";
 	public static String SignUpText = "Sign Up";
+	public static String SleepText = "Sleep";
 	
 	public static String IncorrectSignInMessage = "Incorrect email or password, please check and try again.";
 	public static String WalkingLeftText = "of walking left";
