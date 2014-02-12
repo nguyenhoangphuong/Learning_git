@@ -6,12 +6,10 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
-import com.misfit.ta.backend.aut.SocialAutomationBase;
-import com.misfit.ta.backend.aut.SocialTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.social.SocialUserWithStatus;
 
-public class SocialSendFriendRequestTC extends SocialAutomationBase {
+public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 	
 	// fields
 	protected String nonSocialEmail = "qa001@a.a";

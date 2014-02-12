@@ -5,11 +5,10 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
-import com.misfit.ta.backend.aut.SocialAutomationBase;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.social.SocialUserBase;
 
-public class SocialDeleteFriendTC extends SocialAutomationBase {
+public class SocialDeleteFriendTC extends SocialTestAutomationBase {
 	
 	// test methods
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "DeleteFriend" })

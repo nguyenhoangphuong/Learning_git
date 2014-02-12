@@ -9,12 +9,12 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ta.backend.aut.SocialAutomationBase;
+import com.misfit.ta.backend.aut.correctness.social.SocialTestAutomationBase;
 import com.misfit.ta.backend.data.BaseResult;
 
 public class ServerResultSummary {
 
-	protected static Logger logger = Util.setupLogger(SocialAutomationBase.class);
+	protected static Logger logger = Util.setupLogger(SocialTestAutomationBase.class);
 	
 	protected Map<Integer, Integer> statusCodeCountMap;
 	protected List<Integer> statusCodes;

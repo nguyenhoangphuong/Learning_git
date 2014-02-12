@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
-import com.misfit.ta.backend.aut.OpenAPIAutomationBase;
+import com.misfit.ta.backend.aut.correctness.openapi.OpenAPIAutomationBase;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISession;

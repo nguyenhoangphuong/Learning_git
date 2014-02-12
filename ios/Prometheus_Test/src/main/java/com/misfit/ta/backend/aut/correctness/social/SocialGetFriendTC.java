@@ -5,13 +5,11 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
-import com.misfit.ta.backend.aut.SocialAutomationBase;
-import com.misfit.ta.backend.aut.SocialTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.social.SocialUserBase;
 
-public class SocialGetFriendTC extends SocialAutomationBase {
+public class SocialGetFriendTC extends SocialTestAutomationBase {
 	
 	// test methods
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFriendAPI" })

@@ -7,8 +7,6 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
-import com.misfit.ta.backend.aut.SocialAutomationBase;
-import com.misfit.ta.backend.aut.SocialTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
@@ -16,7 +14,7 @@ import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.social.Leaderboard;
 import com.misfit.ta.backend.data.social.SocialUserLeaderBoardEvent;
 
-public class SocialLeaderBoardTC extends SocialAutomationBase {
+public class SocialLeaderBoardTC extends SocialTestAutomationBase {
 
 
 	// fields

@@ -13,7 +13,6 @@ import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.RequestHelper;
-import com.misfit.ta.backend.aws.AWSHelper;
 import com.misfit.ta.backend.data.account.*;
 import com.misfit.ta.backend.data.goal.*;
 import com.misfit.ta.backend.data.graph.*;
@@ -24,6 +23,7 @@ import com.misfit.ta.backend.data.sync.SyncLog;
 import com.misfit.ta.backend.data.timeline.*;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.backend.data.*;
+import com.misfit.ta.base.AWSHelper;
 import com.misfit.ta.utils.TextTool;
 
 public class MVPApi extends RequestHelper {
