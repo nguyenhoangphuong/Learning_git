@@ -10,10 +10,10 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 
-public class ParallelThreadExecutor {
+public class SeedThreadParallelExecutor {
 	
     // logger
-    protected Logger logger = Util.setupLogger(ParallelThreadExecutor.class);
+    protected Logger logger = Util.setupLogger(SeedThreadParallelExecutor.class);
 
     
     // fields
@@ -27,7 +27,7 @@ public class ParallelThreadExecutor {
 
     
     // constructor
-    public ParallelThreadExecutor(SeedThread seed, int numberOfSeed, int numberOfThread) {
+    public SeedThreadParallelExecutor(SeedThread seed, int numberOfSeed, int numberOfThread) {
     	
     	this.seed = seed;
     	this.numberOfSeed = numberOfSeed;

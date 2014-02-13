@@ -318,7 +318,7 @@ public class DataGenerator {
 		item.setLocalId("timelineitem-" + MVPApi.generateLocalId());
 		item.setUpdatedAt(timestamp);
 		item.setTimestamp(timestamp);
-		item.setItemType(TimelineItemDataBase.TYPE_SLEEP);
+		item.setItemType(TimelineItemDataBase.TYPE_TIMEZONE);
 		item.setData(data);
 
 		return item;

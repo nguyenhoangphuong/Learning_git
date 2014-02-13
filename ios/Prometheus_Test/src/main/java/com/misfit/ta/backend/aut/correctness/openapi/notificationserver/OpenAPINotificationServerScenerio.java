@@ -7,6 +7,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONArray;
+import com.google.resting.json.JSONException;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
@@ -25,7 +27,9 @@ import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase
 import com.misfit.ta.backend.server.ServerHelper;
 import com.misfit.ta.backend.server.notificationendpoint.NotificationEndpointServer;
 import com.misfit.ta.base.BasicEvent;
+import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.utils.TextTool;
 
 public class OpenAPINotificationServerScenerio extends BackendAutomation {
 
@@ -35,9 +39,9 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 	private static String EPB = "http://jenkins.misfitwearables.com:8999/";
 	
 	private static String scope = OpenAPI.allScopesAsString();
-	private static String returnUrl = "https://www.google.com.vn";
+	private static String returnUrl = "https://www.google.com.vn/";
 	
-	private static ResultLogger resultLogger = ResultLogger.getLogger("notification_server_scenerios");
+	private static ResultLogger resultLogger;
 	
 	
 	@BeforeClass(alwaysRun = true)
@@ -46,26 +50,49 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		// set up interface to call back when notification is received
 		NotificationEndpointServer.onNotificationReceived = new BasicEvent<Void>() {
 
-			@SuppressWarnings("unchecked")
 			@Override
 			public Void call(Object sender, Object arguments) {
 
+				// get host and message string
 				NotificationEndpointServer server = (NotificationEndpointServer)sender;
-				List<NotificationMessage> messages = (List<NotificationMessage>) arguments;
+				String messageString = (String) arguments;
+				
+				// convert from json string to object
+				List<NotificationMessage> messages = new ArrayList<NotificationMessage>();
+				try {
+					
+					JSONArray jarr = new JSONArray(messageString);
+					for (int i = 0; i < jarr.length(); i++) {
 
-				resultLogger.log("-------------------- Notification received --------------------");
+						NotificationMessage mess = new NotificationMessage();
+						mess.fromJson(jarr.getJSONObject(i));
+						messages.add(mess);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+				resultLogger.log("*** Notification received");
 				resultLogger.log("Endpoint: " + server.context.getRequest().getBaseUri());
+				resultLogger.log("Notification: " + messageString);
 				resultLogger.log("Messages: " + messages.size());
 				for(NotificationMessage message : messages)
-					resultLogger.log(message.toJson().toString());
-				resultLogger.log("\n\n");
-
+					resultLogger.log(String.format("Owner: %s - ObjectId: %s - %s: %s", 
+							message.getOwnerId(), message.getId(), message.getType(), message.getAction()));
+				resultLogger.log("\n");
+				
 				return null;
 			}
 		};
 		
+		
+		// delete log file
+		Files.delete("logs/notification_server_scenerios.log");
+		resultLogger = ResultLogger.getLogger("notification_server_scenerios");
+		
+		
 		// start notification endpoint servers EPA and EPB
-		resultLogger.log("- START NOTIFICATION ENDPOINTS");
+		resultLogger.log("\n- START NOTIFICATION ENDPOINTS");
 		ServerHelper.startNotificationEndpointServer("http://localhost:8998/");
 		ServerHelper.startNotificationEndpointServer("http://localhost:8999/");
 	}
@@ -76,11 +103,12 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		// PART 1
 		// subcribe profiles, devices to EPA
 		// subcribe goals, sessions, sleeps to EPB
-		resultLogger.log("- SUBCRIBE PROFILES, DEVICES TO EPA - " + EPA);
+		resultLogger.log("\n\nPART 1\n-------------------------------------------------------");
+		resultLogger.log("\n- SUBCRIBE PROFILES, DEVICES TO EPA - " + EPA);
 		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_PROFILE);
 		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_DEVICE);
 		
-		resultLogger.log("- SUBCRIBE GOALS, SESSIONS, SLEEPS TO EPB - " + EPB);
+		resultLogger.log("\n- SUBCRIBE GOALS, SESSIONS, SLEEPS TO EPB - " + EPB);
 		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPB, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
 		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPB, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
 		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPB, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
@@ -90,7 +118,7 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		
 		// sign up 3 users: UA, UB, UC
 		// authorize UA and UB to app
-		resultLogger.log("- SIGN UP USERS A, B, C");
+		resultLogger.log("\n- SIGN UP USERS A, B, C");
 		String password = "qqqqqq";
 		String emailA = MVPApi.generateUniqueEmail();
 		String emailB = MVPApi.generateUniqueEmail();
@@ -109,7 +137,7 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		
 		
 		// create profiles and pedometers for all users
-		resultLogger.log("- CREATE PROFILES AND PEDOMETERS");
+		resultLogger.log("\n- CREATE PROFILES AND PEDOMETERS");
 		resultLogger.log("Expect: 4 messages total from EPA for user A and B");
 		ProfileData profileA = createRandomProfile(tokenA);
 		ProfileData profileB = createRandomProfile(tokenB);
@@ -119,12 +147,12 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		Pedometer pedometerB = createRandomPedometer(tokenB);
 		Pedometer pedometerC = createRandomPedometer(tokenC);
 			
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		
 		
 		// create goals, sessions and sleeps for all users
 		// all timeline items in order: session, sleep, milestone, achievement, timezone, food
-		resultLogger.log("- CREATE GOALS, TIMELINE ITEMS USING BOTH SINGLE AND BATCH INSERT");
+		resultLogger.log("\n- CREATE GOALS, TIMELINE ITEMS USING BOTH SINGLE AND BATCH INSERT");
 		resultLogger.log("Expect: 6 messages total from EPB for user A and B");
 		Goal goalA = createDefaultGoal(tokenA, 0);
 		Goal goalB = createDefaultGoal(tokenB, 0);
@@ -142,83 +170,86 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		itemsB.addAll(createSleepMilestoneAchievementTimezoneFoodItems(tokenB));
 		itemsC.addAll(createSleepMilestoneAchievementTimezoneFoodItems(tokenC));
 		
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		
 		
 		// PART 2
 		// subcribe goals from EPB to EPA
-		resultLogger.log("- SUBCRIBE GOALS FROM EPB TO EPA");
+		resultLogger.log("\n\nPART 2\n-------------------------------------------------------");
+		resultLogger.log("\n- SUBCRIBE GOALS FROM EPB TO EPA");
 		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(10000);
 		
 		
-		// update goals, profiles and pedometers for all users
-		resultLogger.log("- UPDATE GOALS, PROFILES AND PEDOMETERS");
+		// update goals, profiles and pedometers for all users		
+		resultLogger.log("\n- UPDATE GOALS, PROFILES AND PEDOMETERS");
 		resultLogger.log("Expect: 6 messages total from EPA for user A and B");
-		MVPApi.updateGoal(tokenA, goalA);
-		MVPApi.updateGoal(tokenB, goalB);
-		MVPApi.updateGoal(tokenC, goalC);
+		updateGoal(tokenA, goalA.getServerId());
+		updateGoal(tokenB, goalB.getServerId());
+		updateGoal(tokenC, goalC.getServerId());
 		
-		MVPApi.updateProfile(tokenA, profileA);
-		MVPApi.updateProfile(tokenB, profileB);
-		MVPApi.updateProfile(tokenC, profileC);
+		updateProfile(tokenA, profileA.getServerId());
+		updateProfile(tokenB, profileB.getServerId());
+		updateProfile(tokenC, profileC.getServerId());
 		
-		MVPApi.updatePedometer(tokenA, pedometerA);
-		MVPApi.updatePedometer(tokenB, pedometerB);
-		MVPApi.updatePedometer(tokenC, pedometerC);
+		updatePedometer(tokenA, pedometerA.getServerId(), pedometerA.getSerialNumberString());
+		updatePedometer(tokenB, pedometerB.getServerId(), pedometerB.getSerialNumberString());
+		updatePedometer(tokenC, pedometerC.getServerId(), pedometerC.getSerialNumberString());
 		
 		
 		// update all timeline items
-		resultLogger.log("- UPDATE ALL TIMELINE ITEMS");
+		resultLogger.log("\n- UPDATE ALL TIMELINE ITEMS");
 		resultLogger.log("Expect: 4 messages total from EPB for user A and B");
 		for(int i = 0; i < itemsA.size(); i++) {
 			
-			MVPApi.updateTimelineItem(tokenA, itemsA.get(i));
-			MVPApi.updateTimelineItem(tokenB, itemsB.get(i));
-			MVPApi.updateTimelineItem(tokenC, itemsC.get(i));
+			updateTimelineItem(tokenA, itemsA.get(i).getItemType(), itemsA.get(i).getServerId());
+			updateTimelineItem(tokenB, itemsB.get(i).getItemType(), itemsB.get(i).getServerId());
+			updateTimelineItem(tokenC, itemsC.get(i).getItemType(), itemsC.get(i).getServerId());
 		}
 		
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		
 		
 		// PART 3
 		// unsubcribe goals from EPA
-		resultLogger.log("- UNSUBCRIBE GOALS FROM EPA");
+		resultLogger.log("\n\nPART 3\n-------------------------------------------------------");
+		resultLogger.log("\n- UNSUBCRIBE GOALS FROM EPA");
 		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
 		
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		
 		
 		// update all goals
-		resultLogger.log("- UPDATE GOALS");
+		resultLogger.log("\n- UPDATE GOALS");
 		resultLogger.log("Expect: no notifications");
 		MVPApi.updateGoal(tokenA, goalA);
 		MVPApi.updateGoal(tokenB, goalB);
 		MVPApi.updateGoal(tokenC, goalC);
 		
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		
 		
 		// subcribe goals to EPB again
-		resultLogger.log("- SUBCRIBE GOALS TO EPB AGAIN");
+		resultLogger.log("\n- SUBCRIBE GOALS TO EPB AGAIN");
 		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPB, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
 		
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(10000);
 
 
 		// update all goals
-		resultLogger.log("- UPDATE GOALS");
+		resultLogger.log("\n- UPDATE GOALS");
 		resultLogger.log("Expect: 2 messages total from EPB for user A and B");
-		MVPApi.updateGoal(tokenA, goalA);
-		MVPApi.updateGoal(tokenB, goalB);
-		MVPApi.updateGoal(tokenC, goalC);
+		updateGoal(tokenA, goalA.getServerId());
+		updateGoal(tokenB, goalB.getServerId());
+		updateGoal(tokenC, goalC.getServerId());
 
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		
 		
 		// PART 4
 		// update all timeline item state to 1 (deleted)
-		resultLogger.log("- UPDATE ALL TIMELINE ITEMS STATE OF USER A TO 1 (DELETED)");
+		resultLogger.log("\n\nPART 4\n-------------------------------------------------------");
+		resultLogger.log("\n- UPDATE ALL TIMELINE ITEMS STATE OF USER A TO 1 (DELETED)");
 		resultLogger.log("Expect: 2 delete messages from EPB for user A");
 		for(int i = 0; i < itemsA.size(); i++) {
 
@@ -226,23 +257,23 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 			MVPApi.updateTimelineItem(tokenA, itemsA.get(i));
 		}
 		
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		
 		
 		// unlink pedometer of user B
-		resultLogger.log("- UNLINK PEDOMETER OF USER B");
+		resultLogger.log("\n- UNLINK PEDOMETER OF USER B");
 		resultLogger.log("Expect: 1 delete message from EPA to user B");
 		MVPApi.unlinkDevice(tokenB);
 		
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		
 		
-		// create pedometer for user B again
-		resultLogger.log("- CREATE PEDOMETER FOR USER B AGAIN");
+		// relink pedometer for user B again
+		resultLogger.log("\n- RELINK PEDOMETER FOR USER B AGAIN");
 		resultLogger.log("Expect: 1 create message from EPA to user B");
-		pedometerB = createRandomPedometer(tokenB);
+		updatePedometer(tokenB, "", TextTool.getRandomString(10, 10));
 
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 	}
 	
 	private ProfileData createRandomProfile(String token) {
@@ -255,6 +286,13 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		return profile;
 	}
 	
+	private void updateProfile(String token, String objectId) {
+		
+		ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
+		profile.setServerId(objectId);
+		MVPApi.updateProfile(token, profile);
+	}
+
 	private Pedometer createRandomPedometer(String token) {
 		
 		long timestamp = System.currentTimeMillis() / 1000;
@@ -266,6 +304,14 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		return pedometer;
 	}
 
+	private void updatePedometer(String token, String objectId, String serialNumber) {
+		
+		Pedometer pedo = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
+		pedo.setServerId(objectId);
+		pedo.setSerialNumberString(serialNumber);
+		MVPApi.updatePedometer(token, pedo);
+	}
+
 	private Goal createDefaultGoal(String token, int diffFromToday) {
 		
 		Goal goal = Goal.getDefaultGoal(System.currentTimeMillis() / 1000 - 3600 * 24 * diffFromToday);
@@ -273,6 +319,13 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		goal.setServerId(result.goals[0].getServerId());
 		
 		return goal;
+	}
+	
+	private void updateGoal(String token, String objectId) {
+		
+		Goal goal = DataGenerator.generateRandomGoal(System.currentTimeMillis() / 1000, null);
+		goal.setServerId(objectId);
+		MVPApi.updateGoal(token, goal);
 	}
 	
 	private TimelineItem createSessionTimelineItem(String token) {
@@ -310,4 +363,40 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		return items;
 	}
 
+	private void updateTimelineItem(String token, int itemType, String objectId) {
+		
+		long timestamp = System.currentTimeMillis() / 1000;
+		TimelineItem item = null;
+		
+		switch(itemType) {
+			
+		case TimelineItemDataBase.TYPE_SESSION:
+			item = DataGenerator.generateRandomActivitySessionTimelineItem(timestamp, null);
+			break;
+			
+		case TimelineItemDataBase.TYPE_SLEEP:
+			item = DataGenerator.generateRandomSleepTimelineItem(timestamp, null);
+			break;
+			
+		case TimelineItemDataBase.TYPE_MILESTONE:
+			item = DataGenerator.generateRandomMilestoneItem(timestamp, 
+					TimelineItemDataBase.EVENT_TYPE_100_GOAL, null);
+			break;
+			
+		case TimelineItemDataBase.TYPE_LIFETIME_DISTANCE:
+			item = DataGenerator.generateRandomLifetimeDistanceItem(timestamp, null);
+			break;
+			
+		case TimelineItemDataBase.TYPE_FOOD:
+			item = DataGenerator.generateRandomFoodTimelineItem(timestamp, null);
+			break;
+			
+		case TimelineItemDataBase.TYPE_TIMEZONE:
+			item = DataGenerator.generateRandomTimezoneTimelineItem(timestamp, null);
+			break;
+		}
+		
+		item.setServerId(objectId);
+		MVPApi.updateTimelineItem(token, item);
+	}
 }

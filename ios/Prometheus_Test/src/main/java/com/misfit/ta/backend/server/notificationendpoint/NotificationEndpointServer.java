@@ -60,22 +60,16 @@ public class NotificationEndpointServer {
 			if (!jsonObj.isNull("SubscribeURL")) {
 				String subcriptionUrl = jsonObj.getString("SubscribeURL");
 				OpenAPI.confirmSubcription(subcriptionUrl);
+				return;
 			}
 			
 			// if message field is available, it is considered a notification
 			if (!jsonObj.isNull("Message")) {
-				JSONArray jarr = jsonObj.getJSONArray("Message");
-				List<NotificationMessage> messages = new ArrayList<NotificationMessage>();
-
-				for (int i = 0; i < jarr.length(); i++) {
-
-					NotificationMessage mess = new NotificationMessage();
-					mess.fromJson(jarr.getJSONObject(i));
-					messages.add(mess);
-				}
+				
+				String message = jsonObj.getString("Message");
 
 				if(onNotificationReceived != null) {
-		    		onNotificationReceived.call(this, messages);
+		    		onNotificationReceived.call(this, message);
 		    	}
 			}
 			

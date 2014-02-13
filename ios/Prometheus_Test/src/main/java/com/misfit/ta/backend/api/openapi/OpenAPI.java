@@ -48,7 +48,7 @@ public class OpenAPI extends RequestHelper {
 	
 	
 	// dev portal
-	public static BaseResult getLogInForm() {
+	public static BaseResult formLogIn() {
 		
 		String url = authenticateServerBaseAddress + "login";
 		
@@ -79,7 +79,7 @@ public class OpenAPI extends RequestHelper {
 	public static BaseResult logIn(String email, String password) {
 		
 		// get log in form to start new session
-		BaseResult result = getLogInForm();
+		BaseResult result = formLogIn();
 		String cookie = result.getHeaderValue("Set-Cookie");
 		
 		
@@ -102,7 +102,7 @@ public class OpenAPI extends RequestHelper {
 		return result;
 	}
 	
-	public static BaseResult signUpForm() {
+	public static BaseResult formSignUp() {
 		
 		String url = authenticateServerBaseAddress + "signup";
 		
@@ -133,7 +133,7 @@ public class OpenAPI extends RequestHelper {
 	public static BaseResult signUp(String email, String password) {
 		
 		// get sign up form to start a new session
-		BaseResult result = signUpForm();
+		BaseResult result = formSignUp();
 		String cookie = result.getHeaderValue("Set-Cookie");
 		
 		
@@ -141,9 +141,9 @@ public class OpenAPI extends RequestHelper {
 		return submitSignUpForm(email, password, cookie);
 	}
 	
-	public static BaseResult registerAppForm(String cookie) {
+	public static BaseResult formRegisterApp(String cookie) {
 		
-		String url = authenticateServerBaseAddress + "login";
+		String url = authenticateServerBaseAddress + "clients/regnew";
 		
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("Cookie", cookie);
@@ -169,9 +169,6 @@ public class OpenAPI extends RequestHelper {
 	}
 	
 	public static BaseResult registerApp(OpenAPIThirdPartyApp app, String cookie) {
-		
-		// get register app form
-		registerAppForm(cookie);
 		
 		// fill the form
 		return submitRegisterAppForm(app, cookie);
@@ -342,19 +339,27 @@ public class OpenAPI extends RequestHelper {
 		return parseCode(result3);
 	}
 	
-	public static OpenAPIThirdPartyApp getApp(String appId) {
+	public static List<OpenAPIThirdPartyApp> getAllApps() {
 		
 		// get all apps
 		String url = authenticateServerBaseAddress + "clients";
-		
+
 		BaseParams requestInf = new BaseParams();
+		requestInf.addBasicAuthorizationHeader("misfit", "User@123");
 
 		ServiceResponse response = get(url, authenticateServerPort, requestInf);
 		BaseResult result = new BaseResult(response);
-		
-		// find app with same id and return
 		List<OpenAPIThirdPartyApp> apps = OpenAPIThirdPartyApp.getAppsFromResponse(result.response);
 		
+		return apps;
+	}
+	
+	public static OpenAPIThirdPartyApp getApp(String appId) {
+		
+		// get all apps
+		List<OpenAPIThirdPartyApp> apps = getAllApps();
+		
+		// find app with same id and return		
 		for(OpenAPIThirdPartyApp app : apps) {
 			if(app.getId().equals(appId))
 				return app;

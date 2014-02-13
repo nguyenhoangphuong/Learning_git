@@ -58,7 +58,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		MVPApi.createTimelineItems(yourToken, batchItems);
 		MVPApi.createTimelineItems(strangerToken, batchItems);
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "https://www.google.com.vn/");
 	}
 	
 	
@@ -128,7 +128,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps", "Excluded" })
 	public void GetSleepsWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
 		BaseResult result = OpenAPI.getSleeps(invalidScopeAccessToken, "me", fromDate, toDate);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
@@ -194,9 +194,41 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
+	public void GetSleepsWithStateEqualsTo1() {
+		
+		// create a new timeline item
+		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * 5;
+		TimelineItem deletedSleep = DataGenerator.generateRandomSleepTimelineItem(timestamp, null);
+		BaseResult result = MVPApi.createTimelineItem(myToken, deletedSleep);
+		deletedSleep.setServerId(TimelineItem.getTimelineItem(result.response).getServerId());
+
+		
+		// get sleep
+		String date = getDateString(timestamp);
+		result = OpenAPI.getSleeps(accessToken, "me", date, date);
+		List<OpenAPISleep> rsleeps = OpenAPISleep.getSleepsFromResponse(result.response);
+		
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(rsleeps.size(), 1, "Number of sleeps in response");
+		
+		
+		// now update state of that sleep to 1
+		deletedSleep.setState(1);
+		MVPApi.updateTimelineItem(myToken, deletedSleep);
+		
+		
+		// now get sleep again
+		result = OpenAPI.getSleeps(accessToken, "me", date, date);
+		rsleeps = OpenAPISleep.getSleepsFromResponse(result.response);
+
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(rsleeps.size(), 0, "Number of sleeps in response");
+	}
+	
+	
 	/*
 	 * TODO:
-	 * - Get a deleted sleep tile (state == 1)
 	 * - Get a resource using expired token
 	 * - Get a resource with only selected fields
 	 */

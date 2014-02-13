@@ -117,8 +117,7 @@ public class MVPCommon {
 		try {
 			File file = Files.getFile(filePath);
 			byte[] bytes = FileUtils.readFileToByteArray(file);
-//			return Base64.encodeBase64String(bytes);
-			return Base64.encodeBase64URLSafeString(bytes);
+			return Base64.encodeBase64String(bytes);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

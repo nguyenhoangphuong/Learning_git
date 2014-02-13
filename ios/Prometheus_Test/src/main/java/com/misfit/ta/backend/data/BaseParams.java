@@ -4,9 +4,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicHeader;
+
 import com.google.resting.component.impl.json.JSONRequestParams;
 
 public class BaseParams {
@@ -26,6 +28,14 @@ public class BaseParams {
 	}
 
 	// public functions to add params/headers
+	public void addBasicAuthorizationHeader(String username, String password) {
+		
+		String combine = username + ":" + password;
+		String base64 = Base64.encodeBase64String(combine.getBytes()).replace("\r\n", "");
+
+		addHeader("Authorization", "Basic " + base64);
+	}
+	
 	public void addHeader(String key, String value) {
 		BasicHeader header = new BasicHeader(key, value);
 		headers.add(header);

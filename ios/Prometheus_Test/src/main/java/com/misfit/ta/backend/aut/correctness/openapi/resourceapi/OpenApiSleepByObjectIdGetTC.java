@@ -2,6 +2,7 @@ package com.misfit.ta.backend.aut.correctness.openapi.resourceapi;
 
 import java.util.List;
 
+import org.jboss.netty.util.internal.DetectionUtil;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -44,11 +45,11 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		itemB.setServerId(TimelineItem.getTimelineItem(resultB.response).getServerId());
 		itemC.setServerId(TimelineItem.getTimelineItem(resultC.response).getServerId());
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "https://www.google.com.vn/");
 	}
 	
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
 	public void GetSleepByObjectIdUsingInvalidAccessToken() {
 		
 		// empty access token
@@ -63,7 +64,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
 	public void GetSleepByObjectIdWithValidAccessToken() {
 		
 		// use myUid route
@@ -108,17 +109,17 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		}
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps", "Excluded" })
 	public void GetSleepByObjectIdWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
 		BaseResult result = OpenAPI.getSleep(invalidScopeAccessToken, "me", itemA.getServerId());
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
 	public void GetSleepByObjectIdOfOtherUser() {
 				
 		// myUid + objectId from other authorized user
@@ -142,16 +143,16 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
 	public void GetSleepByObjectIdInvalidObjectId() {
 		
 		BaseResult result = OpenAPI.getSleep(accessToken, myUid, TextTool.getRandomString(10, 10));
 		
 		Assert.assertEquals(result.statusCode, 400, "Status code");
-		Assert.assertEquals(result.message, DefaultValues.ObjectNotFound, "Error message");
+		Assert.assertEquals(result.message, DefaultValues.InvalidParameters, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
 	public void GetSleepByObjectIdUsingAppCredential() {
 		
 		// authorized user
@@ -180,6 +181,37 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
+	public void GetSleepByObjectIdWithStateEqualsTo1() {
+		
+		// create a new timeline item
+		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * 5;
+		TimelineItem deletedSleep = DataGenerator.generateRandomSleepTimelineItem(timestamp, null);
+		BaseResult result = MVPApi.createTimelineItem(myToken, deletedSleep);
+		deletedSleep.setServerId(TimelineItem.getTimelineItem(result.response).getServerId());
+		long startTime = ((SleepSessionItem)deletedSleep.getData()).getRealStartTime();
+		
+		
+		// get sleep
+		result = OpenAPI.getSleep(accessToken, "me", deletedSleep.getServerId());
+		OpenAPISleep rsleep = OpenAPISleep.getSleepFromResponse(result.response);
+		
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(rsleep.getStartTime(), getISOTime(startTime), "Sleep start time");
+		
+		
+		// now update state of that sleep to 1
+		deletedSleep.setState(1);
+		MVPApi.updateTimelineItem(myToken, deletedSleep);
+		
+		
+		// now get sleep again
+		result = OpenAPI.getSleep(accessToken, "me", deletedSleep.getServerId());
+
+		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.message, DefaultValues.ObjectNotFound, "Error message");
 	}
 	
 	/*

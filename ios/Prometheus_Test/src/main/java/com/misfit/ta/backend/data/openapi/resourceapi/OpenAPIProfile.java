@@ -7,7 +7,6 @@ import com.google.resting.json.JSONObject;
 public class OpenAPIProfile {
 
 	// fields
-	protected String id;
 	protected String email;
 	protected String name;
 	protected String birthday;
@@ -19,7 +18,6 @@ public class OpenAPIProfile {
 		try {
 			JSONObject object = new JSONObject();
 
-			object.accumulate("id", id);
 			object.accumulate("email", email);
 			object.accumulate("name", name);
 			object.accumulate("birthday", birthday);
@@ -35,8 +33,6 @@ public class OpenAPIProfile {
 	public OpenAPIProfile fromJson(JSONObject json) {
 		OpenAPIProfile obj = this;
 		try {
-			if (!json.isNull("id"))
-				obj.setId(json.getString("id"));
 
 			if (!json.isNull("email"))
 				obj.setEmail(json.getString("email"));
@@ -71,14 +67,6 @@ public class OpenAPIProfile {
 
 
 	// getters setters
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getEmail() {
 		return email;
 	}

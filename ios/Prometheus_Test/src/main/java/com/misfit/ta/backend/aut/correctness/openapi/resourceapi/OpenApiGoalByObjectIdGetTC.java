@@ -54,7 +54,7 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 			goalsC.add(goalC);
 		}
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "https://www.google.com.vn/");
 	}
 	
 	
@@ -97,7 +97,7 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_goals", "Excluded" })
 	public void GetGoalByObjectIdWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
 		BaseResult result = OpenAPI.getGoal(invalidScopeAccessToken, "me", goalsA.get(0).getServerId());
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");

@@ -124,7 +124,7 @@ public class BackendTimelineItemCreateTC  extends BackendAutomation {
 		Assert.assertTrue(item.getAttachedImageUrl() != null, "Attached Image Url is not null");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "timeline_item" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "timeline_item", "Excluded" })
 	public void CreateFoodItemWithInvalidImageData() {
 		
 		TimelineItem fooditem = DataGenerator.generateRandomFoodTimelineItem(System.currentTimeMillis() / 1000, null);

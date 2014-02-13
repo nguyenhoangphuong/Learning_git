@@ -1,6 +1,6 @@
 package com.misfit.ta.backend.aut.performance.social;
 
-import com.misfit.ta.base.ParallelThreadExecutor;
+import com.misfit.ta.base.SeedThreadParallelExecutor;
 
 public class ServerCalculationExecutor {
 
@@ -10,7 +10,7 @@ public class ServerCalculationExecutor {
 		int numberOfSeed = 1000;
 		int numberOfThread = 200;
 		
-		ParallelThreadExecutor executor = new ParallelThreadExecutor(seed, numberOfSeed, numberOfThread);
+		SeedThreadParallelExecutor executor = new SeedThreadParallelExecutor(seed, numberOfSeed, numberOfThread);
 		executor.execute();
 		executor.printSummary();
 	}

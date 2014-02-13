@@ -1,7 +1,7 @@
 package com.misfit.ta.backend.aut.performance;
 
 import com.misfit.ta.Settings;
-import com.misfit.ta.base.ParallelThreadExecutor;
+import com.misfit.ta.base.SeedThreadParallelExecutor;
 
 public class BackendLargeDataGenerator {
 
@@ -18,7 +18,7 @@ public class BackendLargeDataGenerator {
 		int numberOfSeed = Settings.getInt("NUMBER_OF_GENERATE_USER_SEED");
 		int numberOfThread = Settings.getInt("NUMBER_OF_GENERATE_USER_THREAD");
 		
-		ParallelThreadExecutor executor = new ParallelThreadExecutor(seed, numberOfSeed, numberOfThread);
+		SeedThreadParallelExecutor executor = new SeedThreadParallelExecutor(seed, numberOfSeed, numberOfThread);
 		executor.execute();
 		executor.printSummary();
 		GenerateUserSeed.printSummary();

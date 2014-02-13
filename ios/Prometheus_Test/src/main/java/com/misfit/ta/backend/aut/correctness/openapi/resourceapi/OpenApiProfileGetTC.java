@@ -28,7 +28,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		MVPApi.createProfile(yourToken, profile);
 		MVPApi.createProfile(strangerToken, profile);
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
 	}
 	
 	
@@ -71,13 +71,12 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");
-		Assert.assertEquals(data.getId(), myUid, "Profile user id");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile", "Excluded" })
 	public void GetProfileWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_DEVICE, ClientKey, "/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_DEVICE, ClientKey, "https://www.google.com.vn/");
 		BaseResult result = OpenAPI.getProfile(invalidScopeAccessToken, "me");
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
@@ -110,7 +109,6 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");
-		Assert.assertEquals(data.getId(), myUid, "Profile user id");
 		
 		
 		// unauthorized user

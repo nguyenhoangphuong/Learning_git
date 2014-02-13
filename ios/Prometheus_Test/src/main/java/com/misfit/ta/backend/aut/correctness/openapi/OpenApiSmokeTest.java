@@ -27,41 +27,49 @@ public class OpenApiSmokeTest extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "smoke_test" })
 	public void OpenAPIDevPortalAuthenticationResourceAPIsSmokeTest() {
 		
-		String email = MVPApi.generateUniqueEmail();
+		String email = "nhhai16991@gmail.com";
 		String password = "qqqqqq";
 		String returnUrl = "https://www.google.com.vn/";
 		String allScopes = OpenAPI.allScopesAsString();
 		
+		BaseResult result = null;
+		String cookie = null;
+		
 		
 		// sign up new dev account
-		BaseResult result = OpenAPI.signUp(email, password);
-		Assert.assertTrue(result.statusCode < 400, "[Dev Portal]: Sign up flow is ok");
-		String cookie = result.cookie;
+		/*
+		 * TODO:
+		 * sign up flow is not supported in this release
+		 * enable it when we have dev portal
+		 */
+//		result = OpenAPI.signUp(email, password);
+//		Assert.assertTrue(result.statusCode < 400, "[Dev Portal]: Sign up flow is ok");
+//		cookie = result.cookie;
 		
 		
-		// log out that account
-		result = OpenAPI.logOut(cookie);
-		Assert.assertTrue(result.statusCode < 400, "[Dev Portal]: Sign out flow is ok");
-		
-		
-		// log in again
+		// log in
 		result = OpenAPI.logIn(email, password);
 		Assert.assertTrue(result.statusCode < 400, "[Dev Portal]: Sign in flow is ok");
 		cookie = result.cookie;
-		
+				
 		
 		// register an app
 		OpenAPIThirdPartyApp app = new OpenAPIThirdPartyApp();
 		app.setName(TextTool.getRandomString(10, 20));
-		
+
 		result = OpenAPI.registerApp(app, cookie);
 		Assert.assertTrue(result.isOK(), "[Dev Portal]: Register app flow is ok");
-		
+
 		app = OpenAPI.getApp(OpenAPIThirdPartyApp.getAppFromResponse(result.response).getId());
 		String clientKey = app.getClientKey();
 		String clientSecret = app.getClientSecret();
-		
-		
+				
+				
+		// log out that account
+		result = OpenAPI.logOut(cookie);
+		Assert.assertTrue(result.statusCode < 400, "[Dev Portal]: Sign out flow is ok");
+			
+
 		// create some test users
 		String userA = MVPApi.generateUniqueEmail();
 		String userB = MVPApi.generateUniqueEmail();

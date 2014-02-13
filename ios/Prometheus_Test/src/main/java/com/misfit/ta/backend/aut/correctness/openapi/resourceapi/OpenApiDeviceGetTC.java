@@ -29,7 +29,7 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 		MVPApi.createPedometer(yourToken, DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null));
 		MVPApi.createPedometer(strangerToken, DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null));
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_DEVICE, ClientKey, "/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_DEVICE, ClientKey, "https://www.google.com.vn/");
 	}
 	
 
@@ -76,7 +76,7 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_device", "Excluded" })
 	public void GetDeviceWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
 		BaseResult result = OpenAPI.getDevice(invalidScopeAccessToken, "me");
 		Assert.assertEquals(result.statusCode, 403, "Status code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");

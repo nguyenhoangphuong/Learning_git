@@ -63,7 +63,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		MVPApi.createTimelineItems(yourToken, batchItems);
 		MVPApi.createTimelineItems(strangerToken, batchItems);
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "https://www.google.com.vn/");
 	}
 	
 	
@@ -130,7 +130,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions", "Excluded" })
 	public void GetSessionsWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
 		BaseResult result = OpenAPI.getSessions(invalidScopeAccessToken, "me", fromDate, toDate);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
