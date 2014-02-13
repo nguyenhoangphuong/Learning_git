@@ -14,12 +14,13 @@ import com.misfit.ta.utils.TextTool;
 public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 	
 	protected static String clientKey = Settings.getParameter("MVPOpenAPIClientID");
+	protected static String returnUrl = "https://www.google.com.vn/";
 	
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "authorization" })
 	public void AuthorizeUserBeforeLogIn() {
 		
-		BaseResult result = OpenAPI.authorizationDialog("token", clientKey, "/", OpenAPI.RESOURCE_PROFILE, null, null);
+		BaseResult result = OpenAPI.authorizationDialog("token", clientKey, returnUrl, OpenAPI.RESOURCE_PROFILE, null, null);
 
 		Assert.assertTrue(result.rawData.contains("<form action=\"/auth/users/session\" method=\"post\">"), "Contains log in form");
 		Assert.assertTrue(result.rawData.contains("<a href=\"/auth/facebook\">Login with Facebook</a>"), "Contains facebook log in link");
@@ -36,7 +37,7 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 		
 		
 		// get authorize dialog
-		result = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, "/", OpenAPI.RESOURCE_PROFILE, null, cookie);
+		result = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, OpenAPI.RESOURCE_PROFILE, null, cookie);
 
 		Assert.assertTrue(result.rawData.contains("<form action=\"/auth/users/session\" method=\"post\">"), "Contains log in form");
 		Assert.assertTrue(result.rawData.contains("<a href=\"/auth/facebook\">Login with Facebook</a>"), "Contains facebook log in link");
@@ -52,10 +53,10 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 		
 		
 		// without response type / client key / redirect uri / scopes
-		BaseResult result1 = OpenAPI.authorizationDialog(null, clientKey, "/", OpenAPI.RESOURCE_PROFILE, null, cookie);
-		BaseResult result2 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, null, "/", OpenAPI.RESOURCE_PROFILE, null, cookie);
+		BaseResult result1 = OpenAPI.authorizationDialog(null, clientKey, returnUrl, OpenAPI.RESOURCE_PROFILE, null, cookie);
+		BaseResult result2 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, null, returnUrl, OpenAPI.RESOURCE_PROFILE, null, cookie);
 		BaseResult result3 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, null, OpenAPI.RESOURCE_PROFILE, null, cookie);
-		BaseResult result4 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, "/", null, null, cookie);
+		BaseResult result4 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, null, null, cookie);
 		
 		boolean pass = true;
 		pass &= Verify.verifyEquals(result1.statusCode, 400, "Status code (response type)");
@@ -76,11 +77,11 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 		
 		// response type != code or token / random client key / random scopes / 
 		// combination of valid scopes and invalid or empty scopes
-		BaseResult result1 = OpenAPI.authorizationDialog("cotodeken", clientKey, "/", OpenAPI.RESOURCE_PROFILE, null, cookie);
-		BaseResult result2 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, TextTool.getRandomString(10, 10), "/", OpenAPI.RESOURCE_PROFILE, null, cookie);
-		BaseResult result3 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, "/", "superscopes", null, cookie);
-		BaseResult result4 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, "/", OpenAPI.RESOURCE_DEVICE + ",," + OpenAPI.RESOURCE_PROFILE, null, cookie);
-		BaseResult result5 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, "/", OpenAPI.RESOURCE_DEVICE + ",superscopes," + OpenAPI.RESOURCE_PROFILE, null, cookie);
+		BaseResult result1 = OpenAPI.authorizationDialog("cotodeken", clientKey, returnUrl, OpenAPI.RESOURCE_PROFILE, null, cookie);
+		BaseResult result2 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, TextTool.getRandomString(10, 10), returnUrl, OpenAPI.RESOURCE_PROFILE, null, cookie);
+		BaseResult result3 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, "superscopes", null, cookie);
+		BaseResult result4 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, OpenAPI.RESOURCE_DEVICE + ",," + OpenAPI.RESOURCE_PROFILE, null, cookie);
+		BaseResult result5 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, OpenAPI.RESOURCE_DEVICE + ",superscopes," + OpenAPI.RESOURCE_PROFILE, null, cookie);
 		
 		boolean pass = true;
 		pass &= Verify.verifyEquals(result1.statusCode, 400, "Status code (response type)");
