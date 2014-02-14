@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.google.resting.json.JSONException;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.server.ServerHelper;
 
@@ -31,8 +32,8 @@ public class Debug {
 //		};
 
 //		ServerHelper.startNotificationEndpointServer("http://localhost:8998/");
-		ServerHelper.startNotificationEndpointServer("http://localhost:8999/");
-		
+//		ServerHelper.startNotificationEndpointServer("http://localhost:8999/");
+		MVPApi.signUp("nhhai16991@gmail.com", "qqqqqq");
 	}
 
 }

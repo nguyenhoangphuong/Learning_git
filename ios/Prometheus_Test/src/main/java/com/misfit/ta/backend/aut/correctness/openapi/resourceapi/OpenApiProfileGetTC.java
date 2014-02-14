@@ -59,7 +59,6 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");
-		Assert.assertEquals(data.getId(), myUid, "Profile user id");
 		
 		
 		// use "myUid" route
