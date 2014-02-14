@@ -117,6 +117,26 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_device" })
+	public void GetDeviceWhichWasUnlinked() {
+		
+		// unlink
+		MVPApi.unlinkDevice(myToken);
+		
+		// get device
+		BaseResult result = OpenAPI.getDevice(accessToken, "me");
+		OpenAPIDevice rdevice = OpenAPIDevice.fromResponse(result.response);
+		
+		// link again so other tests can run
+		MVPApi.updatePedometer(myToken, pedometer);
+
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(rdevice.getDeviceType(), "shine", "Device's type");
+		Assert.assertNull(rdevice.getSerialNumber(), "Device's serial number");
+		Assert.assertNull(rdevice.getFirmwareVersion(), "Device's firmware version");
+		Assert.assertNull(rdevice.getBatteryLevel(), "Device's battery level");
+	}
+	
 	/*
 	 * TODO:
 	 * - Get an unlinked shine (serial number == UNLINKED)

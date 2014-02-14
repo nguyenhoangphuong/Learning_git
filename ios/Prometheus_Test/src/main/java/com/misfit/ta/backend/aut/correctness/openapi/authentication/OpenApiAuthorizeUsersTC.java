@@ -59,10 +59,15 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 		BaseResult result4 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, null, null, cookie);
 		
 		boolean pass = true;
-		pass &= Verify.verifyEquals(result1.statusCode, 400, "Status code (response type)");
-		pass &= Verify.verifyEquals(result2.statusCode, 400, "Status code (client id)");
-		pass &= Verify.verifyEquals(result3.statusCode, 400, "Status code (redirect uri)");
-		pass &= Verify.verifyEquals(result4.statusCode, 400, "Status code (scopes)");
+		pass &= Verify.verifyEquals(result1.statusCode, 200, "Status code (response type)");
+		pass &= Verify.verifyEquals(result2.statusCode, 200, "Status code (client id)");
+		pass &= Verify.verifyEquals(result3.statusCode, 200, "Status code (redirect uri)");
+		pass &= Verify.verifyEquals(result4.statusCode, 200, "Status code (scopes)");
+		
+		pass &= Verify.verifyContainsNoCase(result1.rawData, "invalid response type", "Error message (response type)");
+		pass &= Verify.verifyContainsNoCase(result2.rawData, "missing client_id parameter", "Error message (client id)");
+		pass &= Verify.verifyContainsNoCase(result3.rawData, "Missing redirect_uri param", "Error message (redirect uri)");
+		pass &= Verify.verifyContainsNoCase(result4.rawData, "Missing scope param", "Error message (scope)");
 		
 		Assert.assertTrue(pass, "All tests are passed");
 	}
@@ -84,11 +89,17 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 		BaseResult result5 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, OpenAPI.RESOURCE_DEVICE + ",superscopes," + OpenAPI.RESOURCE_PROFILE, null, cookie);
 		
 		boolean pass = true;
-		pass &= Verify.verifyEquals(result1.statusCode, 400, "Status code (response type)");
-		pass &= Verify.verifyEquals(result2.statusCode, 400, "Status code (client id)");
-		pass &= Verify.verifyEquals(result3.statusCode, 400, "Status code (random scopes)");
-		pass &= Verify.verifyEquals(result4.statusCode, 400, "Status code (scope combination: valid,,valid)");
-		pass &= Verify.verifyEquals(result5.statusCode, 400, "Status code (scope combination: valid,invalid,valid");
+		pass &= Verify.verifyEquals(result1.statusCode, 200, "Status code (response type)");
+		pass &= Verify.verifyEquals(result2.statusCode, 200, "Status code (client id)");
+		pass &= Verify.verifyEquals(result3.statusCode, 200, "Status code (random scopes)");
+		pass &= Verify.verifyEquals(result4.statusCode, 200, "Status code (scope combination: valid,,valid)");
+		pass &= Verify.verifyEquals(result5.statusCode, 200, "Status code (scope combination: valid,invalid,valid");
+		
+		pass &= Verify.verifyContainsNoCase(result1.rawData, "invalid response type", "Error message (response type)");
+		pass &= Verify.verifyContainsNoCase(result2.rawData, "not authorized", "Error message (client id)");
+		pass &= Verify.verifyContainsNoCase(result3.rawData, "invalid scope", "Error message (random scopes)");
+		pass &= Verify.verifyContainsNoCase(result4.rawData, "invalid scope", "Error message (scope combination: valid,,valid)");
+		pass &= Verify.verifyContainsNoCase(result5.rawData, "invalid scope", "Error message (scope combination: valid,invalid,valid");
 		
 		Assert.assertTrue(pass, "All tests are passed");
 	}

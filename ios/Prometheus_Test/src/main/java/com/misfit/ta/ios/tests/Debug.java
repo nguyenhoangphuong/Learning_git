@@ -8,7 +8,11 @@ import org.graphwalker.Util;
 import com.google.resting.json.JSONException;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
+import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.openapi.OpenAPIThirdPartyApp;
 import com.misfit.ta.backend.server.ServerHelper;
+import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.utils.TextTool;
 
 public class Debug {
 	
@@ -16,24 +20,9 @@ public class Debug {
 	
 	public static void main(String[] args) throws IOException, JSONException {
 
-//		NotificationEndpointServer.onNotificationReceived = new BasicEvent<Void>() {
-//			
-//			@Override
-//			public Void call(Object sender, Object arguments) {
-//		
-//				NotificationEndpointServer server = (NotificationEndpointServer)sender;
-//				String body = (String) arguments;
-//				
-//				logger.info("Sender: " + server.context.getRequest().getBaseUri());
-//				logger.info("Body: " + body);
-//				
-//				return null;
-//			}
-//		};
+		
+		MVPApi.signUp("ns_user_2@qa.com", "qqqqqq");
 
-//		ServerHelper.startNotificationEndpointServer("http://localhost:8998/");
-//		ServerHelper.startNotificationEndpointServer("http://localhost:8999/");
-		MVPApi.signUp("nhhai16991@gmail.com", "qqqqqq");
 	}
 
 }

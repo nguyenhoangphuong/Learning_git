@@ -25,7 +25,7 @@ public class OpenApiExchangeTokenTC extends BackendAutomation {
 		String redirectUrl = "https://www.google.com.vn/";
 		String grantType = OpenAPI.GRANT_TYPE_AUTHORIZATION_CODE;
 		
-		// without grant_type / code / redirect_uri / client_id / client_secret
+		// without grant_type / code / client_id / client_secret / redirect_uri
 		BaseResult result1 = OpenAPI.exchangeCodeForToken(null, code, clientKey, clientSecret, redirectUrl, null);
 		BaseResult result2 = OpenAPI.exchangeCodeForToken(grantType, null, clientKey, clientSecret, redirectUrl, null);
 		BaseResult result3 = OpenAPI.exchangeCodeForToken(grantType, code, null, clientSecret, redirectUrl, null);
@@ -33,11 +33,17 @@ public class OpenApiExchangeTokenTC extends BackendAutomation {
 		BaseResult result5 = OpenAPI.exchangeCodeForToken(grantType, code, clientKey, clientSecret, null, null);
 
 		boolean pass = true;
-		pass &= Verify.verifyEquals(result1.statusCode, 400, "Status code (grant type)");
-		pass &= Verify.verifyEquals(result2.statusCode, 400, "Status code (code)");
+		pass &= Verify.verifyEquals(result1.statusCode, 200, "Status code (grant type)");
+		pass &= Verify.verifyEquals(result2.statusCode, 200, "Status code (code)");
 		pass &= Verify.verifyEquals(result3.statusCode, 401, "Status code (client id)");
 		pass &= Verify.verifyEquals(result4.statusCode, 401, "Status code (client secret)");
-		pass &= Verify.verifyEquals(result5.statusCode, 400, "Status code (redirect uri)");
+		pass &= Verify.verifyEquals(result5.statusCode, 200, "Status code (redirect uri)");
+		
+		pass &= Verify.verifyContainsNoCase(result1.rawData, "invalid grant type", "Error message (grant type)");
+		pass &= Verify.verifyContainsNoCase(result2.rawData, "missing code parameter", "Error message (code)");
+		pass &= Verify.verifyContainsNoCase(result3.rawData, "Unauthorized", "Error message (client id)");
+		pass &= Verify.verifyContainsNoCase(result4.rawData, "Unauthorized", "Error message (client secret)");
+		pass &= Verify.verifyContainsNoCase(result5.rawData, "Missing redirect_uri param", "Error message (redirect uri)");
 		
 		Assert.assertTrue(pass, "All tests are passed");
 	}
@@ -57,12 +63,19 @@ public class OpenApiExchangeTokenTC extends BackendAutomation {
 		BaseResult result6 = OpenAPI.exchangeCodeForToken(grantType, code, clientKey, clientSecret, redirectUrl, null);
 
 		boolean pass = true;
-		pass &= Verify.verifyEquals(result1.statusCode, 400, "Status code (random grant type)");
-		pass &= Verify.verifyEquals(result2.statusCode, 400, "Status code (random code)");
+		pass &= Verify.verifyEquals(result1.statusCode, 200, "Status code (random grant type)");
+		pass &= Verify.verifyEquals(result2.statusCode, 200, "Status code (random code)");
 		pass &= Verify.verifyEquals(result3.statusCode, 401, "Status code (random client id & client secret)");
 		pass &= Verify.verifyEquals(result4.statusCode, 401, "Status code (random client secret)");
 		pass &= Verify.verifyEquals(result5.statusCode, 401, "Status code (random client id)");
-		pass &= Verify.verifyEquals(result6.statusCode, 401, "Status code (redirect url doesn't match)");
+		pass &= Verify.verifyEquals(result6.statusCode, 200, "Status code (redirect url doesn't match)");
+		
+		pass &= Verify.verifyContainsNoCase(result1.rawData, "invalid grant type", "Status code (random grant type)");
+		pass &= Verify.verifyContainsNoCase(result2.rawData, "Invalid parameter", "Status code (random code)");
+		pass &= Verify.verifyContainsNoCase(result3.rawData, "Unauthorized", "Status code (random client id & client secret)");
+		pass &= Verify.verifyContainsNoCase(result4.rawData, "Unauthorized", "Status code (random client secret)");
+		pass &= Verify.verifyContainsNoCase(result5.rawData, "Unauthorized", "Status code (random client id)");
+		pass &= Verify.verifyContainsNoCase(result6.rawData, "Invalid parameter", "Status code (redirect url doesn't match)");
 		
 		Assert.assertTrue(pass, "All tests are passed");
 	}

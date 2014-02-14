@@ -11,7 +11,6 @@ import java.util.concurrent.Future;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
@@ -19,14 +18,9 @@ import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
-import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.openapi.OpenAPIThirdPartyApp;
 import com.misfit.ta.backend.data.openapi.notification.NotificationMessage;
-import com.misfit.ta.backend.data.pedometer.Pedometer;
-import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
-import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
 import com.misfit.ta.backend.server.ServerHelper;
 import com.misfit.ta.backend.server.notificationendpoint.NotificationEndpointServer;
 import com.misfit.ta.base.BasicEvent;
@@ -37,19 +31,83 @@ import com.misfit.ta.utils.TextTool;
 public class OpenAPINotificationServerPerformanceTest {
 
 	protected static Logger logger = Util.setupLogger(OpenAPINotificationServerPerformanceTest.class);
+	private static String localhost = "http://localhost:8998/";
 	private static String endpoint = "http://jenkins.misfitwearables.com:8998/";
 	private static ResultLogger resultLogger;
+	
 	private static int numberOfNotifications = 0;
-	private static int numberOfMessageRecords = 0;
+	
+	private static int numbeOfSuccessfulRegisterApp = 0;
+	private static int numberOfSuccessfulSubscribeApp = 0;
+	private static int numberOfSuccessfulAuthorization = 0;
+	
 	
 	public static void main(String[] args) {
 		
 		if(args.length == 0)
-			args = new String[] {"200", "1", "1"};
+			args = new String[] {"test", "200", "nhhai16991@gmail.com", "qqqqqq", "1"};
 
-		int numberOfThread = Integer.valueOf(args[0]);
-		int numberOfApp = Integer.valueOf(args[1]);
-		int numberOfUser = Integer.valueOf(args[2]);
+		String action = args[0];
+		int numberOfThread = Integer.valueOf(args[1]);
+		
+		if(action.equals("help"))
+			runHelp();
+		if(action.equals("setup"))
+			runSetup(args[2], args[3], Integer.valueOf(args[4]), numberOfThread);
+		else if(action.equals("test"))
+			runTest(args[2], args[3], Integer.valueOf(args[4]), numberOfThread);
+		else if(action.equals("all"))
+			runAll(Integer.valueOf(args[2]), Integer.valueOf(args[3]), Integer.valueOf(args[4]), numberOfThread);
+		
+		return;
+	}
+	
+	// scenerios
+	protected static void runHelp() {
+		logger.info("===========================================================================================================");
+		logger.info("OpenAPINotificationServerPerformanceTest setup numberOfThread email password numberOfApp");
+		logger.info("OpenAPINotificationServerPerformanceTest test numberOfThread email password numberOfTimelineItem");
+		logger.info("OpenAPINotificationServerPerformanceTest all numberOfApp numberOfUser numberOfTimelineItem numberOfThread");
+		logger.info("===========================================================================================================");
+	}
+	
+	protected static void runSetup(String username, String password, int numberOfApp, int numberOfThread) {
+		
+		// start endpoint
+		setUpEndpoint();
+
+		// register apps
+		List<OpenAPIThirdPartyApp> apps = registerApps("nhhai16991@gmail.com", "qqqqqq", numberOfApp, numberOfThread);
+	
+		// subcribe apps to endpoint
+		subcribeApps(apps, endpoint, numberOfThread);
+
+		// authorize users to apps
+		List<String> emails = new ArrayList<String>();
+		emails.add(username);
+		authorizeUsersToApps(emails, password, apps, numberOfThread);
+		
+		logger.info("Total app: " + numberOfApp);
+		logger.info("Total app successfully created: " + numbeOfSuccessfulRegisterApp);
+		logger.info("Total app successfully subscribed: " + numberOfSuccessfulSubscribeApp);
+		logger.info("Total app user successfully authorized to: " + numberOfSuccessfulAuthorization);
+	}
+	
+	protected static void runTest(String email, String password, int numberOfItems, int numberOfThread) {
+		
+		// start endpoint
+		setUpEndpoint();
+				
+		// test notification: create, update, delete...
+		runSimpleTestMultiThread(email, password, numberOfItems, numberOfThread);
+		
+		// summary
+		ShortcutsTyper.delayTime(10000);
+		logger.info("Total notifications: " + numberOfNotifications);
+		resultLogger.log("Total notifications: " + numberOfNotifications);
+	}
+	
+	protected static void runAll(int numberOfApp, int numberOfUser, int numberOfItems, int numberOfThread) {
 		
 		// start endpoint
 		setUpEndpoint();
@@ -67,15 +125,22 @@ public class OpenAPINotificationServerPerformanceTest {
 		authorizeUsersToApps(emails, "qqqqqq", apps, numberOfThread);
 
 		// test notification: create, update, delete...
-		testNotification(emails, "qqqqqq", numberOfThread);
+		testNotification(emails, "qqqqqq", numberOfThread, numberOfItems);
 		
 		
 		// summary
 		ShortcutsTyper.delayTime(10000);
-		resultLogger.log("Total notifications: " + numberOfNotifications);
-		resultLogger.log("Total message records: " + numberOfMessageRecords);
+		logger.info("Total app: " + numberOfApp);
+		logger.info("Total app successfully created: " + numbeOfSuccessfulRegisterApp);
+		logger.info("Total app successfully subscribed: " + numberOfSuccessfulSubscribeApp);
+		logger.info("Total valid access token: " + numberOfSuccessfulAuthorization);
+		logger.info("Total notifications: " + numberOfNotifications);
 		
-		return;
+		resultLogger.log("Total app: " + numberOfApp);
+		resultLogger.log("Total app successfully created: " + numbeOfSuccessfulRegisterApp);
+		resultLogger.log("Total app successfully subscribed: " + numberOfSuccessfulSubscribeApp);
+		resultLogger.log("Total valid access token: " + numberOfSuccessfulAuthorization);
+		resultLogger.log("Total notifications: " + numberOfNotifications);
 	}
 	
 	
@@ -106,8 +171,6 @@ public class OpenAPINotificationServerPerformanceTest {
 						messages.add(mess);
 					}
 					
-					numberOfMessageRecords += messages.size();
-					
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -129,62 +192,61 @@ public class OpenAPINotificationServerPerformanceTest {
 
 
 		// start notification endpoint servers EPA and EPB
-		ServerHelper.startNotificationEndpointServer("http://localhost:8999/");
+		ServerHelper.startNotificationEndpointServer(localhost);
+		ShortcutsTyper.delayTime(5000);
+	}
+		
+	protected static void runSimpleTestMultiThread(String email, String password, int numberOfItems, int numberOfThread) {
+
+		// log in
+		final long timestamp = System.currentTimeMillis() / 1000;
+		final String token = MVPApi.signIn(email, password).token;
+
+		// create list of items
+    	List<TimelineItem> items = new ArrayList<TimelineItem>();
+    	
+    	for(int i = 0; i < numberOfItems; i++) {
+			
+    		items.add(DataGenerator.generateRandomActivitySessionTimelineItem(timestamp - i, null));
+    	}
+
+    	// run
+    	Collection<Future<?>> futures = new LinkedList<Future<?>>();
+    	ExecutorService executor = Executors.newFixedThreadPool(numberOfThread);
+    	for(int i = 0; i < numberOfItems; i++) {
+			
+    		final TimelineItem item = items.get(i);
+			Thread thread = new Thread() {
+
+				public void run() {
+					MVPApi.createTimelineItem(token, item);
+				}
+			};
+
+			futures.add(executor.submit(thread));
+		}
+		
+		executor.shutdown();
+        
+        for (Future<?> future:futures) {
+            try {
+                future.get();
+            } catch (Exception e) {
+            }
+        }
+        
 	}
 	
-	protected static void runTestThread(String email, String password) {
-	
-		// total notification each user: 11 (5 create, 4 update and 2 delete)
-		
+	protected static void runSimpleTestThread(String email, String password, int numberOfItems) {
+
 		// log in
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signIn(email, password).token;
-		
-		
-		// create profile, pedometer, goal and timeline item
-		ProfileData profile = DataGenerator.generateRandomProfile(timestamp, null);
-		Pedometer pedo = DataGenerator.generateRandomPedometer(timestamp, null);
-		Goal goal = DataGenerator.generateRandomGoal(timestamp, null);
-		TimelineItem sleep = DataGenerator.generateRandomSleepTimelineItem(timestamp, null);
-		TimelineItem session = DataGenerator.generateRandomActivitySessionTimelineItem(timestamp, null);
-		
-		List<TimelineItem> list = new ArrayList<TimelineItem>();
-		list.add(sleep);
-		
-		MVPApi.createProfile(token, profile);
-		MVPApi.createPedometer(token, pedo);
-		GoalsResult gresult = MVPApi.createGoal(token, goal);
-		BaseResult tresult1 = MVPApi.createTimelineItem(token, session);
-		ServiceResponse tresponse2 = MVPApi.createTimelineItems(token, list);
-		
-		
-		// set objectId
-		goal.setServerId(gresult.goals[0].getServerId());
-		session.setServerId(TimelineItem.getTimelineItem(tresult1.response).getServerId());
-		sleep.setServerId(TimelineItem.getTimelineItems(tresponse2).get(0).getServerId());
-		
-		
-		// update profile, pedometer, goal and timeline item
-		profile.setName(profile.getName() + "_updated");
-		pedo.setBatteryLevel(pedo.getBatteryLevel() + 1);
-		goal.setValue(goal.getValue() + 100);
-		
-		ActivitySessionItem data = (ActivitySessionItem)session.getData();
-		data.setPoint(data.getPoint() + 100);
-		session.setData(data);
-				
-		MVPApi.updateProfile(token, profile);
-		MVPApi.updatePedometer(token, pedo);
-		MVPApi.updateGoal(token, goal);
-		MVPApi.updateTimelineItem(token, session);
-		
-		
-		// delete sleep, device
-		session.setState(1);
-		sleep.setState(1);
-		MVPApi.updateTimelineItem(token, session);
-		MVPApi.updateTimelineItem(token, sleep);
-		MVPApi.unlinkDevice(token);
+
+
+		// create things
+		for(int i = 0; i < numberOfItems; i++)
+			MVPApi.createTimelineItem(token, DataGenerator.generateRandomActivitySessionTimelineItem(timestamp - i, null));
 	}
 	
 	
@@ -209,7 +271,11 @@ public class OpenAPINotificationServerPerformanceTest {
 
 				public void run() {
 					
-					OpenAPI.registerApp(app, cookie);
+					BaseResult r = OpenAPI.registerApp(app, cookie);
+					if(!r.isOK())
+						resultLogger.log("Register app fail: " + r.statusCode + " - " + r.rawData);
+					else
+						numbeOfSuccessfulRegisterApp++;
 				}
 			};
 
@@ -257,12 +323,14 @@ public class OpenAPINotificationServerPerformanceTest {
 
 				public void run() {
 					
-					OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_PROFILE);
-					OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_DEVICE);
-					OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
-					OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
-					OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
-					ShortcutsTyper.delayTime(10000);
+					BaseResult r = OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
+					if(!r.isOK())
+						resultLogger.log("Subscribe app fail: " + r.statusCode + " - " + r.rawData);
+					else
+					{
+						numberOfSuccessfulSubscribeApp++;
+						ShortcutsTyper.delayTime(3000);
+					}
 				}
 			};
 
@@ -278,7 +346,7 @@ public class OpenAPINotificationServerPerformanceTest {
             }
         }
         
-        ShortcutsTyper.delayTime(30000);
+        ShortcutsTyper.delayTime(Math.min(30000, 1000 * apps.size()));
 	}
 	
  	protected static List<String> signUpUsers(int numberOfUsers, final String password, int numberOfThread) {
@@ -333,7 +401,11 @@ public class OpenAPINotificationServerPerformanceTest {
 				Thread thread = new Thread() {
 					
 					public void run() {
-						OpenAPI.getAccessToken(email, password, scope, clientKey, returnUrl);
+						String accesstoken = OpenAPI.getAccessToken(email, password, scope, clientKey, returnUrl);
+						if(accesstoken == null)
+							resultLogger.log("Authorise user fail: " + email);
+						else
+							numberOfSuccessfulAuthorization++;
 					}
 				};
 				
@@ -351,7 +423,7 @@ public class OpenAPINotificationServerPerformanceTest {
         }
 	}
 
-	protected static void testNotification(List<String> emails, final String password, int numberOfThread) {
+	protected static void testNotification(List<String> emails, final String password, int numberOfThread, final int numberOfItems) {
 		
 		Collection<Future<?>> futures = new LinkedList<Future<?>>();
     	ExecutorService executor = Executors.newFixedThreadPool(numberOfThread);
@@ -363,8 +435,7 @@ public class OpenAPINotificationServerPerformanceTest {
 			Thread thread = new Thread() {
 
 				public void run() {
-					
-					runTestThread(email, password);
+					runSimpleTestThread(email, password, numberOfItems);
 				}
 			};
 
