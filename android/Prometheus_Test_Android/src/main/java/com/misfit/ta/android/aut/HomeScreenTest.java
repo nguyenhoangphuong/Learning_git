@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.android.AutomationTest;
 import com.misfit.ta.android.modelapi.homescreen.DayProgressAPI;
-import com.misfit.ta.android.modelapi.signin.SuccessfulSignInAPI;
 import com.misfit.ta.utils.Files;
 
 public class HomeScreenTest extends AutomationTest {

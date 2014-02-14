@@ -3,6 +3,7 @@ package com.misfit.ta.android.gui;
 import java.util.Random;
 
 import com.misfit.ta.android.Gui;
+import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
@@ -54,5 +55,19 @@ public class PrometheusHelper {
 	
 	public static float calculateMiles(int lastSteps, int lastDuration, float heightInInches) {
 		return (float)MVPCalculator.calculateMiles(lastSteps, lastDuration, heightInInches);
+	}
+	
+	public static String convertNearestTimeInMinuteToString(int minutes) {
+		// use for Android only
+		if (minutes < 60)
+			return String.format(DefaultStrings.RemainWalkingTimeInMinutesStringFormat, minutes);
+		else if (minutes == 60)
+			return DefaultStrings.RemainWalkingTimeOneHourText;
+
+		float hours = minutes / 60f;
+		if(minutes % 60 == 0)
+			return String.format(DefaultStrings.RemainWalkingTimeInHrsStringFormat, hours);
+		
+		return String.format(DefaultStrings.RemainWalkingTimeInHrsWithDecimalStringFormat, hours);
 	}
 }

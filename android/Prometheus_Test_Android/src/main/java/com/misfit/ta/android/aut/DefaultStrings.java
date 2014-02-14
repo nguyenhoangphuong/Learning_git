@@ -38,10 +38,14 @@ public class DefaultStrings {
 	
 	public static String PointsHomeScreenTextViewId = "id/home_points_win";
 	public static String GoalHomeScreenTextViewId = "id/home_points_goal";
-	public static String TimeRemainingHomeScreenTextViewId = "id/home_time_left";
+	public static String RemainWalkingTimeHomeScreenTextViewId = "id/home_time_left";
 	public static String StepsHomeScreenTextViewId = "id/home_activity_steps";
 	public static String MilesHomeScreenTextViewId = "id/home_activity_mile";
 	public static String CaloriesHomeScreenTextViewId = "id/home_activity_calories";
+	public static String RemainWalkingTimeInHrsWithDecimalStringFormat = "about %.1f hrs";
+	public static String RemainWalkingTimeInHrsStringFormat = "about %.0f hrs";
+	public static String RemainWalkingTimeInMinutesStringFormat = "about %d mins";
+	public static String RemainWalkingTimeOneHourText = "about 1 hr";
 	
 	public static String OKText = "OK";
 	public static String CancelText = "Cancel";
