@@ -106,19 +106,19 @@ public class GoalSettingsAPI extends ModelAPI {
 		Assert.assertTrue(ViewUtils.isExistedView(
 				"PTRichTextLabel",
 				"_WALK_\\n "
-						+ MVPCalculator
+						+ PrometheusHelper
 								.convertNearestTimeInMinuteToString(walkMins)),
 				"Suggest time for walking is correct");
 		Assert.assertTrue(ViewUtils.isExistedView(
 				"PTRichTextLabel",
 				"_RUN_\\n "
-						+ MVPCalculator
+						+ PrometheusHelper
 								.convertNearestTimeInMinuteToString(runMins)),
 				"Suggest time for running is correct");
 		Assert.assertTrue(ViewUtils.isExistedView(
 				"PTRichTextLabel",
 				"_SWIM_\\n "
-						+ MVPCalculator
+						+ PrometheusHelper
 								.convertNearestTimeInMinuteToString(swimMins)),
 				"Suggest time for swimming is correct");
 

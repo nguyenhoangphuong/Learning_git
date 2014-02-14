@@ -87,9 +87,9 @@ public class SignUp {
         int swimTime = MVPCalculator.calculateNearestTimeRemainInMinute(goal, MVPEnums.ACTIVITY_SWIMMING);
         
         return new String[] { 
-        		MVPCalculator.convertNearestTimeInMinuteToString(walkTime),
-        		MVPCalculator.convertNearestTimeInMinuteToString(runTime),
-        		MVPCalculator.convertNearestTimeInMinuteToString(swimTime),
+        		PrometheusHelper.convertNearestTimeInMinuteToString(walkTime),
+        		PrometheusHelper.convertNearestTimeInMinuteToString(runTime),
+        		PrometheusHelper.convertNearestTimeInMinuteToString(swimTime),
         };        
     }
     

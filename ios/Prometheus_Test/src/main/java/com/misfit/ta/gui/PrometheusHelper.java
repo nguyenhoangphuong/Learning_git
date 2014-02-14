@@ -444,6 +444,20 @@ public class PrometheusHelper {
 		ShortcutsTyper.delayTime(20000);
 	}
 	
+	public static String convertNearestTimeInMinuteToString(int minutes) {
+		// use for iOS only
+		if (minutes < 60)
+			return minutes + " mins";
+		else if (minutes == 60)
+			return "1 hour";
+
+		float hours = minutes / 60f;
+		if(minutes % 60 == 0)
+			return String.format("%.0f hours", hours);
+		
+		return String.format("%.1f hours", hours);
+	}
+	
 	public static void main(String[] args) {
 		Gui.init("192.168.1.144");
 		Gui.shutdown();

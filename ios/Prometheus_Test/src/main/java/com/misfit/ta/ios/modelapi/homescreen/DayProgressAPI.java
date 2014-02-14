@@ -89,7 +89,7 @@ public class DayProgressAPI extends ModelAPI {
 
 	private void calculateTotalProgressInfo() {
 
-		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps, this.lastDuration, 100);
+		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps, this.lastDuration, MVPEnums.ACTIVITY_SLEEPING);
 		this.lastMiles = PrometheusHelper.calculateMiles(lastSteps, lastDuration, height);
 
 		System.out.println("DEBUG: Last steps " + this.lastSteps);
@@ -144,7 +144,7 @@ public class DayProgressAPI extends ModelAPI {
 					String remainTimeString = Gui.getProperty("PTBottomHalfCircleLabel", 0, "text");
 					remainTimeString = remainTimeString.substring(remainTimeString.indexOf('_') + 1, remainTimeString.lastIndexOf('_'));
 
-					Assert.assertEquals(remainTimeString, MVPCalculator.convertNearestTimeInMinuteToString(remainMins), "Remain time displayed correctly");
+					Assert.assertEquals(remainTimeString, PrometheusHelper.convertNearestTimeInMinuteToString(remainMins), "Remain time displayed correctly");
 				} else {
 					
 					int beatGoalPercentage = (int) Math.round((Math.floor(this.totalPoints) - 1000) / 10);
