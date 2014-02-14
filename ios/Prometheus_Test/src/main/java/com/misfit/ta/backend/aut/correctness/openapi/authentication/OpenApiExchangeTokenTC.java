@@ -43,7 +43,7 @@ public class OpenApiExchangeTokenTC extends BackendAutomation {
 		pass &= Verify.verifyContainsNoCase(result2.rawData, "missing code parameter", "Error message (code)");
 		pass &= Verify.verifyContainsNoCase(result3.rawData, "Unauthorized", "Error message (client id)");
 		pass &= Verify.verifyContainsNoCase(result4.rawData, "Unauthorized", "Error message (client secret)");
-		pass &= Verify.verifyContainsNoCase(result5.rawData, "Missing redirect_uri param", "Error message (redirect uri)");
+		pass &= Verify.verifyContainsNoCase(result5.rawData, "Missing redirectUri", "Error message (redirect uri)");
 		
 		Assert.assertTrue(pass, "All tests are passed");
 	}
