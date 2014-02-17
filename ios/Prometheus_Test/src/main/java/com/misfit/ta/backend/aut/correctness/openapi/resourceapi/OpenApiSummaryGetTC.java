@@ -1,6 +1,7 @@
 package com.misfit.ta.backend.aut.correctness.openapi.resourceapi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.testng.Assert;
@@ -65,7 +66,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		
 		// use "me" route
 		BaseResult result = OpenAPI.getSummary(accessToken, "me", toDate, toDate);
-		OpenAPISummary summary = OpenAPISummary.fromResponse(result.response);
+		OpenAPISummary summary = OpenAPISummary.getSummary(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(summary.getCalories(), MVPCommon.round(goals.get(0).getProgressData().getCalorie(), 1), "Calories");
@@ -76,7 +77,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 				
 		// use "myUid" route
 		result = OpenAPI.getSummary(accessToken, myUid, toDate, toDate);
-		summary = OpenAPISummary.fromResponse(result.response);
+		summary = OpenAPISummary.getSummary(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(summary.getCalories(), MVPCommon.round(goals.get(0).getProgressData().getCalorie(), 1), "Calories");
@@ -100,13 +101,79 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		}
 		
 		result = OpenAPI.getSummary(accessToken, myUid, fromDate, toDate);
-		summary = OpenAPISummary.fromResponse(result.response);
+		summary = OpenAPISummary.getSummary(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(summary.getCalories(), MVPCommon.round(calories, 1), "Calories");
 		Assert.assertEquals(summary.getDistance(), MVPCommon.round(distance, 1), "Distance");
 		Assert.assertEquals(summary.getPoints(), points / 2.5, "Points");
 		Assert.assertEquals((int)summary.getSteps(), steps, "Steps");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary" })
+	public void GetSummaryDetailWithValidAccessToken() {
+		
+		// from date to date
+		BaseResult result = OpenAPI.getSummary(accessToken, "me", fromDate, toDate, true);
+		List<OpenAPISummary> summaries = OpenAPISummary.getSummaries(result.response);
+		Collections.reverse(summaries);
+
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(summaries.size(), 3, "Number of summaries in response");
+		for(int i = 0; i < summaries.size(); i++) {
+		
+			OpenAPISummary summary = summaries.get(i);
+			Assert.assertEquals(summary.getCalories(), MVPCommon.round(goals.get(i).getProgressData().getCalorie(), 1), "Calories");
+			Assert.assertEquals(summary.getDistance(), MVPCommon.round(goals.get(i).getProgressData().getDistanceMiles(), 1), "Distance");
+			Assert.assertEquals(summary.getPoints(), goals.get(i).getProgressData().getPoints() / 2.5, "Points");
+			Assert.assertEquals(summary.getSteps(), goals.get(i).getProgressData().getSteps(), "Steps");
+		}
+		
+		
+		// from date == to date
+		result = OpenAPI.getSummary(accessToken, "me", toDate, toDate, true);
+		summaries = OpenAPISummary.getSummaries(result.response);
+
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(summaries.size(), 1, "Number of summaries in response");
+		for(int i = 0; i < summaries.size(); i++) {
+
+			OpenAPISummary summary = summaries.get(i);
+			Assert.assertEquals(summary.getCalories(), MVPCommon.round(goals.get(i).getProgressData().getCalorie(), 1), "Calories");
+			Assert.assertEquals(summary.getDistance(), MVPCommon.round(goals.get(i).getProgressData().getDistanceMiles(), 1), "Distance");
+			Assert.assertEquals(summary.getPoints(), goals.get(i).getProgressData().getPoints() / 2.5, "Points");
+			Assert.assertEquals(summary.getSteps(), goals.get(i).getProgressData().getSteps(), "Steps");
+		}
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary" })
+	public void GetSummaryDetailDateOutOfRange() {
+		
+		// get detail with toDate in future
+		long timestamp = System.currentTimeMillis() / 1000;
+		BaseResult result = OpenAPI.getSummary(accessToken, "me", getISOTime(timestamp - 3600 * 24 * 10), 
+				getISOTime(timestamp + 3600 * 24 * 10), true);
+		List<OpenAPISummary> summaries = OpenAPISummary.getSummaries(result.response);
+		Collections.reverse(summaries);
+
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(summaries.size(), 5, "Number of summaries in response");
+		for(int i = 0; i < summaries.size(); i++) {
+		
+			OpenAPISummary summary = summaries.get(i);
+			Assert.assertEquals(summary.getCalories(), MVPCommon.round(goals.get(i).getProgressData().getCalorie(), 1), "Calories");
+			Assert.assertEquals(summary.getDistance(), MVPCommon.round(goals.get(i).getProgressData().getDistanceMiles(), 1), "Distance");
+			Assert.assertEquals(summary.getPoints(), goals.get(i).getProgressData().getPoints() / 2.5, "Points");
+			Assert.assertEquals(summary.getSteps(), goals.get(i).getProgressData().getSteps(), "Steps");
+		}
+		
+		
+		// get detail with toDate < fromDate
+		result = OpenAPI.getSummary(accessToken, "me", toDate, fromDate, true);
+		summaries = OpenAPISummary.getSummaries(result.response);
+
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(summaries.size(), 0, "Number of summaries in response");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary", "Excluded" })
@@ -154,7 +221,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 
 		// valid in format but invalid in logic
 		BaseResult result5 = OpenAPI.getSummary(accessToken, "me", toDate, fromDate);
-		OpenAPISummary summary = OpenAPISummary.fromResponse(result5.response);
+		OpenAPISummary summary = OpenAPISummary.getSummary(result5.response);
 		
 		Assert.assertEquals(result5.statusCode, 200, "Status code");
 		Assert.assertEquals(summary.getCalories(), 0.0, "Calories");
@@ -168,7 +235,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		
 		// authorized user
 		BaseResult result = OpenAPI.getSummary(ClientApp, myUid, toDate, toDate);
-		OpenAPISummary summary = OpenAPISummary.fromResponse(result.response);
+		OpenAPISummary summary = OpenAPISummary.getSummary(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(summary.getCalories(), MVPCommon.round(goals.get(0).getProgressData().getCalorie(), 1), "Calories");

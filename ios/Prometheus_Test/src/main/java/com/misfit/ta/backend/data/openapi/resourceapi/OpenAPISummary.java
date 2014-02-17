@@ -1,6 +1,10 @@
 package com.misfit.ta.backend.data.openapi.resourceapi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 
@@ -55,7 +59,7 @@ public class OpenAPISummary {
 		return this;
 	}
 
-	public static OpenAPISummary fromResponse(ServiceResponse response) {
+	public static OpenAPISummary getSummary(ServiceResponse response) {
 		
 		try {
 			JSONObject jsonResponse = new JSONObject(response.getResponseString());
@@ -66,6 +70,31 @@ public class OpenAPISummary {
 		} catch (JSONException e) {
 			return null;
 		}
+	}
+	
+	public static List<OpenAPISummary> getSummaries(ServiceResponse response) {
+		
+		try {
+			JSONObject objJson = new JSONObject(response.getResponseString());
+			if (!objJson.isNull("summary")) {
+				JSONArray jarr = objJson.getJSONArray("summary");
+				List<OpenAPISummary> summaries = new ArrayList<OpenAPISummary>();
+
+				for (int i = 0; i < jarr.length(); i++) {
+					
+					OpenAPISummary summary = new OpenAPISummary();
+					summary.fromJson(jarr.getJSONObject(i));
+					summaries.add(summary);
+				}
+
+				return summaries;
+			}
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 	

@@ -131,7 +131,7 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 		MVPApi.updatePedometer(myToken, pedometer);
 
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(rdevice.getDeviceType(), "shine", "Device's type");
+		Assert.assertNull(rdevice.getDeviceType(), "Device's type");
 		Assert.assertNull(rdevice.getSerialNumber(), "Device's serial number");
 		Assert.assertNull(rdevice.getFirmwareVersion(), "Device's firmware version");
 		Assert.assertNull(rdevice.getBatteryLevel(), "Device's battery level");

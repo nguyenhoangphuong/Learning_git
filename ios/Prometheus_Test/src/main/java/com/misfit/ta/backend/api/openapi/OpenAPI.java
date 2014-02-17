@@ -339,13 +339,14 @@ public class OpenAPI extends RequestHelper {
 		return parseCode(result3);
 	}
 	
-	public static List<OpenAPIThirdPartyApp> getAllApps() {
+	public static List<OpenAPIThirdPartyApp> getAllApps(String cookie) {
 		
 		// get all apps
 		String url = authenticateServerBaseAddress + "clients";
 
 		BaseParams requestInf = new BaseParams();
 		requestInf.addBasicAuthorizationHeader("misfit", "User@123");
+		requestInf.addHeader("Cookie", cookie);
 
 		ServiceResponse response = get(url, authenticateServerPort, requestInf);
 		BaseResult result = new BaseResult(response);
@@ -354,10 +355,10 @@ public class OpenAPI extends RequestHelper {
 		return apps;
 	}
 	
-	public static OpenAPIThirdPartyApp getApp(String appId) {
+	public static OpenAPIThirdPartyApp getApp(String appId, String cookie) {
 		
 		// get all apps
-		List<OpenAPIThirdPartyApp> apps = getAllApps();
+		List<OpenAPIThirdPartyApp> apps = getAllApps(cookie);
 		
 		// find app with same id and return		
 		for(OpenAPIThirdPartyApp app : apps) {
@@ -441,9 +442,15 @@ public class OpenAPI extends RequestHelper {
 	
 	public static BaseResult getSummary(String accessToken, String userId, String startDay, String endDate) {
 		
+		return getSummary(accessToken, userId, startDay, endDate, false);
+	}
+	
+	public static BaseResult getSummary(String accessToken, String userId, String startDay, String endDate, boolean detail) {
+		
 		String url = resourceServerBaseAddress + "user/" + userId + "/activity/summary?" +
 				(startDay == null ? "" : ("start_date=" + startDay)) +
-				(endDate == null ? "" : ("&end_date=" + endDate));
+				(endDate == null ? "" : ("&end_date=" + endDate)) +
+				(detail == false ? "" : "&detail=true");
 
 		BaseParams requestInf = new BaseParams();
 		if(accessToken != null)
@@ -597,11 +604,17 @@ public class OpenAPI extends RequestHelper {
 	
 	public static BaseResult getSummary(OpenAPIThirdPartyApp app, String userId, String startDay, String endDate) {
 		
+		return getSummary(app, userId, startDay, endDate, false);
+	}
+
+	public static BaseResult getSummary(OpenAPIThirdPartyApp app, String userId, String startDay, String endDate, boolean detail) {
+		
 		String clientId = app.getClientKey();
 		String clientSecret = app.getClientSecret();
 		String url = resourceServerBaseAddress + "user/" + userId + "/activity/summary?" +
 				(startDay == null ? "" : ("start_date=" + startDay)) +
-				(endDate == null ? "" : ("&end_date=" + endDate));
+				(endDate == null ? "" : ("&end_date=" + endDate)) +
+				(detail == false ? "" : "&detail=true");
 
 		BaseParams requestInf = new BaseParams();
 		if(clientId != null)

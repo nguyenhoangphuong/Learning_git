@@ -75,9 +75,13 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(rgoals.get(1).getDate(), getDateString(goals.get(1).getStartTime()), "goals[1] date");
 		Assert.assertEquals(rgoals.get(2).getDate(), getDateString(goals.get(2).getStartTime()), "goals[2] date");
 		
-		Assert.assertEquals(rgoals.get(0).getPoint(), goals.get(0).getValue() / 2.5d, "goals[0] value");
-		Assert.assertEquals(rgoals.get(1).getPoint(), goals.get(1).getValue() / 2.5d, "goals[1] value");
-		Assert.assertEquals(rgoals.get(2).getPoint(), goals.get(2).getValue() / 2.5d, "goals[2] value");
+		Assert.assertEquals(rgoals.get(0).getPoints(), goals.get(0).getProgressData().getPoints() / 2.5d, "goals[0] progress");
+		Assert.assertEquals(rgoals.get(1).getPoints(), goals.get(1).getProgressData().getPoints() / 2.5d, "goals[1] progress");
+		Assert.assertEquals(rgoals.get(2).getPoints(), goals.get(2).getProgressData().getPoints() / 2.5d, "goals[2] progress");
+		
+		Assert.assertEquals(rgoals.get(0).getTargetPoints(), goals.get(0).getValue() / 2.5d, "goals[0] value");
+		Assert.assertEquals(rgoals.get(1).getTargetPoints(), goals.get(1).getValue() / 2.5d, "goals[1] value");
+		Assert.assertEquals(rgoals.get(2).getTargetPoints(), goals.get(2).getValue() / 2.5d, "goals[2] value");
 		
 				
 		// use "myUid" route
@@ -92,9 +96,13 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(rgoals.get(1).getDate(), getDateString(goals.get(1).getStartTime()), "goals[1] date");
 		Assert.assertEquals(rgoals.get(2).getDate(), getDateString(goals.get(2).getStartTime()), "goals[2] date");
 		
-		Assert.assertEquals(rgoals.get(0).getPoint(), goals.get(0).getValue() / 2.5d, "goals[0] value");
-		Assert.assertEquals(rgoals.get(1).getPoint(), goals.get(1).getValue() / 2.5d, "goals[1] value");
-		Assert.assertEquals(rgoals.get(2).getPoint(), goals.get(2).getValue() / 2.5d, "goals[2] value");
+		Assert.assertEquals(rgoals.get(0).getPoints(), goals.get(0).getProgressData().getPoints() / 2.5d, "goals[0] progress");
+		Assert.assertEquals(rgoals.get(1).getPoints(), goals.get(1).getProgressData().getPoints() / 2.5d, "goals[1] progress");
+		Assert.assertEquals(rgoals.get(2).getPoints(), goals.get(2).getProgressData().getPoints() / 2.5d, "goals[2] progress");
+		
+		Assert.assertEquals(rgoals.get(0).getTargetPoints(), goals.get(0).getValue() / 2.5d, "goals[0] value");
+		Assert.assertEquals(rgoals.get(1).getTargetPoints(), goals.get(1).getValue() / 2.5d, "goals[1] value");
+		Assert.assertEquals(rgoals.get(2).getTargetPoints(), goals.get(2).getValue() / 2.5d, "goals[2] value");
 		
 		
 		// fromDate == toDate
@@ -105,7 +113,8 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(rgoals.size(), 1, "Number of goals in response");
 		
 		Assert.assertEquals(rgoals.get(0).getDate(), getDateString(goals.get(0).getStartTime()), "goals[0] date");
-		Assert.assertEquals(rgoals.get(0).getPoint(), goals.get(0).getValue() / 2.5d, "goals[0] value");
+		Assert.assertEquals(rgoals.get(0).getPoints(), goals.get(0).getProgressData().getPoints() / 2.5d, "goals[0] progress");
+		Assert.assertEquals(rgoals.get(0).getTargetPoints(), goals.get(0).getValue() / 2.5d, "goals[0] value");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_goals", "Excluded" })
@@ -174,9 +183,13 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(rgoals.get(1).getDate(), getDateString(goals.get(1).getStartTime()), "goals[1] date");
 		Assert.assertEquals(rgoals.get(2).getDate(), getDateString(goals.get(2).getStartTime()), "goals[2] date");
 		
-		Assert.assertEquals(rgoals.get(0).getPoint(), goals.get(0).getValue() / 2.5d, "goals[0] value");
-		Assert.assertEquals(rgoals.get(1).getPoint(), goals.get(1).getValue() / 2.5d, "goals[1] value");
-		Assert.assertEquals(rgoals.get(2).getPoint(), goals.get(2).getValue() / 2.5d, "goals[2] value");
+		Assert.assertEquals(rgoals.get(0).getPoints(), goals.get(0).getProgressData().getPoints() / 2.5d, "goals[0] progress");
+		Assert.assertEquals(rgoals.get(1).getPoints(), goals.get(1).getProgressData().getPoints() / 2.5d, "goals[1] progress");
+		Assert.assertEquals(rgoals.get(2).getPoints(), goals.get(2).getProgressData().getPoints() / 2.5d, "goals[2] progress");
+		
+		Assert.assertEquals(rgoals.get(0).getTargetPoints(), goals.get(0).getValue() / 2.5d, "goals[0] value");
+		Assert.assertEquals(rgoals.get(1).getTargetPoints(), goals.get(1).getValue() / 2.5d, "goals[1] value");
+		Assert.assertEquals(rgoals.get(2).getTargetPoints(), goals.get(2).getValue() / 2.5d, "goals[2] value");
 		
 				
 		// unauthorized user

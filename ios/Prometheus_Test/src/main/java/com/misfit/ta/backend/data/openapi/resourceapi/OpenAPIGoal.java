@@ -14,7 +14,8 @@ public class OpenAPIGoal {
 	// fields
 	private String id;
 	private String date;
-	private Double point;
+	private Double points;
+	private Double targetPoints;
 	
 	
 	// methods
@@ -25,7 +26,8 @@ public class OpenAPIGoal {
 
 			object.accumulate("id", id);
 			object.accumulate("date", date);
-			object.accumulate("point", point);
+			object.accumulate("points", points);
+			object.accumulate("targetPoints", targetPoints);
 			return object;
 			
 		} catch (JSONException e) {
@@ -43,8 +45,11 @@ public class OpenAPIGoal {
 			if (!objJson.isNull("date"))
 				this.setDate(objJson.getString("date"));
 			
-			if (!objJson.isNull("point"))
-				this.setPoint(objJson.getDouble("point"));
+			if (!objJson.isNull("points"))
+				this.setPoints(objJson.getDouble("points"));
+			
+			if (!objJson.isNull("targetPoints"))
+				this.setTargetPoints(objJson.getDouble("targetPoints"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -110,12 +115,20 @@ public class OpenAPIGoal {
 		this.date = date;
 	}
 
-	public Double getPoint() {
-		return point;
+	public Double getPoints() {
+		return points;
 	}
 
-	public void setPoint(Double point) {
-		this.point = point;
+	public void setPoints(Double points) {
+		this.points = points;
 	}
-	
+
+	public Double getTargetPoints() {
+		return targetPoints;
+	}
+
+	public void setTargetPoints(Double targetPoints) {
+		this.targetPoints = targetPoints;
+	}
+
 }

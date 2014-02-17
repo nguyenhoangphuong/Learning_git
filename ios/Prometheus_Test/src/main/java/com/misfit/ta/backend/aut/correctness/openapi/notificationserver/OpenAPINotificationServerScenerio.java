@@ -274,6 +274,18 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		updatePedometer(tokenB, "", TextTool.getRandomString(10, 10));
 
 		ShortcutsTyper.delayTime(5000);
+		
+		
+		
+		// CLEAN UP TEST, UNSUBSCRIBE ALL RESOURCES
+		resultLogger.log("\n\nCLEAN UP\n-------------------------------------------------------");
+		resultLogger.log("\n- UNSUBSCRIBE ALL ENDPOINTS");
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_PROFILE);
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_DEVICE);
+
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
 	}
 	
 	private ProfileData createRandomProfile(String token) {

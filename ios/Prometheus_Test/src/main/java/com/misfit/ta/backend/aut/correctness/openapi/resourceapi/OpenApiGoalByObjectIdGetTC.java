@@ -82,7 +82,8 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(rgoal.getDate(), getDateString(goalsA.get(0).getStartTime()), "goal date");
-		Assert.assertEquals(rgoal.getPoint(), goalsA.get(0).getValue() / 2.5d, "goal value");
+		Assert.assertEquals(rgoal.getPoints(), goalsA.get(0).getProgressData().getPoints() / 2.5d, "goal progress");
+		Assert.assertEquals(rgoal.getTargetPoints(), goalsA.get(0).getValue() / 2.5d, "goal value");
 		
 		
 		// use "me" route
@@ -91,7 +92,8 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(rgoal.getDate(), getDateString(goalsA.get(0).getStartTime()), "goal date");
-		Assert.assertEquals(rgoal.getPoint(), goalsA.get(0).getValue() / 2.5d, "goal value");
+		Assert.assertEquals(rgoal.getPoints(), goalsA.get(0).getProgressData().getPoints() / 2.5d, "goal progress");
+		Assert.assertEquals(rgoal.getTargetPoints(), goalsA.get(0).getValue() / 2.5d, "goal value");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_goals", "Excluded" })
@@ -146,7 +148,8 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(rgoal.getDate(), getDateString(goalsA.get(0).getStartTime()), "goal date");
-		Assert.assertEquals(rgoal.getPoint(), goalsA.get(0).getValue() / 2.5d, "goal value");
+		Assert.assertEquals(rgoal.getPoints(), goalsA.get(0).getProgressData().getPoints() / 2.5d, "goal progress");
+		Assert.assertEquals(rgoal.getTargetPoints(), goalsA.get(0).getValue() / 2.5d, "goal value");
 		
 		
 		// from unauthorized user

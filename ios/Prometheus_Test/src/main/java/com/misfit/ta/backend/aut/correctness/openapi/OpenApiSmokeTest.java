@@ -60,7 +60,7 @@ public class OpenApiSmokeTest extends BackendAutomation {
 		result = OpenAPI.registerApp(app, cookie);
 		Assert.assertTrue(result.isOK(), "[Dev Portal]: Register app flow is ok");
 
-		app = OpenAPI.getApp(OpenAPIThirdPartyApp.getAppFromResponse(result.response).getId());
+		app = OpenAPI.getApp(OpenAPIThirdPartyApp.getAppFromResponse(result.response).getId(), cookie);
 		String clientKey = app.getClientKey();
 		String clientSecret = app.getClientSecret();
 				
