@@ -9,7 +9,6 @@ import java.io.UnsupportedEncodingException;
 import org.graphwalker.exceptions.StopConditionException;
 import org.testng.annotations.Test;
 
-import com.misfit.ios.ViewUtils;
 import com.misfit.ta.Gui;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.internalapi.MVPApi;

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.graphwalker.conditions.EdgeCoverage;
 import org.graphwalker.exceptions.StopConditionException;
-import org.graphwalker.generators.*;
+import org.graphwalker.generators.NonOptimizedShortestPath;
 import org.graphwalker.multipleModels.ModelHandler;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,7 +15,6 @@ import com.misfit.ta.ios.modelapi.homescreen.DayProgressAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityFlowAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityMilestonesAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SleepTileRemovingAPI;
-
 import com.misfit.ta.ios.modelapi.homescreen.TaggingActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.WeekViewAPI;
 import com.misfit.ta.ios.modelapi.signin.SignInWithFacebookAPI;

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.graphwalker.conditions.EdgeCoverage;
 import org.graphwalker.exceptions.StopConditionException;
-import org.graphwalker.generators.*;
+import org.graphwalker.generators.NonOptimizedShortestPath;
 import org.graphwalker.multipleModels.ModelHandler;
 import org.testng.Assert;
 import org.testng.annotations.Test;

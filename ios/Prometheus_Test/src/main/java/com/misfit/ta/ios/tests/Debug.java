@@ -1,46 +1,51 @@
 package com.misfit.ta.ios.tests;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.google.resting.json.JSONException;
-import com.misfit.ta.Settings;
-import com.misfit.ta.backend.api.openapi.OpenAPI;
-import com.misfit.ta.backend.data.openapi.OpenAPIThirdPartyApp;
-import com.misfit.ta.backend.server.ServerHelper;
+import com.misfit.ta.base.AWSHelper;
 
 public class Debug {
 	
 	protected static Logger logger = Util.setupLogger(Debug.class);
 	
-	public static void main(String[] args) throws IOException, JSONException {
+	public static void main(String[] args) throws JSONException, IOException {
 
-		String username = "thinh+1@misfit.com";
-		String password = "misfit1";
-		String returnUrl = "https://www.google.com.vn/";
+//		File file = Files.getFile("rawdata/0101");
+//		logger.info(SyncFileData.getFileTimestampFromRawData(FileUtils.readFileToString(file)));
 		
-		String clientKey = Settings.getParameter("MVPOpenAPIClientID");
-		String clientSecret = Settings.getParameter("MVPOpenAPIClientSecret");
-		String endpoint = "http://jenkins.misfitwearables.com:8999/";
+		String bucket = "shine-binary-data";
+		String username = "vyanh02@gmail.com";
+		String serial = "science006";
 		
-//		ServerHelper.startNotificationEndpointServer("http://localhost:8999/");
+		int start = 22;
+		int end = 28;
 		
-//		OpenAPI.getAccessToken(username, password, OpenAPI.allScopesAsString(),  clientKey, returnUrl);
-		
-//		OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_DEVICE);
-//		OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_PROFILE);
-//		OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
-//		OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
-//		OpenAPI.subscribeNotification(clientKey, clientSecret, endpoint, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
-		
-		
-		OpenAPIThirdPartyApp app = new OpenAPIThirdPartyApp();
-		app.setName("TestCreateApp");
-		String cookie = OpenAPI.logIn("thinh+1@gmail.com", "qqqqqq").cookie;
-		OpenAPI.registerApp(app, cookie);
+		for(int i = start; i <= end; i++) {
+			
+			String prefix = "staging/2014/01/" + i + "/" + username + "/" + serial + "/";
+			List<String> objects = AWSHelper.listFiles(bucket, prefix);
+			
+			for(String obj : objects) {
+				
+				if(obj.contains("debug_log") || obj.contains("hardware_log") || obj.contains("metadata"))
+					continue;
+				
+				logger.info("Downloading " + obj);
+				String[] parts = obj.split("/");
+				String fileName = parts[parts.length - 1];
+				String timestampString = parts[parts.length - 2];
+				
+				AWSHelper.downloadFile(bucket, obj, "rawdata/" + i + "/" + timestampString + "/" + fileName);
+				
+			}
+		}
 	}
 
 }

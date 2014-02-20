@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.aut.correctness.openapi.authentication;
+	package com.misfit.ta.backend.aut.correctness.openapi.authentication;
 
 
 import org.testng.Assert;

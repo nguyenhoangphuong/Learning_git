@@ -5,7 +5,7 @@ import org.graphwalker.Util;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
-import com.misfit.ta.backend.aut.correctness.servercalculation.BackendServerCalculationTest;
+import com.misfit.ta.backend.aut.correctness.servercalculation.BackendServerCalculationIntegration;
 import com.misfit.ta.base.SeedThread;
 import com.misfit.ta.base.ServerResultSummary;
 
@@ -26,7 +26,7 @@ public class ServerCalculationSeed extends SeedThread {
 	// implements intefaces
 	public void run() {
 		
-		BackendServerCalculationTest test = new BackendServerCalculationTest();
+		BackendServerCalculationIntegration test = new BackendServerCalculationIntegration();
 		test.runPerformance();
 	}
 	

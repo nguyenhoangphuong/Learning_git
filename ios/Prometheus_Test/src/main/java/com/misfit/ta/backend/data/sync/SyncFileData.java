@@ -2,6 +2,7 @@ package com.misfit.ta.backend.data.sync;
 
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
+import com.misfit.ta.common.MVPCommon;
 
 public class SyncFileData {
 
@@ -36,7 +37,13 @@ public class SyncFileData {
         }
     }
   
+    public static long getFileTimestampFromRawData(String rawData) {
+    	
+    	String timestampString = rawData.substring(16, 24);
+    	return MVPCommon.litteEndianStringToLong(timestampString);
+    }
 	
+    
 	// getters setters
 	public Long getFileTimestamp() {
 		return fileTimestamp;

@@ -1,10 +1,14 @@
 package com.misfit.ta.backend.data;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
+
+import org.apache.commons.io.FileUtils;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
@@ -33,6 +37,7 @@ import com.misfit.ta.backend.data.timeline.timelineitemdata.TimezoneChangeItem;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.MVPEnums;
+import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.TextTool;
 
 public class DataGenerator {
@@ -428,6 +433,54 @@ public class DataGenerator {
 		syncLog.setEndTime(timestamp);
 		syncLog.setFirmwareRevisionString(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
 		syncLog.setSerialNumberString(TextTool.getRandomString(10, 10));
+		syncLog.setLog("AUTO GENRATED SYNCLOG");
+		syncLog.setIsSuccessful(1);
+		syncLog.setData(data);
+
+		return syncLog;
+	}
+	
+	public static SyncLog createSyncLogFromFilesInFolder(long timestamp, String serialNumber, String folderName) throws IOException {
+		
+		// get latest files
+		Files.delete(folderName);
+		File folder = Files.getFile(folderName);
+		
+		
+		// read sync files
+		List<SyncFileData> fileData = new ArrayList<SyncFileData>();
+		for(File file : folder.listFiles()) {
+
+			String fileHandle = file.getName();
+			String rawData = FileUtils.readFileToString(file);
+			int fileSize = rawData.length() / 2;
+			long fileTimestamp = SyncFileData.getFileTimestampFromRawData(rawData);
+			
+			SyncFileData syncFileData = new SyncFileData();
+			syncFileData.setFileHandle(fileHandle);
+			syncFileData.setFileSize(fileSize);
+			syncFileData.setFileTimestamp(fileTimestamp);
+			syncFileData.setRawData(rawData);
+			syncFileData.setTimestampDifference(0);
+			
+			fileData.add(syncFileData);
+		}
+		
+		SyncData data = new SyncData();
+		data.setSyncMode(3);
+		data.setAppVersion("0.23.4.5678");
+		data.setDeviceInfo("iPhone6,2");
+		data.setIosVersion("7.1");
+		data.setHardwareLog("");
+		data.setFailureLog("");
+		data.setFailureReason(0);
+		data.setFileData(fileData);
+
+		SyncLog syncLog = new SyncLog();
+		syncLog.setStartTime(timestamp - 20);
+		syncLog.setEndTime(timestamp);
+		syncLog.setFirmwareRevisionString(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
+		syncLog.setSerialNumberString(serialNumber);
 		syncLog.setLog("AUTO GENRATED SYNCLOG");
 		syncLog.setIsSuccessful(1);
 		syncLog.setData(data);
