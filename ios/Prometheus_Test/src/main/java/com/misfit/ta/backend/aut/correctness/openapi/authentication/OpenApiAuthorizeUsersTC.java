@@ -24,7 +24,6 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 
 		Assert.assertTrue(result.rawData.contains("<form action=\"/auth/users/session\" method=\"post\">"), "Contains log in form");
 		Assert.assertTrue(result.rawData.contains("<a href=\"/auth/facebook\">Login with Facebook</a>"), "Contains facebook log in link");
-		Assert.assertTrue(result.rawData.contains("<a href=\"/auth/weibo\">Login with Weibo</a>"), "Contains weibo log in link");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "authorization" })
@@ -41,7 +40,6 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 
 		Assert.assertTrue(result.rawData.contains("<form action=\"/auth/users/session\" method=\"post\">"), "Contains log in form");
 		Assert.assertTrue(result.rawData.contains("<a href=\"/auth/facebook\">Login with Facebook</a>"), "Contains facebook log in link");
-		Assert.assertTrue(result.rawData.contains("<a href=\"/auth/weibo\">Login with Weibo</a>"), "Contains weibo log in link");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "authorization" })
@@ -102,7 +100,7 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 		pass &= Verify.verifyContainsNoCase(result3.rawData, "invalid scope", "Error message (random scopes)");
 		pass &= Verify.verifyContainsNoCase(result4.rawData, "invalid scope", "Error message (scope combination: valid,,valid)");
 		pass &= Verify.verifyContainsNoCase(result5.rawData, "invalid scope", "Error message (scope combination: valid,invalid,valid)");
-		pass &= Verify.verifyContainsNoCase(result6.rawData, "invalid redirect url", "Error message (redirect url)");
+		pass &= Verify.verifyContainsNoCase(result6.rawData, "invalid url", "Error message (redirect url)");
 		
 		Assert.assertTrue(pass, "All tests are passed");
 	}
