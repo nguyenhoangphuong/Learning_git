@@ -13,12 +13,12 @@ public class PrometheusHelper {
 		return "test" + System.currentTimeMillis()
 				+ TextTool.getRandomString(6, 6) + "@misfitqa.com";
 	}
-	
+
 	public static int randInt(int includeFrom, int excludeTo) {
 		Random r = new Random();
 		return r.nextInt(excludeTo - includeFrom) + includeFrom;
 	}
-	
+
 	public static void signUp(String email) {
 		SignUp.chooseSignUp();
 		int fullScreenHeight = Gui.getScreenHeight();
@@ -26,8 +26,8 @@ public class PrometheusHelper {
 		String password = "test12";
 		SignUp.fillSignUpForm(email, password);
 		SignUp.pressNext();
-		//input profile
-		
+		// input profile
+
 		ShortcutsTyper.delayTime(4000);
 		SignUp.inputSex(true);
 		ShortcutsTyper.delayTime(500);
@@ -40,34 +40,59 @@ public class PrometheusHelper {
 		SignUp.chooseDefaultBirthdate(fullScreenHeight, fullScreenWidth);
 		ShortcutsTyper.delayOne();
 		SignUp.pressNext();
-		
+
 		SignUp.linkShine();
 	}
-	
+
 	public static void signUp() {
 		String email = generateUniqueEmail();
 		signUp(email);
 	}
 
-	public static float calculatePoint(int lastSteps, int lastDuration, int activityType) {
-		return (float)MVPCalculator.calculatePoint(lastSteps, lastDuration, activityType);
+	public static float calculatePoint(int lastSteps, int lastDuration,
+			int activityType) {
+		return (float) MVPCalculator.calculatePoint(lastSteps, lastDuration,
+				activityType);
 	}
-	
-	public static float calculateMiles(int lastSteps, int lastDuration, float heightInInches) {
-		return (float)MVPCalculator.calculateMiles(lastSteps, lastDuration, heightInInches);
+
+	public static float calculateMiles(int lastSteps, int lastDuration,
+			float heightInInches) {
+		return (float) MVPCalculator.calculateMiles(lastSteps, lastDuration,
+				heightInInches);
 	}
-	
+
 	public static String convertNearestTimeInMinuteToString(int minutes) {
 		// use for Android only
-		if (minutes < 60)
-			return String.format(DefaultStrings.RemainWalkingTimeInMinutesStringFormat, minutes);
-		else if (minutes == 60)
+		if (minutes < 60) {
+			return String.format(
+					DefaultStrings.RemainWalkingTimeInMinutesStringFormat,
+					minutes);
+		} else if (minutes == 60) {
 			return DefaultStrings.RemainWalkingTimeOneHourText;
+		} else {
+			float hours = minutes / 60f;
+			if (minutes % 60 == 0) {
+				return String.format(
+						DefaultStrings.RemainWalkingTimeInHrsStringFormat,
+						hours);
+			} else {
+				return String
+						.format(DefaultStrings.RemainWalkingTimeInHrsWithDecimalStringFormat,
+								hours);
+			}
+		}
+	}
 
-		float hours = minutes / 60f;
-		if(minutes % 60 == 0)
-			return String.format(DefaultStrings.RemainWalkingTimeInHrsStringFormat, hours);
-		
-		return String.format(DefaultStrings.RemainWalkingTimeInHrsWithDecimalStringFormat, hours);
+	public static String convertNearestTimeInMinuteToStringNumber(int minutes) {
+		// use for Android only
+		if (minutes < 60) {
+			return String.valueOf(minutes);
+		} else {
+			if (minutes % 60 == 0) {
+				return String.valueOf((int) minutes / 60);
+			} else {
+				return String.valueOf(minutes / 60f);
+			}
+		}
 	}
 }

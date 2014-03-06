@@ -124,10 +124,11 @@ public class DayProgressAPI extends ModelAPI {
 				1000 - (int) this.totalPoints, MVPEnums.ACTIVITY_WALKING);
 		ViewNode remainWalkingTimeView = ViewUtils.findView("TextView", "mID",
 				DefaultStrings.RemainWalkingTimeHomeScreenTextViewId, 0);
-		String expectedRemainWalkingTimeText = PrometheusHelper.convertNearestTimeInMinuteToString(remainMins);
-		System.out.println("Real display of remain walking time: " + remainWalkingTimeView.text);
+		String expectedRemainWalkingTimeText = PrometheusHelper.convertNearestTimeInMinuteToStringNumber(remainMins);
+		String realRemainWalkingTimeText = remainWalkingTimeView.text.substring(6, 6 + expectedRemainWalkingTimeText.length());
+		System.out.println("Real display of remain walking time: " + realRemainWalkingTimeText);
 		System.out.println("Expected display of remain walking time: " + expectedRemainWalkingTimeText);
-		Assert.assertTrue(expectedRemainWalkingTimeText.equals(remainWalkingTimeView.text), "The remain walking time is correct!!!");
+		Assert.assertTrue(Float.valueOf(expectedRemainWalkingTimeText).equals(Float.valueOf(realRemainWalkingTimeText)), "The remain walking time is correct!!!");
 	}
 	
 	private void assertActivityInfo() {

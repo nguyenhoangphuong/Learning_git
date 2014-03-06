@@ -10,7 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.android.AutomationTest;
-import com.misfit.ta.android.modelapi.*;
+import com.misfit.ta.android.modelapi.signup.SignUpAPI;
 import com.misfit.ta.utils.Files;
 
 public class SignUpTest extends AutomationTest {
