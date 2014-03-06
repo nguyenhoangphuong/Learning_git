@@ -125,7 +125,7 @@ public class SleepTileRemovingAPI extends ModelAPI {
 			Assert.assertTrue(!ViewUtils.isExistedView("UILabel", title), "There's no sleep tile");
 		
 		// make sure the tile is stored on server with state = deleted
-		List<TimelineItem> items = MVPApi.getTimelineItems(token, 0, Integer.MAX_VALUE, 0);
+		List<TimelineItem> items = MVPApi.getTimelineItems(token, 0l, (long)Integer.MAX_VALUE, 0l);
 		int numberOfDeletedSleepTile = 0;
 		for(TimelineItem item : items) {
 			if(item.getItemType().equals(TimelineItemDataBase.TYPE_SLEEP) && item.getState() != null && item.getState() == 1)

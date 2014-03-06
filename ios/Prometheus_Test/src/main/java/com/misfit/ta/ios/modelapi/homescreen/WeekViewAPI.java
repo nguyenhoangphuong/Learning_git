@@ -2,8 +2,6 @@ package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
@@ -112,7 +110,7 @@ public class WeekViewAPI extends ModelAPI {
 		if (index > 0) {
 			long startTimeStamp = getTimeStampOfPreviousDay(index);
 			long endTimeStamp = getTimeStampOfPreviousDay(1);
-			Goal[] goals = MVPApi.searchGoal(token, startTimeStamp, endTimeStamp, 0).goals;
+			Goal[] goals = MVPApi.searchGoal(token, startTimeStamp, endTimeStamp, 0l).goals;
 			System.out.println("DEBUG: start timestamp " + startTimeStamp);
 			System.out.println("DEBUG: end timestamp " + endTimeStamp);
 			for (int i = 0; i < goals.length; i++) {
@@ -163,8 +161,8 @@ public class WeekViewAPI extends ModelAPI {
 		int index = day != 1 ? day - 2 : 6;
 		long startTimeStamp = index > 0 ? getTimeStampOfPreviousDay(index) : MVPApi.getDayStartEpoch();
 		
-		Goal[] thisWeekGoals = MVPApi.searchGoal(token, startTimeStamp, MVPApi.getDayStartEpoch(), 0).goals;
-		Goal[] lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - SevenDaysDiff, MVPApi.getDayStartEpoch() - SevenDaysDiff, 0).goals;
+		Goal[] thisWeekGoals = MVPApi.searchGoal(token, startTimeStamp, MVPApi.getDayStartEpoch(), 0l).goals;
+		Goal[] lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - SevenDaysDiff, MVPApi.getDayStartEpoch() - SevenDaysDiff, 0l).goals;
 		
 		// calculate the difference in points between each day
 		int deltaProgress = 0;

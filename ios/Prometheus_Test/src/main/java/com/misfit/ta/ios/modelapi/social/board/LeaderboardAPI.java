@@ -42,7 +42,7 @@ public class LeaderboardAPI extends ModelAPI {
 		
 		long startDayEpoch = MVPApi.getDayStartEpoch(timestamp);
 		long endDayEpoch = MVPApi.getDayEndEpoch(timestamp);
-		Goal[] goals = MVPApi.searchGoal(token, startDayEpoch, endDayEpoch, 0).goals;
+		Goal[] goals = MVPApi.searchGoal(token, startDayEpoch, endDayEpoch, 0l).goals;
 		
 		// if no result, create one with progress == 0
 		if(goals == null || goals.length == 0) {

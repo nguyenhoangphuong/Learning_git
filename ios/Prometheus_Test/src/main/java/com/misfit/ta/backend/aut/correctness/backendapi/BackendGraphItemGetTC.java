@@ -30,23 +30,23 @@ public class BackendGraphItemGetTC extends BackendAutomation {
 		String token = MVPApi.signIn(email, password).token;
 		
 		// search 1
-		List<GraphItem> items = MVPApi.getGraphItems(token, 0, Integer.MAX_VALUE, 0);
+		List<GraphItem> items = MVPApi.getGraphItems(token, 0l, (long)Integer.MAX_VALUE, 0l);
 		Assert.assertEquals(items.size(), 5, "Found 5 items");
 		
 		// search 2
-		items = MVPApi.getGraphItems(token, MVPApi.getDayStartEpoch(), MVPApi.getDayStartEpoch() + 2020 * 2, 0);
+		items = MVPApi.getGraphItems(token, MVPApi.getDayStartEpoch(), MVPApi.getDayStartEpoch() + 2020 * 2, 0l);
 		Assert.assertEquals(items.size(), 3, "Found 3 items");
 		
 		// search 3
-		items = MVPApi.getGraphItems(token, MVPApi.getDayStartEpoch() + 2020 * 3 + 1, MVPApi.getDayStartEpoch() + 2020 * 4, 0);
+		items = MVPApi.getGraphItems(token, MVPApi.getDayStartEpoch() + 2020 * 3 + 1, MVPApi.getDayStartEpoch() + 2020 * 4, 0l);
 		Assert.assertEquals(items.size(), 1, "Found 1 item");
 		
 		// search 4
-		items = MVPApi.getGraphItems(token, MVPApi.getDayStartEpoch() + 2020 * 5, Integer.MAX_VALUE, 0);
+		items = MVPApi.getGraphItems(token, MVPApi.getDayStartEpoch() + 2020 * 5, (long)Integer.MAX_VALUE, 0l);
 		Assert.assertEquals(items.size(), 0, "Found 0 items");
 		
 		// search 5
-		items = MVPApi.getGraphItems(token, MVPApi.getDayStartEpoch(), MVPApi.getDayStartEpoch() - 1000, 0);
+		items = MVPApi.getGraphItems(token, MVPApi.getDayStartEpoch(), MVPApi.getDayStartEpoch() - 1000, 0l);
 		Assert.assertEquals(items.size(), 0, "Found 0 items");
 	}
 	

@@ -221,7 +221,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
 		// search goal
 		clock.tick("searchGoal");
-		MVPApi.searchGoal(token, 0, Integer.MAX_VALUE, 0);
+		MVPApi.searchGoal(token, 0l, (long)Integer.MAX_VALUE, 0l);
 		clock.tock();
 
 		// update goal

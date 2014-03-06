@@ -39,7 +39,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 
 		// store the token and newly created goal for later use
 		token = MVPApi.signIn(email, "qwerty1").token;
-		blankGoal = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(), Integer.MAX_VALUE, 0).goals[0];
+		blankGoal = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(), (long)Integer.MAX_VALUE, 0l).goals[0];
 	}
 
 	public void e_changeUnitToSI() {

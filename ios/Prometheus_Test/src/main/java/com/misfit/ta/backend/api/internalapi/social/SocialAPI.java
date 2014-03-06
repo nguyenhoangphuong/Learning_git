@@ -1,10 +1,13 @@
 package com.misfit.ta.backend.api.internalapi.social;
 
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONArray;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
@@ -25,6 +28,19 @@ public class SocialAPI extends MVPApi {
 	public static BaseResult getFriends(String token) {
 		
 		String url = baseAddress + "friends";
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		ServiceResponse response = get(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult getFriendsWithAverageUsers(String token) {
+		
+		String url = baseAddress + "friends?include_avg_user=1";
 
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
@@ -214,5 +230,42 @@ public class SocialAPI extends MVPApi {
 		return result;
 	}
 	
+	
+	public static BaseResult sendFriendRequests(String token, List<String> friendIds) {
+		
+		String url = baseAddress + "friend_requests";
+		JSONArray friendIdsJson = new JSONArray(friendIds);
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("friends", friendIdsJson.toString());
+
+		ServiceResponse response = post(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult matchContacts(String token, List<String> emails) {
+		
+		String url = baseAddress + "match_contacts";
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		if(emails != null) {
+			JSONArray emailsJson = new JSONArray(emails);
+			requestInf.addParam("emails", emailsJson.toString());
+		}
+
+		ServiceResponse response = post(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
 }
+
+
+
+
 

@@ -281,15 +281,21 @@ public class MVPApi extends RequestHelper {
 	}
 	
 	// goal apis
-	public static GoalsResult searchGoal(String token, long startTime, long endTime, long modifiedSince) {
+	public static GoalsResult searchGoal(String token, Long startTime, Long endTime, Long modifiedSince) {
 		// prepare
 		String url = baseAddress + "goals";
 
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("startTime", String.valueOf(startTime));
-		requestInf.addParam("endTime", String.valueOf(endTime));
-		requestInf.addParam("updatedAt", String.valueOf(modifiedSince));
+		
+		if(startTime != null)
+			requestInf.addParam("startTime", String.valueOf(startTime));
+		
+		if(endTime != null)
+			requestInf.addParam("endTime", String.valueOf(endTime));
+		
+		if(modifiedSince != null)
+			requestInf.addParam("updatedAt", String.valueOf(modifiedSince));
 
 		// post and recieve raw data
 		ServiceResponse response = MVPApi.get(url, port, requestInf);
@@ -414,18 +420,23 @@ public class MVPApi extends RequestHelper {
 		return GraphItem.getGraphItem(response);
 	}
 
-	public static List<GraphItem> getGraphItems(String token, long startTime, long endTime, long modifiedSince) {
+	public static List<GraphItem> getGraphItems(String token, Long startTime, Long endTime, Long modifiedSince) {
 		String url = baseAddress + "graph_items";
-		BaseParams request = new BaseParams();
+		BaseParams requestInf = new BaseParams();
 		ServiceResponse response;
 		List<GraphItem> items;
 
-		request.addHeader("auth_token", token);
-		request.addParam("startTime", String.valueOf(startTime));
-		request.addParam("endTime", String.valueOf(endTime));
-		request.addParam("modifiedSince", String.valueOf(modifiedSince));
+		requestInf.addHeader("auth_token", token);
+		if(startTime != null)
+			requestInf.addParam("startTime", String.valueOf(startTime));
+		
+		if(endTime != null)
+			requestInf.addParam("endTime", String.valueOf(endTime));
+		
+		if(modifiedSince != null)
+			requestInf.addParam("updatedAt", String.valueOf(modifiedSince));
 
-		response = MVPApi.get(url, port, request);
+		response = MVPApi.get(url, port, requestInf);
 		items = GraphItem.getGraphItems(response);
 		logger.info("Graph items count: " + items.size());
 
@@ -496,17 +507,23 @@ public class MVPApi extends RequestHelper {
 		return TimelineItem.getTimelineItem(response);
 	}
 
-	public static List<TimelineItem> getTimelineItems(String token, long startTime, long endTime, long modifiedSince) {
+	public static List<TimelineItem> getTimelineItems(String token, Long startTime, Long endTime, Long modifiedSince) {
 
 		String url = baseAddress + "timeline_items";
 
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		request.addParam("startTime", String.valueOf(startTime));
-		request.addParam("endTime", String.valueOf(endTime));
-		request.addParam("modifiedSince", String.valueOf(modifiedSince));
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addHeader("auth_token", token);
+		if(startTime != null)
+			requestInf.addParam("startTime", String.valueOf(startTime));
+		
+		if(endTime != null)
+			requestInf.addParam("endTime", String.valueOf(endTime));
+		
+		if(modifiedSince != null)
+			requestInf.addParam("updatedAt", String.valueOf(modifiedSince));
 
-		ServiceResponse response = MVPApi.get(url, port, request);
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
 		List<TimelineItem> items = TimelineItem.getTimelineItems(response);
 		logger.info("Timeline items count: " + items.size());
 

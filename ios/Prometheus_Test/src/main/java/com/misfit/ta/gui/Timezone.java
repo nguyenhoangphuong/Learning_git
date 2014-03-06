@@ -31,7 +31,7 @@ public class Timezone {
 	public static GoalsResult searchGoal(String email, String password) {
 		
 		String token = MVPApi.signIn(email, password).token;
-		GoalsResult goalsResult = MVPApi.searchGoal(token, 0, Integer.MAX_VALUE, 0);
+		GoalsResult goalsResult = MVPApi.searchGoal(token, 0l, (long)Integer.MAX_VALUE, 0l);
 		return goalsResult;
 	}
 

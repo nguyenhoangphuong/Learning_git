@@ -1,6 +1,7 @@
 package com.misfit.ta.backend.aut;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
@@ -132,7 +133,7 @@ public class BackendHelper {
 	
 	public static void clearLatestGoal(String token) {
 		
-		Goal[] goals = MVPApi.searchGoal(token, 0, Integer.MAX_VALUE, 0).goals;
+		Goal[] goals = MVPApi.searchGoal(token, 0l, Long.MAX_VALUE, 0l).goals;
 		if(goals == null || goals.length == 0)
 			return;
 		
@@ -151,4 +152,15 @@ public class BackendHelper {
 		String token = MVPApi.signIn(email, password).token;
 		clearLatestGoal(token);
 	}
+
+	
+	// social
+	public static void makeFriends(String emailA, String passwordA, String emailB, String passwordB) {
+		
+		String tokenA = MVPApi.signIn(emailA, passwordA).token;
+		String tokenB = MVPApi.signIn(emailB, passwordB).token;
+		SocialAPI.sendFriendRequest(tokenA, MVPApi.getUserId(tokenB));
+		SocialAPI.acceptFriendRequest(tokenB, MVPApi.getUserId(tokenA));
+	}
+	
 }

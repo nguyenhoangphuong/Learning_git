@@ -68,7 +68,7 @@ public class WorldFeedAPI extends ModelAPI {
 		MVPApi.updateProfile(tokenA, profileA);
 		
 		// update goal
-		goalA = MVPApi.searchGoal(tokenA, 0, Integer.MAX_VALUE, 0).goals[0];
+		goalA = MVPApi.searchGoal(tokenA, 0l, (long)Integer.MAX_VALUE, 0l).goals[0];
 		goalA.setValue(100 * 2.5);
 		MVPApi.updateGoal(tokenA, goalA);
 		
@@ -91,7 +91,7 @@ public class WorldFeedAPI extends ModelAPI {
 		MVPApi.updateProfile(tokenB, profileB);
 		
 		// update goal
-		Goal goal = MVPApi.searchGoal(tokenB, 0, Integer.MAX_VALUE, 0).goals[0];
+		Goal goal = MVPApi.searchGoal(tokenB, 0l, (long)Integer.MAX_VALUE, 0l).goals[0];
 		goal.setValue(100 * 2.5);
 		MVPApi.updateGoal(tokenB, goal);
 		

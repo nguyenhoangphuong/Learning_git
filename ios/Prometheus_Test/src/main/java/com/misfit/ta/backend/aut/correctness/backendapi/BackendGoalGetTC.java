@@ -37,7 +37,7 @@ public class BackendGoalGetTC extends BackendAutomation {
 		
 		// search 1
 		GoalsResult r = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(2, month, year), 
-				MVPApi.getDayEndEpoch(4, month, year), 0);
+				MVPApi.getDayEndEpoch(4, month, year), 0l);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isOK(), "Status code is 200");
@@ -45,7 +45,7 @@ public class BackendGoalGetTC extends BackendAutomation {
 		
 		// search 2
 		r = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(1, month, year), 
-				MVPApi.getDayEndEpoch(10, month, year), 0);
+				MVPApi.getDayEndEpoch(10, month, year), 0l);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isOK(), "Status code is 200");
@@ -53,7 +53,7 @@ public class BackendGoalGetTC extends BackendAutomation {
 		
 		// search 3
 		r = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(5, month, year), 
-				MVPApi.getDayEndEpoch(1, month, year), 0);
+				MVPApi.getDayEndEpoch(1, month, year), 0l);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isOK(), "Status code is 200");
@@ -64,7 +64,7 @@ public class BackendGoalGetTC extends BackendAutomation {
 	public void SearchGoalsInvalidToken() {
 		String token = DefaultValues.ArbitraryToken;
 		GoalsResult r = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(2, month, year), 
-				MVPApi.getDayEndEpoch(4, month, year), 0);
+				MVPApi.getDayEndEpoch(4, month, year), 0l);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isAuthInvalid(), "Status code is 401");
@@ -76,7 +76,7 @@ public class BackendGoalGetTC extends BackendAutomation {
 		String token = MVPApi.signIn(email, password).token;
 		MVPApi.signOut(token);
 		GoalsResult r = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(2, month, year), 
-				MVPApi.getDayEndEpoch(4, month, year), 0);
+				MVPApi.getDayEndEpoch(4, month, year), 0l);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isAuthInvalid(), "Status code is 401");
@@ -87,7 +87,7 @@ public class BackendGoalGetTC extends BackendAutomation {
 	public void GetGoalUseServerId() {
 		String token = MVPApi.signIn(email, password).token;
 		Goal g1 = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(2, month, year), 
-				MVPApi.getDayEndEpoch(4, month, year), 0).goals[0];
+				MVPApi.getDayEndEpoch(4, month, year), 0l).goals[0];
 		GoalsResult r = MVPApi.getGoal(token, g1.getServerId()); 
 
 		Assert.assertTrue(r.isOK(), "Status code is 200");

@@ -173,13 +173,13 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 
 		// get data from server
-		List<GraphItem> graphitems2 = MVPApi.getGraphItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0);
-		List<GraphItem> graphitems1 = MVPApi.getGraphItems(token, goals[1].getStartTime(), goals[1].getEndTime(), 0);
-		List<GraphItem> graphitems0 = MVPApi.getGraphItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0);
+		List<GraphItem> graphitems2 = MVPApi.getGraphItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
+		List<GraphItem> graphitems1 = MVPApi.getGraphItems(token, goals[1].getStartTime(), goals[1].getEndTime(), 0l);
+		List<GraphItem> graphitems0 = MVPApi.getGraphItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
 
-		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0);
-		List<TimelineItem> timelineitems1 = MVPApi.getTimelineItems(token, goals[1].getStartTime(), goals[1].getEndTime(), 0);
-		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0);
+		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
+		List<TimelineItem> timelineitems1 = MVPApi.getTimelineItems(token, goals[1].getStartTime(), goals[1].getEndTime(), 0l);
+		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
 
 		Goal goal2 = MVPApi.getGoal(token, goals[2].getServerId()).goals[0];
 		Goal goal1 = MVPApi.getGoal(token, goals[1].getServerId()).goals[0];
@@ -415,9 +415,9 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 
 		// get server data
-		List<TimelineItem> timelineitems4 = MVPApi.getTimelineItems(token, goals[4].getStartTime(), goals[4].getEndTime(), 0);
-		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0);
-		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0);
+		List<TimelineItem> timelineitems4 = MVPApi.getTimelineItems(token, goals[4].getStartTime(), goals[4].getEndTime(), 0l);
+		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
+		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
 		statistics = MVPApi.getStatistics(token);
 
 
@@ -511,7 +511,7 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		
 
 		// get server data
-		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0);
+		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0l);
 		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
 
 
@@ -610,7 +610,7 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 
 		// get server data
-		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0);
+		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0l);
 		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
 		
 		
