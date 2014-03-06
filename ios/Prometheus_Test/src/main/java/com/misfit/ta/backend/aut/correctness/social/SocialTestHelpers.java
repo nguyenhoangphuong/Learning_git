@@ -54,10 +54,13 @@ public class SocialTestHelpers {
 		ProfileData thyProfile = DataGenerator.generateRandomProfile(System.currentTimeMillis(), null);
 		misfitProfile.setHandle(misfitHandle);
 		misfitProfile.setName("Misfit Social");
+		misfitProfile.setEmail(misfitEmail);
 		tungProfile.setHandle(tungHandle);
 		tungProfile.setName("Tung Social");
+		tungProfile.setEmail(tungEmail);
 		thyProfile.setHandle(thyHandle);
 		thyProfile.setName("Thy Social");
+		thyProfile.setEmail(thyEmail);
 		
 		MVPApi.createProfile(misfitToken, misfitProfile);
 		MVPApi.createProfile(tungToken, tungProfile);
