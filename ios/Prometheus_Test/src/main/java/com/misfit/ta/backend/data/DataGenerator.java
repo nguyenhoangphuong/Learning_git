@@ -3,12 +3,15 @@ package com.misfit.ta.backend.data;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+import org.graphwalker.Util;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
@@ -24,6 +27,14 @@ import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.sync.SyncData;
 import com.misfit.ta.backend.data.sync.SyncFileData;
 import com.misfit.ta.backend.data.sync.SyncLog;
+import com.misfit.ta.backend.data.sync.sdk.SDKSyncEvent;
+import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
+import com.misfit.ta.backend.data.sync.sdk.requestevent.SDKSyncRequestFinishedEvent;
+import com.misfit.ta.backend.data.sync.sdk.requestevent.SDKSyncRequestStartedEvent;
+import com.misfit.ta.backend.data.sync.sdk.requestevent.SDKSyncResponseFinishedEvent;
+import com.misfit.ta.backend.data.sync.sdk.requestevent.SDKSyncResponseStartedEvent;
+import com.misfit.ta.backend.data.sync.sdk.requestevent.value.SDKSyncResponseFinishedValue;
+import com.misfit.ta.backend.data.sync.sdk.requestevent.value.SDKSyncResponseStartedValue;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItemTypeChangeRecord;
@@ -34,6 +45,7 @@ import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItemInfo;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.SleepSessionItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimezoneChangeItem;
+import com.misfit.ta.base.AWSHelper;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.MVPEnums;
@@ -41,6 +53,8 @@ import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.TextTool;
 
 public class DataGenerator {
+	
+	protected static Logger logger = Util.setupLogger(DataGenerator.class);
 	
 		
 	// generators
@@ -440,6 +454,40 @@ public class DataGenerator {
 		return syncLog;
 	}
 	
+	  
+	
+	// server calculation helpers
+	public static void getSyncFilesFromAWS(boolean fromStaging, String email, String serialNumber, long fromTime, long toTime, String saveFolder) {
+
+		String bucket = "shine-binary-data";
+		String environment = fromStaging ? "staging" : "production";
+		
+		for(long i = fromTime; i <= toTime; i = i + 3600 * 24) {
+			
+			Calendar cal = Calendar.getInstance();
+			String prefix = String.format("%s/%d/%02d/%02d/%s/%s", environment,
+					cal.get(Calendar.YEAR),
+					cal.get(Calendar.MONTH) + 1,
+					cal.get(Calendar.DATE),
+					email, serialNumber);
+			
+			List<String> objects = AWSHelper.listFiles(bucket, prefix);
+			
+			for(String obj : objects) {
+				
+				if(obj.contains("debug_log") || obj.contains("hardware_log") || obj.contains("metadata"))
+					continue;
+				
+				logger.info("Downloading " + obj);
+				String[] parts = obj.split("/");
+				String fileName = parts[parts.length - 1];
+				String timestampString = parts[parts.length - 2];
+				
+				AWSHelper.downloadFile(bucket, obj, saveFolder + "/" + timestampString + "/" + fileName);
+			}
+		}
+	}
+	
 	public static SyncLog createSyncLogFromFilesInFolder(long timestamp, String serialNumber, String folderName) throws IOException {
 		
 		// get latest files
@@ -485,6 +533,71 @@ public class DataGenerator {
 		syncLog.setIsSuccessful(1);
 		syncLog.setData(data);
 
+		return syncLog;
+	}
+	
+	public static SDKSyncLog createSDKSyncLogFromFilesInFolder(long timestamp, String email, String serialNumber, String folderName) throws IOException {
+		
+		long currentTimestamp = timestamp; 
+		File folder = Files.getFile(folderName);
+		List<SDKSyncEvent> events = new ArrayList<SDKSyncEvent>();
+		
+		for(File file : folder.listFiles()) {
+			
+			SDKSyncRequestStartedEvent requestStarted = new SDKSyncRequestStartedEvent();
+			requestStarted.setTimestamp(currentTimestamp++);
+			
+			SDKSyncRequestFinishedEvent requestFinished = new SDKSyncRequestFinishedEvent();
+			requestFinished.setResult(0);
+			requestFinished.setTimestamp(currentTimestamp++);
+			
+			SDKSyncResponseStartedValue value1 = new SDKSyncResponseStartedValue();
+			value1.setData(TextTool.getRandomString(5, 10));
+			
+			SDKSyncResponseStartedEvent responseStarted = new SDKSyncResponseStartedEvent();
+			responseStarted.setResult(0);
+			responseStarted.setTimestamp(currentTimestamp++);
+			responseStarted.setValue(value1);
+			
+			SDKSyncResponseFinishedValue value2 = new SDKSyncResponseFinishedValue();
+			String rawdata = FileUtils.readFileToString(file);
+			value2.setActivityData(rawdata);
+			value2.setFileFormat("12");
+			value2.setFileHandle(file.getName());
+			value2.setHandle("100");
+			value2.setLength(rawdata.length() / 2);
+			value2.setMiliseconds(0);
+			value2.setStatus(0);
+			value2.setTimestamp(currentTimestamp++);
+			value2.setTimezoneOffsetInMinutes(7 * 60);
+			
+			SDKSyncResponseFinishedEvent responseFinished = new SDKSyncResponseFinishedEvent();
+			responseFinished.setResult(0);
+			responseFinished.setTimestamp(currentTimestamp);
+			responseFinished.setValue(value2);
+			
+			SDKSyncEvent syncEvent = new SDKSyncEvent();
+			syncEvent.setEvent("fileGetActivity");
+			syncEvent.setRequestStarted(requestStarted);
+			syncEvent.setRequestFinished(requestFinished);
+			syncEvent.setResponseStarted(responseStarted);
+			syncEvent.setResponseFinished(responseFinished);
+			
+			events.add(syncEvent);
+		}
+		
+		SDKSyncLog syncLog = new SDKSyncLog();
+		syncLog.setPlatform("iOS");
+		syncLog.setSystemVersion("7.1");
+		syncLog.setDeviceModel("iPhone6,1");
+		syncLog.setSdkVersion("0.0.0");
+		syncLog.setUserId(email);
+		syncLog.setSerialNumber(serialNumber);
+		syncLog.setFirmwareVersion(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
+		syncLog.setStartAt(timestamp);
+		syncLog.setEndAt(currentTimestamp);
+		syncLog.setEvents(events);
+		
 		return syncLog;
 	}
 	

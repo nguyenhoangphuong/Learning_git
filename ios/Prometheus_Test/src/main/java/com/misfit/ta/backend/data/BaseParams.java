@@ -18,6 +18,7 @@ public class BaseParams {
 	// fields: params and headers
 	public List<Header> headers = new Vector<Header>();
 	public JSONRequestParams params = new JSONRequestParams();
+	com.google.resting.component.impl.BasicRequestParams asd;
 
 	// constructor
 	public BaseParams() {
@@ -35,22 +36,10 @@ public class BaseParams {
 
 		addHeader("Authorization", "Basic " + base64);
 	}
-	
+
 	public void addHeader(String key, String value) {
 		BasicHeader header = new BasicHeader(key, value);
 		headers.add(header);
-	}
-
-	public void addParam(String key, String value) {
-		params.add(key, value);
-	}
-
-	public void addObjectParam(String key, Object value) {
-		params.add(key, (String) value);
-	}
-
-	public void addJsonParam(String key, JSONBuilder json) {
-		params.add(key, json.toString());
 	}
 
 	public void removeHeader(String key) {
@@ -63,6 +52,13 @@ public class BaseParams {
 			}
 		}
 	}
+
+	
+	public void addParam(String key, String value) {
+		params.add(key, value);
+	}
+
+	
 	
 	public String getParamsAsJsonString() {
 		JSONBuilder json = new JSONBuilder();

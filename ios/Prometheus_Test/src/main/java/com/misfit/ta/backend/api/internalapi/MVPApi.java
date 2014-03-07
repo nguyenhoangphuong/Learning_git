@@ -36,7 +36,7 @@ public class MVPApi extends RequestHelper {
 	public static int port = Integer.parseInt(Settings.getValue("MVPBackendPort"));
 		
 	public static int CACHE_TRY_TIME = 10;
-	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.62r";
+	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.63r.psd2";
 
 	// generators
 	public static String generateUniqueEmail() {
@@ -464,7 +464,7 @@ public class MVPApi extends RequestHelper {
 
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
-		request.addObjectParam("timeline_items", items.toString());
+		request.addParam("timeline_items", items.toString());
 
 		// post and receive raw data
 		ServiceResponse response = MVPApi.post(url, port, request);
@@ -648,7 +648,7 @@ public class MVPApi extends RequestHelper {
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
 		Pedometer pedometer = new Pedometer(serialNumberString, firmwareRevisionString, linkedTime, unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
-		request.addObjectParam("pedometer", pedometer.toJson().toString());
+		request.addParam("pedometer", pedometer.toJson().toString());
 		return request;
 	}
 
