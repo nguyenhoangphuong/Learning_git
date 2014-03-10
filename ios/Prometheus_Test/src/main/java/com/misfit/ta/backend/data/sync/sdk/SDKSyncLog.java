@@ -42,7 +42,7 @@ public class SDKSyncLog {
 				for(SDKSyncEvent event : events)
 					eventsJson.put(event.toJson());
 				
-				obj.accumulate("events", eventsJson);
+				obj.put("events", eventsJson);
 			}
 
 			return obj;

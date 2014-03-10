@@ -9,7 +9,10 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.google.resting.json.JSONException;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.correctness.servercalculation.ServerCalculationTestHelpers;
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.utils.Files;
 
 
@@ -21,7 +24,10 @@ public class Debug {
 
 		Files.delete("rawdata");
 		Files.getFile("rawdata");
-		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc009@a.a", "qqqqqq");
+		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc036@a.a", "qqqqqq");
+		
+		
+//		BackendHelper.createGoalInPast(MVPApi.signIn("dcsc030@a.a", "qqqqqq").token, 50);
 	}
 
 }

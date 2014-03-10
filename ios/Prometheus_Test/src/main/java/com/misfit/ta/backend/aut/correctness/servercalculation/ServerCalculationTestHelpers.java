@@ -24,12 +24,16 @@ import com.misfit.ta.backend.data.sync.sdk.requestevent.SDKSyncResponseStartedEv
 import com.misfit.ta.backend.data.sync.sdk.requestevent.value.SDKSyncResponseFinishedValue;
 import com.misfit.ta.backend.data.sync.sdk.requestevent.value.SDKSyncResponseStartedValue;
 import com.misfit.ta.base.AWSHelper;
+import com.misfit.ta.common.MVPCommon;
+import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
 public class ServerCalculationTestHelpers {
 
 	protected static Logger logger = Util.setupLogger(ServerCalculationTestHelpers.class);
 	protected static String TestMetaDataFile = "test.json";
+	protected static int SDKSyncLogHeaderSize = 16;
+	protected static int DelayTime = 10000;
 	
 	
 	// get data from AWS to create test case
@@ -108,19 +112,20 @@ public class ServerCalculationTestHelpers {
 
 			SDKSyncResponseFinishedValue value2 = new SDKSyncResponseFinishedValue();
 			String rawdata = FileUtils.readFileToString(file);
-			value2.setActivityData(rawdata);
-			value2.setFileFormat("12");
-			value2.setFileHandle(file.getName());
+			
 			value2.setHandle("100");
-			value2.setLength(rawdata.length() / 2);
-			value2.setMiliseconds(0);
+			value2.setFileHandle(rawdata.substring(0, 4));
+			value2.setFileFormat(rawdata.substring(6, 8) + rawdata.substring(4, 6));
+			value2.setLength(MVPCommon.litteEndianStringToInteger(rawdata.substring(8, 16)));
+			value2.setTimestamp(MVPCommon.litteEndianStringToLong(rawdata.substring(16, 24)));
+			value2.setMiliseconds(MVPCommon.litteEndianStringToInteger(rawdata.substring(24, 28)));
+			value2.setTimezoneOffsetInMinutes(MVPCommon.litteEndianStringToInteger(rawdata.substring(28, 32)));
 			value2.setStatus(0);
-			value2.setTimestamp(currentTimestamp++);
-			value2.setTimezoneOffsetInMinutes(7 * 60);
+			value2.setActivityData(rawdata.substring(SDKSyncLogHeaderSize * 2, rawdata.length() - 8));
 
 			SDKSyncResponseFinishedEvent responseFinished = new SDKSyncResponseFinishedEvent();
 			responseFinished.setResult(0);
-			responseFinished.setTimestamp(currentTimestamp);
+			responseFinished.setTimestamp(currentTimestamp++);
 			responseFinished.setValue(value2);
 
 			SDKSyncEvent syncEvent = new SDKSyncEvent();
@@ -150,7 +155,7 @@ public class ServerCalculationTestHelpers {
 
 	
 	// run tests
-	public static void runTest(String testFolderPath, String newUserEmail, String newUserPassword) {
+	public static void runTest(String testFolderPath, String email, String password) {
 		
 		try {
 						
@@ -162,7 +167,10 @@ public class ServerCalculationTestHelpers {
 			long endTime = json.getLong("end_time");
 			Pedometer pedometer = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
 			
-			String token = MVPApi.signUp(newUserEmail, newUserPassword).token;
+			String token = MVPApi.signUp(email, password).token;
+			if(token == null)
+				token = MVPApi.signIn(email, password).token;
+			
 			MVPApi.createProfile(token, DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null));
 			MVPApi.createPedometer(token, pedometer);
 			MVPApi.createGoal(token, Goal.getDefaultGoal());
@@ -182,10 +190,11 @@ public class ServerCalculationTestHelpers {
 				if(syncFolder.isFile())
 					continue;
 				
-				SDKSyncLog syncLog = createSDKSyncLogFromFilesInFolder(startTimestamp, newUserEmail, pedometer.getSerialNumberString(), syncFolder.getAbsolutePath());
+				SDKSyncLog syncLog = createSDKSyncLogFromFilesInFolder(startTimestamp, email, pedometer.getSerialNumberString(), syncFolder.getAbsolutePath());
 				startTimestamp += 600;
 				
 				MVPApi.pushSDKSyncLog(syncLog);
+				ShortcutsTyper.delayTime(DelayTime);
  			}
 		}
 		catch (Exception e) {

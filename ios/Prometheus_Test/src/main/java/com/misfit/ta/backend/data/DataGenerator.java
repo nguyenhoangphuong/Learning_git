@@ -351,8 +351,8 @@ public class DataGenerator {
 		String rawData = "";
 		
 		
-		// prepare rawData's header: fileHandle + fileType + length 
-		// 		+ timestamp + timestampMiliseconds + timezoneOffsetInMinutes
+		// prepare rawData's header: fileHandle (2) + fileType (2) + length (4)
+		// 		+ timestamp (4) + timestampMiliseconds (2) + timezoneOffsetInMinutes (2)
 		rawData = fileHandle + "0011" + MVPCommon.toLittleEndianString(fileSize) 
 				+ MVPCommon.toLittleEndianString(timestamp) + "0000" + "0000";
 		
