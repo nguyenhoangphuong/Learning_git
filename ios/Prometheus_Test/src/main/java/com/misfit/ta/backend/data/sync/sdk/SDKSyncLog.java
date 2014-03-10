@@ -38,8 +38,11 @@ public class SDKSyncLog {
 			obj.accumulate("end_at", endAt);
 
 			if(events != null) {
+				JSONArray eventsJson = new JSONArray();
 				for(SDKSyncEvent event : events)
-					obj.accumulate("events", event.toJson());
+					eventsJson.put(event.toJson());
+				
+				obj.accumulate("events", eventsJson);
 			}
 
 			return obj;

@@ -1,28 +1,43 @@
 package com.misfit.ta.backend.api.internalapi;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.entity.EntityBuilder;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
+import com.google.resting.component.EncodingTypes;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.Settings;
+import com.misfit.ta.backend.api.InsecureHttpClientHelper;
 import com.misfit.ta.backend.api.RequestHelper;
-import com.misfit.ta.backend.data.account.*;
-import com.misfit.ta.backend.data.goal.*;
-import com.misfit.ta.backend.data.graph.*;
-import com.misfit.ta.backend.data.profile.*;
-import com.misfit.ta.backend.data.pedometer.*;
+import com.misfit.ta.backend.data.BaseParams;
+import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.account.AccountResult;
+import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.backend.data.goal.GoalRawData;
+import com.misfit.ta.backend.data.goal.GoalsResult;
+import com.misfit.ta.backend.data.graph.GraphItem;
+import com.misfit.ta.backend.data.pedometer.Pedometer;
+import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.backend.data.profile.ProfileResult;
 import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.sync.SyncLog;
-import com.misfit.ta.backend.data.timeline.*;
+import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
+import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
-import com.misfit.ta.backend.data.*;
 import com.misfit.ta.base.AWSHelper;
 import com.misfit.ta.utils.TextTool;
 
@@ -34,6 +49,8 @@ public class MVPApi extends RequestHelper {
 	// fields
 	public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
 	public static int port = Integer.parseInt(Settings.getValue("MVPBackendPort"));
+	
+	public static String dataCenterBaseAddress = Settings.getValue("MVPDataCenterBaseAddress");
 		
 	public static int CACHE_TRY_TIME = 10;
 	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.63r.psd2";
@@ -129,7 +146,7 @@ public class MVPApi extends RequestHelper {
 
 	public static long getDayStartEpoch(int date, int month, int year) {
 		Calendar cal = Calendar.getInstance();
-		cal.set(year, month, date, 0, 0, 0);
+		cal.set(year, month - 1, date, 0, 0, 0);
 
 		return cal.getTimeInMillis() / 1000;
 	}
@@ -150,7 +167,7 @@ public class MVPApi extends RequestHelper {
 
 	public static long getDayEndEpoch(int date, int month, int year) {
 		Calendar cal = Calendar.getInstance();
-		cal.set(year, month, date, 23, 59, 59);
+		cal.set(year, month - 1, date, 23, 59, 59);
 
 		return cal.getTimeInMillis() / 1000;
 	}
@@ -795,6 +812,48 @@ public class MVPApi extends RequestHelper {
 		
 		return log;
 	}
+	
+	public static BaseResult pushSDKSyncLog(SDKSyncLog syncLog) {
+		
+		String url = dataCenterBaseAddress + "events";
+		CloseableHttpClient httpclient = InsecureHttpClientHelper.getInsecureCloseableHttpClient();
+
+	    EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
+		entityBuilder.setText(syncLog.toJson().toString());
+		
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.addHeader("Content-Type", "application/json");
+		httpPost.addHeader("access_key_id", "39347523984598654-ajwoeifja399438ga3948g494g843fff");
+		httpPost.setEntity(entityBuilder.build());
+		
+		// for debug only
+		BaseParams params = new BaseParams();
+		params.headers = Arrays.asList(httpPost.getAllHeaders());
+		
+		try {			
+			logger.info("POST: " + url);
+			logger.info("Request headers: " + params.getHeadersAsJsonString());
+			logger.info("Request params: " + syncLog.toJson().toString());
+			
+			CloseableHttpResponse response = httpclient.execute(httpPost);
+			ServiceResponse sr = new ServiceResponse(response, EncodingTypes.UTF8);
+			
+	        HttpEntity entity = response.getEntity();
+	        EntityUtils.consume(entity);
+
+	        response.close();
+	        BaseResult result = new BaseResult(sr);
+	        
+	        logger.info("Response raw Data: " + result.rawData);
+	        logger.info("Response code: " + result.statusCode + "\n\n");
+	        
+	        return result;
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+	
 	
 	// statistics
  	public static BaseResult createStatistics(String token, Statistics statistics) {
