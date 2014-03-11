@@ -58,7 +58,7 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 	
 	public void v_HomeScreen() {
 		
-		Assert.assertTrue(HomeScreen.isTodayDefault(), "Current screen is HomeScreen");
+		Assert.assertTrue(HomeScreen.isToday(), "Current screen is HomeScreen");
 	}
 	
 	public void v_PersonalBest() {

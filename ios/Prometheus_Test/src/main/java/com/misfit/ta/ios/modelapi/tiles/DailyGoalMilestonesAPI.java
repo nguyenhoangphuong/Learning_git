@@ -88,13 +88,15 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	public void v_HomeScreenAfterSignInAgain() {
 		
 		hour = 8;
-		v_HomeScreen100();
+		checkGoalTile(1000, Timeline.DailyGoalMessagesFor100Percent);
 		
 		hour = 9;
-		v_HomeScreen150();
+		checkGoalTile(1500, Timeline.DailyGoalMessagesFor150Percent);
 		
 		hour = 10;
-		v_HomeScreen200();
+		Gui.swipeUp(1000);
+		Gui.swipeUp(1000);
+		checkGoalTile(2000, Timeline.DailyGoalMessagesFor200Percent);
 	}
 	
 	
@@ -111,9 +113,8 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 	}
 	
 	public void checkGoalTile(int points, String[] messages) {
-		System.out.println("DEBUG check goal tile Hour: " + hour);
+
 		String time = hour + ":50am";
-		System.out.println("DEBUG check goal tile Time: " + time);
 		Timeline.openNotableEventTile(time);
 		Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(time, points, messages),
 				"Daily goal milestone tile is displayed correctly");

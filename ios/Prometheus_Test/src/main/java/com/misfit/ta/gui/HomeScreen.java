@@ -196,9 +196,14 @@ public class HomeScreen {
 	
 	public static boolean isTodayDefault() {
 		return ViewUtils.isExistedView("UILabel",
-				DefaultStrings.NoActivityLabel);
+				DefaultStrings.SyncShineToSeeYourActivityLabel);
 	}
 
+	public static boolean isNoActivity() {
+		return ViewUtils.isExistedView("UILabel",
+				DefaultStrings.NoActivityLabel);
+	}
+	
 	public static boolean isEditTagTutorial() {
 		
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.TutorialForUpdateActivityTag) &&

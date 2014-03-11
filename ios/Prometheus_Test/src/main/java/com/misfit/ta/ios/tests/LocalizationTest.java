@@ -20,7 +20,7 @@ public class LocalizationTest extends AutomationTest
 	
 	// this test will be run daily to make sure
 	// our script is up to date
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "LocalizeDebug", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "LocalizeDebug", "Excluded", "Deprecated" })
     public void Localization()
     {
    		testLocalizationForLanguage("ru");
@@ -31,85 +31,85 @@ public class LocalizationTest extends AutomationTest
 	// separate into multiple tests instead of using an array
 	// so that we can run it from multi machines
 	// and in case of failure, we need to run failed tests
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeFR", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeFR", "Excluded", "Deprecated" })
     public void LocalizationFR()
     {
    		testLocalizationForLanguage("fr");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeTH", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeTH", "Excluded", "Deprecated" })
     public void LocalizationTH()
     {
    		testLocalizationForLanguage("th");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeKO", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeKO", "Excluded", "Deprecated" })
     public void LocalizationKO()
     {
    		testLocalizationForLanguage("ko");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeZH_HANS", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeZH_HANS", "Excluded", "Deprecated" })
     public void LocalizationZH_HANS()
     {
    		testLocalizationForLanguage("zh-hans");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeZH_HANT", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeZH_HANT", "Excluded", "Deprecated" })
     public void LocalizationZH_HANT()
     {
    		testLocalizationForLanguage("zh-hant");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeJA", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeJA", "Excluded", "Deprecated" })
     public void LocalizationJA()
     {
    		testLocalizationForLanguage("ja");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeRU", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeRU", "Excluded", "Deprecated" })
     public void LocalizationRU()
     {
    		testLocalizationForLanguage("ru");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeMS", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeMS", "Excluded", "Deprecated" })
     public void LocalizationMS()
     {
    		testLocalizationForLanguage("ms");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeAR", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeAR", "Excluded", "Deprecated" })
     public void LocalizationAR()
     {
    		testLocalizationForLanguage("ar");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeES", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeES", "Excluded", "Deprecated" })
     public void LocalizationES()
     {
    		testLocalizationForLanguage("es");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeIT", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeIT", "Excluded", "Deprecated" })
     public void LocalizationIT()
     {
    		testLocalizationForLanguage("it");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeTR", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeTR", "Excluded", "Deprecated" })
     public void LocalizationTR()
     {
    		testLocalizationForLanguage("tr");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizePT_PT", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizePT_PT", "Excluded", "Deprecated" })
     public void LocalizationPT_PT()
     {
    		testLocalizationForLanguage("pt-PT");
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeDE", "ProductionOnly" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Localize", "LocalizeDE", "Excluded", "Deprecated" })
     public void LocalizationDE()
     {
    		testLocalizationForLanguage("de");
