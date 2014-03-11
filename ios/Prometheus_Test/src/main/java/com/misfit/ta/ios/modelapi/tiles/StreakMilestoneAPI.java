@@ -43,7 +43,7 @@ public class StreakMilestoneAPI extends ModelAPI {
 		todayBlankGoal = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(), (long)Integer.MAX_VALUE, 0l).goals[0];
 		
 		// update current day goal's value to 100 pts
-		todayBlankGoal.setValue(100 * 2.5d);
+		todayBlankGoal.setGoalValue(100 * 2.5d);
 		MVPApi.updateGoal(token, todayBlankGoal);
 		
 		// create 1 goal in the past

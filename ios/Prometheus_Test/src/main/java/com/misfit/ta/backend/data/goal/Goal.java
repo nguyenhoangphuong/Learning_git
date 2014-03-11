@@ -15,13 +15,14 @@ import com.misfit.ta.common.MVPEnums;
 public class Goal {
 
 	// fields
-	private Double value;
+	private Double goalValue;
 	private Long startTime;
 	private Long endTime;
 	private Integer timeZoneOffsetInSeconds;
+	private Integer autosleepState;
 
 	private ProgressData progressData;
-	private List<TripleTapData> trippleTapTypeChanges;
+	private List<TripleTapData> tripleTapTypeChanges;
 
 	private String serverId;
 	private String localId;
@@ -39,23 +40,23 @@ public class Goal {
 		try {
 			JSONObject object = new JSONObject();
 
-			object.accumulate("goalValue", value);
+			object.accumulate("goalValue", goalValue);
 			object.accumulate("startTime", startTime);
 			object.accumulate("endTime", endTime);
 			object.accumulate("timeZoneOffsetInSeconds", timeZoneOffsetInSeconds);
+			object.accumulate("autosleepState", autosleepState);
 
 			if (progressData != null)
 				object.accumulate("progressData", progressData.toJson());
 			else
 				object.accumulate("progressData", null);
 
-			if (trippleTapTypeChanges != null) {
+			if (tripleTapTypeChanges != null) {
 				List<JSONObject> arr = new ArrayList<JSONObject>();
-				for (int i = 0; i < trippleTapTypeChanges.size(); i++)
-					arr.add(trippleTapTypeChanges.get(i).toJson());
+				for (int i = 0; i < tripleTapTypeChanges.size(); i++)
+					arr.add(tripleTapTypeChanges.get(i).toJson());
 				object.accumulate("tripleTapTypeChanges", arr);
-			} else
-				object.accumulate("tripleTapTypeChanges", null);
+			}
 			
 			object.accumulate("localId", localId);
 			object.accumulate("serverId", serverId);
@@ -73,7 +74,7 @@ public class Goal {
 		Goal goal = this;
 		try {
 			if (!objJson.isNull("goalValue"))
-				goal.setValue(objJson.getDouble("goalValue"));
+				goal.setGoalValue(objJson.getDouble("goalValue"));
 
 			if (!objJson.isNull("startTime"))
 				goal.setStartTime(objJson.getLong("startTime"));
@@ -83,6 +84,9 @@ public class Goal {
 
 			if (!objJson.isNull("timeZoneOffsetInSeconds"))
 				goal.setTimeZoneOffsetInSeconds(objJson.getInt("timeZoneOffsetInSeconds"));
+			
+			if (!objJson.isNull("autosleepState"))
+				goal.setAutosleepState(objJson.getInt("autosleepState"));
 
 			if (!objJson.isNull("progressData")) {
 				ProgressData data = ProgressData.fromJson(objJson.getJSONObject("progressData"));
@@ -183,24 +187,25 @@ public class Goal {
 		
 		Goal goal = new Goal();
 		goal.setLocalId("goal-" + MVPApi.generateLocalId());
-		goal.setValue(1000 * 2.5);
+		goal.setGoalValue(1000 * 2.5);
 		goal.setStartTime(MVPApi.getDayStartEpoch(timestamp));
 		goal.setEndTime(MVPApi.getDayEndEpoch(timestamp));
 		goal.setTimeZoneOffsetInSeconds(offsetFromUtc);
 		goal.setProgressData(ProgressData.getDefaultProgressData());
-		goal.setTripleTapTypeChanges(tripleTapTypeChanges);		
+		goal.setTripleTapTypeChanges(tripleTapTypeChanges);	
+		goal.setAutosleepState(1);
 		
 		return goal;
 	}
 	
 	
 	// getters setters
-	public Double getValue() {
-		return value;
+	public Double getGoalValue() {
+		return goalValue;
 	}
 
-	public void setValue(Double value) {
-		this.value = value;
+	public void setGoalValue(Double value) {
+		this.goalValue = value;
 	}
 
 	public Long getStartTime() {
@@ -219,6 +224,14 @@ public class Goal {
 		this.endTime = endTime;
 	}
 
+	public Integer getAutosleepState() {
+		return autosleepState;
+	}
+
+	public void setAutosleepState(Integer autosleepState) {
+		this.autosleepState = autosleepState;
+	}
+
 	public ProgressData getProgressData() {
 		return progressData;
 	}
@@ -228,11 +241,11 @@ public class Goal {
 	}
 
 	public List<TripleTapData> getTripleTapTypeChanges() {
-		return trippleTapTypeChanges;
+		return tripleTapTypeChanges;
 	}
 
 	public void setTripleTapTypeChanges(List<TripleTapData> tripleTapTypeChanges) {
-		this.trippleTapTypeChanges = tripleTapTypeChanges;
+		this.tripleTapTypeChanges = tripleTapTypeChanges;
 	}
 
 	public Integer getTimeZoneOffsetInSeconds() {

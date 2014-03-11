@@ -73,14 +73,21 @@ public class DefaultStrings {
 	public static String TutorialFirstPageLabel = "_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.";
 	public static String TileTimeTravelLabel = "TIME TRAVEL";
 	public static String MisfitLabsButton = "Misfit Labs";
-	public static String LeaderBoardButtonTag = "MenuFriendLeaderBoard";
-	public static String MenuProgressButtonTag = "MenuProgress";
-	public static String WorldViewButtonTag = "MenuWorldFeed";
-	public static String SocialProfileButtonTag = "MenuProfile";
 	public static String ProgressCircleTutorial = "tap for steps, calories and distance";
 	public static String SyncingLabel = "Syncing...";
 	
+	public static String TodayButtonTag = "ButtonGoToToday";
+	public static String WeeklyButtonTag = "ButtonWeekly";
+	public static String MenuActivityTimelineButtonTag = "MenuActivityGoal";
+	public static String MenuSleepTimelineButtonTag = "MenuSleepGoal";
+	public static String MenuWeightTimelineButtonTag = "MenuWeightGoal";
+	public static String MenuSocial = "MenuSocial";
 	
+	public static String SocialProfileButtonLabel = "PROFILE";
+	public static String WorldViewButtonLabel = "FEED";
+	public static String LeaderBoardTodayButtonLabel = "TODAY";
+	public static String LeaderBoardYesterdayButtonLabel = "YESTERDAY";
+			
 	public static String TutorialForUpdateActivityTag = "Hold down on an activity highlight to change the tag. You can only do this on the current day.";
 	public static String TutorialForDeleteSleepTile = "Hold down on a sleep highlight to remove it. You can only do this on the current day.";
 

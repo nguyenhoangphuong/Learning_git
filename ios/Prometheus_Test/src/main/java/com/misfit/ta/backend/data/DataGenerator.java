@@ -81,12 +81,13 @@ public class DataGenerator {
 		g.setLocalId("goal-" + MVPApi.generateLocalId());
 		g.setUpdatedAt(timestamp);
 
-		g.setValue(MVPCommon.randInt(10, 30) * 100 * 2.5);
+		g.setGoalValue(MVPCommon.randInt(10, 30) * 100 * 2.5);
 		g.setStartTime(MVPApi.getDayStartEpoch(timestamp));
 		g.setEndTime(MVPApi.getDayEndEpoch(timestamp));
 		g.setTimeZoneOffsetInSeconds(7 * 3600);
 		g.setProgressData(progressData);
 		g.setTripleTapTypeChanges(tripleTaps);
+		g.setAutosleepState(1);
 
 		return g;
 	}

@@ -18,7 +18,7 @@ public class DuplicateLagFixForGoal {
 		Assert.assertEquals(expected.getServerId(), acutal.getServerId(), "Server id");
 		Assert.assertEquals(expected.getLocalId(), acutal.getLocalId(), "Local id");
 		Assert.assertEquals(expected.getUpdatedAt(), acutal.getUpdatedAt(), "Updated at");
-		Assert.assertEquals(expected.getValue(), acutal.getValue(), "Value");
+		Assert.assertEquals(expected.getGoalValue(), acutal.getGoalValue(), "Value");
 		Assert.assertEquals(expected.getStartTime(), acutal.getStartTime(), "Start time");
 		Assert.assertEquals(expected.getEndTime(), acutal.getEndTime(), "End time");
 		Assert.assertEquals(expected.getProgressData().getPoints(), acutal.getProgressData().getPoints(), "Progress points");

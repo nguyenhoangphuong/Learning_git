@@ -14,6 +14,10 @@ import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.correctness.servercalculation.ServerCalculationTestHelpers;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.gui.AppInstaller;
+import com.misfit.ta.gui.Gui;
+import com.misfit.ta.gui.HomeScreen;
+import com.misfit.ta.gui.social.LeaderboardView;
+import com.misfit.ta.gui.social.SocialProfileView;
 import com.misfit.ta.utils.Files;
 
 
@@ -27,7 +31,18 @@ public class Debug {
 //		Files.getFile("rawdata");
 //		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc037@a.a", "qqqqqq");
 		
-		AppInstaller.launchInstrument();
+//		Gui.init("192.168.1.250");
+//		HomeScreen.tapSleepTimeline();
+//		HomeScreen.tapWeightTimeline();
+//		HomeScreen.tapActivityTimeline();
+//		HomeScreen.tapMenuSocial();
+//		LeaderboardView.tapYesterday();
+//		LeaderboardView.tapToday();
+//		HomeScreen.tapWordView();
+//		HomeScreen.tapLeaderboard();
+//		HomeScreen.tapSocialProfile();
+		
+		MVPApi.unlinkDevice(MVPApi.signIn("ios_automation_search_friend@misfitqa.com", "qwerty1").token);
 	}
 
 }

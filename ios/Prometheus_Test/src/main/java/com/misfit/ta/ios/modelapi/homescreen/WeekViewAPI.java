@@ -115,8 +115,8 @@ public class WeekViewAPI extends ModelAPI {
 			System.out.println("DEBUG: end timestamp " + endTimeStamp);
 			for (int i = 0; i < goals.length; i++) {
 				System.out.println("Goal " + goals[i].getStartTime());
-				System.out.println("Goal " + goals[i].getValue());
-				totalGoal += (int) (goals[i].getValue() / 2.5);
+				System.out.println("Goal " + goals[i].getGoalValue());
+				totalGoal += (int) (goals[i].getGoalValue() / 2.5);
 			}
 		}
 		System.out.println("DEBUG: Total goal " + totalGoal);

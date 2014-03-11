@@ -10,6 +10,7 @@ import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.social.SocialUserWithStatus;
 import com.misfit.ta.report.TRS;
+import com.misfit.ta.utils.TextTool;
 
 public class SocialSearchUsersTC extends SocialTestAutomationBase {
 	
@@ -17,8 +18,17 @@ public class SocialSearchUsersTC extends SocialTestAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SearchUsersAPI" })
 	public void SearchUsers_WithoutKeywordParam() {
 		
-		// query friends
+		// query friends non existed id
 		BaseResult result = SocialAPI.searchSocialUsers(misfitToken, null);
+
+		// no result
+		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.errorMessage, DefaultValues.InvalidParameterMessage, "Error message");
+		Assert.assertEquals(result.errorCode, DefaultValues.InvalidParameterCode, "Error code");
+		
+		
+		// query friends short keywords
+		result = SocialAPI.searchSocialUsers(misfitToken, TextTool.getRandomString(1, 2));
 
 		// no result
 		Assert.assertEquals(result.statusCode, 400, "Status code");

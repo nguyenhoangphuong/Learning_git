@@ -117,7 +117,7 @@ public class BackendHelper {
 		
 		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * diffFromToday;
 		Goal goal = Goal.getDefaultGoal(timestamp);
-		goal.setValue(2500d);
+		goal.setGoalValue(2500d);
 		goal.getProgressData().setPoints(2500d);
 		goal.getProgressData().setDistanceMiles(2d);
 		goal.getProgressData().setSteps(4000);

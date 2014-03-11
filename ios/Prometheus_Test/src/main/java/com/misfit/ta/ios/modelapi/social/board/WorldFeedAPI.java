@@ -69,7 +69,7 @@ public class WorldFeedAPI extends ModelAPI {
 		
 		// update goal
 		goalA = MVPApi.searchGoal(tokenA, 0l, (long)Integer.MAX_VALUE, 0l).goals[0];
-		goalA.setValue(100 * 2.5);
+		goalA.setGoalValue(100 * 2.5);
 		MVPApi.updateGoal(tokenA, goalA);
 		
 		// pull to refresh
@@ -92,7 +92,7 @@ public class WorldFeedAPI extends ModelAPI {
 		
 		// update goal
 		Goal goal = MVPApi.searchGoal(tokenB, 0l, (long)Integer.MAX_VALUE, 0l).goals[0];
-		goal.setValue(100 * 2.5);
+		goal.setGoalValue(100 * 2.5);
 		MVPApi.updateGoal(tokenB, goal);
 		
 		// pull to refresh
@@ -121,7 +121,7 @@ public class WorldFeedAPI extends ModelAPI {
 	
 	public void e_input100() {
 		
-		HomeScreen.tapMyProgress();
+		HomeScreen.tapActivityTimeline();
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(new String[] {"12", "00", "AM"}, 10, 1000);
 		HomeScreen.tapSave();
@@ -134,7 +134,7 @@ public class WorldFeedAPI extends ModelAPI {
 	
 	public void e_input150() {
 		
-		HomeScreen.tapMyProgress();
+		HomeScreen.tapActivityTimeline();
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(new String[] {"12", "20", "AM"}, 5, 500);
 		HomeScreen.tapSave();
@@ -175,7 +175,7 @@ public class WorldFeedAPI extends ModelAPI {
 		SocialProfileView.tapDone();
 		ShortcutsTyper.delayTime(2000);
 		SocialProfileView.tapBack();
-		HomeScreen.tapMyProgress();
+		HomeScreen.tapActivityTimeline();
 	}
 	
 	public void e_turnOnPrivacy() {
@@ -184,7 +184,7 @@ public class WorldFeedAPI extends ModelAPI {
 		SocialProfileView.tapDone();
 		ShortcutsTyper.delayTime(2000);
 		SocialProfileView.tapBack();
-		HomeScreen.tapMyProgress();
+		HomeScreen.tapActivityTimeline();
 	}
 	
 	public void e_signOut() {

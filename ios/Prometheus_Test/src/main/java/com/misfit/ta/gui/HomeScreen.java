@@ -3,6 +3,7 @@ package com.misfit.ta.gui;
 import java.util.Calendar;
 
 import com.misfit.ios.ViewUtils;
+import com.misfit.ta.gui.social.LeaderboardView;
 
 public class HomeScreen {
 
@@ -24,6 +25,7 @@ public class HomeScreen {
 		Gui.touchAVIew("PTListItemView", DefaultStrings.MyShineButton);
 	}
 
+	
 	public static void tapOpenManualInput() {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.ManualButton);
 	}
@@ -33,25 +35,48 @@ public class HomeScreen {
 	}
 
 	public static void tapArrowButtonToday() {
-		Gui.touchAVIew("UIButton", 0);
+		Gui.touchAVIew("UIButton", DefaultStrings.TodayButtonTag);
 	}
 	
-	public static void tapMyProgress() {
-		Gui.touchAVIew("UIButton", DefaultStrings.MenuProgressButtonTag);
+	public static void tapWeekViewModeButton() {
+		Gui.touchAVIew("UIButton", DefaultStrings.WeeklyButtonTag);
 	}
+	
+	public static void tapActivityTimeline() {
+		Gui.touchAVIew("UIButton", DefaultStrings.MenuActivityTimelineButtonTag);
+	}
+	
+	public static void tapSleepTimeline() {
+		Gui.touchAVIew("UIButton", DefaultStrings.MenuSleepTimelineButtonTag);
+	}
+	
+	public static void tapWeightTimeline() {
+		Gui.touchAVIew("UIButton", DefaultStrings.MenuWeightTimelineButtonTag);
+	}
+	
+	public static void tapMenuSocial() {
+		Gui.touchAVIew("UIButton", DefaultStrings.MenuSocial);
+		PrometheusHelper.waitForThrobberToDissappear();
+	}
+	
 	
 	public static void tapLeaderboard() {
-		Gui.touchAVIew("UIButton", DefaultStrings.LeaderBoardButtonTag);
+		tapMenuSocial();
+		LeaderboardView.tapToday();
 	}
 	
 	public static void tapWordView() {
-		Gui.touchAVIew("UIButton", DefaultStrings.WorldViewButtonTag);
+		tapMenuSocial();
+		Gui.touchAVIew("UIButton", DefaultStrings.WorldViewButtonLabel);
 	}
 	
 	public static void tapSocialProfile() {
-		Gui.touchAVIew("UIButton", DefaultStrings.SocialProfileButtonTag);
+		tapMenuSocial();
+		Gui.touchAVIew("UIButton", DefaultStrings.SocialProfileButtonLabel);
 	}
 	
+
+	/* Manual input */
 	public static void chooseSleep() {
 		Gui.touchAVIew("UILabel", DefaultStrings.SleepLabel);
 	}
@@ -77,7 +102,6 @@ public class HomeScreen {
 		Gui.touchAVIew("UILabel", DefaultStrings.BasketballLabel);
 	}
 
-	/* Manual input */
 	public static void tapRandom() {
 		Gui.touchAVIew("UIButtonLabel", "Random");
 	}
@@ -107,6 +131,7 @@ public class HomeScreen {
 		PrometheusHelper.inputManualRecord(times, duration, steps);
 	}
 
+	
 	/* Timeline */
 	public static void goToPreviousDays(int days) {
 		for (int i = 0; i < days; i++) {
@@ -141,9 +166,10 @@ public class HomeScreen {
 //		NuRemoteClient.sendToServer("((PTClientServerSyncService sharedService) startSyncing)");
 	}
 
+	
 	/* Visible checking */
 	public static boolean isHomeScreen() {
-		return ViewUtils.isExistedView("UIButton", DefaultStrings.LeaderBoardButtonTag);
+		return ViewUtils.isExistedView("UIButton", DefaultStrings.MenuButtonTag);
 	}
 	
 	public static boolean isToday() {
@@ -215,6 +241,7 @@ public class HomeScreen {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.TutorialForDeleteSleepTile) &&
 				ViewUtils.isExistedView("UIButtonLabel", DefaultStrings.EndTutorialButton);
 	}
+	
 	
 	// alerts
 	public static boolean hasSuggestWearingPositionForSwimmingMessage() {

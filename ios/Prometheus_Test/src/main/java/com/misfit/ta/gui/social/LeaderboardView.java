@@ -30,12 +30,12 @@ public class LeaderboardView {
 	
 	public static void tapToday() {
 		
-		Gui.touchAVIew("UILabel", DefaultStrings.TodayTitle);
+		Gui.touchAVIew("UILabel", DefaultStrings.LeaderBoardTodayButtonLabel);
 	}
 	
 	public static void tapYesterday() {
 		
-		Gui.touchAVIew("UILabel", DefaultStrings.YesterdayTitle);
+		Gui.touchAVIew("UILabel", DefaultStrings.LeaderBoardYesterdayButtonLabel);
 	}
 	
 	public static void tapDontHaveFacebook() {

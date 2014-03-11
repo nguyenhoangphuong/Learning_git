@@ -50,6 +50,7 @@ public class SocialFeatureTest extends AutomationTest
         System.out.println(actualResult);
     }
 
+	
 	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AddFriends" })
     public void AddFriends() throws InterruptedException, StopConditionException, IOException
     {

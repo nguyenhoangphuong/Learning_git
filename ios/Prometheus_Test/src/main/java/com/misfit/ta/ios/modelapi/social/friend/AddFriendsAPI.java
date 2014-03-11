@@ -66,12 +66,14 @@ public class AddFriendsAPI extends ModelAPI {
 		MVPApi.createProfile(tokenA, profileA);
 		MVPApi.createGoal(tokenA, goal);
 		MVPApi.createPedometer(tokenA, pedo);
+		MVPApi.unlinkDevice(tokenA);
 		
 		String tokenB = MVPApi.signUp(emailB, "qwerty1").token;
 		pedo.setSerialNumberString(TextTool.getRandomString(10, 10));
 		MVPApi.createProfile(tokenB, profileB);
 		MVPApi.createGoal(tokenB, goal);
 		MVPApi.createPedometer(tokenB, pedo);
+		MVPApi.unlinkDevice(tokenB);
 	}
 	
 	public void e_signInAccountA() {
