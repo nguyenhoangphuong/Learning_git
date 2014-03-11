@@ -26,6 +26,10 @@ public class SocialProfileView {
 		Gui.touchAVIew("UILabel", DefaultStrings.BackButton);
 	}
 	
+	static public void tapNext() {
+		Gui.touchAVIew("UILabel", DefaultStrings.NextButton);
+	}
+	
 	static public void tapCancel() {
 		
 		Gui.touchAVIew("UILabel", DefaultStrings.CancelButton);

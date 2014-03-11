@@ -125,6 +125,7 @@ public class CreateSocialProfileAPI extends ModelAPI {
 		SocialProfileView.inputHandle(handle);
 		SocialProfileView.tapDone();
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.ProfilePreviewViewTitle);
+		SocialProfileView.tapNext();
 	}
 	
 	public void e_tapGotIt() {
