@@ -5,6 +5,7 @@ import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.android.chimpchat.core.TouchPressType;
 import com.misfit.ta.android.gui.Helper.Helper;
+import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeScreen {
@@ -69,5 +70,14 @@ public class HomeScreen {
 	
 	public static void sleepManual() {
 		Gui.touchAView("Button", "mText", DefaultStrings.SleepText);
+	}
+	
+	public static Integer getCurrentGoalInPicker() {
+		return Integer.valueOf(getCurrentValueInPicker(0));
+	}
+	
+	public static String getCurrentValueInPicker(int index) {
+		ViewNode currentGoalView = ViewUtils.findView("ShineCustomEditText", "mID", DefaultStrings.ShineCustomEditTextInPickerId, index);
+		return currentGoalView.text;
 	}
 }

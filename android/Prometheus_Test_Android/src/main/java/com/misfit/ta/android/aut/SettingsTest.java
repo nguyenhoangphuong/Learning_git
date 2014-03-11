@@ -34,9 +34,8 @@ public class SettingsTest extends AutomationTest {
 	@Test(groups = { "android", "Prometheus", "settings" })
     public void goalSettingsTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
-        model.add("successfulSignin", new SuccessfulSignInAPI(this, Files.getFile("model/signin/SuccessfulSignIn.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
-        model.add("goalSettings", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettings.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
-        model.execute("successfulSignin");
+        model.add("goalSettings", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettings.graphml"), true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("goalSettings");
 
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();

@@ -126,37 +126,26 @@ public class SignUp {
 	public static void chooseDefaultHeightValue(int fullScreenHeight,
 			int fullScreenWidth) {
 		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpHeightTextViewId);
-		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
+		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
 	}
 
 	public static void tapToSignOutAtProfilePage(int fullScreenHeight,
 			int fullScreenWidth) {
-		dismissPopup(fullScreenHeight, fullScreenWidth,
+		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
 				DefaultStrings.SignOutText);
 	}
 
-	public static void dismissPopup(int fullScreenHeight, int fullScreenWidth,
-			String buttonText) {
-		int popupHeight = Gui.getHeight();
-		int popupWidth = Gui.getWidth();
-		ViewNode okButton = ViewUtils.findView("TextView", "mText", buttonText,
-				0);
-		Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth, popupHeight,
-				popupWidth, okButton);
-		// Magic line which makes ViewServer reload views after we dismiss popup
-		ShortcutsTyper.delayTime(50);
-	}
 
 	public static void chooseDefaultWeightValue(int fullScreenHeight,
 			int fullScreenWidth) {
 		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpWeightTextViewId);
-		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
+		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
 	}
 
 	public static void chooseDefaultBirthdate(int fullScreenHeight,
 			int fullScreenWidth) {
 		Gui.touchAView("TextView", "mID",
 				DefaultStrings.SignUpBirthdayTextViewId);
-		dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
+		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
 	}
 }

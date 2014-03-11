@@ -3,34 +3,37 @@ package com.misfit.ta.android.gui;
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.gui.Helper.Helper;
+import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class Settings {
 	// TODO need to adapt when there are more context menu options
-	// These values are used in test with device Galaxy Nexus, other devices may
+	// These values are used in test with device Nexus 4, other devices may
 	// need adaption.
-	private static final int SETTINGS_CONTEXT_WIDTH = 540;
-	private static final int SETTINGS_CONTEXT_HEIGHT = 195;
-	private static final int SETTINGS_CONTEXT_INC = 75;
+	private static final int SETTINGS_CONTEXT_X = 555;
+	private static final int SETTINGS_CONTEXT_Y = 195;
+	private static final int SETTINGS_CONTEXT_INC = 95;
 	
 	
 	/**
 	 * Settings Menu
 	 */
 	public static void tapAdjustGoal() {
-		ShortcutsTyper.delayTime(300);
-		Gui.touch(SETTINGS_CONTEXT_WIDTH, SETTINGS_CONTEXT_HEIGHT);
+		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y);
 	}
 
-	public static void tapSettings() {
-		ShortcutsTyper.delayTime(300);
-		Gui.touch(SETTINGS_CONTEXT_WIDTH, SETTINGS_CONTEXT_HEIGHT
+	public static void tapShineSettings() {
+		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y
 				+ SETTINGS_CONTEXT_INC);
 	}
 
-	public static void tapAbout() {
-		ShortcutsTyper.delayTime(300);
-		Gui.touch(SETTINGS_CONTEXT_WIDTH, SETTINGS_CONTEXT_HEIGHT
+	public static void tapHelp() {
+		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y
+				+ SETTINGS_CONTEXT_INC * 3);
+	}
+	
+	public static void tapMyProfile() {
+		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y
 				+ SETTINGS_CONTEXT_INC * 2);
 	}
 
@@ -213,45 +216,23 @@ public class Settings {
 	}
 
 	/**
-	 * About Screen
-	 */
-	public static void chooseSuport() {
-		Gui.touchAView("TextView", "mID", "id/aboutSupportContainer");
-	}
-
-	public static void chooseLikeFacebook() {
-		Gui.touchAView("TextView", "mID", "id/aboutLikeContainer");
-	}
-
-	public static void chooseWebsite() {
-		Gui.touchAView("TextView", "mID", "id/aboutWebsiteContainer");
-	}
-
-	public static void chooseRateOurApp() {
-		Gui.touchAView("TextView", "mID", "id/aboutRateContainer");
-	}
-
-	/**
 	 * Adjust Goal Screen
 	 */
 	public static void checkToConfirmGoal() {
-		Gui.touchAView("ActionMenuItemView", "mID", "id/check");
 	}
 
-	public static Integer getCurrentLevel() {
-		return Integer.valueOf(ViewUtils.findView("TextView", "mID",
-				"id/textCurrentLevel", 0).text);
+
+	public static void swipeDownGoalPicker(int fullScreenHeight,
+			int fullScreenWidth, int popupHeight, int popupWidth,
+			ViewNode viewOnPopup, int steps) {
+		Gui.swipeDownViewOnPopup(fullScreenHeight, fullScreenWidth,
+				popupHeight, popupWidth, viewOnPopup, steps);
 	}
 
-	public static void setGoalUp(int steps) {
-		for (int i = 0; i < steps; i++) {
-			Gui.touchAView("Button", 1);
-		}
-	}
-
-	public static void setGoalDown(int steps) {
-		for (int i = 0; i < steps; i++) {
-			Gui.touchAView("Button", 0);
-		}
+	public static void swipeUpGoalPicker(int fullScreenHeight,
+			int fullScreenWidth, int popupHeight, int popupWidth,
+			ViewNode viewOnPopup, int steps) {
+		Gui.swipeUpViewOnPopup(fullScreenHeight, fullScreenWidth, popupHeight,
+				popupWidth, viewOnPopup, steps);
 	}
 }

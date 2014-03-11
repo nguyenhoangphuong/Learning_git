@@ -79,10 +79,6 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_PressBackToSignOut() {
-//		fullScreenHeight = Gui.getScreenHeight();
-//		fullScreenWidth = Gui.getScreenWidth();
-//		System.out.println(fullScreenHeight);
-//		System.out.println(fullScreenWidth);              
 		ShortcutsTyper.delayTime(100);
 		SignUp.pressBack();
 		ShortcutsTyper.delayTime(100);

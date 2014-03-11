@@ -55,7 +55,14 @@ public class DefaultStrings {
 	public static String SignInText = "Sign In";
 	public static String SignUpText = "Sign Up";
 	public static String SleepText = "Sleep";
+	public static String SyncLaterText = "Sync Later";
+	public static String SyncNowText = "Sync Now";
+	public static String SyncNeededText = "Sync Needed";
+	public static String SyncNeededStatementText = "Sync now to apply your new settings to Shine."; 
+	public static String AdjustGoalText = "Adjust Goal";
 	
 	public static String IncorrectSignInMessage = "Incorrect email or password, please check and try again.";
 	public static String WalkingLeftText = "of walking left";
+	
+	public static String ShineCustomEditTextInPickerId = "id/np__numberpicker_input";
 }

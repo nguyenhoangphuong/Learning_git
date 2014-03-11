@@ -24,11 +24,11 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * This method implements the Edge 'e_ChooseSettings'
 	 * 
 	 */
-	public void e_ChooseSettings() {
+	public void e_ChooseMyProfile() {
 		ShortcutsTyper.delayTime(3000);
 		HomeScreen.tapSettingsMenu();
 		ShortcutsTyper.delayTime(3000);
-		Settings.tapSettings();
+		Settings.tapMyProfile();
 		ShortcutsTyper.delayTime(3000);
 	}
 
@@ -103,7 +103,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(3000);
 		HomeScreen.tapSettingsMenu();
 		ShortcutsTyper.delayTime(3000);
-		Settings.tapSettings();
+		Settings.tapShineSettings();
 		ShortcutsTyper.delayTime(3000);
 	}
 	private void check() {

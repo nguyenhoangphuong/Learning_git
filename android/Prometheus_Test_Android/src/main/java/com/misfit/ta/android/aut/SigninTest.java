@@ -10,15 +10,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.android.AutomationTest;
-import com.misfit.ta.android.Gui;
-import com.misfit.ta.android.ViewUtils;
-import com.misfit.ta.android.gui.HomeScreen;
-import com.misfit.ta.android.gui.Settings;
-import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.android.modelapi.signin.InvalidSignInAPI;
 import com.misfit.ta.android.modelapi.signin.SuccessfulSignInAPI;
 import com.misfit.ta.utils.Files;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SigninTest extends AutomationTest {
 

@@ -3,7 +3,9 @@ package com.misfit.ta.android.gui;
 import java.util.Random;
 
 import com.misfit.ta.android.Gui;
+import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
+import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
@@ -94,5 +96,17 @@ public class PrometheusHelper {
 				return String.valueOf(minutes / 60f);
 			}
 		}
+	}
+	
+	public static void dismissPopup(int fullScreenHeight, int fullScreenWidth,
+			String buttonText) {
+		int popupHeight = Gui.getHeight();
+		int popupWidth = Gui.getWidth();
+		ViewNode okButton = ViewUtils.findView("TextView", "mText", buttonText,
+				0);
+		Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth, popupHeight,
+				popupWidth, okButton);
+		// Magic line which makes ViewServer reload views after we dismiss popup
+		ShortcutsTyper.delayTime(50);
 	}
 }
