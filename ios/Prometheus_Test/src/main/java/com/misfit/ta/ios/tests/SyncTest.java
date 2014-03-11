@@ -16,7 +16,7 @@ import com.misfit.ta.utils.Files;
 
 public class SyncTest extends AutomationTest {
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Syncing", "Linking" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Syncing", "Linking", "Excluded" })
 	public void LinkNoShineAvailable() throws InterruptedException, StopConditionException, IOException {
 		ModelHandler model = getModelhandler();
 		model.add("LinkNoShineAvailable", new LinkNoShineAvailableAPI(this, Files.getFile("model/sync/LinkNoShineAvailable.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
@@ -26,7 +26,7 @@ public class SyncTest extends AutomationTest {
 		System.out.println(actualResult);
 	}
 
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Syncing", "Linking" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Syncing", "Linking", "Excluded" })
 	public void LinkOneShineAvailable() throws InterruptedException, StopConditionException, IOException {
 		ModelHandler model = getModelhandler();
 		model.add("LinkOneShineAvailable", new LinkOneShineAvailableAPI(this, Files.getFile("model/sync/LinkOneShineAvaiable.graphml"), false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));

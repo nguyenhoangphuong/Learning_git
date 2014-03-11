@@ -19,7 +19,7 @@ public class DefaultStrings {
 	public static String SignUpInvalidEmailMessage = "Sorry, this email is invalid";
 	public static String SignInInvalidEmailMessage = "Make sure you have the '@' and '.' in your email address.";
 	public static String InvalidPasswordMessage = "To keep your account secure, try at least 6 characters.";
-	public static String SignInWrongAccountMessage = "Incorrect email or password";
+	public static String SignInWrongAccountMessage = "Sorry, your email or password is not correct";
 	public static String SignUpDuplicatedEmailMessage = "Sorry, someone else has used this before";
 		public static String LogInButton = "Already have an account? _Sign in now_.";
 	public static String LogInFacebookButton = " SIGN IN";
