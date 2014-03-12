@@ -33,7 +33,7 @@ import com.misfit.ta.utils.TextTool;
 public class OpenAPINotificationServerPerformanceTest {
 
 	protected static Logger logger = Util.setupLogger(OpenAPINotificationServerPerformanceTest.class);
-	private static String localhost = "http://localhost:8998/";
+	private static String localhost = "http://0.0.0.0:8998/";
 	private static String endpoint = "http://jenkins.misfitwearables.com:8998/";
 	private static ResultLogger resultLogger;
 	private static List<String> errorMessages = new ArrayList<String>();

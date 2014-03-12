@@ -1,7 +1,5 @@
 package com.misfit.ta.backend.server.notificationendpoint;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,12 +11,9 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
-import com.misfit.ta.backend.aut.ResultLogger;
-import com.misfit.ta.backend.data.openapi.notification.NotificationMessage;
 import com.misfit.ta.base.BasicEvent;
 import com.sun.jersey.api.core.HttpContext;
 import com.sun.jersey.api.core.HttpRequestContext;
@@ -31,6 +26,8 @@ public class NotificationEndpointServer {
 	
 	// event when server receive notification
 	public static BasicEvent<Void> onNotificationReceived;
+	public static String KeyStoreFilePath = "keys/star_misfit_server_keystore.jks";
+	public static String KeyStorePassword = "importkey";
 	
 	
 	// http context

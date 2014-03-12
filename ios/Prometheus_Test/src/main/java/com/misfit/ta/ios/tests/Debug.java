@@ -13,12 +13,15 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.correctness.servercalculation.ServerCalculationTestHelpers;
 import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.server.ServerHelper;
+import com.misfit.ta.backend.server.notificationendpoint.NotificationEndpointServer;
 import com.misfit.ta.gui.AppInstaller;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.social.LeaderboardView;
 import com.misfit.ta.gui.social.SocialProfileView;
 import com.misfit.ta.utils.Files;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 
 public class Debug {
@@ -29,7 +32,7 @@ public class Debug {
 
 //		Files.delete("rawdata");
 //		Files.getFile("rawdata");
-//		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc037@a.a", "qqqqqq");
+//		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc040@a.a", "qqqqqq");
 		
 //		Gui.init("192.168.1.250");
 //		HomeScreen.tapSleepTimeline();
@@ -42,7 +45,12 @@ public class Debug {
 //		HomeScreen.tapLeaderboard();
 //		HomeScreen.tapSocialProfile();
 		
-		MVPApi.unlinkDevice(MVPApi.signIn("ios_automation_search_friend@misfitqa.com", "qwerty1").token);
+//		MVPApi.unlinkDevice(MVPApi.signIn("ios_automation_search_friend@misfitqa.com", "qwerty1").token);
+		
+		ServerHelper.startNotificationEndpointServer("https://0.0.0.0:8999/");
+		while(true) {
+			ShortcutsTyper.delayOne();
+		}
 	}
 
 }

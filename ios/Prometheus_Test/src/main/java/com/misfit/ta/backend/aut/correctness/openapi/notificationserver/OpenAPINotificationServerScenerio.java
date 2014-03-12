@@ -35,8 +35,10 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 
 	private static String ClientKey = Settings.getParameter("MVPOpenAPIClientID");
 	private static String ClientSecret = Settings.getParameter("MVPOpenAPIClientSecret");
-	private static String EPA = "http://jenkins.misfitwearables.com:8998/";
-	private static String EPB = "http://jenkins.misfitwearables.com:8999/";
+	private static String EPA = "https://jenkins.misfitwearables.com:8998/";
+	private static String EPB = "https://jenkins.misfitwearables.com:8999/";
+	private static String LocalhostA = "https://0.0.0.0:8998/";
+	private static String LocalhostB = "https://0.0.0.0:8999/";
 	
 	private static String scope = OpenAPI.allScopesAsString();
 	private static String returnUrl = "https://www.google.com.vn/";
@@ -93,8 +95,9 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		
 		// start notification endpoint servers EPA and EPB
 		resultLogger.log("\n- START NOTIFICATION ENDPOINTS");
-		ServerHelper.startNotificationEndpointServer("http://localhost:8998/");
-		ServerHelper.startNotificationEndpointServer("http://localhost:8999/");
+		ServerHelper.startNotificationEndpointServer(LocalhostA);
+		ServerHelper.startNotificationEndpointServer(LocalhostB);
+		ShortcutsTyper.delayTime(5000);
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "notificationserver", "Excluded" })
