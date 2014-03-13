@@ -13,6 +13,7 @@ import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
@@ -155,6 +156,8 @@ public class WorldFeedAPI extends ModelAPI {
 		
 		TimelineItem milestone = DataGenerator.generateRandomMilestoneItem(cal.getTimeInMillis() / 1000, 
 				TimelineItemDataBase.EVENT_TYPE_200_GOAL, null);
+		MilestoneItem mi = (MilestoneItem)milestone.getData();
+		mi.getInfo().setPoint(500); // 200 * 2.5
 		
 		MVPApi.createTimelineItem(tokenA, milestone);
 		
@@ -240,7 +243,7 @@ public class WorldFeedAPI extends ModelAPI {
 	public void v_WorldFeedBWithRecords() {
 
 		Assert.assertTrue(WorldFeedView.has100PercentRecord(profileB.getHandle(), 100, profileB.getGender().equals(0)),
-				"No 100% record of B on world view");
+				"There is 100% record of B on world view");
 	}
 	
 	public void v_WorldFeedAWithoutRecords() {

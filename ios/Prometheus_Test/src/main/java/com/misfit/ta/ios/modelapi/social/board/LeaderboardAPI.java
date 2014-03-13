@@ -177,6 +177,7 @@ public class LeaderboardAPI extends ModelAPI {
 	
 	public void v_LeaderboardA() {
 		
+		LeaderboardView.tapGotIt();
 		LeaderboardView.tapYesterday();
 		Assert.assertEquals(LeaderboardView.getPointOfUser(handleA), "500", "A's yesterday points");
 		Assert.assertEquals(LeaderboardView.getPointOfUser(handleB), "300", "B's yesterday points");
@@ -198,6 +199,7 @@ public class LeaderboardAPI extends ModelAPI {
 	
 	public void v_LeaderboardB() {
 
+		LeaderboardView.tapGotIt();
 		LeaderboardView.tapToday();
 		Assert.assertEquals(LeaderboardView.getPointOfUser(handleA), "-", "A's today points");
 		Assert.assertEquals(LeaderboardView.getPointOfUser(handleB), "200", "B's today points");
@@ -210,6 +212,7 @@ public class LeaderboardAPI extends ModelAPI {
 
 	public void v_LeaderboardBUpdated() {
 
+		LeaderboardView.tapGotIt();
 		LeaderboardView.tapToday();
 		Assert.assertEquals(LeaderboardView.getPointOfUser(handleA), "300", "A's today points");
 		Assert.assertEquals(LeaderboardView.getPointOfUser(handleB), "200", "B's today points");

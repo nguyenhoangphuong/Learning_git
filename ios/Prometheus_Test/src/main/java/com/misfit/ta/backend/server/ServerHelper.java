@@ -1,20 +1,21 @@
 package com.misfit.ta.backend.server;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.core.UriBuilder;
 
 import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.HttpHandler;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.grizzly.ssl.SSLContextConfigurator;
 import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 import org.graphwalker.Util;
 
-import com.misfit.ta.backend.server.notificationendpoint.NotificationEndpointServer;
-import com.misfit.ta.utils.Files;
 import com.sun.jersey.api.container.ContainerFactory;
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 import com.sun.jersey.api.core.PackagesResourceConfig;
@@ -58,22 +59,48 @@ public class ServerHelper {
 	}
 	
 	private static void startHttpsNotificationEndpointServer(final String url) {
-		
-		try {
-			Files.delete("keys");
-			Files.getFile("keys");
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
-		
+			
 		Thread thread = new Thread(new Runnable() {
 			public void run() {
 
 				ResourceConfig rc = new PackagesResourceConfig("com.misfit.ta.backend.server.notificationendpoint");
-		        SSLContextConfigurator sslCon=new SSLContextConfigurator();
+//		        SSLContextConfigurator sslCon=new SSLContextConfigurator();
+//
+//		        sslCon.setKeyStoreFile(NotificationEndpointServer.KeyStoreFilePath);
+//		        sslCon.setKeyStorePass(NotificationEndpointServer.KeyStorePassword);
+//		        sslCon.setTrustStoreFile(NotificationEndpointServer.KeyStoreFilePath);
+//		        sslCon.setTrustStorePass(NotificationEndpointServer.KeyStorePassword);
 
-		        sslCon.setKeyStoreFile(NotificationEndpointServer.KeyStoreFilePath);
-		        sslCon.setKeyStorePass(NotificationEndpointServer.KeyStorePassword);
+				TrustManager[] trustAllCerts = new TrustManager[]{
+						new X509TrustManager() {
+							public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+								return null;
+							}
+							public void checkClientTrusted(
+									java.security.cert.X509Certificate[] certs, String authType) {
+							}
+							public void checkServerTrusted(
+									java.security.cert.X509Certificate[] certs, String authType) {
+							}
+						}
+				};
+				
+				KeyManager[] keyManagers = new KeyManager[1];
+
+				// Install the all-trusting trust manager
+				SSLContext sslCon = null;
+				try {
+					sslCon = SSLContext.getInstance("SSL");
+					sslCon.init(null, trustAllCerts, new java.security.SecureRandom());
+					HttpsURLConnection.setDefaultSSLSocketFactory(sslCon.getSocketFactory());
+				} catch (Exception e) {
+				}
+		        
+		        SSLEngineConfigurator sslEngine = new SSLEngineConfigurator(sslCon)
+		        	.setClientMode(true)
+		        	.setNeedClientAuth(false)
+		        	.setNeedClientAuth(false);
+		        		        
 
 		        URI uri = UriBuilder.fromUri(url).build();		        
 		        HttpServer secure;
@@ -81,7 +108,7 @@ public class ServerHelper {
 					secure = GrizzlyServerFactory.createHttpServer(uri,
 					        ContainerFactory.createContainer(HttpHandler.class, rc),
 					        true,
-					        new SSLEngineConfigurator(sslCon).setClientMode(false));
+					        sslEngine);
 					
 					secure.start();
 					

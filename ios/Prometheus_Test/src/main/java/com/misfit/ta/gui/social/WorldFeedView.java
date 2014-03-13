@@ -70,12 +70,22 @@ public class WorldFeedView {
 	
 	public static void choosePrivacyOn() {
 		
-		Gui.touchAVIew("UIButton", 13);
+		String parentView = String.format("(ViewUtils findViewWithViewName: @\"%s\" andIndex: @\"%d\")", 
+				"PTSocialWorldFeedPrivacyView", 0);
+		String cmd = String.format("(Gui touchAView: (ViewUtils findViewWithViewName: @\"%s\" andIndex: @\"%d\" inView: %s))",
+				"UIButton", 0, parentView);
+		
+		NuRemoteClient.sendToServer(cmd);
 	}
 	
 	public static void choosePrivacyOff() {
 		
-		Gui.touchAVIew("UIButton", 14);
+		String parentView = String.format("(ViewUtils findViewWithViewName: @\"%s\" andIndex: @\"%d\")", 
+				"PTSocialWorldFeedPrivacyView", 0);
+		String cmd = String.format("(Gui touchAView: (ViewUtils findViewWithViewName: @\"%s\" andIndex: @\"%d\" inView: %s))",
+				"UIButton", 1, parentView);
+		
+		NuRemoteClient.sendToServer(cmd);
 	}
 	
 	

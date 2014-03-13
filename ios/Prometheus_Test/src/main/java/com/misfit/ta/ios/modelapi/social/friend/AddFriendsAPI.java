@@ -177,6 +177,7 @@ public class AddFriendsAPI extends ModelAPI {
 
 	public void v_LeaderboardB() {
 		
+		LeaderboardView.tapGotIt();
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", profileA.getHandle()), "Handle of A is existed on B's leaderboard");
 	}
 	

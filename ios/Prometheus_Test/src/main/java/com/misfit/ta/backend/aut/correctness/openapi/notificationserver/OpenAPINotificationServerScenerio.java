@@ -35,9 +35,9 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 
 	private static String ClientKey = Settings.getParameter("MVPOpenAPIClientID");
 	private static String ClientSecret = Settings.getParameter("MVPOpenAPIClientSecret");
-	private static String EPA = "https://jenkins.misfitwearables.com:8998/";
+	private static String EPA = "http://jenkins.misfitwearables.com:8998/";
 	private static String EPB = "https://jenkins.misfitwearables.com:8999/";
-	private static String LocalhostA = "https://0.0.0.0:8998/";
+	private static String LocalhostA = "http://0.0.0.0:8998/";
 	private static String LocalhostB = "https://0.0.0.0:8999/";
 	
 	private static String scope = OpenAPI.allScopesAsString();

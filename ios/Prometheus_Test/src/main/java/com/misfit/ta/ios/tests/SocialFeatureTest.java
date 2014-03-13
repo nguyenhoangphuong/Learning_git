@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.social.averageuser.AverageUserAutoFriendAPI;
-import com.misfit.ta.ios.modelapi.social.averageuser.AverageUserChangeGenderAPI;
 import com.misfit.ta.ios.modelapi.social.averageuser.AverageUserDeleteAndAddAgainAPI;
 import com.misfit.ta.ios.modelapi.social.board.LeaderboardAPI;
 import com.misfit.ta.ios.modelapi.social.board.WorldFeedAPI;
@@ -132,19 +131,6 @@ public class SocialFeatureTest extends AutomationTest
         		Files.getFile("model/social/averageuser/AverageUserAutoFriend.graphml"),
                 true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("AverageUserAutoFriend");
-        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
-        String actualResult = getModelhandler().getStatistics();
-        System.out.println(actualResult);
-    }
-	
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AverageUserChangeGender" })
-    public void AverageUserChangeGender() throws InterruptedException, StopConditionException, IOException
-    {
-        ModelHandler model = getModelhandler();
-        model.add("AverageUserChangeGender", new AverageUserChangeGenderAPI(this, 
-        		Files.getFile("model/social/averageuser/AverageUserChangeGender.graphml"),
-                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
-        model.execute("AverageUserChangeGender");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);

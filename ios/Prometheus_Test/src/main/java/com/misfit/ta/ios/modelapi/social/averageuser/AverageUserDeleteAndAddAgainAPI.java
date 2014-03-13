@@ -51,6 +51,8 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		ShortcutsTyper.delayOne();
 		SocialProfileView.tapDone();
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.ProfilePreviewViewTitle);
+		SocialProfileView.tapNext();
+		ShortcutsTyper.delayOne();
 		HomeScreen.tapActivityTimeline();
 	}
 	
@@ -101,7 +103,11 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		
 		Assert.assertTrue(LeaderboardView.isDefaultView(), "Current view is leaderboard view");
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", "misterfit"), "Average user's handle is visible");
-	}	
+	}
+	
+	public void v_LeaderboardNoCheck() {
+		
+	}
 	
 	public void v_LeaderboardDeleted() {
 		

@@ -28,6 +28,8 @@ public class NotificationEndpointServer {
 	public static BasicEvent<Void> onNotificationReceived;
 	public static String KeyStoreFilePath = "keys/star_misfit_server_keystore.jks";
 	public static String KeyStorePassword = "importkey";
+	public static String TrustStoreFilePath = "keys/truststore.ts";
+	public static String TrustStorePassword = "User@123";
 	
 	
 	// http context
@@ -43,7 +45,7 @@ public class NotificationEndpointServer {
     }
 	
     @POST
-    public void doPost(String body) {
+    public String doPost(String body) {
 
     	HttpRequestContext request = context.getRequest();
     	logger.info("===================================================================");
@@ -57,7 +59,7 @@ public class NotificationEndpointServer {
 			if (!jsonObj.isNull("SubscribeURL")) {
 				String subcriptionUrl = jsonObj.getString("SubscribeURL");
 				OpenAPI.confirmSubcription(subcriptionUrl);
-				return;
+				return "Message received: " + body;
 			}
 			
 			// if message field is available, it is considered a notification
@@ -72,6 +74,8 @@ public class NotificationEndpointServer {
 			
 		} catch (JSONException e) {
 		}
+    	
+    	return "Message received: " + body;
     }
 
 }

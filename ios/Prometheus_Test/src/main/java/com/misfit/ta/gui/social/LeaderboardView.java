@@ -25,16 +25,18 @@ public class LeaderboardView {
 	
 	public static void tapToCloseCurrentUser() {
 		
-		HomeScreen.tapSocialProfile();
+		HomeScreen.tapMenuSocial();
 	}
 	
 	public static void tapToday() {
 		
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		Gui.touchAVIew("UILabel", DefaultStrings.LeaderBoardTodayButtonLabel);
 	}
 	
 	public static void tapYesterday() {
 		
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		Gui.touchAVIew("UILabel", DefaultStrings.LeaderBoardYesterdayButtonLabel);
 	}
 	
@@ -84,7 +86,7 @@ public class LeaderboardView {
 	
 	public static boolean isDefaultView() {
 		
-		return ViewUtils.isExistedView("UILabel", DefaultStrings.YesterdayTitle);
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.LeaderBoardYesterdayButtonLabel);
 	}
 	
 	

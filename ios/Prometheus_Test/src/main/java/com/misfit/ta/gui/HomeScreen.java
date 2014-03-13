@@ -67,11 +67,13 @@ public class HomeScreen {
 	
 	public static void tapWordView() {
 		tapMenuSocial();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		Gui.touchAVIew("UIButton", DefaultStrings.WorldViewButtonLabel);
 	}
 	
 	public static void tapSocialProfile() {
 		tapMenuSocial();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		Gui.touchAVIew("UIButton", DefaultStrings.SocialProfileButtonLabel);
 	}
 	

@@ -50,6 +50,8 @@ public class AverageUserAutoFriendAPI extends ModelAPI {
 		ShortcutsTyper.delayOne();
 		SocialProfileView.tapDone();
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.ProfilePreviewViewTitle);
+		SocialProfileView.tapNext();
+		ShortcutsTyper.delayOne();
 		HomeScreen.tapActivityTimeline();
 	}
 	

@@ -138,7 +138,6 @@ public class EditSocialProfileAPI extends ModelAPI {
 		
 		SocialProfileView.tapBack();
 		HomeScreen.tapLeaderboard();
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.TodayTitle);
 	}
 	
 	public void e_goToSocialProfile() {

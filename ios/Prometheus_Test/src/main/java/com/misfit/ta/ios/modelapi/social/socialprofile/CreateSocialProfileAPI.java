@@ -37,6 +37,7 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	public void e_init() {
 		
 		PrometheusHelper.signUpDefaultProfile();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 	
 	public void e_goToLeaderboard() {
@@ -47,6 +48,12 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	public void e_goToWorldView() {
 		
 		HomeScreen.tapWordView();
+	}
+	
+	public void e_goToWorldViewAndWaitForPanel() {
+		
+		HomeScreen.tapWordView();
+		PrometheusHelper.waitForView("UIButton", DefaultStrings.SaveButton);
 	}
 	
 	public void e_tapDontHaveFacebook() {
