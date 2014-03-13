@@ -36,8 +36,9 @@ public class WeekViewAPI extends ModelAPI {
 		
 		String email = "thy@misfitwearables.com";
 		String password = "test12";
-		token = MVPApi.signIn(email, password).token;
 		PrometheusHelper.signIn(email, password);
+		
+		token = MVPApi.signIn(email, password).token;
 	}
 	
 	public void e_ChangeDayView() {
@@ -57,7 +58,7 @@ public class WeekViewAPI extends ModelAPI {
 		HomeScreen.tapOpenSettingsTray();
 		ShortcutsTyper.delayTime(1000);
 		HomeScreen.tapAdjustGoal();
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 				
 		int oldGoal = HomeSettings.getSpinnerGoal();
 		diff = 100;

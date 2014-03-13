@@ -16,9 +16,11 @@ import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.gui.SleepViews;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SleepTileRemovingAPI extends ModelAPI {
 	public SleepTileRemovingAPI(AutomationTest automation, File model,
@@ -37,6 +39,7 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	public void e_init() {
 		
 		email = PrometheusHelper.signUpDefaultProfile();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		token = MVPApi.signIn(email, "qwerty1").token;
 		
 		// set personal best to 500pts
@@ -48,7 +51,7 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	
 	public void e_inputSleep() {
 		
-		currentTitle = "5:59am ";
+		currentTitle = "5:59am";
 		sleepTileCount += 2;
 		allSleepTileTitles.add(currentTitle);
 		
@@ -56,11 +59,12 @@ public class SleepTileRemovingAPI extends ModelAPI {
 		HomeScreen.tap8HourSleep();
 		HomeScreen.tapSave();
 		Timeline.dragUpTimelineAndHandleTutorial();
+		ShortcutsTyper.delayOne();
 	}
 	
 	public void e_inputNap() {
 		
-		currentTitle = "2:00pm ";
+		currentTitle = "2:00pm";
 		sleepTileCount++;
 		allSleepTileTitles.add(currentTitle);
 		
@@ -71,19 +75,25 @@ public class SleepTileRemovingAPI extends ModelAPI {
 		Timeline.dragUpTimelineAndHandleTutorial();
 	}
 	
-	public void e_removeSleepTile() {
+	public void e_editSleepTile() {
 		
 		Timeline.holdAndPressTile(currentTitle);
 	}
 	
+	public void e_removeSleepTile() {
+		
+		SleepViews.tapDeleteSleep();
+	}
+	
 	public void e_cancelRemove() {
 		
-		Gui.touchAVIew("UILabel", DefaultStrings.CancelButton);
+		Gui.touchPopupButton(DefaultStrings.CancelButton);
 	}
 	
 	public void e_confirmRemove() {
 		
-		Gui.touchAVIew("UILabel", DefaultStrings.RemoveSleepButton);
+		Gui.touchPopupButton(DefaultStrings.RemoveButton);
+		ShortcutsTyper.delayOne();
 		Timeline.dragDownTimeline();
 	}
 	
@@ -103,13 +113,17 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	
 	public void v_HomeScreenWithSleepTile() {
 		
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", currentTitle), "Current sleep tile is existed");
+		Assert.assertTrue(Timeline.isTileExisted(currentTitle), "Current sleep tile is existed");
+	}
+	
+	public void v_EditSleep() {
+		
+		Assert.assertTrue(SleepViews.isEditSleepView(), "Current view is edit sleep popup");
 	}
 	
 	public void v_RemoveSleepConfirm() {
 		
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.RemoveSleepButton) &&
-				ViewUtils.isExistedView("UILabel", DefaultStrings.CancelButton), 
+		Assert.assertTrue(SleepViews.hasRemoveSleepConfirmationAlert(), 
 				"Action sheet confirmation is shown");		
 	}
 	

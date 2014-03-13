@@ -44,10 +44,16 @@ public class ServerCalculationTestHelpers {
 		
 		getSyncFilesFromAWS(true, email, startTime, endTime, saveFolder);
 		try {
-			String jsonString = String.format("{\"start_time\":%d,\"end_time\":%d,\"email\":%s}", startTime, endTime, email);
-			FileUtils.write(new File(saveFolder + "/" + TestMetaDataFile), jsonString);
+			JSONObject json = new JSONObject();
+			json.put("start_time", startTime);
+			json.put("end_time", endTime);
+			json.put("start_date", String.format("%02d/%02d/%d", startDate, startMonth, startYear));
+			json.put("end_date", String.format("%02d/%02d/%d", endDate, endMonth, endYear));
+			json.put("email", email);
 			
-		} catch (IOException e) {
+			FileUtils.write(new File(saveFolder + "/" + TestMetaDataFile), json.toString());
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

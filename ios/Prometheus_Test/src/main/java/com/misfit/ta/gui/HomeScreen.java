@@ -38,10 +38,6 @@ public class HomeScreen {
 		Gui.touchAVIew("UIButton", DefaultStrings.TodayButtonTag);
 	}
 	
-	public static void tapWeekViewModeButton() {
-		Gui.touchAVIew("UIButton", DefaultStrings.WeeklyButtonTag);
-	}
-	
 	public static void tapActivityTimeline() {
 		Gui.touchAVIew("UIButton", DefaultStrings.MenuActivityTimelineButtonTag);
 	}

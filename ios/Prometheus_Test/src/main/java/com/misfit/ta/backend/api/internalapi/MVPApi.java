@@ -530,7 +530,7 @@ public class MVPApi extends RequestHelper {
 
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
-		requestInf.addHeader("auth_token", token);
+		
 		if(startTime != null)
 			requestInf.addParam("startTime", String.valueOf(startTime));
 		

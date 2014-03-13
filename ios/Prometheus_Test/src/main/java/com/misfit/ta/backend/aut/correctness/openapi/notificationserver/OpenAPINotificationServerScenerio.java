@@ -35,10 +35,12 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 
 	private static String ClientKey = Settings.getParameter("MVPOpenAPIClientID");
 	private static String ClientSecret = Settings.getParameter("MVPOpenAPIClientSecret");
-	private static String EPA = "http://jenkins.misfitwearables.com:8998/";
-	private static String EPB = "https://jenkins.misfitwearables.com:8999/";
+//	private static String EPA = "http://jenkins.misfitwearables.com:8998/";
+//	private static String EPB = "http://jenkins.misfitwearables.com:8999/";
+	private static String EPA = "https://tester.int.misfitwearables.com/handle_post.php";
+	private static String EPB = "https://tester.int.misfitwearables.com/handle_post.php";
 	private static String LocalhostA = "http://0.0.0.0:8998/";
-	private static String LocalhostB = "https://0.0.0.0:8999/";
+	private static String LocalhostB = "http://0.0.0.0:8999/";
 	
 	private static String scope = OpenAPI.allScopesAsString();
 	private static String returnUrl = "https://www.google.com.vn/";
@@ -95,9 +97,9 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		
 		// start notification endpoint servers EPA and EPB
 		resultLogger.log("\n- START NOTIFICATION ENDPOINTS");
-		ServerHelper.startNotificationEndpointServer(LocalhostA);
-		ServerHelper.startNotificationEndpointServer(LocalhostB);
-		ShortcutsTyper.delayTime(5000);
+//		ServerHelper.startNotificationEndpointServer(LocalhostA);
+//		ServerHelper.startNotificationEndpointServer(LocalhostB);
+//		ShortcutsTyper.delayTime(5000);
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "notificationserver", "Excluded" })
@@ -106,17 +108,17 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		// PART 1
 		// subcribe profiles, devices to EPA
 		// subcribe goals, sessions, sleeps to EPB
-		resultLogger.log("\n\nPART 1\n-------------------------------------------------------");
-		resultLogger.log("\n- SUBCRIBE PROFILES, DEVICES TO EPA - " + EPA);
-		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_PROFILE);
-		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_DEVICE);
+//		resultLogger.log("\n\nPART 1\n-------------------------------------------------------");
+//		resultLogger.log("\n- SUBCRIBE PROFILES, DEVICES TO EPA - " + EPA);
+//		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_PROFILE);
+//		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_DEVICE);
+//		
+//		resultLogger.log("\n- SUBCRIBE GOALS, SESSIONS, SLEEPS TO EPB - " + EPB);
+//		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPB, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
+//		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPB, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
+//		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPB, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
 		
-		resultLogger.log("\n- SUBCRIBE GOALS, SESSIONS, SLEEPS TO EPB - " + EPB);
-		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPB, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
-		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPB, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
-		OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPB, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
-		
-		ShortcutsTyper.delayTime(10000);
+//		ShortcutsTyper.delayTime(10000);
 		
 		
 		// sign up 3 users: UA, UB, UC

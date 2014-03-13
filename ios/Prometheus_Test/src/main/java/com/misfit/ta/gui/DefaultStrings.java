@@ -13,6 +13,7 @@ public class DefaultStrings {
 	public static String FemaleLabel = "Female";
 	public static String LoadingLabel = "Loading";
 	public static String LoadingEtcLabel = "Loading...";
+	public static String RemoveButton = "Remove";
 	
 	// sign in / sign up
 	public static String Title = "Oops...";
@@ -36,6 +37,11 @@ public class DefaultStrings {
 			"\\_Swimming\\_", "\\_Biking\\_", "\\_Tennis\\_",
 			"Even\\n\\_dancing!\\_" };
 
+	// sleep views
+	public static String EditSleepTitleLabel = "Edit Sleep";
+	public static String RemoveSleepConfirmationAlertMessage = "This action can't be undone.";
+	public static String RemoveSleepConfirmationAlertTitle = "Remove Sleep Session?";
+	
 	// link
 	public static String NoShineAvailableMessage = "All Shines detected are linked to other accounts. Make sure your Shine is unlinked and try again.";
 	public static String NoShineAvailableTitle = "Multiple Shines Detected";
@@ -60,7 +66,7 @@ public class DefaultStrings {
 	public static String MenuButtonTag = "MenuSync";
 	public static String TodayTitle = "Today";
 	public static String YesterdayTitle = "Yesterday";
-	public static String WeekDayButtonTag = "MenuProfile";
+	public static String WeekDayButtonTag = "ButtonWeekly";
 	public static String ThisWeekTitle = "This week";
 	public static String LastWeekTitle = "Last week";
 	public static String SettingsButton = "Settings";
@@ -77,7 +83,6 @@ public class DefaultStrings {
 	public static String SyncingLabel = "Syncing...";
 	
 	public static String TodayButtonTag = "ButtonGoToToday";
-	public static String WeeklyButtonTag = "ButtonWeekly";
 	public static String MenuActivityTimelineButtonTag = "MenuActivityGoal";
 	public static String MenuSleepTimelineButtonTag = "MenuSleepGoal";
 	public static String MenuWeightTimelineButtonTag = "MenuWeightGoal";
