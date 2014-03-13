@@ -70,7 +70,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	public void e_EditBirthDate() {
 		
 		this.year = PrometheusHelper.randInt(1970, 2000) + "";
-		this.month = PrometheusHelper.getMonthString(PrometheusHelper.randInt(1, 13), true);
+		this.month = PrometheusHelper.getMonthString(PrometheusHelper.randInt(1, 12), true);
 		this.day = PrometheusHelper.randInt(1, 29) + "";
 		HomeSettings.updateBirthDay(year, month, day);
 		

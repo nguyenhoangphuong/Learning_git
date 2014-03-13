@@ -44,7 +44,7 @@ public class SignUpAPI extends ModelAPI {
 	 */
 	public void e_InputProfile() {
 		ShortcutsTyper.delayTime(2000);
-		SignUp.inputSex(true);
+		PrometheusHelper.editGender(true);
 		ShortcutsTyper.delayTime(500);
 		SignUp.inputUnits(true);
 		ShortcutsTyper.delayTime(500);

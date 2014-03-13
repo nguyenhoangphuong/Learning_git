@@ -1,4 +1,5 @@
 package com.misfit.ta.android.modelapi.settings;
+
 import java.io.File;
 
 import org.graphwalker.generators.PathGenerator;
@@ -6,7 +7,9 @@ import org.testng.Assert;
 
 import com.misfit.ta.android.AutomationTest;
 import com.misfit.ta.android.Gui;
+import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.android.gui.HomeScreen;
+import com.misfit.ta.android.gui.PrometheusHelper;
 import com.misfit.ta.android.gui.Settings;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
@@ -16,20 +19,37 @@ public class ProfileSettingsAPI extends ModelAPI {
 			boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
+
 	private Field latestUpdatedField;
+	private boolean checkAll = false;
+	private int fullScreenHeight;
+	private int fullScreenWidth;
+
 	private enum Field {
-		 NAME, BIRTHDATE, HEIGHT, WEIGHT, GENDER, UNITS;  //; is optional
+		EMAIL, BIRTHDATE, HEIGHT, WEIGHT, GENDER // ; is optional
 	}
+
+	private boolean isMale = true;
+	private boolean isUSUnit = true;
+	private int h1 = 0; 
+	private int h2 = 0;
+	private int w1 = 0; 
+	private int w2 = 0;
+	private String year = "";
+	private String month = "";
+	private String day = "";
 	/**
 	 * This method implements the Edge 'e_ChooseSettings'
 	 * 
 	 */
 	public void e_ChooseMyProfile() {
-		ShortcutsTyper.delayTime(3000);
+		fullScreenHeight = Gui.getScreenHeight();
+		fullScreenWidth = Gui.getScreenWidth();
+		System.out.println(fullScreenHeight);
+		System.out.println(fullScreenWidth);
 		HomeScreen.tapSettingsMenu();
-		ShortcutsTyper.delayTime(3000);
 		Settings.tapMyProfile();
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(2000);
 	}
 
 	/**
@@ -37,7 +57,15 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditBirthDate() {
-		Settings.editBirthDate("04", "Mar", "1979");
+		Gui.touchAView("TextView", "mID", DefaultStrings.BirthdayTextViewId);
+		
+		this.year = String.valueOf(PrometheusHelper.randInt(1970, 2000));
+		this.month = PrometheusHelper.getMonthString(PrometheusHelper.randInt(1, 13), false);
+		this.day = String.valueOf(PrometheusHelper.randInt(1, 29));
+		PrometheusHelper.editBirthDate(day, month, year, fullScreenHeight, fullScreenWidth);
+		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
+				DefaultStrings.SetText);
+		System.out.println("Change birthday to day : " + day + " month: " + month + "year: " + year);
 		latestUpdatedField = Field.BIRTHDATE;
 	}
 
@@ -46,7 +74,8 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditGender() {
-		Settings.editGender(true);
+		this.isMale = PrometheusHelper.coin();
+		PrometheusHelper.editGender(isMale);
 		latestUpdatedField = Field.GENDER;
 	}
 
@@ -55,26 +84,14 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditHeight() {
-		Settings.editHeight(7,5);
+		this.h1 = PrometheusHelper.randInt(4, 8);
+		this.h2 = PrometheusHelper.randInt(0, 12);
+		Gui.touchAView("TextView", "mID", DefaultStrings.HeightTextViewId);
+		System.out.println("Change height to digit: " + h1 + " fraction: " + h2);
+		PrometheusHelper.editHeightInInches(h1, h2, fullScreenHeight, fullScreenWidth);
+		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
+				DefaultStrings.SetText);
 		latestUpdatedField = Field.HEIGHT;
-	}
-
-	/**
-	 * This method implements the Edge 'e_EditName'
-	 * 
-	 */
-	public void e_EditName() {
-		Settings.editName("thy vo");
-		latestUpdatedField = Field.NAME;
-	}
-
-	/**
-	 * This method implements the Edge 'e_EditPreferedUnits'
-	 * 
-	 */
-	public void e_EditPreferedUnits() {
-		Settings.editPreferredUnits();
-		latestUpdatedField = Field.UNITS;
 	}
 
 	/**
@@ -82,7 +99,13 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_EditWeight() {
-		Settings.editWeight(119, 8);
+		this.w1 = PrometheusHelper.randInt(80, 260);
+		this.w2 = PrometheusHelper.randInt(0, 10);
+		Gui.touchAView("TextView", "mID", DefaultStrings.WeightTextViewId);
+		System.out.println("Change weight to digit: " + w1 + " fraction: " + w2);
+		PrometheusHelper.editWeightInLbs(w1, w2, fullScreenHeight, fullScreenWidth);
+		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
+				DefaultStrings.SetText);
 		latestUpdatedField = Field.WEIGHT;
 	}
 
@@ -91,7 +114,9 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_Init() {
-		// TODO:
+		ShortcutsTyper.delayOne();
+		PrometheusHelper.signUp();
+		ShortcutsTyper.delayTime(2000);
 	}
 
 	/**
@@ -99,37 +124,6 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_Keep() {
-		Gui.pressBack();
-		ShortcutsTyper.delayTime(3000);
-		HomeScreen.tapSettingsMenu();
-		ShortcutsTyper.delayTime(3000);
-		Settings.tapShineSettings();
-		ShortcutsTyper.delayTime(3000);
-	}
-	private void check() {
-		switch (latestUpdatedField) {
-			case BIRTHDATE:
-				Assert.assertEquals("03/04/1979", Settings.getCurrentBirthDate());
-				break;
-			case NAME:
-				Assert.assertEquals("thy vo", Settings.getCurrentName());
-				break;
-			case HEIGHT:
-				Assert.assertEquals("7\' 5\"", Settings.getCurrentHeight());
-				break;
-			case WEIGHT:
-				Assert.assertEquals("119.8 lbs", Settings.getCurrentWeight());
-				break;
-			case UNITS:
-				Assert.assertEquals("U.S.", Settings.getCurrentUnit());
-				break;
-			case GENDER:
-				Assert.assertEquals("Male", Settings.getCurrentGender());
-				break;
-			default:
-				System.out.println("Nothing to check");
-				break;
-		}
 	}
 
 	/**
@@ -137,7 +131,9 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_PressBack() {
-		Settings.backToDayView();
+		Gui.touchAView("TextView", "mText", DefaultStrings.MyProfileText);
+		checkAll = true;
+		ShortcutsTyper.delayTime(2000);
 	}
 
 	/**
@@ -153,7 +149,12 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_ProfileView() {
-		// TODO:
+		if (checkAll) {
+			System.out.println("Check all!!!");
+			assertGenderValue();
+			assertHeightValue();
+			assertBirthdateValue();
+		}
 	}
 
 	/**
@@ -161,7 +162,52 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_UpdateProfile() {
-		// TODO: there should be another check here, but at this moment, the current views isn't re-loaded 
+		ShortcutsTyper.delayTime(2000);
+		switch (latestUpdatedField) {
+			case GENDER:
+				System.out.println("Gender is updated!!!");
+				assertGenderValue();
+				break; 
+			case HEIGHT:
+				System.out.println("Height is updated!!!");
+				assertHeightValue();
+				break;
+			case WEIGHT:
+				System.out.println("Weight is updated!!!");
+				assertWeightValue();
+				break;
+			case BIRTHDATE:
+				System.out.println("Birthdate is updated!!!");
+				assertBirthdateValue();
+				break;
+		}
 	}
 
+	private void assertHeightValue() {
+		String heightText = Settings.getCurrentHeight();
+		String expectedHeightText = String.valueOf(h1) + "\' " + String.valueOf(h2) + "\"";
+		Assert.assertTrue(expectedHeightText.equals(heightText), "This is not a correct height value");
+	}
+	
+	private void assertWeightValue() {
+		String weightText = Settings.getCurrentWeight();
+		String expectedWeightText = String.valueOf(w1);
+		if (w2 != 0) {
+			expectedWeightText +=  "." + String.valueOf(w2);
+		}
+		expectedWeightText += " lbs";
+		Assert.assertTrue(expectedWeightText.equals(weightText), "This is not a correct weight value");
+	}
+	
+	private void assertBirthdateValue() {
+		String birthdateText = Settings.getCurrentBirthDate();
+		String expectedBirthdateText = Integer.valueOf(day) <= 9 ? "0" + day : day;
+		expectedBirthdateText += " " + month + ", " + year;
+		Assert.assertTrue(expectedBirthdateText.equals(birthdateText), "This is not a correct birthdate value");
+	}
+	
+	private void assertGenderValue() {
+		boolean expectedIsMale = Settings.hasMaleGender();
+		Assert.assertTrue(expectedIsMale == isMale, "This is not a correct gender value");
+	}
 }

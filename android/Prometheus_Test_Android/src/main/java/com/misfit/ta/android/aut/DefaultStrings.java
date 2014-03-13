@@ -23,13 +23,13 @@ public class DefaultStrings {
 	public static String SignInPasswordTextViewId = "id/sign_in_pwd_edit";
 	public static String SignUpEmailTextViewId = "id/sign_up_email_edit";
 	public static String SignUpPasswordTextViewId = "id/sign_up_pwd_edit";
-	public static String SignUpMaleButtonId = "id/male_radio_btn";
-	public static String SignUpFemaleButtonId = "id/female_radio_btn";
+	public static String MaleButtonId = "id/male_radio_btn";
+	public static String FemaleButtonId = "id/female_radio_btn";
 	public static String SignUpUSButtonId = "id/us_radio_btn";
 	public static String SignUpMetricButtonId = "id/us_radio_btn";
-	public static String SignUpHeightTextViewId = "id/edit_height_tv";
-	public static String SignUpWeightTextViewId = "id/edit_weight_tv";
-	public static String SignUpBirthdayTextViewId = "id/edit_birthday_tv";
+	public static String HeightTextViewId = "id/edit_height_tv";
+	public static String WeightTextViewId = "id/edit_weight_tv";
+	public static String BirthdayTextViewId = "id/edit_birthday_tv";
 	public static String SignUpLinkShineTextViewId = "id/tap_to_link_tv";
 	public static String ManualActionMenuItemViewId = "id/menu_manual";
 	public static String SettingsActionMenuItemViewId = "id/0x0";
@@ -60,6 +60,7 @@ public class DefaultStrings {
 	public static String SyncNeededText = "Sync Needed";
 	public static String SyncNeededStatementText = "Sync now to apply your new settings to Shine."; 
 	public static String AdjustGoalText = "Adjust Goal";
+	public static String MyProfileText = "My Profile";
 	
 	public static String IncorrectSignInMessage = "Incorrect email or password, please check and try again.";
 	public static String WalkingLeftText = "of walking left";

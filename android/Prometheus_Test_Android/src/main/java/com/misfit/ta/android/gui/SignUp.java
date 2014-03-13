@@ -62,7 +62,7 @@ public class SignUp {
 	public static void fillProfileForm(Boolean isMale, String weight,
 			String height, Integer[] birthday) {
 		if (isMale != null) {
-			inputSex(isMale);
+			PrometheusHelper.editGender(isMale);
 		}
 
 		// TODO: add logic code here
@@ -71,46 +71,6 @@ public class SignUp {
 	public static void linkShine() {
 		Gui.longTouchAView("TextView", "mID",
 				DefaultStrings.SignUpLinkShineTextViewId);
-	}
-
-	public static String formatDateString(int date, int month, int year) {
-		String[] monthStrings = { "dummy", "Jan", "Feb", "Mar", "Apr", "May",
-				"Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-
-		return monthStrings[month] + " " + String.format("%02d", date) + ", "
-				+ year;
-	}
-
-	public static String formatWeightString(float weight, boolean isUS) {
-		return String.format("%.1f", weight) + (isUS ? " lbs" : " kg");
-	}
-
-	public static String formatHeightString(float height, boolean isUS) {
-		if (isUS) {
-			return String.format("%d", height / 12) + "'"
-					+ String.format("%d", height % 12) + "\"";
-		}
-
-		return String.format("%.2f", height) + " m";
-	}
-
-	public static void inputSex(Boolean isMale) {
-		if (isMale) {
-			Gui.touchAView("RadioButton", "mID",
-					DefaultStrings.SignUpMaleButtonId);
-		} else {
-			Gui.touchAView("RadioButton", "mID",
-					DefaultStrings.SignUpFemaleButtonId);
-		}
-	}
-
-	public static void inputBirthday(int date, int month, int year) {
-	}
-
-	public static void inputWeight(float weight, boolean isUS) {
-	}
-
-	public static void inputHeight(float height, boolean isUS) {
 	}
 
 	public static void inputUnits(boolean isUS) {
@@ -125,7 +85,7 @@ public class SignUp {
 
 	public static void chooseDefaultHeightValue(int fullScreenHeight,
 			int fullScreenWidth) {
-		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpHeightTextViewId);
+		Gui.touchAView("TextView", "mID", DefaultStrings.HeightTextViewId);
 		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
 	}
 
@@ -138,14 +98,14 @@ public class SignUp {
 
 	public static void chooseDefaultWeightValue(int fullScreenHeight,
 			int fullScreenWidth) {
-		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpWeightTextViewId);
+		Gui.touchAView("TextView", "mID", DefaultStrings.WeightTextViewId);
 		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
 	}
 
 	public static void chooseDefaultBirthdate(int fullScreenHeight,
 			int fullScreenWidth) {
 		Gui.touchAView("TextView", "mID",
-				DefaultStrings.SignUpBirthdayTextViewId);
+				DefaultStrings.BirthdayTextViewId);
 		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
 	}
 }

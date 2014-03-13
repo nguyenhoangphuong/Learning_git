@@ -14,8 +14,8 @@ public class PrometheusHelper {
 	/* Constants */
 	private static int DEFAULT_TIMEOUT = 20000;
 	private static String[] longMonths = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-	private static String[] sortMonths = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-	private static String[] sortDaysOfWeek = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+	private static String[] shortMonths = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+	private static String[] shortDaysOfWeek = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 	private static String[] longDaysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
 	/* Input Helper */
@@ -182,11 +182,11 @@ public class PrometheusHelper {
 
 	/* String utilities */
 	public static String getMonthString(int monthNumber, boolean isLongMonthString) {
-		return isLongMonthString ? longMonths[monthNumber - 1] : sortMonths[monthNumber - 1];
+		return isLongMonthString ? longMonths[monthNumber - 1] : shortMonths[monthNumber - 1];
 	}
 
 	public static String getDayOfWeek(int dayNumber, boolean isLongString) {
-		return isLongString ? longDaysOfWeek[dayNumber - 1] : sortDaysOfWeek[dayNumber - 1];
+		return isLongString ? longDaysOfWeek[dayNumber - 1] : shortDaysOfWeek[dayNumber - 1];
 	}
 
 	public static String formatBirthday(String year, String monthString, String day) {

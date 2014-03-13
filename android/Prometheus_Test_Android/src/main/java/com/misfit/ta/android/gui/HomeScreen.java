@@ -73,11 +73,7 @@ public class HomeScreen {
 	}
 	
 	public static Integer getCurrentGoalInPicker() {
-		return Integer.valueOf(getCurrentValueInPicker(0));
+		return Integer.valueOf(PrometheusHelper.getCurrentValueInPicker(0));
 	}
 	
-	public static String getCurrentValueInPicker(int index) {
-		ViewNode currentGoalView = ViewUtils.findView("ShineCustomEditText", "mID", DefaultStrings.ShineCustomEditTextInPickerId, index);
-		return currentGoalView.text;
-	}
 }
