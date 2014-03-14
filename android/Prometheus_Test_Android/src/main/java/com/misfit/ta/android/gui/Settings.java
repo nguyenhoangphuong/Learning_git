@@ -41,17 +41,6 @@ public class Settings {
 				* 2);
 	}
 
-	public static boolean isProfileSettings() {
-		return ViewUtils.findView("TextView", "mID", "id/dateOfBirthTextView",
-				0) != null;
-	}
-
-	public static boolean isGoalSettings() {
-		ShortcutsTyper.delayTime(1000);
-		return ViewUtils.findView("TextView", "mID", "id/action_bar_subtitle",
-				0) != null;
-	}
-
 	public static String getCurrentBirthDate() {
 		return ViewUtils.findView("TextView", "mID",
 				DefaultStrings.BirthdayTextViewId, 0).text;
@@ -72,20 +61,49 @@ public class Settings {
 				DefaultStrings.MaleButtonId, 0).isChecked;
 	}
 
-	public static String getCurrentUnit() {
-		return ViewUtils.findView("TextView", "mID",
-				"id/preferredUnitsTextView", 0).text;
+	public static boolean displayClock() {
+		return ViewUtils.findView("CheckBox", "mID",
+				DefaultStrings.ShineSettingsDisplayClockCheckBoxId, 0).isChecked;
 	}
 
-	public static void tapSignOut() {
-		Gui.touchAView("TextView", "mID", "id/signoutTextView");
+	public static boolean showProgressFirst() {
+		return ViewUtils.findView("RadioButton", "mID",
+				DefaultStrings.ShineSettingsRadioButtonId1, 0).isChecked;
+	}
+
+	public static boolean showClockFirst() {
+		return ViewUtils.findView("RadioButton", "mID",
+				DefaultStrings.ShineSettingsRadioButtonId2, 0).isChecked;
+	}
+
+	public static boolean useMiles() {
+		return ViewUtils.findView("RadioButton", "mID",
+				DefaultStrings.ShineSettingsRadioButtonId1, 1).isChecked;
+	}
+
+	public static boolean useKm() {
+		return ViewUtils.findView("RadioButton", "mID",
+				DefaultStrings.ShineSettingsRadioButtonId2, 1).isChecked;
+	}
+
+	public static boolean useLbs() {
+		return ViewUtils.findView("RadioButton", "mID",
+				DefaultStrings.ShineSettingsRadioButtonId1, 2).isChecked;
+	}
+
+	public static boolean useKg() {
+		return ViewUtils.findView("RadioButton", "mID",
+				DefaultStrings.ShineSettingsRadioButtonId2, 2).isChecked;
+	}
+
+	public static boolean trackSleep() {
+		return ViewUtils.findView("Switch", "mID",
+				DefaultStrings.ShineSettingsSleepTrackingSwitchId, 0).isChecked;
 	}
 
 	/**
 	 * Adjust Goal Screen
 	 */
-	public static void checkToConfirmGoal() {
-	}
 
 	public static void swipeDownGoalPicker(int fullScreenHeight,
 			int fullScreenWidth, int popupHeight, int popupWidth,

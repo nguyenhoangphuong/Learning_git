@@ -66,4 +66,8 @@ public class DefaultStrings {
 	public static String WalkingLeftText = "of walking left";
 	
 	public static String ShineCustomEditTextInPickerId = "id/np__numberpicker_input";
+	public static String ShineSettingsRadioButtonId1 = "id/setting_radio_button_1";
+	public static String ShineSettingsRadioButtonId2 = "id/setting_radio_button_2";
+	public static String ShineSettingsDisplayClockCheckBoxId = "id/setting_toggle";
+	public static String ShineSettingsSleepTrackingSwitchId = "id/setting_toggle";
 }
