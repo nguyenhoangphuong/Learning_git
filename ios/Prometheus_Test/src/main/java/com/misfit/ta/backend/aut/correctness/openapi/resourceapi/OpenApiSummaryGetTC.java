@@ -73,6 +73,9 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(summary.getDistance(), MVPCommon.round(goals.get(0).getProgressData().getDistanceMiles(), 1), "Distance");
 		Assert.assertEquals(summary.getPoints(), goals.get(0).getProgressData().getPoints() / 2.5, "Points");
 		Assert.assertEquals(summary.getSteps(), goals.get(0).getProgressData().getSteps(), "Steps");
+		Assert.assertEquals(MVPCommon.round(summary.getActivityCalories(), 1), 
+				MVPCommon.round(goals.get(0).getProgressData().getCalorie() 
+				- goals.get(0).getProgressData().getFullBmrCalorie(), 1), "Activity calories");
 		
 				
 		// use "myUid" route
@@ -84,12 +87,16 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(summary.getDistance(), MVPCommon.round(goals.get(0).getProgressData().getDistanceMiles(), 1), "Distance");
 		Assert.assertEquals(summary.getPoints(), goals.get(0).getProgressData().getPoints() / 2.5, "Points");
 		Assert.assertEquals(summary.getSteps(), goals.get(0).getProgressData().getSteps(), "Steps");
+		Assert.assertEquals(MVPCommon.round(summary.getActivityCalories(), 1), 
+				MVPCommon.round(goals.get(0).getProgressData().getCalorie() 
+				- goals.get(0).getProgressData().getFullBmrCalorie(), 1), "Activity calories");
 		
 		
 		// summary of a specific range
 		double calories = 0;
 		double distance = 0;
 		double points = 0;
+		double activityCalories = 0;
 		int steps = 0;
 		
 		for(int i = 0; i < 3; i++) {
@@ -98,6 +105,8 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 			distance += goals.get(i).getProgressData().getDistanceMiles();
 			points += goals.get(i).getProgressData().getPoints();
 			steps += goals.get(i).getProgressData().getSteps();
+			activityCalories += (goals.get(i).getProgressData().getCalorie()
+					- goals.get(i).getProgressData().getFullBmrCalorie());
 		}
 		
 		result = OpenAPI.getSummary(accessToken, myUid, fromDate, toDate);
@@ -108,6 +117,8 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(summary.getDistance(), MVPCommon.round(distance, 1), "Distance");
 		Assert.assertEquals(summary.getPoints(), points / 2.5, "Points");
 		Assert.assertEquals((int)summary.getSteps(), steps, "Steps");
+		Assert.assertEquals(MVPCommon.round(summary.getActivityCalories(), 1), 
+				MVPCommon.round(activityCalories, 1), "Activity calories");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary" })

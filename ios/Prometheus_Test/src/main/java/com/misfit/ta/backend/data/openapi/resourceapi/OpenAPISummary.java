@@ -16,6 +16,7 @@ public class OpenAPISummary {
 	private Integer steps;
 	private Double calories;
 	private Double distance;
+	private Double activityCalories;
 	
 	
 	// methods
@@ -28,6 +29,7 @@ public class OpenAPISummary {
 			object.accumulate("steps", steps);
 			object.accumulate("calories", calories);
 			object.accumulate("distance", distance);
+			object.accumulate("activityCalories", activityCalories);
 			return object;
 			
 		} catch (JSONException e) {
@@ -51,6 +53,9 @@ public class OpenAPISummary {
 			
 			if (!objJson.isNull("distance"))
 				this.setDistance(objJson.getDouble("distance"));
+			
+			if (!objJson.isNull("activityCalories"))
+				this.setActivityCalories(objJson.getDouble("activityCalories"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -129,6 +134,14 @@ public class OpenAPISummary {
 
 	public void setDistance(Double distance) {
 		this.distance = distance;
+	}
+
+	public Double getActivityCalories() {
+		return activityCalories;
+	}
+
+	public void setActivityCalories(Double activityCalories) {
+		this.activityCalories = activityCalories;
 	}
 	
 }

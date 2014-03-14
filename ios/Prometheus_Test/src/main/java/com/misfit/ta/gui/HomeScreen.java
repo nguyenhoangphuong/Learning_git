@@ -2,6 +2,7 @@ package com.misfit.ta.gui;
 
 import java.util.Calendar;
 
+import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.gui.social.LeaderboardView;
 
@@ -71,6 +72,31 @@ public class HomeScreen {
 		tapMenuSocial();
 		PrometheusHelper.handleUpdateFirmwarePopup();
 		Gui.touchAVIew("UIButton", DefaultStrings.SocialProfileButtonLabel);
+	}
+	
+	
+	static public void switchAutoSleepTrackingOn() {
+
+		String cmd = "((ViewUtils findViewWithViewName:@\"UISwitch\" andIndex: 1) setOn:1 animated:1)";
+		NuRemoteClient.sendToServer(cmd);
+	}
+	
+	static public void switchAutoSleepTrackingOff() {
+
+		String cmd = "((ViewUtils findViewWithViewName:@\"UISwitch\" andIndex: 1) setOn:0 animated:1)";
+		NuRemoteClient.sendToServer(cmd);
+	}
+	
+	static public void switchActivityTaggingOn() {
+
+		String cmd = "((ViewUtils findViewWithViewName:@\"UISwitch\" andIndex: 0) setOn:1 animated:1)";
+		NuRemoteClient.sendToServer(cmd);
+	}
+	
+	static public void switchActivityTaggingOff() {
+
+		String cmd = "((ViewUtils findViewWithViewName:@\"UISwitch\" andIndex: 0) setOn:0 animated:1)";
+		NuRemoteClient.sendToServer(cmd);
 	}
 	
 

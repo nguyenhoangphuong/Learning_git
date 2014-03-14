@@ -36,9 +36,13 @@ public class WeekViewAPI extends ModelAPI {
 		
 		String email = "thy@misfitwearables.com";
 		String password = "test12";
-		PrometheusHelper.signIn(email, password);
 		
 		token = MVPApi.signIn(email, password).token;
+		Goal goal = MVPApi.searchGoal(token, getTimeStampOfPreviousDay(1), null, 0l).goals[0];
+		goal.getProgressData().setPoints(goal.getProgressData().getPoints() + 100 * 2.5);
+		MVPApi.updateGoal(token, goal);
+		
+		PrometheusHelper.signIn(email,password); 
 	}
 	
 	public void e_ChangeDayView() {
@@ -149,10 +153,8 @@ public class WeekViewAPI extends ModelAPI {
 	
 	
 	private long getTimeStampOfPreviousDay(int index) {
-		Calendar dayBefore = Calendar.getInstance();
-		dayBefore.add(Calendar.DATE, -(index));
-		long timeStamp = MVPApi.getDayStartEpoch(dayBefore.get(Calendar.DATE), dayBefore.get(Calendar.MONTH), dayBefore.get(Calendar.YEAR));
-		return timeStamp;
+		
+		return MVPApi.getDayStartEpoch(System.currentTimeMillis() / 1000 - 3600 * 24 * index);
 	}
 	
 	private Integer calculateImprovement() {

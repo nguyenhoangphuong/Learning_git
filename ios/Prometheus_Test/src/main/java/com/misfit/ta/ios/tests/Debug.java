@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.gui.Gui;
+import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.social.LeaderboardView;
 
@@ -27,7 +28,11 @@ public class Debug {
 //		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc045@a.a", "qqqqqq");
 
 		Gui.init("192.168.1.144");
-		LeaderboardView.pullToRefresh();
+		HomeScreen.switchAutoSleepTrackingOff();
+//		HomeScreen.switchAutoSleepTrackingOn();
+//		HomeScreen.switchActivityTaggingOff();
+//		HomeScreen.switchActivityTaggingOn();
+//		Gui.touchAVIew("UISwitch", 1);
 
 	}
 }

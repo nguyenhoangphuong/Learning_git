@@ -34,7 +34,8 @@ public class TaggingActivityAPI extends ModelAPI {
 	private int totalSteps = 0;
 	private float totalPoints = 0f;
 	
-	private boolean isNoActivity = true; 
+	private boolean isNoActivity = true;
+	private boolean isAutoSleepTurnedOn = true;
 
 
 	public TaggingActivityAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
@@ -158,6 +159,15 @@ public class TaggingActivityAPI extends ModelAPI {
 		HomeScreen.tapOpenSettingsTray();
 		HomeScreen.tapMyShine();
 		HomeSettings.tapMisfitLabs();
+		
+		if(isAutoSleepTurnedOn) {
+			
+			isAutoSleepTurnedOn = false;
+			HomeScreen.switchAutoSleepTrackingOff();
+			HomeSettings.tapSave();
+			PrometheusHelper.waitForView("UILabel", DefaultStrings.MyShineTitle);
+			HomeSettings.tapMisfitLabs();
+		}
 
 		switch (activity) {
 		case MVPEnums.ACTIVITY_BASKETBALL:
@@ -239,7 +249,8 @@ public class TaggingActivityAPI extends ModelAPI {
 			if (HomeScreen.isPointEarnedProgessCircle()) {
 				System.out.println("DEBUG: PROGRESS CIRCLE VIEW 1");
 				System.out.println("DEBUG: Assert total points " + this.totalPoints);
-				Assert.assertTrue(ViewUtils.isExistedView("UILabel", (int) Math.floor(this.totalPoints) + ""), 
+				Assert.assertTrue(ViewUtils.isExistedView("UILabel", (int) Math.floor(this.totalPoints) + "") ||
+						ViewUtils.isExistedView("UILabel", (int) Math.round(this.totalPoints) + ""), 
 						"Total points displayed correctly");
 			} 
 

@@ -68,7 +68,7 @@ public class DataGenerator {
 		
 		ProgressData progressData = new ProgressData();
 		progressData.setFullBmrCalorie(MVPCommon.randInt(1200, 1600));
-		progressData.setCalorie(MVPCommon.randInt(15000, 25000) * 0.1d);
+		progressData.setCalorie(MVPCommon.randInt(17000, 25000) * 0.1d);
 		progressData.setDistanceMiles(MVPCommon.randInt(10, 50) * 0.1d);
 		progressData.setSteps(MVPCommon.randInt(5000, 20000));
 		progressData.setPoints(MVPCommon.randInt(500, 3000) * 2.5);
