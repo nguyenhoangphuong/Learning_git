@@ -159,9 +159,7 @@ public class HomeScreen {
 	public static void pullToRefresh() {
 				
 		Gui.swipeLeft(1000);
-//		NuRemoteClient.sendToServer("((ViewUtils findViewWithViewName:@\"PTGoalCircleHorizontalScrollView\" andIndex:0) animateToWaitingPositionBeforeSyncingFinish)");
-//		NuRemoteClient.sendToServer("((ViewUtils findViewWithViewName:@\"PTGoalCircleHorizontalScrollView\" andIndex:0) startLoadingAnimation)");
-//		NuRemoteClient.sendToServer("((PTClientServerSyncService sharedService) startSyncing)");
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 
 	

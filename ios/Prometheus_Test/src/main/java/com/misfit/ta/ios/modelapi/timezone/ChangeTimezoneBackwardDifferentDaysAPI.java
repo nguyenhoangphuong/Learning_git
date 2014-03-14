@@ -35,6 +35,7 @@ public class ChangeTimezoneBackwardDifferentDaysAPI extends ModelAPI {
 	// edge
 	public void e_init() {
 
+		Timezone.changeTimezone(currentTimezone);
 		email = PrometheusHelper.signUpDefaultProfile();
 	}
 

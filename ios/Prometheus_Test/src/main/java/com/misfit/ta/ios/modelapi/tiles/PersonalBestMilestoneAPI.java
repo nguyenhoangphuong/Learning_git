@@ -35,7 +35,6 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 		
 		// pull to refresh to make sure local db is latest
 		HomeScreen.pullToRefresh();
-		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 	
 	public void e_inputPersonalBest() {

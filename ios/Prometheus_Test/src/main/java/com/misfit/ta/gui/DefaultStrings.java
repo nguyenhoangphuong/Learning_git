@@ -56,7 +56,7 @@ public class DefaultStrings {
 	public static String ForgotPasswordEmailSentMessage = "Check your email to reset your password";
 	public static String ForgotPasswordNewPasswordMessage = "You may now log in with your new password";
 	public static String ForgotPasswordWrongConfirmMessage = "Confirm password must match new password.";
-	public static String ForgotPasswordInvalidEmailMessage = "Invalid email";
+	public static String ForgotPasswordInvalidEmailMessage = "Invalid Email";
 	public static String ForgotPasswordButton = "What's my password again?";
 	public static String ForgotPasswordSubmitButton = "SUBMIT";
 	public static String ForgotPasswordCancelButton = "CANCEL";

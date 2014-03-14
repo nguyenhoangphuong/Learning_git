@@ -48,7 +48,6 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		
 		// get new data from server
 		HomeScreen.pullToRefresh();
-		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 	
 	public void e_inputActivityAndFinishTutorial() {

@@ -9,6 +9,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.social.LeaderboardView;
@@ -71,10 +72,11 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		SocialProfileView.tapDeleteFriend("misterfit");
 		SocialProfileView.tapRemoveFriend();
 		SocialProfileView.tapDone();
+		Gui.captureScreen("e_deleteAverageUserAndGoToLeaderboard" + System.nanoTime());
 		SocialProfileView.tapBack();
 		
 		HomeScreen.tapLeaderboard();
-		ShortcutsTyper.delayTime(3000);
+		LeaderboardView.pullToRefresh();
 	}
 	
 	public void e_addAverageUserAndGoToLeaderboard() {
@@ -85,11 +87,12 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		SearchFriendView.tapSearchField();
 		SearchFriendView.inputKeyWordAndSearch("misterfit");
 		SearchFriendView.tapAdd("misterfit");
+		Gui.captureScreen("e_addAverageUserAndGoToLeaderboard" + System.nanoTime());
 		SearchFriendView.tapBack();
 		SocialProfileView.tapBack();
 		
 		HomeScreen.tapLeaderboard();
-		ShortcutsTyper.delayTime(3000);
+		LeaderboardView.pullToRefresh();
 	}
 	
 	

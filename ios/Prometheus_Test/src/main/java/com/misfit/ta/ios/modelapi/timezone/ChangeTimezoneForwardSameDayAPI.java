@@ -19,9 +19,9 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 
 	private String email;
 	private String password = "qwerty1";
-	private int currentTimezone = 4;
-	private int previousTimezone = 4;
-	private int delta = 1;
+	private int currentTimezone = 8;
+	private int previousTimezone = 8;
+	private int delta = 2;
 	private long beforeStartTime = 0;
 	private long beforeEndTime = 0;
 	private long beforeOffset = 0;

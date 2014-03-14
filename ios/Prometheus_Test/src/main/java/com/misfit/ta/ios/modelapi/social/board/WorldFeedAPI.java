@@ -74,8 +74,8 @@ public class WorldFeedAPI extends ModelAPI {
 		MVPApi.updateGoal(tokenA, goalA);
 		
 		// pull to refresh
+		ShortcutsTyper.delayTime(10000);
 		HomeScreen.pullToRefresh();
-		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 	
 	public void e_signUpAccountB() {
@@ -97,8 +97,8 @@ public class WorldFeedAPI extends ModelAPI {
 		MVPApi.updateGoal(tokenB, goal);
 		
 		// pull to refresh
+		ShortcutsTyper.delayTime(10000);
 		HomeScreen.pullToRefresh();
-		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 	
 	public void e_goToWorldFeed() {
@@ -126,7 +126,7 @@ public class WorldFeedAPI extends ModelAPI {
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(new String[] {"12", "00", "AM"}, 10, 1000);
 		HomeScreen.tapSave();
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		HomeScreen.tapWordView();
 		
 		WorldFeedView.pullToRefresh();
@@ -139,7 +139,7 @@ public class WorldFeedAPI extends ModelAPI {
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(new String[] {"12", "20", "AM"}, 5, 500);
 		HomeScreen.tapSave();
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		HomeScreen.tapWordView();
 		
 		WorldFeedView.pullToRefresh();
@@ -160,6 +160,7 @@ public class WorldFeedAPI extends ModelAPI {
 		mi.getInfo().setPoint(500); // 200 * 2.5
 		
 		MVPApi.createTimelineItem(tokenA, milestone);
+		ShortcutsTyper.delayTime(5000);
 		
 		// pull to refresh world view
 		WorldFeedView.pullToRefresh();

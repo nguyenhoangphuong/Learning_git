@@ -80,7 +80,6 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		
 		// refresh
 		HomeScreen.pullToRefresh();
-		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 	}
 
 	public void e_signOutAndSignInAgain() {

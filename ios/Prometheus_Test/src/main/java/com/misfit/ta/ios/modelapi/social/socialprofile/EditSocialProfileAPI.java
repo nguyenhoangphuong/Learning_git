@@ -50,14 +50,13 @@ public class EditSocialProfileAPI extends ModelAPI {
 		MVPApi.updateProfile(token, profile);
 		
 		// pull to refresh
+		ShortcutsTyper.delayTime(10000);
 		HomeScreen.pullToRefresh();
-		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingLabel);
 		
 		// set up gui
 		HomeScreen.tapLeaderboard();
 		LeaderboardView.tapGotIt();
 		HomeScreen.tapSocialProfile();
-		
 	}
 	
 	public void e_tapEdit() {
