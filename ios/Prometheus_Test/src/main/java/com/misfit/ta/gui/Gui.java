@@ -543,6 +543,13 @@ public class Gui {
         message = message.replace("%index", String.valueOf(index));
         NuRemoteClient.sendToServer(message);
     }
+    
+    public static void setPicker(int index, int value) {
+        String message = "(Gui selectPickerRowWithIndex: %value inColumn: %index)";
+        message = message.replace("%value", value + "");
+        message = message.replace("%index", String.valueOf(index));
+        NuRemoteClient.sendToServer(message);
+    }
 
     public static void dismissPicker() {
         NuRemoteClient.sendToServer("(Gui dismissPicker)");

@@ -1,7 +1,6 @@
 package com.misfit.ta.gui;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeSettings {
 
@@ -54,6 +53,10 @@ public class HomeSettings {
 		Gui.touchAVIew("UILabel", DefaultStrings.UnlinkButton);
 	}
 
+	public static void tapSave() {
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SaveButton);
+	}
+	
 	public static void tapSignOut() {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.CaptializedShineOutButton);
 	}
@@ -85,57 +88,43 @@ public class HomeSettings {
 	public static void tapDoneAtNewGoal() {
 		Gui.touchAVIew("UIButton", DefaultStrings.SaveButton);
 	}
-
-	public static void setSpinnerGoal(int newGoal, int currentGoal) {
-		int buttonIndex = newGoal >= currentGoal ? 0 : 1;
-		for (int i = 0; i < Math.abs(newGoal - currentGoal) / 100; i++) {
-			Gui.touchAVIew("UIButton", buttonIndex);
-			ShortcutsTyper.delayTime(500);
-		}
+	
+	public static void setActivityGoal(int points) {
+		Gui.setPicker(0, points / 1000);
+		Gui.setPicker(1, (points / 100) % 10);
+	}
+	
+	public static void setSleepGoal(int hours, int minutes) {
+		Gui.setPicker(0, hours);
+		Gui.setPicker(2, minutes);
+	}
+	
+	public static void setWeightGoal(String digit, String fraction, boolean isUSUnit) {
+		
+		PrometheusHelper.enterWeight(digit, fraction, isUSUnit);
 	}
 
-	public static int getSpinnerGoal() {
-		return Gui.getSpinnerValue("PTNumberSpinner", 0);
+	public static void tapActivityGoalTab() {
+		
+		Gui.touchAVIew("UITabBarButtonLabel", 0);
 	}
-
+	
+	public static void tapSleepGoalTab() {
+		
+		Gui.touchAVIew("UITabBarButtonLabel", 1);
+	}
+	
+	public static void tapWeightGoalTab() {
+		
+		Gui.touchAVIew("UITabBarButtonLabel", 2);
+	}
+	
 	public static void tapOKAtNewGoalPopup() {
 		Gui.touchPopupButton(DefaultStrings.OKButton);
 	}
 
 	public static boolean hasNewGoalInstructionMessage() {
 		return Gui.getPopupContent().equals(DefaultStrings.NewGoalInstruction);
-	}
-
-	public static void tapHead() {
-		Gui.touchAVIew("UIButton", 0);
-	}
-
-	public static void tapUpperArm() {
-		Gui.touchAVIew("UIButton", 1);
-	}
-
-	public static void tapChest() {
-		Gui.touchAVIew("UIButton", 2);
-	}
-
-	public static void tapWrist() {
-		Gui.touchAVIew("UIButton", 3);
-	}
-
-	public static void tapWaist() {
-		Gui.touchAVIew("UIButton", 4);
-	}
-
-	public static void tapFootAnkle() {
-		Gui.touchAVIew("UIButton", 5);
-	}
-	
-	public static void tapWearingShine() {
-		
-	}
-
-	public static void tapSave() {
-		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SaveButton);
 	}
 	
 	/* Mode Debug */
@@ -152,11 +141,20 @@ public class HomeSettings {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.EditProfileTitle);
 	}
 
-	public static boolean isAtEditGoal() {
-		return ViewUtils.isExistedView("UILabel", DefaultStrings.MyGoalTitle);
-	}
-
 	public static boolean isAtMyShine() {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.MyShineTitle);
 	}
+
+	public static boolean isAtEditActivityGoal() {
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.HowToHitActivityGoalLabel);
+	}
+	
+	public static boolean isAtEditSleepGoal() {
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.HowToHitSleepGoalLabel);
+	}
+	
+	public static boolean isAtEditWeightGoal() {
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.HowToHitWeightGoalLabel);
+	}
+
 }

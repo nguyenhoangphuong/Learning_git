@@ -93,13 +93,31 @@ public class ServerCalculationTestHelpers {
 
 	
 	// create sdk sync log from test folder
-	public static SDKSyncLog createSDKSyncLogFromFilesInFolder(long timestamp, String email, String serialNumber, String folderName) throws IOException {
+	public static SDKSyncLog createSDKSyncLogFromFilesInFolder(long timestamp, String email, String serialNumber, String folderName) {
 
 		long currentTimestamp = timestamp; 
 		File folder = new File(folderName);
-		List<SDKSyncEvent> events = new ArrayList<SDKSyncEvent>();
+		List<String> dataStrings = new ArrayList<String>();
 
 		for(File file : folder.listFiles()) {
+
+			try {
+				dataStrings.add(FileUtils.readFileToString(file));
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+
+		return createSDKSyncLogFromDataStrings(currentTimestamp, email, serialNumber, dataStrings);
+	}
+
+	public static SDKSyncLog createSDKSyncLogFromDataStrings(long timestamp, String email, String serialNumber, List<String> dataStrings) {
+
+		long currentTimestamp = timestamp; 
+		List<SDKSyncEvent> events = new ArrayList<SDKSyncEvent>();
+
+		for(String rawdata : dataStrings) {
 
 			SDKSyncRequestStartedEvent requestStarted = new SDKSyncRequestStartedEvent();
 			requestStarted.setTimestamp(currentTimestamp++);
@@ -117,7 +135,6 @@ public class ServerCalculationTestHelpers {
 			responseStarted.setValue(value1);
 
 			SDKSyncResponseFinishedValue value2 = new SDKSyncResponseFinishedValue();
-			String rawdata = FileUtils.readFileToString(file);
 			
 			value2.setHandle("100");
 			value2.setFileHandle(rawdata.substring(0, 4));
@@ -158,7 +175,7 @@ public class ServerCalculationTestHelpers {
 
 		return syncLog;
 	}
-
+	
 	
 	// run tests
 	public static void runTest(String testFolderPath, String email, String password) {

@@ -390,6 +390,27 @@ public class MVPApi extends RequestHelper {
 		return result;
 	}
 	
+	public static BaseResult getRawDataAsString(Long timestamp, Integer timezoneOffsetInMinutes,
+			String fileHandle, String fileFormat, GoalRawData rawData) {
+	
+		// prepare
+		String url = baseAddress + "goals/raw_data";
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addParam("timestamp", timestamp.toString());
+		requestInf.addParam("fileHandle", fileHandle);
+		requestInf.addParam("fileFormat", fileFormat);
+		requestInf.addParam("timezoneOffsetInMinutes", timezoneOffsetInMinutes.toString());
+		requestInf.addParam("data", rawData.toJson().toString());
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.post(url, port, requestInf);
+
+		// format data
+		GoalsResult result = new GoalsResult(response);
+		return result;
+	}
+	
 	// graph apis
 	public static BaseResult createGraphItem(String token, GraphItem item) {
 

@@ -1,6 +1,7 @@
 package com.misfit.ta.backend.aut.correctness.servercalculation;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -19,6 +20,7 @@ import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.DisplayUnit;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.statistics.Statistics;
+import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.LifetimeDistanceItem;
@@ -164,9 +166,15 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 
 		// push data to server
-		MVPApi.pushRawData(token, goals[2].getServerId(), data2, 0);
-		MVPApi.pushRawData(token, goals[1].getServerId(), data1, 0);
-		MVPApi.pushRawData(token, goals[0].getServerId(), data0, 0);
+		List<String> dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime(), goals[2].getTimeZoneOffsetInSeconds() / 3600, "0101", "0012", data2).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(goals[1].getStartTime(), goals[1].getTimeZoneOffsetInSeconds() / 3600, "0102", "0012", data1).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime(), goals[0].getTimeZoneOffsetInSeconds() / 3600, "0103", "0012", data0).rawData);
+		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		
+//		MVPApi.pushRawData(token, goals[2].getServerId(), data2, 0);
+//		MVPApi.pushRawData(token, goals[1].getServerId(), data1, 0);
+//		MVPApi.pushRawData(token, goals[0].getServerId(), data0, 0);
 
 		logger.info("Waiting " + delayTime + " miliseconds");
 		ShortcutsTyper.delayTime(delayTime);
@@ -721,7 +729,7 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 	}
 
 	
-	// helpers
+	// data helpers
 	private void changeDistanceUnit(String token, int unit) {
 
 		ProfileData profile = new ProfileData();
@@ -820,8 +828,14 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		return rawdata;
 	}
 
+	private void pushSyncData(long timestamp, String email, String serialNumber, List<String> dataStrings) {
+		
+		SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromDataStrings(timestamp, email, serialNumber, dataStrings);
+		MVPApi.pushSDKSyncLog(syncLog);
+	}
+	
 
-
+	// test verifying helpers
 	private int getNumberOfTile(List<TimelineItem> items, int itemType) {
 		
 		int count = 0;
@@ -846,7 +860,6 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		return count;
 	}
 
-	
 	
 	private boolean hasSessionTileWithData(List<TimelineItem> items, Goal goal, int offsetMinute, int minutes, int points) {
 

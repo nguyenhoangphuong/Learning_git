@@ -42,7 +42,7 @@ public class WeekViewAPI extends ModelAPI {
 		goal.getProgressData().setPoints(goal.getProgressData().getPoints() + 100 * 2.5);
 		MVPApi.updateGoal(token, goal);
 		
-		PrometheusHelper.signIn(email,password); 
+		PrometheusHelper.signIn(email,password);
 	}
 	
 	public void e_ChangeDayView() {
@@ -62,16 +62,14 @@ public class WeekViewAPI extends ModelAPI {
 		HomeScreen.tapOpenSettingsTray();
 		ShortcutsTyper.delayTime(1000);
 		HomeScreen.tapAdjustGoal();
-		ShortcutsTyper.delayTime(5000);
 				
-		int oldGoal = HomeSettings.getSpinnerGoal();
-		diff = 100;
-		currentGoal = oldGoal + diff * (System.nanoTime() % 2 == 0 ? 1 : -1);
-		if(currentGoal == oldGoal)
-			currentGoal = oldGoal + 100;
+		int oldGoal = currentGoal;
+		do {
+			currentGoal = PrometheusHelper.randInt(10, 25) * 100;
+		} while (oldGoal == currentGoal);
 		
 		// change goal
-		HomeSettings.setSpinnerGoal(currentGoal, oldGoal);
+		HomeSettings.setActivityGoal(currentGoal);
 		HomeSettings.tapDoneAtNewGoal();
 		PrometheusHelper.waitForAlert();
 		

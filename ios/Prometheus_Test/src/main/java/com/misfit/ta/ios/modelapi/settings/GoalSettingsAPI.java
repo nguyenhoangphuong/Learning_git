@@ -15,6 +15,7 @@ import com.misfit.ta.gui.*;
 import com.misfit.ta.ios.AutomationTest;
 
 public class GoalSettingsAPI extends ModelAPI {
+	
 	private static final Logger logger = Util
 			.setupLogger(GoalSettingsAPI.class);
 
@@ -23,84 +24,195 @@ public class GoalSettingsAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 
-	private int goal = 1000;
-	private int tempGoal = 1000;
+	private int activityGoal = 1000;
+	private int activityGoalTemporary = 1000;
+	
+	private int sleepGoalHours = 8;
+	private int sleepGoalMinutes = 0;
+	private int sleepGoalHoursTemp = 8;
+	private int sleepGoalMinutesTemp = 0;
+	
+	private int weightDigit = 8;
+	private int weightFraction = 0;
+	private int weightDigitTemp = 8;
+	private int weightFractionTemp = 0;
+	private boolean weightUnitUS = true;
+	private boolean weightUnitUSTemp = true;
+	
 
 	public void e_Init() {
 
 		// sign up with goal = 1000
 		PrometheusHelper.signUpDefaultProfile();
-		
+
 		// input a dummy record
 		HomeScreen.tapOpenManualInput();
-		PrometheusHelper.inputManualRecord(new String[] {"1", "00", "am"}, 5, 500);
+		PrometheusHelper.inputManualRecord(new String[] { "1", "00", "am" }, 5, 500);
 		HomeScreen.tapSave();
 	}
-
-	public void e_ToGoalSettings() {
+	
+	public void e_ToSleepTimeline() {
 		
+		HomeScreen.tapSleepTimeline();
+	}
+	
+	public void e_ToWeightTimeline() {
+		
+		HomeScreen.tapWeightTimeline();
+	}
+
+	public void e_ToActivityGoalSettings() {
+
 		HomeScreen.tapOpenSettingsTray();
 		HomeScreen.tapAdjustGoal();
 	}
+	
+	public void e_ToSleepGoalSettings() {
 
-	public void e_ChangeGoal() {
+		HomeScreen.tapOpenSettingsTray();
+		HomeScreen.tapAdjustGoal();
+		HomeSettings.tapSleepGoalTab();
+	}
+	
+	public void e_ToWeightGoalSettings() {
+
+		HomeScreen.tapOpenSettingsTray();
+		HomeScreen.tapAdjustGoal();
+		HomeSettings.tapWeightGoalTab();
+	}
+
+	public void e_ChangeActivityGoal() {
+
+		do {
+			activityGoalTemporary = PrometheusHelper.randInt(10, 25) * 100;
+		} while (activityGoalTemporary == activityGoal);
+
+		HomeSettings.setActivityGoal(activityGoalTemporary);
+
+		logger.info("Set activity goal to: " + activityGoalTemporary);
+	}
+	
+	public void e_ChangeSleepGoal() {
+
+		do {
+			sleepGoalHoursTemp = PrometheusHelper.randInt(0, 11);
+		} while (sleepGoalHoursTemp == sleepGoalHours);
 		
 		do {
-			tempGoal = PrometheusHelper.randInt(10, 25) * 100;
-		}
-		while (tempGoal == goal);
-		
-		int currentGoal = HomeSettings.getSpinnerGoal();
-		HomeSettings.setSpinnerGoal(tempGoal, currentGoal);
+			sleepGoalMinutesTemp = PrometheusHelper.randInt(0, 59);
+		} while (sleepGoalMinutesTemp == sleepGoalMinutes);
 
-		logger.info("Set goal to: " + tempGoal);
+		HomeSettings.setSleepGoal(sleepGoalHoursTemp, sleepGoalMinutesTemp);
+
+		logger.info("Set sleep goal to: " + sleepGoalHoursTemp + " hrs " + sleepGoalMinutesTemp + " mins");
+	}
+	
+	public void e_ChangeWeightGoal() {
+
+		do {
+			weightDigitTemp = PrometheusHelper.randInt(90, 100);
+		} while (weightDigitTemp == weightDigit);
+		
+		do {
+			weightFractionTemp = PrometheusHelper.randInt(0, 9);
+		} while (weightFractionTemp == weightFraction);
+		
+		weightUnitUSTemp = PrometheusHelper.coin();
+
+		HomeSettings.setWeightGoal(weightDigitTemp + "", "." + weightFractionTemp, weightUnitUSTemp);
+
+		logger.info("Set weight goal to: " + weightDigitTemp + "." + weightFractionTemp + (weightUnitUSTemp ? " lbs" : " kg"));
 	}
 
 	public void e_CancelEdit() {
-		
+
 		HomeSettings.tapCancel();
 		logger.info("Cancel new goal");
 	}
 
 	public void e_DoneEdit() {
-		
+
 		HomeSettings.tapDoneAtNewGoal();
 		PrometheusHelper.waitForAlert();
-		goal = tempGoal;
+		activityGoal = activityGoalTemporary;
+		sleepGoalHours = sleepGoalHoursTemp;
+		sleepGoalMinutes = sleepGoalMinutesTemp;
+		weightDigit = weightDigitTemp;
+		weightFraction = weightFractionTemp;
+		weightUnitUS = weightUnitUSTemp;
+		
 		logger.info("Confirm new goal");
 	}
 
 	public void e_ConfirmNewGoal() {
-		
+
 		HomeSettings.tapOKAtNewGoalPopup();
 	}
 
-	public void v_GoalSettings() {
-		
+	
+	
+	public void v_HomeScreenNoCheck() {
+
+	}
+	
+	public void v_ActivityTimeline() {
+
+		Assert.assertTrue(HomeScreen.isActivityTimeline(), "Current view is HomeScreen - Activity");
+	}
+
+	public void v_SleepTimeline() {
+
+		Assert.assertTrue(HomeScreen.isSleepTimeline(), "Current view is HomeScreen - Sleep");
+	}
+
+	public void v_WeightTimeline() {
+
+		Assert.assertTrue(HomeScreen.isWeightTimeline(), "Current view is HomeScreen - Weight");
+	}
+	
+	public void v_ActivityGoalSettings() {
+
 		// check if current view is goal settings
-		Assert.assertTrue(HomeSettings.isAtEditGoal(),
-				"Current view is GoalSettings");
+		Assert.assertTrue(HomeSettings.isAtEditActivityGoal(), "Current view is GoalSettings - Activity");
 
 		// check if default value is correct
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
-		String expect = this.goal + "";
-		Assert.assertTrue(actual.indexOf(expect) >= 0,
-				"Default goal value is correct");
+		String expect = this.activityGoal + "";
+		Assert.assertTrue(actual.indexOf(expect) >= 0, "Current activity goal value is correct");
+	}
+	
+	public void v_SleepGoalSettings() {
+
+		// check if current view is goal settings
+		Assert.assertTrue(HomeSettings.isAtEditSleepGoal(), "Current view is GoalSettings - Sleep");
+
+		// check if default value is correct
+		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
+		String expect = this.sleepGoalHours + (this.sleepGoalHours == 1 ? " hour " : " hours ") +
+				this.sleepGoalMinutes + (this.sleepGoalMinutes == 1 ? " minute " : " minutes ");
+		Assert.assertTrue(actual.indexOf(expect) >= 0, "Current sleep goal value is correct");
+	}
+	
+	public void v_WeightGoalSettings() {
+
+		// check if current view is goal settings
+		Assert.assertTrue(HomeSettings.isAtEditWeightGoal(), "Current view is GoalSettings - Weight");
+
+		// check if default value is correct
+		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
+		String expect = this.weightDigit + "." + weightFraction + (weightUnitUS ? " lbs" : " kg");
+		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
 	}
 
 	public void v_GoalUpdated() {
-		
-		// check new spinner value
-		int newGoal = HomeSettings.getSpinnerGoal();
-		Assert.assertEquals(newGoal, tempGoal, "Spinner's value is correct");
 
 		// check how to hit your goal
 		int walkMins = MVPCalculator.calculateNearestTimeRemainInMinute(
-				tempGoal, MVPEnums.ACTIVITY_WALKING);
+				activityGoalTemporary, MVPEnums.ACTIVITY_WALKING);
 		int runMins = MVPCalculator.calculateNearestTimeRemainInMinute(
-				tempGoal, MVPEnums.ACTIVITY_RUNNING);
+				activityGoalTemporary, MVPEnums.ACTIVITY_RUNNING);
 		int swimMins = MVPCalculator.calculateNearestTimeRemainInMinute(
-				tempGoal, MVPEnums.ACTIVITY_SWIMMING);
+				activityGoalTemporary, MVPEnums.ACTIVITY_SWIMMING);
 
 		// check suggest time with correct calculation
 		Assert.assertTrue(ViewUtils.isExistedView(
@@ -123,31 +235,56 @@ public class GoalSettingsAPI extends ModelAPI {
 				"Suggest time for swimming is correct");
 
 	}
+	
+	public void v_SleepGoalUpdated() {
+
+		// currently nothing to check
+		// preserve for future
+	}
+
+	public void v_WeightGoalUpdated() {
+
+		// currently nothing to check
+		// preserve for future
+	}
 
 	public void v_NewGoalConfirmation() {
-		
+
 		// check alert content
 		Assert.assertTrue(HomeSettings.hasNewGoalInstructionMessage(),
 				"Alert message is correct");
 	}
 
-	public void v_HomeScreen() {
-		
-		// check if current screen is home screen
-		Assert.assertTrue(HomeScreen.isToday(), "Current screen is HomeScreen");
-	}
+	public void v_ActivityTimelineUpdated() {
 
-	public void v_HomeScreenUpdated() {
-		
 		// check if new goal value had been updated
-		String actual = Gui.getProperty("UILabel", 4, "text");
-		String expect = this.goal + "";
+		String actual = HomeScreen.getCurrentActivityGoalString();
+		String expect = this.activityGoal + "";
+		logger.info("Actual goal is: " + actual + " - Expect goal is: "+ expect);
+		Assert.assertTrue(actual.indexOf(expect) >= 0 || ViewUtils.isExistedView("UILabel",
+								String.format("of %s points", expect)),
+				"Activity goal value is correct");
+	}
+	
+	public void v_SleepTimelineUpdated() {
+
+		// check if new goal value had been updated
+		String actual = HomeScreen.getCurrentSleepGoalString();
+		String expect = this.sleepGoalHours + (this.sleepGoalHours == 1 ? " hr " : " hrs ") +
+				this.sleepGoalHours + (this.sleepGoalMinutes == 1 ? " min" : " mins");
 		logger.info("Actual goal is: " + actual + " - Expect goal is: "
 				+ expect);
 		Assert.assertTrue(
 				actual.indexOf(expect) >= 0
 						|| ViewUtils.isExistedView("UILabel",
 								String.format("of %s points", expect)),
+				"Sleep goal value is correct");
+	}
+	
+	public void v_WeightTimelineUpdated() {
+
+		// check if new goal value had been updated
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("goal weight: %d.%d", weightDigit, weightFraction)),
 				"Default goal value is correct");
 	}
 

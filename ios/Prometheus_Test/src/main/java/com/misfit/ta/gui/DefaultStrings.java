@@ -15,6 +15,10 @@ public class DefaultStrings {
 	public static String LoadingEtcLabel = "Loading...";
 	public static String RemoveButton = "Remove";
 	
+	public static String ActivityLabel = "Activity";
+	public static String SleepLabel = "Sleep";
+	public static String WeightLabel = "Weight";
+	
 	// sign in / sign up
 	public static String Title = "Oops...";
 	public static String SignUpInvalidEmailMessage = "Sorry, this email is invalid";
@@ -81,6 +85,7 @@ public class DefaultStrings {
 	public static String MisfitLabsButton = "Misfit Labs";
 	public static String ProgressCircleTutorial = "tap for steps, calories and distance";
 	public static String SyncingLabel = "Syncing...";
+	public static String CurrentWeightLabel = "Current Weight";
 	
 	public static String TodayButtonTag = "ButtonGoToToday";
 	public static String MenuActivityTimelineButtonTag = "MenuActivityGoal";
@@ -124,7 +129,6 @@ public class DefaultStrings {
 	public static String LinkButton = "Link";
 	public static String UnlinkButton = "Unlink";
 	public static String LinkShineButton = "Link Shine";
-	public static String SleepLabel = "Sleep";
 	public static String WalkingLabel = "Walking";
 	public static String RunningLabel = "Running";
 	public static String CyclingLabel = "Cycling";
@@ -133,6 +137,10 @@ public class DefaultStrings {
 	public static String BasketballLabel = "Basketball";
 	public static String SoccerLabel = "Soccer";
 	public static String DefaultLabel = "Default";
+	
+	public static String HowToHitActivityGoalLabel = "Here are a few ways to hit your goal:";
+	public static String HowToHitSleepGoalLabel = "SLEEP SAVVY:";
+	public static String HowToHitWeightGoalLabel = "THE SCOOP:";
 	
 	// time zone
 	public static String TimezoneForwardLabel = "You travelled forwards in time by";

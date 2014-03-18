@@ -73,9 +73,9 @@ public class WorldFeedAPI extends ModelAPI {
 		goalA.setGoalValue(100 * 2.5);
 		MVPApi.updateGoal(tokenA, goalA);
 		
-		// pull to refresh
-		ShortcutsTyper.delayTime(10000);
-		HomeScreen.pullToRefresh();
+		// sign out and sign in again
+		PrometheusHelper.signOut();
+		PrometheusHelper.signIn(emailA, "qwerty1");
 	}
 	
 	public void e_signUpAccountB() {
@@ -96,9 +96,9 @@ public class WorldFeedAPI extends ModelAPI {
 		goal.setGoalValue(100 * 2.5);
 		MVPApi.updateGoal(tokenB, goal);
 		
-		// pull to refresh
-		ShortcutsTyper.delayTime(10000);
-		HomeScreen.pullToRefresh();
+		// sign out and sign in again
+		PrometheusHelper.signOut();
+		PrometheusHelper.signIn(emailB, "qwerty1");
 	}
 	
 	public void e_goToWorldFeed() {

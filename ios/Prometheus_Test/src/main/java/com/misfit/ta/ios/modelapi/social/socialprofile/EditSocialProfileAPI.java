@@ -49,9 +49,9 @@ public class EditSocialProfileAPI extends ModelAPI {
 		
 		MVPApi.updateProfile(token, profile);
 		
-		// pull to refresh
-		ShortcutsTyper.delayTime(10000);
-		HomeScreen.pullToRefresh();
+		// sign out and sign in again
+		PrometheusHelper.signOut();
+		PrometheusHelper.signIn(email, "qwerty1");
 		
 		// set up gui
 		HomeScreen.tapLeaderboard();

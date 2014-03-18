@@ -12,7 +12,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class PrometheusHelper {
 
 	/* Constants */
-	private static int DEFAULT_TIMEOUT = 20000;
+	private static int DEFAULT_TIMEOUT = 15;
 	private static String[] longMonths = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 	private static String[] shortMonths = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 	private static String[] shortDaysOfWeek = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
@@ -423,8 +423,7 @@ public class PrometheusHelper {
 		try {
 			int total = 0;
 			while(!condition.call()) {
-				ShortcutsTyper.delayTime(200);
-				total += 200;
+				total += 1;
 
 				if(total > timeout)
 					break;

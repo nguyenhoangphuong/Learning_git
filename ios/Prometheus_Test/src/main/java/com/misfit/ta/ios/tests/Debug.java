@@ -7,10 +7,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
+import com.misfit.ios.NuRemoteClient;
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
-import com.misfit.ta.gui.social.LeaderboardView;
+import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.gui.social.SearchFriendView;
 
 
 public class Debug {
@@ -25,14 +28,11 @@ public class Debug {
 
 //		Files.delete("rawdata");
 //		Files.getFile("rawdata");
-//		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc045@a.a", "qqqqqq");
+//		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc047@a.a", "qqqqqq");
 
-		Gui.init("192.168.1.144");
-		HomeScreen.switchAutoSleepTrackingOff();
-//		HomeScreen.switchAutoSleepTrackingOn();
-//		HomeScreen.switchActivityTaggingOff();
-//		HomeScreen.switchActivityTaggingOn();
-//		Gui.touchAVIew("UISwitch", 1);
-
+		Gui.init("192.168.1.224");
+		ViewUtils.isExistedView("UILabel", "goal weight: 140.0");
+		ViewUtils.isExistedView("UILabel", "goal weight: _140.0_");
+		
 	}
 }

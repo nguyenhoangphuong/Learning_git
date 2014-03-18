@@ -265,6 +265,43 @@ public class HomeScreen {
 	}
 	
 	
+	public static boolean isActivityTimeline() {
+
+		return ViewUtils.isExistedView("PTGoalCircleView", 0);
+	}
+
+	public static boolean isSleepTimeline() {
+
+		return ViewUtils.isExistedView("PTSleepGoalCircleView", 0);
+	}
+
+	public static boolean isWeightTimeline() {
+
+		return ViewUtils.isExistedView("UIButton", DefaultStrings.CurrentWeightLabel);
+	}
+	
+	// get
+	public static String getCurrentActivityGoalString() {
+
+		String circleView = String.format("(ViewUtils findViewWithViewName: \"%s\" andIndex: %d)", "PTGoalCircleView", 0);
+		String labelView = String.format("(ViewUtils findViewWithViewName: \"%s\" andIndex: %d inView: %s)", "UILabel", 1, circleView);
+		String cmd = String.format("(Gui getValueWithPropertyName: @\"%s\" inView: %s)", "text", labelView);
+
+		NuRemoteClient.sendToServer(cmd);
+		return NuRemoteClient.getLastMessage();
+	}
+
+	public static String getCurrentSleepGoalString() {
+
+		String circleView = String.format("(ViewUtils findViewWithViewName: \"%s\" andIndex: %d)", "PTSleepGoalCircleView", 0);
+		String labelView = String.format("(ViewUtils findViewWithViewName: \"%s\" andIndex: %d inView: %s)", "UILabel", 1, circleView);
+		String cmd = String.format("(Gui getValueWithPropertyName: @\"%s\" inView: %s)", "text", labelView);
+
+		NuRemoteClient.sendToServer(cmd);
+		return NuRemoteClient.getLastMessage();
+	}
+	
+	
 	// alerts
 	public static boolean hasSuggestWearingPositionForSwimmingMessage() {
 		return Gui.hasAlert()
