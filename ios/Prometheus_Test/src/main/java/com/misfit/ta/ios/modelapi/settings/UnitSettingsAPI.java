@@ -50,7 +50,7 @@ public class UnitSettingsAPI extends ModelAPI {
 	
 	public void e_ChangeProfileDistanceUnit() {
 		
-		Gui.touchAVIew("UIButton", isDistanceUSUnit ? DefaultStrings.KmLabel : DefaultStrings.MileLabel);
+		Gui.touchAVIew("UILabel", isDistanceUSUnit ? DefaultStrings.KmLabel : DefaultStrings.MileLabel);
 		isDistanceUSUnit = !isDistanceUSUnit;
 		
 		System.out.println("Change Profile Distance Unit to: " + isDistanceUSUnit);
@@ -59,7 +59,7 @@ public class UnitSettingsAPI extends ModelAPI {
 
 	public void e_ChangeProfileWeightUnit() {
 		
-		Gui.touchAVIew("UIButton", isWeightUSUnit ? DefaultStrings.KgLabel : DefaultStrings.LbsLabel);
+		Gui.touchAVIew("UILabel", isWeightUSUnit ? DefaultStrings.KgLabel : DefaultStrings.LbsLabel);
 		isWeightUSUnit = !isWeightUSUnit;
 		
 		System.out.println("Change Profile Weight Unit to: " + isWeightUSUnit);
