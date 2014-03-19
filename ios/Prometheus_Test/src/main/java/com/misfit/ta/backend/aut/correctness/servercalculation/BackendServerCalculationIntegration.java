@@ -34,7 +34,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class BackendServerCalculationIntegration extends BackendAutomation {
 
 
-	protected int delayTime = 20000;
+	protected int delayTime = 30000;
 
 	// test cases
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation" })
@@ -167,14 +167,10 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 		// push data to server
 		List<String> dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime(), goals[2].getTimeZoneOffsetInSeconds() / 3600, "0101", "0012", data2).rawData);
-		dataStrings.add(MVPApi.getRawDataAsString(goals[1].getStartTime(), goals[1].getTimeZoneOffsetInSeconds() / 3600, "0102", "0012", data1).rawData);
-		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime(), goals[0].getTimeZoneOffsetInSeconds() / 3600, "0103", "0012", data0).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime(), goals[2].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(goals[1].getStartTime(), goals[1].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data1).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime(), goals[0].getTimeZoneOffsetInSeconds() / 60, "0103", "18", data0).rawData);
 		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
-		
-//		MVPApi.pushRawData(token, goals[2].getServerId(), data2, 0);
-//		MVPApi.pushRawData(token, goals[1].getServerId(), data1, 0);
-//		MVPApi.pushRawData(token, goals[0].getServerId(), data0, 0);
 
 		logger.info("Waiting " + delayTime + " miliseconds");
 		ShortcutsTyper.delayTime(delayTime);
@@ -398,27 +394,37 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 
 		// push to server
-		MVPApi.pushRawData(token, goals[5].getServerId(), data5, 0);
-		MVPApi.pushRawData(token, goals[4].getServerId(), data4a, 0);
+		List<String> dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(goals[5].getStartTime(), goals[5].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data5).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(goals[4].getStartTime(), goals[4].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data4a).rawData);		
+		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
 		changeDistanceUnit(token, 0);
-		MVPApi.pushRawData(token, goals[4].getServerId(), data4b, 1 * 60);
-		MVPApi.pushRawData(token, goals[3].getServerId(), data3, 0);
-		MVPApi.pushRawData(token, goals[2].getServerId(), data2a, 0);
+		dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(goals[4].getStartTime() + 3600, goals[4].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data4b).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(goals[3].getStartTime(), goals[3].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data3).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime(), goals[2].getTimeZoneOffsetInSeconds() / 60, "0103", "18", data2a).rawData);
+		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
 		changeDistanceUnit(token, 1);
-		MVPApi.pushRawData(token, goals[2].getServerId(), data2b, 1 * 60);
-		MVPApi.pushRawData(token, goals[1].getServerId(), data1, 0);
+		dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime() + 3600, goals[2].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2b).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(goals[1].getStartTime(), goals[1].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data1).rawData);
+		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
 		changeDistanceUnit(token, 0);
-		MVPApi.pushRawData(token, goals[0].getServerId(), data0a, 0);
+		dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime(), goals[0].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data0a).rawData);
+		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
 		changeDistanceUnit(token, 1);
-		MVPApi.pushRawData(token, goals[0].getServerId(), data0b, 6 * 60);
+		dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime() + 6 * 3600, goals[0].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data0b).rawData);
+		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 
 
@@ -514,7 +520,10 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 		
 		// push to server
-		MVPApi.pushRawData(token, goal.getServerId(), data, 0);
+		List<String> dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data).rawData);
+		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		
 		ShortcutsTyper.delayTime(delayTime);
 		
 
@@ -612,8 +621,14 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		
 		
 		// push to server
-		MVPApi.pushRawData(token, goal.getServerId(), data1, 0);
-		MVPApi.pushRawData(token, goal.getServerId(), data2, 0);
+		List<String> dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data1).rawData);
+		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		
+		dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2).rawData);
+		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		
 		ShortcutsTyper.delayTime(delayTime);
 
 
@@ -829,7 +844,7 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 	}
 
 	private void pushSyncData(long timestamp, String email, String serialNumber, List<String> dataStrings) {
-		
+
 		SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromDataStrings(timestamp, email, serialNumber, dataStrings);
 		MVPApi.pushSDKSyncLog(syncLog);
 	}

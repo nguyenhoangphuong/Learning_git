@@ -8,7 +8,7 @@ import org.testng.Assert;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
@@ -40,6 +40,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		// store the token and newly created goal for later use
 		token = MVPApi.signIn(email, "qwerty1").token;
 		blankGoal = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(), (long)Integer.MAX_VALUE, 0l).goals[0];
+		blankGoal.setProgressData(ProgressData.getDefaultProgressData());
 	}
 
 	public void e_changeUnitToSI() {

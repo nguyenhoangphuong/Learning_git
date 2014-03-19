@@ -86,6 +86,8 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		PrometheusHelper.waitForThrobberToDissappear();
 		SearchFriendView.tapSearchField();
 		SearchFriendView.inputKeyWordAndSearch("misterfit");
+		SearchFriendView.waitUntilSearchFinish();
+		
 		SearchFriendView.tapAdd("misterfit");
 		PrometheusHelper.waitForView("UILabel", DefaultStrings.PendingButton);
 		Gui.captureScreen("e_addAverageUserAndGoToLeaderboard" + System.nanoTime());

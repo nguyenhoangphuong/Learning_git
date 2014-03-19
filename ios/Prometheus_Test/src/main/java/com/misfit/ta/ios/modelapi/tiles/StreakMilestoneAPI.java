@@ -11,7 +11,7 @@ import org.testng.Assert;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -41,6 +41,7 @@ public class StreakMilestoneAPI extends ModelAPI {
 		// get current goal
 		token = MVPApi.signIn(email, "qwerty1").token;
 		todayBlankGoal = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(), (long)Integer.MAX_VALUE, 0l).goals[0];
+		todayBlankGoal.setProgressData(ProgressData.getDefaultProgressData());
 		
 		// update current day goal's value to 100 pts
 		todayBlankGoal.setGoalValue(100 * 2.5d);
@@ -124,23 +125,14 @@ public class StreakMilestoneAPI extends ModelAPI {
 		for(int i = 0; i < dayDiff; i++)
 			Gui.swipeUp(1000);
 
-		//String title = (mins / 60) + ":" + String.format("%02d", mins % 60 + 10) + "am";
 		String title = (dayDiff + 1) + "";
-		boolean pass = false;
-		for (int i = 0; i < 3; i++) {
-			Timeline.openTile(title);
-			Gui.captureScreen("streaktile-" + System.nanoTime());
-			if (Timeline.isStreakTileCorrect(title, dayDiff + 1, messages)) {
-				pass = true;
-				Timeline.closeCurrentTile();
-				break;
-			}
-			Timeline.closeCurrentTile();
-		}
-
+		Timeline.openTile(title);
+		Gui.captureScreen("streaktile-" + System.nanoTime());
+		
+		Assert.assertTrue(Timeline.isStreakTileCorrect(title, dayDiff + 1, messages), "At least one tile has correct content");
+		
+		Timeline.closeCurrentTile();
 		Timeline.dragDownTimeline();
-
-		Assert.assertTrue(pass, "At least one tile has correct content");
 	}
 
 }

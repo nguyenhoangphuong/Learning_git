@@ -394,20 +394,40 @@ public class MVPApi extends RequestHelper {
 			String fileHandle, String fileFormat, GoalRawData rawData) {
 	
 		// prepare
-		String url = baseAddress + "goals/raw_data";
+		String url = baseAddress + "internal/convert_shine_binary";
+		
+		JSONObject header = new JSONObject();
+		try {
+			header.accumulate("timestamp", timestamp);
+			header.accumulate("file_handler", fileHandle);
+			header.accumulate("file_format_id", fileFormat);
+			header.accumulate("timezone", timezoneOffsetInMinutes);
+		}
+		catch (Exception e) {
+		}
+		
+		logger.info(header.toString());
+		
+		JSONObject rawDataJson = rawData.toJson();
+		JSONObject data = new JSONObject();
+		try {
+			data.accumulate("headers", header);
+			data.put("points", rawDataJson.getJSONArray("points"));
+			data.put("steps", rawDataJson.getJSONArray("steps"));
+			data.put("variances", rawDataJson.getJSONArray("variances"));
+			data.put("triple_tap_minutes", rawDataJson.getJSONArray("triple_tap_minutes"));
+		}
+		catch (Exception e) {
+		}
 		
 		BaseParams requestInf = new BaseParams();
-		requestInf.addParam("timestamp", timestamp.toString());
-		requestInf.addParam("fileHandle", fileHandle);
-		requestInf.addParam("fileFormat", fileFormat);
-		requestInf.addParam("timezoneOffsetInMinutes", timezoneOffsetInMinutes.toString());
-		requestInf.addParam("data", rawData.toJson().toString());
+		requestInf.addParam("data", data.toString());
 
 		// post and receive raw data
 		ServiceResponse response = MVPApi.post(url, port, requestInf);
 
 		// format data
-		GoalsResult result = new GoalsResult(response);
+		BaseResult result = new BaseResult(response);
 		return result;
 	}
 	

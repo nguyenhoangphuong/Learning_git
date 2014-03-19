@@ -7,17 +7,7 @@
 	<test name="SmokeTest1">
 		<groups>
 			<run>
-				<include name="TRSTest" />
-			</run>
-		</groups>
-		<packages>
-			<package name="com.misfit.*" />
-		</packages>
-	</test>
-	<test name="SmokeTest2">
-		<groups>
-			<run>
-				<include name="TRSTest" />
+				<include name="openapi" />
 			</run>
 		</groups>
 		<packages>
