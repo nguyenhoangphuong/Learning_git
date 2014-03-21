@@ -114,7 +114,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		result = OpenAPI.getProfile(ClientApp, strangerUid);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
-		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+		Assert.assertEquals(result.message, DefaultValues.UnauthorizedAccess, "Error message");
 	}
 	
 	/*

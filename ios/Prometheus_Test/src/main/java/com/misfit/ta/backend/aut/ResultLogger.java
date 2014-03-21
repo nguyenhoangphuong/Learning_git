@@ -58,7 +58,6 @@ public class ResultLogger {
 	public void log(String message) {
 		
 	    try {
-		    
 			writer.write(message + "\n");
 			writer.flush();
 		} catch (IOException e) {

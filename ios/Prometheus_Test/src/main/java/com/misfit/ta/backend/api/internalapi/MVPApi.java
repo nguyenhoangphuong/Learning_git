@@ -1,5 +1,6 @@
 package com.misfit.ta.backend.api.internalapi;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -39,6 +40,7 @@ import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.base.AWSHelper;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.utils.TextTool;
 
 public class MVPApi extends RequestHelper {
@@ -854,16 +856,28 @@ public class MVPApi extends RequestHelper {
 		return log;
 	}
 	
-	public static BaseResult pushSDKSyncLog(SDKSyncLog syncLog) {
-		
+	public static BaseResult pushSDKSyncLog(SDKSyncLog syncLog, boolean gzip) {
+	
 		String url = dataCenterBaseAddress + "events";
 		CloseableHttpClient httpclient = InsecureHttpClientHelper.getInsecureCloseableHttpClient();
 
+		String body = syncLog.toJson().toString();
+		if(gzip) {
+			try {
+				body = MVPCommon.compressGzip(body);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	    EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
-		entityBuilder.setText(syncLog.toJson().toString());
+		entityBuilder.setText(body);
 		
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.addHeader("Content-Type", "application/json");
+		if(gzip) {
+			httpPost.addHeader("Content-Encoding", "gzip");
+		}
 		httpPost.addHeader("access_key_id", "39347523984598654-ajwoeifja399438ga3948g494g843fff");
 		httpPost.setEntity(entityBuilder.build());
 		
@@ -893,6 +907,11 @@ public class MVPApi extends RequestHelper {
 		catch (Exception e) {
 			return null;
 		}
+	}
+	
+	public static BaseResult pushSDKSyncLog(SDKSyncLog syncLog) {
+		
+		return pushSDKSyncLog(syncLog, false);
 	}
 	
 	

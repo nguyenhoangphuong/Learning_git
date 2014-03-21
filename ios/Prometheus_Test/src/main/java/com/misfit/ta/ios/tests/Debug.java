@@ -7,13 +7,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ios.NuRemoteClient;
-import com.misfit.ios.ViewUtils;
-import com.misfit.ta.gui.Gui;
-import com.misfit.ta.gui.HomeScreen;
-import com.misfit.ta.gui.HomeSettings;
-import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.gui.social.SearchFriendView;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.aut.correctness.servercalculation.ServerCalculationTestHelpers;
+import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
 
 
 public class Debug {
@@ -30,9 +26,14 @@ public class Debug {
 //		Files.getFile("rawdata");
 //		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc047@a.a", "qqqqqq");
 
-		Gui.init("192.168.1.224");
-		ViewUtils.isExistedView("UILabel", "goal weight: 140.0");
-		ViewUtils.isExistedView("UILabel", "goal weight: _140.0_");
+//		Gui.init("192.168.1.224");
+//		ViewUtils.isExistedView("UILabel", "goal weight: 140.0");
+//		ViewUtils.isExistedView("UILabel", "goal weight: _140.0_");
+		SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(System.currentTimeMillis() / 1000,
+				"gzip@1.1", "ABCDEFGHIJ", "rawdata/test1/1392170920");
+		MVPApi.pushSDKSyncLog(syncLog, true);
+//		logger.info(ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(System.currentTimeMillis() / 1000,
+//				"dc_performance@qa.com", "ABCDEFGHIJ", "rawdata/test1/1392170920").toJson().toString());
 		
 	}
 }

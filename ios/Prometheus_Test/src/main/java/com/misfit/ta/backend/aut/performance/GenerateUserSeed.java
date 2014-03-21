@@ -23,7 +23,6 @@ import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.LifetimeDistanceItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.base.SeedThread;
-import com.misfit.ta.base.ServerResultSummary;
 import com.misfit.ta.common.MVPCommon;
 
 public class GenerateUserSeed extends SeedThread {
@@ -32,7 +31,6 @@ public class GenerateUserSeed extends SeedThread {
 	
 	// static fields
 	public static ResultLogger resultLogger = ResultLogger.getLogger("user_generate_seed_" + System.nanoTime());
-	public static ServerResultSummary summary = new ServerResultSummary();
 	public static int numberOfUserFullyCreated = 0;
 	public static int numberOfUserCreated = 0;
 	
@@ -80,7 +78,6 @@ public class GenerateUserSeed extends SeedThread {
 		BaseResult result = MVPApi.signUp(email, password);
 		String token = ((AccountResult)result).token;
 		hasError = (result.statusCode >= 300);
-		summary.addBaseResult(result);
 		numberOfUserCreated++;
 		
 		// create profile
@@ -90,21 +87,18 @@ public class GenerateUserSeed extends SeedThread {
 		
 		result = MVPApi.createProfile(token, profile);
 		hasError = (result.statusCode >= 300);
-		summary.addBaseResult(result);
 		
 		
 		// create pedometer
 		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
 		result = MVPApi.createPedometer(token, pedometer);
 		hasError = (result.statusCode >= 300);
-		summary.addBaseResult(result);
 		
 		
 		// create statistics
 		Statistics statistics = DataGenerator.generateRandomStatistics(timestamp, null);
 		result = MVPApi.createStatistics(token, statistics);
 		hasError = (result.statusCode >= 300);
-		summary.addBaseResult(result);
 		
 		
 		// create goals
@@ -115,7 +109,6 @@ public class GenerateUserSeed extends SeedThread {
 			result = MVPApi.createGoal(token, goal);
 			
 			hasError = (result.statusCode >= 300);
-			summary.addBaseResult(result);
 		}
 		
 		
@@ -254,12 +247,10 @@ public class GenerateUserSeed extends SeedThread {
 		ServiceResponse response = MVPApi.createGraphItems(token, graphItems);
 		result = new BaseResult(response);
 		hasError = (result.statusCode >= 300);
-		summary.addBaseResult(result);
 		
 		response = MVPApi.createTimelineItems(token, timelineItems);
 		result = new BaseResult(response);
 		hasError = (result.statusCode >= 300);
-		summary.addBaseResult(result);
 
 		
 		// create sync logs
@@ -288,7 +279,6 @@ public class GenerateUserSeed extends SeedThread {
 				
 				syncLog.setSerialNumberString(pedometer.getSerialNumberString());
 				result = MVPApi.pushSyncLog(token, syncLog);
-				summary.addBaseResult(result);
 				
 				hasError = (result.statusCode >= 300);
 			}
@@ -303,7 +293,6 @@ public class GenerateUserSeed extends SeedThread {
 				hasError + "\t" + 
 				numberOfUserCreated + "\t" + 
 				numberOfUserFullyCreated + "\t" +
-				summary.errorCodeCountAsString() + "\t" + 
 				(globalEndTime - globalStartTime));
 	}
 

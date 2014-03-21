@@ -1,11 +1,13 @@
 package com.misfit.ta.common;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
@@ -111,7 +113,7 @@ public class MVPCommon {
 	}
 	
 	
-	// encoding
+	// encoding, compress / decompress
 	public static String readFileAsBase64String(String filePath) {
 		
 		try {
@@ -125,6 +127,21 @@ public class MVPCommon {
 		
 		return null;
 	}
+
+	public static String compressGzip(String str) throws IOException {
+		if (str == null || str.length() == 0) {
+			return str;
+		}
+		
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		GZIPOutputStream gzip = new GZIPOutputStream(out);
+		gzip.write(str.getBytes());
+		gzip.close();
+		
+		String outStr = out.toString("ISO-8859-1");
+		return outStr;
+	}
+
 	
 	
 	// mvp related

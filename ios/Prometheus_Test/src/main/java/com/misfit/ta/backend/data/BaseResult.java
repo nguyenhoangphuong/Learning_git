@@ -35,35 +35,37 @@ public class BaseResult {
 	// constructor
 	public BaseResult(ServiceResponse response) {
 		
-		// raw data
-		this.response = response;
-		this.rawData = response.getContentData().toString();
+		if(response != null) {
+			// raw data
+			this.response = response;
+			this.rawData = response.getContentData().toString();
 
-		if (!this.rawData.trim().isEmpty()) {
-		    try {
-                json = new JSONObject(this.rawData.toString());
-                
-                if (!json.isNull("error_message")) {
-                	this.errorMessage = json.getString("error_message");
-                	this.pairResult.put("error_message", this.errorMessage);
-                }
-                
-                if (!json.isNull("message")) {
-                	this.message = json.getString("message");
-                	this.pairResult.put("message", this.message);
-                }
-                
-                if (!json.isNull("error_code")) {
-                	this.errorCode = Integer.valueOf(json.getString("error_code"));
-                	this.pairResult.put("error_code", this.errorCode);
-                }
+			if (!this.rawData.trim().isEmpty()) {
+				try {
+					json = new JSONObject(this.rawData.toString());
 
-            } catch (JSONException e1) {
-            }
+					if (!json.isNull("error_message")) {
+						this.errorMessage = json.getString("error_message");
+						this.pairResult.put("error_message", this.errorMessage);
+					}
+
+					if (!json.isNull("message")) {
+						this.message = json.getString("message");
+						this.pairResult.put("message", this.message);
+					}
+
+					if (!json.isNull("error_code")) {
+						this.errorCode = Integer.valueOf(json.getString("error_code"));
+						this.pairResult.put("error_code", this.errorCode);
+					}
+
+				} catch (JSONException e1) {
+				}
+			}
+
+			this.statusCode = response.getStatusCode();
+			this.pairResult.put("status_code", this.statusCode);
 		}
-
-		this.statusCode = response.getStatusCode();
-		this.pairResult.put("status_code", this.statusCode);
 	}
 
 	// utilities functions

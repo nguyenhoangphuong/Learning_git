@@ -69,13 +69,25 @@ public class SeedThreadParallelExecutor {
         
     }
     
+    public String getSummary() {
+    	
+    	String summary = "";
+    	summary += "\n------------------------------------------------------------------";
+    	summary += "\nSeed count: " + this.numberOfSeed;
+    	summary += "\nThread count: " + this.numberOfThread;
+    	summary += "\nStart time: " + this.startTime;
+    	summary += "\nEnd time: " + this.endTime;
+    	summary += "\nTotal running time: " + this.totalTime;
+    	summary += "\n------------------------------------------------------------------\n";
+    	
+    	return summary;
+    }
+    
     public void printSummary() {
     	
-    	logger.info("------------------------------------------------------------------");
-    	logger.info("Start time: " + this.startTime);
-    	logger.info("End time: " + this.endTime);
-    	logger.info("Total running time: " + this.totalTime);
-    	logger.info("------------------------------------------------------------------");
+    	String[] lines = getSummary().split("\n");
+    	for(String line : lines)
+    		logger.info(line);
     }
 
 }
