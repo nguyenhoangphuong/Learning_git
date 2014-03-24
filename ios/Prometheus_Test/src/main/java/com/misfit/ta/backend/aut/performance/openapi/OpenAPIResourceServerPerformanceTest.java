@@ -67,7 +67,7 @@ public class OpenAPIResourceServerPerformanceTest {
 		}
 		sb.append("\n------------------------------------------------------------------\n");
 
-		logger.info(sb.toString());
+		logger.error(sb.toString());
 		resultLogger.log(sb.toString());
 	}
 
@@ -83,17 +83,34 @@ public class OpenAPIResourceServerPerformanceTest {
 
 		static {
 			
+			// set up temp account
 			long timestamp = System.currentTimeMillis() / 1000;
 			String email = MVPApi.generateUniqueEmail();
 			String password = "qqqqqq";
 			String token = MVPApi.signUp(email, password).token;
 			myUid = MVPApi.getUserId(token);
 
+			MVPApi.createProfile(token,DataGenerator.generateRandomProfile(timestamp, null));
+			MVPApi.createPedometer(token,DataGenerator.generateRandomPedometer(timestamp, null));
+			MVPApi.createGoal(token, Goal.getDefaultGoal(timestamp - 3600 * 24));
+
+			BaseResult result1 = MVPApi.createGoal(token, Goal.getDefaultGoal());
+			BaseResult result2 = MVPApi.createTimelineItem(token, DataGenerator.generateRandomActivitySessionTimelineItem(timestamp, null));
+			BaseResult result3 = MVPApi.createTimelineItem(token, DataGenerator.generateRandomSleepTimelineItem(timestamp, null));
+
+			goalId = Goal.getGoal(result1.response).getServerId();
+			sessionId = TimelineItem.getTimelineItem(result2.response).getServerId();
+			sleepId = TimelineItem.getTimelineItem(result3.response).getServerId();
+	
 //			String email = "nhhai16991@gmail.com";
 //			String password = "qqqqqq";
-//			String token = MVPApi.signIn(email, password).token;
 //			myUid = "5240134a67819f054100047b";
+//			goalId = "5323e93e5b77e596560016a2";
+//			sessionId = "5277a21c67819f42da0f7dc0";
+//			sleepId = "52d755ff5b77e5918902ef6f";
 			
+			
+			// get 3rd party app and access token
 			String clientKey = Settings.getParameter("MVPOpenAPIClientID");
 			String clientSecret = Settings
 					.getParameter("MVPOpenAPIClientSecret");
@@ -105,27 +122,6 @@ public class OpenAPIResourceServerPerformanceTest {
 			app = new OpenAPIThirdPartyApp();
 			app.setClientKey(clientKey);
 			app.setClientSecret(clientSecret);
-
-			MVPApi.createProfile(token,
-					DataGenerator.generateRandomProfile(timestamp, null));
-			MVPApi.createPedometer(token,
-					DataGenerator.generateRandomPedometer(timestamp, null));
-			MVPApi.createGoal(token, Goal.getDefaultGoal(timestamp - 3600 * 24));
-
-			BaseResult result1 = MVPApi
-					.createGoal(token, Goal.getDefaultGoal());
-			BaseResult result2 = MVPApi
-					.createTimelineItem(token, DataGenerator
-							.generateRandomActivitySessionTimelineItem(
-									timestamp, null));
-			BaseResult result3 = MVPApi.createTimelineItem(token, DataGenerator
-					.generateRandomSleepTimelineItem(timestamp, null));
-
-			goalId = Goal.getGoal(result1.response).getServerId();
-			sessionId = TimelineItem.getTimelineItem(result2.response)
-					.getServerId();
-			sleepId = TimelineItem.getTimelineItem(result3.response)
-					.getServerId();
 		}
 
 		// implements intefaces

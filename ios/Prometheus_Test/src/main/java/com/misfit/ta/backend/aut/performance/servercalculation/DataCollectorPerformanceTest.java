@@ -34,13 +34,19 @@ public class DataCollectorPerformanceTest {
 	public static void main(String[] args) {
 		
 		if (args.length == 0) {
-			args = new String[] { "20", "200" };
+			args = new String[] { "1500", "500", "rawdata/test1/1392219789" };
 		}
 		
 		int numberOfSeed = Integer.valueOf(args[0]);
 		int numberOfThread = Integer.valueOf(args[1]);
 		
-		SeedThread seed = new DataCollectorPerformanceSeed();
+		String rawDataPath = null;
+		if(args.length < 3)
+			rawDataPath = "rawdata/test1/1392219789";
+		else
+			rawDataPath = args[2];
+		
+		SeedThread seed = new DataCollectorPerformanceSeed(rawDataPath);
 		SeedThreadParallelExecutor executor = new SeedThreadParallelExecutor(seed, numberOfSeed, numberOfThread);
 		executor.execute();
 
@@ -60,17 +66,24 @@ public class DataCollectorPerformanceTest {
 		}
 		sb.append("\n------------------------------------------------------------------\n");
 		
-		logger.info(sb.toString());
+		logger.error(sb.toString());
 		resultLogger.log(sb.toString());
 	}
 	
 	public static class DataCollectorPerformanceSeed extends SeedThread {
 
+		private String rawDataPath;
+		
+		public DataCollectorPerformanceSeed(String rawDataPath) {
+			this.rawDataPath = rawDataPath;
+			
+		}
+		
 		// implements intefaces
 		public void run() {
 
 			SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(System.currentTimeMillis() / 1000,
-					"dc_performance@qa.com", "ABCDEFGHIJ", "rawdata/test1/1392170920");
+					"dc_performance@qa.com", "ABCDEFGHIJ", rawDataPath);
 			
 			addRequest();
 			addResult(MVPApi.pushSDKSyncLog(syncLog));
@@ -78,7 +91,7 @@ public class DataCollectorPerformanceTest {
 
 		public SeedThread duplicate() {
 
-			return new DataCollectorPerformanceSeed();
+			return new DataCollectorPerformanceSeed(this.rawDataPath);
 		}
 	}
 

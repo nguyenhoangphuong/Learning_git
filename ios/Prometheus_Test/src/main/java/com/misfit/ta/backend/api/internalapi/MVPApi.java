@@ -890,8 +890,10 @@ public class MVPApi extends RequestHelper {
 			logger.info("Request headers: " + params.getHeadersAsJsonString());
 			logger.info("Request params: " + syncLog.toJson().toString());
 			
+			long start = System.currentTimeMillis();
 			CloseableHttpResponse response = httpclient.execute(httpPost);
 			ServiceResponse sr = new ServiceResponse(response, EncodingTypes.UTF8);
+			long end = System.currentTimeMillis();
 			
 	        HttpEntity entity = response.getEntity();
 	        EntityUtils.consume(entity);
@@ -899,6 +901,7 @@ public class MVPApi extends RequestHelper {
 	        response.close();
 	        BaseResult result = new BaseResult(sr);
 	        
+	        logger.error("Time taken in REST: " + (end - start));
 	        logger.info("Response raw Data: " + result.rawData);
 	        logger.info("Response code: " + result.statusCode + "\n\n");
 	        
