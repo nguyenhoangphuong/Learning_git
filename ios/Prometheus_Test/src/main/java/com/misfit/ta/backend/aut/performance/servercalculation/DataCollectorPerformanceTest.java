@@ -27,7 +27,8 @@ public class DataCollectorPerformanceTest {
 
 	private static synchronized void addResult(BaseResult result) {
 
-		numberOfResponse++;
+		if(result.response != null)
+			numberOfResponse++;
 		resultCode[result.statusCode]++;
 	}
 	
@@ -49,6 +50,10 @@ public class DataCollectorPerformanceTest {
 		SeedThread seed = new DataCollectorPerformanceSeed(rawDataPath);
 		SeedThreadParallelExecutor executor = new SeedThreadParallelExecutor(seed, numberOfSeed, numberOfThread);
 		executor.execute();
+		
+		SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(System.currentTimeMillis() / 1000,
+				"end_dc_performance@qa.com", "ABCDEFGHIJ", rawDataPath);
+		MVPApi.pushSDKSyncLog(syncLog);
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("\nTest statistics: ");
