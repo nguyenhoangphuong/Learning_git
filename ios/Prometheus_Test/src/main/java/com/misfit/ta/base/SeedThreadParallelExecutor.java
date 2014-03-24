@@ -21,9 +21,9 @@ public class SeedThreadParallelExecutor {
     protected int numberOfThread;
     protected int numberOfSeed;
     
-    protected long startTime;
-    protected long endTime;
-    protected long totalTime;
+    public long startTime;
+    public long endTime;
+    public long totalTime;
 
     
     // constructor

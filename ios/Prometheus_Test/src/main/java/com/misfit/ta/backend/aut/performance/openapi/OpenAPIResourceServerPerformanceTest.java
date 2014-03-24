@@ -33,7 +33,8 @@ public class OpenAPIResourceServerPerformanceTest {
 
 	private static synchronized void addResult(BaseResult result) {
 
-		numberOfResponse++;
+		if(result != null && result.response != null)
+			numberOfResponse++;
 		resultCode[result.statusCode]++;
 	}
 
@@ -59,6 +60,7 @@ public class OpenAPIResourceServerPerformanceTest {
 		sb.append("\n------------------------------------------------------------------");
 		sb.append("\nTotal requests: " + numberOfRequest);
 		sb.append("\nTotal response: " + numberOfResponse);
+		sb.append("\nRPS: " + (numberOfRequest * 1.0 / executor.totalTime));
 		sb.append("\nStatus code distribution:");
 
 		for (int i = 0; i < resultCode.length; i++) {
@@ -101,14 +103,6 @@ public class OpenAPIResourceServerPerformanceTest {
 			goalId = Goal.getGoal(result1.response).getServerId();
 			sessionId = TimelineItem.getTimelineItem(result2.response).getServerId();
 			sleepId = TimelineItem.getTimelineItem(result3.response).getServerId();
-	
-//			String email = "nhhai16991@gmail.com";
-//			String password = "qqqqqq";
-//			myUid = "5240134a67819f054100047b";
-//			goalId = "5323e93e5b77e596560016a2";
-//			sessionId = "5277a21c67819f42da0f7dc0";
-//			sleepId = "52d755ff5b77e5918902ef6f";
-			
 			
 			// get 3rd party app and access token
 			String clientKey = Settings.getParameter("MVPOpenAPIClientID");

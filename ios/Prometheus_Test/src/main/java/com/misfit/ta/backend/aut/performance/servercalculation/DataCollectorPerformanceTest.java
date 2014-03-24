@@ -27,13 +27,14 @@ public class DataCollectorPerformanceTest {
 
 	private static synchronized void addResult(BaseResult result) {
 
-		if(result.response != null)
+		if(result != null && result.response != null)
 			numberOfResponse++;
 		resultCode[result.statusCode]++;
 	}
 	
 	public static void main(String[] args) {
 		
+		// parse params
 		if (args.length == 0) {
 			args = new String[] { "1500", "500", "rawdata/test1/1392219789" };
 		}
@@ -47,14 +48,20 @@ public class DataCollectorPerformanceTest {
 		else
 			rawDataPath = args[2];
 		
+		
+		// run the test
 		SeedThread seed = new DataCollectorPerformanceSeed(rawDataPath);
 		SeedThreadParallelExecutor executor = new SeedThreadParallelExecutor(seed, numberOfSeed, numberOfThread);
 		executor.execute();
 		
+		
+		// test ended marker
 		SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(System.currentTimeMillis() / 1000,
 				"end_dc_performance@qa.com", "ABCDEFGHIJ", rawDataPath);
 		MVPApi.pushSDKSyncLog(syncLog);
 
+		
+		// result
 		StringBuffer sb = new StringBuffer();
 		sb.append("\nTest statistics: ");
 		sb.append(executor.getSummary());
@@ -63,6 +70,7 @@ public class DataCollectorPerformanceTest {
 		sb.append("\n------------------------------------------------------------------");
 		sb.append("\nTotal requests: " + numberOfRequest);
 		sb.append("\nTotal response: " + numberOfResponse);
+		sb.append("\nRPS: " + (numberOfRequest * 1.0 / executor.totalTime));
 		sb.append("\nStatus code distribution:");
 		
 		for(int i = 0; i < resultCode.length; i++) {
