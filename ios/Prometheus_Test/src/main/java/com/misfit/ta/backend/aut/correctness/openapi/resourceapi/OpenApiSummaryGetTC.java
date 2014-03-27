@@ -53,11 +53,13 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		String nullString = null;
 		BaseResult result = OpenAPI.getSummary(nullString, "me", fromDate, toDate);
 		Assert.assertEquals(result.statusCode, 401, "Status code");
+		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
 		// invalid access token
 		result = OpenAPI.getSummary(TextTool.getRandomString(10, 10), "me", fromDate, toDate);
 		Assert.assertEquals(result.statusCode, 401, "Status code");
+		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
 	
@@ -194,6 +196,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		BaseResult result = OpenAPI.getSummary(invalidScopeAccessToken, "me", fromDate, toDate);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
@@ -203,11 +206,13 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		// from other authorized user
 		BaseResult result = OpenAPI.getSummary(accessToken, yourUid, fromDate, toDate);
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 
 		// from unauthorized user
 		result = OpenAPI.getSummary(accessToken, strangerUid, fromDate, toDate);
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
@@ -221,12 +226,16 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		BaseResult result4 = OpenAPI.getSummary(accessToken, "me", fromDate, "def");
 		
 		Assert.assertEquals(result1.statusCode, 400, "Status code");
+		Assert.assertEquals(result1.code, 400, "OpenAPI code");
 		Assert.assertEquals(result1.errorMessage, DefaultValues.MissingParameters, "Error message");
 		Assert.assertEquals(result2.statusCode, 400, "Status code");
+		Assert.assertEquals(result2.code, 400, "OpenAPI code");
 		Assert.assertEquals(result2.errorMessage, DefaultValues.MissingParameters, "Error message");
 		Assert.assertEquals(result3.statusCode, 400, "Status code");
+		Assert.assertEquals(result3.code, 400, "OpenAPI code");
 		Assert.assertEquals(result3.errorMessage, DefaultValues.InvalidParameters, "Error message");
 		Assert.assertEquals(result4.statusCode, 400, "Status code");
+		Assert.assertEquals(result4.code, 400, "OpenAPI code");
 		Assert.assertEquals(result4.errorMessage, DefaultValues.InvalidParameters, "Error message");
 		
 
@@ -259,7 +268,8 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		result = OpenAPI.getSummary(ClientApp, strangerUid, toDate, toDate);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
-		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
+		Assert.assertEquals(result.message, DefaultValues.UnauthorizedAccess, "Error message");
 	}
 	
 	/*

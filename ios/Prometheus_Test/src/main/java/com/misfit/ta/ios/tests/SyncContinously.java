@@ -10,7 +10,6 @@ import org.graphwalker.exceptions.StopConditionException;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.Gui;
-import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.sync.SyncDebugLog;
@@ -24,13 +23,15 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SyncContinously {
 
-	private static int NUMBER_OF_SYNC = 50;
+	public int numberOfSync = 50;
+	public String deviceIp = "192.168.1.114";
 	private InstrumentHelper instrument = new InstrumentHelper();
+	
 
 	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "QuietSync", "SyncContinously" })
 	public void QuietSyncContinously() {
 		
-		for (int i = 0; i < NUMBER_OF_SYNC; i++) {
+		for (int i = 0; i < numberOfSync; i++) {
 
 			System.out.println("--------------------- Quiet Sync: " + i + " ----------------------");
 
@@ -58,7 +59,7 @@ public class SyncContinously {
 
 		// connect Nu
 		// NOTE: you have to open app by yourself
-		Gui.init(Settings.getParameter("DeviceIP"));
+		Gui.init(deviceIp);
 		
 		// user info
 		String email = "science018@qa.com";
@@ -86,10 +87,10 @@ public class SyncContinously {
 		int successfulSyncCount = 0;
 		int failedSyncCount = 0;
 		
-		SyncDebugLog[] syncLogs = new SyncDebugLog[NUMBER_OF_SYNC];
-		long[] uiStartTime = new long[NUMBER_OF_SYNC];
-		long[] uiEndTime = new long[NUMBER_OF_SYNC];
-		boolean[] statusPassed = new boolean[NUMBER_OF_SYNC];
+		SyncDebugLog[] syncLogs = new SyncDebugLog[numberOfSync];
+		long[] uiStartTime = new long[numberOfSync];
+		long[] uiEndTime = new long[numberOfSync];
+		boolean[] statusPassed = new boolean[numberOfSync];
 
 		// start test
 		ShortcutsTyper.delayTime(2000);
@@ -97,7 +98,7 @@ public class SyncContinously {
 			long begin = System.currentTimeMillis() / 1000 - 720;
 
 			PrometheusHelper.signIn(email, password);
-			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
+			for (int i = 0; i < numberOfSync; i++) {
 				
 				TRS.instance().addStep("Sync number: " + (i + 1), null);
 
@@ -158,7 +159,7 @@ public class SyncContinously {
 
 		// connect Nu
 		// NOTE: you have to open app first
-		Gui.init("192.168.1.144");
+		Gui.init(deviceIp);
 		
 		// tracking
 		int successfulSyncCount = 0;
@@ -167,7 +168,7 @@ public class SyncContinously {
 		// start test
 		try {
 
-			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
+			for (int i = 0; i < numberOfSync; i++) {
 				
 				TRS.instance().addStep("Sync number: " + (i + 1), null);
 
@@ -218,13 +219,13 @@ public class SyncContinously {
 		PrintWriter fr;
 		try {
 			fr = new PrintWriter(detailResult.getAbsolutePath(), "UTF-8");
-			fr.print("Total test: " + NUMBER_OF_SYNC + "\n");
+			fr.print("Total test: " + numberOfSync + "\n");
 			fr.print("Fail number: " + failedSyncCount + "\n");
 			fr.print("Success number: " + successfulSyncCount + "\n");
 			fr.print('\n');
 
 			fr.print("No.\tStatus\tNumberOfRetries\tRetryReasons\tUITotalTime\tScanningTime\tGetSettingsTime\tTransferDataTime\tSetSettingsAndCleanupTime\n");
-			for (int i = 0; i < NUMBER_OF_SYNC; i++) {
+			for (int i = 0; i < numberOfSync; i++) {
 
 				fr.print((i + 1) + "\t");
 				fr.print(statusPassed[i] + "\t");
@@ -248,4 +249,38 @@ public class SyncContinously {
 		return detailResult;
 	}
 	
+	
+	public static void main(String[] args) throws InterruptedException, StopConditionException, IOException {
+		
+		if(args.length == 0)
+			args = new String[] {"help", ""};
+		
+		String mode = args[0].toLowerCase();
+		String deviceIp = args[1];
+		int numberOfSync = (args.length < 3 ? 50 : Integer.parseInt(args[2]));
+		
+		if(mode.equals("help")) {
+			
+			System.out.println("How to use:");
+			System.out.println("SyncContinously [deviceip] [mode] [numberOfSync]");
+			System.out.println("mode: manual/quiet");
+			System.out.println("deviceip: 192.168.1.123");
+			System.out.println("numberOfSync: default = 50");
+		}
+		else if(mode.equals("manual")) {
+			
+			SyncContinously test = new SyncContinously();
+			test.deviceIp = deviceIp;
+			test.numberOfSync = numberOfSync;
+			test.QuickManualSyncContinously();
+		}
+		else if(mode.equals("quiet")) {
+			
+			SyncContinously test = new SyncContinously();
+			test.deviceIp = deviceIp;
+			test.numberOfSync = numberOfSync;
+			test.QuietSyncContinously();
+		}
+	}
+
 }

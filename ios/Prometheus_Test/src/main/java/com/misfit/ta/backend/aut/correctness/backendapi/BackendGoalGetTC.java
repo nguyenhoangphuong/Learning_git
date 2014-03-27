@@ -25,7 +25,7 @@ public class BackendGoalGetTC extends BackendAutomation {
 		String token = MVPApi.signUp(email, password).token;
 		for(int i = 1; i <= 5; i++) {
 			Calendar calendar = Calendar.getInstance();
-			calendar.set(year, month, i);
+			calendar.set(year, month - 1, i);
 			long timestamp = calendar.getTimeInMillis() / 1000;
 			MVPApi.createGoal(token, Goal.getDefaultGoal(timestamp));
 		}

@@ -40,11 +40,13 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 		String nullString = null;
 		BaseResult result = OpenAPI.getDevice(nullString, "me");
 		Assert.assertEquals(result.statusCode, 401, "Status code");
+		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
 		// invalid access token
 		result = OpenAPI.getDevice(TextTool.getRandomString(10, 10), "me");
 		Assert.assertEquals(result.statusCode, 401, "Status code");
+		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
 		
@@ -79,6 +81,7 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
 		BaseResult result = OpenAPI.getDevice(invalidScopeAccessToken, "me");
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
@@ -88,11 +91,13 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 		// from other authorized user
 		BaseResult result = OpenAPI.getDevice(accessToken, yourUid);
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 		
 		// from unauthorized user
 		result = OpenAPI.getDevice(accessToken, strangerUid);
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 
@@ -114,7 +119,8 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 		result = OpenAPI.getDevice(ClientApp, strangerUid);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
-		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
+		Assert.assertEquals(result.message, DefaultValues.UnauthorizedAccess, "Error message");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_device" })

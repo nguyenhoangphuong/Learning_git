@@ -47,7 +47,7 @@ public class Verify {
 	
 	public static boolean verifyContainsNoCase(String actualString, String expectContainString, String message) {
 		
-		if(!actualString.contains(expectContainString)) {
+		if(!actualString.toLowerCase().contains(expectContainString.toLowerCase())) {
 			logger.error(message + " expected contains [" + expectContainString + "] but doesn't: [" + actualString + "]");
 			TRS.instance().addCode(message + " expected contains [" + expectContainString + "] but doesn't: [" + actualString + "]", null);
 			return false;

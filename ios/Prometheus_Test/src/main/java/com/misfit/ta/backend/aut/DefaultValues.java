@@ -61,7 +61,7 @@ public class DefaultValues {
 	static public String UserNotUseSocialMessage = "User did not join social";
 	
 	// open api messages
-	static public String InvalidAccessToken = "Invalid authentication token";
+	static public String InvalidAccessToken = "Invalid Access Token";
 	static public String ResourceForbidden = "Forbidden";
 	static public String UnauthorizedAccess = "Unauthorized access";
 	static public String MissingParameters = "Missing parameters";

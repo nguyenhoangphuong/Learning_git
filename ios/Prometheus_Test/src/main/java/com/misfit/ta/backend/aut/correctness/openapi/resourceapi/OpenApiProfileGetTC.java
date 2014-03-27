@@ -39,11 +39,13 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		String nullString = null;
 		BaseResult result = OpenAPI.getProfile(nullString, "me");
 		Assert.assertEquals(result.statusCode, 401, "Status code");
+		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
 		// invalid access token
 		result = OpenAPI.getProfile(TextTool.getRandomString(10, 10), "me");
 		Assert.assertEquals(result.statusCode, 401, "Status code");
+		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
 	
@@ -79,6 +81,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		BaseResult result = OpenAPI.getProfile(invalidScopeAccessToken, "me");
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
@@ -88,11 +91,13 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		// from other authorized user
 		BaseResult result = OpenAPI.getProfile(accessToken, yourUid);
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 
 		// from unauthorized user
 		result = OpenAPI.getProfile(accessToken, strangerUid);
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
@@ -114,6 +119,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		result = OpenAPI.getProfile(ClientApp, strangerUid);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.UnauthorizedAccess, "Error message");
 	}
 	

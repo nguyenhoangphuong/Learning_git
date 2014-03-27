@@ -31,6 +31,7 @@ public class BaseResult {
 	public String errorMessage;
 	public String message;
 	public int errorCode;
+	public int code;
 
 	// constructor
 	public BaseResult(ServiceResponse response) {
@@ -57,6 +58,11 @@ public class BaseResult {
 					if (!json.isNull("error_code")) {
 						this.errorCode = Integer.valueOf(json.getString("error_code"));
 						this.pairResult.put("error_code", this.errorCode);
+					}
+					
+					if (!json.isNull("code")) {
+						this.code = Integer.valueOf(json.getString("code"));
+						this.pairResult.put("code", this.code);
 					}
 
 				} catch (JSONException e1) {

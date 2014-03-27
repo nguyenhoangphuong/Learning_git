@@ -65,11 +65,13 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 		String nullString = null;
 		BaseResult result = OpenAPI.getGoal(nullString, "me", goalsA.get(0).getServerId());
 		Assert.assertEquals(result.statusCode, 401, "Status code");
+		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
 		// invalid access token
 		result = OpenAPI.getGoal(TextTool.getRandomString(10, 10), "me", goalsA.get(0).getServerId());
 		Assert.assertEquals(result.statusCode, 401, "Status code");
+		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
 	
@@ -103,6 +105,7 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 		BaseResult result = OpenAPI.getGoal(invalidScopeAccessToken, "me", goalsA.get(0).getServerId());
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
@@ -112,21 +115,25 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 		// "me" + objectId from other authorized user
 		BaseResult result = OpenAPI.getGoal(accessToken, "me", goalsB.get(0).getServerId());
 		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.code, 400, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ObjectNotFound, "Error message");
 		
 		// myUid + objectId from other authorized user
 		result = OpenAPI.getGoal(accessToken, myUid, goalsC.get(0).getServerId());
 		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.code, 400, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ObjectNotFound, "Error message");
 		
 		// from other authorized user
 		result = OpenAPI.getGoal(accessToken, yourUid, goalsB.get(0).getServerId());
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 
 		// from unauthorized user
 		result = OpenAPI.getGoal(accessToken, strangerUid, goalsC.get(0).getServerId());
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
@@ -136,6 +143,7 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 		BaseResult result = OpenAPI.getGoal(accessToken, myUid, TextTool.getRandomString(10, 10));
 		
 		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.code, 400, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidParameters, "Error message");
 	}
 	
@@ -156,7 +164,8 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 		result = OpenAPI.getGoal(ClientApp, strangerUid, goalsA.get(0).getServerId());
 
 		Assert.assertEquals(result.statusCode, 403, "Status code");
-		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
+		Assert.assertEquals(result.message, DefaultValues.UnauthorizedAccess, "Error message");
 	}
 	
 	/*

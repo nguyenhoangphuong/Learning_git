@@ -2,7 +2,6 @@ package com.misfit.ta.backend.aut.correctness.openapi.resourceapi;
 
 import java.util.List;
 
-import org.jboss.netty.util.internal.DetectionUtil;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -56,11 +55,13 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		String nullString = null;
 		BaseResult result = OpenAPI.getSleep(nullString, "me", itemA.getServerId());
 		Assert.assertEquals(result.statusCode, 401, "Status code");
+		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 
 		// invalid access token
 		result = OpenAPI.getSleep(TextTool.getRandomString(10, 10), "me", itemA.getServerId());
 		Assert.assertEquals(result.statusCode, 401, "Status code");
+		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
 	
@@ -116,6 +117,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		BaseResult result = OpenAPI.getSleep(invalidScopeAccessToken, "me", itemA.getServerId());
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
@@ -125,21 +127,25 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		// myUid + objectId from other authorized user
 		BaseResult result = OpenAPI.getSleep(accessToken, myUid, itemB.getServerId());
 		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.code, 400, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ObjectNotFound, "Error message");
 		
 		// "me" + objectId from other authorized user
 		result = OpenAPI.getSleep(accessToken, "me", itemC.getServerId());
 		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.code, 400, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ObjectNotFound, "Error message");
 
 		// from other authorized user
 		result = OpenAPI.getSleep(accessToken, yourUid, itemB.getServerId());
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 
 		// from unauthorized user
 		result = OpenAPI.getSleep(accessToken, strangerUid, itemC.getServerId());
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
@@ -149,6 +155,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		BaseResult result = OpenAPI.getSleep(accessToken, myUid, TextTool.getRandomString(10, 10));
 		
 		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.code, 400, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidParameters, "Error message");
 	}
 	
@@ -180,6 +187,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		result = OpenAPI.getSleep(ClientApp, strangerUid, itemA.getServerId());
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
@@ -211,6 +219,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		result = OpenAPI.getSleep(accessToken, "me", deletedSleep.getServerId());
 
 		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.code, 400, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.ObjectNotFound, "Error message");
 	}
 	

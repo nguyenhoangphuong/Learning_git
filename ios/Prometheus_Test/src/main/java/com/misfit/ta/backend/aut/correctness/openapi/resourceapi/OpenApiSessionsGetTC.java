@@ -193,7 +193,8 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		result = OpenAPI.getSessions(ClientApp, strangerUid, fromDate, toDate);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
-		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+		Assert.assertEquals(result.code, 403, "OpenAPI code");
+		Assert.assertEquals(result.message, DefaultValues.UnauthorizedAccess, "Error message");
 	}
 	
 	

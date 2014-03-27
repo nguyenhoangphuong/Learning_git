@@ -54,7 +54,7 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 	
 	
 	// test methods
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly", "Excluded" })
 	public void GetFacebookFriends_NormalCase() {
 		
 		// query friends
@@ -86,7 +86,7 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 		Assert.assertEquals(count, 2, "Number of friends found");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly", "Excluded" })
 	public void GetFacebookFriends_ChangeRequestStatus() {
 		
 		// set up
@@ -165,7 +165,7 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 		SocialAPI.deleteFriend(misfitToken, thyUid);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly", "Excluded" })
 	public void GetFacebookFriends_AfterFriendsChangeTheirProfiles() {	
 		
 		// now tung change his name
@@ -175,7 +175,7 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 		MVPApi.updateProfile(tungToken, tungProfile);
 
 		// query again
-		BaseResult result = SocialAPI.getFriends(misfitToken);
+		BaseResult result = SocialAPI.getFacebookFriends(misfitToken);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
 
 		// now tung change back his name (must do this if you want to run this test again)
@@ -209,7 +209,7 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 		}
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly", "Excluded" })
 	public void GetFacebookFriends_AfterDeleteFriends() {		
 		
 

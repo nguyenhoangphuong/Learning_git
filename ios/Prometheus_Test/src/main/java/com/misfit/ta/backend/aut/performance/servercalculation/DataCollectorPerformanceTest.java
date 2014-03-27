@@ -36,7 +36,7 @@ public class DataCollectorPerformanceTest {
 		
 		// parse params
 		if (args.length == 0) {
-			args = new String[] { "1500", "500", "rawdata/test1/1392219789" };
+			args = new String[] { "10", "10", "rawdata/test1/1392219789" };
 		}
 		
 		int numberOfSeed = Integer.valueOf(args[0]);
