@@ -188,7 +188,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
 		Assert.assertEquals(result.code, 403, "OpenAPI code");
-		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
+		Assert.assertEquals(result.message, DefaultValues.UnauthorizedAccess, "Error message");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })

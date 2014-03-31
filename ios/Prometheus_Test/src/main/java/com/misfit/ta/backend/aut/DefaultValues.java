@@ -85,7 +85,6 @@ public class DefaultValues {
 		p.setGoalLevel(4);
 		p.setLatestVersion("8");
 		p.setWearingPosition("Wrist");
-		p.setPersonalRecords(null);
 		p.setDisplayedUnits(new DisplayUnit());
 
 		return p;

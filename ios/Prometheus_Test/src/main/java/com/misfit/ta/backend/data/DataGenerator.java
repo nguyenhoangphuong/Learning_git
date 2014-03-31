@@ -47,6 +47,7 @@ public class DataGenerator {
 	public static ProfileData generateRandomProfile(long timestamp, Map<String, Object> options) {
 		
 		ProfileData p = new ProfileData();
+		long birthday = (long) MVPCommon.randInt(685000000, 686000000);
 
 		p.setLocalId("profiles-" + MVPApi.generateLocalId());
 		p.setUpdatedAt((long) (System.currentTimeMillis() / 1000));
@@ -54,7 +55,8 @@ public class DataGenerator {
 		p.setWeight(MVPCommon.randInt(1200, 1800) / 10d);
 		p.setHeight(MVPCommon.randInt(58, 70) * 1d);
 		p.setGender(MVPCommon.randInt(0, 1));
-		p.setDateOfBirth((long) MVPCommon.randInt(685000000, 686000000));
+		p.setDateOfBirth(birthday + 3600 * 7);
+		p.setDateOfBirthUTC(birthday);
 		p.setName(TextTool.getRandomString(7, 10));
 		p.setGoalLevel(1);
 

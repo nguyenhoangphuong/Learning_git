@@ -3,7 +3,6 @@ package com.misfit.ta.backend.data.profile;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
-import com.misfit.ta.backend.data.statistics.PersonalRecord;
 
 public class ProfileData {
 
@@ -11,17 +10,18 @@ public class ProfileData {
 	protected String serverId;
 	protected Long updatedAt;
 	protected String localId;
+	protected Long createdAt;
 
 	protected Double weight;
 	protected Double height;
 	protected Integer gender;
 	protected Long dateOfBirth;
+	protected Long dateOfBirthUTC;
 	protected String name;
 
 	protected Integer goalLevel;
 	protected String latestVersion;
 	protected String wearingPosition;
-	protected PersonalRecord personalRecords;
 	protected DisplayUnit displayedUnits;
 	
 	protected String handle;
@@ -29,6 +29,9 @@ public class ProfileData {
 	protected String avatar;
 	protected String email;
 	protected String authToken;
+	
+	protected Boolean isEarlyUser;
+	protected String promotionCode;
 	
 	
 	// constructor
@@ -45,19 +48,18 @@ public class ProfileData {
 			object.accumulate("localId", localId);
 			object.accumulate("serverId", serverId);
 			object.accumulate("updatedAt", updatedAt);
+			object.accumulate("createdAt", createdAt);
 
 			object.accumulate("weight", weight);
 			object.accumulate("height", height);
 			object.accumulate("gender", gender);
 			object.accumulate("dateOfBirth", dateOfBirth);
+			object.accumulate("dateOfBirthUTC", dateOfBirthUTC);
 			object.accumulate("name", name);
 
 			object.accumulate("goalLevel", goalLevel);
 			object.accumulate("latestVersion", latestVersion);
 			object.accumulate("wearingPosition", wearingPosition);
-
-			if (personalRecords != null)
-				object.accumulate("personalRecords", personalRecords.toJson());
 			
 			if (displayedUnits != null)
 				object.accumulate("displayedUnits", displayedUnits.toJson());
@@ -67,6 +69,9 @@ public class ProfileData {
 			object.accumulate("avatar", avatar);
 			object.accumulate("email", email);
 			object.accumulate("authToken", authToken);
+			
+			object.accumulate("isEarlyUser", isEarlyUser);
+			object.accumulate("promotionCode", promotionCode);
 
 			return object;
 		} catch (JSONException e) {
@@ -86,6 +91,9 @@ public class ProfileData {
 
 			if (!json.isNull("updatedAt"))
 				obj.setUpdatedAt(json.getLong("updatedAt"));
+			
+			if (!json.isNull("createdAt"))
+				obj.setCreatedAt(json.getLong("createdAt"));
 
 			if (!json.isNull("weight"))
 				obj.setWeight(json.getDouble("weight"));
@@ -98,6 +106,9 @@ public class ProfileData {
 
 			if (!json.isNull("dateOfBirth"))
 				obj.setDateOfBirth(json.getLong("dateOfBirth"));
+			
+			if (!json.isNull("dateOfBirthUTC"))
+				obj.setDateOfBirthUTC(json.getLong("dateOfBirthUTC"));
 
 			if (!json.isNull("name"))
 				obj.setName(json.getString("name"));
@@ -110,9 +121,6 @@ public class ProfileData {
 
 			if (!json.isNull("wearingPosition"))
 				obj.setWearingPosition(json.getString("wearingPosition"));
-
-			if (!json.isNull("personalRecords"))
-				obj.setPersonalRecords(PersonalRecord.fromJson(json.getJSONObject("personalRecords")));
 
 			if (!json.isNull("displayedUnits"))
 				obj.setDisplayedUnits(DisplayUnit.fromJson(json.getJSONObject("displayedUnits")));
@@ -131,6 +139,12 @@ public class ProfileData {
 			
 			if (!json.isNull("privacy"))
                 obj.setPrivacy(json.getInt("privacy"));
+			
+			if (!json.isNull("isEarlyUser"))
+				obj.setIsEarlyUser(json.getBoolean("isEarlyUser"));
+			
+			if (!json.isNull("promotionCode"))
+				obj.setPromotionCode(json.getString("promotionCode"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -240,14 +254,6 @@ public class ProfileData {
 		this.wearingPosition = wearingPosition;
 	}
 
-	public PersonalRecord getPersonalRecords() {
-		return personalRecords;
-	}
-
-	public void setPersonalRecords(PersonalRecord personalRecords) {
-		this.personalRecords = personalRecords;
-	}
-
 	public DisplayUnit getDisplayedUnits() {
 		return displayedUnits;
 	}
@@ -294,6 +300,46 @@ public class ProfileData {
 
 	public void setAuthToken(String authToken) {
 		this.authToken = authToken;
+	}
+
+
+	public Long getCreatedAt() {
+		return createdAt;
+	}
+
+
+	public void setCreatedAt(Long createdAt) {
+		this.createdAt = createdAt;
+	}
+
+
+	public Long getDateOfBirthUTC() {
+		return dateOfBirthUTC;
+	}
+
+
+	public void setDateOfBirthUTC(Long dateOfBirthUTC) {
+		this.dateOfBirthUTC = dateOfBirthUTC;
+	}
+
+
+	public Boolean getIsEarlyUser() {
+		return isEarlyUser;
+	}
+
+
+	public void setIsEarlyUser(Boolean isEarlyUser) {
+		this.isEarlyUser = isEarlyUser;
+	}
+
+
+	public String getPromotionCode() {
+		return promotionCode;
+	}
+
+
+	public void setPromotionCode(String promotionCode) {
+		this.promotionCode = promotionCode;
 	}
 
 }

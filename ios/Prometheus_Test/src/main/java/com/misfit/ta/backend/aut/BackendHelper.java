@@ -3,6 +3,7 @@ package com.misfit.ta.backend.aut;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.statistics.Statistics;
@@ -113,6 +114,17 @@ public class BackendHelper {
 		MVPApi.createGoal(token, goal);
 	}
 	
+	public static void createGoalsInThePast(String token, int numberOfGoals, int dayInterval) {
+		
+		for(int i = 1; i <= numberOfGoals; i++) {
+			
+			long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * i * dayInterval;
+			Goal goal = Goal.getDefaultGoal(timestamp);
+			
+			MVPApi.createGoal(token, goal);
+		}
+	}
+	
 	public static void completeGoalInPast(String token, int diffFromToday) {
 		
 		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * diffFromToday;
@@ -161,6 +173,20 @@ public class BackendHelper {
 		String tokenB = MVPApi.signIn(emailB, passwordB).token;
 		SocialAPI.sendFriendRequest(tokenA, MVPApi.getUserId(tokenB));
 		SocialAPI.acceptFriendRequest(tokenB, MVPApi.getUserId(tokenA));
+	}
+
+	
+	// whole account
+	public static String createAccount(String email, String password) {
+		
+		long timestamp = System.currentTimeMillis() / 1000;
+		String token = MVPApi.signUp(email, password).token;
+		MVPApi.createProfile(token, DataGenerator.generateRandomProfile(timestamp, null));
+		MVPApi.createPedometer(token, DataGenerator.generateRandomPedometer(timestamp, null));
+		MVPApi.unlinkDevice(token);
+		MVPApi.createGoal(token, Goal.getDefaultGoal());
+		
+		return token;
 	}
 	
 }

@@ -11,6 +11,7 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.correctness.servercalculation.ServerCalculationTestHelpers;
 import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
+import com.misfit.ta.utils.TextTool;
 
 
 public class Debug {
@@ -23,18 +24,15 @@ public class Debug {
 	
 	public static void main(String[] args) throws Exception {
 
-		BackendHelper.link("haihonghao@qa.com", "qqqqqq", "HaiHongHao");
-		BackendHelper.link("haidangyeu@qa.com", "qqqqqq", "HaiDangYeu");
+//		String token = BackendHelper.createAccount("ios127@a.a", "qqqqqq");
+//		BackendHelper.createGoalsInThePast(token, 80, 7);
+		BackendHelper.link("ios120@a.a", "qqqqqq", TextTool.getRandomString(10, 10));
+		
 //		Files.delete("rawdata");
 //		Files.getFile("rawdata");
 //		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc047@a.a", "qqqqqq");
 
 //		Gui.init("192.168.1.224");
-//		ViewUtils.isExistedView("UILabel", "goal weight: 140.0");
-//		ViewUtils.isExistedView("UILabel", "goal weight: _140.0_");
-		
-//		logger.info(ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(System.currentTimeMillis() / 1000,
-//				"dc_performance@qa.com", "ABCDEFGHIJ", "rawdata/test1/1392170920").toJson().toString());
 		
 	}
 }
