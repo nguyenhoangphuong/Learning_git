@@ -8,10 +8,7 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.backend.aut.correctness.servercalculation.ServerCalculationTestHelpers;
-import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
-import com.misfit.ta.utils.TextTool;
+import com.misfit.ta.backend.data.profile.ProfileData;
 
 
 public class Debug {
@@ -26,7 +23,10 @@ public class Debug {
 
 //		String token = BackendHelper.createAccount("ios127@a.a", "qqqqqq");
 //		BackendHelper.createGoalsInThePast(token, 80, 7);
-		BackendHelper.link("ios120@a.a", "qqqqqq", TextTool.getRandomString(10, 10));
+		ProfileData profile = new ProfileData();
+		profile.setWeight(-1d);
+		String token = MVPApi.signIn("ios120@a.a", "qqqqqq").token;
+		MVPApi.updateProfile(token, profile);
 		
 //		Files.delete("rawdata");
 //		Files.getFile("rawdata");

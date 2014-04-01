@@ -57,7 +57,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		OpenAPIProfile data = OpenAPIProfile.fromResponse(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(data.getBirthday(), getDateString(profile.getDateOfBirthUTC()), "Profile birthday");
+		Assert.assertEquals(data.getBirthday(), getISODateString(profile.getDateOfBirthUTC()), "Profile birthday");
 		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");
@@ -68,7 +68,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		data = OpenAPIProfile.fromResponse(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(data.getBirthday(), getDateString(profile.getDateOfBirthUTC()), "Profile birthday");
+		Assert.assertEquals(data.getBirthday(), getISODateString(profile.getDateOfBirthUTC()), "Profile birthday");
 		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");
@@ -109,7 +109,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		OpenAPIProfile data = OpenAPIProfile.fromResponse(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(data.getBirthday(), getDateString(profile.getDateOfBirthUTC()), "Profile birthday");
+		Assert.assertEquals(data.getBirthday(), getISODateString(profile.getDateOfBirthUTC()), "Profile birthday");
 		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");

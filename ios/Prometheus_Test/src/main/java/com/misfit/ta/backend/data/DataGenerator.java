@@ -3,8 +3,10 @@ package com.misfit.ta.backend.data;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
@@ -46,8 +48,17 @@ public class DataGenerator {
 	// generators
 	public static ProfileData generateRandomProfile(long timestamp, Map<String, Object> options) {
 		
+		int date = MVPCommon.randInt(1, 30);
+		
+		Calendar cal1 = Calendar.getInstance();
+		cal1.set(1991, 8, date, 0, 0, 0);
+		long birthdayLocal = cal1.getTimeInMillis() / 1000;
+		
+		Calendar cal2 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal2.set(1991, 8, date, 0, 0, 0);
+		long birthdayUTC = cal2.getTimeInMillis() / 1000;
+		
 		ProfileData p = new ProfileData();
-		long birthday = (long) MVPCommon.randInt(685000000, 686000000);
 
 		p.setLocalId("profiles-" + MVPApi.generateLocalId());
 		p.setUpdatedAt((long) (System.currentTimeMillis() / 1000));
@@ -55,8 +66,8 @@ public class DataGenerator {
 		p.setWeight(MVPCommon.randInt(1200, 1800) / 10d);
 		p.setHeight(MVPCommon.randInt(58, 70) * 1d);
 		p.setGender(MVPCommon.randInt(0, 1));
-		p.setDateOfBirth(birthday + 3600 * 7);
-		p.setDateOfBirthUTC(birthday);
+		p.setDateOfBirth(birthdayLocal);
+		p.setDateOfBirthUTC(birthdayUTC);
 		p.setName(TextTool.getRandomString(7, 10));
 		p.setGoalLevel(1);
 

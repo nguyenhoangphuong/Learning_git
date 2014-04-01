@@ -64,6 +64,18 @@ public class OpenAPIAutomationBase extends BackendAutomation {
 		return formatter.format(cal.getTime());
 	}
 	
+	public static String getISODateString(long timestamp) {
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(timestamp * 1000);
+		
+		TimeZone tz = TimeZone.getTimeZone("UTC");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		formatter.setTimeZone(tz);
+		
+		return formatter.format(cal.getTime());
+	}
+	
 	public static String getISOTime(long timestamp) {
 		
 		Calendar cal = Calendar.getInstance();
