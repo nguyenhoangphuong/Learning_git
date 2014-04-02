@@ -23,22 +23,26 @@ public class Settings {
 	/**
 	 * Settings Menu
 	 */
-	public static void tapAdjustGoal() {
+	public static void tapSetActivityGoal() {
 		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y);
+	}
+	
+	public static void tapSetSleepGoal() {
+		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y + SETTINGS_CONTEXT_INC);
 	}
 
 	public static void tapShineSettings() {
-		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y + SETTINGS_CONTEXT_INC);
+		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y + SETTINGS_CONTEXT_INC * 2);
 	}
 
 	public static void tapHelp() {
 		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y + SETTINGS_CONTEXT_INC
-				* 3);
+				* 4);
 	}
 
 	public static void tapMyProfile() {
 		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y + SETTINGS_CONTEXT_INC
-				* 2);
+				* 3);
 	}
 
 	public static String getCurrentBirthDate() {

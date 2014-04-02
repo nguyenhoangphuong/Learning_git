@@ -15,9 +15,12 @@ import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
 public class PrometheusHelper {
-	
-	private static String[] longMonths = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-	private static String[] shortMonths = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+	private static String[] longMonths = { "January", "February", "March",
+			"April", "May", "June", "July", "August", "September", "October",
+			"November", "December" };
+	private static String[] shortMonths = { "Jan", "Feb", "Mar", "Apr", "May",
+			"Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
 	public static String generateUniqueEmail() {
 		return "test" + System.currentTimeMillis()
@@ -162,7 +165,8 @@ public class PrometheusHelper {
 		int currentDigitNumber = Integer.valueOf(currentDigit);
 		digit = digit < minDigit ? minDigit : digit > maxDigit ? maxDigit
 				: digit;
-		System.out.println("Weight digit is changed from: " + currentDigitNumber + " to " + digit);
+		System.out.println("Weight digit is changed from: "
+				+ currentDigitNumber + " to " + digit);
 		editValueOnPicker(currentDigitNumber, digit, 0, fullScreenHeight,
 				fullScreenWidth);
 
@@ -171,7 +175,8 @@ public class PrometheusHelper {
 				.substring(1));
 		fraction = fraction < minFraction ? minFraction
 				: fraction > maxFraction ? maxFraction : fraction;
-		System.out.println("Weight fraction is changed from: " + currentFractionNumber + " to " + fraction);
+		System.out.println("Weight fraction is changed from: "
+				+ currentFractionNumber + " to " + fraction);
 		editValueOnPicker(currentFractionNumber, fraction, 1, fullScreenHeight,
 				fullScreenWidth);
 
@@ -179,14 +184,12 @@ public class PrometheusHelper {
 
 	public static void editGender(Boolean isMale) {
 		if (isMale) {
-			Gui.touchAView("RadioButton", "mID",
-					DefaultStrings.MaleButtonId);
+			Gui.touchAView("RadioButton", "mID", DefaultStrings.MaleButtonId);
 		} else {
-			Gui.touchAView("RadioButton", "mID",
-					DefaultStrings.FemaleButtonId);
+			Gui.touchAView("RadioButton", "mID", DefaultStrings.FemaleButtonId);
 		}
 	}
-	
+
 	public static void editHeightInInches(int digit, int fraction,
 			int fullScreenHeight, int fullScreenWidth) {
 		int maxDigit = 8;
@@ -198,7 +201,8 @@ public class PrometheusHelper {
 		int currentDigitNumber = Integer.valueOf(currentDigit.substring(0, 1));
 		digit = digit < minDigit ? minDigit : digit > maxDigit ? maxDigit
 				: digit;
-		System.out.println("Height digit is changed from: " + currentDigitNumber + " to " + digit);
+		System.out.println("Height digit is changed from: "
+				+ currentDigitNumber + " to " + digit);
 		editValueOnPicker(currentDigitNumber, digit, 0, fullScreenHeight,
 				fullScreenWidth);
 
@@ -207,7 +211,8 @@ public class PrometheusHelper {
 				0, currentFraction.indexOf("\"")));
 		fraction = fraction < minFraction ? minFraction
 				: fraction > maxFraction ? maxFraction : fraction;
-		System.out.println("Height fraction is changed from: " + currentFractionNumber + " to " + fraction);
+		System.out.println("Height fraction is changed from: "
+				+ currentFractionNumber + " to " + fraction);
 		editValueOnPicker(currentFractionNumber, fraction, 1, fullScreenHeight,
 				fullScreenWidth);
 
@@ -226,13 +231,24 @@ public class PrometheusHelper {
 					Gui.getHeight(), Gui.getWidth(), pickerNode, delta);
 		}
 	}
-	
-	public static String getMonthString(int monthNumber, boolean isLongMonthString) {
-		return isLongMonthString ? longMonths[monthNumber - 1] : shortMonths[monthNumber - 1];
+
+	public static String getMonthString(int monthNumber,
+			boolean isLongMonthString) {
+		return isLongMonthString ? longMonths[monthNumber - 1]
+				: shortMonths[monthNumber - 1];
 	}
-	
+
 	public static boolean coin() {
 		return new Random().nextBoolean();
 	}
 
+	public static void manualInputActivity(String hour, String minute,
+			int lastDuration, int steps) {
+		HomeScreen.tapManual();
+		// input record
+		HomeScreen.inputManualTime(hour, minute);
+		HomeScreen.intputActivity(String.valueOf(lastDuration),
+				String.valueOf(steps));
+		HomeScreen.saveManual();
+	}
 }

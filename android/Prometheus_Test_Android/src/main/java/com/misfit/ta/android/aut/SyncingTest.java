@@ -30,14 +30,14 @@ public class SyncingTest {
 		
 		for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 			System.out.println("Start syncing #" + i);
-			Gui.touchAView("ImageButton", "mID", "id/menu_sync");
+			Gui.touchAView("ThreeStateView", "mID", "id/action_three_state_imageview");
 			while(ViewUtils.findView("TextView", "mText", "Syncing", 0) != null) {
 				System.out.println("Still Syncing");
 				ShortcutsTyper.delayTime(300);
 				Gui.setInvalidView();
 			}
 			
-			ShortcutsTyper.delayTime(300);
+			ShortcutsTyper.delayTime(1000);
 			
 			if (hasFailedSyncPopup()) {
 				if (firstFailedSync) {

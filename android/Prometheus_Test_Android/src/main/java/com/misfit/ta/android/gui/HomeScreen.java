@@ -11,15 +11,14 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class HomeScreen {
 
 	public static boolean isHomeScreenVisible() {
-		return ViewUtils.findView("ActionMenuItemView", "mID", DefaultStrings.SettingsActionMenuItemViewId, 0) != null;
+		return ViewUtils.findView("FrameLayout", "mID", DefaultStrings.SettingsActionMenuViewId, 0) != null;
 	}
 
 	/**
 	 * Manual Goal
 	 */
 	public static void tapManual() {
-		Gui.touchAView("ActionMenuItemView", "mID",
-				DefaultStrings.ManualActionMenuItemViewId);
+		Gui.touchAView("TextView", "mText", "M");
 	}
 
 	public static void saveManual() {
@@ -30,7 +29,7 @@ public class HomeScreen {
 	 * Go to Settings screens
 	 */
 	public static void tapSettingsMenu() {
-		Gui.touchAView("ActionMenuItemView", "mID", DefaultStrings.SettingsActionMenuItemViewId);
+		Gui.touchAView("FrameLayout", "mID", DefaultStrings.SettingsActionMenuViewId);
 	}
 
 	/**

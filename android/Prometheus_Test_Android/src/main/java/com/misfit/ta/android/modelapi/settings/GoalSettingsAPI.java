@@ -10,6 +10,7 @@ import com.misfit.ta.android.AutomationTest;
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
+import com.misfit.ta.android.chimpchat.core.TouchPressType;
 import com.misfit.ta.android.gui.HomeScreen;
 import com.misfit.ta.android.gui.PrometheusHelper;
 import com.misfit.ta.android.gui.Settings;
@@ -91,6 +92,8 @@ public class GoalSettingsAPI extends ModelAPI {
 		ShortcutsTyper.delayOne();
 		PrometheusHelper.signUp();
 		ShortcutsTyper.delayTime(2000);
+		PrometheusHelper.manualInputActivity("06", "05", 5, 580);
+		ShortcutsTyper.delayTime(1000);
 	}
 
 	/**
@@ -103,7 +106,7 @@ public class GoalSettingsAPI extends ModelAPI {
 		System.out.println(fullScreenHeight);
 		System.out.println(fullScreenWidth);
 		HomeScreen.tapSettingsMenu();
-		Settings.tapAdjustGoal();
+		Settings.tapSetActivityGoal();
 	}
 	
 	/**
@@ -111,7 +114,8 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_PullToRefresh() {
-		Gui.swipeLeft(1);
+		Gui.swipe(fullScreenWidth /2, fullScreenHeight/2, fullScreenWidth/2, fullScreenHeight/2 + 800);
+		Gui.touch(fullScreenWidth/2, fullScreenHeight/2 + 800, TouchPressType.DOWN);
 		ShortcutsTyper.delayOne();
 	}
 
@@ -130,12 +134,6 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_GoalUpdated() {
-//		Gui.getCurrentViews();
-//		ShortcutsTyper.delayOne();
-//		currentGoal = HomeScreen.getCurrentGoalInPicker();
-//		System.out.println("******* Updated goal in picker: " + currentGoal);
-//		System.out.println("******* Expected goal: " + goal);
-//		Assert.assertTrue(currentGoal == goal, "Number picker is not working.");
 	}
 
 	/**

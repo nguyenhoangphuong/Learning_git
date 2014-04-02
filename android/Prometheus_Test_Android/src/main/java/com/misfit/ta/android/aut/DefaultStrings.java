@@ -32,16 +32,16 @@ public class DefaultStrings {
 	public static String BirthdayTextViewId = "id/edit_birthday_tv";
 	public static String SignUpLinkShineTextViewId = "id/tap_to_link_tv";
 	public static String ManualActionMenuItemViewId = "id/menu_manual";
-	public static String SettingsActionMenuItemViewId = "id/0x0";
+	public static String SettingsActionMenuViewId = "id/action_menu_view";
 	public static String DurationEditTextId = "id/manual_duration_edit_text";
 	public static String StepsEditTextId = "id/manual_steps_edit_text";
 	
-	public static String PointsHomeScreenTextViewId = "id/home_points_win";
-	public static String GoalHomeScreenTextViewId = "id/home_points_goal";
-	public static String RemainWalkingTimeHomeScreenTextViewId = "id/home_time_left";
-	public static String StepsHomeScreenTextViewId = "id/home_activity_steps";
-	public static String MilesHomeScreenTextViewId = "id/home_activity_mile";
-	public static String CaloriesHomeScreenTextViewId = "id/home_activity_calories";
+	public static String PointsHomeScreenTextViewId = "id/card_activity_current_points_tv";
+	public static String GoalHomeScreenTextViewId = "id/card_activity_goal_points_tv";
+	public static String RemainWalkingTimeHomeScreenTextViewId = "id/card_activity_remind_walking_left_tv";
+	public static String StepsHomeScreenTextViewId = "id/card_activity_steps_tv";
+	public static String MilesHomeScreenTextViewId = "id/card_activity_distance_tv";
+	public static String CaloriesHomeScreenTextViewId = "id/card_activity_calories_tv";
 	public static String RemainWalkingTimeInHrsWithDecimalStringFormat = "about %.1f hrs";
 	public static String RemainWalkingTimeInHrsStringFormat = "about %.0f hrs";
 	public static String RemainWalkingTimeInMinutesStringFormat = "about %d mins";
