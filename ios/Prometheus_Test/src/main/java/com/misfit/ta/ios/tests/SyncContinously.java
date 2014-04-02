@@ -255,16 +255,16 @@ public class SyncContinously {
 		if(args.length == 0)
 			args = new String[] {"help", ""};
 		
-		String mode = args[0].toLowerCase();
-		String deviceIp = args[1];
+		String deviceIp = args[0];
+		String mode = (args.length < 2 ? "manual" : args[1].toLowerCase());
 		int numberOfSync = (args.length < 3 ? 50 : Integer.parseInt(args[2]));
 		
 		if(mode.equals("help")) {
 			
 			System.out.println("How to use:");
 			System.out.println("SyncContinously [deviceip] [mode] [numberOfSync]");
-			System.out.println("mode: manual/quiet");
 			System.out.println("deviceip: 192.168.1.123");
+			System.out.println("mode: manual/quiet, default = manual");
 			System.out.println("numberOfSync: default = 50");
 		}
 		else if(mode.equals("manual")) {
