@@ -228,4 +228,12 @@
 		
 	</dependencies>
 
+	<distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>backend-lib</name>
+        <url>http://artifactory.int.misfitwearables.com:8081/artifactory/libs-release-local</url>
+    </repository>
+</distributionManagement>
+
 </project>
