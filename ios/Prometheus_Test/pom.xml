@@ -121,6 +121,11 @@
 			<version>0.0.64</version>
 		</dependency>
 		<dependency>
+			<groupId>com.misfit.qa</groupId>
+			<artifactId>prometheus-backend</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>RELEASE</version>
