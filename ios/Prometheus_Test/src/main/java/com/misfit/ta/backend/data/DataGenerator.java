@@ -13,6 +13,8 @@ import java.util.zip.Checksum;
 import org.apache.commons.io.FileUtils;
 
 
+import com.google.resting.json.JSONArray;
+import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
@@ -95,8 +97,8 @@ public class DataGenerator {
 		g.setUpdatedAt(timestamp);
 
 		g.setGoalValue(MVPCommon.randInt(10, 30) * 100 * 2.5);
-		g.setStartTime(MVPApi.getDayStartEpoch(timestamp));
-		g.setEndTime(MVPApi.getDayEndEpoch(timestamp));
+		g.setStartTime(MVPCommon.getDayStartEpoch(timestamp));
+		g.setEndTime(MVPCommon.getDayEndEpoch(timestamp));
 		g.setTimeZoneOffsetInSeconds(7 * 3600);
 		g.setProgressData(progressData);
 		g.setTripleTapTypeChanges(tripleTaps);
@@ -500,6 +502,70 @@ public class DataGenerator {
 		syncLog.setData(data);
 
 		return syncLog;
+	}
+
+	public static JSONArray[] generateTimelineItemsAndGraphItems() {
+		int numberOfItemsPerDay = 1;
+		int numberOfDays = 1;
+		numberOfItemsPerDay = Settings.getInt("NUMBER_OF_ITEMS_PER_DAY");
+		numberOfDays = Settings.getInt("NUMBER_OF_DAYS");
+		return DataGenerator.generateTimelineItemsAndGraphItems(numberOfDays, numberOfItemsPerDay);
+	}
+
+	public static JSONArray[] generateTimelineItemsAndGraphItems(int numberOfDays, int numberOfItemsPerDay) {
+	
+		long timestamp = System.currentTimeMillis() / 1000;
+				
+		// create graph items
+		List<GraphItem> graphItems = new ArrayList<GraphItem>();
+		for(int i = 0; i < numberOfDays; i++) {
+	
+			long goalTimestamp = timestamp - 3600 * 24 * i;
+			long goalStartTime = MVPCommon.getDayStartEpoch(goalTimestamp);
+			long goalEndTime = MVPCommon.getDayEndEpoch(goalTimestamp);
+			long graphItemInterval = (goalEndTime - goalStartTime) / Math.max(numberOfItemsPerDay, 1);
+	
+			for(long t = goalStartTime; t <= goalEndTime; t += graphItemInterval) {
+	
+				GraphItem graphItem = generateRandomGraphItem(t, null);
+				graphItems.add(graphItem);
+			}
+		}
+	
+	
+		// create activity session timeline items
+		List<TimelineItem> timelineItems = new ArrayList<TimelineItem>();
+		for(int i = 0; i < numberOfDays; i++) {
+	
+			long goalTimestamp = timestamp - 3600 * 24 * i;
+			long goalStartTime = MVPCommon.getDayStartEpoch(goalTimestamp);
+			long goalEndTime = MVPCommon.getDayEndEpoch(goalTimestamp);
+			long numberOfItem = Math.max(1, numberOfItemsPerDay);
+			long step = (goalEndTime - goalStartTime) / numberOfItem;
+	
+			for(long t = goalStartTime; t <= goalEndTime; t += step) {
+	
+				TimelineItem activityTile = generateRandomActivitySessionTimelineItem(t, null);
+				timelineItems.add(activityTile);
+			}
+		}
+		
+		
+		// data for a number of days
+		JSONArray timelineItemsJsonArr = new JSONArray();
+		JSONArray graphItemsJsonArr = new JSONArray();
+		
+		for(TimelineItem item: timelineItems)
+			timelineItemsJsonArr.put(item.toJson());
+		
+		for(GraphItem item: graphItems)
+			graphItemsJsonArr.put(item.toJson());
+		
+	
+		JSONArray[] array = new JSONArray[2];
+		array[0] = timelineItemsJsonArr;
+		array[1] = graphItemsJsonArr;
+		return array;
 	}
 
 }

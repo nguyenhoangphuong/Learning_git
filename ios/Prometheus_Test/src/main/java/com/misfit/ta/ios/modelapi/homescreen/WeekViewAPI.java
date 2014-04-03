@@ -9,6 +9,7 @@ import org.testng.Assert;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
@@ -152,7 +153,7 @@ public class WeekViewAPI extends ModelAPI {
 	
 	private long getTimeStampOfPreviousDay(int index) {
 		
-		return MVPApi.getDayStartEpoch(System.currentTimeMillis() / 1000 - 3600 * 24 * index);
+		return MVPCommon.getDayStartEpoch(System.currentTimeMillis() / 1000 - 3600 * 24 * index);
 	}
 	
 	private Integer calculateImprovement() {
@@ -160,10 +161,10 @@ public class WeekViewAPI extends ModelAPI {
 		// search goals from monday to current day of this week and last week
 		int day = now.get(Calendar.DAY_OF_WEEK);
 		int index = day != 1 ? day - 2 : 6;
-		long startTimeStamp = index > 0 ? getTimeStampOfPreviousDay(index) : MVPApi.getDayStartEpoch();
+		long startTimeStamp = index > 0 ? getTimeStampOfPreviousDay(index) : MVPCommon.getDayStartEpoch();
 		
-		Goal[] thisWeekGoals = MVPApi.searchGoal(token, startTimeStamp, MVPApi.getDayStartEpoch(), 0l).goals;
-		Goal[] lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - SevenDaysDiff, MVPApi.getDayStartEpoch() - SevenDaysDiff, 0l).goals;
+		Goal[] thisWeekGoals = MVPApi.searchGoal(token, startTimeStamp, MVPCommon.getDayStartEpoch(), 0l).goals;
+		Goal[] lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - SevenDaysDiff, MVPCommon.getDayStartEpoch() - SevenDaysDiff, 0l).goals;
 		
 		// calculate the difference in points between each day
 		int deltaProgress = 0;

@@ -117,8 +117,8 @@ public class GenerateUserSeed extends SeedThread {
 		for(int i = 0; i < numberOfGoal; i++) {
 			
 			long goalTimestamp = timestamp - 3600 * 24 * i;
-			long goalStartTime = MVPApi.getDayStartEpoch(goalTimestamp);
-			long goalEndTime = MVPApi.getDayEndEpoch(goalTimestamp);
+			long goalStartTime = MVPCommon.getDayStartEpoch(goalTimestamp);
+			long goalEndTime = MVPCommon.getDayEndEpoch(goalTimestamp);
 			
 			for(long t = goalStartTime; t <= goalEndTime; t += graphItemInterval) {
 				
@@ -133,8 +133,8 @@ public class GenerateUserSeed extends SeedThread {
 		for(int i = 0; i < numberOfGoal; i++) {
 			
 			long goalTimestamp = timestamp - 3600 * 24 * i;
-			long goalStartTime = MVPApi.getDayStartEpoch(goalTimestamp);
-			long goalEndTime = MVPApi.getDayEndEpoch(goalTimestamp);
+			long goalStartTime = MVPCommon.getDayStartEpoch(goalTimestamp);
+			long goalEndTime = MVPCommon.getDayEndEpoch(goalTimestamp);
 			long numberOfItem = MVPCommon.randInt(minimumSessionTileNumber, maximumSessionTileNumber);
 			if(numberOfItem <= 0)
 				continue;
@@ -153,8 +153,8 @@ public class GenerateUserSeed extends SeedThread {
 		for(int i = numberOfGoal; i > 0; i--) {
 			
 			long goalTimestamp = timestamp - 3600 * 24 * i;
-			long goalStartTime = MVPApi.getDayStartEpoch(goalTimestamp);
-			long goalEndTime = MVPApi.getDayEndEpoch(goalTimestamp);
+			long goalStartTime = MVPCommon.getDayStartEpoch(goalTimestamp);
+			long goalEndTime = MVPCommon.getDayEndEpoch(goalTimestamp);
 			
 			// personal best
 			if(MVPCommon.coin()) {
@@ -210,7 +210,7 @@ public class GenerateUserSeed extends SeedThread {
 		
 		
 		// create lifetime distance tiles
-		long startTime = MVPApi.getDayStartEpoch(timestamp - 3600 * 24 * 20);
+		long startTime = MVPCommon.getDayStartEpoch(timestamp - 3600 * 24 * 20);
 		long t1 = MVPCommon.randLong(startTime, startTime + 3600 * 24 * 6);
 		long t2 = MVPCommon.randLong(t1, t1 + 3600 * 24 * 6);
 		long t3 = MVPCommon.randLong(t2, t2 + 3600 * 24 * 6);
@@ -258,8 +258,8 @@ public class GenerateUserSeed extends SeedThread {
 		for(int i = numberOfGoal; i > 0; i--) {
 			
 			long goalTimestamp = timestamp - 3600 * 24 * i;
-			long goalStartTime = MVPApi.getDayStartEpoch(goalTimestamp);
-			long goalEndTime = MVPApi.getDayEndEpoch(goalTimestamp);
+			long goalStartTime = MVPCommon.getDayStartEpoch(goalTimestamp);
+			long goalEndTime = MVPCommon.getDayEndEpoch(goalTimestamp);
 			
 			long interval = (goalEndTime - goalStartTime) / syncLogNumber;
 			int totalMinute =(int) (interval - 300) / 60;

@@ -11,6 +11,7 @@ import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
+import com.misfit.ta.common.MVPCommon;
 
 public class BackendGoalGetTC extends BackendAutomation {
 	
@@ -36,24 +37,24 @@ public class BackendGoalGetTC extends BackendAutomation {
 		String token = MVPApi.signIn(email, password).token;
 		
 		// search 1
-		GoalsResult r = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(2, month, year), 
-				MVPApi.getDayEndEpoch(4, month, year), 0l);
+		GoalsResult r = MVPApi.searchGoal(token, MVPCommon.getDayStartEpoch(2, month, year), 
+				MVPCommon.getDayEndEpoch(4, month, year), 0l);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isOK(), "Status code is 200");
 		Assert.assertEquals(r.goals.length, 3, "Found 3 goals");
 		
 		// search 2
-		r = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(1, month, year), 
-				MVPApi.getDayEndEpoch(10, month, year), 0l);
+		r = MVPApi.searchGoal(token, MVPCommon.getDayStartEpoch(1, month, year), 
+				MVPCommon.getDayEndEpoch(10, month, year), 0l);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isOK(), "Status code is 200");
 		Assert.assertEquals(r.goals.length, 5, "Found 5 goals");
 		
 		// search 3
-		r = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(5, month, year), 
-				MVPApi.getDayEndEpoch(1, month, year), 0l);
+		r = MVPApi.searchGoal(token, MVPCommon.getDayStartEpoch(5, month, year), 
+				MVPCommon.getDayEndEpoch(1, month, year), 0l);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isOK(), "Status code is 200");
@@ -63,8 +64,8 @@ public class BackendGoalGetTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "goal" })
 	public void SearchGoalsInvalidToken() {
 		String token = DefaultValues.ArbitraryToken;
-		GoalsResult r = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(2, month, year), 
-				MVPApi.getDayEndEpoch(4, month, year), 0l);
+		GoalsResult r = MVPApi.searchGoal(token, MVPCommon.getDayStartEpoch(2, month, year), 
+				MVPCommon.getDayEndEpoch(4, month, year), 0l);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isAuthInvalid(), "Status code is 401");
@@ -75,8 +76,8 @@ public class BackendGoalGetTC extends BackendAutomation {
 	public void SearchGoalsExpiredToken() {
 		String token = MVPApi.signIn(email, password).token;
 		MVPApi.signOut(token);
-		GoalsResult r = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(2, month, year), 
-				MVPApi.getDayEndEpoch(4, month, year), 0l);
+		GoalsResult r = MVPApi.searchGoal(token, MVPCommon.getDayStartEpoch(2, month, year), 
+				MVPCommon.getDayEndEpoch(4, month, year), 0l);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isAuthInvalid(), "Status code is 401");
@@ -86,8 +87,8 @@ public class BackendGoalGetTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "goal" })
 	public void GetGoalUseServerId() {
 		String token = MVPApi.signIn(email, password).token;
-		Goal g1 = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(2, month, year), 
-				MVPApi.getDayEndEpoch(4, month, year), 0l).goals[0];
+		Goal g1 = MVPApi.searchGoal(token, MVPCommon.getDayStartEpoch(2, month, year), 
+				MVPCommon.getDayEndEpoch(4, month, year), 0l).goals[0];
 		GoalsResult r = MVPApi.getGoal(token, g1.getServerId()); 
 
 		Assert.assertTrue(r.isOK(), "Status code is 200");

@@ -25,7 +25,6 @@ import com.misfit.ta.backend.api.InsecureHttpClientHelper;
 import com.misfit.ta.backend.api.RequestHelper;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
@@ -67,113 +66,6 @@ public class MVPApi extends RequestHelper {
 		return System.nanoTime() + "-" + TextTool.getRandomString(10, 10);
 	}
 	
-	public static JSONArray[] generateTimelineItemsAndGraphItems() {
-		int numberOfItemsPerDay = 1;
-		int numberOfDays = 1;
-		numberOfItemsPerDay = Settings.getInt("NUMBER_OF_ITEMS_PER_DAY");
-		numberOfDays = Settings.getInt("NUMBER_OF_DAYS");
-		return generateTimelineItemsAndGraphItems(numberOfDays, numberOfItemsPerDay);
-	}
-
-	public static JSONArray[] generateTimelineItemsAndGraphItems(int numberOfDays, int numberOfItemsPerDay) {
-
-		long timestamp = System.currentTimeMillis() / 1000;
-				
-		// create graph items
-		List<GraphItem> graphItems = new ArrayList<GraphItem>();
-		for(int i = 0; i < numberOfDays; i++) {
-
-			long goalTimestamp = timestamp - 3600 * 24 * i;
-			long goalStartTime = MVPApi.getDayStartEpoch(goalTimestamp);
-			long goalEndTime = MVPApi.getDayEndEpoch(goalTimestamp);
-			long graphItemInterval = (goalEndTime - goalStartTime) / Math.max(numberOfItemsPerDay, 1);
-
-			for(long t = goalStartTime; t <= goalEndTime; t += graphItemInterval) {
-
-				GraphItem graphItem = DataGenerator.generateRandomGraphItem(t, null);
-				graphItems.add(graphItem);
-			}
-		}
-
-
-		// create activity session timeline items
-		List<TimelineItem> timelineItems = new ArrayList<TimelineItem>();
-		for(int i = 0; i < numberOfDays; i++) {
-
-			long goalTimestamp = timestamp - 3600 * 24 * i;
-			long goalStartTime = MVPApi.getDayStartEpoch(goalTimestamp);
-			long goalEndTime = MVPApi.getDayEndEpoch(goalTimestamp);
-			long numberOfItem = Math.max(1, numberOfItemsPerDay);
-			long step = (goalEndTime - goalStartTime) / numberOfItem;
-
-			for(long t = goalStartTime; t <= goalEndTime; t += step) {
-
-				TimelineItem activityTile = DataGenerator.generateRandomActivitySessionTimelineItem(t, null);
-				timelineItems.add(activityTile);
-			}
-		}
-		
-		
-		// data for a number of days
-		JSONArray timelineItemsJsonArr = new JSONArray();
-		JSONArray graphItemsJsonArr = new JSONArray();
-		
-		for(TimelineItem item: timelineItems)
-			timelineItemsJsonArr.put(item.toJson());
-		
-		for(GraphItem item: graphItems)
-			graphItemsJsonArr.put(item.toJson());
-		
-
-		JSONArray[] array = new JSONArray[2];
-		array[0] = timelineItemsJsonArr;
-		array[1] = graphItemsJsonArr;
-		return array;
-	}
-	
-	// utilities
-	public static long getDayStartEpoch() {
-		return getDayStartEpoch(System.currentTimeMillis() / 1000);
-	}
-
-	public static long getDayStartEpoch(long epoch) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(epoch * 1000);
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-
-		return cal.getTimeInMillis() / 1000;
-	}
-
-	public static long getDayStartEpoch(int date, int month, int year) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(year, month - 1, date, 0, 0, 0);
-
-		return cal.getTimeInMillis() / 1000;
-	}
-
-	public static long getDayEndEpoch() {
-		return getDayEndEpoch(System.currentTimeMillis() / 1000);
-	}
-
-	public static long getDayEndEpoch(long epoch) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(epoch * 1000);
-		cal.set(Calendar.HOUR_OF_DAY, 23);
-		cal.set(Calendar.MINUTE, 59);
-		cal.set(Calendar.SECOND, 59);
-
-		return cal.getTimeInMillis() / 1000;
-	}
-
-	public static long getDayEndEpoch(int date, int month, int year) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(year, month - 1, date, 23, 59, 59);
-
-		return cal.getTimeInMillis() / 1000;
-	}
-
 	// account apis
 	static private AccountResult sign(String email, String password, String shortUrl) {
 		// trace
@@ -630,6 +522,17 @@ public class MVPApi extends RequestHelper {
 			return null;
 		}
 	}
+	
+	public static BaseResult getDeviceLinkingStatusRaw(String token, String serialNumberString) {
+		
+		String url = baseAddress + "device_linking_status";
+		BaseParams request = new BaseParams();
+		request.addHeader("auth_token", token);
+		request.addParam("serial_number_string", serialNumberString);
+		ServiceResponse response = MVPApi.get(url, port, request);
+		
+		return new BaseResult(response);
+	}
 
 	public static String unlinkDevice(String token) {
 		String url = baseAddress + "unlink_device";
@@ -748,6 +651,16 @@ public class MVPApi extends RequestHelper {
 		}
 	}
 
+	public static BaseResult generateNewSerialNumber(String token) {
+		
+		String url = baseAddress + "shine_serials/issue";
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		
+		ServiceResponse response = MVPApi.post(url, port, requestInf);
+		return new BaseResult(response);
+	}
+	
 	// sync apis
 	public static ServiceResponse syncLog(String token, String log) {
 

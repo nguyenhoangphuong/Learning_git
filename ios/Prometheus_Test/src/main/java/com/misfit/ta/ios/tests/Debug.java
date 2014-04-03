@@ -7,9 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ta.gui.AppInstaller;
-import com.misfit.ta.gui.Gui;
-import com.misfit.ta.gui.LaunchScreen;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 
 
 public class Debug {
@@ -22,15 +20,14 @@ public class Debug {
 	
 	public static void main(String[] args) throws Exception {
 		
-//		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
-//		MVPApi.getProfileOfUserId(token, "52bc053551381073fb000006");
+		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
+		MVPApi.getDeviceLinkingStatusRaw(token, "SH0AZ00Y9Q");
 		
 //		Files.delete("rawdata");
 //		Files.getFile("rawdata");
 //		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc047@a.a", "qqqqqq");
 
 //		AppInstaller.launchInstrument();
-		Gui.init("192.168.1.144");
-		LaunchScreen.tapIHaveAShine();
+		
 	}
 }

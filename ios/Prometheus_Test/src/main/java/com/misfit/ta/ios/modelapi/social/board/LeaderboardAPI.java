@@ -10,6 +10,7 @@ import org.testng.Assert;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
@@ -40,8 +41,8 @@ public class LeaderboardAPI extends ModelAPI {
 	
 	protected Goal getOrCreateEmptyGoal(String token, long timestamp) {
 		
-		long startDayEpoch = MVPApi.getDayStartEpoch(timestamp);
-		long endDayEpoch = MVPApi.getDayEndEpoch(timestamp);
+		long startDayEpoch = MVPCommon.getDayStartEpoch(timestamp);
+		long endDayEpoch = MVPCommon.getDayEndEpoch(timestamp);
 		Goal[] goals = MVPApi.searchGoal(token, startDayEpoch, endDayEpoch, 0l).goals;
 		
 		// if no result, create one with progress == 0

@@ -14,8 +14,8 @@ import org.testng.annotations.Test;
 
 import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
+import com.misfit.ta.backend.data.DataGenerator;
 
 public class BackendSyncSimulation {
 
@@ -76,7 +76,7 @@ public class BackendSyncSimulation {
         JSONArray timelineItems = new JSONArray();
         JSONArray graphItems = new JSONArray();
 
-        JSONArray[] array = MVPApi.generateTimelineItemsAndGraphItems();
+        JSONArray[] array = DataGenerator.generateTimelineItemsAndGraphItems();
         timelineItems = array[0];
         graphItems = array[1];
 

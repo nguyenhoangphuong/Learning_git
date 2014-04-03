@@ -13,6 +13,7 @@ import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.social.Leaderboard;
 import com.misfit.ta.backend.data.social.SocialUserInLeaderBoard;
+import com.misfit.ta.common.MVPCommon;
 
 public class SocialLeaderBoardTC extends SocialTestAutomationBase {
 
@@ -30,8 +31,8 @@ public class SocialLeaderBoardTC extends SocialTestAutomationBase {
 	// test helpers
 	protected Goal getOrCreateEmptyGoal(String token, long timestamp) {
 		
-		long startDayEpoch = MVPApi.getDayStartEpoch(timestamp);
-		long endDayEpoch = MVPApi.getDayEndEpoch(timestamp);
+		long startDayEpoch = MVPCommon.getDayStartEpoch(timestamp);
+		long endDayEpoch = MVPCommon.getDayEndEpoch(timestamp);
 		Goal[] goals = MVPApi.searchGoal(token, startDayEpoch, endDayEpoch, 0l).goals;
 		
 		// if no result, create one with progress == 0

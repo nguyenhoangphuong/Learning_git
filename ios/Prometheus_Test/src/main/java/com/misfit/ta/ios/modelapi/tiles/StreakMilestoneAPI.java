@@ -12,6 +12,7 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -40,7 +41,7 @@ public class StreakMilestoneAPI extends ModelAPI {
 
 		// get current goal
 		token = MVPApi.signIn(email, "qwerty1").token;
-		todayBlankGoal = MVPApi.searchGoal(token, MVPApi.getDayStartEpoch(), (long)Integer.MAX_VALUE, 0l).goals[0];
+		todayBlankGoal = MVPApi.searchGoal(token, MVPCommon.getDayStartEpoch(), (long)Integer.MAX_VALUE, 0l).goals[0];
 		todayBlankGoal.setProgressData(ProgressData.getDefaultProgressData());
 		
 		// update current day goal's value to 100 pts

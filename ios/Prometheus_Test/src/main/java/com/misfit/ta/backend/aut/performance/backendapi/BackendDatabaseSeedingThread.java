@@ -248,7 +248,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 		clock.tock();
 		
 		// create today's milestone items
-		long goalStartTime = MVPApi.getDayStartEpoch(System.currentTimeMillis() / 1000);
+		long goalStartTime = MVPCommon.getDayStartEpoch(System.currentTimeMillis() / 1000);
 		MVPApi.createTimelineItem(token, DataGenerator.generateRandomMilestoneItem(goalStartTime + MVPCommon.randLong(3600, 80000), TimelineItemDataBase.EVENT_TYPE_100_GOAL, null));
 		MVPApi.createTimelineItem(token, DataGenerator.generateRandomMilestoneItem(goalStartTime + MVPCommon.randLong(3600, 80000), TimelineItemDataBase.EVENT_TYPE_150_GOAL, null));
 		MVPApi.createTimelineItem(token, DataGenerator.generateRandomMilestoneItem(goalStartTime + MVPCommon.randLong(3600, 80000), TimelineItemDataBase.EVENT_TYPE_200_GOAL, null));

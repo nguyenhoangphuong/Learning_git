@@ -10,6 +10,7 @@ import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.MVPEnums;
 
 public class Goal {
@@ -188,8 +189,8 @@ public class Goal {
 		Goal goal = new Goal();
 		goal.setLocalId("goal-" + MVPApi.generateLocalId());
 		goal.setGoalValue(1000 * 2.5);
-		goal.setStartTime(MVPApi.getDayStartEpoch(timestamp));
-		goal.setEndTime(MVPApi.getDayEndEpoch(timestamp));
+		goal.setStartTime(MVPCommon.getDayStartEpoch(timestamp));
+		goal.setEndTime(MVPCommon.getDayEndEpoch(timestamp));
 		goal.setTimeZoneOffsetInSeconds(offsetFromUtc);
 		goal.setProgressData(ProgressData.getDefaultProgressData());
 		goal.setTripleTapTypeChanges(tripleTapTypeChanges);	

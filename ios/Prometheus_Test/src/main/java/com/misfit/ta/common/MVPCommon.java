@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -176,4 +177,50 @@ public class MVPCommon {
 		
 		return null;
 	}
+
+	
+	// datetime utilities
+	public static long getDayStartEpoch() {
+		return MVPCommon.getDayStartEpoch(System.currentTimeMillis() / 1000);
+	}
+
+	
+	public static long getDayStartEpoch(long epoch) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(epoch * 1000);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+	
+		return cal.getTimeInMillis() / 1000;
+	}
+
+	public static long getDayStartEpoch(int date, int month, int year) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(year, month - 1, date, 0, 0, 0);
+	
+		return cal.getTimeInMillis() / 1000;
+	}
+
+	public static long getDayEndEpoch() {
+		return MVPCommon.getDayEndEpoch(System.currentTimeMillis() / 1000);
+	}
+
+	public static long getDayEndEpoch(long epoch) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(epoch * 1000);
+		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+	
+		return cal.getTimeInMillis() / 1000;
+	}
+
+	public static long getDayEndEpoch(int date, int month, int year) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(year, month - 1, date, 23, 59, 59);
+	
+		return cal.getTimeInMillis() / 1000;
+	}
+
 }

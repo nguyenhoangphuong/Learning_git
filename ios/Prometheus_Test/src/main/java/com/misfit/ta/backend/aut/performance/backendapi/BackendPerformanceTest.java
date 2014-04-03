@@ -15,6 +15,7 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.ResultLogger;
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
@@ -38,7 +39,7 @@ public class BackendPerformanceTest extends BackendAutomation {
 
 		rlog.log("Number of try\t" + "signUpTime\t" + "signOutTime\t" + "signInTime\t" + "createProfileTime\t" + "getProfileTime\t" + "updateProfileTime\t" + "addTimelineItems\t" + "addGraphItems\t" + "email");
 
-		JSONArray[] array = MVPApi.generateTimelineItemsAndGraphItems();
+		JSONArray[] array = DataGenerator.generateTimelineItemsAndGraphItems();
 		JSONArray timelineItems = array[0];
 		JSONArray graphItems = array[1];
 
@@ -114,7 +115,7 @@ public class BackendPerformanceTest extends BackendAutomation {
 		int numberOfUsers = Settings.getInt("NUMBER_OF_USERS");
 		for (userCount = 0; userCount < numberOfUsers; userCount++) {
 			count += step;
-			JSONArray[] array = MVPApi.generateTimelineItemsAndGraphItems(count, 1);
+			JSONArray[] array = DataGenerator.generateTimelineItemsAndGraphItems(count, 1);
 			JSONArray timelineItems = array[0];
 			JSONArray graphItems = array[1];
 

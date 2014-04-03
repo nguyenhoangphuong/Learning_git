@@ -39,8 +39,8 @@ public class ServerCalculationTestHelpers {
 	// get data from AWS to create test case
 	public static void createTest(String saveFolder, String email, int startDate, int startMonth, int startYear, int endDate, int endMonth, int endYear) {
 		
-		long startTime = MVPApi.getDayStartEpoch(startDate, startMonth, startYear);
-		long endTime = MVPApi.getDayEndEpoch(endDate, endMonth, endYear);
+		long startTime = MVPCommon.getDayStartEpoch(startDate, startMonth, startYear);
+		long endTime = MVPCommon.getDayEndEpoch(endDate, endMonth, endYear);
 		
 		getSyncFilesFromAWS(true, email, startTime, endTime, saveFolder);
 		try {
@@ -206,7 +206,7 @@ public class ServerCalculationTestHelpers {
 			
 			// push raw data to server
 			File testFolder = new File(testFolderPath);
-			long startTimestamp = MVPApi.getDayStartEpoch();
+			long startTimestamp = MVPCommon.getDayStartEpoch();
 			
 			for(File syncFolder : testFolder.listFiles()) {
 				

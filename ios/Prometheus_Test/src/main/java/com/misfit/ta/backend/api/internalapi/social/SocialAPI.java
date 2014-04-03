@@ -203,6 +203,20 @@ public class SocialAPI extends MVPApi {
         return new BaseResult(response);
     }
 
+    public static BaseResult renewFacebook(String token, String email, String accessToken) {
+
+        String url = baseAddress + "renew_facebook";
+        BaseParams request = new BaseParams();
+        ServiceResponse response;
+
+        request.addHeader("auth_token", token);
+        request.addParam("access_token", accessToken);
+        request.addParam("email", email);
+
+        response = MVPApi.post(url, port, request);
+        return new BaseResult(response);
+    }
+
     
 	public static BaseResult getLeaderboardInfo(String token) {
 		
