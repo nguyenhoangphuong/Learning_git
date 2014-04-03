@@ -4,11 +4,9 @@ package com.misfit.ta.backend.aut.correctness.social;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.social.SocialUserWithStatus;
 
 public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
@@ -174,74 +172,6 @@ public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 		
 		// cancel friend request misfit --> tung
 		SocialAPI.cancelFriendRequest(misfitToken, tungUid);
-	}
-
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest", "StagingOnly" })
-	public void SendFriendRequest_ToAverageFemaleUser() {
-		
-		String avgUid = "52bc053551381073fb000006";
-
-		// update profile
-		ProfileData profile = new ProfileData();
-		profile.setGender(1);
-		MVPApi.updateProfile(misfitToken, profile);
-
-		// delete avgUser
-		SocialAPI.deleteFriend(misfitToken, avgUid);
-
-		// misfit --> avgUser 
-		BaseResult result = SocialAPI.sendFriendRequest(misfitToken, avgUid);
-		Assert.assertEquals(result.statusCode, 200, "Status code");
-
-		// check friend request from misfit
-		result = SocialAPI.getFriendRequestsFromMe(misfitToken);
-		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
-
-		Assert.assertEquals(friends.length, 0, "Number of friend requests from misfit");
-
-		// check friend list if misfit
-		result = SocialAPI.getFriendsWithAverageUsers(misfitToken);
-		friends = SocialUserWithStatus.usersFromResponse(result.response);
-
-		Assert.assertEquals(friends.length, 1, "Number of friends of misfit");
-		Assert.assertEquals(friends[0].getUid(), avgUid, "Uid of average user");
-
-		// delete avgUser
-		SocialAPI.deleteFriend(misfitToken, avgUid);
-	}
-	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest", "StagingOnly" })
-	public void SendFriendRequest_ToAverageMaleUser() {
-
-		String avgUid = "52bc053451381073fb000003";
-
-		// update profile
-		ProfileData profile = new ProfileData();
-		profile.setGender(0);
-		MVPApi.updateProfile(misfitToken, profile);
-
-		// delete avgUser
-		SocialAPI.deleteFriend(misfitToken, avgUid);
-
-		// misfit --> avgUser 
-		BaseResult result = SocialAPI.sendFriendRequest(misfitToken, avgUid);
-		Assert.assertEquals(result.statusCode, 200, "Status code");
-
-		// check friend request from misfit
-		result = SocialAPI.getFriendRequestsFromMe(misfitToken);
-		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
-
-		Assert.assertEquals(friends.length, 0, "Number of friend requests from misfit");
-
-		// check friend list if misfit
-		result = SocialAPI.getFriendsWithAverageUsers(misfitToken);
-		friends = SocialUserWithStatus.usersFromResponse(result.response);
-
-		Assert.assertEquals(friends.length, 1, "Number of friends of misfit");
-		Assert.assertEquals(friends[0].getUid(), avgUid, "Uid of average user");
-
-		// delete avgUser
-		SocialAPI.deleteFriend(misfitToken, avgUid);
 	}
 	
 }

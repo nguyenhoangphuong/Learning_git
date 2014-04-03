@@ -32,10 +32,10 @@ public class ProfileResult extends BaseResult {
 	private void formatOK() {
 		try {
 			JSONObject proJSON = json.getJSONObject("profile");
-			profile = ProfileData.fromJson(proJSON);
+			profile.fromJson(proJSON);
 			
 			JSONObject statisticsObj = json.getJSONObject("statistics");
-            statistics = Statistics.fromJson(statisticsObj);
+            statistics.fromJson(statisticsObj);
 			
 		} catch (Exception e) {
 		}

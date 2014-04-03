@@ -12,7 +12,7 @@ import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.social.Leaderboard;
-import com.misfit.ta.backend.data.social.SocialUserLeaderBoardEvent;
+import com.misfit.ta.backend.data.social.SocialUserInLeaderBoard;
 
 public class SocialLeaderBoardTC extends SocialTestAutomationBase {
 
@@ -110,8 +110,8 @@ public class SocialLeaderBoardTC extends SocialTestAutomationBase {
         BaseResult result = SocialAPI.getLeaderboardInfo(misfitToken);
         Leaderboard board = Leaderboard.fromResponse(result.response);
 
-        List<SocialUserLeaderBoardEvent> today = board.getToday();
-        SocialUserLeaderBoardEvent[] records = today.toArray(new SocialUserLeaderBoardEvent[today.size()]);
+        List<SocialUserInLeaderBoard> today = board.getToday();
+        SocialUserInLeaderBoard[] records = today.toArray(new SocialUserInLeaderBoard[today.size()]);
         SocialTestHelpers.printUsers(records);
         
         // check leaderboard detail
@@ -136,7 +136,7 @@ public class SocialLeaderBoardTC extends SocialTestAutomationBase {
         board = Leaderboard.fromResponse(result.response);
 
         today = board.getToday();
-        records = today.toArray(new SocialUserLeaderBoardEvent[today.size()]);
+        records = today.toArray(new SocialUserInLeaderBoard[today.size()]);
         SocialTestHelpers.printUsers(records);
         
         // check leaderboard detail
@@ -168,8 +168,8 @@ public class SocialLeaderBoardTC extends SocialTestAutomationBase {
         BaseResult result = SocialAPI.getLeaderboardInfo(misfitToken);
         Leaderboard board = Leaderboard.fromResponse(result.response);
 
-        List<SocialUserLeaderBoardEvent> yesterday = board.getYesterday();
-        SocialUserLeaderBoardEvent[] records = yesterday.toArray(new SocialUserLeaderBoardEvent[yesterday.size()]);
+        List<SocialUserInLeaderBoard> yesterday = board.getYesterday();
+        SocialUserInLeaderBoard[] records = yesterday.toArray(new SocialUserInLeaderBoard[yesterday.size()]);
         SocialTestHelpers.printUsers(records);
         
         // check leaderboard detail

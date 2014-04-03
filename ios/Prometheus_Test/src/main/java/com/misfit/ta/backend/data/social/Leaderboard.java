@@ -11,23 +11,23 @@ import com.google.resting.json.JSONObject;
 public class Leaderboard {
 
     // fields
-    protected List<SocialUserLeaderBoardEvent> today;
-    protected List<SocialUserLeaderBoardEvent> yesterday;
+    protected List<SocialUserInLeaderBoard> today;
+    protected List<SocialUserInLeaderBoard> yesterday;
 
     // getters setters
-    public List<SocialUserLeaderBoardEvent> getToday() {
+    public List<SocialUserInLeaderBoard> getToday() {
         return today;
     }
 
-    public void setToday(List<SocialUserLeaderBoardEvent> today) {
+    public void setToday(List<SocialUserInLeaderBoard> today) {
         this.today = today;
     }
 
-    public List<SocialUserLeaderBoardEvent> getYesterday() {
+    public List<SocialUserInLeaderBoard> getYesterday() {
         return yesterday;
     }
 
-    public void setYesterday(List<SocialUserLeaderBoardEvent> yesterday) {
+    public void setYesterday(List<SocialUserInLeaderBoard> yesterday) {
         this.yesterday = yesterday;
     }
 
@@ -63,10 +63,10 @@ public class Leaderboard {
             if (!json.isNull("today")) {
 
                 JSONArray todayJsonArr = json.getJSONArray("today");
-                List<SocialUserLeaderBoardEvent> todayList = new ArrayList<SocialUserLeaderBoardEvent>();
+                List<SocialUserInLeaderBoard> todayList = new ArrayList<SocialUserInLeaderBoard>();
 
                 for (int i = 0; i < todayJsonArr.length(); i++) {
-                    SocialUserLeaderBoardEvent record = new SocialUserLeaderBoardEvent();
+                    SocialUserInLeaderBoard record = new SocialUserInLeaderBoard();
                     record.fromJson(todayJsonArr.getJSONObject(i));
                     todayList.add(record);
                 }
@@ -77,10 +77,10 @@ public class Leaderboard {
             if (!json.isNull("yesterday")) {
 
                 JSONArray yesterdayJsonArr = json.getJSONArray("yesterday");
-                List<SocialUserLeaderBoardEvent> yesterdayList = new ArrayList<SocialUserLeaderBoardEvent>();
+                List<SocialUserInLeaderBoard> yesterdayList = new ArrayList<SocialUserInLeaderBoard>();
 
                 for (int i = 0; i < yesterdayJsonArr.length(); i++) {
-                    SocialUserLeaderBoardEvent record = new SocialUserLeaderBoardEvent();
+                    SocialUserInLeaderBoard record = new SocialUserInLeaderBoard();
                     record.fromJson(yesterdayJsonArr.getJSONObject(i));
                     yesterdayList.add(record);
                 }
@@ -111,7 +111,7 @@ public class Leaderboard {
 
     public int getLeaderPointToday() {
         if (today != null && !today.isEmpty()) {
-            SocialUserLeaderBoardEvent first = today.get(0);
+            SocialUserInLeaderBoard first = today.get(0);
             return first.getPoints();
         } else
             return -1;
@@ -119,7 +119,7 @@ public class Leaderboard {
     
     public String getLeaderNameToday() {
         if (today != null && !today.isEmpty()) {
-            SocialUserLeaderBoardEvent first = today.get(0);
+            SocialUserInLeaderBoard first = today.get(0);
             return first.getName();
         } else
             return "";

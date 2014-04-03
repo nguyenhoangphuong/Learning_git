@@ -32,13 +32,8 @@ public class ProfileData {
 	
 	protected Boolean isEarlyUser;
 	protected String promotionCode;
-	
-	
-	// constructor
-	public ProfileData() {
 
-	}
-
+	
 	
 	// methods
 	public JSONObject toJson() {
@@ -80,7 +75,7 @@ public class ProfileData {
 		}
 	}
 	
-	public static ProfileData fromJson(JSONObject json) {
+	public ProfileData fromJson(JSONObject json) {
 		ProfileData obj = new ProfileData();
 		try {
 			if (!json.isNull("localId"))
@@ -157,8 +152,9 @@ public class ProfileData {
 		try {
 			JSONObject jsonResponse = new JSONObject(response.getResponseString());
 			JSONObject jsonItem = jsonResponse.getJSONObject("profile");
-
-			return ProfileData.fromJson(jsonItem);
+			ProfileData profile = new ProfileData();
+			
+			return profile.fromJson(jsonItem);
 		} catch (JSONException e) {
 			return null;
 		}

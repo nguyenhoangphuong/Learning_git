@@ -36,7 +36,7 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
     public void beforeClass() {
 		
 		misfitToken = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
-		tungToken = MVPApi.signIn("tung+1@misfitwearables.com", "qqqqqq").token;
+		tungToken = MVPApi.signIn("mfwcqa.social@gmail.com", "qqqqqq").token;
 		thyToken = MVPApi.signIn("mfwcqa@gmail.com", "qqqqqq").token;
 		
 		misfitUid = MVPApi.getUserId(misfitToken);
@@ -44,17 +44,17 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 		thyUid = MVPApi.getUserId(thyToken);
 		
 		misfitHandle = "nhhai";
-		tungHandle = "tung_plus1";
+		tungHandle = "misfit_social_misfit";
 		thyHandle = "mfwcqa";
 		
 		misfitName = "NHHai";
-		tungName = "Tung+1";
+		tungName = "Misfit Social";
 		thyName = "mfwcqa";
 	}
 	
 	
 	// test methods
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
 	public void GetFacebookFriends_NormalCase() {
 		
 		// query friends
@@ -86,7 +86,7 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 		Assert.assertEquals(count, 2, "Number of friends found");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
 	public void GetFacebookFriends_ChangeRequestStatus() {
 		
 		// set up
@@ -165,7 +165,7 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 		SocialAPI.deleteFriend(misfitToken, thyUid);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
 	public void GetFacebookFriends_AfterFriendsChangeTheirProfiles() {	
 		
 		// now tung change his name
@@ -177,10 +177,6 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 		// query again
 		BaseResult result = SocialAPI.getFacebookFriends(misfitToken);
 		SocialUserWithStatus[] friends = SocialUserWithStatus.usersFromResponse(result.response);
-
-		// now tung change back his name (must do this if you want to run this test again)
-		tungProfile.setName(tungOldName);
-		MVPApi.updateProfile(tungToken, tungProfile);
 				
 		// check updated result
 		SocialTestHelpers.printUsers(friends);
@@ -193,6 +189,10 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 			}
 		}
 
+		// now tung change back his name (must do this if you want to run this test again)
+		tungProfile.setName(tungOldName);
+		MVPApi.updateProfile(tungToken, tungProfile);
+				
 		// query again
 		result = SocialAPI.getFriends(misfitToken);
 		friends = SocialUserWithStatus.usersFromResponse(result.response);
@@ -209,8 +209,8 @@ public class SocialGetFacebookFriendTC extends BackendAutomation {
 		}
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI", "StagingOnly", "Excluded" })
-	public void GetFacebookFriends_AfterDeleteFriends() {		
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "GetFacebookFriendAPI" })
+	public void GetFacebookFriends_AfterDeleteFriends() {
 		
 
 		// misfit --> thy, thy -v- misfit

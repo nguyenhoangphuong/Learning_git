@@ -217,6 +217,19 @@ public class SocialAPI extends MVPApi {
 		return result;
 	}
 	
+	public static BaseResult getLeaderboardInfoWithAverageUsers(String token) {
+		
+		String url = baseAddress + "leaderboard?include_avg_user=1";
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		ServiceResponse response = get(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
 	public static BaseResult getWorldInfo(String token) {
 		
 		String url = baseAddress + "world";

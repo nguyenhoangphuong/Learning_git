@@ -27,8 +27,8 @@ public class SocialTestHelpers {
 	public static HashMap<String, HashMap<String, Object>> getSocialInitialTestData() {
 		
 		// NOTE:
-		// mfwcqa.social makes friend with all other accounts
-		// all other accounts make friend with only mfwcqa.social
+		// misfit makes friend with all other accounts
+		// all other accounts make friend with only misfit
 		
 		// connect facebook
 		String misfitEmail = MVPApi.generateUniqueEmail();

@@ -299,6 +299,21 @@ public class MVPApi extends RequestHelper {
 		return null;
 	}
 	
+	public static ProfileResult getProfileOfUserId(String token, String userid) {
+		// prepare
+		String url = baseAddress + "profiles/" + userid;
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+
+		// format data
+		ProfileResult result = new ProfileResult(response);
+		return result;
+	}
+	
 	// goal apis
 	public static GoalsResult searchGoal(String token, Long startTime, Long endTime, Long modifiedSince) {
 		// prepare

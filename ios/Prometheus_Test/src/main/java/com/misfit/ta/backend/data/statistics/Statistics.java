@@ -8,20 +8,17 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 public class Statistics {
 
 	// fields
-	private String serverId;
-	private String localId;
-	private Long updatedAt;
-	private PersonalRecord personalRecords;
-	private Double lifetimeDistance;
-	private Integer bestStreak;
-	private Integer totalGoalHit;
+	protected String serverId;
+	protected String localId;
+	protected Long updatedAt;
+	protected PersonalRecord personalRecords;
+	protected Double lifetimeDistance;
+	protected Integer bestStreak;
+	protected Integer totalGoalHit;
+	protected Integer todayApnsNumber;
+	protected Long lastApnsTime;
 
-	
-	// constructors
-	public Statistics() {
-	}
 
-	
 	// methods
 	public JSONObject toJson() {
 		try {
@@ -38,6 +35,8 @@ public class Statistics {
 			obj.accumulate("lifetimeDistance", lifetimeDistance);
 			obj.accumulate("bestStreak", bestStreak);
 			obj.accumulate("totalGoalHit", totalGoalHit);
+			obj.accumulate("todayApnsNumber", todayApnsNumber);
+			obj.accumulate("lastApnsTime", lastApnsTime);
 
 			return obj;
 		} catch (JSONException e) {
@@ -46,7 +45,7 @@ public class Statistics {
 		}
 	}
 
-	public static Statistics fromJson(JSONObject json) {
+	public Statistics fromJson(JSONObject json) {
 		Statistics obj = new Statistics();
 		try {
 			
@@ -71,6 +70,12 @@ public class Statistics {
 			if (!json.isNull("totalGoalsHit"))
 				obj.setTotalGoalHit(json.getInt("totalGoalsHit"));
 			
+			if (!json.isNull("todayApnsNumber"))
+				obj.setTodayApnsNumber(json.getInt("todayApnsNumber"));
+			
+			if (!json.isNull("lastApnsTime"))
+				obj.setLastApnsTime(json.getLong("lastApnsTime"));
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -82,8 +87,9 @@ public class Statistics {
 		try {
 			JSONObject jsonResponse = new JSONObject(response.getResponseString());
 			JSONObject jsonItem = jsonResponse.getJSONObject("statistics");
-
-			return Statistics.fromJson(jsonItem);
+			Statistics statistics = new Statistics();
+			
+			return statistics.fromJson(jsonItem);
 		} catch (JSONException e) {
 			return null;
 		}
@@ -157,6 +163,22 @@ public class Statistics {
 
 	public void setTotalGoalHit(Integer totalGoalHit) {
 		this.totalGoalHit = totalGoalHit;
+	}
+
+	public Integer getTodayApnsNumber() {
+		return todayApnsNumber;
+	}
+
+	public void setTodayApnsNumber(Integer todayApnsNumber) {
+		this.todayApnsNumber = todayApnsNumber;
+	}
+
+	public Long getLastApnsTime() {
+		return lastApnsTime;
+	}
+
+	public void setLastApnsTime(Long lastApnsTime) {
+		this.lastApnsTime = lastApnsTime;
 	}
 
 }

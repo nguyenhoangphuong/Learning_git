@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
+import com.misfit.ta.backend.BackendTestEnvironment;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
@@ -269,7 +270,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
 	public void doSocialOperation() {
 
-		int index = (Settings.getParameter("MVPBackendEnviroment") == "Staging" ? 0 : 1);
+		int index = (BackendTestEnvironment.isStaging() ? 0 : 1);
 		String[] mfwcqaAccessTokens = new String[] 
 				{
 					"CAAG661ngu9YBADeNMl7jiCAZChVFWvIyPId8ZBweDaqMudhr6Uke0Yjty13DW8hdqEzzz2r6EXoXjVqI06biVxZBZCfgtY6q7pJZAsGHNGQMR5fLmnxlkLBfYSZBbU9PGm7OXpjMroOD1UJ5h7op2sfLRuH58Fr12nd1mIAF4ACYUr8xwCJUZAR0Eco65s25DveAqpjaxS4n5ANInS2dwG5T153pS6JIhHv1YEylDBZCWwZDZD",
