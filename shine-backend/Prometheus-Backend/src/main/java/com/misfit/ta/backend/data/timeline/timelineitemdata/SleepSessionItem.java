@@ -15,6 +15,8 @@ public class SleepSessionItem extends TimelineItemDataBase {
     private Long bookmarkTime;
     private Long realEndTime;
     private Long realStartTime;
+    private Long editedStartTime;
+    private Long editedEndTime;
     private Boolean isFirstSleepOfDay;
     private Boolean isAutoDetected;
     private Integer normalizedSleepQuality;
@@ -35,7 +37,9 @@ public class SleepSessionItem extends TimelineItemDataBase {
             object.accumulate("realSleepTimeInMinutes", realSleepTimeInMinutes);
             object.accumulate("bookmarkTime", bookmarkTime);
             object.accumulate("realEndTime", realEndTime);
-            object.accumulate("realStartTime", realStartTime);          
+            object.accumulate("realStartTime", realStartTime);
+            object.accumulate("editedStartTime", editedStartTime);
+            object.accumulate("editedEndTime", editedEndTime);
             object.accumulate("isFirstSleepOfDay", isFirstSleepOfDay);
             object.accumulate("isAutoDetected", isAutoDetected);
             object.accumulate("normalizedSleepQuality", normalizedSleepQuality);
@@ -77,6 +81,12 @@ public class SleepSessionItem extends TimelineItemDataBase {
 			
 			if (!json.isNull("realStartTime"))
 				this.setRealStartTime(json.getLong("realStartTime"));
+
+			if (!json.isNull("editedStartTime"))
+				this.setEditedStartTime(json.getLong("editedStartTime"));
+			
+			if (!json.isNull("editedEndTime"))
+				this.setEditedEndTime(json.getLong("editedEndTime"));
 			
 			if (!json.isNull("isFirstSleepOfDay"))
 				this.setIsFirstSleepOfDay(json.getBoolean("isFirstSleepOfDay"));
@@ -184,4 +194,20 @@ public class SleepSessionItem extends TimelineItemDataBase {
 		this.sleepStateChanges = sleepStateChanges;
 	}
 
+	public Long getEditedStartTime() {
+		return editedStartTime;
+	}
+
+	public void setEditedStartTime(Long editedStartTime) {
+		this.editedStartTime = editedStartTime;
+	}
+
+	public Long getEditedEndTime() {
+		return editedEndTime;
+	}
+
+	public void setEditedEndTime(Long editedEndTime) {
+		this.editedEndTime = editedEndTime;
+	}
+	
 }

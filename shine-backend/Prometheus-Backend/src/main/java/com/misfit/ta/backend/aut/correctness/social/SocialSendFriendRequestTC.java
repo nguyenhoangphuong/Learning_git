@@ -131,7 +131,6 @@ public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 		BaseResult result = SocialAPI.sendFriendRequest(misfitToken, tungUid);
 
 		// now tung and misfit are friends, fuck
-		// TODO: may change in the future, when we have cancel friend requests
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 
 		// check friend request list from tung
@@ -197,7 +196,7 @@ public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
-	public void SendFriendRequest_WithEmptyList() throws JSONException {
+	public void SendFriendRequests_WithEmptyList() throws JSONException {
 	
 		List<String> friendIds = new ArrayList<String>();
 		BaseResult result = SocialAPI.sendFriendRequests(misfitToken, friendIds);
@@ -208,7 +207,21 @@ public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
-	public void SendFriendRequest_ToMultipleUsers() throws JSONException {
+	public void SendFriendRequests_ToUserWithInvalidUid() throws JSONException {
+		
+		// to invalid uid user
+		List<String> friendIds = new ArrayList<String>();
+		friendIds.add("invalid_uid");
+
+		BaseResult result = SocialAPI.sendFriendRequests(misfitToken, friendIds);
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+
+		JSONArray jsonarr = new JSONArray(result.rawData);
+		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(0)), DefaultValues.UserNotFoundCode, "Error code for invalid user");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
+	public void SendFriendRequests_ToInvalidUsers() throws JSONException {
 		
 		// misfit --> tung, tung -v- misfit
 		SocialAPI.sendFriendRequest(misfitToken, tungUid);
@@ -216,23 +229,80 @@ public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 		
 		// to invalid user / non social user / yourself / your friend / valid friend
 		List<String> friendIds = new ArrayList<String>();
-		friendIds.add("invalid_uid");
 		friendIds.add(nonSocialUserUid);
 		friendIds.add(misfitUid);
 		friendIds.add(tungUid);
 		friendIds.add(thyUid);
 		
+		// expect first 3 requests are failed
 		BaseResult result = SocialAPI.sendFriendRequests(misfitToken, friendIds);
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		
 		JSONArray jsonarr = new JSONArray(result.rawData);
-		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(0)), DefaultValues.UserNotFoundCode, "Error code for invalid user");
-		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(1)), DefaultValues.UserNotUseSocialCode, "Error code for non-social user");
-		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(2)), DefaultValues.CannotSendRequestToYourSelfCode, "Error code for yourself");
-		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(3)), DefaultValues.AlreadyAreFriendsCode, "Error code for invalid user");
+		Assert.assertEquals(jsonarr.length(), 3, "Number of failed requests");
+		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(0)), DefaultValues.UserNotUseSocialCode, "Error code for non-social user");
+		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(1)), DefaultValues.CannotSendRequestToYourSelfCode, "Error code for yourself");
+		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(2)), DefaultValues.AlreadyAreFriendsCode, "Error code for invalid user");
 		
-		// delete friend
+		// last one passed (to thy)
+		result = SocialAPI.getFriendRequestsFromMe(misfitToken);
+		SocialUserWithStatus[] users = SocialUserWithStatus.usersFromResponse(result.response);
+		
+		Assert.assertEquals(users.length, 1, "Number of request from me");
+		Assert.assertEquals(users[0].getUid(), thyUid, "User id");
+		Assert.assertEquals(users[0].getStatus(), SocialAPI.STATUS_REQUESTED_FROM_ME, "Friend status");
+		
+		result = SocialAPI.getFriendRequestsToMe(thyToken);
+		users = SocialUserWithStatus.usersFromResponse(result.response);
+		
+		Assert.assertEquals(users.length, 1, "Number of request to thy");
+		Assert.assertEquals(users[0].getUid(), misfitUid, "User id");
+		Assert.assertEquals(users[0].getStatus(), SocialAPI.STATUS_REQUESTED_TO_ME, "Friend status");
+		
+		// now send to requested friend
+		friendIds.clear();
+		friendIds.add(thyUid);
+		
+		result = SocialAPI.sendFriendRequests(misfitToken, friendIds);
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		
+		jsonarr = new JSONArray(result.rawData);
+		Assert.assertEquals(jsonarr.length(), 1, "Number of failed requests");
+		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(0)), DefaultValues.AlreadyRequestedCode, "Error code for already requested user");
+		
+		// now send to who requested you
+		friendIds.clear();
+		friendIds.add(misfitUid);
+		
+		result = SocialAPI.sendFriendRequests(thyToken, friendIds);
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		
+		result = SocialAPI.getFriends(thyToken);
+		users = SocialUserWithStatus.usersFromResponse(result.response);
+		Assert.assertEquals(users.length, 1, "Number of thy's friends");
+		Assert.assertEquals(users[0].getUid(), misfitUid, "Friend's uid");
+		
+		// clean up test: delete friend / cancel request
+		SocialAPI.deleteFriend(misfitToken, thyUid);
 		SocialAPI.deleteFriend(misfitToken, tungUid);
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
+	public void SendFriendRequests_ToMultipleVvalidUsers() throws JSONException {
+		
+		// to 2 valid non friend users
+		List<String> friendIds = new ArrayList<String>();
+		friendIds.add(tungUid);
+		friendIds.add(thyUid);
+		
+		// expect first 3 requests are failed
+		BaseResult result = SocialAPI.sendFriendRequests(misfitToken, friendIds);
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(result.rawData, "{}", "Response's body");
+		
+		// clean up test: delete friend / cancel request
+		SocialAPI.cancelFriendRequest(misfitToken, thyUid);
+		SocialAPI.cancelFriendRequest(misfitToken, tungUid);
 	}
 	
 	private int getErrorCode(JSONObject json) {

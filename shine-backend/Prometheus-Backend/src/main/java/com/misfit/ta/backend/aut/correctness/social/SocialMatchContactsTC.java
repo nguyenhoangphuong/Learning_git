@@ -31,6 +31,21 @@ public class SocialMatchContactsTC extends SocialTestAutomationBase {
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "MatchContacts" })
+    public void MatchContacts_WithoutParamsOrEmptyList() {
+
+		// empty list
+		BaseResult result = SocialAPI.matchContacts(misfitToken, new ArrayList<String>());
+		SocialUserWithStatus[] users = SocialUserWithStatus.usersFromResponse(result.response);
+		
+		Assert.assertEquals(users.length, 0, "Number of users found");
+
+		
+		// without emails param
+		result = SocialAPI.matchContacts(misfitToken, null);
+		Assert.assertEquals(result.statusCode, 400, "Number of users found");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "MatchContacts" })
     public void MatchContacts_InvalidContacts() {
 	
 		// sign up new user
@@ -47,6 +62,7 @@ public class SocialMatchContactsTC extends SocialTestAutomationBase {
 		List<String> emails = new  ArrayList<String>();
 		emails.add(TextTool.getRandomString(10, 30));
 		emails.add("a@.a");
+		emails.add("as");
 		
 		// non existed / non-social user emails
 		emails.add(MVPApi.generateUniqueEmail());
@@ -60,6 +76,7 @@ public class SocialMatchContactsTC extends SocialTestAutomationBase {
 		BaseResult result = SocialAPI.matchContacts(misfitToken, emails);
 		SocialUserWithStatus[] users = SocialUserWithStatus.usersFromResponse(result.response);
 		
+		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(users.length, 0, "Number of users found");
 	}
 	
@@ -72,25 +89,28 @@ public class SocialMatchContactsTC extends SocialTestAutomationBase {
 		
 		
 		// match contacts
-		// non-friend user
+		// non-friend user / friend / duplicated emails
 		List<String> emails = new  ArrayList<String>();
 		emails.add(thyEmail);
-		
-		// friend user
 		emails.add(tungEmail);
-		
-//		// duplicated emails
-//		emails.add(thyEmail);
-//		emails.add(tungEmail);
+		emails.add(thyEmail);
+		emails.add(tungEmail);
 		
 		
 		// check result
 		BaseResult result = SocialAPI.matchContacts(misfitToken, emails);
 		SocialUserWithStatus[] users = SocialUserWithStatus.usersFromResponse(result.response);
 
-		Assert.assertEquals(users.length, 1, "Number of users found");
-		Assert.assertEquals(users[0].getUid(), tungUid, "User uid");
-		Assert.assertEquals(users[0].getName(), tungName, "User display name");
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(users.length, 2, "Number of users found");
+		Assert.assertEquals(users[0].getUid(), thyUid, "User uid");
+		Assert.assertEquals(users[0].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status to thy");
+		Assert.assertEquals(users[1].getUid(), tungUid, "User uid");
+		Assert.assertEquals(users[1].getStatus(), SocialAPI.STATUS_APPROVED, "Status to thy");
+		
+		// clean up: delete friends
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+		
 	}
 	
 }
