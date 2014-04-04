@@ -1,20 +1,42 @@
 package com.misfit.ta.backend.aut.correctness.social;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.google.resting.json.JSONArray;
+import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
+import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.social.SocialUserWithStatus;
 
 public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 	
 	// fields
-	protected String nonSocialEmail = "qa001@a.a";
-	protected String nonSocialUserUid = "51b1e051513810703f000054";
+	protected String nonSocialUserUid;
 	
+	@BeforeClass(alwaysRun = true)
+    public void beforeClass() {
+		
+		super.beforeClass();
+		
+		String nonSocialEmail = MVPApi.generateUniqueEmail();
+		String token = MVPApi.signUp(nonSocialEmail, "qqqqqq").token;
+		ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
+		profile.setHandle(null);
+		
+		MVPApi.createProfile(token, profile);
+		nonSocialUserUid = MVPApi.getUserId(token);
+	}
 	
 	// test methods	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
@@ -174,4 +196,52 @@ public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 		SocialAPI.cancelFriendRequest(misfitToken, tungUid);
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
+	public void SendFriendRequest_WithEmptyList() throws JSONException {
+	
+		List<String> friendIds = new ArrayList<String>();
+		BaseResult result = SocialAPI.sendFriendRequests(misfitToken, friendIds);
+		
+		Assert.assertEquals(result.statusCode, 400, "Status code");
+		Assert.assertEquals(result.errorCode, DefaultValues.InvalidParameterCode, "Error code");
+		Assert.assertEquals(result.errorMessage, DefaultValues.InvalidParameterMessage, "Error message");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
+	public void SendFriendRequest_ToMultipleUsers() throws JSONException {
+		
+		// misfit --> tung, tung -v- misfit
+		SocialAPI.sendFriendRequest(misfitToken, tungUid);
+		SocialAPI.acceptFriendRequest(tungToken, misfitUid);
+		
+		// to invalid user / non social user / yourself / your friend / valid friend
+		List<String> friendIds = new ArrayList<String>();
+		friendIds.add("invalid_uid");
+		friendIds.add(nonSocialUserUid);
+		friendIds.add(misfitUid);
+		friendIds.add(tungUid);
+		friendIds.add(thyUid);
+		
+		BaseResult result = SocialAPI.sendFriendRequests(misfitToken, friendIds);
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		
+		JSONArray jsonarr = new JSONArray(result.rawData);
+		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(0)), DefaultValues.UserNotFoundCode, "Error code for invalid user");
+		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(1)), DefaultValues.UserNotUseSocialCode, "Error code for non-social user");
+		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(2)), DefaultValues.CannotSendRequestToYourSelfCode, "Error code for yourself");
+		Assert.assertEquals(getErrorCode(jsonarr.getJSONObject(3)), DefaultValues.AlreadyAreFriendsCode, "Error code for invalid user");
+		
+		// delete friend
+		SocialAPI.deleteFriend(misfitToken, tungUid);
+	}
+	
+	private int getErrorCode(JSONObject json) {
+		
+		try {
+			return Integer.parseInt(json.getJSONObject("error").getString("code"));
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+
 }

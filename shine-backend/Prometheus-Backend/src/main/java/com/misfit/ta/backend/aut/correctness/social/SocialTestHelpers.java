@@ -26,10 +26,6 @@ public class SocialTestHelpers {
 	
 	public static HashMap<String, HashMap<String, Object>> getSocialInitialTestData() {
 		
-		// NOTE:
-		// misfit makes friend with all other accounts
-		// all other accounts make friend with only misfit
-		
 		// connect facebook
 		String misfitEmail = MVPApi.generateUniqueEmail();
 		String tungEmail = MVPApi.generateUniqueEmail();
@@ -102,11 +98,6 @@ public class SocialTestHelpers {
 		mapNameData.put("thy", thyData);
 				
 		return mapNameData;
-	}
-
-	public static void restoreSocialTestData(HashMap<String, HashMap<String, Object>> testData) {
-		
-		// TODO:
 	}
 
 }

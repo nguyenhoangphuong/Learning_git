@@ -509,10 +509,11 @@ public class MVPApi extends RequestHelper {
 	}
 
 	public static String getDeviceLinkingStatus(String token, String serialNumberString) {
-		String url = baseAddress + "device_linking_status";
+		String url = baseAddress + "device_linking_status" + (serialNumberString == null ? "" :
+			"?serial_number_string=" + serialNumberString);
+		
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
-		request.addParam("serial_number_string", serialNumberString);
 		try {
 			ServiceResponse response = MVPApi.get(url, port, request);
 			String message = Pedometer.getMessage(response);

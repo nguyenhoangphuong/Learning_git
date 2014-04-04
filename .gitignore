@@ -13,6 +13,7 @@ target/
 */*/apps
 */*/images
 */*/keys
+*/*/rawdata
 ios/*/*/ios
 */*/logs
 */*/instrumentscli*.trace

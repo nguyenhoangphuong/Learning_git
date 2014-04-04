@@ -26,6 +26,7 @@ public class BaseParams {
 		// api key
 		this.addHeader("api_key", "76801581");
 		this.addHeader("locale", CurrentLocale);
+		this.addHeader("Content-Type", "application/json");
 	}
 
 	// public functions to add params/headers

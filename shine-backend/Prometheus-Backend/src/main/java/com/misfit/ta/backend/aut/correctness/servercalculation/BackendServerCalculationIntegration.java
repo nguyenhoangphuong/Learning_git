@@ -2,7 +2,6 @@ package com.misfit.ta.backend.aut.correctness.servercalculation;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -83,19 +82,19 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		// - 100% tile
 		// - 150% tile
 		GoalRawData data2 = new GoalRawData();
-		data2.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0, 7 * 60));
 
-		data2.appendGoalRawData(generateSessionRawData(6000, 600, 60));
-		data2.appendGoalRawData(generateEmptyRawData(7 * 60 + 60, 10 * 60));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(6000, 600, 60));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(7 * 60 + 60, 10 * 60));
 
-		data2.appendGoalRawData(generateSessionRawData(5000, 500, 50));
-		data2.appendGoalRawData(generateEmptyRawData(10 * 60 + 50, 13 * 60));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(5000, 500, 50));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(10 * 60 + 50, 13 * 60));
 
-		data2.appendGoalRawData(generateSessionRawData(3000, 300, 30));
-		data2.appendGoalRawData(generateEmptyRawData(13 * 60 + 30, 17 * 60));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(3000, 300, 30));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(13 * 60 + 30, 17 * 60));
 
-		data2.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data2.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 24 * 60));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(4000, 400, 40));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(17 * 60 + 40, 24 * 60));
 
 		// story on 2nd day (yesterday):
 		// - session: 60 minutes - 6000 steps - 600 points at 7:00
@@ -111,22 +110,22 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		// - personal best tile
 		// - statistics updated
 		GoalRawData data1 = new GoalRawData();
-		data1.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0, 7 * 60));
 
-		data1.appendGoalRawData(generateSessionRawData(6000, 600, 60));
-		data1.appendGoalRawData(generateEmptyRawData(7 * 60 + 60, 10 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(6000, 600, 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(7 * 60 + 60, 10 * 60));
 
-		data1.appendGoalRawData(generateSessionRawData(5000, 500, 50));
-		data1.appendGoalRawData(generateEmptyRawData(10 * 60 + 50, 13 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(5000, 500, 50));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(10 * 60 + 50, 13 * 60));
 
-		data1.appendGoalRawData(generateSessionRawData(3000, 300, 30));
-		data1.appendGoalRawData(generateEmptyRawData(13 * 60 + 30, 17 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(3000, 300, 30));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(13 * 60 + 30, 17 * 60));
 
-		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data1.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 20 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(4000, 400, 40));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(17 * 60 + 40, 20 * 60));
 
-		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data1.appendGoalRawData(generateEmptyRawData(20 * 60 + 40, 24 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(4000, 400, 40));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(20 * 60 + 40, 24 * 60));
 
 		// story on 3rd day:
 		// - session: 60 minutes - 6000 steps - 600 points at 7:00
@@ -144,25 +143,25 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		// - personal best tile
 		// - statistics updated
 		GoalRawData data0 = new GoalRawData();
-		data0.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0, 7 * 60));
 
-		data0.appendGoalRawData(generateSessionRawData(6000, 600, 60));
-		data0.appendGoalRawData(generateEmptyRawData(7 * 60 + 60, 10 * 60));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(6000, 600, 60));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(7 * 60 + 60, 10 * 60));
 
-		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
-		data0.appendGoalRawData(generateEmptyRawData(10 * 60 + 50, 13 * 60));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(5000, 500, 50));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(10 * 60 + 50, 13 * 60));
 
-		data0.appendGoalRawData(generateSessionRawData(3000, 300, 30));
-		data0.appendGoalRawData(generateEmptyRawData(13 * 60 + 30, 17 * 60));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(3000, 300, 30));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(13 * 60 + 30, 17 * 60));
 
-		data0.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data0.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 21 * 60));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(4000, 400, 40));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(17 * 60 + 40, 21 * 60));
 
-		data0.appendGoalRawData(generateSessionRawData(6000, 600, 60));
-		data0.appendGoalRawData(generateEmptyRawData(21 * 60 + 60, 23 * 60));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(6000, 600, 60));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(21 * 60 + 60, 23 * 60));
 		
-		data0.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data0.appendGoalRawData(generateEmptyRawData(23 * 60 + 40, 24 * 60));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(4000, 400, 40));
+		data0.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(23 * 60 + 40, 24 * 60));
 
 
 		// push data to server
@@ -344,57 +343,57 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		// 1st day:
 		// 63720 steps - 360 minute (49.21 miles)
 		GoalRawData data5 = new GoalRawData();
-		data5.appendGoalRawData(generateSessionRawData(63720, 3600, 360));
-		data5.appendGoalRawData(generateEmptyRawData(0 * 60 + 360, 24 * 60));
+		data5.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(63720, 3600, 360));
+		data5.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 360, 24 * 60));
 
 		// 2nd day:
 		// SI: 1900 steps - 20 mins (0.69 miles - 49.9 total)
 		// US: 2560 steps - 20 mins (1.1 miles - 51 total)
 		GoalRawData data4a = new GoalRawData();
-		data4a.appendGoalRawData(generateSessionRawData(1900, 200, 20));
-		data4a.appendGoalRawData(generateEmptyRawData(0 * 60 + 20, 1 * 60));
+		data4a.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(1900, 200, 20));
+		data4a.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 20, 1 * 60));
 
 		GoalRawData data4b = new GoalRawData();
-		data4b.appendGoalRawData(generateSessionRawData(2560, 200, 20));
-		data4b.appendGoalRawData(generateEmptyRawData(1 * 60 + 20, 24 * 60));
+		data4b.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(2560, 200, 20));
+		data4b.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(1 * 60 + 20, 24 * 60));
 
 		// 3rd day:
 		// 127440 steps - 720 minutes (98.41 miles - 149.41 total)
 		GoalRawData data3 = new GoalRawData();
-		data3.appendGoalRawData(generateSessionRawData(127440, 7200, 720));
-		data3.appendGoalRawData(generateEmptyRawData(0 * 60 + 720, 24 * 60));
+		data3.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(127440, 7200, 720));
+		data3.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 720, 24 * 60));
 
 		// 4th day
 		// US: 4260 steps - 30 mins (2.01 miles - 151.42 total)
 		// SI: 12780 steps - 90 mins (6.03 miles - 157.45 total)
 		// 60840 steps - 360 mins (42.8 miles - 200.25 total)
 		GoalRawData data2a = new GoalRawData();
-		data2a.appendGoalRawData(generateSessionRawData(4260, 300, 30));
-		data2a.appendGoalRawData(generateEmptyRawData(0 * 60 + 30, 1 * 60));
+		data2a.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(4260, 300, 30));
+		data2a.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 30, 1 * 60));
 
 		GoalRawData data2b = new GoalRawData();
-		data2b.appendGoalRawData(generateSessionRawData(12780, 900, 90));
-		data2b.appendGoalRawData(generateEmptyRawData(1 * 60 + 90, 6 * 60));
+		data2b.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(12780, 900, 90));
+		data2b.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(1 * 60 + 90, 6 * 60));
 
-		data2b.appendGoalRawData(generateSessionRawData(60840, 3600, 360));
-		data2b.appendGoalRawData(generateEmptyRawData(6 * 60 + 360, 24 * 60));
+		data2b.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(60840, 3600, 360));
+		data2b.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(6 * 60 + 360, 24 * 60));
 
 		// 5th day
 		// 126000 steps - 720 mins (95.14 miles - 295.39 total)
 		GoalRawData data1 = new GoalRawData();
-		data1.appendGoalRawData(generateSessionRawData(126000, 7200, 720));
-		data1.appendGoalRawData(generateEmptyRawData(0 * 60 + 720, 24 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(126000, 7200, 720));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 720, 24 * 60));
 
 		// 6th day
 		// US: 21300 steps - 150 mins (10.05 miles - 305.44 total)
 		// SI: 21300 steps - 150 mins (10.05 miles - 315.49 total)
 		GoalRawData data0a = new GoalRawData();
-		data0a.appendGoalRawData(generateSessionRawData(21300, 1500, 150));
-		data0a.appendGoalRawData(generateEmptyRawData(0 * 60 + 150, 6 * 60));
+		data0a.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(21300, 1500, 150));
+		data0a.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 150, 6 * 60));
 
 		GoalRawData data0b = new GoalRawData();
-		data0b.appendGoalRawData(generateSessionRawData(21300, 1500, 150));
-		data0b.appendGoalRawData(generateEmptyRawData(6 * 60 + 150, 24 * 60));
+		data0b.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(21300, 1500, 150));
+		data0b.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(6 * 60 + 150, 24 * 60));
 
 
 		// push to server
@@ -490,27 +489,27 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		// - 200% tile
 		// - progress is correct (points, steps, distance) 
 		GoalRawData data = new GoalRawData();
-		data.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0, 7 * 60));
 
-		data.appendGoalRawData(generateSessionRawData(6000, 600, 60));
-		data.appendGoalRawData(generateEmptyRawData(7 * 60 + 60, 9 * 60));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(6000, 600, 60));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(7 * 60 + 60, 9 * 60));
 
-		data.appendGoalRawData(generateSessionRawData(400, 40, 4));
-		data.appendGoalRawData(generateEmptyRawData(9 * 60 + 4, 9 * 60 + 10));
-		data.appendGoalRawData(generateSessionRawData(400, 40, 4));
-		data.appendGoalRawData(generateEmptyRawData(9 * 60 + 10 + 4, 10 * 60));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(400, 40, 4));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(9 * 60 + 4, 9 * 60 + 10));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(400, 40, 4));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(9 * 60 + 10 + 4, 10 * 60));
 
-		data.appendGoalRawData(generateSessionRawData(5000, 500, 50));
-		data.appendGoalRawData(generateEmptyRawData(10 * 60 + 50, 13 * 60));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(5000, 500, 50));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(10 * 60 + 50, 13 * 60));
 
-		data.appendGoalRawData(generateSessionRawData(3000, 300, 30));
-		data.appendGoalRawData(generateEmptyRawData(13 * 60 + 30, 15 * 60));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(3000, 300, 30));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(13 * 60 + 30, 15 * 60));
 
-		data.appendGoalRawData(generateGapData(100, 10, 2, 4, 60));
-		data.appendGoalRawData(generateEmptyRawData(15 * 60 + 60, 17 * 60));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateGapData(100, 10, 2, 4, 60));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(15 * 60 + 60, 17 * 60));
 
-		data.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 24 * 60));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(4000, 400, 40));
+		data.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(17 * 60 + 40, 24 * 60));
 
 		
 		// push to server
@@ -591,24 +590,24 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		// - 6 session tile (3 from each shine)
 		// - 2000 pogress pts
 		GoalRawData data1 = new GoalRawData();
-		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data1.appendGoalRawData(generateEmptyRawData(0 * 60 + 40, 2 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(4000, 400, 40));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 40, 2 * 60));
 
-		data1.appendGoalRawData(generateSessionRawData(2000, 200, 20));
-		data1.appendGoalRawData(generateEmptyRawData(2 * 60 + 20, 3 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(2000, 200, 20));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(2 * 60 + 20, 3 * 60));
 
-		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data1.appendGoalRawData(generateEmptyRawData(3 * 60 + 40, 24 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(4000, 400, 40));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(3 * 60 + 40, 24 * 60));
 		
 		GoalRawData data2 = new GoalRawData();
-		data2.appendGoalRawData(generateEmptyRawData(0, 10));
-		data2.appendGoalRawData(generateSessionRawData(2000, 200, 20));
-		data2.appendGoalRawData(generateEmptyRawData(0 * 60 + 10 + 20, 1 * 60 + 50));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0, 10));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(2000, 200, 20));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 10 + 20, 1 * 60 + 50));
 
-		data2.appendGoalRawData(generateSessionRawData(2000, 200, 20));
-		data2.appendGoalRawData(generateEmptyRawData(1 * 60 + 50 + 20, 2 * 60 + 50));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(2000, 200, 20));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(1 * 60 + 50 + 20, 2 * 60 + 50));
 
-		data2.appendGoalRawData(generateSessionRawData(6000, 600, 60));
+		data2.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(6000, 600, 60));
 		
 		
 		// push to server
@@ -677,43 +676,43 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 
 		GoalRawData data5 = new GoalRawData();
-		data5.appendGoalRawData(generateSessionRawData(63720, 3600, 360));
-		data5.appendGoalRawData(generateEmptyRawData(0 * 60 + 360, 24 * 60));
+		data5.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(63720, 3600, 360));
+		data5.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 360, 24 * 60));
 
 		GoalRawData data4a = new GoalRawData();
-		data4a.appendGoalRawData(generateSessionRawData(1900, 200, 20));
-		data4a.appendGoalRawData(generateEmptyRawData(0 * 60 + 20, 1 * 60));
+		data4a.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(1900, 200, 20));
+		data4a.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 20, 1 * 60));
 
 		GoalRawData data4b = new GoalRawData();
-		data4b.appendGoalRawData(generateSessionRawData(2560, 200, 20));
-		data4b.appendGoalRawData(generateEmptyRawData(1 * 60 + 20, 24 * 60));
+		data4b.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(2560, 200, 20));
+		data4b.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(1 * 60 + 20, 24 * 60));
 
 		GoalRawData data3 = new GoalRawData();
-		data3.appendGoalRawData(generateSessionRawData(127440, 7200, 720));
-		data3.appendGoalRawData(generateEmptyRawData(0 * 60 + 720, 24 * 60));
+		data3.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(127440, 7200, 720));
+		data3.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 720, 24 * 60));
 
 		GoalRawData data2a = new GoalRawData();
-		data2a.appendGoalRawData(generateSessionRawData(4260, 300, 30));
-		data2a.appendGoalRawData(generateEmptyRawData(0 * 60 + 30, 1 * 60));
+		data2a.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(4260, 300, 30));
+		data2a.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 30, 1 * 60));
 
 		GoalRawData data2b = new GoalRawData();
-		data2b.appendGoalRawData(generateSessionRawData(12780, 900, 90));
-		data2b.appendGoalRawData(generateEmptyRawData(1 * 60 + 90, 6 * 60));
+		data2b.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(12780, 900, 90));
+		data2b.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(1 * 60 + 90, 6 * 60));
 
-		data2b.appendGoalRawData(generateSessionRawData(60840, 3600, 360));
-		data2b.appendGoalRawData(generateEmptyRawData(6 * 60 + 360, 24 * 60));
+		data2b.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(60840, 3600, 360));
+		data2b.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(6 * 60 + 360, 24 * 60));
 
 		GoalRawData data1 = new GoalRawData();
-		data1.appendGoalRawData(generateSessionRawData(126000, 7200, 720));
-		data1.appendGoalRawData(generateEmptyRawData(0 * 60 + 720, 24 * 60));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(126000, 7200, 720));
+		data1.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 720, 24 * 60));
 
 		GoalRawData data0a = new GoalRawData();
-		data0a.appendGoalRawData(generateSessionRawData(21300, 1500, 150));
-		data0a.appendGoalRawData(generateEmptyRawData(0 * 60 + 150, 6 * 60));
+		data0a.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(21300, 1500, 150));
+		data0a.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(0 * 60 + 150, 6 * 60));
 
 		GoalRawData data0b = new GoalRawData();
-		data0b.appendGoalRawData(generateSessionRawData(21300, 1500, 150));
-		data0b.appendGoalRawData(generateEmptyRawData(6 * 60 + 150, 24 * 60));
+		data0b.appendGoalRawData(ServerCalculationTestHelpers.generateSessionRawData(21300, 1500, 150));
+		data0b.appendGoalRawData(ServerCalculationTestHelpers.generateEmptyRawData(6 * 60 + 150, 24 * 60));
 
 
 		// push to server
@@ -736,96 +735,6 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		profile.setDisplayedUnits(new DisplayUnit());
 		profile.getDisplayedUnits().setDistanceUnit(unit);
 		MVPApi.updateProfile(token, profile);
-	}
-
-	private GoalRawData generateSessionRawData(int totalSteps, int totalPoints, int duration)  {
-
-		int stepPerMinute = totalSteps / duration;
-		int pointPerMinute = totalPoints / duration;
-
-		int[] steps = new int[duration];
-		int[] points = new int[duration];
-		int[] variances = new int[duration];
-
-		Arrays.fill(steps, stepPerMinute);
-		Arrays.fill(points, (int)(pointPerMinute * 2.5));
-		Arrays.fill(variances, 10000);
-
-		// if steps/point is not devidable
-		if(totalSteps % duration != 0)
-			steps[0] = totalSteps % duration;
-
-		if(totalPoints % duration != 0)
-			points[0] = totalPoints % duration;
-
-		GoalRawData rawdata = new GoalRawData();
-		rawdata.setPoints(points);
-		rawdata.setSteps(steps);
-
-		rawdata.setVariances(variances);
-
-		return rawdata;
-	}
-
-	private GoalRawData generateEmptyRawData(int duration) {
-
-		int[] steps = new int[duration];
-		int[] points = new int[duration];
-		int[] variances = new int[duration];
-
-		Arrays.fill(steps, 0);
-		Arrays.fill(points, 0);
-		Arrays.fill(variances, 10000);
-
-		GoalRawData rawdata = new GoalRawData();
-		rawdata.setPoints(points);
-		rawdata.setSteps(steps);
-		rawdata.setVariances(variances);
-
-		return rawdata;
-	}
-
-	private GoalRawData generateEmptyRawData(int includeStartOffsetMinute, int excludeEndOffsetMinute) {
-
-		int duration = excludeEndOffsetMinute - includeStartOffsetMinute;
-		return generateEmptyRawData(duration);
-	}
-
-	private GoalRawData generateGapData(int stepPerMinute, int pointPerMinute, int activeInterval, int idleInterval, int duration) {
-
-		int gapCount = duration / (idleInterval + activeInterval);
-
-		int[] steps = new int[duration];
-		int[] points = new int[duration];
-		int[] variances = new int[duration];
-
-		Arrays.fill(steps, 0);
-		Arrays.fill(points, 0);
-		Arrays.fill(variances, 10000);
-
-		int index = 0;
-		for(int i = 0; i < gapCount; i++) {
-
-			for(int j = 0; j < activeInterval; j++) {
-				steps[index] = stepPerMinute;
-				points[index] = (int)(pointPerMinute * 2.5);
-				index++;
-			}
-
-			for(int k = 0; k < idleInterval; k++) {
-				steps[index] = 0;
-				points[index] = 0;
-				index++;
-			}
-
-		}
-
-		GoalRawData rawdata = new GoalRawData();
-		rawdata.setPoints(points);
-		rawdata.setSteps(steps);
-		rawdata.setVariances(variances);
-
-		return rawdata;
 	}
 
 	private void pushSyncData(long timestamp, String email, String serialNumber, List<String> dataStrings) {

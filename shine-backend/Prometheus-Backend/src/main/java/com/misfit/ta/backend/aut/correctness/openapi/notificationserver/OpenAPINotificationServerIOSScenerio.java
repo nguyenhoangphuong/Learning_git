@@ -31,7 +31,28 @@ import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
-public class OpenAPINotificationServerScenerio extends BackendAutomation {
+/*
+ * This test cover:
+ * profile:
+ * - PUT /profile
+ * - POST /profile
+ * 
+ * device:
+ * - POST /pedometer
+ * - PUT /pedometer
+ * - POST /unlink_device
+ * 
+ * goal
+ * - POST /goal
+ * - PUT /goal/:id
+ * 
+ * sessions + sleeps:
+ * - POST /timeline_items
+ * - POST /timeline_items/batch_insert
+ * - PUT /timeline_itmes/:id
+ */
+
+public class OpenAPINotificationServerIOSScenerio extends BackendAutomation {
 
 	private static String ClientKey = Settings.getParameter("MVPOpenAPIClientID");
 	private static String ClientSecret = Settings.getParameter("MVPOpenAPIClientSecret");
@@ -90,7 +111,7 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		
 		// delete log file
 		Files.delete("logs/notification_server_scenerios.log");
-		resultLogger = ResultLogger.getLogger("notification_server_scenerios");
+		resultLogger = ResultLogger.getLogger("notification_server_ios_scenerios");
 		
 		
 		// start notification endpoint servers EPA and EPB
@@ -277,18 +298,6 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		updatePedometer(tokenB, "", TextTool.getRandomString(10, 10));
 
 		ShortcutsTyper.delayTime(5000);
-		
-		
-		
-		// CLEAN UP TEST, UNSUBSCRIBE ALL RESOURCES
-		resultLogger.log("\n\nCLEAN UP\n-------------------------------------------------------");
-		resultLogger.log("\n- UNSUBSCRIBE ALL ENDPOINTS");
-		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_PROFILE);
-		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_DEVICE);
-
-		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
-		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
-		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
 	}
 	
 	private ProfileData createRandomProfile(String token) {
@@ -414,4 +423,5 @@ public class OpenAPINotificationServerScenerio extends BackendAutomation {
 		item.setServerId(objectId);
 		MVPApi.updateTimelineItem(token, item);
 	}
+
 }

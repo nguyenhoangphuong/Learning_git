@@ -2,7 +2,6 @@ package com.misfit.ta.backend.api;
 
 import javax.net.ssl.SSLContext;
 
-import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;

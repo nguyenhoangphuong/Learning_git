@@ -1,16 +1,22 @@
 package com.misfit.ta.backend.api;
 
-import static com.google.resting.component.EncodingTypes.UTF8;
-
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.entity.EntityBuilder;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.google.resting.Resting;
+import com.google.resting.component.EncodingTypes;
 import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
-import com.google.resting.method.delete.DeleteHelper;
-import com.google.resting.method.post.PostHelper;
-import com.google.resting.method.put.PutHelper;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.BaseParams;
@@ -24,6 +30,7 @@ public class RequestHelper {
 	public static final String HTTP_GET = "get";
 	public static final String HTTP_DELETE = "delete";
 	public static final String HTTP_PUT = "put";
+	private static CloseableHttpClient httpclient = InsecureHttpClientHelper.getInsecureCloseableHttpClient();
 	
 	// request helpers
 	static public ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
@@ -42,13 +49,13 @@ public class RequestHelper {
 		ServiceResponse response = null;
 		ResultLogger.registerRequest();
 		if (type.equalsIgnoreCase(MVPApi.HTTP_POST))
-			response = PostHelper.post(url, port, UTF8, requestInf.params, requestInf.headers);
+			response = doPost(url, port, requestInf);
 		else if (type.equalsIgnoreCase(MVPApi.HTTP_GET))
-			response = Resting.get(url, port, requestInf.params, UTF8, requestInf.headers);
+			response = doGet(url, port, requestInf);
 		else if (type.equalsIgnoreCase(MVPApi.HTTP_PUT))
-			response = PutHelper.put(url, UTF8, port, requestInf.params, requestInf.headers);
+			response = doPut(url, port, requestInf);
 		else if (type.equalsIgnoreCase(MVPApi.HTTP_DELETE))
-			response = DeleteHelper.delete(url, port, requestInf.params, UTF8, requestInf.headers);
+			response = doDelete(url, port, requestInf);
 
 		// log result
 		IContentData rawData = response.getContentData();
@@ -81,4 +88,67 @@ public class RequestHelper {
 		return request("delete", url, port, requestInf);
 	}
 
+	
+	// execute http requests
+	static private ServiceResponse doPost(String url, int port, BaseParams requestInf) {
+
+	    EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
+		entityBuilder.setText(requestInf.getParamsAsJsonString());
+		
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
+		httpPost.setEntity(entityBuilder.build());
+		
+		return excuteHttpRequest(httpPost);
+	}
+	
+	static private ServiceResponse doGet(String url, int port, BaseParams requestInf) {
+
+		HttpGet httpGet = new HttpGet(url);
+		httpGet.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
+
+		return excuteHttpRequest(httpGet);
+	}
+
+	static private ServiceResponse doPut(String url, int port, BaseParams requestInf) {
+
+	    EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
+		entityBuilder.setText(requestInf.getParamsAsJsonString());
+		
+		HttpPut httpPut = new HttpPut(url);
+		httpPut.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
+		httpPut.setEntity(entityBuilder.build());
+		
+		return excuteHttpRequest(httpPut);
+	}
+	
+	static private ServiceResponse doDelete(String url, int port, BaseParams requestInf) {
+
+		HttpDelete httpDelete = new HttpDelete(url);
+		httpDelete.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
+		
+		return excuteHttpRequest(httpDelete);
+	}
+	
+	static private ServiceResponse excuteHttpRequest(HttpUriRequest httprequest) {
+		
+		try {			
+			long start = System.currentTimeMillis();
+			CloseableHttpResponse response = httpclient.execute(httprequest);
+			ServiceResponse sr = new ServiceResponse(response, EncodingTypes.UTF8);
+			long end = System.currentTimeMillis();
+			logger.info("Time taken in REST: " + (end - start));
+			
+	        HttpEntity entity = response.getEntity();
+	        EntityUtils.consume(entity);
+
+	        response.close();
+	        
+	        return sr;
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+	
 }
