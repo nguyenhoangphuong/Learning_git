@@ -2,6 +2,7 @@ package com.misfit.ta.android.gui;
 
 import org.testng.Assert;
 
+import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
@@ -35,6 +36,11 @@ public class Timezone {
 	}
 
 	public static void changeTimezone(int offset) {
+		HomeScreen.tapManual();
+		int timezoneOffsetInSeconds = offset * 3600;
+		Gui.touchAView("TextView", "mID", DefaultStrings.TimezoneEditTextId);
+		Gui.type(String.valueOf(timezoneOffsetInSeconds));
+		HomeScreen.saveManual();
 	}
 
 }

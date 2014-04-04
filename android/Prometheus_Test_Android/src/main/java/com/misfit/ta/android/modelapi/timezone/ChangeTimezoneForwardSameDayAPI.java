@@ -13,7 +13,7 @@ import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
+public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 	private String email = "";
 	private String password = "test12";
 	private int currentTimezone = 7;
@@ -23,7 +23,7 @@ public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 	private long beforeEndTime = 0;
 	private long beforeOffset = 0;
 
-	public ChangeTimezoneBackwardSameDayAPI(AutomationTest automation,
+	public ChangeTimezoneForwardSameDayAPI(AutomationTest automation,
 			File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
@@ -44,12 +44,13 @@ public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 		beforeEndTime = goal.getEndTime();
 		beforeStartTime = goal.getStartTime();
 		beforeOffset = goal.getTimeZoneOffsetInSeconds();
-		
+
 		this.previousTimezone = this.currentTimezone;
-		this.currentTimezone = this.currentTimezone - delta;
-		
+		this.currentTimezone = this.currentTimezone + delta;
+
 		Timezone.changeTimezone(currentTimezone);
-		System.out.println("Change timezone from " + this.previousTimezone + " to " + this.currentTimezone);
+		System.out.println("Change timezone from " + this.previousTimezone
+				+ " to " + this.currentTimezone);
 	}
 
 	// vertex
@@ -59,7 +60,8 @@ public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 
 	public void v_HomeScreenUpdated() {
 		// check goal start time and end time
-		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime, delta, beforeOffset, false);
+		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime,
+				delta, beforeOffset, true);
 		Timezone.changeTimezone(7);
 	}
 }

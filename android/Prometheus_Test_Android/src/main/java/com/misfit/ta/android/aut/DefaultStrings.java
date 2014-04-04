@@ -35,6 +35,7 @@ public class DefaultStrings {
 	public static String SettingsActionMenuViewId = "id/action_menu_view";
 	public static String DurationEditTextId = "id/manual_duration_edit_text";
 	public static String StepsEditTextId = "id/manual_steps_edit_text";
+	public static String TimezoneEditTextId = "id/manual_timezone_edit_text";
 	
 	public static String PointsHomeScreenTextViewId = "id/card_activity_current_points_tv";
 	public static String GoalHomeScreenTextViewId = "id/card_activity_goal_points_tv";
