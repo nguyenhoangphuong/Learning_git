@@ -298,6 +298,14 @@ public class OpenAPINotificationServerIOSScenerio extends BackendAutomation {
 		updatePedometer(tokenB, "", TextTool.getRandomString(10, 10));
 
 		ShortcutsTyper.delayTime(5000);
+		
+		
+		// set up: unsubscribe all
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_DEVICE);
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_PROFILE);
 	}
 	
 	private ProfileData createRandomProfile(String token) {

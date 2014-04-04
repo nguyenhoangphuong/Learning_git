@@ -76,7 +76,7 @@ public class ProfileData {
 	}
 	
 	public ProfileData fromJson(JSONObject json) {
-		ProfileData obj = new ProfileData();
+		ProfileData obj = this;
 		try {
 			if (!json.isNull("localId"))
 				obj.setLocalId(json.getString("localId"));

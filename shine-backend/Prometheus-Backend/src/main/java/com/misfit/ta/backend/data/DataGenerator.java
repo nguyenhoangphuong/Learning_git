@@ -16,6 +16,9 @@ import org.apache.commons.io.FileUtils;
 import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.data.beddit.BedditSleepSession;
+import com.misfit.ta.backend.data.beddit.BedditSleepSessionProperties;
+import com.misfit.ta.backend.data.beddit.BedditSleepSessionTimeData;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.goal.TripleTapData;
@@ -343,6 +346,52 @@ public class DataGenerator {
 		item.setData(data);
 
 		return item;
+	}
+	
+	public static BedditSleepSession generateRandomBedditSleepSession(long timestamp, Map<String, Object> options) {
+		
+		BedditSleepSessionTimeData timeData = new BedditSleepSessionTimeData();
+		long realStartTime = timestamp + MVPCommon.randInt(600, 1200);
+		long realEndTime = timestamp + MVPCommon.randInt(3600 * 5, 3600 * 10);
+		timeData.setRealStartTime(realStartTime);
+		timeData.setRealEndTime(realEndTime);
+		
+		BedditSleepSessionProperties props = new BedditSleepSessionProperties();
+		props.setNormalizedSleepQuality(MVPCommon.randInt(60, 100));
+		
+		List<Object[]> sleepStates = new ArrayList<Object[]>();
+		long currentTimestamp = realStartTime;
+		while(currentTimestamp <= realEndTime) {
+			Object[] entry = new Object[] {currentTimestamp, MVPCommon.randInt(60, 80)};
+			sleepStates.add(entry);
+			currentTimestamp += 600;
+		}
+		
+		List<Object[]> heartRates = new ArrayList<Object[]>();
+		currentTimestamp = realStartTime;
+		while(currentTimestamp <= realEndTime) {
+			Object[] entry = new Object[] {currentTimestamp, MVPCommon.randInt(6000, 8000) / 100d};
+			heartRates.add(entry);
+			currentTimestamp += 600;
+		}
+		
+		List<Object[]> snoringEpisodes = new ArrayList<Object[]>();
+		currentTimestamp = realStartTime;
+		while(currentTimestamp <= realEndTime) {
+			Object[] entry = new Object[] {currentTimestamp, MVPCommon.randInt(60, 600)};
+			snoringEpisodes.add(entry);
+			currentTimestamp += MVPCommon.randLong(600, 60 * 120);
+		}
+		
+		BedditSleepSession sleep = new BedditSleepSession();
+		sleep.setLocalId("bedditsleep-" + MVPApi.generateLocalId());
+		sleep.setTimeData(timeData);
+		sleep.setProperties(props);
+		sleep.setSleepStates(sleepStates);
+		sleep.setHeartRates(heartRates);
+		sleep.setSnoringEpisodes(snoringEpisodes);
+		
+		return sleep;
 	}
 	
 	

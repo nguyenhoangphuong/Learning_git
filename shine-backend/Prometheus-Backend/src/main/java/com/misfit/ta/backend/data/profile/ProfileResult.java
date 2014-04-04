@@ -8,8 +8,8 @@ import com.misfit.ta.backend.data.statistics.Statistics;
 public class ProfileResult extends BaseResult {
 
 	// fields
-	public ProfileData profile = new ProfileData();
-	public Statistics statistics = new Statistics();
+	public ProfileData profile;
+	public Statistics statistics;
 
 
 	// constructor
@@ -18,26 +18,30 @@ public class ProfileResult extends BaseResult {
 
 		try {
 			// invalid token
-			if (json.getString("profile") == "null") {
-				profile = null;
-				this.pairResult.put("profile", "null");
-				return;
+			if (!json.isNull("profile")) {
+				
+				if(json.getString("profile").equals("null"))
+					profile = null;
+				else {
+					profile = new ProfileData();
+					JSONObject proJSON = json.getJSONObject("profile");
+					profile.fromJson(proJSON);
+				}
 			}
-
-			formatOK();
-		} catch (Exception e) {
-		}
-	}
-
-	private void formatOK() {
-		try {
-			JSONObject proJSON = json.getJSONObject("profile");
-			profile.fromJson(proJSON);
 			
-			JSONObject statisticsObj = json.getJSONObject("statistics");
-            statistics.fromJson(statisticsObj);
+			if (!json.isNull("statistics")) {
+				
+				if(json.getString("statistics").equals("null"))
+					statistics = null;
+				else {
+					statistics = new Statistics();
+					JSONObject statisticsObj = json.getJSONObject("statistics");
+		            statistics.fromJson(statisticsObj);
+				}
+			}
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

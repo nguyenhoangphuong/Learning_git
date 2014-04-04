@@ -26,6 +26,7 @@ import com.misfit.ta.backend.api.RequestHelper;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;
+import com.misfit.ta.backend.data.beddit.BedditSleepSession;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
 import com.misfit.ta.backend.data.goal.GoalsResult;
@@ -210,19 +211,22 @@ public class MVPApi extends RequestHelper {
 	public static GoalsResult searchGoal(String token, Long startTime, Long endTime, Long modifiedSince) {
 		// prepare
 		String url = baseAddress + "goals";
+		String queryString = "";
+		
+		if(startTime != null)
+			queryString += ("&startTime=" + startTime);
+		
+		if(endTime != null)
+			queryString += ("&endTime=" + endTime);
+		
+		if(modifiedSince != null)
+			queryString += ("&modifiedSince=" + modifiedSince);
+		
+		url += ("?" + queryString);
 
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
 		
-		if(startTime != null)
-			requestInf.addParam("startTime", String.valueOf(startTime));
-		
-		if(endTime != null)
-			requestInf.addParam("endTime", String.valueOf(endTime));
-		
-		if(modifiedSince != null)
-			requestInf.addParam("updatedAt", String.valueOf(modifiedSince));
-
 		// post and recieve raw data
 		ServiceResponse response = MVPApi.get(url, port, requestInf);
 
@@ -340,6 +344,7 @@ public class MVPApi extends RequestHelper {
 		return result;
 	}
 	
+	
 	// graph apis
 	public static BaseResult createGraphItem(String token, GraphItem item) {
 
@@ -388,28 +393,31 @@ public class MVPApi extends RequestHelper {
 	}
 
 	public static List<GraphItem> getGraphItems(String token, Long startTime, Long endTime, Long modifiedSince) {
-		String url = baseAddress + "graph_items";
-		BaseParams requestInf = new BaseParams();
-		ServiceResponse response;
-		List<GraphItem> items;
 
-		requestInf.addHeader("auth_token", token);
+		String url = baseAddress + "graph_items";
+		String queryString = "";
+		
 		if(startTime != null)
-			requestInf.addParam("startTime", String.valueOf(startTime));
+			queryString += ("&startTime=" + startTime);
 		
 		if(endTime != null)
-			requestInf.addParam("endTime", String.valueOf(endTime));
+			queryString += ("&endTime=" + endTime);
 		
 		if(modifiedSince != null)
-			requestInf.addParam("updatedAt", String.valueOf(modifiedSince));
+			queryString += ("&modifiedSince=" + modifiedSince);
+		
+		url += ("?" + queryString);
 
-		response = MVPApi.get(url, port, requestInf);
-		items = GraphItem.getGraphItems(response);
-		logger.info("Graph items count: " + items.size());
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+	
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+		List<GraphItem> items = GraphItem.getGraphItems(response);
 
 		return items;
 	}
 
+	
 	// timeline apis
 	public static BaseResult createTimelineItem(String token, TimelineItem item) {
 
@@ -477,18 +485,21 @@ public class MVPApi extends RequestHelper {
 	public static List<TimelineItem> getTimelineItems(String token, Long startTime, Long endTime, Long modifiedSince) {
 
 		String url = baseAddress + "timeline_items";
-
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+		String queryString = "";
 		
 		if(startTime != null)
-			requestInf.addParam("startTime", String.valueOf(startTime));
+			queryString += ("&startTime=" + startTime);
 		
 		if(endTime != null)
-			requestInf.addParam("endTime", String.valueOf(endTime));
+			queryString += ("&endTime=" + endTime);
 		
 		if(modifiedSince != null)
-			requestInf.addParam("updatedAt", String.valueOf(modifiedSince));
+			queryString += ("&modifiedSince=" + modifiedSince);
+		
+		url += ("?" + queryString);
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
 
 		ServiceResponse response = MVPApi.get(url, port, requestInf);
 		List<TimelineItem> items = TimelineItem.getTimelineItems(response);
@@ -526,10 +537,11 @@ public class MVPApi extends RequestHelper {
 	
 	public static BaseResult getDeviceLinkingStatusRaw(String token, String serialNumberString) {
 		
-		String url = baseAddress + "device_linking_status";
+		String url = baseAddress + "device_linking_status" + (serialNumberString == null ? "" :
+			"?serial_number_string=" + serialNumberString);
+		
 		BaseParams request = new BaseParams();
 		request.addHeader("auth_token", token);
-		request.addParam("serial_number_string", serialNumberString);
 		ServiceResponse response = MVPApi.get(url, port, request);
 		
 		return new BaseResult(response);
@@ -884,6 +896,85 @@ public class MVPApi extends RequestHelper {
 		
 		BaseResult result = userInfo(token);
 		return Statistics.fromResponse(result.response);
+	}
+	
+	
+	// beddit sleeps
+	public static BaseResult searchBedditSleepSessions(String token, Long startTime, Long endTime, Long modifiedSince) {
+		
+		// prepare
+		String url = baseAddress + "beddit/sleep_sessions";
+		String queryString = "";
+		
+		if(startTime != null)
+			queryString += ("&startTime=" + startTime);
+		
+		if(endTime != null)
+			queryString += ("&endTime=" + endTime);
+		
+		if(modifiedSince != null)
+			queryString += ("&modifiedSince=" + modifiedSince);
+		
+		url += ("?" + queryString);
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult createBedditSleepSession(String token, BedditSleepSession sleep) {
+
+		// prepare
+		String url = baseAddress + "beddit/sleep_sessions";
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("sleep_session", sleep.toJson().toString());
+
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.post(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult createBedditSleepSessions(String token, List<BedditSleepSession> sleeps) {
+
+		// prepare
+		String url = baseAddress + "beddit/sleep_sessions/batch_insert";
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		
+		JSONArray jsonarr = new JSONArray(sleeps);
+		requestInf.addParam("sleep_sessions", jsonarr.toString());
+
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.post(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
+	}
+	
+	public static BaseResult updateBedditSleepSession(String token, BedditSleepSession sleep) {
+
+		// prepare
+		String url = baseAddress + "beddit/sleep_sessions/" + sleep.getServerId();
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("sleep_session", sleep.toJson().toString());
+
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.put(url, port, requestInf);
+		BaseResult result = new BaseResult(response);
+		
+		return result;
 	}
 	
 	

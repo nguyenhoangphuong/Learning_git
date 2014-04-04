@@ -34,31 +34,31 @@ public class StatisticsOfAverageUser extends Statistics {
 	}
 
 	public StatisticsOfAverageUser fromJson(JSONObject json) {
-		StatisticsOfAverageUser obj = new StatisticsOfAverageUser();
+		
 		try {
 			
 			super.fromJson(json);
 			
 			if (!json.isNull("todayAverage"))
-				obj.setTodayAverage(json.getInt("todayAverage"));
+				this.setTodayAverage(json.getInt("todayAverage"));
 			
 			if (!json.isNull("todayRecord"))
-				obj.setTodayRecord(json.getInt("todayRecord"));
+				this.setTodayRecord(json.getInt("todayRecord"));
 			
 			if (!json.isNull("yesterdayAverage"))
-				obj.setYesterdayAverage(json.getInt("yesterdayAverage"));
+				this.setYesterdayAverage(json.getInt("yesterdayAverage"));
 			
 			if (!json.isNull("yesterdayRecord"))
-				obj.setYesterdayRecord(json.getInt("yesterdayRecord"));
+				this.setYesterdayRecord(json.getInt("yesterdayRecord"));
 			
 			if (!json.isNull("weekRecord"))
-				obj.setWeekRecord(json.getInt("weekRecord"));
+				this.setWeekRecord(json.getInt("weekRecord"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		return obj;
+		return this;
 	}
 
 	public static StatisticsOfAverageUser fromResponse(ServiceResponse response) {

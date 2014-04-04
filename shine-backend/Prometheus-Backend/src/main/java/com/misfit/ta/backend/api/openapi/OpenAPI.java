@@ -53,6 +53,7 @@ public class OpenAPI extends RequestHelper {
 		String url = authenticateServerBaseAddress + "login";
 		
 		BaseParams requestInf = new BaseParams();
+		requestInf.removeHeader("Content-Type");
 
 		ServiceResponse response = get(url, authenticateServerPort, requestInf);
 		BaseResult result = new BaseResult(response);
@@ -65,6 +66,7 @@ public class OpenAPI extends RequestHelper {
 		String url = authenticateServerBaseAddress + "users/session";
 		
 		BaseParams requestInf = new BaseParams();
+		
 		requestInf.addParam("email", email);
 		requestInf.addParam("password", password);
 		requestInf.addHeader("Cookie", cookie);
@@ -92,6 +94,7 @@ public class OpenAPI extends RequestHelper {
 		String url = authenticateServerBaseAddress + "logout";
 		
 		BaseParams requestInf = new BaseParams();
+		requestInf.removeHeader("Content-Type");
 		
 		if(cookie != null)
 			requestInf.addHeader("Cookie", cookie);
@@ -107,6 +110,7 @@ public class OpenAPI extends RequestHelper {
 		String url = authenticateServerBaseAddress + "signup";
 		
 		BaseParams requestInf = new BaseParams();
+		requestInf.removeHeader("Content-Type");
 
 		ServiceResponse response = get(url, authenticateServerPort, requestInf);
 		BaseResult result = new BaseResult(response);
@@ -119,6 +123,7 @@ public class OpenAPI extends RequestHelper {
 		String url = authenticateServerBaseAddress + "users";
 		
 		BaseParams requestInf = new BaseParams();
+		
 		requestInf.addParam("email", email);
 		requestInf.addParam("password", password);
 		requestInf.addHeader("Cookie", cookie);
@@ -146,6 +151,8 @@ public class OpenAPI extends RequestHelper {
 		String url = authenticateServerBaseAddress + "clients/regnew";
 		
 		BaseParams requestInf = new BaseParams();
+		requestInf.removeHeader("Content-Type");
+		
 		requestInf.addHeader("Cookie", cookie);
 
 		ServiceResponse response = get(url, authenticateServerPort, requestInf);
@@ -159,6 +166,7 @@ public class OpenAPI extends RequestHelper {
 		String url = authenticateServerBaseAddress + "clients";
 		
 		BaseParams requestInf = new BaseParams();
+		
 		requestInf.addHeader("Cookie", cookie);
 		requestInf.addParam("name", app.getName());
 		

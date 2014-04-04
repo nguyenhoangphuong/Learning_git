@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
+
 import com.misfit.ta.utils.Files;
 
 public class MVPCommon {
@@ -140,7 +143,6 @@ public class MVPCommon {
 		String outStr = out.toString("ISO-8859-1");
 		return outStr;
 	}
-
 	
 	
 	// mvp related
@@ -230,4 +232,22 @@ public class MVPCommon {
 		return cal.getTimeInMillis() / 1000;
 	}
 
+	
+	// string manipulating
+	public static Map<String, String> parseStringIntoMap(String paramsString) {
+		return parseStringIntoMap(paramsString, "=", ",");
+	}
+	
+	public static Map<String, String> parseStringIntoMap(String paramsString, String keyValueDilimiter, String paramDelimiter) {
+		
+		Map<String, String> map = new HashMap<String, String>();
+		String[] params = paramsString.split(paramDelimiter);
+		for(String param: params) {
+			String[] keypair = param.split(keyValueDilimiter);
+			map.put(keypair[0], keypair[1]);
+		}
+		
+		return map;
+	}
+	
 }

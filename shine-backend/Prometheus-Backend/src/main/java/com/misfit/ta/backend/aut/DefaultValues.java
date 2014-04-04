@@ -14,6 +14,7 @@ import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.CustomTimelineItemData;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.utils.TextTool;
 
 public class DefaultValues {
@@ -120,7 +121,7 @@ public class DefaultValues {
 		item.setUpdatedAt(timestamp);
 		item.setTimestamp(timestamp);
 		item.setTotalValue(0d);
-		item.setAverageValue((r.nextInt() % 70 + 10) / 60d);
+		item.setAverageValue(MVPCommon.round((r.nextInt() % 70 + 10) / 60d, 2));
 
 		return item;
 	}

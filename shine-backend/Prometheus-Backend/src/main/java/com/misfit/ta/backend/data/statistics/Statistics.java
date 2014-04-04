@@ -46,7 +46,7 @@ public class Statistics {
 	}
 
 	public Statistics fromJson(JSONObject json) {
-		Statistics obj = new Statistics();
+		Statistics obj = this;
 		try {
 			
 			if (!json.isNull("serverId"))

@@ -147,6 +147,8 @@ public class OpenAPINotificationServerAndroidScenerio extends BackendAutomation 
 		goalA.setUpdatedAt(resultA.goals[0].getUpdatedAt());
 		goalB.setServerId(resultB.goals[0].getServerId());
 		goalB.setUpdatedAt(resultB.goals[0].getUpdatedAt());
+		
+		ShortcutsTyper.delayTime(5000);
 
 
 		// story
@@ -189,9 +191,15 @@ public class OpenAPINotificationServerAndroidScenerio extends BackendAutomation 
 		
 		// push to server
 		resultLogger.log("\n- PUSH RAWDATA TO CALCULATION SERVER");
-		resultLogger.log("Expect: 4 messages total from EP for user A");
+		resultLogger.log("Expect: 5 messages total (4 sessions created and 1 goal updated) from EP for user A");
 		MVPApi.pushRawData(tokenA, goalA.getServerId(), data, 0);
 		MVPApi.pushRawData(tokenB, goalB.getServerId(), data, 0);
-		ShortcutsTyper.delayTime(20000);
+		ShortcutsTyper.delayTime(10000);
+		
+		
+		// set up: unsubscribe all
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
+		OpenAPI.unsubscribeNotification(ClientKey, ClientSecret, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
 	}
 }
