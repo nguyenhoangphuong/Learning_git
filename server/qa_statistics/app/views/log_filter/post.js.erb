@@ -1,0 +1,6 @@
+<% html = "" %>
+
+<% html += @logs + "<br/>" %>
+$("#log_filter_result").html("<%= escape_javascript(html).html_safe %>");
+console.log("ajax end");
+$("#loading").hide();
