@@ -171,12 +171,10 @@ public class PrometheusHelper {
 	}
 
 	public static float calculateCalories(float points, float weightInLbs, float fullBMR, int currentMinute) {
-		
 		return (float)MVPCalculator.calculateCalories(points, weightInLbs, fullBMR, currentMinute);
 	}
 
 	public static float calculateFullBMR(float weightInLbs, float heightInInches, int age, boolean isMale) {
-		
 		return (float)MVPCalculator.calculateFullBMR(weightInLbs, heightInInches, age, isMale);
 	}
 

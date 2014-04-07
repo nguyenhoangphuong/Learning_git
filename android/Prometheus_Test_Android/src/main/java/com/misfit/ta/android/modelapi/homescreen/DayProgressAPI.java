@@ -1,6 +1,7 @@
 package com.misfit.ta.android.modelapi.homescreen;
 
 import java.io.File;
+import java.util.Calendar;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
@@ -14,6 +15,7 @@ import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class DayProgressAPI extends ModelAPI {
@@ -32,6 +34,9 @@ public class DayProgressAPI extends ModelAPI {
 	private float totalPoints = 0f;
 	private float totalMiles = 0f;
 	private float height = 64f; // 5'4""
+	private float weight = 140f; //140lbs
+	private boolean isMale = true;
+	private int year = 1982;
 
 	/**
 	 * This method implements the Edge 'e_Init'
@@ -39,6 +44,7 @@ public class DayProgressAPI extends ModelAPI {
 	 */
 	public void e_Init() {
 		ShortcutsTyper.delayOne();
+		// gender, height and weight have default values such as male, 5'4"", 140lbs
 		PrometheusHelper.signUp();
 		ShortcutsTyper.delayTime(2000);
 	}
@@ -86,6 +92,7 @@ public class DayProgressAPI extends ModelAPI {
 		System.out.println("Last Points: " + lastPoints);
 		assertRemainWalkingTime();
 		assertActivityInfo();
+		assertCaloriesValue();
 		Assert.assertTrue(
 				view.text.equals(String.format("%d",
 						(int) Math.floor(this.totalPoints))),
@@ -141,6 +148,19 @@ public class DayProgressAPI extends ModelAPI {
 		System.out.println(String.format("%.1f", this.totalMiles));
 		System.out.println("Total miles: " + this.totalMiles);
 		Assert.assertTrue(displayMiles.text.equals(String.format("%.1f", this.totalMiles)));
+	}
+	
+	private void assertCaloriesValue() {
+		Calendar now = Calendar.getInstance();
+		float fullBMR = PrometheusHelper.calculateFullBMR(weight, height, now.get(Calendar.YEAR) - year, isMale);	
+		System.out.println("Full BMR: " + fullBMR);
+		String caloriesText = ViewUtils.findView("TextView", "mID", DefaultStrings.CaloriesHomeScreenTextViewId, 0).text;
+		System.out.println("Display calories: " + caloriesText);
+		float result = PrometheusHelper.calculateCalories(this.totalPoints, weight, fullBMR, now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE));
+		System.out.println("Calculated calories: " + result);
+		if (Math.abs(Float.valueOf(caloriesText) - result) > 50f) {
+			Assert.fail("Calories calculation is not correct");
+		}
 	}
 
 }
