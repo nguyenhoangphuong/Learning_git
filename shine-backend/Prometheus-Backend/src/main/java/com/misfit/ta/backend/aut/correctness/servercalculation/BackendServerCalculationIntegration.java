@@ -32,7 +32,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class BackendServerCalculationIntegration extends BackendAutomation {
 
 
-	protected int delayTime = 30000;
+	protected int delayTime = 20000;
 
 	// test cases
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation" })
@@ -605,6 +605,8 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		
 		// push to server
 		MVPApi.pushRawData(token, goal.getServerId(), data1, 0);
+		ShortcutsTyper.delayTime(5000);
+		
 		MVPApi.pushRawData(token, goal.getServerId(), data2, 0);
 		ShortcutsTyper.delayTime(delayTime);
 
@@ -927,6 +929,7 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 			cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
 			long timestamp = cal.getTimeInMillis() / 1000;
+			logger.info(timestamp);
 
 			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
 
