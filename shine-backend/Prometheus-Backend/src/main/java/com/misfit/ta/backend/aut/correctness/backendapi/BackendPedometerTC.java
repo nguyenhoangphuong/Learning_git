@@ -121,7 +121,7 @@ public class BackendPedometerTC extends BackendAutomation {
 		Assert.assertTrue(DefaultValues.DeviceLinkedToAnotherAccount.equals(linkingStatus), "Failed to steal device!");
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer", "KnownIssue" })
 	public void LinkToShineWhichWasUnlinkedBefore() {
 		
 		String serialNumberString = TextTool.getRandomString(10, 10);
@@ -225,7 +225,7 @@ public class BackendPedometerTC extends BackendAutomation {
 		Assert.assertEquals(count, 0, "Fail count");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer", "KnownIssue" })
 	public void UpdatePedometerToUseOtherSerialNumber() {
 		
 		// sign up and create pedometer

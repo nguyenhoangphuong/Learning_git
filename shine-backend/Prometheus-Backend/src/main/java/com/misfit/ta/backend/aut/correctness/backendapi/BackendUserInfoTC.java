@@ -69,7 +69,8 @@ public class BackendUserInfoTC extends BackendAutomation {
 			
 			Assert.assertEquals(profile.getHeight(), sprofile.getHeight(), "Profile height - " + i);
 			Assert.assertEquals(pedometer.getBatteryLevel(), spedometer.getBatteryLevel(), "Pedometer battery level - " + i);
-			Assert.assertEquals(statistics.getLifetimeDistance(), sstatistics.getLifetimeDistance(), "Statistics lifetime distance - " + i);
+			Assert.assertEquals(MVPCommon.round(statistics.getLifetimeDistance(), 2), 
+					MVPCommon.round(sstatistics.getLifetimeDistance(), 2), "Statistics lifetime distance - " + i);
 			Assert.assertEquals(goal.getProgressData().getPoints(), sgoal.getProgressData().getPoints(), "Goal today point - " + i);
 		}
 	}

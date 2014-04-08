@@ -3,6 +3,7 @@ package com.misfit.ta.backend.data.beddit;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
@@ -14,6 +15,7 @@ public class BedditSleepSession {
 	protected String serverId;
 	protected Long updatedAt;
 	
+	protected Long timestamp;
 	protected BedditSleepSessionTimeData timeData;
 	protected BedditSleepSessionProperties properties;
 	protected List<Object[]> sleepStates;
@@ -29,6 +31,7 @@ public class BedditSleepSession {
         	object.accumulate("localId", localId);
         	object.accumulate("serverId", serverId);
         	object.accumulate("updatedAt", updatedAt);
+        	object.accumulate("timestamp", timestamp);
         	
         	if(timeData != null)
             	object.accumulate("timeData", timeData.toJson());
@@ -100,6 +103,9 @@ public class BedditSleepSession {
 			if (!json.isNull("updatedAt"))
 				this.setUpdatedAt(json.getLong("updatedAt"));
 			
+			if (!json.isNull("timestamp"))
+				this.setTimestamp(json.getLong("timestamp"));
+			
 			if (!json.isNull("timeData"))
 				this.setTimeData((new BedditSleepSessionTimeData()).fromJson(json.getJSONObject("timeData")));
 			
@@ -111,7 +117,10 @@ public class BedditSleepSession {
 				sleepStates = new ArrayList<Object[]>();
 				
 				for(int i = 0; i < jsonarr.length(); i++) {
-					sleepStates.add(new Object[] {jsonarr.getLong(0), jsonarr.getInt(1)});
+					sleepStates.add(new Object[] {
+						jsonarr.getJSONArray(i).getLong(0), 
+						jsonarr.getJSONArray(i).getInt(1)
+					});
 				}
 			}
 			
@@ -120,7 +129,10 @@ public class BedditSleepSession {
 				heartRates = new ArrayList<Object[]>();
 				
 				for(int i = 0; i < jsonarr.length(); i++) {
-					heartRates.add(new Object[] {jsonarr.getLong(0), jsonarr.getDouble(1)});
+					heartRates.add(new Object[] {
+						jsonarr.getJSONArray(i).getLong(0), 
+						jsonarr.getJSONArray(i).getDouble(1)
+					});
 				}
 			}
 			
@@ -129,7 +141,10 @@ public class BedditSleepSession {
 				snoringEpisodes = new ArrayList<Object[]>();
 				
 				for(int i = 0; i < jsonarr.length(); i++) {
-					snoringEpisodes.add(new Object[] {jsonarr.getLong(0), jsonarr.getInt(1)});
+					snoringEpisodes.add(new Object[]  {
+						jsonarr.getJSONArray(i).getLong(0),
+						jsonarr.getJSONArray(i).getInt(1)
+					});
 				}
 			}
 			
@@ -140,6 +155,49 @@ public class BedditSleepSession {
 		return this;
 	}
     
+	public static BedditSleepSession getBedditSleepSessionFromResponse(ServiceResponse response) {
+		
+		try {
+
+			JSONObject responseBody = new JSONObject(response.getResponseString());
+			JSONObject json = responseBody.getJSONObject("sleep_session");
+			
+			BedditSleepSession sleep = new BedditSleepSession();
+			sleep.fromJson(json);
+
+			return sleep;
+		}
+		catch (Exception e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static List<BedditSleepSession> getBedditSleepSessionsFromResponse(ServiceResponse response) {
+		
+		try {
+			List<BedditSleepSession> items = new ArrayList<BedditSleepSession>();
+
+			JSONObject responseBody = new JSONObject(response.getResponseString());
+			JSONArray jsonItems = responseBody.getJSONArray("sleep_sessions");
+
+			for (int i = 0; i < jsonItems.length(); i++) {
+
+				BedditSleepSession item = new BedditSleepSession();
+				item.fromJson(jsonItems.getJSONObject(i));
+				items.add(item);
+			}
+
+			return items;
+		}
+		catch (Exception e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
     
     // getters setters
 	public String getLocalId() {
@@ -164,6 +222,14 @@ public class BedditSleepSession {
 
 	public void setUpdatedAt(Long updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	public Long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Long timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public BedditSleepSessionTimeData getTimeData() {

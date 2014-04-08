@@ -4,39 +4,49 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.graphwalker.Util;
+
 import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.api.openapi.OpenAPI;
-import com.misfit.ta.backend.aut.correctness.servercalculation.ServerCalculationTestHelpers;
+import com.misfit.ta.backend.aut.BackendHelper;
+import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.beddit.BedditSleepSession;
-import com.misfit.ta.utils.Files;
 
 public class Debug {
 
+	protected static Logger logger = Util.setupLogger(Debug.class);
+	
 	public static void main(String[] args) throws FileNotFoundException {
 	
-		List<BedditSleepSession> sleeps = new ArrayList<BedditSleepSession>();
-		sleeps.add(DataGenerator.generateRandomBedditSleepSession(System.currentTimeMillis() / 1000, null));
-		sleeps.add(DataGenerator.generateRandomBedditSleepSession(System.currentTimeMillis() / 1000, null));
-		sleeps.add(DataGenerator.generateRandomBedditSleepSession(System.currentTimeMillis() / 1000, null));
-		sleeps.add(DataGenerator.generateRandomBedditSleepSession(System.currentTimeMillis() / 1000, null));
+//		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
+//		BaseResult result = MVPApi.searchGoalProgress(token, 3, MVPCommon.getDayStartEpoch() - 3600 * 24 * 14, null, null);
+//		List<WeightGoalProgress> weights = WeightGoalProgress.getWeighGoalProgressesFromResponse(result.response);
+//		for(WeightGoalProgress weight : weights) {
+//			logger.info(weight.toJson().toString());
+//		}
 		
-		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
-		MVPApi.createBedditSleepSession(token, sleeps.get(0));
-		
-		
-//		OpenAPI.subscribeNotification("ANBwgUj0CtEpE06W", "Tp4cSIifwcO0YNAofWJ0KbuuWIVNk1nF", "https://tester.int.misfitwearables.com/handle_post.php", OpenAPI.RESOURCE_DEVICE);
-//		OpenAPI.getAccessToken("thinh@misfitwearables.com", "misfit1", OpenAPI.allScopesAsString(), 
-//				"ANBwgUj0CtEpE06W", "https://www.misfitwearables.com/");
-//		MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq");
+//		List<BedditSleepSession> sleeps = new ArrayList<BedditSleepSession>();
+//		sleeps.add(DataGenerator.generateRandomBedditSleepSession(System.currentTimeMillis() / 1000 - 3600 * 24 * 4, null));
+//		sleeps.add(DataGenerator.generateRandomBedditSleepSession(System.currentTimeMillis() / 1000 - 3600 * 24 * 3, null));
+//		sleeps.add(DataGenerator.generateRandomBedditSleepSession(System.currentTimeMillis() / 1000 - 3600 * 24 * 2, null));
+//		sleeps.add(DataGenerator.generateRandomBedditSleepSession(System.currentTimeMillis() / 1000 - 3600 * 24 * 1, null));
 //		
+//		String token = MVPApi.signIn("testbeddit001@a.a", "qqqqqq").token;
+//		BaseResult result = null;
+////		result = MVPApi.createBedditSleepSession(token, sleeps.get(0));
+////		MVPApi.createBedditSleepSessions(token, sleeps);
+//		result = MVPApi.searchBedditSleepSessions(token, System.currentTimeMillis() / 1000 - 3600 * 24 * 15, null, null);
+//		List<BedditSleepSession> sleeps_result = BedditSleepSession.getBedditSleepSessionsFromResponse(result.response);
+//		sleeps_result.get(0).getProperties().setNormalizedSleepQuality(-1);
+//		MVPApi.updateBedditSleepSession(token, sleeps_result.get(0));
+		
+		BackendHelper.link("nhhai16991@gmail.com", "qqqqqq", "HaiDangYeu");
+		
 //		Files.delete("rawdata");
 //		Files.getFile("rawdata");
 //		MVPApi.pushSDKSyncLog(ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(
 //				System.currentTimeMillis() / 1000, 
 //				"a@a.a", "adsasdasds", "rawdata/test1/1392170920"));
-		
-//		emails.add("test1396516200642vgbqkn@misfitqa.com");
-//		SocialAPI.matchContacts(MVPApi.signIn("test1396516200642foiss0@misfitqa.com", "qqqqqq").token, emails);
 	}
 }

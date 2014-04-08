@@ -30,6 +30,8 @@ import com.misfit.ta.backend.data.beddit.BedditSleepSession;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
 import com.misfit.ta.backend.data.goal.GoalsResult;
+import com.misfit.ta.backend.data.goalprogress.GoalProgress;
+import com.misfit.ta.backend.data.goalprogress.GoalSettings;
 import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
@@ -48,6 +50,7 @@ public class MVPApi extends RequestHelper {
 	// logger
 	protected static Logger logger = Util.setupLogger(MVPApi.class);
 
+	
 	// fields
 	public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
 	public static int port = Integer.parseInt(Settings.getValue("MVPBackendPort"));
@@ -57,6 +60,7 @@ public class MVPApi extends RequestHelper {
 	public static int CACHE_TRY_TIME = 10;
 	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.65r";
 
+	
 	// generators
 	public static String generateUniqueEmail() {
 		return "test" + System.currentTimeMillis() + TextTool.getRandomString(6, 6).toLowerCase() + "@misfitqa.com";
@@ -66,6 +70,7 @@ public class MVPApi extends RequestHelper {
 	{
 		return System.nanoTime() + "-" + TextTool.getRandomString(10, 10);
 	}
+	
 	
 	// account apis
 	static private AccountResult sign(String email, String password, String shortUrl) {
@@ -113,6 +118,7 @@ public class MVPApi extends RequestHelper {
 		return result;
 	}
 
+	
 	// profile apis
 	public static ProfileResult createProfile(String token, ProfileData data) {
 
@@ -207,8 +213,10 @@ public class MVPApi extends RequestHelper {
 		return result;
 	}
 	
+	
 	// goal apis
 	public static GoalsResult searchGoal(String token, Long startTime, Long endTime, Long modifiedSince) {
+		
 		// prepare
 		String url = baseAddress + "goals";
 		String queryString = "";
@@ -236,6 +244,7 @@ public class MVPApi extends RequestHelper {
 	}
 
 	public static GoalsResult getGoal(String token, String serverId) {
+
 		// prepare
 		String url = baseAddress + "goals/" + serverId;
 
@@ -337,6 +346,105 @@ public class MVPApi extends RequestHelper {
 		requestInf.addParam("data", data.toString());
 
 		// post and receive raw data
+		ServiceResponse response = MVPApi.post(url, port, requestInf);
+
+		// format data
+		BaseResult result = new BaseResult(response);
+		return result;
+	}
+	
+	public static BaseResult searchGoalProgress(String token, Integer type, Long startTime, Long endTime, Long modifiedSince) {
+	
+		// prepare
+		String url = baseAddress + "goal_progresses";
+		String queryString = "";
+
+		if(type != null)
+			queryString += ("&type=" + type);
+		
+		if(startTime != null)
+			queryString += ("&startTime=" + startTime);
+
+		if(endTime != null)
+			queryString += ("&endTime=" + endTime);
+
+		if(modifiedSince != null)
+			queryString += ("&modifiedSince=" + modifiedSince);
+
+		url += ("?" + queryString);
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+
+		// format data
+		BaseResult result = new BaseResult(response);
+		return result;
+
+	}
+
+	public static BaseResult createGoalProgress(String token, Integer type, GoalProgress goalProgress) {
+
+		// prepare
+		String url = baseAddress + "goal_progresses" + (type == null ? "" : ("?type=" + type));
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("goal_progress", goalProgress.toJson().toString());
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.post(url, port, requestInf);
+
+		// format data
+		BaseResult result = new BaseResult(response);
+		return result;
+	}
+	
+	public static BaseResult updateGoalProgress(String token, GoalProgress goalProgress) {
+
+		// prepare
+		String url = baseAddress + "goal_progresses/" + goalProgress.getServerId();
+		
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("goal_progress", goalProgress.toJson().toString());
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.put(url, port, requestInf);
+
+		// format data
+		BaseResult result = new BaseResult(response);
+		return result;
+	}
+	
+	public static BaseResult getGoalSettings(String token, Integer type) {
+		
+		// prepare
+		String url = baseAddress + "goal_settings" + (type == null ? "" : ("?type=" + type));
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+
+		// format data
+		BaseResult result = new BaseResult(response);
+		return result;
+	}
+	
+	public static BaseResult setGoalSettings(String token, Integer type, GoalSettings goalSettings) {
+		
+		// prepare
+		String url = baseAddress + "goal_settings" + (type == null ? "" : ("?type=" + type));
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("goal_settings", goalSettings.toJson().toString());
+
+		// post and recieve raw data
 		ServiceResponse response = MVPApi.post(url, port, requestInf);
 
 		// format data
@@ -509,6 +617,7 @@ public class MVPApi extends RequestHelper {
 
 	}
 
+	
 	// pedometer apis
 	public static Pedometer showPedometer(String token) {
 		String url = baseAddress + "pedometer";
@@ -673,6 +782,7 @@ public class MVPApi extends RequestHelper {
 		ServiceResponse response = MVPApi.post(url, port, requestInf);
 		return new BaseResult(response);
 	}
+	
 	
 	// sync apis
 	public static ServiceResponse syncLog(String token, String log) {

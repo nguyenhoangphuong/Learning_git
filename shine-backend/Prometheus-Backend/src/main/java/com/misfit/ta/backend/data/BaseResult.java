@@ -28,6 +28,7 @@ public class BaseResult {
 	// level, inherit class should add result to pairResult
 	public Map<String, Object> pairResult = new HashMap<String, Object>();
 	public int statusCode;
+	public String debugMessage;
 	public String errorMessage;
 	public String message;
 	public int errorCode;
@@ -45,6 +46,11 @@ public class BaseResult {
 				try {
 					json = new JSONObject(this.rawData.toString());
 
+					if (!json.isNull("debug_message")) {
+						this.debugMessage = json.getString("debug_message");
+						this.pairResult.put("debug_message", this.debugMessage);
+					}
+					
 					if (!json.isNull("error_message")) {
 						this.errorMessage = json.getString("error_message");
 						this.pairResult.put("error_message", this.errorMessage);

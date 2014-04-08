@@ -385,6 +385,7 @@ public class DataGenerator {
 		
 		BedditSleepSession sleep = new BedditSleepSession();
 		sleep.setLocalId("bedditsleep-" + MVPApi.generateLocalId());
+		sleep.setTimestamp(timestamp);
 		sleep.setTimeData(timeData);
 		sleep.setProperties(props);
 		sleep.setSleepStates(sleepStates);
