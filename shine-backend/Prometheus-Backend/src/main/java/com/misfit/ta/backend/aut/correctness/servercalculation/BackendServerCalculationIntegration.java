@@ -605,7 +605,7 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		
 		// push to server
 		MVPApi.pushRawData(token, goal.getServerId(), data1, 0);
-		ShortcutsTyper.delayTime(5000);
+		ShortcutsTyper.delayTime(10000);
 		
 		MVPApi.pushRawData(token, goal.getServerId(), data2, 0);
 		ShortcutsTyper.delayTime(delayTime);

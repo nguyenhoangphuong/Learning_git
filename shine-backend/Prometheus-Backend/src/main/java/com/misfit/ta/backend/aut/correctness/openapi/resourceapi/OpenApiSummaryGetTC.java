@@ -272,6 +272,40 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.UnauthorizedAccess, "Error message");
 	}
 	
+	public void GetSummaryWithNullProgressData() {
+		
+		// create a goal with progress data == null
+		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * 10;
+		Goal goal = DataGenerator.generateRandomGoal(timestamp, null);
+		goal.setProgressData(null);
+		MVPApi.createGoal(myToken, goal);
+		
+		
+		// get summary detail = false
+		String date = getDateString(timestamp);
+		BaseResult result = OpenAPI.getSummary(accessToken, "me", date, date);
+		OpenAPISummary summary = OpenAPISummary.getSummary(result.response);
+		
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(summary.getCalories(), 0d, "Calories");
+		Assert.assertEquals(summary.getDistance(), 0d, "Distance");
+		Assert.assertEquals(summary.getPoints(), 0d, "Points");
+		Assert.assertEquals((int)summary.getSteps(), 0, "Steps");
+		Assert.assertEquals(summary.getActivityCalories(), 0d, "Activity calories");
+		
+		
+		// get summary detail = true
+		result = OpenAPI.getSummary(accessToken, "me", date, date, true);
+		summary = OpenAPISummary.getSummary(result.response);
+
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(summary.getCalories(), 0, "Calories");
+		Assert.assertEquals(summary.getDistance(), 0, "Distance");
+		Assert.assertEquals(summary.getPoints(), 0, "Points");
+		Assert.assertEquals((int)summary.getSteps(), 0, "Steps");
+		Assert.assertEquals(summary.getActivityCalories(), 0, "Activity calories");
+	}
+	
 	/*
 	 * TODO:
 	 * - Get a resource using expired token
