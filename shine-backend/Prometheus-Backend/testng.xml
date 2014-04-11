@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="MPVP1 client" verbose="1">
-	<listeners>
-		<listener class-name="com.misfit.ta.testng.OnFailure" />
-		<listener class-name="com.misfit.ta.testng.HandleLogFiles" />
-	</listeners>
-	<test name="SmokeTest1">
-		<groups>
-			<run>
-				<include name="openapi" />
-			</run>
-		</groups>
-		<packages>
-			<package name="com.misfit.*" />
-		</packages>
-	</test>
+<suite name="Backend Automation" verbose="1">
+   <listeners>
+      <listener class-name="com.misfit.ta.testng.OnFailure" />
+      <listener class-name="com.misfit.ta.testng.HandleLogFiles" />
+   </listeners>
+   <test name="Server Calculation">
+      <groups>
+         <run>
+            <include name="new_servercalculation_smoke" />
+            <exclude name="OTF" />
+            <exclude name="Excluded" />
+         </run>
+      </groups>
+      <packages>
+         <package name="com.misfit.ta.backend.aut.correctness.servercalculation.*" />
+      </packages>
+   </test>
 </suite>
