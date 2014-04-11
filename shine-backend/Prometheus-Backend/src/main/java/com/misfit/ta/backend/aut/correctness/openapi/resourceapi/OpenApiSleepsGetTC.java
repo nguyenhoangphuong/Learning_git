@@ -1,6 +1,7 @@
 package com.misfit.ta.backend.aut.correctness.openapi.resourceapi;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.testng.Assert;
@@ -207,8 +208,13 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
 	public void GetSleepsWithStateEqualsTo1() {
 		
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		
 		// create a new timeline item
-		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * 5;
+		long timestamp = cal.getTimeInMillis() / 1000 - 3600 * 24 * 5;
 		TimelineItem deletedSleep = DataGenerator.generateRandomSleepTimelineItem(timestamp, null);
 		BaseResult result = MVPApi.createTimelineItem(myToken, deletedSleep);
 		deletedSleep.setServerId(TimelineItem.getTimelineItem(result.response).getServerId());

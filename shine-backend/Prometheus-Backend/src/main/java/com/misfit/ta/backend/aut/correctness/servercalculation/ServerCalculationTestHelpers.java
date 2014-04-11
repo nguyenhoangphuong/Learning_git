@@ -27,6 +27,7 @@ import com.misfit.ta.backend.data.sync.sdk.requestevent.value.SDKSyncResponseFin
 import com.misfit.ta.backend.data.sync.sdk.requestevent.value.SDKSyncResponseStartedValue;
 import com.misfit.ta.base.AWSHelper;
 import com.misfit.ta.common.MVPCommon;
+import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
@@ -163,7 +164,23 @@ public class ServerCalculationTestHelpers {
 
 			events.add(syncEvent);
 		}
+		
+		// add close event
+		SDKSyncRequestStartedEvent requestStarted = new SDKSyncRequestStartedEvent();
+		requestStarted.setTimestamp(currentTimestamp++);
 
+		SDKSyncRequestFinishedEvent requestFinished = new SDKSyncRequestFinishedEvent();
+		requestFinished.setResult(0);
+		requestFinished.setTimestamp(currentTimestamp++);
+		
+		SDKSyncEvent syncEvent = new SDKSyncEvent();
+		syncEvent.setEvent("close");
+		syncEvent.setRequestStarted(requestStarted);
+		syncEvent.setRequestFinished(requestFinished);
+		
+		events.add(syncEvent);
+		
+		// the sync log
 		SDKSyncLog syncLog = new SDKSyncLog();
 		syncLog.setPlatform("iOS");
 		syncLog.setSystemVersion("7.1");
@@ -184,6 +201,9 @@ public class ServerCalculationTestHelpers {
 	public static void runTest(String testFolderPath, String email, String password) {
 		
 		try {
+			
+			Files.delete("rawdata");
+			Files.getFile("rawdata");
 						
 			// create user and create goals in the test time range
 			String jsonString = FileUtils.readFileToString(new File(testFolderPath + "/" + TestMetaDataFile));

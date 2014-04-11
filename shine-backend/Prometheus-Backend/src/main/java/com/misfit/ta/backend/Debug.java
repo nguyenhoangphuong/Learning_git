@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
+import com.misfit.ta.Gui;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.BaseResult;
@@ -41,7 +42,8 @@ public class Debug {
 //		sleeps_result.get(0).getProperties().setNormalizedSleepQuality(-1);
 //		MVPApi.updateBedditSleepSession(token, sleeps_result.get(0));
 		
-		BackendHelper.link("nhhai16991@gmail.com", "qqqqqq", "HaiDangYeu");
+//		BackendHelper.link("nhhai16991@gmail.com", "qqqqqq", "HaiDangYeu");
+		
 		
 //		Files.delete("rawdata");
 //		Files.getFile("rawdata");

@@ -39,15 +39,16 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 	protected int delayTime = 30000;
 
 	// test cases
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "new_servercalculation", "new_servercalculation_smoke" })
 	public void ServerCalculation_Integration() throws FileNotFoundException {
 
 		// sign up new account
 		boolean testPassed = true;
-		String email = MVPApi.generateUniqueEmail();
-//		String email = "sc042@a.a";
+//		String email = MVPApi.generateUniqueEmail();
+		String email = "sc057@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
+		String userId = MVPApi.getUserId(token);
 
 
 		// create profile / pedometer / statistics
@@ -172,7 +173,7 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime(), goals[2].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[1].getStartTime(), goals[1].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data1).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime(), goals[0].getTimeZoneOffsetInSeconds() / 60, "0103", "18", data0).rawData);
-		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
 
 		logger.info("Waiting " + delayTime + " miliseconds");
 		ShortcutsTyper.delayTime(delayTime);
@@ -281,7 +282,7 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "new_servercalculation" })
 	public void ServerCalculation_MarathonTile() {
 
 		// sign up new account
@@ -454,7 +455,7 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "new_servercalculation" })
 	public void ServerCalculation_Progress() {
 
 		// sign up new account
@@ -560,7 +561,7 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation", "Excluded" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "new_servercalculation" })
 	public void ServerCalculation_OverlapData() {
 		
 		// sign up new account

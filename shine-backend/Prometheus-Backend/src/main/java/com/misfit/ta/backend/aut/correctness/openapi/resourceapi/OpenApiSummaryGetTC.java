@@ -272,6 +272,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.UnauthorizedAccess, "Error message");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary" })
 	public void GetSummaryWithNullProgressData() {
 		
 		// create a goal with progress data == null
