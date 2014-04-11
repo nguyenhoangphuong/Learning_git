@@ -39,13 +39,13 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 	protected int delayTime = 30000;
 
 	// test cases
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "new_servercalculation", "new_servercalculation_smoke" })
-	public void ServerCalculation_Integration() throws FileNotFoundException {
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "NewServercalculationSmoke" })
+	public void NewServerCalculation_Integration() throws FileNotFoundException {
 
 		// sign up new account
 		boolean testPassed = true;
-		String email = MVPApi.generateUniqueEmail();
-//		String email = "sc057@a.a";
+//		String email = MVPApi.generateUniqueEmail();
+		String email = "sc059@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 		String userId = MVPApi.getUserId(token);
@@ -282,8 +282,8 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "new_servercalculation" })
-	public void ServerCalculation_MarathonTile() {
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation" })
+	public void NewServerCalculation_MarathonTile() {
 
 		// sign up new account
 		boolean testPassed = true;
@@ -455,8 +455,8 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "new_servercalculation" })
-	public void ServerCalculation_Progress() {
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation" })
+	public void NewServerCalculation_Progress() {
 
 		// sign up new account
 		boolean testPassed = true;
@@ -561,8 +561,8 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "new_servercalculation" })
-	public void ServerCalculation_OverlapData() {
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation" })
+	public void NewServerCalculation_OverlapData() {
 		
 		// sign up new account
 		boolean testPassed = true;
