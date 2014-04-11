@@ -1,28 +1,17 @@
 package com.misfit.ta.backend.api.internalapi.social;
 
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.entity.EntityBuilder;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.google.resting.component.EncodingTypes;
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
-import com.misfit.ta.backend.api.InsecureHttpClientHelper;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;
-import com.misfit.ta.common.MVPCommon;
 
 public class SocialAPI extends MVPApi {
 	

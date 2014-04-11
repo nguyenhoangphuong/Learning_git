@@ -1,5 +1,9 @@
 package com.misfit.ta.backend.api;
 
+import java.net.URI;
+
+import javax.ws.rs.core.UriBuilder;
+
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.entity.EntityBuilder;
@@ -33,15 +37,20 @@ public class RequestHelper {
 	private static CloseableHttpClient httpclient = InsecureHttpClientHelper.getInsecureCloseableHttpClient();
 	
 	// request helpers
-	static public ServiceResponse request(String type, String url, int port, BaseParams requestInf) {
+	static public ServiceResponse request(String type, String url, Integer port, BaseParams requestInf) {
+		
+		// build uri
+		URI uri = UriBuilder.fromUri(url).build();
+		if(port != null)
+			uri = UriBuilder.fromUri(url).port(port).build();
 		
 		// log address
-		logger.info(type.toUpperCase() + ": " + url + " - port: " + port);
+		logger.info(type.toUpperCase() + ": " + url + " - port: " + uri.getPort());
 		logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
 		logger.info("Request params: " + requestInf.getParamsAsJsonString());
 
 		// send to TRS
-		TRS.instance().addStep(type.toUpperCase() + ": " + url + " - port: " + port, null);
+		TRS.instance().addStep(type.toUpperCase() + ": " + url + " - port: " + uri.getPort(), null);
 		TRS.instance().addCode("Request headers: " + requestInf.getHeadersAsJsonString(), null);
 		TRS.instance().addCode("Request params: " + requestInf.getParamsAsJsonString(), null);
 
@@ -49,20 +58,22 @@ public class RequestHelper {
 		ServiceResponse response = null;
 		ResultLogger.registerRequest();
 		if (type.equalsIgnoreCase(MVPApi.HTTP_POST))
-			response = doPost(url, port, requestInf);
+			response = doPost(uri, port, requestInf);
 		else if (type.equalsIgnoreCase(MVPApi.HTTP_GET))
-			response = doGet(url, port, requestInf);
+			response = doGet(uri, port, requestInf);
 		else if (type.equalsIgnoreCase(MVPApi.HTTP_PUT))
-			response = doPut(url, port, requestInf);
+			response = doPut(uri, port, requestInf);
 		else if (type.equalsIgnoreCase(MVPApi.HTTP_DELETE))
-			response = doDelete(url, port, requestInf);
+			response = doDelete(uri, port, requestInf);
 
 		// log result
 		IContentData rawData = response.getContentData();
-		logger.info("Response raw Data: " + rawData);
-		ResultLogger.registerResponse();
 		int error = response.getStatusCode();
+		
+		ResultLogger.registerResponse();
 		ResultLogger.addErrorCode(error);
+		
+		logger.info("Response raw Data: " + rawData);
 		logger.info("Response code: " + error + "\n\n");
 
 		// send to TRS
@@ -72,25 +83,25 @@ public class RequestHelper {
 		return response;
 	}
 
-	static public ServiceResponse post(String url, int port, BaseParams requestInf) {
+	static public ServiceResponse post(String url, Integer port, BaseParams requestInf) {
 		return request("post", url, port, requestInf);
 	}
 
-	static public ServiceResponse get(String url, int port, BaseParams requestInf) {
+	static public ServiceResponse get(String url, Integer port, BaseParams requestInf) {
 		return request("get", url, port, requestInf);
 	}
 
-	static public ServiceResponse put(String url, int port, BaseParams requestInf) {
+	static public ServiceResponse put(String url, Integer port, BaseParams requestInf) {
 		return request("put", url, port, requestInf);
 	}
 
-	static public ServiceResponse delete(String url, int port, BaseParams requestInf) {
+	static public ServiceResponse delete(String url, Integer port, BaseParams requestInf) {
 		return request("delete", url, port, requestInf);
 	}
 
 	
 	// execute http requests
-	static private ServiceResponse doPost(String url, int port, BaseParams requestInf) {
+	static private ServiceResponse doPost(URI url, Integer port, BaseParams requestInf) {
 
 	    EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
 		entityBuilder.setText(requestInf.getParamsAsJsonString());
@@ -102,7 +113,7 @@ public class RequestHelper {
 		return excuteHttpRequest(httpPost);
 	}
 	
-	static private ServiceResponse doGet(String url, int port, BaseParams requestInf) {
+	static private ServiceResponse doGet(URI url, Integer port, BaseParams requestInf) {
 
 		HttpGet httpGet = new HttpGet(url);
 		httpGet.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
@@ -110,7 +121,7 @@ public class RequestHelper {
 		return excuteHttpRequest(httpGet);
 	}
 
-	static private ServiceResponse doPut(String url, int port, BaseParams requestInf) {
+	static private ServiceResponse doPut(URI url, Integer port, BaseParams requestInf) {
 
 	    EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
 		entityBuilder.setText(requestInf.getParamsAsJsonString());
@@ -122,7 +133,7 @@ public class RequestHelper {
 		return excuteHttpRequest(httpPut);
 	}
 	
-	static private ServiceResponse doDelete(String url, int port, BaseParams requestInf) {
+	static private ServiceResponse doDelete(URI url, Integer port, BaseParams requestInf) {
 
 		HttpDelete httpDelete = new HttpDelete(url);
 		httpDelete.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));

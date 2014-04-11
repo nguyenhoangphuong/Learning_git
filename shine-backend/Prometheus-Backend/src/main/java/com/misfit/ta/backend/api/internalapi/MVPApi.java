@@ -53,10 +53,13 @@ public class MVPApi extends RequestHelper {
 	
 	// fields
 	public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
-	public static int port = Integer.parseInt(Settings.getValue("MVPBackendPort"));
+	public static Integer port = Settings.getValue("MVPBackendPort") == null ? null : 
+		Integer.parseInt(Settings.getValue("MVPBackendPort"));
 	
 	public static String dataCenterBaseAddress = Settings.getValue("MVPDataCenterBaseAddress");
-		
+	public static Integer dataCenterPort = Settings.getValue("MVPDataCenterPort") == null ? null : 
+		Integer.parseInt(Settings.getValue("MVPDataCenterPort"));
+	
 	public static int CACHE_TRY_TIME = 10;
 	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.65r";
 

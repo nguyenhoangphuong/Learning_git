@@ -38,13 +38,16 @@ public class OpenAPI extends RequestHelper {
 	
 	// fields
 	public static String resourceServerBaseAddress = Settings.getValue("MVPOpenAPIResourceServerBaseAddress");
-	public static int resourceServerPort = Integer.parseInt(Settings.getValue("MVPOpenAPIResourceServerPort"));
+	public static Integer resourceServerPort = Settings.getValue("MVPOpenAPIResourceServerPort") == null ? null :
+		Integer.parseInt(Settings.getValue("MVPOpenAPIResourceServerPort"));
 	
 	public static String subscribeServerBaseAddress = Settings.getValue("MVPOpenAPISubscribeServerBaseAddress");
-	public static int subscribeServerPort = Integer.parseInt(Settings.getValue("MVPOpenAPISubcribeServerPort"));
+	public static Integer subscribeServerPort = Settings.getValue("MVPOpenAPISubcribeServerPort") == null ? null :
+		Integer.parseInt(Settings.getValue("MVPOpenAPISubcribeServerPort"));
 	
 	public static String authenticateServerBaseAddress = Settings.getValue("MVPOpenAPIAuthenticateServerBaseAddress");
-	public static int authenticateServerPort = Integer.parseInt(Settings.getValue("MVPOpenAPIAuthenticateServerPort"));
+	public static Integer authenticateServerPort = Settings.getValue("MVPOpenAPIAuthenticateServerPort") == null ? null :
+		Integer.parseInt(Settings.getValue("MVPOpenAPIAuthenticateServerPort"));
 	
 	
 	// dev portal

@@ -1,18 +1,13 @@
 package com.misfit.ta.backend;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URI;
 
+import javax.ws.rs.core.UriBuilder;
+
+import org.apache.http.client.methods.HttpPost;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
-
-import com.misfit.ta.Gui;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.DataGenerator;
-import com.misfit.ta.backend.data.beddit.BedditSleepSession;
 
 public class Debug {
 
@@ -20,6 +15,11 @@ public class Debug {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 	
+		URI uri = UriBuilder.fromUri("https://www.test.com:3000/v3").port(2000).build();
+		HttpPost httpPost = new HttpPost(uri);
+		logger.info(httpPost.getURI().getHost());
+		logger.info(httpPost.getURI().getPort());
+		
 //		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
 //		BaseResult result = MVPApi.searchGoalProgress(token, 3, MVPCommon.getDayStartEpoch() - 3600 * 24 * 14, null, null);
 //		List<WeightGoalProgress> weights = WeightGoalProgress.getWeighGoalProgressesFromResponse(result.response);
