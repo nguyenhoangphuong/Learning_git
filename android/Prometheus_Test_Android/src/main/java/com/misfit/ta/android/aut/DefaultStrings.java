@@ -1,5 +1,7 @@
 package com.misfit.ta.android.aut;
 
+import com.misfit.ta.android.gui.Gui;
+
 public class DefaultStrings {
 	static public String SignUpInvalidEmailMessage = "Invalid email";
 	static public String SignUpInvalidPasswordMessage = "Sorry, the password should have at least 6 characters, at least 1 digit and 1 letter";
@@ -31,11 +33,14 @@ public class DefaultStrings {
 	public static String WeightTextViewId = "id/edit_weight_tv";
 	public static String BirthdayTextViewId = "id/edit_birthday_tv";
 	public static String SignUpLinkShineTextViewId = "id/tap_to_link_tv";
-	public static String ManualActionMenuItemViewId = "id/menu_manual";
 	public static String SettingsActionMenuViewId = "id/action_menu_view";
 	public static String DurationEditTextId = "id/manual_duration_edit_text";
 	public static String StepsEditTextId = "id/manual_steps_edit_text";
 	public static String TimezoneEditTextId = "id/manual_timezone_edit_text";
+	public static String ManualViewId = "id/action_manual_input_view";
+	public static String DebugViewId = "id/action_debug_input_view";
+	public static String DebugTextViewId = "id/debug_tv";
+			
 	
 	public static String PointsHomeScreenTextViewId = "id/card_activity_current_points_tv";
 	public static String GoalHomeScreenTextViewId = "id/card_activity_goal_points_tv";
@@ -62,6 +67,8 @@ public class DefaultStrings {
 	public static String SyncNeededStatementText = "Sync now to apply your new settings to Shine."; 
 	public static String AdjustGoalText = "Adjust Goal";
 	public static String MyProfileText = "My Profile";
+	public static String GoalsText = "Goals";
+	
 	
 	public static String IncorrectSignInMessage = "Incorrect email or password, please check and try again.";
 	public static String WalkingLeftText = "of walking left";
@@ -71,4 +78,14 @@ public class DefaultStrings {
 	public static String ShineSettingsRadioButtonId2 = "id/setting_radio_button_2";
 	public static String ShineSettingsDisplayClockCheckBoxId = "id/setting_toggle";
 	public static String ShineSettingsSleepTrackingSwitchId = "id/setting_toggle";
+	
+	// MainMenuTextView
+	public static String HistoryMainMenuTextViewId = "id/history_drawer_tv";
+	public static String GoalsMainMenuTextViewId = "id/goal_drawer_tv";
+	public static String ProfileMainMenuTextViewId = "id/profile_drawer_tv";
+	public static String SettingsMainMenuTextViewId = "id/settings_drawer_tv";
+	public static String HelpAndAboutMainMenuTextViewId = "id/help_and_about_drawer_tv";
+	
+	public static String ActivityGoalViewId = "id/daily_goal_setting_view";
+	public static String SleepGoalViewId = "id/nightly_goal_setting_view";
 }

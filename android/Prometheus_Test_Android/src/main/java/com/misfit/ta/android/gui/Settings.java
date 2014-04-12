@@ -13,36 +13,32 @@ import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class Settings {
-	// TODO need to adapt when there are more context menu options
-	// These values are used in test with device Nexus 4, other devices may
-	// need adaption.
-	private static final int SETTINGS_CONTEXT_X = 555;
-	private static final int SETTINGS_CONTEXT_Y = 195;
-	private static final int SETTINGS_CONTEXT_INC = 95;
 
 	/**
 	 * Settings Menu
 	 */
 	public static void tapSetActivityGoal() {
-		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y);
+		Gui.touchAView("ShineSettingCheckbox", "mID", DefaultStrings.ActivityGoalViewId);
 	}
 	
 	public static void tapSetSleepGoal() {
-		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y + SETTINGS_CONTEXT_INC);
+		Gui.touchAView("ShineSettingCheckbox", "mID", DefaultStrings.SleepGoalViewId);
 	}
 
 	public static void tapShineSettings() {
-		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y + SETTINGS_CONTEXT_INC * 2);
+		Gui.touchAView("MenuMainTextView", "mID", DefaultStrings.SettingsMainMenuTextViewId);
 	}
 
 	public static void tapHelp() {
-		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y + SETTINGS_CONTEXT_INC
-				* 4);
+		Gui.touchAView("MenuMainTextView", "mID", DefaultStrings.HelpAndAboutMainMenuTextViewId);
+	}
+	
+	public static void tapGoalsOnDashboard() {
+		Gui.touchAView("MenuMainTextView", "mID", DefaultStrings.GoalsMainMenuTextViewId);
 	}
 
 	public static void tapMyProfile() {
-		Gui.touch(SETTINGS_CONTEXT_X, SETTINGS_CONTEXT_Y + SETTINGS_CONTEXT_INC
-				* 3);
+		Gui.touchAView("MenuMainTextView", "mID", DefaultStrings.ProfileMainMenuTextViewId);
 	}
 
 	public static String getCurrentBirthDate() {

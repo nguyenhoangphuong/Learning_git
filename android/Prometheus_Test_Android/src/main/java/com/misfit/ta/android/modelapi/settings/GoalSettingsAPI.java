@@ -105,7 +105,9 @@ public class GoalSettingsAPI extends ModelAPI {
 		fullScreenWidth = Gui.getScreenWidth();
 		System.out.println(fullScreenHeight);
 		System.out.println(fullScreenWidth);
-		HomeScreen.tapSettingsMenu();
+		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
+		Settings.tapGoalsOnDashboard();
+		ShortcutsTyper.delayTime(500);
 		Settings.tapSetActivityGoal();
 	}
 	
@@ -120,20 +122,27 @@ public class GoalSettingsAPI extends ModelAPI {
 	}
 
 	/**
-	 * This method implements the Vertex 'v_GoalSettings'
+	 * This method implements the Vertex 'v_ActivityGoalSettings'
 	 * 
 	 */
-	public void v_GoalSettings() {
+	public void v_ActivityGoalSettings() {
 		ShortcutsTyper.delayOne();
 		Assert.assertTrue(ViewUtils.findView("TextView", "mText",
 				DefaultStrings.AdjustGoalText, 0) != null, "This is not adjust goal popup.");
 	}
 
 	/**
-	 * This method implements the Vertex 'v_GoalUpdated'
+	 * This method implements the Vertex 'v_ActivityGoalSettingUpdated'
 	 * 
 	 */
-	public void v_GoalUpdated() {
+	public void v_ActivityGoalSettingsUpdated() {
+	}
+	
+	/**
+	 * This method implements the Vertex 'v_GoalSettingUpdated'
+	 * 
+	 */
+	public void v_GoalSettingsUpdated() {
 	}
 
 	/**
@@ -154,6 +163,10 @@ public class GoalSettingsAPI extends ModelAPI {
 		String goalText = homescreenText.substring(3, homescreenText.indexOf(" ", 3));
 		System.out.println("Goal in homescreen: " + goalText);
 		Assert.assertTrue(Integer.valueOf(goalText).equals(goal), "Goal in homescreen should be updated with the new value: " + goal);
+	}
+	
+	public void e_BackToHomeScreen() {
+		Gui.touchAView("TextView", "mID", DefaultStrings.GoalsText);
 	}
 
 }

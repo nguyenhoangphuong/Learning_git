@@ -41,7 +41,7 @@ public class PrometheusHelper {
 		SignUp.pressNext();
 		// input profile
 
-		ShortcutsTyper.delayTime(4000);
+		ShortcutsTyper.delayTime(6000);
 		PrometheusHelper.editGender(true);
 		ShortcutsTyper.delayTime(500);
 		SignUp.inputUnits(true);

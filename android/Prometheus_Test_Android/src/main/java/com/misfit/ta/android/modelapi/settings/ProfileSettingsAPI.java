@@ -47,7 +47,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 		fullScreenWidth = Gui.getScreenWidth();
 		System.out.println(fullScreenHeight);
 		System.out.println(fullScreenWidth);
-		HomeScreen.tapSettingsMenu();
+		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
 		Settings.tapMyProfile();
 		ShortcutsTyper.delayTime(2000);
 	}

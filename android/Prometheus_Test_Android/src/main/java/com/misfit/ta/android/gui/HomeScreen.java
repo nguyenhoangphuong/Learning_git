@@ -10,35 +10,28 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeScreen {
 
-	public static boolean isHomeScreenVisible() {
-		return ViewUtils.findView("FrameLayout", "mID", DefaultStrings.SettingsActionMenuViewId, 0) != null;
-	}
-
-	/**
-	 * Manual Goal
-	 */
 	public static void tapManual() {
+//		Gui.touchAView("FrameLayout", "mID", DefaultStrings.ManualViewId);
 		Gui.touchAView("TextView", "mText", "M");
+	}
+	
+	public static void tapDebug() {
+//		Gui.touchAView("FrameLayout", "mID", DefaultStrings.DebugViewId);
+		Gui.touchAView("TextView", "mText", "D");
 	}
 
 	public static void saveManual() {
 		Gui.touchAView("Button", "mText", DefaultStrings.SaveText);
 	}
 
-	/**
-	 * Go to Settings screens
-	 */
 	public static void tapSettingsMenu() {
-		Gui.touchAView("FrameLayout", "mID", DefaultStrings.SettingsActionMenuViewId);
+		
+	}
+	
+	public static void openDashboardMenu(int fullScreenHeight, int fullScreenWidth) {
+		Gui.swipeLeftRight(0, fullScreenHeight/2, fullScreenWidth, fullScreenHeight/2, 1);
 	}
 
-	/**
-	 * Place Shine to sync
-	 */
-	public static void sync() {
-		Gui.touch(Gui.getCoordinators("ImageButton", "mID", "id/buttonSync"),
-				TouchPressType.DOWN);
-	}
 
 	public static void inputManualTime(String hour, String minute) {
 		Gui.touchAView("NumberPicker$CustomEditText", 0);
@@ -73,6 +66,14 @@ public class HomeScreen {
 	
 	public static Integer getCurrentGoalInPicker() {
 		return Integer.valueOf(PrometheusHelper.getCurrentValueInPicker(0));
+	}
+	
+	public static String[] getDebugValues(){
+		 String regex = "([\\r\\n\\t]+)";
+		 String text = ViewUtils.findView("TextView", "mID", DefaultStrings.DebugTextViewId, 0).text;
+		 System.out.println(text);
+		 String[] result = text.split(regex);
+		 return result;
 	}
 	
 }
