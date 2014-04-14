@@ -35,7 +35,7 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 	protected int delayTime = 20000;
 
 	// test cases
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation", "ServerCalculationSmoke" })
 	public void ServerCalculation_Integration() throws FileNotFoundException {
 
 		// sign up new account
