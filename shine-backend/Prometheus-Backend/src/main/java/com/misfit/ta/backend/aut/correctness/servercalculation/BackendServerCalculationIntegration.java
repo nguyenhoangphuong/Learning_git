@@ -823,7 +823,6 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 	}
 
 
-
 	private int getNumberOfTile(List<TimelineItem> items, int itemType) {
 		
 		int count = 0;
@@ -847,18 +846,18 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 		return count;
 	}
-
 	
 	
 	private boolean hasSessionTileWithData(List<TimelineItem> items, Goal goal, int offsetMinute, int minutes, int points) {
 
 		long goalStartTime = goal.getStartTime();
 		Calendar cal = Calendar.getInstance();
-
+		cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
+		long timestamp = cal.getTimeInMillis() / 1000;
+		
+		logger.info("Looking for session with: Timestamp: " + timestamp + ", Points: " + points + ", Duration: " + minutes);
+		
 		for(TimelineItem item : items) {
-
-			cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
-			long timestamp = cal.getTimeInMillis() / 1000;
 
 			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_SESSION) {
 
@@ -875,11 +874,12 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 		long goalStartTime = goal.getStartTime();
 		Calendar cal = Calendar.getInstance();
-
+		cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
+		long timestamp = cal.getTimeInMillis() / 1000;
+		
+		logger.info("Looking for daily event with: Timestamp: " + timestamp + ", Points: " + points + ", Event type: " + eventType);
+		
 		for(TimelineItem item : items) {
-
-			cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
-			long timestamp = cal.getTimeInMillis() / 1000;
 
 			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
 
@@ -902,11 +902,12 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 		long goalStartTime = goal.getStartTime();
 		Calendar cal = Calendar.getInstance();
-
+		cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
+		long timestamp = cal.getTimeInMillis() / 1000;
+		
+		logger.info("Looking for streak event with: Timestamp: " + timestamp + ", Streak number: " + streakNumber);
+		
 		for(TimelineItem item : items) {
-
-			cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
-			long timestamp = cal.getTimeInMillis() / 1000;
 
 			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
 
@@ -924,12 +925,12 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 		long goalStartTime = goal.getStartTime();
 		Calendar cal = Calendar.getInstance();
-
+		cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
+		long timestamp = cal.getTimeInMillis() / 1000;
+		
+		logger.info("Looking for personal best event with: Timestamp: " + timestamp + ", Points: " + points + ", Extended amount: " + extendedAmount);
+		
 		for(TimelineItem item : items) {
-
-			cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
-			long timestamp = cal.getTimeInMillis() / 1000;
-			logger.info(timestamp);
 
 			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
 
@@ -957,12 +958,13 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 		long goalStartTime = goal.getStartTime();
 		Calendar cal = Calendar.getInstance();
-
+		cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
+		long timestamp = cal.getTimeInMillis() / 1000;
+		
+		logger.info("Looking for distance milestone with: Timestamp: " + timestamp + ", Marathon number: " + marathonNumber + ", Unit: " + unit);
+		
 		for(TimelineItem item : items) {
-
-			cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
-			long timestamp = cal.getTimeInMillis() / 1000;
-
+			
 			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_LIFETIME_DISTANCE) {
 
 				LifetimeDistanceItem distanceitem = (LifetimeDistanceItem) item.getData();
@@ -972,5 +974,5 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 		return false;
 	}
-	
+
 }
