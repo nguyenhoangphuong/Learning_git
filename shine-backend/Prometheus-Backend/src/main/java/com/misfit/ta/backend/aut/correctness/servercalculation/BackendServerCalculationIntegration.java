@@ -1,38 +1,30 @@
 package com.misfit.ta.backend.aut.correctness.servercalculation;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
-import com.misfit.ta.backend.data.profile.DisplayUnit;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
-import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
-import com.misfit.ta.backend.data.timeline.timelineitemdata.LifetimeDistanceItem;
-import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItem;
-import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItemInfo;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.Verify;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class BackendServerCalculationIntegration extends BackendAutomation {
+public class BackendServerCalculationIntegration extends BackendServerCalculationBase {
 
 
-	protected int delayTime = 20000;
+	protected int delayTime = 30000;
 
 	// test cases
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation", "ServerCalculationSmoke" })
@@ -41,7 +33,7 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		// sign up new account
 		boolean testPassed = true;
 		String email = MVPApi.generateUniqueEmail();
-//		String email = "sc042@a.a";
+//		String email = "sc059@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
@@ -56,12 +48,17 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		MVPApi.createStatistics(token, statistics);
 
 
-		// create goals for 3 days
-		Goal[] goals = new Goal[3];
-		for(int i = 0; i < 3; i++) {
+		// create goals for 4 days
+		Goal[] goals = new Goal[4];
+		for(int i = 0; i < goals.length; i++) {
 
 			long goalTimestamp = timestamp - i * 3600 * 24;
 			Goal goal = Goal.getDefaultGoal(goalTimestamp);
+			
+			// if today goal, increase length to 25h
+			if(i == 0)
+				goal.setEndTime(goal.getEndTime() + 3600);
+			
 			GoalsResult result = MVPApi.createGoal(token, goal);
 
 			goal.setServerId(result.goals[0].getServerId());
@@ -69,9 +66,9 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 			goals[i] = goal;
 		}
-
-
-		// story on 1st day (yesterday of yesterday):
+		
+		
+		// story on 4th day (3 days ago):
 		// - session: 60 minutes - 6000 steps - 600 points at 7:00
 		// - session: 50 minutes - 5000 steps - 500 points at 10:00
 		// - session: 30 minutes - 3000 steps - 300 points at 13:00
@@ -80,6 +77,34 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		// - 4 acitivity session tiles
 		// - 100% tile
 		// - 150% tile
+		GoalRawData data3 = new GoalRawData();
+		data3.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
+
+		data3.appendGoalRawData(generateSessionRawData(6000, 600, 60));
+		data3.appendGoalRawData(generateEmptyRawData(7 * 60 + 60, 10 * 60));
+
+		data3.appendGoalRawData(generateSessionRawData(5000, 500, 50));
+		data3.appendGoalRawData(generateEmptyRawData(10 * 60 + 50, 13 * 60));
+
+		data3.appendGoalRawData(generateSessionRawData(3000, 300, 30));
+		data3.appendGoalRawData(generateEmptyRawData(13 * 60 + 30, 17 * 60));
+
+		data3.appendGoalRawData(generateSessionRawData(4000, 400, 40));
+		data3.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 24 * 60));
+
+		// story on 3th day (2 days ago):
+		// - session: 60 minutes - 6000 steps - 600 points at 7:00
+		// - session: 50 minutes - 5000 steps - 500 points at 10:00
+		// - session: 30 minutes - 3000 steps - 300 points at 13:00
+		// - session: 40 minutes - 4000 steps - 400 points at 17:00
+		// - session: 40 minutes - 4000 steps - 400 points at 20:00
+		// expect:
+		// - 5 acitivity session tiles
+		// - 100% tile
+		// - 150% tile
+		// - 200% tile
+		// - personal best tile
+		// - statistics updated
 		GoalRawData data2 = new GoalRawData();
 		data2.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
 
@@ -93,19 +118,24 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		data2.appendGoalRawData(generateEmptyRawData(13 * 60 + 30, 17 * 60));
 
 		data2.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data2.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 24 * 60));
+		data2.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 20 * 60));
+
+		data2.appendGoalRawData(generateSessionRawData(4000, 400, 40));
+		data2.appendGoalRawData(generateEmptyRawData(20 * 60 + 40, 24 * 60));
 
 		// story on 2nd day (yesterday):
 		// - session: 60 minutes - 6000 steps - 600 points at 7:00
 		// - session: 50 minutes - 5000 steps - 500 points at 10:00
 		// - session: 30 minutes - 3000 steps - 300 points at 13:00
 		// - session: 40 minutes - 4000 steps - 400 points at 17:00
-		// - session: 40 minutes - 4000 steps - 400 points at 20:00
+		// - session: 60 minutes - 6000 steps - 600 points at 21:00
+		// - session: 40 minutes - 4000 steps - 400 points at 23:00
 		// expect:
-		// - 5 acitivity session tiles
+		// - 6 acitivity session tiles
 		// - 100% tile
 		// - 150% tile
 		// - 200% tile
+		// - streak tile
 		// - personal best tile
 		// - statistics updated
 		GoalRawData data1 = new GoalRawData();
@@ -121,49 +151,54 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		data1.appendGoalRawData(generateEmptyRawData(13 * 60 + 30, 17 * 60));
 
 		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data1.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 20 * 60));
+		data1.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 21 * 60));
 
+		data1.appendGoalRawData(generateSessionRawData(6000, 600, 60));
+		data1.appendGoalRawData(generateEmptyRawData(21 * 60 + 60, 23 * 60));
+		
 		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data1.appendGoalRawData(generateEmptyRawData(20 * 60 + 40, 24 * 60));
-
-		// story on 3rd day:
-		// - session: 60 minutes - 6000 steps - 600 points at 7:00
+		data1.appendGoalRawData(generateEmptyRawData(23 * 60 + 40, 24 * 60));
+		
+		
+		// story on today:
+		// - session: 50 minutes - 5000 steps - 600 points at 8:00
+		// - session: 50 minutes - 5000 steps - 500 points at 9:00
 		// - session: 50 minutes - 5000 steps - 500 points at 10:00
-		// - session: 30 minutes - 3000 steps - 300 points at 13:00
-		// - session: 40 minutes - 4000 steps - 400 points at 17:00
-		// - session: 60 minutes - 6000 steps - 600 points at 21:00
-		// - session: 40 minutes - 4000 steps - 400 points at 23:00
+		// - session: 50 minutes - 5000 steps - 500 points at 11:00
+		// - session: 50 minutes - 5000 steps - 500 points at 12:00
+		// - session: 50 minutes - 5000 steps - 500 points at 13:00
 		// expect:
-		// - 5 acitivity session tiles
+		// - 26 graph items
+		// - 6 acitivity session tiles
 		// - 100% tile
 		// - 150% tile
 		// - 200% tile
 		// - streak tile
-		// - personal best tile
+		// - personal best
 		// - statistics updated
 		GoalRawData data0 = new GoalRawData();
-		data0.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
-
-		data0.appendGoalRawData(generateSessionRawData(6000, 600, 60));
-		data0.appendGoalRawData(generateEmptyRawData(7 * 60 + 60, 10 * 60));
+		data0.appendGoalRawData(generateEmptyRawData(0, 8 * 60));
 
 		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
-		data0.appendGoalRawData(generateEmptyRawData(10 * 60 + 50, 13 * 60));
+		data0.appendGoalRawData(generateEmptyRawData(8 * 60 + 50, 9 * 60));
 
-		data0.appendGoalRawData(generateSessionRawData(3000, 300, 30));
-		data0.appendGoalRawData(generateEmptyRawData(13 * 60 + 30, 17 * 60));
-
-		data0.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data0.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 21 * 60));
-
-		data0.appendGoalRawData(generateSessionRawData(6000, 600, 60));
-		data0.appendGoalRawData(generateEmptyRawData(21 * 60 + 60, 23 * 60));
+		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
+		data0.appendGoalRawData(generateEmptyRawData(9 * 60 + 50, 10 * 60));
 		
-		data0.appendGoalRawData(generateSessionRawData(4000, 400, 40));
-		data0.appendGoalRawData(generateEmptyRawData(23 * 60 + 40, 24 * 60));
+		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
+		data0.appendGoalRawData(generateEmptyRawData(10 * 60 + 50, 11 * 60));
+		
+		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
+		data0.appendGoalRawData(generateEmptyRawData(11 * 60 + 50, 12 * 60));
+		
+		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
+		data0.appendGoalRawData(generateEmptyRawData(12 * 60 + 50, 13 * 60));
+		
+		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
 
 
 		// push data to server
+		MVPApi.pushRawData(token, goals[3].getServerId(), data3, 0);
 		MVPApi.pushRawData(token, goals[2].getServerId(), data2, 0);
 		MVPApi.pushRawData(token, goals[1].getServerId(), data1, 0);
 		MVPApi.pushRawData(token, goals[0].getServerId(), data0, 0);
@@ -173,14 +208,17 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 
 		// get data from server
+		List<GraphItem> graphitems3 = MVPApi.getGraphItems(token, goals[3].getStartTime(), goals[3].getEndTime(), 0l);
 		List<GraphItem> graphitems2 = MVPApi.getGraphItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
 		List<GraphItem> graphitems1 = MVPApi.getGraphItems(token, goals[1].getStartTime(), goals[1].getEndTime(), 0l);
 		List<GraphItem> graphitems0 = MVPApi.getGraphItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
 
+		List<TimelineItem> timelineitems3 = MVPApi.getTimelineItems(token, goals[3].getStartTime(), goals[3].getEndTime(), 0l);
 		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
 		List<TimelineItem> timelineitems1 = MVPApi.getTimelineItems(token, goals[1].getStartTime(), goals[1].getEndTime(), 0l);
 		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
 
+		Goal goal3 = MVPApi.getGoal(token, goals[3].getServerId()).goals[0];
 		Goal goal2 = MVPApi.getGoal(token, goals[2].getServerId()).goals[0];
 		Goal goal1 = MVPApi.getGoal(token, goals[1].getServerId()).goals[0];
 		Goal goal0 = MVPApi.getGoal(token, goals[0].getServerId()).goals[0];
@@ -189,92 +227,131 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 
 
 		// ===== VERIFY GRAPH ITEMS
+		testPassed &= Verify.verifyEquals(graphitems3.size(), 44, "Number of graph items");
 		testPassed &= Verify.verifyEquals(graphitems2.size(), 44, "Number of graph items");
 		testPassed &= Verify.verifyEquals(graphitems1.size(), 44, "Number of graph items");
-		testPassed &= Verify.verifyEquals(graphitems0.size(), 44, "Number of graph items");
+		testPassed &= Verify.verifyEquals(graphitems0.size(), 26, "Number of graph items");
 
 
 		// ===== VERIFY TIMELINE ITEMS
 		// number of session tiles are correct
-		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems2), 4, "Goals[2] has 4 session tiles");
-		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems1), 5, "Goals[1] has 5 session tiles");
+		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems3), 4, "Goals[3] has 4 session tiles");
+		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems2), 5, "Goals[2] has 5 session tiles");
+		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems1), 6, "Goals[1] has 6 session tiles");
 		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems0), 6, "Goals[0] has 6 session tiles");
 
 
 		// session tiles are correct
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems3, goals[3], 7 * 60, 60, 600), "Goal[3] has session tile at 7:00 - 600 pts");
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems3, goals[3], 10 * 60, 50, 500), "Goal[3] has session tile at 10:00 - 500 pts");
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems3, goals[3], 13 * 60, 30, 300), "Goal[3] has session tile at 13:00 - 300 pts");
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems3, goals[3], 17 * 60, 40, 400), "Goal[3] has session tile at 17:00 - 400 pts");
+
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems2, goals[2], 7 * 60, 60, 600), "Goal[2] has session tile at 7:00 - 600 pts");
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems2, goals[2], 10 * 60, 50, 500), "Goal[2] has session tile at 10:00 - 500 pts");
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems2, goals[2], 13 * 60, 30, 300), "Goal[2] has session tile at 13:00 - 300 pts");
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems2, goals[2], 17 * 60, 40, 400), "Goal[2] has session tile at 17:00 - 400 pts");
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems2, goals[2], 20 * 60, 40, 400), "Goal[2] has session tile at 20:00 - 400 pts");
 
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 7 * 60, 60, 600), "Goal[1] has session tile at 7:00 - 600 pts");
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 10 * 60, 50, 500), "Goal[1] has session tile at 10:00 - 500 pts");
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 13 * 60, 30, 300), "Goal[1] has session tile at 13:00 - 300 pts");
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 17 * 60, 40, 400), "Goal[1] has session tile at 17:00 - 400 pts");
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 20 * 60, 40, 400), "Goal[1] has session tile at 20:00 - 400 pts");
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 21 * 60, 60, 600), "Goal[1] has session tile at 21:00 - 600 pts");
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 23 * 60, 40, 400), "Goal[1] has session tile at 23:00 - 400 pts");
 
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 7 * 60, 60, 600), "Goal[0] has session tile at 7:00 - 600 pts");
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 8 * 60, 50, 500), "Goal[0] has session tile at 8:00 - 500 pts");
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 9 * 60, 50, 500), "Goal[0] has session tile at 9:00 - 500 pts");
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 10 * 60, 50, 500), "Goal[0] has session tile at 10:00 - 500 pts");
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 13 * 60, 30, 300), "Goal[0] has session tile at 13:00 - 300 pts");
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 17 * 60, 40, 400), "Goal[0] has session tile at 17:00 - 400 pts");
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 21 * 60, 60, 600), "Goal[0] has session tile at 21:00 - 600 pts");
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 23 * 60, 40, 400), "Goal[0] has session tile at 23:00 - 400 pts");
-
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 11 * 60, 50, 500), "Goal[0] has session tile at 11:00 - 500 pts");
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 12 * 60, 50, 500), "Goal[0] has session tile at 12:00 - 500 pts");
+		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 13 * 60, 50, 500), "Goal[0] has session tile at 13:00 - 500 pts");
+		
 
 		// daily goal milestone tiles are correct
+		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems3, goals[3], 10 * 60 + 40, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[3] has 100% tile");
+		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems3, goals[3], 17 * 60 + 10, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goals[3] has 150% tile");
+
 		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems2, goals[2], 10 * 60 + 40, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[2] has 100% tile");
 		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems2, goals[2], 17 * 60 + 10, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goals[2] has 150% tile");
+		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems2, goals[2], 20 * 60 + 20, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goals[2] has 200% tile");
 
 		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems1, goals[1], 10 * 60 + 40, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[1] has 100% tile");
 		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems1, goals[1], 17 * 60 + 10, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goals[1] has 150% tile");
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems1, goals[1], 20 * 60 + 20, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goals[1] has 200% tile");
+		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems1, goals[1], 21 * 60 + 20, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goals[1] has 200% tile");
 
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 10 * 60 + 40, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[0] has 100% tile");
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 17 * 60 + 10, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goals[0] has 150% tile");
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 21 * 60 + 20, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goals[0] has 200% tile");
-
+		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 9 * 60 + 50, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[0] has 100% tile");
+		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 10 * 60 + 50, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goals[0] has 150% tile");
+		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 11 * 60 + 50, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goals[0] has 200% tile");
+		
 
 		// personal best and streak tiles are correct
-		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems1, goals[1], 20 * 60 + 40, 2200, 400), "Goals[1] reaches 2200pts extended Goal[2] by 400pts");
-		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems0, goals[0], 23 * 60 + 40, 2800, 600), "Goals[0] reaches 2800pts extended Goal[1] by 600pts");
-		testPassed &= Verify.verifyTrue(hasStreakMilestone(timelineitems0, goals[0], 10 * 60 + 40, 3), "Goals[0] has 3-day streak tile");
+		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems2, goals[2], 24 * 60 - 1, 2200, 400), "Goals[2] reaches 2200pts extended Goal[3] by 400pts");
+		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems1, goals[1], 24 * 60 - 1, 2800, 600), "Goals[1] reaches 2800pts extended Goal[2] by 600pts");
+		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems0, goals[0], 13 * 60 + 50, 3000, 200), "Goals[0] reaches 3000pts extended Goal[1] by 200pts");
+		
+		testPassed &= Verify.verifyTrue(hasStreakMilestone(timelineitems1, goals[1], 10 * 60 + 40, 3), "Goals[1] has 3-day streak tile");
+		testPassed &= Verify.verifyTrue(hasStreakMilestone(timelineitems0, goals[0], 9 * 60 + 50, 4), "Goals[0] has 4-day streak tile");
 
 
 		// ===== VERIFY GOAL PROGRESS
-		double miles2 = MVPCalculator.calculateMiles(6000, 60, profile.getHeight()) + 
+		double miles3 = MVPCalculator.calculateMiles(6000, 60, profile.getHeight()) + 
 				MVPCalculator.calculateMiles(5000, 50, profile.getHeight()) +
 				MVPCalculator.calculateMiles(4000, 40, profile.getHeight()) +
 				MVPCalculator.calculateMiles(3000, 30, profile.getHeight());
-		double miles1 = miles2 + MVPCalculator.calculateMiles(4000, 40, profile.getHeight());
-		double miles0 = miles2 + MVPCalculator.calculateMiles(6000, 60, profile.getHeight()) 
+		double miles2 = miles3 + MVPCalculator.calculateMiles(4000, 40, profile.getHeight());
+		double miles1 = miles3 + MVPCalculator.calculateMiles(6000, 60, profile.getHeight()) 
 				+ MVPCalculator.calculateMiles(4000, 40, profile.getHeight());
+		double miles0 = MVPCalculator.calculateMiles(5000, 50, profile.getHeight()) * 6;
+		
+		double weight = profile.getWeight();
+		double height = profile.getHeight();
+		double fullBMR = MVPCalculator.calculateFullBMR((float)weight, (float)height, 
+				profile.calculateAge() + 1, profile.getGender().equals(0));
+		
+		double calorie3 = MVPCalculator.calculateCalories(1800, (float)weight, (float)fullBMR, 24 * 60);
+		double calorie2 = MVPCalculator.calculateCalories(2200, (float)weight, (float)fullBMR, 24 * 60);
+		double calorie1 = MVPCalculator.calculateCalories(2800, (float)weight, (float)fullBMR, 24 * 60);
+		double calorie0 = MVPCalculator.calculateCalories(3000, (float)weight, (float)fullBMR, 25 * 60);
 
 
-		testPassed &= Verify.verifyEquals(goal2.getProgressData().getPoints(), 1800 * 2.5, "Goals[2] progress point");
-		testPassed &= Verify.verifyEquals(goal1.getProgressData().getPoints(), 2200 * 2.5, "Goals[1] progress point");
-		testPassed &= Verify.verifyEquals(goal0.getProgressData().getPoints(), 2800 * 2.5, "Goals[0] progress point");
+		testPassed &= Verify.verifyEquals(goal3.getProgressData().getPoints(), 1800 * 2.5, "Goals[3] progress point");
+		testPassed &= Verify.verifyEquals(goal2.getProgressData().getPoints(), 2200 * 2.5, "Goals[2] progress point");
+		testPassed &= Verify.verifyEquals(goal1.getProgressData().getPoints(), 2800 * 2.5, "Goals[1] progress point");
+		testPassed &= Verify.verifyEquals(goal0.getProgressData().getPoints(), 3000 * 2.5, "Goals[0] progress point");
 
-		testPassed &= Verify.verifyEquals(goal2.getProgressData().getSteps(), 18000, "Goals[2] progress steps");
-		testPassed &= Verify.verifyEquals(goal1.getProgressData().getSteps(), 22000, "Goals[1] progress steps");
-		testPassed &= Verify.verifyEquals(goal0.getProgressData().getSteps(), 28000, "Goals[0] progress steps");
+		testPassed &= Verify.verifyEquals(goal3.getProgressData().getSteps(), 18000, "Goals[3] progress steps");
+		testPassed &= Verify.verifyEquals(goal2.getProgressData().getSteps(), 22000, "Goals[2] progress steps");
+		testPassed &= Verify.verifyEquals(goal1.getProgressData().getSteps(), 28000, "Goals[1] progress steps");
+		testPassed &= Verify.verifyEquals(goal0.getProgressData().getSteps(), 30000, "Goals[1] progress steps");
 
-		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getDistanceMiles(), miles2, 0.001, "Goals[2] progress distance in miles");
-		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getDistanceMiles(), miles1, 0.001, "Goals[1] progress distance in miles");
-		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getDistanceMiles(), miles0, 0.001, "Goals[0] progress distance in miles");
+		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData().getDistanceMiles(), miles3, distanceDelta, "Goals[3] progress distance in miles");
+		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getDistanceMiles(), miles2, distanceDelta, "Goals[2] progress distance in miles");
+		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getDistanceMiles(), miles1, distanceDelta, "Goals[1] progress distance in miles");
+		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getDistanceMiles(), miles0, distanceDelta, "Goals[0] progress distance in miles");
 
+		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[3] full bmr");
+		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[2] full bmr");
+		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[1] full bmr");
+		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[0] full bmr");
+		
+		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData().getCalorie(), calorie3, totalCalorieDelta, "Goals[3] total calorie");
+		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getCalorie(), calorie2, totalCalorieDelta, "Goals[2] total calorie");
+		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getCalorie(), calorie1, totalCalorieDelta, "Goals[1] total calorie");
+		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getCalorie(), calorie0, totalCalorieDelta, "Goals[0] total calorie");
 
 		// ===== VERIFY STATISTICS
-		long personalBestTimestamp = goals[0].getStartTime() + (23 * 60 + 40) * 60;
-		testPassed &= Verify.verifyNearlyEquals(statistics.getLifetimeDistance(), miles0 + miles1 + miles2, 0.001, "Lifetime distance");
-		testPassed &= Verify.verifyEquals(statistics.getBestStreak(), 3, "Best streak number");
-		testPassed &= Verify.verifyEquals(statistics.getTotalGoalHit(), 3, "Total goal hit number");
-		testPassed &= Verify.verifyEquals(statistics.getPersonalRecords().getPersonalBestRecordsInPoint().getPoint(), 2800 * 2.5, "Personal best points");
+		long personalBestTimestamp = goals[0].getStartTime() + (13 * 60 + 50) * 60;
+		testPassed &= Verify.verifyNearlyEquals(statistics.getLifetimeDistance(), miles0 + miles1 + miles2 + miles3, distanceDelta, "Lifetime distance");
+		testPassed &= Verify.verifyEquals(statistics.getBestStreak(), 4, "Best streak number");
+		testPassed &= Verify.verifyEquals(statistics.getTotalGoalHit(), 4, "Total goal hit number");
+		testPassed &= Verify.verifyEquals(statistics.getPersonalRecords().getPersonalBestRecordsInPoint().getPoint(), 3000 * 2.5, "Personal best points");
 		testPassed &= Verify.verifyEquals(statistics.getPersonalRecords().getPersonalBestRecordsInPoint().getTimestamp(), personalBestTimestamp, "Personal best timestamp");
 
 		Assert.assertTrue(testPassed, "All asserts are passed");
 
 	}
-
+	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation" })
 	public void ServerCalculation_MarathonTile() {
 
@@ -720,259 +797,6 @@ public class BackendServerCalculationIntegration extends BackendAutomation {
 		MVPApi.pushRawData(token, goals[1].getServerId(), data1, 0);
 		MVPApi.pushRawData(token, goals[0].getServerId(), data0a, 0);
 		MVPApi.pushRawData(token, goals[0].getServerId(), data0b, 6 * 60);
-	}
-
-	
-	// helpers
-	private void changeDistanceUnit(String token, int unit) {
-
-		ProfileData profile = new ProfileData();
-		profile.setDisplayedUnits(new DisplayUnit());
-		profile.getDisplayedUnits().setDistanceUnit(unit);
-		MVPApi.updateProfile(token, profile);
-	}
-
-	private GoalRawData generateSessionRawData(int totalSteps, int totalPoints, int duration)  {
-
-		int stepPerMinute = totalSteps / duration;
-		int pointPerMinute = totalPoints / duration;
-
-		int[] steps = new int[duration];
-		int[] points = new int[duration];
-		int[] variances = new int[duration];
-
-		Arrays.fill(steps, stepPerMinute);
-		Arrays.fill(points, (int)(pointPerMinute * 2.5));
-		Arrays.fill(variances, 10000);
-
-		// if steps/point is not devidable
-		if(totalSteps % duration != 0)
-			steps[0] = totalSteps % duration;
-
-		if(totalPoints % duration != 0)
-			points[0] = totalPoints % duration;
-
-		GoalRawData rawdata = new GoalRawData();
-		rawdata.setPoints(points);
-		rawdata.setSteps(steps);
-
-		rawdata.setVariances(variances);
-
-		return rawdata;
-	}
-
-	private GoalRawData generateEmptyRawData(int duration) {
-
-		int[] steps = new int[duration];
-		int[] points = new int[duration];
-		int[] variances = new int[duration];
-
-		Arrays.fill(steps, 0);
-		Arrays.fill(points, 0);
-		Arrays.fill(variances, 10000);
-
-		GoalRawData rawdata = new GoalRawData();
-		rawdata.setPoints(points);
-		rawdata.setSteps(steps);
-		rawdata.setVariances(variances);
-
-		return rawdata;
-	}
-
-	private GoalRawData generateEmptyRawData(int includeStartOffsetMinute, int excludeEndOffsetMinute) {
-
-		int duration = excludeEndOffsetMinute - includeStartOffsetMinute;
-		return generateEmptyRawData(duration);
-	}
-
-	private GoalRawData generateGapData(int stepPerMinute, int pointPerMinute, int activeInterval, int idleInterval, int duration) {
-
-		int gapCount = duration / (idleInterval + activeInterval);
-
-		int[] steps = new int[duration];
-		int[] points = new int[duration];
-		int[] variances = new int[duration];
-
-		Arrays.fill(steps, 0);
-		Arrays.fill(points, 0);
-		Arrays.fill(variances, 10000);
-
-		int index = 0;
-		for(int i = 0; i < gapCount; i++) {
-
-			for(int j = 0; j < activeInterval; j++) {
-				steps[index] = stepPerMinute;
-				points[index] = (int)(pointPerMinute * 2.5);
-				index++;
-			}
-
-			for(int k = 0; k < idleInterval; k++) {
-				steps[index] = 0;
-				points[index] = 0;
-				index++;
-			}
-
-		}
-
-		GoalRawData rawdata = new GoalRawData();
-		rawdata.setPoints(points);
-		rawdata.setSteps(steps);
-		rawdata.setVariances(variances);
-
-		return rawdata;
-	}
-
-
-	private int getNumberOfTile(List<TimelineItem> items, int itemType) {
-		
-		int count = 0;
-		for(TimelineItem item : items) {
-
-			if(item.getItemType() == itemType)
-				count++;
-		}
-
-		return count;
-	}
-	
-	private int getNumberOfSessionTiles(List<TimelineItem> items) {
-
-		int count = 0;
-		for(TimelineItem item : items) {
-
-			if(item.getItemType() == TimelineItemDataBase.TYPE_SESSION)
-				count++;
-		}
-
-		return count;
-	}
-	
-	
-	private boolean hasSessionTileWithData(List<TimelineItem> items, Goal goal, int offsetMinute, int minutes, int points) {
-
-		long goalStartTime = goal.getStartTime();
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
-		long timestamp = cal.getTimeInMillis() / 1000;
-		
-		logger.info("Looking for session with: Timestamp: " + timestamp + ", Points: " + points + ", Duration: " + minutes);
-		
-		for(TimelineItem item : items) {
-
-			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_SESSION) {
-
-				ActivitySessionItem session = (ActivitySessionItem) item.getData();
-				double diff = (session.getPoint() - points * 2.5) + (session.getDuration() - minutes * 60);
-				return diff == 0;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean hasDailyGoalMilestone(List<TimelineItem> items, Goal goal, int offsetMinute, int eventType, int points) {
-
-		long goalStartTime = goal.getStartTime();
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
-		long timestamp = cal.getTimeInMillis() / 1000;
-		
-		logger.info("Looking for daily event with: Timestamp: " + timestamp + ", Points: " + points + ", Event type: " + eventType);
-		
-		for(TimelineItem item : items) {
-
-			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
-
-				MilestoneItem milestone = (MilestoneItem) item.getData();
-				MilestoneItemInfo milestoneInfo = milestone.getInfo();
-
-				// ignore streak tile because it had the same timestamp with 100%
-				if(milestone.getEventType() == TimelineItemDataBase.EVENT_TYPE_STREAK)
-					continue;
-
-				double diff = milestoneInfo.getPoint() - points * 2.5;
-				return milestone.getEventType().equals(eventType) && diff == 0;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean hasStreakMilestone(List<TimelineItem> items, Goal goal, int offsetMinute, int streakNumber) {
-
-		long goalStartTime = goal.getStartTime();
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
-		long timestamp = cal.getTimeInMillis() / 1000;
-		
-		logger.info("Looking for streak event with: Timestamp: " + timestamp + ", Streak number: " + streakNumber);
-		
-		for(TimelineItem item : items) {
-
-			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
-
-				MilestoneItem milestone = (MilestoneItem) item.getData();
-				MilestoneItemInfo milestoneInfo = milestone.getInfo();
-				if(milestone.getEventType().equals(TimelineItemDataBase.EVENT_TYPE_STREAK))
-					return  milestoneInfo.getStreakNumber().equals(streakNumber);
-			}
-		}
-
-		return false;
-	}
-
-	private boolean hasPersonalBestMilestone(List<TimelineItem> items, Goal goal, int offsetMinute, int points, int extendedAmount) {
-
-		long goalStartTime = goal.getStartTime();
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
-		long timestamp = cal.getTimeInMillis() / 1000;
-		
-		logger.info("Looking for personal best event with: Timestamp: " + timestamp + ", Points: " + points + ", Extended amount: " + extendedAmount);
-		
-		for(TimelineItem item : items) {
-
-			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
-
-				MilestoneItem milestone = (MilestoneItem) item.getData();
-				MilestoneItemInfo milestoneInfo = milestone.getInfo();
-				double diff = (milestoneInfo.getPoint() - points * 2.5) + (milestoneInfo.getExceededAmount() - extendedAmount * 2.5); 
-				return milestone.getEventType().equals(TimelineItemDataBase.EVENT_TYPE_PERSONAL_BEST) && diff == 0;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean hasLifeTimeDistanceTile(List<TimelineItem> items, Goal goal, int offsetMinute, int marathonNumber, int unit) {
-
-		int[] marathonNumbers = new int[] {2, 6, 12};
-		int milestoneType = 0;
-		for(int i = 0; i < marathonNumbers.length; i++) {
-
-			if(marathonNumber == marathonNumbers[i]) {
-				milestoneType = i;
-				break;
-			}
-		}
-
-		long goalStartTime = goal.getStartTime();
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(goalStartTime * 1000 + offsetMinute * 60 * 1000);
-		long timestamp = cal.getTimeInMillis() / 1000;
-		
-		logger.info("Looking for distance milestone with: Timestamp: " + timestamp + ", Marathon number: " + marathonNumber + ", Unit: " + unit);
-		
-		for(TimelineItem item : items) {
-			
-			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_LIFETIME_DISTANCE) {
-
-				LifetimeDistanceItem distanceitem = (LifetimeDistanceItem) item.getData();
-				return distanceitem.getMilestoneType().equals(milestoneType) && distanceitem.getUnitSystem().equals(unit);
-			}
-		}
-
-		return false;
 	}
 
 }
