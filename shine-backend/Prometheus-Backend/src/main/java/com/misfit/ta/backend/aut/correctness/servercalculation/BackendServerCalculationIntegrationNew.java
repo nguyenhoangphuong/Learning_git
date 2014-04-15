@@ -36,7 +36,7 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 	// TODO:
 	// verify new server calculation on local
 	protected int timestampDelta = 120;
-	protected int delayTime = 30000;
+	protected int delayTime = 60000;
 	
 
 	// test cases
