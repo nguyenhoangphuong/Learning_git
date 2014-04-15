@@ -24,8 +24,8 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 	private String accessToken;
 	private List<Goal> goals;
 	
-	private String fromDate = getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * 2);
-	private String toDate = getDateString(System.currentTimeMillis() / 1000);
+	private String fromDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * 2);
+	private String toDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000);
 	
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass() {
@@ -164,8 +164,8 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		
 		// get detail with toDate in future
 		long timestamp = System.currentTimeMillis() / 1000;
-		BaseResult result = OpenAPI.getSummary(accessToken, "me", getISOTime(timestamp - 3600 * 24 * 10), 
-				getISOTime(timestamp + 3600 * 24 * 10), true);
+		BaseResult result = OpenAPI.getSummary(accessToken, "me", MVPCommon.getISOTime(timestamp - 3600 * 24 * 10), 
+				MVPCommon.getISOTime(timestamp + 3600 * 24 * 10), true);
 		List<OpenAPISummary> summaries = OpenAPISummary.getSummaries(result.response);
 		Collections.reverse(summaries);
 
@@ -283,7 +283,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		
 		
 		// get summary detail = false
-		String date = getDateString(timestamp);
+		String date = MVPCommon.getDateString(timestamp);
 		BaseResult result = OpenAPI.getSummary(accessToken, "me", date, date);
 		OpenAPISummary summary = OpenAPISummary.getSummary(result.response);
 		

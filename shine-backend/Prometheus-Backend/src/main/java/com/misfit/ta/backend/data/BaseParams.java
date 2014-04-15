@@ -10,6 +10,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicHeader;
 
 import com.google.resting.component.impl.json.JSONRequestParams;
+import com.google.resting.json.JSONException;
+import com.google.resting.json.JSONObject;
 
 public class BaseParams {
 	
@@ -62,28 +64,38 @@ public class BaseParams {
 	
 	
 	public String getParamsAsJsonString() {
-		JSONBuilder json = new JSONBuilder();
+
+		JSONObject jsonObj = new JSONObject();
 		List<NameValuePair> pairs = params.getRequestParams();
 		Iterator<NameValuePair> iter = pairs.iterator();
 
 		while (iter.hasNext()) {
 			NameValuePair pair = iter.next();
-			json.addValue(pair.getName(), pair.getValue());
+			try {
+				jsonObj.put(pair.getName(), pair.getValue());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 
-		return json.toJSONString();
+		return jsonObj.toString();
 	}
 	
 	public String getHeadersAsJsonString() {
-		JSONBuilder json = new JSONBuilder();
+		
+		JSONObject jsonObj = new JSONObject();
 		Iterator<Header> iter = headers.iterator();
 
 		while (iter.hasNext()) {
 			Header header = iter.next();
-			json.addValue(header.getName(), header.getValue());
+			try {
+				jsonObj.put(header.getName(), header.getValue());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 
-		return json.toJSONString();
+		return jsonObj.toString();
 	}
 
 }

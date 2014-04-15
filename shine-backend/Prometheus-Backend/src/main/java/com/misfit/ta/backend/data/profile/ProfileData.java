@@ -1,5 +1,8 @@
 package com.misfit.ta.backend.data.profile;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
@@ -160,6 +163,15 @@ public class ProfileData {
 		}
 	}
 	
+	public int calculateAge() {
+		
+		Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		Calendar cal2 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal2.setTimeInMillis(this.dateOfBirthUTC * 1000);
+		
+		return cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR);
+	}
+	
 	
 	// getters setters
 	public String getServerId() {
@@ -298,41 +310,33 @@ public class ProfileData {
 		this.authToken = authToken;
 	}
 
-
 	public Long getCreatedAt() {
 		return createdAt;
 	}
-
 
 	public void setCreatedAt(Long createdAt) {
 		this.createdAt = createdAt;
 	}
 
-
 	public Long getDateOfBirthUTC() {
 		return dateOfBirthUTC;
 	}
-
 
 	public void setDateOfBirthUTC(Long dateOfBirthUTC) {
 		this.dateOfBirthUTC = dateOfBirthUTC;
 	}
 
-
 	public Boolean getIsEarlyUser() {
 		return isEarlyUser;
 	}
-
 
 	public void setIsEarlyUser(Boolean isEarlyUser) {
 		this.isEarlyUser = isEarlyUser;
 	}
 
-
 	public String getPromotionCode() {
 		return promotionCode;
 	}
-
 
 	public void setPromotionCode(String promotionCode) {
 		this.promotionCode = promotionCode;

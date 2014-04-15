@@ -1,8 +1,5 @@
 package com.misfit.ta.backend.aut.correctness.openapi;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 import org.testng.annotations.BeforeClass;
 
@@ -53,38 +50,5 @@ public class OpenAPIAutomationBase extends BackendAutomation {
 		ClientApp = new OpenAPIThirdPartyApp();
 		ClientApp.setClientKey(ClientKey);
 		ClientApp.setClientSecret(ClientSecret);
-	}
-	
-	public static String getDateString(long timestamp) {
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(timestamp * 1000);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		
-		return formatter.format(cal.getTime());
-	}
-	
-	public static String getISODateString(long timestamp) {
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(timestamp * 1000);
-		
-		TimeZone tz = TimeZone.getTimeZone("UTC");
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		formatter.setTimeZone(tz);
-		
-		return formatter.format(cal.getTime());
-	}
-	
-	public static String getISOTime(long timestamp) {
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(timestamp * 1000);
-		
-		TimeZone tz = TimeZone.getTimeZone("UTC");
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
-		df.setTimeZone(tz);
-		
-		return df.format(cal.getTime());
 	}
 }

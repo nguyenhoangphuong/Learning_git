@@ -70,7 +70,7 @@ public class OpenApiSessionByObjectIdGetTC extends OpenAPIAutomationBase {
 		ActivitySessionItem sessionA = (ActivitySessionItem)itemA.getData();
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(ritem.getStartTime(), getISOTime(itemA.getTimestamp()) , "Activity start time");
+		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISOTime(itemA.getTimestamp()) , "Activity start time");
 		Assert.assertEquals(ritem.getActivityType(), MVPCommon.getActivityName(sessionA.getActivityType()) , "Activity type");
 		Assert.assertEquals(ritem.getCalories(), MVPCommon.round(sessionA.getCalories(), 1), "Activity calories");
 		Assert.assertEquals(ritem.getDistance(), MVPCommon.round(sessionA.getDistance(), 1), "Activity distance");
@@ -84,7 +84,7 @@ public class OpenApiSessionByObjectIdGetTC extends OpenAPIAutomationBase {
 		sessionA = (ActivitySessionItem)itemA.getData();
 
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(ritem.getStartTime(), getISOTime(itemA.getTimestamp()) , "Activity start time");
+		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISOTime(itemA.getTimestamp()) , "Activity start time");
 		Assert.assertEquals(ritem.getActivityType(), MVPCommon.getActivityName(sessionA.getActivityType()) , "Activity type");
 		Assert.assertEquals(ritem.getCalories(), MVPCommon.round(sessionA.getCalories(), 1), "Activity calories");
 		Assert.assertEquals(ritem.getDistance(), MVPCommon.round(sessionA.getDistance(), 1), "Activity distance");
@@ -145,7 +145,7 @@ public class OpenApiSessionByObjectIdGetTC extends OpenAPIAutomationBase {
 		ActivitySessionItem sessionA = (ActivitySessionItem)itemA.getData();
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(ritem.getStartTime(), getISOTime(itemA.getTimestamp()) , "Activity start time");
+		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISOTime(itemA.getTimestamp()) , "Activity start time");
 		Assert.assertEquals(ritem.getActivityType(), MVPCommon.getActivityName(sessionA.getActivityType()) , "Activity type");
 		Assert.assertEquals(ritem.getCalories(), MVPCommon.round(sessionA.getCalories(), 1), "Activity calories");
 		Assert.assertEquals(ritem.getDistance(), MVPCommon.round(sessionA.getDistance(), 1), "Activity distance");

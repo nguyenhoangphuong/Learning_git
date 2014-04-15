@@ -12,6 +12,7 @@ import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPIProfile;
 import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.utils.TextTool;
 
 public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
@@ -57,7 +58,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		OpenAPIProfile data = OpenAPIProfile.fromResponse(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(data.getBirthday(), getISODateString(profile.getDateOfBirthUTC()), "Profile birthday");
+		Assert.assertEquals(data.getBirthday(), MVPCommon.getUTCDateString(profile.getDateOfBirthUTC()), "Profile birthday");
 		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");
@@ -68,7 +69,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		data = OpenAPIProfile.fromResponse(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(data.getBirthday(), getISODateString(profile.getDateOfBirthUTC()), "Profile birthday");
+		Assert.assertEquals(data.getBirthday(), MVPCommon.getUTCDateString(profile.getDateOfBirthUTC()), "Profile birthday");
 		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");
@@ -109,7 +110,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		OpenAPIProfile data = OpenAPIProfile.fromResponse(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(data.getBirthday(), getISODateString(profile.getDateOfBirthUTC()), "Profile birthday");
+		Assert.assertEquals(data.getBirthday(), MVPCommon.getUTCDateString(profile.getDateOfBirthUTC()), "Profile birthday");
 		Assert.assertEquals(data.getEmail(), myEmail, "Profile email");
 		Assert.assertEquals(data.getGender(), profile.getGender().equals(0) ? "male" : "female", "Profile gender");
 		Assert.assertEquals(data.getName(), profile.getName(), "Profile name");

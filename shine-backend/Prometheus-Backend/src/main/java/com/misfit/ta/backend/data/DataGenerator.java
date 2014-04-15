@@ -332,6 +332,53 @@ public class DataGenerator {
 		return item;
 	}
 	
+	public static TimelineItem generateRandomSleepNapTimelineItem(long timestamp, Map<String, Object> options) {
+
+		long realStartTime = timestamp + MVPCommon.randInt(600, 1200);
+		long realEndTime = timestamp + MVPCommon.randInt(3600 * 1, 3600 * 2);
+		int realSleepTimeInMinutes = (int)((realEndTime - realStartTime) / 60);
+		int	realDeepSleepTimeInMinutes = realSleepTimeInMinutes * MVPCommon.randInt(20, 40) / 100;
+		
+		List<Integer[]> sleepStateChanges = new ArrayList<Integer[]>();
+		sleepStateChanges.add(new Integer[] {0, 2});
+		int currentMinuteOffset = 0;
+		int currentState = 2;
+		while(currentMinuteOffset < realSleepTimeInMinutes - 15) {
+			
+			int state;
+			do {
+				state = MVPCommon.randInt(1, 3);
+			}
+			while (state == currentState);
+			
+			currentMinuteOffset += MVPCommon.randLong(10, 120);
+			currentState = state;
+			
+			sleepStateChanges.add(new Integer[] {currentMinuteOffset, state});
+		}
+				
+		SleepSessionItem data = new SleepSessionItem();
+		data.setBookmarkTime(timestamp);
+		data.setIsAutoDetected(MVPCommon.coin());
+		data.setIsFirstSleepOfDay(true);
+		data.setNormalizedSleepQuality(MVPCommon.randInt(60, 100));
+		data.setRealDeepSleepTimeInMinutes(realDeepSleepTimeInMinutes);
+		data.setRealSleepTimeInMinutes(realSleepTimeInMinutes);
+		data.setRealStartTime(realStartTime);
+		data.setRealEndTime(realEndTime);
+		data.setSleepStateChanges(sleepStateChanges);
+
+		TimelineItem item = new TimelineItem();
+		item.setLocalId("timelineitem-" + MVPApi.generateLocalId());
+		item.setUpdatedAt(timestamp);
+		item.setTimestamp(timestamp);
+		item.setItemType(TimelineItemDataBase.TYPE_SLEEP);
+		item.setData(data);
+
+		return item;
+	}
+	
+
 	public static TimelineItem generateRandomTimezoneTimelineItem(long timestamp, Map<String, Object> options) {
 
 		TimezoneChangeItem data = new TimezoneChangeItem();

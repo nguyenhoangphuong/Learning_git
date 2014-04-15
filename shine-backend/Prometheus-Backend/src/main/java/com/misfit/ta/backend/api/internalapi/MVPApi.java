@@ -1010,6 +1010,36 @@ public class MVPApi extends RequestHelper {
 		BaseResult result = userInfo(token);
 		return Statistics.fromResponse(result.response);
 	}
+
+	public static BaseResult getSummaryByMonth(String token, Long startTimestamp) {
+	
+		String url = baseAddress + "aggregate/monthly?";
+		String startDate = MVPCommon.getDateString(startTimestamp);
+		if(startTimestamp != null)
+			url += ("start_date=" + startDate);
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+
+		return new BaseResult(response);
+	}
+	
+	public static BaseResult getSummaryByWeek(String token, Long startTimestamp) {
+		
+		String url = baseAddress + "aggregate/weekly?";
+		String startDate = MVPCommon.getDateString(startTimestamp);
+		if(startTimestamp != null)
+			url += ("start_date=" + startDate);
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+
+		return new BaseResult(response);
+	}
 	
 	
 	// beddit sleeps
@@ -1099,6 +1129,7 @@ public class MVPApi extends RequestHelper {
 
 		return new BaseResult(response);
 	}
+
 	
 	// test
 	public static void main(String[] args) throws JSONException {

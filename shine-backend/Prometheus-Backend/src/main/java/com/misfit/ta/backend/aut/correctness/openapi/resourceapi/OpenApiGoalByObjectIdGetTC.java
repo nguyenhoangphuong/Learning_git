@@ -16,6 +16,7 @@ import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPIGoal;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.utils.TextTool;
 
 public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
@@ -83,7 +84,7 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 		OpenAPIGoal rgoal = OpenAPIGoal.getGoalFromResponse(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(rgoal.getDate(), getDateString(goalsA.get(0).getStartTime()), "goal date");
+		Assert.assertEquals(rgoal.getDate(), MVPCommon.getDateString(goalsA.get(0).getStartTime()), "goal date");
 		Assert.assertEquals(rgoal.getPoints(), goalsA.get(0).getProgressData().getPoints() / 2.5d, "goal progress");
 		Assert.assertEquals(rgoal.getTargetPoints(), goalsA.get(0).getGoalValue() / 2.5d, "goal value");
 		
@@ -93,7 +94,7 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 		rgoal = OpenAPIGoal.getGoalFromResponse(result.response);
 
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(rgoal.getDate(), getDateString(goalsA.get(0).getStartTime()), "goal date");
+		Assert.assertEquals(rgoal.getDate(), MVPCommon.getDateString(goalsA.get(0).getStartTime()), "goal date");
 		Assert.assertEquals(rgoal.getPoints(), goalsA.get(0).getProgressData().getPoints() / 2.5d, "goal progress");
 		Assert.assertEquals(rgoal.getTargetPoints(), goalsA.get(0).getGoalValue() / 2.5d, "goal value");
 	}
@@ -155,7 +156,7 @@ public class OpenApiGoalByObjectIdGetTC extends OpenAPIAutomationBase {
 		OpenAPIGoal rgoal = OpenAPIGoal.getGoalFromResponse(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(rgoal.getDate(), getDateString(goalsA.get(0).getStartTime()), "goal date");
+		Assert.assertEquals(rgoal.getDate(), MVPCommon.getDateString(goalsA.get(0).getStartTime()), "goal date");
 		Assert.assertEquals(rgoal.getPoints(), goalsA.get(0).getProgressData().getPoints() / 2.5d, "goal progress");
 		Assert.assertEquals(rgoal.getTargetPoints(), goalsA.get(0).getGoalValue() / 2.5d, "goal value");
 		

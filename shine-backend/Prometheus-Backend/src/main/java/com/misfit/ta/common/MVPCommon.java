@@ -3,6 +3,7 @@ package com.misfit.ta.common;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.codec.binary.Base64;
@@ -193,8 +195,8 @@ public class MVPCommon {
 		return MVPCommon.getDayStartEpoch(System.currentTimeMillis() / 1000);
 	}
 
-	
 	public static long getDayStartEpoch(long epoch) {
+	
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(epoch * 1000);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -233,6 +235,80 @@ public class MVPCommon {
 	}
 
 	
+	public static long getDayStartEpoch(long epoch, TimeZone tz) {
+		
+		Calendar cal = Calendar.getInstance(tz);
+		cal.setTimeInMillis(epoch * 1000);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+	
+		return cal.getTimeInMillis() / 1000;
+	}
+	
+	public static long getDayStartEpoch(int date, int month, int year, TimeZone tz) {
+		
+		Calendar cal = Calendar.getInstance(tz);
+		cal.set(year, month - 1, date, 0, 0, 0);
+	
+		return cal.getTimeInMillis() / 1000;
+	}
+
+	public static long getDayEndEpoch(long epoch, TimeZone tz) {
+		
+		Calendar cal = Calendar.getInstance(tz);
+		cal.setTimeInMillis(epoch * 1000);
+		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+	
+		return cal.getTimeInMillis() / 1000;
+	}
+
+	public static long getDayEndEpoch(int date, int month, int year, TimeZone tz) {
+		
+		Calendar cal = Calendar.getInstance(tz);
+		cal.set(year, month - 1, date, 23, 59, 59);
+	
+		return cal.getTimeInMillis() / 1000;
+	}
+	
+	
+	// datetime format
+ 	public static String getDateString(long timestamp) {
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(timestamp * 1000);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		
+		return formatter.format(cal.getTime());
+	}
+
+	public static String getUTCDateString(long timestamp) {
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(timestamp * 1000);
+		
+		TimeZone tz = TimeZone.getTimeZone("UTC");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		formatter.setTimeZone(tz);
+		
+		return formatter.format(cal.getTime());
+	}
+
+	public static String getISOTime(long timestamp) {
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(timestamp * 1000);
+		
+		TimeZone tz = TimeZone.getTimeZone("UTC");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
+		df.setTimeZone(tz);
+		
+		return df.format(cal.getTime());
+	}
+	
+	
 	// string manipulating
 	public static Map<String, String> parseStringIntoMap(String paramsString) {
 		return parseStringIntoMap(paramsString, "=", ",");
@@ -249,5 +325,5 @@ public class MVPCommon {
 		
 		return map;
 	}
-	
+
 }

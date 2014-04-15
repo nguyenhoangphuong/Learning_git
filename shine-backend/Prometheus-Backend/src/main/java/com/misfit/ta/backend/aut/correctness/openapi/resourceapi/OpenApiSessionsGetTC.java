@@ -24,8 +24,8 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 	private String accessToken;
 	private List<List<TimelineItem>> allSessions;
 	
-	private String fromDate = getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * 2);
-	private String toDate = getDateString(System.currentTimeMillis() / 1000);
+	private String fromDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * 2);
+	private String toDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000);
 	
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass() {
@@ -104,7 +104,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		// fromDate == toDate
 		for(int i = 0; i < 5; i++) {
 
-			String date = getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * i);
+			String date = MVPCommon.getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * i);
 			result = OpenAPI.getSessions(accessToken, myUid, date, date);
 			rsessions = OpenAPISession.getSessionsFromResponse(result.response);
 
@@ -116,7 +116,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 				ActivitySessionItem csession = (ActivitySessionItem)allSessions.get(i).get(j).getData();
 				OpenAPISession rsession = rsessions.get(j);
 				
-				Assert.assertEquals(rsession.getStartTime(), getISOTime(allSessions.get(i).get(j).getTimestamp()) , "Activity start time");
+				Assert.assertEquals(rsession.getStartTime(), MVPCommon.getISOTime(allSessions.get(i).get(j).getTimestamp()) , "Activity start time");
 				Assert.assertEquals(rsession.getActivityType(), MVPCommon.getActivityName(csession.getActivityType()) , "Activity type");
 				Assert.assertEquals(rsession.getCalories(), MVPCommon.round(csession.getCalories(), 1), "Activity calories");
 				Assert.assertEquals(rsession.getDistance(), MVPCommon.round(csession.getDistance(), 1), "Activity distance");

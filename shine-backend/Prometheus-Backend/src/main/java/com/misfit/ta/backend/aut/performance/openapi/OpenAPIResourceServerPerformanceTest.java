@@ -7,7 +7,6 @@ import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.aut.ResultLogger;
-import com.misfit.ta.backend.aut.correctness.openapi.OpenAPIAutomationBase;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
@@ -15,6 +14,7 @@ import com.misfit.ta.backend.data.openapi.OpenAPIThirdPartyApp;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.base.SeedThread;
 import com.misfit.ta.base.SeedThreadParallelExecutor;
+import com.misfit.ta.common.MVPCommon;
 
 public class OpenAPIResourceServerPerformanceTest {
 
@@ -121,9 +121,9 @@ public class OpenAPIResourceServerPerformanceTest {
 		// implements intefaces
 		public void run() {
 
-			String endDate = OpenAPIAutomationBase.getDateString(System
+			String endDate = MVPCommon.getDateString(System
 					.currentTimeMillis() / 1000);
-			String startDate = OpenAPIAutomationBase.getDateString(System
+			String startDate = MVPCommon.getDateString(System
 					.currentTimeMillis() / 1000 - 3600 * 24 * 30);
 
 			// device

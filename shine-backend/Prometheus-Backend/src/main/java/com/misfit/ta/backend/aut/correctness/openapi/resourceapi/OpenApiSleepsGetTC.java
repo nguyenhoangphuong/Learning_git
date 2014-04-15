@@ -18,6 +18,7 @@ import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISleep;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISleepDetail;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.SleepSessionItem;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.utils.TextTool;
 
 public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
@@ -25,8 +26,8 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 	private String accessToken;
 	private List<List<TimelineItem>> allTimelineItems;
 	
-	private String fromDate = getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * 2);
-	private String toDate = getDateString(System.currentTimeMillis() / 1000);
+	private String fromDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * 2);
+	private String toDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000);
 	
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass() {
@@ -102,7 +103,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		// fromDate == toDate
 		for(int i = 0; i < 5; i++) {
 
-			String date = getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * i);
+			String date = MVPCommon.getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * i);
 			result = OpenAPI.getSleeps(accessToken, myUid, date, date);
 			rsleeps = OpenAPISleep.getSleepsFromResponse(result.response);
 
@@ -112,7 +113,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 			SleepSessionItem csession = (SleepSessionItem)allTimelineItems.get(i).get(0).getData();
 			OpenAPISleep rsession = rsleeps.get(0);
 
-			Assert.assertEquals(rsession.getStartTime(), getISOTime(csession.getRealStartTime()), "Sleep start time");
+			Assert.assertEquals(rsession.getStartTime(), MVPCommon.getISOTime(csession.getRealStartTime()), "Sleep start time");
 			Assert.assertEquals(rsession.getAutoDetected(), csession.getIsAutoDetected(), "Sleep auto detected");
 			Assert.assertEquals((int)rsession.getDuration(), csession.getRealEndTime() - csession.getRealStartTime(), "Sleep duration");
 
@@ -122,7 +123,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 			for(int k = 0; k < cdetails.size(); k++) {
 				
 				long stateChangeTime = csession.getRealStartTime() + cdetails.get(k)[0] * 60;
-				Assert.assertEquals(rdetails.get(k).getDatetime(), getISOTime(stateChangeTime), "Sleep state change timestamp");
+				Assert.assertEquals(rdetails.get(k).getDatetime(), MVPCommon.getISOTime(stateChangeTime), "Sleep state change timestamp");
 				Assert.assertEquals(rdetails.get(k).getValue(), cdetails.get(k)[1], "Sleep new state");
 			}
 		}
@@ -221,7 +222,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 
 		
 		// get sleep
-		String date = getDateString(timestamp);
+		String date = MVPCommon.getDateString(timestamp);
 		result = OpenAPI.getSleeps(accessToken, "me", date, date);
 		List<OpenAPISleep> rsleeps = OpenAPISleep.getSleepsFromResponse(result.response);
 		

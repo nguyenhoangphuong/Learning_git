@@ -20,6 +20,7 @@ import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.utils.TextTool;
 
 public class OpenApiSmokeTest extends BackendAutomation {
@@ -126,8 +127,8 @@ public class OpenApiSmokeTest extends BackendAutomation {
 		
 		// query and verify data of user A using access token and "me" route
 		long timestamp = System.currentTimeMillis() / 1000;
-		String fromDate = OpenAPIAutomationBase.getDateString(timestamp - 3600 * 24 * 1);
-		String toDate = OpenAPIAutomationBase.getDateString(timestamp);
+		String fromDate = MVPCommon.getDateString(timestamp - 3600 * 24 * 1);
+		String toDate = MVPCommon.getDateString(timestamp);
 		
 		result = OpenAPI.getProfile(accessTokenA, "me");
 		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/me/profile ok");

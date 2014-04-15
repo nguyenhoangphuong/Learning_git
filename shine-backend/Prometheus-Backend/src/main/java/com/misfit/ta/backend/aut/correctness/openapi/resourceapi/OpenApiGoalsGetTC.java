@@ -16,6 +16,7 @@ import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPIGoal;
+import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.utils.TextTool;
 
 public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
@@ -23,8 +24,8 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 	private String accessToken;
 	private List<Goal> goals;
 	
-	private String fromDate = getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * 2);
-	private String toDate = getDateString(System.currentTimeMillis() / 1000);
+	private String fromDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * 2);
+	private String toDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000);
 	
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass() {
@@ -73,9 +74,9 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(rgoals.size(), 3, "Number of goals in response");
 		
-		Assert.assertEquals(rgoals.get(0).getDate(), getDateString(goals.get(0).getStartTime()), "goals[0] date");
-		Assert.assertEquals(rgoals.get(1).getDate(), getDateString(goals.get(1).getStartTime()), "goals[1] date");
-		Assert.assertEquals(rgoals.get(2).getDate(), getDateString(goals.get(2).getStartTime()), "goals[2] date");
+		Assert.assertEquals(rgoals.get(0).getDate(), MVPCommon.getDateString(goals.get(0).getStartTime()), "goals[0] date");
+		Assert.assertEquals(rgoals.get(1).getDate(), MVPCommon.getDateString(goals.get(1).getStartTime()), "goals[1] date");
+		Assert.assertEquals(rgoals.get(2).getDate(), MVPCommon.getDateString(goals.get(2).getStartTime()), "goals[2] date");
 		
 		Assert.assertEquals(rgoals.get(0).getPoints(), goals.get(0).getProgressData().getPoints() / 2.5d, "goals[0] progress");
 		Assert.assertEquals(rgoals.get(1).getPoints(), goals.get(1).getProgressData().getPoints() / 2.5d, "goals[1] progress");
@@ -94,9 +95,9 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(rgoals.size(), 3, "Number of goals in response");
 		
-		Assert.assertEquals(rgoals.get(0).getDate(), getDateString(goals.get(0).getStartTime()), "goals[0] date");
-		Assert.assertEquals(rgoals.get(1).getDate(), getDateString(goals.get(1).getStartTime()), "goals[1] date");
-		Assert.assertEquals(rgoals.get(2).getDate(), getDateString(goals.get(2).getStartTime()), "goals[2] date");
+		Assert.assertEquals(rgoals.get(0).getDate(), MVPCommon.getDateString(goals.get(0).getStartTime()), "goals[0] date");
+		Assert.assertEquals(rgoals.get(1).getDate(), MVPCommon.getDateString(goals.get(1).getStartTime()), "goals[1] date");
+		Assert.assertEquals(rgoals.get(2).getDate(), MVPCommon.getDateString(goals.get(2).getStartTime()), "goals[2] date");
 		
 		Assert.assertEquals(rgoals.get(0).getPoints(), goals.get(0).getProgressData().getPoints() / 2.5d, "goals[0] progress");
 		Assert.assertEquals(rgoals.get(1).getPoints(), goals.get(1).getProgressData().getPoints() / 2.5d, "goals[1] progress");
@@ -114,7 +115,7 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(rgoals.size(), 1, "Number of goals in response");
 		
-		Assert.assertEquals(rgoals.get(0).getDate(), getDateString(goals.get(0).getStartTime()), "goals[0] date");
+		Assert.assertEquals(rgoals.get(0).getDate(), MVPCommon.getDateString(goals.get(0).getStartTime()), "goals[0] date");
 		Assert.assertEquals(rgoals.get(0).getPoints(), goals.get(0).getProgressData().getPoints() / 2.5d, "goals[0] progress");
 		Assert.assertEquals(rgoals.get(0).getTargetPoints(), goals.get(0).getGoalValue() / 2.5d, "goals[0] value");
 	}
@@ -188,9 +189,9 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(rgoals.size(), 3, "Number of goals in response");
 		
-		Assert.assertEquals(rgoals.get(0).getDate(), getDateString(goals.get(0).getStartTime()), "goals[0] date");
-		Assert.assertEquals(rgoals.get(1).getDate(), getDateString(goals.get(1).getStartTime()), "goals[1] date");
-		Assert.assertEquals(rgoals.get(2).getDate(), getDateString(goals.get(2).getStartTime()), "goals[2] date");
+		Assert.assertEquals(rgoals.get(0).getDate(), MVPCommon.getDateString(goals.get(0).getStartTime()), "goals[0] date");
+		Assert.assertEquals(rgoals.get(1).getDate(), MVPCommon.getDateString(goals.get(1).getStartTime()), "goals[1] date");
+		Assert.assertEquals(rgoals.get(2).getDate(), MVPCommon.getDateString(goals.get(2).getStartTime()), "goals[2] date");
 		
 		Assert.assertEquals(rgoals.get(0).getPoints(), goals.get(0).getProgressData().getPoints() / 2.5d, "goals[0] progress");
 		Assert.assertEquals(rgoals.get(1).getPoints(), goals.get(1).getProgressData().getPoints() / 2.5d, "goals[1] progress");

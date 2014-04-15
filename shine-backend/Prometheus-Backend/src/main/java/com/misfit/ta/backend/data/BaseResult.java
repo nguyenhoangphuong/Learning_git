@@ -158,13 +158,17 @@ public class BaseResult {
 	public String getHeadersAsJsonString() {
 		
 		Header[] headers = response.getResponseHeaders();
-		JSONBuilder json = new JSONBuilder();
+		JSONObject jsonObj = new JSONObject();
 		
 		for(Header header: headers) {
-			json.addValue(header.getName(), header.getValue());
+			try {
+				jsonObj.put(header.getName(), header.getValue());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 
-		return json.toJSONString();
+		return jsonObj.toString();
 	}
 
 	public String appendCookie(String cookieString) {
