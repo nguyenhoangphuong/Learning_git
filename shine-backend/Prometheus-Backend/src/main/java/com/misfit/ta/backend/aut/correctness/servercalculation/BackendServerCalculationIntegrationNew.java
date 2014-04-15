@@ -35,8 +35,9 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 
 	// TODO:
 	// verify new server calculation on local
-
+	protected int timestampDelta = 120;
 	protected int delayTime = 30000;
+	
 
 	// test cases
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "NewServercalculationSmoke" })
@@ -912,7 +913,7 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 		
 		for(TimelineItem item : items) {
 
-			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
+			if(Math.abs(item.getTimestamp() - timestamp) <  timestampDelta && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
 
 				MilestoneItem milestone = (MilestoneItem) item.getData();
 				MilestoneItemInfo milestoneInfo = milestone.getInfo();
@@ -940,7 +941,7 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 		
 		for(TimelineItem item : items) {
 
-			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
+			if(Math.abs(item.getTimestamp() - timestamp) <  timestampDelta && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
 
 				MilestoneItem milestone = (MilestoneItem) item.getData();
 				MilestoneItemInfo milestoneInfo = milestone.getInfo();
@@ -963,7 +964,7 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 		
 		for(TimelineItem item : items) {
 
-			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
+			if(Math.abs(item.getTimestamp() - timestamp) <  timestampDelta && item.getItemType() == TimelineItemDataBase.TYPE_MILESTONE) {
 
 				MilestoneItem milestone = (MilestoneItem) item.getData();
 				MilestoneItemInfo milestoneInfo = milestone.getInfo();
@@ -996,7 +997,7 @@ public class BackendServerCalculationIntegrationNew extends BackendAutomation {
 		
 		for(TimelineItem item : items) {
 			
-			if(item.getTimestamp().equals(timestamp) && item.getItemType() == TimelineItemDataBase.TYPE_LIFETIME_DISTANCE) {
+			if(Math.abs(item.getTimestamp() - timestamp) <  timestampDelta && item.getItemType() == TimelineItemDataBase.TYPE_LIFETIME_DISTANCE) {
 
 				LifetimeDistanceItem distanceitem = (LifetimeDistanceItem) item.getData();
 				return distanceitem.getMilestoneType().equals(milestoneType) && distanceitem.getUnitSystem().equals(unit);
