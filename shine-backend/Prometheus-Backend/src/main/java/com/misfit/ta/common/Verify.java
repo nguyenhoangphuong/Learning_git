@@ -9,51 +9,66 @@ public class Verify {
 
 	protected static Logger logger = Util.setupLogger(Verify.class);
 	
-	public static boolean verifyTrue(boolean actual, String message) {
+	public static String verifyTrue(boolean actual, String message) {
 		
 		if(!actual) {
-			logger.error(message + " expected true but found false");
-			TRS.instance().addCode(message + " expected true but found false", null);
-			return false;
+			message = message + " expected true but found false";
+			logger.error(message);
+			TRS.instance().addCode(message, null);
+			return message;
 		}
 		
-		return true;
+		return null;
 	}
 	
-	public static boolean verifyEquals(Object actual, Object expect, String message) {
+	public static String verifyEquals(Object actual, Object expect, String message) {
 		
 		if(!expect.equals(actual)) {
-			logger.error(message + " expected [" + expect + "] but found [" + actual + "]");
-			TRS.instance().addCode(message + " expected [" + expect + "] but found [" + actual + "]", null);
-			return false;
+			message = message + " expected [" + expect + "] but found [" + actual + "]";
+			logger.error(message);
+			TRS.instance().addCode(message, null);
+			return message;
 		}
 		
-		return true;
+		return null;
 	}
 	
-	public static boolean verifyNearlyEquals(double actual, double expect, double delta, String message) {
+	public static String verifyNotEquals(Object actual, Object expect, String message) {
+		
+		if(expect.equals(actual)) {
+			message = message + " expected not [" + expect + "] but found [" + actual + "]";
+			logger.error(message);
+			TRS.instance().addCode(message, null);
+			return message;
+		}
+		
+		return null;
+	}
+	
+	public static String verifyNearlyEquals(double actual, double expect, double delta, String message) {
 		
 		double diff = Math.abs(actual - expect); 
 		if(diff > delta) {
-			logger.error(message + " expect difference not greater than [" + delta + "] but found [" + diff + "] (" +
-					actual + " - " + expect + ")");
-			TRS.instance().addCode(message + " expect difference not greater than [" + delta + "] but found [" + diff + "] (" +
-					actual + " - " + expect + ")", null);
-			return false;
+			message = message + " expect difference not greater than [" + delta + "] but found [" + diff + "] (" +
+					actual + " - " + expect + ")";
+			logger.error(message);
+			TRS.instance().addCode(message, null);
+			return message;
 		}
 		
-		return true;
+		return null;
 	}
 	
-	public static boolean verifyContainsNoCase(String actualString, String expectContainString, String message) {
+	public static String verifyContainsNoCase(String actualString, String expectContainString, String message) {
 		
 		if(!actualString.toLowerCase().contains(expectContainString.toLowerCase())) {
-			logger.error(message + " expected contains [" + expectContainString + "] but doesn't: [" + actualString + "]");
-			TRS.instance().addCode(message + " expected contains [" + expectContainString + "] but doesn't: [" + actualString + "]", null);
-			return false;
+			message = message + " expected contains [" + expectContainString + "] but doesn't: [" + actualString + "]";
+			logger.error(message);
+			TRS.instance().addCode(message, null);
+			return message;
 		}
 		
-		return true;
+		return null;
 	}
 	
 }

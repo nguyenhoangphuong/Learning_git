@@ -33,17 +33,17 @@ public class OpenApiExchangeTokenTC extends BackendAutomation {
 		BaseResult result5 = OpenAPI.exchangeCodeForToken(grantType, code, clientKey, clientSecret, null, null);
 
 		boolean pass = true;
-		pass &= Verify.verifyEquals(result1.statusCode, 200, "Status code (grant type)");
-		pass &= Verify.verifyEquals(result2.statusCode, 200, "Status code (code)");
-		pass &= Verify.verifyEquals(result3.statusCode, 401, "Status code (client id)");
-		pass &= Verify.verifyEquals(result4.statusCode, 401, "Status code (client secret)");
-		pass &= Verify.verifyEquals(result5.statusCode, 200, "Status code (redirect uri)");
+		pass &= Verify.verifyEquals(result1.statusCode, 200, "Status code (grant type)") == null;
+		pass &= Verify.verifyEquals(result2.statusCode, 200, "Status code (code)") == null;
+		pass &= Verify.verifyEquals(result3.statusCode, 401, "Status code (client id)") == null;
+		pass &= Verify.verifyEquals(result4.statusCode, 401, "Status code (client secret)") == null;
+		pass &= Verify.verifyEquals(result5.statusCode, 200, "Status code (redirect uri)") == null;
 		
-		pass &= Verify.verifyContainsNoCase(result1.rawData, "invalid grant type", "Error message (grant type)");
-		pass &= Verify.verifyContainsNoCase(result2.rawData, "missing code parameter", "Error message (code)");
-		pass &= Verify.verifyContainsNoCase(result3.rawData, "Unauthorized", "Error message (client id)");
-		pass &= Verify.verifyContainsNoCase(result4.rawData, "Unauthorized", "Error message (client secret)");
-		pass &= Verify.verifyContainsNoCase(result5.rawData, "Missing redirectUri", "Error message (redirect uri)");
+		pass &= Verify.verifyContainsNoCase(result1.rawData, "invalid grant type", "Error message (grant type)") == null;
+		pass &= Verify.verifyContainsNoCase(result2.rawData, "missing code parameter", "Error message (code)") == null;
+		pass &= Verify.verifyContainsNoCase(result3.rawData, "Unauthorized", "Error message (client id)") == null;
+		pass &= Verify.verifyContainsNoCase(result4.rawData, "Unauthorized", "Error message (client secret)") == null;
+		pass &= Verify.verifyContainsNoCase(result5.rawData, "Missing redirectUri", "Error message (redirect uri)") == null;
 		
 		Assert.assertTrue(pass, "All tests are passed");
 	}
@@ -63,19 +63,19 @@ public class OpenApiExchangeTokenTC extends BackendAutomation {
 		BaseResult result6 = OpenAPI.exchangeCodeForToken(grantType, code, clientKey, clientSecret, redirectUrl, null);
 
 		boolean pass = true;
-		pass &= Verify.verifyEquals(result1.statusCode, 200, "Status code (random grant type)");
-		pass &= Verify.verifyEquals(result2.statusCode, 200, "Status code (random code)");
-		pass &= Verify.verifyEquals(result3.statusCode, 401, "Status code (random client id & client secret)");
-		pass &= Verify.verifyEquals(result4.statusCode, 401, "Status code (random client secret)");
-		pass &= Verify.verifyEquals(result5.statusCode, 401, "Status code (random client id)");
-		pass &= Verify.verifyEquals(result6.statusCode, 200, "Status code (redirect url doesn't match)");
+		pass &= Verify.verifyEquals(result1.statusCode, 200, "Status code (random grant type)") == null;
+		pass &= Verify.verifyEquals(result2.statusCode, 200, "Status code (random code)") == null;
+		pass &= Verify.verifyEquals(result3.statusCode, 401, "Status code (random client id & client secret)") == null;
+		pass &= Verify.verifyEquals(result4.statusCode, 401, "Status code (random client secret)") == null;
+		pass &= Verify.verifyEquals(result5.statusCode, 401, "Status code (random client id)") == null;
+		pass &= Verify.verifyEquals(result6.statusCode, 200, "Status code (redirect url doesn't match)") == null;
 		
-		pass &= Verify.verifyContainsNoCase(result1.rawData, "invalid grant type", "Status code (random grant type)");
-		pass &= Verify.verifyContainsNoCase(result2.rawData, "Invalid parameter", "Status code (random code)");
-		pass &= Verify.verifyContainsNoCase(result3.rawData, "Unauthorized", "Status code (random client id & client secret)");
-		pass &= Verify.verifyContainsNoCase(result4.rawData, "Unauthorized", "Status code (random client secret)");
-		pass &= Verify.verifyContainsNoCase(result5.rawData, "Unauthorized", "Status code (random client id)");
-		pass &= Verify.verifyContainsNoCase(result6.rawData, "Invalid parameter", "Status code (redirect url doesn't match)");
+		pass &= Verify.verifyContainsNoCase(result1.rawData, "invalid grant type", "Status code (random grant type)") == null;
+		pass &= Verify.verifyContainsNoCase(result2.rawData, "Invalid parameter", "Status code (random code)") == null;
+		pass &= Verify.verifyContainsNoCase(result3.rawData, "Unauthorized", "Status code (random client id & client secret)") == null;
+		pass &= Verify.verifyContainsNoCase(result4.rawData, "Unauthorized", "Status code (random client secret)") == null;
+		pass &= Verify.verifyContainsNoCase(result5.rawData, "Unauthorized", "Status code (random client id)") == null;
+		pass &= Verify.verifyContainsNoCase(result6.rawData, "Invalid parameter", "Status code (redirect url doesn't match)") == null;
 		
 		Assert.assertTrue(pass, "All tests are passed");
 	}

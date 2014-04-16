@@ -201,9 +201,8 @@ public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 		List<String> friendIds = new ArrayList<String>();
 		BaseResult result = SocialAPI.sendFriendRequests(misfitToken, friendIds);
 		
-		Assert.assertEquals(result.statusCode, 400, "Status code");
-		Assert.assertEquals(result.errorCode, DefaultValues.InvalidParameterCode, "Error code");
-		Assert.assertEquals(result.errorMessage, DefaultValues.InvalidParameterMessage, "Error message");
+		Assert.assertEquals(result.statusCode, 200, "Status code");
+		Assert.assertEquals(result.rawData, "{}", "Data");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })

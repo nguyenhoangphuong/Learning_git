@@ -38,14 +38,6 @@ public class Debug {
 //		List<BedditSleepSession> sleeps_result = BedditSleepSession.getBedditSleepSessionsFromResponse(result.response);
 //		sleeps_result.get(0).getProperties().setNormalizedSleepQuality(-1);
 //		MVPApi.updateBedditSleepSession(token, sleeps_result.get(0));
-		
-//		BackendHelper.link("nhhai16991@gmail.com", "qqqqqq", "HaiDangYeu");
-		
-		
-//		Files.delete("rawdata");
-//		Files.getFile("rawdata");
-//		MVPApi.pushSDKSyncLog(ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(
-//				System.currentTimeMillis() / 1000, 
-//				"a@a.a", "adsasdasds", "rawdata/test1/1392170920"));
+	
 	}
 }

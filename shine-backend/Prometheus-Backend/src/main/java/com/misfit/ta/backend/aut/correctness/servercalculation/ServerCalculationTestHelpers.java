@@ -13,10 +13,7 @@ import org.graphwalker.Util;
 
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.data.DataGenerator;
-import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
-import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.sync.sdk.SDKSyncEvent;
 import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
 import com.misfit.ta.backend.data.sync.sdk.requestevent.SDKSyncRequestFinishedEvent;
@@ -27,19 +24,15 @@ import com.misfit.ta.backend.data.sync.sdk.requestevent.value.SDKSyncResponseFin
 import com.misfit.ta.backend.data.sync.sdk.requestevent.value.SDKSyncResponseStartedValue;
 import com.misfit.ta.base.AWSHelper;
 import com.misfit.ta.common.MVPCommon;
-import com.misfit.ta.utils.Files;
-import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
 public class ServerCalculationTestHelpers {
 
 	protected static Logger logger = Util.setupLogger(ServerCalculationTestHelpers.class);
-	protected static String TestMetaDataFile = "test.json";
-	protected static int SDKSyncLogHeaderSize = 16;
-	protected static int DelayTime = 10000;
+	protected static final int SDKSyncLogHeaderSize = 16;
+	public static final String TestMetaDataFile = "test.json";
 
-	
-	// NEW CALCULATION SERVER 
+
 	// get data from AWS to create test case
 	public static void createTest(String saveFolder, String email, int startDate, int startMonth, int startYear, int endDate, int endMonth, int endYear) {
 		
@@ -196,60 +189,8 @@ public class ServerCalculationTestHelpers {
 		return syncLog;
 	}
 	
-	
-	// run tests
-	public static void runTest(String testFolderPath, String email, String password) {
-		
-		try {
-			
-			Files.delete("rawdata");
-			Files.getFile("rawdata");
-						
-			// create user and create goals in the test time range
-			String jsonString = FileUtils.readFileToString(new File(testFolderPath + "/" + TestMetaDataFile));
-			JSONObject json = new JSONObject(jsonString);
-			
-			long startTime = json.getLong("start_time");
-			long endTime = json.getLong("end_time");
-			Pedometer pedometer = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
-			
-			String token = MVPApi.signUp(email, password).token;
-			if(token == null)
-				token = MVPApi.signIn(email, password).token;
-			
-			MVPApi.createProfile(token, DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null));
-			MVPApi.createPedometer(token, pedometer);
-			MVPApi.createGoal(token, Goal.getDefaultGoal());
-			
-			for(long i = startTime - 3600 * 24; i <= endTime; i = i + 3600 * 24) {
-				
-				MVPApi.createGoal(token, Goal.getDefaultGoal(i));
-			}
-			
-			
-			// push raw data to server
-			File testFolder = new File(testFolderPath);
-			long startTimestamp = MVPCommon.getDayStartEpoch();
-			
-			for(File syncFolder : testFolder.listFiles()) {
-				
-				if(syncFolder.isFile())
-					continue;
-				
-				SDKSyncLog syncLog = createSDKSyncLogFromFilesInFolder(startTimestamp, email, pedometer.getSerialNumberString(), syncFolder.getAbsolutePath());
-				startTimestamp += 600;
-				
-				MVPApi.pushSDKSyncLog(syncLog);
-				ShortcutsTyper.delayTime(DelayTime);
- 			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-
-	// OLD CALCULATION SERVER
+	// generate data helper
 	public static GoalRawData generateSessionRawData(int totalSteps, int totalPoints, int duration)  {
 
 		int stepPerMinute = totalSteps / duration;
