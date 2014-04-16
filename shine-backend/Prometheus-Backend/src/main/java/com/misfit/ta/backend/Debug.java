@@ -1,20 +1,13 @@
 package com.misfit.ta.backend;
 
 import java.io.FileNotFoundException;
-import java.net.URI;
-import java.util.Calendar;
-import java.util.TimeZone;
 
-import javax.ws.rs.core.UriBuilder;
-
-import org.apache.http.client.methods.HttpPost;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.common.MVPCommon;
-import com.misfit.ta.utils.TextTool;
+import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.servercalculation.ServerCalculationCursor;
 
 public class Debug {
 
@@ -22,7 +15,7 @@ public class Debug {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 	
-		logger.info(String.format("Looking for tile with timestamp: %d - points: %d - duration: %d", 123l, 4, 5));
+		BaseResult r = MVPApi.getCursors(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token);
 		
 //		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
 //		BaseResult result = MVPApi.searchGoalProgress(token, 3, MVPCommon.getDayStartEpoch() - 3600 * 24 * 14, null, null);

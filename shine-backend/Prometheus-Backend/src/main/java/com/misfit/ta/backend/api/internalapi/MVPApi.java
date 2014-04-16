@@ -971,6 +971,16 @@ public class MVPApi extends RequestHelper {
 		return pushSDKSyncLog(syncLog, false);
 	}
 	
+	public static BaseResult getCursors(String token) {
+
+		String url = baseAddress + "cursors";
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+		return new BaseResult(response);
+	}
+	
 	
 	// statistics
  	public static BaseResult createStatistics(String token, Statistics statistics) {

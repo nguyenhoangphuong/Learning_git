@@ -23,7 +23,7 @@ import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.Verify;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class BackendServerCalculationIntegrationNew extends BackendServerCalculationBase {
+public class BackendNewServerCalculationIntegration extends BackendServerCalculationBase {
 
 	// fields
 	protected int delayTime = 60000;
