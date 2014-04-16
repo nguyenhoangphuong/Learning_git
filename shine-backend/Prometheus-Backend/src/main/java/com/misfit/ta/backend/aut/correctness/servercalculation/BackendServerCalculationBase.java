@@ -22,7 +22,7 @@ public class BackendServerCalculationBase extends BackendAutomation {
 	// fields
 	protected static final int timestampDelta = 120;
 	protected static final double fullBmrDelta = 10;
-	protected static final double totalCalorieDelta = 20;
+	protected static final double totalCalorieDelta = 30;
 	protected static final double distanceDelta = 0.001;
 	
 	
