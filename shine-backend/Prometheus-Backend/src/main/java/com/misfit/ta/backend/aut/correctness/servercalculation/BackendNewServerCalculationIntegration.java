@@ -16,7 +16,6 @@ import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.statistics.Statistics;
-import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.common.MVPCalculator;
@@ -367,6 +366,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 //		String email = "sc038@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
+		String userId = MVPApi.getUserId(token);
 
 
 		// create profile (height = 64") / pedometer / statistics
@@ -476,7 +476,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		List<String> dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[5].getStartTime(), goals[5].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data5).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[4].getStartTime(), goals[4].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data4a).rawData);		
-		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
 		changeDistanceUnit(token, 0);
@@ -484,26 +484,26 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		dataStrings.add(MVPApi.getRawDataAsString(goals[4].getStartTime() + 3600, goals[4].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data4b).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[3].getStartTime(), goals[3].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data3).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime(), goals[2].getTimeZoneOffsetInSeconds() / 60, "0103", "18", data2a).rawData);
-		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
 		changeDistanceUnit(token, 1);
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime() + 3600, goals[2].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2b).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[1].getStartTime(), goals[1].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data1).rawData);
-		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
 		changeDistanceUnit(token, 0);
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime(), goals[0].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data0a).rawData);
-		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
 		changeDistanceUnit(token, 1);
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime() + 6 * 3600, goals[0].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data0b).rawData);
-		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 
 
@@ -540,6 +540,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 //		String email = "sc034@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
+		String userId = MVPApi.getUserId(token);
 
 
 		// create profile / pedometer / statistics
@@ -601,7 +602,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		// push to server
 		List<String> dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data).rawData);
-		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
 		
 		ShortcutsTyper.delayTime(delayTime);
 		
@@ -646,6 +647,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 //		String email = "sc041@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
+		String userId = MVPApi.getUserId(token);
 
 
 		// create profile / pedometer / statistics
@@ -702,11 +704,11 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		// push to server
 		List<String> dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data1).rawData);
-		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
 		
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2).rawData);
-		pushSyncData(timestamp, email, pedometer.getSerialNumberString(), dataStrings);
+		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
 		
 		ShortcutsTyper.delayTime(delayTime);
 
@@ -741,12 +743,4 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
-	
-	// data helpers
-	private void pushSyncData(long timestamp, String email, String serialNumber, List<String> dataStrings) {
-
-		SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromDataStrings(timestamp, email, serialNumber, dataStrings);
-		MVPApi.pushSDKSyncLog(syncLog);
-	}
-	
 }

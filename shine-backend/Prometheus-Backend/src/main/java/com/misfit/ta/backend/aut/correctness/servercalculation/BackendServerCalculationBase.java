@@ -10,6 +10,7 @@ import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
 import com.misfit.ta.backend.data.profile.DisplayUnit;
 import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.LifetimeDistanceItem;
@@ -123,6 +124,12 @@ public class BackendServerCalculationBase extends BackendAutomation {
 		rawdata.setVariances(variances);
 
 		return rawdata;
+	}
+
+	protected void pushSyncData(long timestamp, String email, String serialNumber, List<String> dataStrings) {
+
+		SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromDataStrings(timestamp, email, serialNumber, dataStrings);
+		MVPApi.pushSDKSyncLog(syncLog);
 	}
 	
 
