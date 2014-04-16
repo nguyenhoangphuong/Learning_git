@@ -425,16 +425,16 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		// - Tiles are displayed in correct order
 
 		// 1st day:
-		// 63720 steps - 360 minute (49.21 miles)
+		// 63360 steps - 360 minute (48.38 miles)
 		GoalRawData data5 = new GoalRawData();
-		data5.appendGoalRawData(generateSessionRawData(63720, 3600, 360));
+		data5.appendGoalRawData(generateSessionRawData(63360, 3600, 360));
 		data5.appendGoalRawData(generateEmptyRawData(0 * 60 + 360, 24 * 60));
 
 		// 2nd day:
-		// SI: 1900 steps - 20 mins (0.69 miles - 49.9 total)
-		// US: 2560 steps - 20 mins (1.1 miles - 51 total)
+		// SI: 2960 steps - 20 mins (1.55 miles - 49.93 total)
+		// US: 2560 steps - 20 mins (1.1 miles - 51.03 total)
 		GoalRawData data4a = new GoalRawData();
-		data4a.appendGoalRawData(generateSessionRawData(1900, 200, 20));
+		data4a.appendGoalRawData(generateSessionRawData(2960, 200, 20));
 		data4a.appendGoalRawData(generateEmptyRawData(0 * 60 + 20, 1 * 60));
 
 		GoalRawData data4b = new GoalRawData();
@@ -442,35 +442,35 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		data4b.appendGoalRawData(generateEmptyRawData(1 * 60 + 20, 24 * 60));
 
 		// 3rd day:
-		// 127440 steps - 720 minutes (98.41 miles - 149.41 total)
+		// 126720 steps - 720 minutes (96.77 miles - 147.80 total)
 		GoalRawData data3 = new GoalRawData();
-		data3.appendGoalRawData(generateSessionRawData(127440, 7200, 720));
+		data3.appendGoalRawData(generateSessionRawData(126720, 7200, 720));
 		data3.appendGoalRawData(generateEmptyRawData(0 * 60 + 720, 24 * 60));
 
 		// 4th day
-		// US: 4260 steps - 30 mins (2.01 miles - 151.42 total)
-		// SI: 12780 steps - 90 mins (6.03 miles - 157.45 total)
-		// 60840 steps - 360 mins (42.8 miles - 200.25 total)
+		// US: 5100 steps - 30 mins (3.63 miles - 151.43 total)
+		// SI: 12780 steps - 90 mins (6.03 miles - 157.46 total)
+		// 61200 steps - 360 mins (43.58 miles - 201.04 total)
 		GoalRawData data2a = new GoalRawData();
-		data2a.appendGoalRawData(generateSessionRawData(4260, 300, 30));
+		data2a.appendGoalRawData(generateSessionRawData(5100, 300, 30));
 		data2a.appendGoalRawData(generateEmptyRawData(0 * 60 + 30, 1 * 60));
 
 		GoalRawData data2b = new GoalRawData();
 		data2b.appendGoalRawData(generateSessionRawData(12780, 900, 90));
 		data2b.appendGoalRawData(generateEmptyRawData(1 * 60 + 90, 6 * 60));
 
-		data2b.appendGoalRawData(generateSessionRawData(60840, 3600, 360));
+		data2b.appendGoalRawData(generateSessionRawData(61200, 3600, 360));
 		data2b.appendGoalRawData(generateEmptyRawData(6 * 60 + 360, 24 * 60));
 
 		// 5th day
-		// 126000 steps - 720 mins (95.14 miles - 295.39 total)
+		// 126720 steps - 720 mins (96.77 miles - 297.81 total)
 		GoalRawData data1 = new GoalRawData();
-		data1.appendGoalRawData(generateSessionRawData(126000, 7200, 720));
+		data1.appendGoalRawData(generateSessionRawData(126720, 7200, 720));
 		data1.appendGoalRawData(generateEmptyRawData(0 * 60 + 720, 24 * 60));
 
 		// 6th day
-		// US: 21300 steps - 150 mins (10.05 miles - 305.44 total)
-		// SI: 21300 steps - 150 mins (10.05 miles - 315.49 total)
+		// US: 21300 steps - 150 mins (10.05 miles - 307.86 total)
+		// SI: 21300 steps - 150 mins (10.05 miles - 317.91 total)
 		GoalRawData data0a = new GoalRawData();
 		data0a.appendGoalRawData(generateSessionRawData(21300, 1500, 150));
 		data0a.appendGoalRawData(generateEmptyRawData(0 * 60 + 150, 6 * 60));
@@ -528,13 +528,13 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		numberOfDistanceTile += getNumberOfTile(timelineitems0, TimelineItemDataBase.TYPE_LIFETIME_DISTANCE);
 		
 		testPassed &= Verify.verifyEquals(numberOfDistanceTile, 3, "Number of lifetime distance tiles") == null;
-		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems4, goals[4], 0 * 60 + 15, 2, 1), "2 marathons tile in SI unit") == null;
-		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems2, goals[2], 0 * 60 + 9, 6, 0), "6 marathons tile in US unit") == null;
-		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems0, goals[0], 0 * 60 + 69, 12, 0), "12 marathons tile in US unit") == null;
+		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems4, goals[4], 0 * 60 + 18, 2, 1), "2 marathons tile in SI unit") == null;
+		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems2, goals[2], 0 * 60 + 19, 6, 0), "6 marathons tile in US unit") == null;
+		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems0, goals[0], 0 * 60 + 33, 12, 0), "12 marathons tile in US unit") == null;
 
 
 		// === VERIFY STATISTICS
-		testPassed &= Verify.verifyNearlyEquals(statistics.getLifetimeDistance(), 315.49d, 0.01, "Lifetime distance") == null;
+		testPassed &= Verify.verifyNearlyEquals(statistics.getLifetimeDistance(), 317.91d	, 0.01, "Lifetime distance") == null;
 
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}

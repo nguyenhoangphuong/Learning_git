@@ -26,7 +26,7 @@ public class BackendNewServerCalculationCursor extends BackendServerCalculationB
 	public void setUp() {
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "NewServercalculationCursor" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "NewServercalculationCursor", "Excluded" })
 	public void ServerCalculationCursor() {
 		
 		assertionMessages.clear();

@@ -33,7 +33,7 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		// sign up new account
 		boolean testPassed = true;
 		String email = MVPApi.generateUniqueEmail();
-//		String email = "sc059@a.a";
+		//		String email = "sc059@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
@@ -54,11 +54,11 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 			long goalTimestamp = timestamp - i * 3600 * 24;
 			Goal goal = Goal.getDefaultGoal(goalTimestamp);
-			
+
 			// if today goal, increase length to 25h
 			if(i == 0)
 				goal.setEndTime(goal.getEndTime() + 3600);
-			
+
 			GoalsResult result = MVPApi.createGoal(token, goal);
 
 			goal.setServerId(result.goals[0].getServerId());
@@ -66,8 +66,8 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 			goals[i] = goal;
 		}
-		
-		
+
+
 		// story on 4th day (3 days ago):
 		// - session: 60 minutes - 6000 steps - 600 points at 7:00
 		// - session: 50 minutes - 5000 steps - 500 points at 10:00
@@ -155,11 +155,11 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 		data1.appendGoalRawData(generateSessionRawData(6000, 600, 60));
 		data1.appendGoalRawData(generateEmptyRawData(21 * 60 + 60, 23 * 60));
-		
+
 		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
 		data1.appendGoalRawData(generateEmptyRawData(23 * 60 + 40, 24 * 60));
-		
-		
+
+
 		// story on today:
 		// - session: 50 minutes - 5000 steps - 600 points at 8:00
 		// - session: 50 minutes - 5000 steps - 500 points at 9:00
@@ -184,16 +184,16 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
 		data0.appendGoalRawData(generateEmptyRawData(9 * 60 + 50, 10 * 60));
-		
+
 		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
 		data0.appendGoalRawData(generateEmptyRawData(10 * 60 + 50, 11 * 60));
-		
+
 		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
 		data0.appendGoalRawData(generateEmptyRawData(11 * 60 + 50, 12 * 60));
-		
+
 		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
 		data0.appendGoalRawData(generateEmptyRawData(12 * 60 + 50, 13 * 60));
-		
+
 		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
 
 
@@ -266,7 +266,7 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 11 * 60, 50, 500), "Goal[0] has session tile at 11:00 - 500 pts") == null;
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 12 * 60, 50, 500), "Goal[0] has session tile at 12:00 - 500 pts") == null;
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 13 * 60, 50, 500), "Goal[0] has session tile at 13:00 - 500 pts") == null;
-		
+
 
 		// daily goal milestone tiles are correct
 		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems3, goals[3], 10 * 60 + 40, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[3] has 100% tile") == null;
@@ -283,13 +283,13 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 9 * 60 + 50, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[0] has 100% tile") == null;
 		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 10 * 60 + 50, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goals[0] has 150% tile") == null;
 		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 11 * 60 + 50, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goals[0] has 200% tile") == null;
-		
+
 
 		// personal best and streak tiles are correct
 		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems2, goals[2], 24 * 60 - 1, 2200, 400), "Goals[2] reaches 2200pts extended Goal[3] by 400pts") == null;
 		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems1, goals[1], 24 * 60 - 1, 2800, 600), "Goals[1] reaches 2800pts extended Goal[2] by 600pts") == null;
 		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems0, goals[0], 13 * 60 + 50, 3000, 200), "Goals[0] reaches 3000pts extended Goal[1] by 200pts") == null;
-		
+
 		testPassed &= Verify.verifyTrue(hasStreakMilestone(timelineitems1, goals[1], 10 * 60 + 40, 3), "Goals[1] has 3-day streak tile") == null;
 		testPassed &= Verify.verifyTrue(hasStreakMilestone(timelineitems0, goals[0], 9 * 60 + 50, 4), "Goals[0] has 4-day streak tile") == null;
 
@@ -303,12 +303,12 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		double miles1 = miles3 + MVPCalculator.calculateMiles(6000, 60, profile.getHeight()) 
 				+ MVPCalculator.calculateMiles(4000, 40, profile.getHeight());
 		double miles0 = MVPCalculator.calculateMiles(5000, 50, profile.getHeight()) * 6;
-		
+
 		double weight = profile.getWeight();
 		double height = profile.getHeight();
 		double fullBMR = MVPCalculator.calculateFullBMR((float)weight, (float)height, 
 				profile.calculateAge() + 1, profile.getGender().equals(0));
-		
+
 		double calorie3 = MVPCalculator.calculateCalories(1800, (float)weight, (float)fullBMR, 24 * 60);
 		double calorie2 = MVPCalculator.calculateCalories(2200, (float)weight, (float)fullBMR, 24 * 60);
 		double calorie1 = MVPCalculator.calculateCalories(2800, (float)weight, (float)fullBMR, 24 * 60);
@@ -334,7 +334,7 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[2] full bmr") == null;
 		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[1] full bmr") == null;
 		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[0] full bmr") == null;
-		
+
 		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData().getCalorie(), calorie3, totalCalorieDelta, "Goals[3] total calorie") == null;
 		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getCalorie(), calorie2, totalCalorieDelta, "Goals[2] total calorie") == null;
 		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getCalorie(), calorie1, totalCalorieDelta, "Goals[1] total calorie") == null;
@@ -351,14 +351,14 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		Assert.assertTrue(testPassed, "All asserts are passed");
 
 	}
-	
+
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation" })
 	public void ServerCalculation_MarathonTile() {
 
 		// sign up new account
 		boolean testPassed = true;
 		String email = MVPApi.generateUniqueEmail();
-//		String email = "sc038@a.a";
+		//		String email = "sc038@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
@@ -411,16 +411,16 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		// - Tiles are displayed in correct order
 
 		// 1st day:
-		// 63720 steps - 360 minute (49.21 miles)
+		// 63360 steps - 360 minute (48.38 miles)
 		GoalRawData data5 = new GoalRawData();
-		data5.appendGoalRawData(generateSessionRawData(63720, 3600, 360));
+		data5.appendGoalRawData(generateSessionRawData(63360, 3600, 360));
 		data5.appendGoalRawData(generateEmptyRawData(0 * 60 + 360, 24 * 60));
 
 		// 2nd day:
-		// SI: 1900 steps - 20 mins (0.69 miles - 49.9 total)
-		// US: 2560 steps - 20 mins (1.1 miles - 51 total)
+		// SI: 2960 steps - 20 mins (1.55 miles - 49.93 total)
+		// US: 2560 steps - 20 mins (1.1 miles - 51.03 total)
 		GoalRawData data4a = new GoalRawData();
-		data4a.appendGoalRawData(generateSessionRawData(1900, 200, 20));
+		data4a.appendGoalRawData(generateSessionRawData(2960, 200, 20));
 		data4a.appendGoalRawData(generateEmptyRawData(0 * 60 + 20, 1 * 60));
 
 		GoalRawData data4b = new GoalRawData();
@@ -428,35 +428,35 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		data4b.appendGoalRawData(generateEmptyRawData(1 * 60 + 20, 24 * 60));
 
 		// 3rd day:
-		// 127440 steps - 720 minutes (98.41 miles - 149.41 total)
+		// 126720 steps - 720 minutes (96.77 miles - 147.80 total)
 		GoalRawData data3 = new GoalRawData();
-		data3.appendGoalRawData(generateSessionRawData(127440, 7200, 720));
+		data3.appendGoalRawData(generateSessionRawData(126720, 7200, 720));
 		data3.appendGoalRawData(generateEmptyRawData(0 * 60 + 720, 24 * 60));
 
 		// 4th day
-		// US: 4260 steps - 30 mins (2.01 miles - 151.42 total)
-		// SI: 12780 steps - 90 mins (6.03 miles - 157.45 total)
-		// 60840 steps - 360 mins (42.8 miles - 200.25 total)
+		// US: 5100 steps - 30 mins (3.63 miles - 151.43 total)
+		// SI: 12780 steps - 90 mins (6.03 miles - 157.46 total)
+		// 61200 steps - 360 mins (43.58 miles - 201.04 total)
 		GoalRawData data2a = new GoalRawData();
-		data2a.appendGoalRawData(generateSessionRawData(4260, 300, 30));
+		data2a.appendGoalRawData(generateSessionRawData(5100, 300, 30));
 		data2a.appendGoalRawData(generateEmptyRawData(0 * 60 + 30, 1 * 60));
 
 		GoalRawData data2b = new GoalRawData();
 		data2b.appendGoalRawData(generateSessionRawData(12780, 900, 90));
 		data2b.appendGoalRawData(generateEmptyRawData(1 * 60 + 90, 6 * 60));
 
-		data2b.appendGoalRawData(generateSessionRawData(60840, 3600, 360));
+		data2b.appendGoalRawData(generateSessionRawData(61200, 3600, 360));
 		data2b.appendGoalRawData(generateEmptyRawData(6 * 60 + 360, 24 * 60));
 
 		// 5th day
-		// 126000 steps - 720 mins (95.14 miles - 295.39 total)
+		// 126720 steps - 720 mins (96.77 miles - 297.81 total)
 		GoalRawData data1 = new GoalRawData();
-		data1.appendGoalRawData(generateSessionRawData(126000, 7200, 720));
+		data1.appendGoalRawData(generateSessionRawData(126720, 7200, 720));
 		data1.appendGoalRawData(generateEmptyRawData(0 * 60 + 720, 24 * 60));
 
 		// 6th day
-		// US: 21300 steps - 150 mins (10.05 miles - 305.44 total)
-		// SI: 21300 steps - 150 mins (10.05 miles - 315.49 total)
+		// US: 21300 steps - 150 mins (10.05 miles - 307.86 total)
+		// SI: 21300 steps - 150 mins (10.05 miles - 317.91 total)
 		GoalRawData data0a = new GoalRawData();
 		data0a.appendGoalRawData(generateSessionRawData(21300, 1500, 150));
 		data0a.appendGoalRawData(generateEmptyRawData(0 * 60 + 150, 6 * 60));
@@ -470,22 +470,22 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		MVPApi.pushRawData(token, goals[5].getServerId(), data5, 0);
 		MVPApi.pushRawData(token, goals[4].getServerId(), data4a, 0);
 		ShortcutsTyper.delayTime(delayTime);
-		
+
 		changeDistanceUnit(token, 0);
 		MVPApi.pushRawData(token, goals[4].getServerId(), data4b, 1 * 60);
 		MVPApi.pushRawData(token, goals[3].getServerId(), data3, 0);
 		MVPApi.pushRawData(token, goals[2].getServerId(), data2a, 0);
 		ShortcutsTyper.delayTime(delayTime);
-		
+
 		changeDistanceUnit(token, 1);
 		MVPApi.pushRawData(token, goals[2].getServerId(), data2b, 1 * 60);
 		MVPApi.pushRawData(token, goals[1].getServerId(), data1, 0);
 		ShortcutsTyper.delayTime(delayTime);
-		
+
 		changeDistanceUnit(token, 0);
 		MVPApi.pushRawData(token, goals[0].getServerId(), data0a, 0);
 		ShortcutsTyper.delayTime(delayTime);
-		
+
 		changeDistanceUnit(token, 1);
 		MVPApi.pushRawData(token, goals[0].getServerId(), data0b, 6 * 60);
 		ShortcutsTyper.delayTime(delayTime);
@@ -502,15 +502,15 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		int numberOfDistanceTile = getNumberOfTile(timelineitems4, TimelineItemDataBase.TYPE_LIFETIME_DISTANCE);
 		numberOfDistanceTile += getNumberOfTile(timelineitems2, TimelineItemDataBase.TYPE_LIFETIME_DISTANCE);
 		numberOfDistanceTile += getNumberOfTile(timelineitems0, TimelineItemDataBase.TYPE_LIFETIME_DISTANCE);
-		
+
 		testPassed &= Verify.verifyEquals(numberOfDistanceTile, 3, "Number of lifetime distance tiles") == null;
-		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems4, goals[4], 0 * 60 + 15, 2, 1), "2 marathons tile in SI unit") == null;
-		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems2, goals[2], 0 * 60 + 9, 6, 0), "6 marathons tile in US unit") == null;
-		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems0, goals[0], 0 * 60 + 69, 12, 0), "12 marathons tile in US unit") == null;
+		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems4, goals[4], 0 * 60 + 18, 2, 1), "2 marathons tile in SI unit") == null;
+		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems2, goals[2], 0 * 60 + 19, 6, 0), "6 marathons tile in US unit") == null;
+		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems0, goals[0], 0 * 60 + 33, 12, 0), "12 marathons tile in US unit") == null;
 
 
 		// === VERIFY STATISTICS
-		testPassed &= Verify.verifyNearlyEquals(statistics.getLifetimeDistance(), 315.49d, 0.01, "Lifetime distance") == null;
+		testPassed &= Verify.verifyNearlyEquals(statistics.getLifetimeDistance(), 317.91d, 0.01, "Lifetime distance") == null;
 
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
@@ -521,7 +521,7 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		// sign up new account
 		boolean testPassed = true;
 		String email = MVPApi.generateUniqueEmail();
-//		String email = "sc034@a.a";
+		//		String email = "sc034@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
@@ -581,11 +581,11 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		data.appendGoalRawData(generateSessionRawData(4000, 400, 40));
 		data.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 24 * 60));
 
-		
+
 		// push to server
 		MVPApi.pushRawData(token, goal.getServerId(), data, 0);
 		ShortcutsTyper.delayTime(delayTime);
-		
+
 
 		// get server data
 		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0l);
@@ -613,18 +613,18 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		testPassed &= Verify.verifyEquals(goal.getProgressData().getPoints(), 2080 * 2.5, "Goal progress point") == null;
 		testPassed &= Verify.verifyEquals(goal.getProgressData().getSteps(), 20800, "Goal progress steps") == null;
 		testPassed &= Verify.verifyNearlyEquals(goal.getProgressData().getDistanceMiles(), miles, 0.001, "Goal progress distance in miles") == null;
-		
-		
+
+
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation" })
 	public void ServerCalculation_OverlapData() {
-		
+
 		// sign up new account
 		boolean testPassed = true;
 		String email = MVPApi.generateUniqueEmail();
-//		String email = "sc041@a.a";
+		//		String email = "sc041@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
@@ -645,8 +645,8 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 		goal.setServerId(result.goals[0].getServerId());
 		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
-		
-		
+
+
 		// story:
 		// 1st shine:
 		// - 4000 steps - 40 mins (400pts) at 0:00am
@@ -668,7 +668,7 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
 		data1.appendGoalRawData(generateEmptyRawData(3 * 60 + 40, 24 * 60));
-		
+
 		GoalRawData data2 = new GoalRawData();
 		data2.appendGoalRawData(generateEmptyRawData(0, 10));
 		data2.appendGoalRawData(generateSessionRawData(2000, 200, 20));
@@ -678,12 +678,12 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		data2.appendGoalRawData(generateEmptyRawData(1 * 60 + 50 + 20, 2 * 60 + 50));
 
 		data2.appendGoalRawData(generateSessionRawData(6000, 600, 60));
-		
-		
+
+
 		// push to server
 		MVPApi.pushRawData(token, goal.getServerId(), data1, 0);
 		ShortcutsTyper.delayTime(10000);
-		
+
 		MVPApi.pushRawData(token, goal.getServerId(), data2, 0);
 		ShortcutsTyper.delayTime(delayTime);
 
@@ -691,8 +691,8 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		// get server data
 		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0l);
 		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
-		
-		
+
+
 		// VERIFY TIMELINE ITEMS
 		// number of session tiles are correct
 		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems), 6, "Goal has 6 session tiles") == null;
@@ -701,7 +701,7 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 0 * 60, 40, 400), "Goal has session tile at 0:00 - 400 pts") == null;
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 2 * 60, 20, 200), "Goal has session tile at 2:00 - 200 pts") == null;
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 3 * 60, 40, 400), "Goal has session tile at 3:00 - 400 pts") == null;
-		
+
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 0 * 60 + 10, 20, 200), "Goal has session tile at 0:10 - 200 pts") == null;
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 1 * 60 + 50, 20, 200), "Goal has session tile at 1:50 - 200 pts") == null;
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 2 * 60 + 50, 60, 600), "Goal has session tile at 2:50 - 600 pts") == null;
@@ -710,16 +710,16 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		// ===== VERIFY GOAL PROGRESS
 		double miles = MVPCalculator.calculateMiles(data1.getSteps(), profile.getHeight());
 		miles += MVPCalculator.calculateMiles(data2.getSteps(), profile.getHeight());
-		
+
 		testPassed &= Verify.verifyEquals(goal.getProgressData().getPoints(), 2000 * 2.5, "Goal progress point") == null;
 		testPassed &= Verify.verifyEquals(goal.getProgressData().getSteps(), 20000, "Goal progress steps") == null;
 		testPassed &= Verify.verifyNearlyEquals(goal.getProgressData().getDistanceMiles(), miles, 0.001, "Goal progress distance in miles") == null;
-		
+
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
 	public void runPerformance() {
-		
+
 		String email = MVPApi.generateUniqueEmail();
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
