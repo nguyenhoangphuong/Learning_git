@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
@@ -29,6 +30,7 @@ import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.Verify;
 import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.utils.TextTool;
 
 public class BackendNewServerCalculationIntegration extends BackendServerCalculationBase {
 
@@ -714,9 +716,18 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data1).rawData);
 		pushSyncData(timestamp + delayTime * 1, userId, pedometer.getSerialNumberString(), dataStrings);
 		
+		
+		// link to new shine 
+		String serialNumber = TextTool.getRandomString(10, 10);
+		BackendHelper.link(token, serialNumber);
+		
+		ShortcutsTyper.delayTime(delayTime);
+		
+		
+		// push data to server
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2).rawData);
-		pushSyncData(timestamp + delayTime * 2, userId, pedometer.getSerialNumberString(), dataStrings);
+		pushSyncData(timestamp + delayTime * 2, userId, serialNumber, dataStrings);
 		
 		ShortcutsTyper.delayTime(delayTime);
 

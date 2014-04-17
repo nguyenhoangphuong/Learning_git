@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
@@ -20,6 +21,7 @@ import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.Verify;
 import com.misfit.ta.utils.ShortcutsTyper;
+import com.misfit.ta.utils.TextTool;
 
 public class BackendServerCalculationIntegration extends BackendServerCalculationBase {
 
@@ -682,8 +684,16 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 		// push to server
 		MVPApi.pushRawData(token, goal.getServerId(), data1, 0);
-		ShortcutsTyper.delayTime(10000);
+		
+		
+		// link to new shine 
+		String serialNumber = TextTool.getRandomString(10, 10);
+		BackendHelper.link(token, serialNumber);
 
+		ShortcutsTyper.delayTime(delayTime);
+
+		
+		// push to server
 		MVPApi.pushRawData(token, goal.getServerId(), data2, 0);
 		ShortcutsTyper.delayTime(delayTime);
 
