@@ -485,30 +485,30 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		dataStrings.add(MVPApi.getRawDataAsString(goals[5].getStartTime(), goals[5].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data5).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[4].getStartTime(), goals[4].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data4a).rawData);		
 		pushSyncData(timestamp + delayTime * 1, userId, pedometer.getSerialNumberString(), dataStrings);
+		changeDistanceUnit(token, 0);
 		ShortcutsTyper.delayTime(delayTime);
 		
-		changeDistanceUnit(token, 0);
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[4].getStartTime() + 3600, goals[4].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data4b).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[3].getStartTime(), goals[3].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data3).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime(), goals[2].getTimeZoneOffsetInSeconds() / 60, "0103", "18", data2a).rawData);
 		pushSyncData(timestamp + delayTime * 2, userId, pedometer.getSerialNumberString(), dataStrings);
+		changeDistanceUnit(token, 1);
 		ShortcutsTyper.delayTime(delayTime);
 		
-		changeDistanceUnit(token, 1);
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime() + 3600, goals[2].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2b).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[1].getStartTime(), goals[1].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data1).rawData);
 		pushSyncData(timestamp + delayTime * 3, userId, pedometer.getSerialNumberString(), dataStrings);
+		changeDistanceUnit(token, 0);
 		ShortcutsTyper.delayTime(delayTime);
 		
-		changeDistanceUnit(token, 0);
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime(), goals[0].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data0a).rawData);
 		pushSyncData(timestamp + delayTime * 4, userId, pedometer.getSerialNumberString(), dataStrings);
+		changeDistanceUnit(token, 1);
 		ShortcutsTyper.delayTime(delayTime);
 		
-		changeDistanceUnit(token, 1);
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime() + 6 * 3600, goals[0].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data0b).rawData);
 		pushSyncData(timestamp + delayTime * 5, userId, pedometer.getSerialNumberString(), dataStrings);
