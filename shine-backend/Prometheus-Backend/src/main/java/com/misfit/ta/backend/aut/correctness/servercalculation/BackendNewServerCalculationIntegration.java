@@ -44,8 +44,8 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 		// sign up new account
 		boolean testPassed = true;
-		String email = MVPApi.generateUniqueEmail();
-		//	String email = "sc059@a.a";
+//		String email = MVPApi.generateUniqueEmail();
+		String email = "sc060@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 		String userId = MVPApi.getUserId(token);
@@ -487,29 +487,33 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		dataStrings.add(MVPApi.getRawDataAsString(goals[5].getStartTime(), goals[5].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data5).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[4].getStartTime(), goals[4].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data4a).rawData);		
 		pushSyncData(timestamp + delayTime * 1, userId, pedometer.getSerialNumberString(), dataStrings);
-		changeDistanceUnit(token, 0);
 		ShortcutsTyper.delayTime(delayTime);
+		
+		changeDistanceUnit(token, 0);
 		
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[4].getStartTime() + 3600, goals[4].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data4b).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[3].getStartTime(), goals[3].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data3).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime(), goals[2].getTimeZoneOffsetInSeconds() / 60, "0103", "18", data2a).rawData);
 		pushSyncData(timestamp + delayTime * 2, userId, pedometer.getSerialNumberString(), dataStrings);
-		changeDistanceUnit(token, 1);
 		ShortcutsTyper.delayTime(delayTime);
+		
+		changeDistanceUnit(token, 1);
 		
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime() + 3600, goals[2].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2b).rawData);
 		dataStrings.add(MVPApi.getRawDataAsString(goals[1].getStartTime(), goals[1].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data1).rawData);
 		pushSyncData(timestamp + delayTime * 3, userId, pedometer.getSerialNumberString(), dataStrings);
-		changeDistanceUnit(token, 0);
 		ShortcutsTyper.delayTime(delayTime);
+		
+		changeDistanceUnit(token, 0);
 		
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime(), goals[0].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data0a).rawData);
 		pushSyncData(timestamp + delayTime * 4, userId, pedometer.getSerialNumberString(), dataStrings);
-		changeDistanceUnit(token, 1);
 		ShortcutsTyper.delayTime(delayTime);
+		
+		changeDistanceUnit(token, 1);
 		
 		dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime() + 6 * 3600, goals[0].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data0b).rawData);
@@ -768,31 +772,37 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		Files.delete("rawdata");
 		Files.getFile("rawdata");
 		
-		String email = "";
-		String password = "";
-		
 		String[] testPaths = new String[] {
-			"rawdata/test1", "rawdata/test2", "rawdata/test3", "rawdata/test4"
+			"rawdata/test0", 
+//			"rawdata/test1", 
+//			"rawdata/test2", 
+//			"rawdata/test3", 
+//			"rawdata/test4"
 		};
 
+//		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+		String token = MVPApi.signUp("sc070@a.a", "qqqqqq").token;
+		String userId = MVPApi.getUserId(token);
+		
 		for(String testFolderPath : testPaths) {
 			
 			// parse test metadata file
 			String jsonString = FileUtils.readFileToString(new File(testFolderPath + "/" + 
 					ServerCalculationTestHelpers.TestMetaDataFile));
+			logger.info("Data: " + jsonString);
 			JSONObject json = new JSONObject(jsonString);
 
 			// create user and create goals in the test time range
 			long startTime = json.getLong("start_time");
-			long endTime = json.getLong("end_time");
+			long lastSyncTime = json.getLong("last_sync_time");
 			Pedometer pedometer = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
-
-			String token = MVPApi.signUp(email, password).token;
+			
 			MVPApi.createProfile(token, DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null));
 			MVPApi.createPedometer(token, pedometer);
 			MVPApi.createGoal(token, Goal.getDefaultGoal());
 			
-			for(long i = startTime - 3600 * 24; i <= endTime; i = i + 3600 * 24)
+			// create goal in old day too
+			for(long i = startTime - 3600 * 24; i <= lastSyncTime; i = i + 3600 * 24)
 				MVPApi.createGoal(token, Goal.getDefaultGoal(i));
 
 			// push raw data to server
@@ -804,13 +814,48 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 				if(syncFolder.isFile())
 					continue;
 
-				SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(startTimestamp, email, pedometer.getSerialNumberString(), syncFolder.getAbsolutePath());
+				SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(startTimestamp, userId, pedometer.getSerialNumberString(), syncFolder.getAbsolutePath());
 				startTimestamp += 600;
 
 				MVPApi.pushSDKSyncLog(syncLog);
-				ShortcutsTyper.delayTime(10000);
+				ShortcutsTyper.delayTime(5000);
 			}
+			
+			logger.info("Delay " + delayTime + " miliseconds");
+			ShortcutsTyper.delayTime(delayTime);
+			
+			// get timeline items
+			List<TimelineItem> items = MVPApi.getTimelineItems(token, startTime - 3600 * 24, 
+					lastSyncTime + 3600 * 24, null);
+			
+			for(TimelineItem item : items)
+				if(item.getItemType() == 5)
+					logger.info(item.toJson().toString());
+			
 		}
 	}
+	
 
+	private void checkTimelineItems(List<TimelineItem> scItems, List<TimelineItem> expectedItems) {
+		
+		// check sleep
+		for(TimelineItem expect : expectedItems) {
+			
+			if(expect.getItemType() != TimelineItemDataBase.TYPE_SLEEP)
+				continue;
+			
+			for(TimelineItem actual : scItems) {
+				
+				if(actual.getItemType() != TimelineItemDataBase.TYPE_SLEEP)
+					continue;
+				
+				if(Math.abs(expect.getTimestamp() - actual.getTimestamp()) <= 60) {
+					
+				}
+			}
+			
+		}
+		
+	}
+	
 }

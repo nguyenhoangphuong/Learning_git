@@ -38,14 +38,16 @@ public class ServerCalculationTestHelpers {
 		
 		long startTime = MVPCommon.getDayStartEpoch(startDate, startMonth, startYear);
 		long endTime = MVPCommon.getDayEndEpoch(endDate, endMonth, endYear);
+		long lastSyncTime = getSyncFilesFromAWS(true, email, startTime, endTime, saveFolder);
 		
-		getSyncFilesFromAWS(true, email, startTime, endTime, saveFolder);
 		try {
 			JSONObject json = new JSONObject();
 			json.put("start_time", startTime);
 			json.put("end_time", endTime);
-			json.put("start_date", String.format("%02d/%02d/%d", startDate, startMonth, startYear));
-			json.put("end_date", String.format("%02d/%02d/%d", endDate, endMonth, endYear));
+			json.put("start_date", MVPCommon.getDateString(startTime));
+			json.put("end_date", MVPCommon.getDateString(endTime));
+			json.put("last_sync_time", lastSyncTime);
+			json.put("last_sync_date",  MVPCommon.getDateString(lastSyncTime));
 			json.put("email", email);
 			
 			FileUtils.write(new File(saveFolder + "/" + TestMetaDataFile), json.toString());
@@ -55,10 +57,11 @@ public class ServerCalculationTestHelpers {
 		}
 	}
 	
-	public static void getSyncFilesFromAWS(boolean fromStaging, String email, long fromTime, long toTime, String saveFolder) {
+	public static long getSyncFilesFromAWS(boolean fromStaging, String email, long fromTime, long toTime, String saveFolder) {
 
 		String bucket = "shine-binary-data";
 		String environment = fromStaging ? "staging" : "production";
+		long lastSyncTime = fromTime;
 
 		for(long i = fromTime; i <= toTime; i = i + 3600 * 24) {
 
@@ -84,8 +87,11 @@ public class ServerCalculationTestHelpers {
 				String timestampString = parts[parts.length - 2];
 
 				AWSHelper.downloadFile(bucket, obj, saveFolder + "/" + timestampString + "/" + fileName);
+				lastSyncTime = Long.parseLong(timestampString);
 			}
 		}
+		
+		return lastSyncTime;
 	}
 
 	
