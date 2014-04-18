@@ -44,8 +44,8 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 		// sign up new account
 		boolean testPassed = true;
-//		String email = MVPApi.generateUniqueEmail();
-		String email = "sc060@a.a";
+		String email = MVPApi.generateUniqueEmail();
+//		String email = "sc060@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 		String userId = MVPApi.getUserId(token);
