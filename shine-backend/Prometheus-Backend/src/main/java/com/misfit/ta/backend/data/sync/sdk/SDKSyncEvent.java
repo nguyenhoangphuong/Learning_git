@@ -8,6 +8,9 @@ import com.misfit.ta.backend.data.sync.sdk.requestevent.SDKSyncResponseFinishedE
 import com.misfit.ta.backend.data.sync.sdk.requestevent.SDKSyncResponseStartedEvent;
 
 public class SDKSyncEvent {
+	
+	public static final String EVENT_GET_FILE_ACTIVITY = "fileGetActivity";
+	public static final String EVENT_CLOSE = "close";
 
 	protected SDKSyncRequestStartedEvent requestStarted;
 	protected SDKSyncRequestFinishedEvent requestFinished;

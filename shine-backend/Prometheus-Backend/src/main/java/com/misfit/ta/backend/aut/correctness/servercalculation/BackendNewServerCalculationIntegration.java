@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -22,8 +23,10 @@ import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.statistics.Statistics;
+import com.misfit.ta.backend.data.sync.sdk.SDKSyncEvent;
 import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.SleepSessionItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPCommon;
@@ -36,6 +39,8 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 	// fields
 	protected int delayTime = 60000;
+	protected int DURATION_DELTA = 5;
+	protected long TIMESTAMP_DELTA = 60; 
 
 
 	// test cases
@@ -774,19 +779,20 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		
 		String[] testPaths = new String[] {
 			"rawdata/test0", 
-//			"rawdata/test1", 
+			"rawdata/test1", 
 //			"rawdata/test2", 
 //			"rawdata/test3", 
 //			"rawdata/test4"
 		};
-
-//		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
-		String token = MVPApi.signUp("sc070@a.a", "qqqqqq").token;
-		String userId = MVPApi.getUserId(token);
 		
 		for(String testFolderPath : testPaths) {
 			
+			String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+//			String token = MVPApi.signUp("sc077@a.a", "qqqqqq").token;
+			String userId = MVPApi.getUserId(token);
+			
 			// parse test metadata file
+			long currentTimestamp = System.currentTimeMillis() / 1000;
 			String jsonString = FileUtils.readFileToString(new File(testFolderPath + "/" + 
 					ServerCalculationTestHelpers.TestMetaDataFile));
 			logger.info("Data: " + jsonString);
@@ -795,19 +801,22 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 			// create user and create goals in the test time range
 			long startTime = json.getLong("start_time");
 			long lastSyncTime = json.getLong("last_sync_time");
-			Pedometer pedometer = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
+			int numberOfDays = (int) ((lastSyncTime - startTime) / (3600 * 24) + 2);
+			logger.info("Number of days: " + numberOfDays);			
 			
+			Pedometer pedometer = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
 			MVPApi.createProfile(token, DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null));
 			MVPApi.createPedometer(token, pedometer);
 			MVPApi.createGoal(token, Goal.getDefaultGoal());
 			
 			// create goal in old day too
-			for(long i = startTime - 3600 * 24; i <= lastSyncTime; i = i + 3600 * 24)
-				MVPApi.createGoal(token, Goal.getDefaultGoal(i));
+			for(int i = numberOfDays; i >= 0; i--)
+				MVPApi.createGoal(token, Goal.getDefaultGoal(currentTimestamp - i * 3600 * 24));
 
 			// push raw data to server
 			File testFolder = new File(testFolderPath);
 			long startTimestamp = MVPCommon.getDayStartEpoch();
+			int numberOfDaysToAdd = (int) ((currentTimestamp - lastSyncTime) / (3600 * 24));
 
 			for(File syncFolder : testFolder.listFiles()) {
 
@@ -815,6 +824,19 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 					continue;
 
 				SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(startTimestamp, userId, pedometer.getSerialNumberString(), syncFolder.getAbsolutePath());
+				
+				for(SDKSyncEvent event : syncLog.getEvents()) {
+					if(event.getEvent().equals(SDKSyncEvent.EVENT_GET_FILE_ACTIVITY)) {
+						
+						long timestamp = event.getResponseFinished().getValue().getTimestamp();
+						
+						Calendar cal = Calendar.getInstance();
+						cal.setTimeInMillis(timestamp * 1000);
+						cal.add(Calendar.DAY_OF_MONTH, numberOfDaysToAdd);
+						
+						event.getResponseFinished().getValue().setTimestamp(cal.getTimeInMillis() / 1000);
+					}
+				}
 				startTimestamp += 600;
 
 				MVPApi.pushSDKSyncLog(syncLog);
@@ -825,37 +847,111 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 			ShortcutsTyper.delayTime(delayTime);
 			
 			// get timeline items
-			List<TimelineItem> items = MVPApi.getTimelineItems(token, startTime - 3600 * 24, 
-					lastSyncTime + 3600 * 24, null);
+			List<TimelineItem> actualItems = MVPApi.getTimelineItems(token, 
+					currentTimestamp - 3600 * 24 * numberOfDays, 
+					currentTimestamp + 3600 * 24, null, TimelineItemDataBase.TYPE_SLEEP);
+			List<TimelineItem> expectedItems = TimelineItem.getTimelineItems(json.getJSONArray("sleeps"));
 			
-			for(TimelineItem item : items)
+			logger.info("Actual sleeps: ");
+			for(TimelineItem item : actualItems)
 				if(item.getItemType() == 5)
 					logger.info(item.toJson().toString());
 			
+			logger.info("");
+			logger.info("Expected sleeps: ");
+			for(TimelineItem item : expectedItems)
+				if(item.getItemType() == 5)
+					logger.info(item.toJson().toString());
+			logger.info("");
+			
+			checkSleepTimelineItems(actualItems, expectedItems, numberOfDaysToAdd);
 		}
 	}
 	
 
-	private void checkTimelineItems(List<TimelineItem> scItems, List<TimelineItem> expectedItems) {
+	private void checkSleepTimelineItems(List<TimelineItem> scItems, List<TimelineItem> expectedItems, int dayDifference) {
 		
-		// check sleep
-		for(TimelineItem expect : expectedItems) {
+		Assert.assertEquals(scItems.size(), expectedItems.size(), "Number of sleep tile");
+		int numberOfFailedItems = 0;
+		
+		for(int i = 0; i < expectedItems.size(); i++) {
+		
+			TimelineItem expect = expectedItems.get(i);
+			TimelineItem actual = scItems.get(i);
 			
-			if(expect.getItemType() != TimelineItemDataBase.TYPE_SLEEP)
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(expect.getTimestamp() * 1000);
+			cal.add(Calendar.DAY_OF_MONTH, dayDifference);
+			
+			long timestampDifference = cal.getTimeInMillis() / 1000 - expect.getTimestamp();
+			logger.info("Day difference " + dayDifference + ", Timestamp different: " + timestampDifference);
+			
+			// timestamp
+			if(!(Math.abs(expect.getTimestamp() + timestampDifference - actual.getTimestamp()) <= TIMESTAMP_DELTA)) {
+			
+				logger.info("Sleep[" + i + "] - Expect timestamp: " + (expect.getTimestamp() + timestampDifference) + 
+						", Actualy timestamp: " + actual.getTimestamp());
+				numberOfFailedItems++;
 				continue;
+			}
 			
-			for(TimelineItem actual : scItems) {
+			// sleep data
+			SleepSessionItem actualSleep = (SleepSessionItem)actual.getData();
+			SleepSessionItem expectSleep = (SleepSessionItem)expect.getData();
+
+			if (Math.abs(expectSleep.getRealStartTime() + timestampDifference - actualSleep.getRealStartTime()) > TIMESTAMP_DELTA ||
+				Math.abs(expectSleep.getRealEndTime() + timestampDifference - actualSleep.getRealEndTime()) > TIMESTAMP_DELTA ||
+				Math.abs(actualSleep.getRealSleepTimeInMinutes() - expectSleep.getRealSleepTimeInMinutes()) > DURATION_DELTA ||
+				Math.abs(actualSleep.getRealDeepSleepTimeInMinutes() - expectSleep.getRealDeepSleepTimeInMinutes()) > DURATION_DELTA ||
+				Math.abs(actualSleep.getNormalizedSleepQuality() - expectSleep.getNormalizedSleepQuality()) > 1 ||
+				actualSleep.getIsAutoDetected() == null || !actualSleep.getIsAutoDetected().equals(expectSleep.getIsAutoDetected()) ||
+				actualSleep.getIsFirstSleepOfDay() == null || !actualSleep.getIsFirstSleepOfDay().equals(expectSleep.getIsFirstSleepOfDay()) ) {
 				
-				if(actual.getItemType() != TimelineItemDataBase.TYPE_SLEEP)
-					continue;
+				logger.info("Sleep[" + i + "]: ");
+				logger.info("Real start time: " + actualSleep.getRealStartTime() + " - " + (expectSleep.getRealStartTime() + timestampDifference));
+				logger.info("Real end time: " + actualSleep.getRealEndTime() + " - " + (expectSleep.getRealEndTime() + timestampDifference));
+				logger.info("Real sleep time: " + actualSleep.getRealSleepTimeInMinutes() + " - " + expectSleep.getRealSleepTimeInMinutes());
+				logger.info("Real deep sleep time: " + actualSleep.getRealDeepSleepTimeInMinutes() + " - " + expectSleep.getRealDeepSleepTimeInMinutes());
+				logger.info("Sleep quality: " + actualSleep.getNormalizedSleepQuality() + " - " + expectSleep.getNormalizedSleepQuality());
+				logger.info("Is auto detected: " + actualSleep.getIsAutoDetected() + " - " + expectSleep.getIsAutoDetected());
+				logger.info("Is 1st sleep: " + actualSleep.getIsFirstSleepOfDay() + " - " + expectSleep.getIsFirstSleepOfDay());
 				
-				if(Math.abs(expect.getTimestamp() - actual.getTimestamp()) <= 60) {
+				numberOfFailedItems++;
+				continue;
+			}
+			
+			// sleep states
+			List<Integer[]> actualStateChanges = actualSleep.getSleepStateChanges();
+			List<Integer[]> expectStateChanges = expectSleep.getSleepStateChanges();
+			
+			if(actualStateChanges.size() != expectStateChanges.size()) {
+				
+				logger.info(String.format("Sleep[%d]: Number of sleep states changes: %d - %d", 
+						actualStateChanges.size(), expectStateChanges.size()));
+				numberOfFailedItems++;
+				continue;
+			}
+			
+			int numberOfSleepStatesFailed = 0;
+			for(int j = 0; j < actualStateChanges.size(); j++) {
+				
+				if (Math.abs(actualStateChanges.get(j)[0] - expectStateChanges.get(j)[0]) > 5 ||
+					!actualStateChanges.get(j)[1].equals(expectStateChanges.get(j)[1])) {
+				
+					logger.info("Sleep[" + i + "]: ");
+					logger.info(String.format("SleepState[%d]: %d, %d - %d, %d", j,
+							actualStateChanges.get(j)[0], actualStateChanges.get(j)[1],
+							expectStateChanges.get(j)[0], expectStateChanges.get(j)[1]));
 					
+					numberOfSleepStatesFailed++;
 				}
 			}
 			
+			if(numberOfSleepStatesFailed > 0)
+				numberOfFailedItems++;
 		}
 		
+		Assert.assertEquals(numberOfFailedItems, 0, "Number of failed sleeps");
 	}
 	
 }

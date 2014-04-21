@@ -1,13 +1,17 @@
 package com.misfit.ta.backend;
 
 import java.io.FileNotFoundException;
+import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.aut.BackendHelper;
+import com.misfit.ta.backend.aut.correctness.servercalculation.ServerCalculationTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.servercalculation.ServerCalculationCursor;
+import com.misfit.ta.common.MVPCommon;
 
 public class Debug {
 
@@ -15,7 +19,10 @@ public class Debug {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 	
-		BaseResult r = MVPApi.getCursors(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token);
+		MVPApi.getTimelineItems(MVPApi.signIn("vyanh02@gmail.com", "User@123").token, 1391619600l, 1392219789l, null, 5);
+//		BackendHelper.link("haidangyeu@qa.com", "qqqqqq", "HaiDangYeu");
+//		ServerCalculationTestHelpers.createTest("tests/test0", "haidangyeu@qa.com", 17, 4, 2014, 19, 4, 2014);
+		
 		
 //		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
 //		BaseResult result = MVPApi.searchGoalProgress(token, 3, MVPCommon.getDayStartEpoch() - 3600 * 24 * 14, null, null);

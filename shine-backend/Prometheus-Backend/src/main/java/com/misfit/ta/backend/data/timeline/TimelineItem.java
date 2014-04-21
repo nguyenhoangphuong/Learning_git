@@ -169,6 +169,16 @@ public class TimelineItem {
 			JSONObject responseBody = new JSONObject(response.getResponseString());
 			JSONArray jsonItems = responseBody.getJSONArray("timeline_items");
 
+			return getTimelineItems(jsonItems);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static List<TimelineItem> getTimelineItems(JSONArray jsonItems) {
+
+		try {
 			List<TimelineItem> items = new Vector<TimelineItem>();
 			for (int i = 0; i < jsonItems.length(); i++) {
 				JSONObject jsonItem = jsonItems.getJSONObject(i);

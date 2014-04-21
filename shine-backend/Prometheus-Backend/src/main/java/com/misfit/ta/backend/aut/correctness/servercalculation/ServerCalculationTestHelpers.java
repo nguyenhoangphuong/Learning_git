@@ -155,7 +155,7 @@ public class ServerCalculationTestHelpers {
 			responseFinished.setValue(value2);
 
 			SDKSyncEvent syncEvent = new SDKSyncEvent();
-			syncEvent.setEvent("fileGetActivity");
+			syncEvent.setEvent(SDKSyncEvent.EVENT_GET_FILE_ACTIVITY);
 			syncEvent.setRequestStarted(requestStarted);
 			syncEvent.setRequestFinished(requestFinished);
 			syncEvent.setResponseStarted(responseStarted);
@@ -173,7 +173,7 @@ public class ServerCalculationTestHelpers {
 		requestFinished.setTimestamp(currentTimestamp++);
 		
 		SDKSyncEvent syncEvent = new SDKSyncEvent();
-		syncEvent.setEvent("close");
+		syncEvent.setEvent(SDKSyncEvent.EVENT_CLOSE);
 		syncEvent.setRequestStarted(requestStarted);
 		syncEvent.setRequestFinished(requestFinished);
 		

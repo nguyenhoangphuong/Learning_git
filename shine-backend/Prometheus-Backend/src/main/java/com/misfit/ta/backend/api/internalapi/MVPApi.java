@@ -595,6 +595,12 @@ public class MVPApi extends RequestHelper {
 
 	public static List<TimelineItem> getTimelineItems(String token, Long startTime, Long endTime, Long modifiedSince) {
 
+		return getTimelineItems(token, startTime, endTime, modifiedSince, null);
+
+	}
+
+	public static List<TimelineItem> getTimelineItems(String token, Long startTime, Long endTime, Long modifiedSince, Integer type) {
+
 		String url = baseAddress + "timeline_items";
 		String queryString = "";
 		
@@ -606,6 +612,9 @@ public class MVPApi extends RequestHelper {
 		
 		if(modifiedSince != null)
 			queryString += ("&modifiedSince=" + modifiedSince);
+		
+		if(type != null)
+			queryString += ("&itemType=" + type);
 		
 		url += ("?" + queryString);
 		
