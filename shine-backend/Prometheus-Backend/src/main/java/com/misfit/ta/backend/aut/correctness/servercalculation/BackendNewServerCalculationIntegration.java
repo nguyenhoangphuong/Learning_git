@@ -40,6 +40,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 	protected int delayTime = 60000;
 	protected int DURATION_DELTA = 10;
 	protected long TIMESTAMP_DELTA = 600; 
+	protected long QUALITY_DELTA = 3;
 
 
 	// test cases
@@ -867,6 +868,11 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 	private void checkSleepTimelineItems(List<TimelineItem> scItems, List<TimelineItem> expectedItems, int dayDifference) {
 		
+		logger.info("Test parameters: ");
+		logger.info(String.format("TIMESTAMP_DELTA: %d, DURATION_DELTA: %d, QUALITY_DELTA: %d", 
+				TIMESTAMP_DELTA, DURATION_DELTA, QUALITY_DELTA));
+		logger.info("");
+		
 		Assert.assertEquals(scItems.size(), expectedItems.size(), "Number of sleep tile");
 		int numberOfFailedItems = 0;
 		
@@ -883,12 +889,12 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 			logger.info("Day difference " + dayDifference + ", Timestamp different: " + timestampDifference);
 			
 			// timestamp
+			boolean pass = true;
 			if(!(Math.abs(expect.getTimestamp() + timestampDifference - actual.getTimestamp()) <= TIMESTAMP_DELTA)) {
 			
 				logger.info("Sleep[" + i + "] - Expect timestamp: " + (expect.getTimestamp() + timestampDifference) + 
 						", Actualy timestamp: " + actual.getTimestamp());
-				numberOfFailedItems++;
-				continue;
+				pass = false;
 			}
 			
 			// sleep data
@@ -899,7 +905,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 				Math.abs(expectSleep.getRealEndTime() + timestampDifference - actualSleep.getRealEndTime()) > TIMESTAMP_DELTA ||
 				Math.abs(actualSleep.getRealSleepTimeInMinutes() - expectSleep.getRealSleepTimeInMinutes()) > DURATION_DELTA ||
 				Math.abs(actualSleep.getRealDeepSleepTimeInMinutes() - expectSleep.getRealDeepSleepTimeInMinutes()) > DURATION_DELTA ||
-				Math.abs(actualSleep.getNormalizedSleepQuality() - expectSleep.getNormalizedSleepQuality()) > 1 ||
+				Math.abs(actualSleep.getNormalizedSleepQuality() - expectSleep.getNormalizedSleepQuality()) > QUALITY_DELTA ||
 				actualSleep.getIsAutoDetected() == null || !actualSleep.getIsAutoDetected().equals(expectSleep.getIsAutoDetected()) ||
 				actualSleep.getIsFirstSleepOfDay() == null || !actualSleep.getIsFirstSleepOfDay().equals(expectSleep.getIsFirstSleepOfDay()) ) {
 				
@@ -912,8 +918,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 				logger.info("Is auto detected: " + actualSleep.getIsAutoDetected() + " - " + expectSleep.getIsAutoDetected());
 				logger.info("Is 1st sleep: " + actualSleep.getIsFirstSleepOfDay() + " - " + expectSleep.getIsFirstSleepOfDay());
 				
-				numberOfFailedItems++;
-				continue;
+				pass = false;
 			}
 			
 			// sleep states
@@ -924,26 +929,30 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 				
 				logger.info(String.format("Sleep[%d]: Number of sleep states changes: %d - %d", 
 						actualStateChanges.size(), expectStateChanges.size()));
-				numberOfFailedItems++;
-				continue;
+				
+				pass = false;
 			}
-			
-			int numberOfSleepStatesFailed = 0;
-			for(int j = 0; j < actualStateChanges.size(); j++) {
-				
-				if (Math.abs(actualStateChanges.get(j)[0] - expectStateChanges.get(j)[0]) > 5 ||
-					!actualStateChanges.get(j)[1].equals(expectStateChanges.get(j)[1])) {
-				
-					logger.info("Sleep[" + i + "]: ");
-					logger.info(String.format("SleepState[%d]: %d, %d - %d, %d", j,
-							actualStateChanges.get(j)[0], actualStateChanges.get(j)[1],
-							expectStateChanges.get(j)[0], expectStateChanges.get(j)[1]));
+			else {
+				int numberOfSleepStatesFailed = 0;
+				for(int j = 0; j < actualStateChanges.size(); j++) {
 					
-					numberOfSleepStatesFailed++;
+					if (Math.abs(actualStateChanges.get(j)[0] - expectStateChanges.get(j)[0]) > 5 ||
+						!actualStateChanges.get(j)[1].equals(expectStateChanges.get(j)[1])) {
+					
+						logger.info("Sleep[" + i + "]: ");
+						logger.info(String.format("SleepState[%d]: %d, %d - %d, %d", j,
+								actualStateChanges.get(j)[0], actualStateChanges.get(j)[1],
+								expectStateChanges.get(j)[0], expectStateChanges.get(j)[1]));
+						
+						numberOfSleepStatesFailed++;
+					}
 				}
+				
+				if(numberOfSleepStatesFailed > 0)
+					pass = false;
 			}
 			
-			if(numberOfSleepStatesFailed > 0)
+			if(pass == false)
 				numberOfFailedItems++;
 		}
 		
