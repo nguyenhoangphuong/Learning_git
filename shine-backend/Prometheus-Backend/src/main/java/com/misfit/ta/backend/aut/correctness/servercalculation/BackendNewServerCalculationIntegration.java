@@ -38,8 +38,8 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 	// fields
 	protected int delayTime = 60000;
-	protected int DURATION_DELTA = 5;
-	protected long TIMESTAMP_DELTA = 60; 
+	protected int DURATION_DELTA = 10;
+	protected long TIMESTAMP_DELTA = 600; 
 
 
 	// test cases

@@ -10,6 +10,7 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.correctness.servercalculation.ServerCalculationTestHelpers;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.servercalculation.ServerCalculationCursor;
 import com.misfit.ta.common.MVPCommon;
 
@@ -19,7 +20,9 @@ public class Debug {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 	
-		MVPApi.getTimelineItems(MVPApi.signIn("vyanh02@gmail.com", "User@123").token, 1391619600l, 1392219789l, null, 5);
+		ProfileData data = new ProfileData();
+		data.setHeight(-1d);
+		MVPApi.updateProfile(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token, data);
 //		BackendHelper.link("haidangyeu@qa.com", "qqqqqq", "HaiDangYeu");
 //		ServerCalculationTestHelpers.createTest("tests/test0", "haidangyeu@qa.com", 17, 4, 2014, 19, 4, 2014);
 		
