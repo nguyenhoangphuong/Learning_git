@@ -771,7 +771,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "NewServerCalculationSleep" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServerCalculationSleep", "NewServercalculation" })
 	public void NewServerCalculation_RealSleepData() throws IOException, JSONException {
 
 		String[] testPaths = new String[] {
