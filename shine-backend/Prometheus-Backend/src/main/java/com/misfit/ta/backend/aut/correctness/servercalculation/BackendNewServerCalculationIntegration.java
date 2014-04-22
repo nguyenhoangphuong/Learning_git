@@ -774,9 +774,6 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "NewServerCalculationSleep" })
 	public void NewServerCalculation_RealSleepData() throws IOException, JSONException {
 
-		Files.delete("rawdata");
-		Files.getFile("rawdata");
-		
 		String[] testPaths = new String[] {
 			"rawdata/test0", 
 			"rawdata/test1", 
