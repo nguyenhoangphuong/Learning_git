@@ -31,7 +31,6 @@ import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.Verify;
-import com.misfit.ta.utils.Files;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
@@ -771,7 +770,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServerCalculationSleep", "NewServercalculation" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServerCalculationSleep", "NewServercalculation", "NSCSleep" })
 	public void NewServerCalculation_RealSleepData() throws IOException, JSONException {
 
 		String[] testPaths = new String[] {
