@@ -9,6 +9,7 @@ import java.util.Random;
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
+import com.misfit.ta.android.chimpchat.core.TouchPressType;
 import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.utils.ShortcutsTyper;
@@ -218,17 +219,58 @@ public class PrometheusHelper {
 
 	}
 
+	public static void editSleepGoal(int hour, int minute,
+			int fullScreenHeight, int fullScreenWidth) {
+		int maxHour = 16;
+		int minHour = 1;
+		int maxMinute = 45;
+		int minMinute = 0;
+		System.out.println("Start to edit sleep goal");
+		String currentHour = PrometheusHelper.getCurrentValueInPicker(0);
+		int currentHourNumber = Integer.valueOf(currentHour);
+		hour = hour < minHour ? minHour : hour > maxHour ? maxHour : hour;
+		System.out.println("Hour value is changed from: " + currentHourNumber
+				+ " to " + hour);
+		editSleepGoalOnPicker(currentHourNumber, hour, 0, fullScreenHeight,
+				fullScreenWidth, 1);
+
+		String currentMinute = PrometheusHelper.getCurrentValueInPicker(1);
+		int currentMinuteNumber = Integer.valueOf(currentMinute);
+		minute = minute < minMinute ? minMinute
+				: minute > maxMinute ? maxMinute : minute;
+		System.out.println("Minute value is changed from: "
+				+ currentMinuteNumber + " to " + minute);
+		editSleepGoalOnPicker(currentMinuteNumber, minute, 1, fullScreenHeight,
+				fullScreenWidth, 15);
+
+	}
+
 	public static void editValueOnPicker(int oldValue, int newValue,
 			int pickerIndex, int fullScreenHeight, int fullScreenWidth) {
 		ViewNode pickerNode = ViewUtils.findView("ShineCustomEditText", "mID",
 				DefaultStrings.ShineCustomEditTextInPickerId, pickerIndex);
 		int delta = Math.abs(newValue - oldValue);
 		if (newValue < oldValue) {
-			Settings.swipeDownGoalPicker(fullScreenHeight, fullScreenWidth,
+			Settings.swipeDownValuePicker(fullScreenHeight, fullScreenWidth,
 					Gui.getHeight(), Gui.getWidth(), pickerNode, delta);
 		} else {
-			Settings.swipeUpGoalPicker(fullScreenHeight, fullScreenWidth,
+			Settings.swipeUpValuePicker(fullScreenHeight, fullScreenWidth,
 					Gui.getHeight(), Gui.getWidth(), pickerNode, delta);
+		}
+	}
+
+	public static void editSleepGoalOnPicker(int oldValue, int newValue,
+			int pickerIndex, int fullScreenHeight, int fullScreenWidth,
+			int delta) {
+		ViewNode pickerNode = ViewUtils.findView("ShineCustomEditText", "mID",
+				DefaultStrings.ShineCustomEditTextInPickerId, pickerIndex);
+		int steps = Math.abs(newValue - oldValue) / delta;
+		if (newValue < oldValue) {
+			Settings.swipeDownValuePicker(fullScreenHeight, fullScreenWidth,
+					Gui.getHeight(), Gui.getWidth(), pickerNode, steps);
+		} else {
+			Settings.swipeUpValuePicker(fullScreenHeight, fullScreenWidth,
+					Gui.getHeight(), Gui.getWidth(), pickerNode, steps);
 		}
 	}
 
@@ -251,12 +293,29 @@ public class PrometheusHelper {
 				String.valueOf(steps));
 		HomeScreen.saveManual();
 	}
-	
-	public static float calculateCalories(float points, float weightInLbs, float fullBMR, int currentMinute) {
-		return (float)MVPCalculator.calculateCalories(points, weightInLbs, fullBMR, currentMinute);
+
+	public static void manualInputSleep() {
+		HomeScreen.tapManual();
+		HomeScreen.sleepManual();
+		ShortcutsTyper.delayTime(30000);
 	}
 
-	public static float calculateFullBMR(float weightInLbs, float heightInInches, int age, boolean isMale) {
-		return (float)MVPCalculator.calculateFullBMR(weightInLbs, heightInInches, age, isMale);
+	public static void pullToRefresh(int fullScreenWidth, int fullScreenHeight) {
+		Gui.swipe(fullScreenWidth / 2, fullScreenHeight / 2,
+				fullScreenWidth / 2, fullScreenHeight / 2 + 800);
+		Gui.touch(fullScreenWidth / 2, fullScreenHeight / 2 + 800,
+				TouchPressType.DOWN);
+	}
+
+	public static float calculateCalories(float points, float weightInLbs,
+			float fullBMR, int currentMinute) {
+		return (float) MVPCalculator.calculateCalories(points, weightInLbs,
+				fullBMR, currentMinute);
+	}
+
+	public static float calculateFullBMR(float weightInLbs,
+			float heightInInches, int age, boolean isMale) {
+		return (float) MVPCalculator.calculateFullBMR(weightInLbs,
+				heightInInches, age, isMale);
 	}
 }

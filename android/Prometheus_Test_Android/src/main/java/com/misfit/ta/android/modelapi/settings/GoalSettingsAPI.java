@@ -59,10 +59,10 @@ public class GoalSettingsAPI extends ModelAPI {
 		ViewNode goalPickerNode = ViewUtils.findView("ShineCustomEditText",
 				"mID", DefaultStrings.ShineCustomEditTextInPickerId, 0);
 		if (swipeDown) {
-			Settings.swipeDownGoalPicker(fullScreenHeight, fullScreenWidth,
+			Settings.swipeDownValuePicker(fullScreenHeight, fullScreenWidth,
 					Gui.getHeight(), Gui.getWidth(), goalPickerNode, steps);
 		} else {
-			Settings.swipeUpGoalPicker(fullScreenHeight, fullScreenWidth,
+			Settings.swipeUpValuePicker(fullScreenHeight, fullScreenWidth,
 					Gui.getHeight(), Gui.getWidth(), goalPickerNode, steps);
 		}
 	}
@@ -116,8 +116,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_PullToRefresh() {
-		Gui.swipe(fullScreenWidth /2, fullScreenHeight/2, fullScreenWidth/2, fullScreenHeight/2 + 800);
-		Gui.touch(fullScreenWidth/2, fullScreenHeight/2 + 800, TouchPressType.DOWN);
+		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
 		ShortcutsTyper.delayOne();
 	}
 

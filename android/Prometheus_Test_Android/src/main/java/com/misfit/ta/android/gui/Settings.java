@@ -101,18 +101,15 @@ public class Settings {
 				DefaultStrings.ShineSettingsSleepTrackingSwitchId, 0).isChecked;
 	}
 
-	/**
-	 * Adjust Goal Screen
-	 */
 
-	public static void swipeDownGoalPicker(int fullScreenHeight,
+	public static void swipeDownValuePicker(int fullScreenHeight,
 			int fullScreenWidth, int popupHeight, int popupWidth,
 			ViewNode viewOnPopup, int steps) {
 		Gui.swipeDownViewOnPopup(fullScreenHeight, fullScreenWidth,
 				popupHeight, popupWidth, viewOnPopup, steps);
 	}
 
-	public static void swipeUpGoalPicker(int fullScreenHeight,
+	public static void swipeUpValuePicker(int fullScreenHeight,
 			int fullScreenWidth, int popupHeight, int popupWidth,
 			ViewNode viewOnPopup, int steps) {
 		Gui.swipeUpViewOnPopup(fullScreenHeight, fullScreenWidth, popupHeight,
