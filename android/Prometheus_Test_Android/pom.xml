@@ -119,13 +119,13 @@
 		<dependency>
 			<groupId>com.misfit.ta</groupId>
 			<artifactId>tools</artifactId>
-			<version>0.0.63</version>
+			<version>0.0.64</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>com.misfit.qa</groupId>
+			<groupId>com.misfit.ta</groupId>
 			<artifactId>prometheus-backend</artifactId>
-			<version>0.0.3</version>
+			<version>0.0.4</version>
 		</dependency>
 		
 		<dependency>
@@ -155,7 +155,12 @@
 			<version>1.4</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
