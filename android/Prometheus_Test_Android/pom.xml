@@ -119,7 +119,7 @@
 		<dependency>
 			<groupId>com.misfit.ta</groupId>
 			<artifactId>tools</artifactId>
-			<version>0.0.65</version>
+			<version>0.0.66</version>
 		</dependency>
 		
 		<dependency>
