@@ -27,6 +27,8 @@ public class ShineHistoryRecord {
 				record.date = jsonArr.getJSONArray(i).getString(0);
 				record.activityPoints = jsonArr.getJSONArray(i).getDouble(1);
 				record.sleepSeconds = jsonArr.getJSONArray(i).getInt(2);
+				
+				summary.add(record);
 			}
 			
 			return summary;

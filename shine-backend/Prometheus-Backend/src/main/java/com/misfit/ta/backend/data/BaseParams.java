@@ -10,6 +10,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicHeader;
 
 import com.google.resting.component.impl.json.JSONRequestParams;
+import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 
@@ -71,6 +72,26 @@ public class BaseParams {
 
 		while (iter.hasNext()) {
 			NameValuePair pair = iter.next();
+			
+			// try to put as JSONObject
+			try {
+				String s = pair.getValue().replace("\\\"", "\"");
+				JSONObject valueJsonObj = new JSONObject(s);
+				jsonObj.put(pair.getName(), valueJsonObj);
+				continue;
+			} catch (JSONException e) {
+			}
+			
+			// try to put as JSONArray
+			try {
+				String s = pair.getValue().replace("\\\"", "\"");
+				JSONArray valueJsonArr = new JSONArray(s);
+				jsonObj.put(pair.getName(), valueJsonArr);
+				continue;
+			} catch (JSONException e) {
+			}
+						
+			// try to put as normal string
 			try {
 				jsonObj.put(pair.getName(), pair.getValue());
 			} catch (JSONException e) {

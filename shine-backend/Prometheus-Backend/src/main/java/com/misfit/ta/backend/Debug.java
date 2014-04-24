@@ -1,18 +1,12 @@
 package com.misfit.ta.backend;
 
 import java.io.FileNotFoundException;
-import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.backend.aut.correctness.servercalculation.ServerCalculationTestHelpers;
-import com.misfit.ta.backend.data.BaseResult;
-import com.misfit.ta.backend.data.profile.ProfileData;
-import com.misfit.ta.backend.data.servercalculation.ServerCalculationCursor;
-import com.misfit.ta.common.MVPCommon;
+import com.misfit.ta.backend.data.goal.Goal;
 
 public class Debug {
 
@@ -20,9 +14,18 @@ public class Debug {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 	
-		ProfileData data = new ProfileData();
-		data.setHeight(-1d);
-		MVPApi.updateProfile(MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token, data);
+//		
+		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
+//		BackendHelper.unlink(token);
+//		BackendHelper.link(token, "HaiDangYeu");
+		Goal goal = Goal.getDefaultGoal(631126800l);
+		MVPApi.createGoal(token, goal);
+		
+//		List<String> emails = new  ArrayList<String>();
+//		emails.add("a");
+//		emails.add("b");
+//		SocialAPI.matchContacts(token, emails);
+		
 //		BackendHelper.link("haidangyeu@qa.com", "qqqqqq", "HaiDangYeu");
 //		ServerCalculationTestHelpers.createTest("tests/test0", "haidangyeu@qa.com", 17, 4, 2014, 19, 4, 2014);
 		

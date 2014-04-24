@@ -61,7 +61,7 @@ public class MVPApi extends RequestHelper {
 		Integer.parseInt(Settings.getValue("MVPDataCenterPort"));
 	
 	public static int CACHE_TRY_TIME = 10;
-	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.65r";
+	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.66r";
 
 	
 	// generators
@@ -1030,12 +1030,13 @@ public class MVPApi extends RequestHelper {
 		return Statistics.fromResponse(result.response);
 	}
 
-	public static BaseResult getSummaryByMonth(String token, Long startTimestamp) {
+	public static BaseResult getSummaryByMonth(String token, String startDate) {
 	
 		String url = baseAddress + "aggregate/monthly?";
-		String startDate = MVPCommon.getDateString(startTimestamp);
-		if(startTimestamp != null)
+		
+		if(startDate != null) {
 			url += ("start_date=" + startDate);
+		}
 
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);
@@ -1045,12 +1046,13 @@ public class MVPApi extends RequestHelper {
 		return new BaseResult(response);
 	}
 	
-	public static BaseResult getSummaryByWeek(String token, Long startTimestamp) {
+	public static BaseResult getSummaryByWeek(String token, String startDate) {
 		
 		String url = baseAddress + "aggregate/weekly?";
-		String startDate = MVPCommon.getDateString(startTimestamp);
-		if(startTimestamp != null)
+
+		if(startDate != null) {
 			url += ("start_date=" + startDate);
+		}
 
 		BaseParams requestInf = new BaseParams();
 		requestInf.addHeader("auth_token", token);

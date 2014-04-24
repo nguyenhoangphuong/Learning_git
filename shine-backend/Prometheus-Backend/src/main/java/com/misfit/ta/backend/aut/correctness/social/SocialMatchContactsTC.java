@@ -103,10 +103,19 @@ public class SocialMatchContactsTC extends SocialTestAutomationBase {
 
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(users.length, 2, "Number of users found");
-		Assert.assertEquals(users[0].getUid(), thyUid, "User uid");
-		Assert.assertEquals(users[0].getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status to thy");
-		Assert.assertEquals(users[1].getUid(), tungUid, "User uid");
-		Assert.assertEquals(users[1].getStatus(), SocialAPI.STATUS_APPROVED, "Status to thy");
+		for(SocialUserWithStatus user : users) {
+			
+			if(user.getUid().equals(thyUid)) {
+				Assert.assertEquals(user.getName(), thyName, "Name of thy");
+				Assert.assertEquals(user.getStatus(), SocialAPI.STATUS_NOT_REQUESTED, "Status to thy");
+			}
+			
+			if(user.getUid().equals(tungUid)) {
+				Assert.assertEquals(user.getName(), tungName, "Name of tung");
+				Assert.assertEquals(user.getStatus(), SocialAPI.STATUS_APPROVED, "Status to tung");
+			}
+		}
+		
 		
 		// clean up: delete friends
 		SocialAPI.deleteFriend(misfitToken, tungUid);

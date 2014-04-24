@@ -325,7 +325,7 @@ public class DataGenerator {
 		TimelineItem item = new TimelineItem();
 		item.setLocalId("timelineitem-" + MVPApi.generateLocalId());
 		item.setUpdatedAt(timestamp);
-		item.setTimestamp(timestamp);
+		item.setTimestamp(realStartTime);
 		item.setItemType(TimelineItemDataBase.TYPE_SLEEP);
 		item.setData(data);
 
@@ -371,7 +371,7 @@ public class DataGenerator {
 		TimelineItem item = new TimelineItem();
 		item.setLocalId("timelineitem-" + MVPApi.generateLocalId());
 		item.setUpdatedAt(timestamp);
-		item.setTimestamp(timestamp);
+		item.setTimestamp(realStartTime);
 		item.setItemType(TimelineItemDataBase.TYPE_SLEEP);
 		item.setData(data);
 
