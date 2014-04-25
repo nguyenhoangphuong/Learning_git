@@ -28,138 +28,141 @@ import com.misfit.ta.report.TRS;
 
 public class RequestHelper {
 
-	protected static Logger logger = Util.setupLogger(RequestHelper.class);
-	
-	public static final String HTTP_POST = "post";
-	public static final String HTTP_GET = "get";
-	public static final String HTTP_DELETE = "delete";
-	public static final String HTTP_PUT = "put";
-	private static CloseableHttpClient httpclient = InsecureHttpClientHelper.getInsecureCloseableHttpClient();
-	
-	// request helpers
-	static public ServiceResponse request(String type, String url, Integer port, BaseParams requestInf) {
-		
-		// build uri
-		URI uri = UriBuilder.fromUri(url).build();
-		if(port != null)
-			uri = UriBuilder.fromUri(url).port(port).build();
-		
-		// log address
-		logger.info(type.toUpperCase() + ": " + url + " - port: " + uri.getPort());
-		logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
-		logger.info("Request params: " + requestInf.getParamsAsJsonString());
+    protected static Logger logger = Util.setupLogger(RequestHelper.class);
 
-		// send to TRS
-		TRS.instance().addStep(type.toUpperCase() + ": " + url + " - port: " + uri.getPort(), null);
-		TRS.instance().addCode("Request headers: " + requestInf.getHeadersAsJsonString(), null);
-		TRS.instance().addCode("Request params: " + requestInf.getParamsAsJsonString(), null);
+    public static final String HTTP_POST = "post";
+    public static final String HTTP_GET = "get";
+    public static final String HTTP_DELETE = "delete";
+    public static final String HTTP_PUT = "put";
+    private static CloseableHttpClient httpclient = InsecureHttpClientHelper.getInsecureCloseableHttpClient();
 
-		// wrapper send request
-		ServiceResponse response = null;
-		ResultLogger.registerRequest();
-		if (type.equalsIgnoreCase(MVPApi.HTTP_POST))
-			response = doPost(uri, port, requestInf);
-		else if (type.equalsIgnoreCase(MVPApi.HTTP_GET))
-			response = doGet(uri, port, requestInf);
-		else if (type.equalsIgnoreCase(MVPApi.HTTP_PUT))
-			response = doPut(uri, port, requestInf);
-		else if (type.equalsIgnoreCase(MVPApi.HTTP_DELETE))
-			response = doDelete(uri, port, requestInf);
+    // request helpers
+    static public ServiceResponse request(String type, String url, Integer port, BaseParams requestInf) {
+        
+        if (requestInf == null) {
+            requestInf = new BaseParams();
+        }
+        // build uri
+        URI uri = UriBuilder.fromUri(url).build();
+        if (port != null)
+            uri = UriBuilder.fromUri(url).port(port).build();
 
-		// log result
-		IContentData rawData = response.getContentData();
-		int error = response.getStatusCode();
-		
-		ResultLogger.registerResponse();
-		ResultLogger.addErrorCode(error);
-		
-		logger.info("Response raw Data: " + rawData);
-		logger.info("Response code: " + error + "\n\n");
+        // log address
+        logger.info(type.toUpperCase() + ": " + url + " - port: " + uri.getPort());
+        logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
 
-		// send to TRS
-		TRS.instance().addCode("Response raw Data: " + rawData, null);
-		TRS.instance().addCode("Response code: " + error + "\n\n", null);
+        logger.info("Request params: " + requestInf.getParamsAsJsonString());
 
-		return response;
-	}
+        // send to TRS
+        TRS.instance().addStep(type.toUpperCase() + ": " + url + " - port: " + uri.getPort(), null);
+        logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
 
-	static public ServiceResponse post(String url, Integer port, BaseParams requestInf) {
-		return request("post", url, port, requestInf);
-	}
+        logger.info("Request params: " + requestInf.getParamsAsJsonString());
 
-	static public ServiceResponse get(String url, Integer port, BaseParams requestInf) {
-		return request("get", url, port, requestInf);
-	}
+        // wrapper send request
+        ServiceResponse response = null;
+        ResultLogger.registerRequest();
+        if (type.equalsIgnoreCase(MVPApi.HTTP_POST))
+            response = doPost(uri, port, requestInf);
+        else if (type.equalsIgnoreCase(MVPApi.HTTP_GET))
+            response = doGet(uri, port, requestInf);
+        else if (type.equalsIgnoreCase(MVPApi.HTTP_PUT))
+            response = doPut(uri, port, requestInf);
+        else if (type.equalsIgnoreCase(MVPApi.HTTP_DELETE))
+            response = doDelete(uri, port, requestInf);
 
-	static public ServiceResponse put(String url, Integer port, BaseParams requestInf) {
-		return request("put", url, port, requestInf);
-	}
+        // log result
+        IContentData rawData = response.getContentData();
+        int error = response.getStatusCode();
 
-	static public ServiceResponse delete(String url, Integer port, BaseParams requestInf) {
-		return request("delete", url, port, requestInf);
-	}
+        ResultLogger.registerResponse();
+        ResultLogger.addErrorCode(error);
 
-	
-	// execute http requests
-	static private ServiceResponse doPost(URI url, Integer port, BaseParams requestInf) {
+        logger.debug("Response raw Data: " + rawData);
+        logger.debug("Response code: " + error + "\n\n");
 
-	    EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
-		entityBuilder.setText(requestInf.getParamsAsJsonString());
-		
-		HttpPost httpPost = new HttpPost(url);
-		httpPost.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
-		httpPost.setEntity(entityBuilder.build());
-		
-		return excuteHttpRequest(httpPost);
-	}
-	
-	static private ServiceResponse doGet(URI url, Integer port, BaseParams requestInf) {
+        // send to TRS
+        TRS.instance().addCode("Response raw Data: " + rawData, null);
+        TRS.instance().addCode("Response code: " + error + "\n\n", null);
 
-		HttpGet httpGet = new HttpGet(url);
-		httpGet.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
+        return response;
+    }
 
-		return excuteHttpRequest(httpGet);
-	}
+    static public ServiceResponse post(String url, Integer port, BaseParams requestInf) {
+        return request("post", url, port, requestInf);
+    }
 
-	static private ServiceResponse doPut(URI url, Integer port, BaseParams requestInf) {
+    static public ServiceResponse get(String url, Integer port, BaseParams requestInf) {
+        return request("get", url, port, requestInf);
+    }
 
-	    EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
-		entityBuilder.setText(requestInf.getParamsAsJsonString());
-		
-		HttpPut httpPut = new HttpPut(url);
-		httpPut.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
-		httpPut.setEntity(entityBuilder.build());
-		
-		return excuteHttpRequest(httpPut);
-	}
-	
-	static private ServiceResponse doDelete(URI url, Integer port, BaseParams requestInf) {
+    static public ServiceResponse put(String url, Integer port, BaseParams requestInf) {
+        return request("put", url, port, requestInf);
+    }
 
-		HttpDelete httpDelete = new HttpDelete(url);
-		httpDelete.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
-		
-		return excuteHttpRequest(httpDelete);
-	}
-	
-	static private ServiceResponse excuteHttpRequest(HttpUriRequest httprequest) {
-		
-		try {			
-			long start = System.currentTimeMillis();
-			CloseableHttpResponse response = httpclient.execute(httprequest);
-			ServiceResponse sr = new ServiceResponse(response, EncodingTypes.UTF8);
-			long end = System.currentTimeMillis();
-			logger.info("Time taken in REST: " + (end - start));
-			
-	        HttpEntity entity = response.getEntity();
-	        EntityUtils.consume(entity);
+    static public ServiceResponse delete(String url, Integer port, BaseParams requestInf) {
+        return request("delete", url, port, requestInf);
+    }
 
-	        response.close();
-	        
-	        return sr;
-		}
-		catch (Exception e) {
-			return null;
-		}
-	}
-	
+    // execute http requests
+    static private ServiceResponse doPost(URI url, Integer port, BaseParams requestInf) {
+
+        EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
+        entityBuilder.setText(requestInf.getParamsAsJsonString());
+
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
+        httpPost.setEntity(entityBuilder.build());
+
+        return excuteHttpRequest(httpPost);
+    }
+
+    static private ServiceResponse doGet(URI url, Integer port, BaseParams requestInf) {
+
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
+
+        return excuteHttpRequest(httpGet);
+    }
+
+    static private ServiceResponse doPut(URI url, Integer port, BaseParams requestInf) {
+
+        EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
+        entityBuilder.setText(requestInf.getParamsAsJsonString());
+
+        HttpPut httpPut = new HttpPut(url);
+        httpPut.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
+        httpPut.setEntity(entityBuilder.build());
+
+        return excuteHttpRequest(httpPut);
+    }
+
+    static private ServiceResponse doDelete(URI url, Integer port, BaseParams requestInf) {
+
+        HttpDelete httpDelete = new HttpDelete(url);
+        httpDelete.setHeaders(requestInf.headers.toArray(new Header[requestInf.headers.size()]));
+
+        return excuteHttpRequest(httpDelete);
+    }
+
+    static private ServiceResponse excuteHttpRequest(HttpUriRequest httprequest) {
+
+        try {
+            long start = System.currentTimeMillis();
+            CloseableHttpResponse response = httpclient.execute(httprequest);
+            ServiceResponse sr = new ServiceResponse(response, EncodingTypes.UTF8);
+            long end = System.currentTimeMillis();
+            logger.info("Time taken in REST: " + (end - start));
+
+            HttpEntity entity = response.getEntity();
+            EntityUtils.consume(entity);
+
+            response.close();
+
+            return sr;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
