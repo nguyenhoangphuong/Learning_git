@@ -28,18 +28,18 @@ public class DayInPastAPI extends ModelAPI {
 		
 		// we're using qa account which has many days in the past
 		this.days = PrometheusHelper.randInt(2, 7);
-		HomeScreen.goToPreviousDays(this.days);
+		HomeScreen.tapPreviousDayButton(this.days);
 	}
 
 	public void e_BackToYesterday() {
 		
 		this.days = 1;
-		HomeScreen.goToPreviousDays(1);
+		HomeScreen.tapPreviousDayButton(1);
 	}
 
 	public void e_SwipeBackToday() {
 		
-		HomeScreen.goToNextDays(this.days);
+		HomeScreen.tapNextDayButton(this.days);
 
 		// restore days to 0
 		this.days = 0;

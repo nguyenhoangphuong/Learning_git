@@ -27,7 +27,6 @@ public class WeekViewAPI extends ModelAPI {
 	}
 
 	private int currentGoal;
-	private int diff;
 	private Calendar now = Calendar.getInstance();
 	private String token;
 
@@ -35,15 +34,16 @@ public class WeekViewAPI extends ModelAPI {
 	
 	public void e_Init() {
 		
-		String email = "thy@misfitwearables.com";
-		String password = "test12";
+		String email = "automation_weekly@qa.com";
+		String password = "qqqqqq";
 		
 		token = MVPApi.signIn(email, password).token;
-		Goal goal = MVPApi.searchGoal(token, getTimeStampOfPreviousDay(1), null, 0l).goals[0];
-		goal.getProgressData().setPoints(goal.getProgressData().getPoints() + 100 * 2.5);
+		Goal goal = MVPApi.searchGoal(token, getTimeStampOfPreviousDay(0), null, 0l).goals[0];
+		goal.getProgressData().setPoints(MVPCommon.randInt(10, 15) * 100 * 2.5);
 		MVPApi.updateGoal(token, goal);
 		
-		PrometheusHelper.signIn(email,password);
+//		PrometheusHelper.signIn(email,password);
+		HomeScreen.pullToRefresh();
 	}
 	
 	public void e_ChangeDayView() {
@@ -80,11 +80,11 @@ public class WeekViewAPI extends ModelAPI {
 	}
 	
 	public void e_GoToLastWeek() {
-		HomeScreen.goToLastWeek();
+		HomeScreen.tapPreviousDayButton(1);
 	}
 
 	public void e_GoToThisWeek() {
-		HomeScreen.goToThisWeek();
+		HomeScreen.tapNextDayButton(1);
 	}
 
 	
@@ -106,26 +106,30 @@ public class WeekViewAPI extends ModelAPI {
 	}
 	
 	public void v_UpdatedWeekGoal() {
-		int day = now.get(Calendar.DAY_OF_WEEK);
+		
 		// day -- > Monday: 2; Tuesday: 3; Wednesday: 4; Thursday: 5; Friday: 6;
 		// Sunday: 1
+		int day = now.get(Calendar.DAY_OF_WEEK);
 		int index = day != 1 ? day - 2 : 6;
 		int totalGoal = currentGoal * (7 - index);
+		
 		if (index > 0) {
+			
 			long startTimeStamp = getTimeStampOfPreviousDay(index);
 			long endTimeStamp = getTimeStampOfPreviousDay(1);
-			Goal[] goals = MVPApi.searchGoal(token, startTimeStamp, endTimeStamp, 0l).goals;
-			System.out.println("DEBUG: start timestamp " + startTimeStamp);
-			System.out.println("DEBUG: end timestamp " + endTimeStamp);
+			Goal[] goals = MVPApi.searchGoal(token, startTimeStamp, endTimeStamp, null).goals;
+			
 			for (int i = 0; i < goals.length; i++) {
 				System.out.println("Goal " + goals[i].getStartTime());
 				System.out.println("Goal " + goals[i].getGoalValue());
 				totalGoal += (int) (goals[i].getGoalValue() / 2.5);
 			}
 		}
+		
 		System.out.println("DEBUG: Total goal " + totalGoal);
-		ShortcutsTyper.delayOne();
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format(DefaultStrings.PointsDisplay, totalGoal)), "Week goal is correct");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", 
+				String.format(DefaultStrings.PointsDisplay, totalGoal)), 
+				"Week goal is correct");
 	}
 	
 	public void v_ThisWeekImprovement() {
@@ -163,8 +167,8 @@ public class WeekViewAPI extends ModelAPI {
 		int index = day != 1 ? day - 2 : 6;
 		long startTimeStamp = index > 0 ? getTimeStampOfPreviousDay(index) : MVPCommon.getDayStartEpoch();
 		
-		Goal[] thisWeekGoals = MVPApi.searchGoal(token, startTimeStamp, MVPCommon.getDayStartEpoch(), 0l).goals;
-		Goal[] lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - SevenDaysDiff, MVPCommon.getDayStartEpoch() - SevenDaysDiff, 0l).goals;
+		Goal[] thisWeekGoals = MVPApi.searchGoal(token, startTimeStamp, MVPCommon.getDayStartEpoch(), null).goals;
+		Goal[] lastWeekGoals = MVPApi.searchGoal(token, startTimeStamp - SevenDaysDiff, MVPCommon.getDayStartEpoch() - SevenDaysDiff, null).goals;
 		
 		// calculate the difference in points between each day
 		int deltaProgress = 0;

@@ -32,9 +32,9 @@ public class GoalSettingsAPI extends ModelAPI {
 	private int sleepGoalHoursTemp = 8;
 	private int sleepGoalMinutesTemp = 0;
 	
-	private int weightDigit = 8;
+	private int weightDigit = 140;
 	private int weightFraction = 0;
-	private int weightDigitTemp = 8;
+	private int weightDigitTemp = 140;
 	private int weightFractionTemp = 0;
 	private boolean weightUnitUS = true;
 	private boolean weightUnitUSTemp = true;
@@ -48,7 +48,13 @@ public class GoalSettingsAPI extends ModelAPI {
 		// input a dummy record
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(new String[] { "1", "00", "am" }, 5, 500);
+		HomeScreen.tap180MinNap();
 		HomeScreen.tapSave();
+	}
+	
+	public void e_ToActivityTimeline() {
+	
+		HomeScreen.tapActivityTimeline();
 	}
 	
 	public void e_ToSleepTimeline() {
@@ -61,6 +67,11 @@ public class GoalSettingsAPI extends ModelAPI {
 		HomeScreen.tapWeightTimeline();
 	}
 
+	public void e_SetWeightGoal() {
+		
+		HomeScreen.tapSetWeightGoal();
+	}
+	
 	public void e_ToActivityGoalSettings() {
 
 		HomeScreen.tapOpenSettingsTray();
@@ -95,7 +106,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_ChangeSleepGoal() {
 
 		do {
-			sleepGoalHoursTemp = PrometheusHelper.randInt(0, 11);
+			sleepGoalHoursTemp = PrometheusHelper.randInt(1, 12);
 		} while (sleepGoalHoursTemp == sleepGoalHours);
 		
 		do {
@@ -133,7 +144,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_DoneEdit() {
 
 		HomeSettings.tapDoneAtNewGoal();
-		PrometheusHelper.waitForAlert();
+		
 		activityGoal = activityGoalTemporary;
 		sleepGoalHours = sleepGoalHoursTemp;
 		sleepGoalMinutes = sleepGoalMinutesTemp;
@@ -165,6 +176,11 @@ public class GoalSettingsAPI extends ModelAPI {
 		Assert.assertTrue(HomeScreen.isSleepTimeline(), "Current view is HomeScreen - Sleep");
 	}
 
+	public void v_WeightTimelineInitial() {
+
+		Assert.assertTrue(HomeScreen.isWeightTimelineInitial(), "Current view is HomeScreen - Weight");
+	}
+	
 	public void v_WeightTimeline() {
 
 		Assert.assertTrue(HomeScreen.isWeightTimeline(), "Current view is HomeScreen - Weight");
@@ -188,23 +204,21 @@ public class GoalSettingsAPI extends ModelAPI {
 
 		// check if default value is correct
 		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
-		String expect = this.sleepGoalHours + (this.sleepGoalHours == 1 ? " hour " : " hours ") +
-				this.sleepGoalMinutes + (this.sleepGoalMinutes == 1 ? " minute " : " minutes ");
-		Assert.assertTrue(actual.indexOf(expect) >= 0, "Current sleep goal value is correct");
+		String expectHours = this.sleepGoalHours + (this.sleepGoalHours == 1 ? " hour" : " hours");
+		String expectMins = this.sleepGoalMinutes + (this.sleepGoalMinutes == 1 ? " min" : " mins");
+		
+		Assert.assertTrue(actual.indexOf(expectHours) >= 0, "Current sleep goal value (hours) is correct");
+		if(this.sleepGoalMinutes != 0)
+			Assert.assertTrue(actual.indexOf(expectMins) >= 0, "Current sleep goal value (mins) is correct");
 	}
 	
 	public void v_WeightGoalSettings() {
 
 		// check if current view is goal settings
 		Assert.assertTrue(HomeSettings.isAtEditWeightGoal(), "Current view is GoalSettings - Weight");
-
-		// check if default value is correct
-		String actual = Gui.getProperty("PTRichTextLabel", 0, "text");
-		String expect = this.weightDigit + "." + weightFraction + (weightUnitUS ? " lbs" : " kg");
-		Assert.assertTrue(actual.indexOf(expect) >= 0, "Default goal value is correct");
 	}
 
-	public void v_GoalUpdated() {
+	public void v_ActivityGoalUpdated() {
 
 		// check how to hit your goal
 		int walkMins = MVPCalculator.calculateNearestTimeRemainInMinute(
@@ -250,6 +264,8 @@ public class GoalSettingsAPI extends ModelAPI {
 
 	public void v_NewGoalConfirmation() {
 
+		PrometheusHelper.waitForAlert();
+		
 		// check alert content
 		Assert.assertTrue(HomeSettings.hasNewGoalInstructionMessage(),
 				"Alert message is correct");
@@ -261,8 +277,8 @@ public class GoalSettingsAPI extends ModelAPI {
 		String actual = HomeScreen.getCurrentActivityGoalString();
 		String expect = this.activityGoal + "";
 		logger.info("Actual goal is: " + actual + " - Expect goal is: "+ expect);
-		Assert.assertTrue(actual.indexOf(expect) >= 0 || ViewUtils.isExistedView("UILabel",
-								String.format("of %s points", expect)),
+		Assert.assertTrue(actual.indexOf(expect) >= 0 || 
+				ViewUtils.isExistedView("UILabel", String.format("of %s points", expect)),
 				"Activity goal value is correct");
 	}
 	
@@ -270,14 +286,11 @@ public class GoalSettingsAPI extends ModelAPI {
 
 		// check if new goal value had been updated
 		String actual = HomeScreen.getCurrentSleepGoalString();
-		String expect = this.sleepGoalHours + (this.sleepGoalHours == 1 ? " hr " : " hrs ") +
-				this.sleepGoalHours + (this.sleepGoalMinutes == 1 ? " min" : " mins");
-		logger.info("Actual goal is: " + actual + " - Expect goal is: "
-				+ expect);
-		Assert.assertTrue(
-				actual.indexOf(expect) >= 0
-						|| ViewUtils.isExistedView("UILabel",
-								String.format("of %s points", expect)),
+		String expect = "of " + this.sleepGoalHours + " hour " +
+				(this.sleepGoalMinutes == 0 ? "" : this.sleepGoalMinutes + " min ") + "goal";
+		logger.info("Actual goal is: " + actual + " - Expect goal is: "+ expect);
+		Assert.assertTrue(actual.indexOf(expect) >= 0 || 
+				ViewUtils.isExistedView("UILabel",String.format("of %s points", expect)),
 				"Sleep goal value is correct");
 	}
 	
@@ -285,7 +298,9 @@ public class GoalSettingsAPI extends ModelAPI {
 
 		// check if new goal value had been updated
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("goal weight: %d.%d", weightDigit, weightFraction)),
-				"Default goal value is correct");
+				"Weight goal value is correct");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", weightUnitUS ? "140.0 lbs" : "63.5 kg"),
+				"Weight goal unit is correct");
 	}
 
 }
