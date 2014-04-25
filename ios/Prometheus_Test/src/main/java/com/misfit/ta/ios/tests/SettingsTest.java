@@ -22,19 +22,41 @@ public class SettingsTest extends AutomationTest {
     public void ProfileSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("ProfileSettings", new ProfileSettingsAPI(this, Files.getFile("model/settings/ProfileSettings.graphml"),
-                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("ProfileSettings");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
     }
-
+    
     @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "GoalSettings" })
-    public void GoalSettings() throws InterruptedException, StopConditionException, IOException {
+    public void GoalSettings_Activity() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
-        model.add("GoalSettings", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettings.graphml"),
-                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
-        model.execute("GoalSettings");
+        model.add("GoalSettingsActivity", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettingsActivity.graphml"),
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("GoalSettingsActivity");
+        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+        String actualResult = getModelhandler().getStatistics();
+        System.out.println(actualResult);
+    }
+    
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "GoalSettings" })
+    public void GoalSettings_Sleep() throws InterruptedException, StopConditionException, IOException {
+        ModelHandler model = getModelhandler();
+        model.add("GoalSettingsSleep", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettingsSleep.graphml"),
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("GoalSettingsSleep");
+        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+        String actualResult = getModelhandler().getStatistics();
+        System.out.println(actualResult);
+    }
+    
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "GoalSettings" })
+    public void GoalSettings_Weight() throws InterruptedException, StopConditionException, IOException {
+        ModelHandler model = getModelhandler();
+        model.add("GoalSettingsWeight", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettingsWeight.graphml"),
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("GoalSettingsWeight");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
@@ -44,12 +66,13 @@ public class SettingsTest extends AutomationTest {
     public void UnitSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("UnitSettings", new UnitSettingsAPI(this, Files.getFile("model/settings/UnitSettings.graphml"),
-                false, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("UnitSettings");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
     }
+    
     @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "WearingShine" })
     public void WearingShine() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
@@ -60,4 +83,5 @@ public class SettingsTest extends AutomationTest {
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
     }
+
 }

@@ -7,7 +7,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
+import com.misfit.ios.NuRemoteClient;
+import com.misfit.ios.ViewUtils;
+import com.misfit.ta.Gui;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.gui.AppInstaller;
+import com.misfit.ta.gui.HomeScreen;
+import com.misfit.ta.gui.HomeSettings;
+import com.misfit.ta.gui.PrometheusHelper;
 
 
 public class Debug {
@@ -20,14 +27,9 @@ public class Debug {
 	
 	public static void main(String[] args) throws Exception {
 		
-		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
-		MVPApi.getDeviceLinkingStatusRaw(token, "SH0AZ00Y9Q");
-		
-//		Files.delete("rawdata");
-//		Files.getFile("rawdata");
-//		ServerCalculationTestHelpers.runTest("rawdata/test1", "dcsc047@a.a", "qqqqqq");
-
-//		AppInstaller.launchInstrument();
-		
+		Gui.init("192.168.1.144");
+		logger.info(HomeScreen.isPointEarnedProgessCircle());
+		logger.info(HomeScreen.isTutorialProgressCircle());
+		logger.info(HomeScreen.isSummaryProgressCircle());
 	}
 }

@@ -38,7 +38,7 @@ public class UnitSettingsAPI extends ModelAPI {
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(new String[] {"1", "00", "am"}, 5, 500);
 		HomeScreen.tapSave();
-		
+		ShortcutsTyper.delayOne();
 		HomeScreen.tapProgressCircle();
 	}
 	
@@ -46,44 +46,45 @@ public class UnitSettingsAPI extends ModelAPI {
 		
 		HomeScreen.tapOpenSettingsTray();
 		HomeScreen.tapSettings();
+		ShortcutsTyper.delayOne();
 	}
 	
 	public void e_ChangeProfileDistanceUnit() {
 		
-		Gui.touchAVIew("UILabel", isDistanceUSUnit ? DefaultStrings.KmLabel : DefaultStrings.MileLabel);
 		isDistanceUSUnit = !isDistanceUSUnit;
+		if(isDistanceUSUnit) 
+			HomeSettings.tapMile(); 
+		else 
+			HomeSettings.tapKm();
 		
-		System.out.println("Change Profile Distance Unit to: " + isDistanceUSUnit);
 		HomeSettings.tapYourProfile();
 	}
 
 	public void e_ChangeProfileWeightUnit() {
 		
-		Gui.touchAVIew("UILabel", isWeightUSUnit ? DefaultStrings.KgLabel : DefaultStrings.LbsLabel);
 		isWeightUSUnit = !isWeightUSUnit;
+		if(isWeightUSUnit)
+			HomeSettings.tapLbs();
+		else
+			HomeSettings.tapKg();
 		
-		System.out.println("Change Profile Weight Unit to: " + isWeightUSUnit);
 		HomeSettings.tapYourProfile();
 	}
 
 	public void e_ChangeSettingsDistanceUnit() {
 		
-		Gui.touchAVIew("PTHeightPickerControl", 0);
-		Gui.setPicker(2, !isDistanceUSUnit ? DefaultStrings.InchesLabel : DefaultStrings.MetreLabel);
 		isDistanceUSUnit = !isDistanceUSUnit;
-		
-		System.out.println("Change Settings Distance Unit to: " + isDistanceUSUnit);
+		HomeSettings.updateHeight(null, null, isDistanceUSUnit);
+
 		HomeSettings.tapBack();
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.EditProfileTitle);
 	}
 
 	public void e_ChangeSettingsWeightUnit() {
 		
-		Gui.touchAVIew("PTWeightPickerControl", 0);
-		Gui.setPicker(2, !isWeightUSUnit ? DefaultStrings.LbsLabel : DefaultStrings.KgLabel);
 		isWeightUSUnit = !isWeightUSUnit;
+		HomeSettings.updateWeight(null, null, isWeightUSUnit);
 		
-		System.out.println("Change Settings Weight Unit to: " + isWeightUSUnit);
 		HomeSettings.tapBack();
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.EditProfileTitle);
 	}

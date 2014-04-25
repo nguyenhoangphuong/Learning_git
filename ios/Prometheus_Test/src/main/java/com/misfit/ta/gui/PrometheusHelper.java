@@ -57,8 +57,8 @@ public class PrometheusHelper {
 
 		Gui.touchAVIew("PTHeightPickerControl", 0);
 		Gui.setPicker(2, isUSUnit ? DefaultStrings.InchesLabel : DefaultStrings.MetreLabel);
-		Gui.setPicker(0, digit);
-		Gui.setPicker(1, fraction);
+		if(digit != null) Gui.setPicker(0, digit);
+		if(fraction != null) Gui.setPicker(1, fraction);
 		Gui.dismissPicker();
 	}
 
@@ -72,8 +72,8 @@ public class PrometheusHelper {
 		
 		Gui.touchAVIew("PTWeightPickerControl", 0);
 		Gui.setPicker(2, isUSUnit ? DefaultStrings.LbsLabel : DefaultStrings.KgLabel);
-		Gui.setPicker(0, digit);
-		Gui.setPicker(1, fraction);
+		if(digit != null) Gui.setPicker(0, digit);
+		if(fraction != null) Gui.setPicker(1, fraction);
 		Gui.dismissPicker();
 	}
 

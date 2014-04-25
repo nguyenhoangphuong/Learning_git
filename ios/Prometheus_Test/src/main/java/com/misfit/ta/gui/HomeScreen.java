@@ -26,6 +26,11 @@ public class HomeScreen {
 		Gui.touchAVIew("PTListItemView", DefaultStrings.MyShineButton);
 	}
 
+	public static void tapSetWeightGoal() {
+		
+		Gui.touchAVIew("UIButton", DefaultStrings.SetWeightGoalButton);
+	}
+	
 	
 	public static void tapOpenManualInput() {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.ManualButton);
@@ -157,27 +162,18 @@ public class HomeScreen {
 
 	
 	/* Timeline */
-	public static void goToPreviousDays(int days) {
+	public static void tapPreviousDayButton(int days) {
 		for (int i = 0; i < days; i++) {
 			Gui.touchAVIew("UIButton", "<");
 		}
 	}
 
-	public static void goToNextDays(int days) {
+	public static void tapNextDayButton(int days) {
 		for (int i = 0; i < days; i++) {
 			Gui.touchAVIew("UIButton", ">");
 		}
 	}
 	
-	public static void goToLastWeek() {
-		Gui.touchAVIew("UIButton", "<");
-	}
-	
-	public static void goToThisWeek() {
-		// from last week to this week
-		Gui.touchAVIew("UIButton", ">");
-	}
-
 	public static void sync() {
 		PrometheusHelper.sync();
 	}
@@ -277,7 +273,12 @@ public class HomeScreen {
 
 	public static boolean isWeightTimeline() {
 
-		return ViewUtils.isExistedView("UIButton", DefaultStrings.CurrentWeightLabel);
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.CurrentWeightLabel);
+	}
+	
+	public static boolean isWeightTimelineInitial() {
+
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.SetWeightGoalButton);
 	}
 	
 	// get

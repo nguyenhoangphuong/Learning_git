@@ -95,8 +95,8 @@ public class HomeSettings {
 	}
 	
 	public static void setSleepGoal(int hours, int minutes) {
-		Gui.setPicker(0, hours);
-		Gui.setPicker(2, minutes);
+		Gui.setPicker(0, hours - 1);
+		Gui.setPicker(1, minutes);
 	}
 	
 	public static void setWeightGoal(String digit, String fraction, boolean isUSUnit) {
@@ -154,7 +154,7 @@ public class HomeSettings {
 	}
 	
 	public static boolean isAtEditWeightGoal() {
-		return ViewUtils.isExistedView("UILabel", DefaultStrings.HowToHitWeightGoalLabel);
+		return ViewUtils.isExistedView("PTWeightPickerView", 0);
 	}
 
 }

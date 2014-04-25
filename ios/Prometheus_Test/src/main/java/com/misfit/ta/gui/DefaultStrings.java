@@ -76,7 +76,7 @@ public class DefaultStrings {
 	public static String SettingsButton = "Settings";
 	public static String MyShineButton = "My Shine";
 	public static String MyShineTitle = "My Shine";
-	public static String MyGoalButton = "My Goal";
+	public static String MyGoalButton = "My Goals";
 	public static String NoActivityLabel = "No activity yet.";
 	public static String SyncShineToSeeYourActivityLabel = "Sync Shine to see your activity.";
 	public static String EndTutorialButton = "OK, I GOT IT";
@@ -86,6 +86,7 @@ public class DefaultStrings {
 	public static String ProgressCircleTutorial = "tap for steps, calories and distance";
 	public static String SyncingLabel = "Syncing...";
 	public static String CurrentWeightLabel = "Current Weight";
+	public static String SetWeightGoalButton = "Set Weight Goal";
 	
 	public static String TodayButtonTag = "ButtonGoToToday";
 	public static String MenuActivityTimelineButtonTag = "MenuActivityGoal";
@@ -140,7 +141,7 @@ public class DefaultStrings {
 	
 	public static String HowToHitActivityGoalLabel = "Here are a few ways to hit your goal:";
 	public static String HowToHitSleepGoalLabel = "SLEEP SAVVY:";
-	public static String HowToHitWeightGoalLabel = "THE SCOOP:";
+	public static String HowToHitWeightGoalLabel = "THE SCOOP";
 	
 	// time zone
 	public static String TimezoneForwardLabel = "You travelled forwards in time by";
@@ -200,8 +201,8 @@ public class DefaultStrings {
 	public static String PointsDisplay = "of %d points";
 	public static String LessImprovmentMessage = "less active than last week";
 	public static String MoreImprovmentMessage = "more active than last week";
-	public static String _180MinNap = "180-min nap";
-	public static String _8HourSleep = "8-hour sleep";
+	public static String _180MinNap = "180m nap";
+	public static String _8HourSleep = "8h sleep";
 	public static String RemoveSleepButton = "Remove Sleep";
 	
 	public static String BatteryLowTitle = "Your battery is low!";

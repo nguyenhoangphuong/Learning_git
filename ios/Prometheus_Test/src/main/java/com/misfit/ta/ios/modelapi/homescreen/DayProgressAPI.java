@@ -1,7 +1,9 @@
 package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.graphwalker.generators.PathGenerator;
@@ -11,6 +13,7 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
@@ -44,7 +47,7 @@ public class DayProgressAPI extends ModelAPI {
 	private boolean isMale = true;
 	private int year = 1981;
 	
-	private boolean isNoActivity = true;
+	List<String> errors = new ArrayList<String>();
 
 	public void e_Init() {
 
@@ -84,7 +87,6 @@ public class DayProgressAPI extends ModelAPI {
 
 		calculateTotalProgressInfo();
 		this.hour++;
-		this.isNoActivity = false;
 	}
 
 	private void calculateTotalProgressInfo() {
@@ -110,11 +112,10 @@ public class DayProgressAPI extends ModelAPI {
 		// TODO: wait until the bug is fixed
 //		if(this.isNoActivity)
 //			Assert.assertTrue(HomeScreen.isTodayDefault(), "Homescreen - Today - No activity is default");
+		Assert.assertTrue(HomeScreen.isToday(), "Current view is Today");
 	}
 
 	public void v_UpdatedToday() {
-		
-
 
 		// check summary through process circle
 		for (int i = 0; i < 2; i++) {
@@ -132,10 +133,10 @@ public class DayProgressAPI extends ModelAPI {
 				}
 				
 				// check total point
-				Assert.assertTrue(
+				errors.add(Verify.verifyTrue(
 						ViewUtils.isExistedView("UILabel", String.format("%d", (int) Math.floor(this.totalPoints))) || 
 						ViewUtils.isExistedView("UILabel", String.format("%d", (int) Math.round(this.totalPoints))), 
-						"Total points displayed correctly");
+						"Total points displayed correctly"));
 
 				// check remain walking time
 				if (1000 > this.totalPoints) {
@@ -144,14 +145,19 @@ public class DayProgressAPI extends ModelAPI {
 					String remainTimeString = Gui.getProperty("PTBottomHalfCircleLabel", 0, "text");
 					remainTimeString = remainTimeString.substring(remainTimeString.indexOf('_') + 1, remainTimeString.lastIndexOf('_'));
 
-					Assert.assertEquals(remainTimeString, PrometheusHelper.convertNearestTimeInMinuteToString(remainMins), "Remain time displayed correctly");
+					errors.add(Verify.verifyEquals(
+							remainTimeString, PrometheusHelper.convertNearestTimeInMinuteToString(remainMins), 
+							"Remain time displayed correctly"));
 				} else {
 					
 					int beatGoalPercentage = (int) Math.round((Math.floor(this.totalPoints) - 1000) / 10);
 					String beatGoalString = DefaultStrings.BeatGoalMessage + "\\_" + String.valueOf(beatGoalPercentage) + "%\\_";
 					System.out.println("DEBUG beat goal: " + beatGoalString);
 					ShortcutsTyper.delayTime(4000);
-					Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", beatGoalString), "Beat goal message is displayed OK");
+					
+					errors.add(Verify.verifyTrue(
+							ViewUtils.isExistedView("PTRichTextLabel", beatGoalString), 
+							"Beat goal message is displayed OK"));
 				}
 
 			}
@@ -159,8 +165,9 @@ public class DayProgressAPI extends ModelAPI {
 			else if (HomeScreen.isSummaryProgressCircle()) {
 				
 				// check total step
-				Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel", String.format("_%d_ steps", this.totalSteps)), 
-						"Total steps displayed correctly");
+				errors.add(Verify.verifyTrue(
+						ViewUtils.isExistedView("PTRichTextLabel", String.format("_%d_ steps", this.totalSteps)), 
+						"Total steps displayed correctly"));
 
 				// check total burned calories
 				String caloriesText = Gui.getProperty("PTRichTextLabel", 1, "text");
@@ -176,17 +183,12 @@ public class DayProgressAPI extends ModelAPI {
 				System.out.println("DEBUG: Calories text " + calories);
 				System.out.println("DEBUG: Calculated Calories " + result);
 								
-				if (Math.abs(calories - result) > 50f) {
-					TRS.instance().addCode("Calories text: " + calories, null);
-					TRS.instance().addCode("Calculated Calories: " + result, null);
-					
-					Assert.fail("Calories calculation is not correct");
-				}
+				errors.add(Verify.verifyNearlyEquals(calories, result, 50, "Calories"));
 				
 				// check total distance
-				 Assert.assertTrue(ViewUtils.isExistedView("PTRichTextLabel",
+				errors.add(Verify.verifyTrue(ViewUtils.isExistedView("PTRichTextLabel",
 						 String.format("_%.1f_ miles", this.totalMiles)),
-						 "Total miles displayed correctly");
+						 "Total miles displayed correctly"));
 
 			}
 			
@@ -200,18 +202,32 @@ public class DayProgressAPI extends ModelAPI {
 		if (this.lastPoints >= 50f) {
 			
 			Timeline.openTile(this.lastStartTime);
-			Assert.assertTrue(Timeline.isActivityTileCorrect(this.lastStartTime, this.lastEndTime, this.lastDuration, 
+			errors.add(Verify.verifyTrue(Timeline.isActivityTileCorrect(this.lastStartTime, this.lastEndTime, this.lastDuration, 
 					(int) Math.floor(this.lastPoints), null),
-					"Activity tile displays correctly");
+					"Activity tile displays correctly"));
 			Timeline.closeCurrentTile();
 			
 		} else {
-			Assert.assertTrue(!ViewUtils.isExistedView("UILabel", this.lastStartTime), 
-					"Start time shouldn't be displayed because of low points");
+			errors.add(Verify.verifyTrue(!ViewUtils.isExistedView("UILabel", this.lastStartTime), 
+					"Start time shouldn't be displayed because of low points"));
 		}
 		Timeline.dragDownTimeline();
 	}
 
-	public void v_EndInput() {}
+	public void v_EndInput() {
+		
+		boolean pass = true;
+		
+		TRS.instance().addStep("Errors", null);
+		for(String error : errors) {
+			if(error != null) {
+				pass = false;
+				TRS.instance().addCode(error, null);
+				System.out.println(error);
+			}
+		}
+		
+		Assert.assertTrue(pass, "All assertion passed");
+	}
 	
 }

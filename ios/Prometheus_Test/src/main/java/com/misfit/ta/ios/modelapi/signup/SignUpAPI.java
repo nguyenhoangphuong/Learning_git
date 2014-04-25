@@ -139,7 +139,6 @@ public class SignUpAPI extends ModelAPI {
     	Timeline.dragUpTimelineAndHandleTutorial();
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileTapMeLabel), "Tap Me! tile is displayed");
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileActivitiesLabel), "Activities tile is displayed");
-    	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileSleepLabel), "Sleep tile is displayed");
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileMilestonesLabel), "Milestones tile is displayed");
     	Timeline.dragDownTimeline();
     }
