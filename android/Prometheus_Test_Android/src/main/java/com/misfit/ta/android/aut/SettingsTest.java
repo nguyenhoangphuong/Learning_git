@@ -18,7 +18,7 @@ import com.misfit.ta.utils.Files;
 
 public class SettingsTest extends AutomationTest {
 
-	@Test(groups = { "android", "Prometheus", "settings" })
+	@Test(groups = { "android", "Prometheus", "settings", "Included" })
     public void profileSettingsTest() throws InterruptedException, StopConditionException, IOException {
 		ModelHandler model = getModelhandler();
        
@@ -31,7 +31,7 @@ public class SettingsTest extends AutomationTest {
     }
 	
 	
-	@Test(groups = { "android", "Prometheus", "settings" })
+	@Test(groups = { "android", "Prometheus", "settings", "Included" })
     public void goalSettingsTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("goalSettings", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettings.graphml"), true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
@@ -42,7 +42,7 @@ public class SettingsTest extends AutomationTest {
         System.out.println(actualResult);
     }
 
-	@Test(groups = { "android", "Prometheus", "settings" })
+	@Test(groups = { "android", "Prometheus", "settings", "Included" })
     public void sleepGoalSettingsTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("sleepGoalSettings", new SleepGoalSettingsAPI(this, Files.getFile("model/settings/SleepGoalSettings.graphml"), true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));

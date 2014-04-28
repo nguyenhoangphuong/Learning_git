@@ -28,6 +28,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	private int fullScreenWidth = 0;
 	private int goal = 1000;
 	private int currentGoal = 1000;
+	private boolean isEdited = false;
 
 	/**
 	 * This method implements the Edge 'e_CancelEdit'
@@ -36,6 +37,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_CancelEdit() {
 		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
 				DefaultStrings.CancelText);
+		isEdited = false;
 	}
 
 	/**
@@ -74,14 +76,8 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_ConfirmNewGoal() {
 		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
 				DefaultStrings.SetText);
+		isEdited = true;
 		ShortcutsTyper.delayTime(4000);
-		Assert.assertTrue(ViewUtils.findView("TextView", "mText",
-				DefaultStrings.SyncNeededText, 0) != null
-				&& ViewUtils.findView("TextView", "mText",
-						DefaultStrings.SyncNeededStatementText, 0) != null, "This is not sync needed popup.");
-		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
-				DefaultStrings.SyncLaterText);
-		ShortcutsTyper.delayOne();
 	}
 
 	/**
@@ -92,8 +88,12 @@ public class GoalSettingsAPI extends ModelAPI {
 		ShortcutsTyper.delayOne();
 		PrometheusHelper.signUp();
 		ShortcutsTyper.delayTime(2000);
+		fullScreenHeight = Gui.getScreenHeight();
+		fullScreenWidth = Gui.getScreenWidth();
+		System.out.println(fullScreenHeight);
+		System.out.println(fullScreenWidth);
 		PrometheusHelper.manualInputActivity("06", "05", 5, 580);
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(6000);
 	}
 
 	/**
@@ -101,22 +101,20 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ToGoalSettings() {
-		fullScreenHeight = Gui.getScreenHeight();
-		fullScreenWidth = Gui.getScreenWidth();
-		System.out.println(fullScreenHeight);
-		System.out.println(fullScreenWidth);
 		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
+		Gui.setInvalidView();
+		ShortcutsTyper.delayTime(5000);
 		Settings.tapGoalsOnDashboard();
 		ShortcutsTyper.delayTime(500);
 		Settings.tapSetActivityGoal();
 	}
-	
+
 	/**
 	 * This method implements the Edge 'e_PullToRefresh'
 	 * 
 	 */
 	public void e_PullToRefresh() {
-		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
+		// PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
 		ShortcutsTyper.delayOne();
 	}
 
@@ -125,9 +123,10 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_ActivityGoalSettings() {
-		ShortcutsTyper.delayOne();
-		Assert.assertTrue(ViewUtils.findView("TextView", "mText",
-				DefaultStrings.AdjustGoalText, 0) != null, "This is not adjust goal popup.");
+		// ShortcutsTyper.delayOne();
+		// Assert.assertTrue(ViewUtils.findView("TextView", "mText",
+		// DefaultStrings.AdjustGoalText, 0) != null,
+		// "This is not adjust goal popup.");
 	}
 
 	/**
@@ -136,7 +135,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void v_ActivityGoalSettingsUpdated() {
 	}
-	
+
 	/**
 	 * This method implements the Vertex 'v_GoalSettingUpdated'
 	 * 
@@ -157,15 +156,32 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_HomeScreenUpdated() {
-		ViewNode homescreenGoal = ViewUtils.findView("TextView", "mID", DefaultStrings.GoalHomeScreenTextViewId, 0);
-		String homescreenText = homescreenGoal.text;
-		String goalText = homescreenText.substring(3, homescreenText.indexOf(" ", 3));
-		System.out.println("Goal in homescreen: " + goalText);
-		Assert.assertTrue(Integer.valueOf(goalText).equals(goal), "Goal in homescreen should be updated with the new value: " + goal);
+		if (isEdited) {
+			ShortcutsTyper.delayTime(2000);
+			Assert.assertTrue(
+					ViewUtils.findView("TextView", "mText",
+							DefaultStrings.SyncNeededText, 0) != null
+							&& ViewUtils.findView("TextView", "mText",
+									DefaultStrings.SyncNeededStatementText, 0) != null,
+					"This is not sync needed popup.");
+			PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
+					DefaultStrings.SyncLaterText);
+			ShortcutsTyper.delayOne();
+
+			ViewNode homescreenGoal = ViewUtils.findView("TextView", "mID",
+					DefaultStrings.GoalHomeScreenTextViewId, 0);
+			String homescreenText = homescreenGoal.text;
+			String goalText = homescreenText.substring(3,
+					homescreenText.indexOf(" ", 3));
+			System.out.println("Goal in homescreen: " + goalText);
+			Assert.assertTrue(Integer.valueOf(goalText).equals(goal),
+					"Goal in homescreen should be updated with the new value: "
+							+ goal);
+		}
 	}
-	
+
 	public void e_BackToHomeScreen() {
-		Gui.touchAView("TextView", "mID", DefaultStrings.GoalsText);
+		Gui.touchAView("TextView", "mText", DefaultStrings.GoalsText);
 	}
 
 }

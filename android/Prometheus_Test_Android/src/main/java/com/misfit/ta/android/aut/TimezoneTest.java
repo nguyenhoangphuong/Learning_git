@@ -16,7 +16,7 @@ import com.misfit.ta.utils.Files;
 
 public class TimezoneTest extends AutomationTest{
 
-	@Test(groups = { "Android", "TimeZone" })
+	@Test(groups = { "android", "TimeZone", "Excluded" })
 	public void ChangeTimezoneBackwardSameday() throws InterruptedException, StopConditionException, IOException 
 	{
 		ModelHandler model = getModelhandler();
@@ -30,7 +30,7 @@ public class TimezoneTest extends AutomationTest{
 	}
 	
 
-	@Test(groups = { "Android", "TimeZone" })
+	@Test(groups = { "android", "TimeZone", "Excluded" })
 	public void ChangeTimezoneForwardSameday() throws InterruptedException, StopConditionException, IOException 
 	{
 		ModelHandler model = getModelhandler();

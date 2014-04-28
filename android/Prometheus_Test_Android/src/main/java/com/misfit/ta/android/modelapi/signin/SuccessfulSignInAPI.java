@@ -5,9 +5,11 @@ import java.io.File;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.AutomationTest;
 import com.misfit.ta.android.gui.SignIn;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SuccessfulSignInAPI extends ModelAPI {
 	public SuccessfulSignInAPI(AutomationTest automation, File model,
@@ -37,7 +39,8 @@ public class SuccessfulSignInAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_Init() {
-		// TODO:
+		ShortcutsTyper.delayTime(3000);
+		Gui.printView();
 	}
 
 	/**

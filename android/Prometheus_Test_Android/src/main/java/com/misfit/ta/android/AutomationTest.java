@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import com.misfit.ta.utils.ScreenShooter;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
 
@@ -50,6 +51,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     logger.info("***** End of test case: " + method.getName());
     logger.info("***** Result: " + result);
     logger.info("*****************************************************");
+    
   }
 
   @BeforeMethod(alwaysRun = true)
@@ -62,9 +64,10 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     Gui.init();
    
     ScreenShooter.resetShotQueue();
+    logger.info("***** Clean cache *****");
     Gui.cleanCache();
     Gui.start("com.misfitwearables.prometheus/.MainActivity");
-
+    ShortcutsTyper.delayTime(5000);
   }
 
 

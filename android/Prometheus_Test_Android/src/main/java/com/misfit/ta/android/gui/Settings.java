@@ -115,4 +115,12 @@ public class Settings {
 		Gui.swipeUpViewOnPopup(fullScreenHeight, fullScreenWidth, popupHeight,
 				popupWidth, viewOnPopup, steps);
 	}
+	
+	public static String getDailyGoalSummary() {
+		return ViewUtils.findView("TextView", "mID", DefaultStrings.GoalSummaryTextViewId, 0).text;
+	}
+	
+	public static String getNightlyGoalSummary() {
+		return ViewUtils.findView("TextView", "mID", DefaultStrings.GoalSummaryTextViewId, 1).text;
+	}
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Random;
 
 import org.graphwalker.generators.PathGenerator;
+import org.testng.Assert;
 
 import com.misfit.ta.android.AutomationTest;
 import com.misfit.ta.android.Gui;
@@ -22,9 +23,9 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 
 	private int fullScreenHeight = 0;
 	private int fullScreenWidth = 0;
-	private int goalHr = 8;
+	private int goalHr;
 	private int currentGoalHr = 8;
-	private int goalMin = 0;
+	private int goalMin;
 	private int currentGoalMin = 0;
 
 	
@@ -33,7 +34,7 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_BackToHomeScreen() {
-		Gui.touchAView("TextView", "mID", DefaultStrings.GoalsText);
+		Gui.touchAView("TextView", "mText", DefaultStrings.GoalsText);
 	}
 
 	/**
@@ -53,8 +54,15 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 		Random r = new Random();
 		int[] minuteOptions = {0, 15, 30, 45};
 		goalHr = r.nextInt(16) + 1;
-		goalMin = minuteOptions[r.nextInt(4)];
-		PrometheusHelper.editSleepGoal(currentGoalHr, currentGoalMin, goalHr, goalMin);
+		if (goalHr == 16) {
+			goalMin = 0;
+		} else {
+			goalMin = minuteOptions[r.nextInt(4)];
+		}
+		System.out.println("Random hour: " + goalHr);
+		System.out.println("Random minute: " + goalMin);
+		
+		PrometheusHelper.editSleepGoal(goalHr, goalMin, fullScreenHeight, fullScreenWidth);
 	}
 
 	/**
@@ -62,6 +70,8 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ConfirmNewGoal() {
+		currentGoalHr = goalHr;
+		currentGoalMin = goalMin;
 		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
 				DefaultStrings.SetText);
 		ShortcutsTyper.delayTime(4000);
@@ -75,9 +85,12 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 		ShortcutsTyper.delayOne();
 		PrometheusHelper.signUp();
 		ShortcutsTyper.delayTime(2000);
+		fullScreenHeight = Gui.getScreenHeight();
+		fullScreenWidth = Gui.getScreenWidth();
 		PrometheusHelper.manualInputSleep();
+		ShortcutsTyper.delayTime(10000);
 		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
-		ShortcutsTyper.delayTime(5000);
+		ShortcutsTyper.delayTime(6000);
 	}
 
 	/**
@@ -85,7 +98,7 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_PullToRefresh() {
-		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
+//		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
 		ShortcutsTyper.delayTime(5000);
 	}
 
@@ -94,13 +107,12 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ToSleepGoalSettings() {
-		fullScreenHeight = Gui.getScreenHeight();
-		fullScreenWidth = Gui.getScreenWidth();
-		System.out.println(fullScreenHeight);
-		System.out.println(fullScreenWidth);
 		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
+		Gui.setInvalidView();
+		ShortcutsTyper.delayTime(5000);
+		Gui.printView();
 		Settings.tapGoalsOnDashboard();
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(1000);
 		Settings.tapSetSleepGoal();
 	}
 
@@ -109,7 +121,14 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_GoalSettingsUpdated() {
-		// TODO:
+		String expectedNightlyGoalSummary = String.valueOf(currentGoalHr) + " hours";
+		if (currentGoalMin != 0) {
+			expectedNightlyGoalSummary += " " + String.valueOf(currentGoalMin) + " mins";
+		}
+		String nightlyGoalSummary = Settings.getNightlyGoalSummary();
+		System.out.println("Expected nightly goal summary: " + expectedNightlyGoalSummary);
+		System.out.println("Nightly goal summary: " + nightlyGoalSummary);
+		Assert.assertTrue(expectedNightlyGoalSummary.equals(nightlyGoalSummary));
 	}
 
 	/**
@@ -125,7 +144,10 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_HomeScreenUpdated() {
-		// TODO:
+		ShortcutsTyper.delayTime(3000);
+		String totalSleep = HomeScreen.getTotalSleep();
+		String totalSleepHour = totalSleep.substring(0, totalSleep.indexOf(":"));
+		String totalSleepMintue = totalSleep.substring(totalSleep.indexOf(":") + 1, totalSleep.length());
 	}
 
 	/**
@@ -141,7 +163,7 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SleepGoalSettingsUpdated() {
-		// TODO:
+		
 	}
 
 }
