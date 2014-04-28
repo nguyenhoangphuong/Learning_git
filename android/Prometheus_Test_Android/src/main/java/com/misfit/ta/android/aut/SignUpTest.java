@@ -15,7 +15,7 @@ import com.misfit.ta.utils.Files;
 
 public class SignUpTest extends AutomationTest {
     
-    @Test(groups = { "Android", "Prometheus", "signup" })
+    @Test(groups = { "Android", "Prometheus", "signup", "Included" })
     public void SignUp() throws InterruptedException, StopConditionException, IOException 
     {
         ModelHandler model = getModelhandler();

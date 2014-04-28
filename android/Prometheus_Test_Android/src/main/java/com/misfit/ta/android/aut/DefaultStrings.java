@@ -88,4 +88,7 @@ public class DefaultStrings {
 	
 	public static String ActivityGoalViewId = "id/daily_goal_setting_view";
 	public static String SleepGoalViewId = "id/nightly_goal_setting_view";
+	
+	public static String GoalSummaryTextViewId = "id/setting_toggle_summary_tv";
+	public static String TotalSleepTextViewId = "id/card_sleep_total_hours_tv";
 }

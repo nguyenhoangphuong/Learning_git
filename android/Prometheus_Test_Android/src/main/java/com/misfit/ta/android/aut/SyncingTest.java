@@ -13,7 +13,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class SyncingTest {
 	private static int NUMBER_OF_SYNC = 30;
 	
-	@Test(groups = { "Android", "Prometheus", "Syncing", "AndroidAutomation", "ContinuousSyncing", "ManualSyncing" })
+	@Test(groups = { "android", "Prometheus", "Syncing", "AndroidAutomation", "ContinuousSyncing", "ManualSyncing", "Excluded" })
 	public void ManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
 		int countSuccessfulSync = 0;
 		int countFailedSync = 0;

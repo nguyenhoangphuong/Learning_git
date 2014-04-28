@@ -14,7 +14,7 @@ import com.misfit.ta.android.modelapi.homescreen.DayProgressAPI;
 import com.misfit.ta.utils.Files;
 
 public class HomeScreenTest extends AutomationTest {
-	@Test(groups = { "android", "Prometheus", "homescreen" })
+	@Test(groups = { "android", "Prometheus", "homescreen", "Included"})
     public void dayProgressTest() throws InterruptedException, StopConditionException, IOException {
 		ModelHandler model = getModelhandler();
        

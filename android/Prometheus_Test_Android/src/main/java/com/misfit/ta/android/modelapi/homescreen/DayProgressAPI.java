@@ -85,6 +85,7 @@ public class DayProgressAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_UpdatedToday() {
+		ShortcutsTyper.delayTime(2000);
 		ViewNode view = ViewUtils.findView("TextView", "mID",
 				DefaultStrings.PointsHomeScreenTextViewId, 0);
 		System.out.println("Display: " + view.text);

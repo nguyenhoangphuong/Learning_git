@@ -93,7 +93,7 @@ public class InvalidSignInAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_IncorrectSignIn() {
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(1000);
 		Assert.assertTrue(SignIn.hasIncorrectEmailPasswordMessage(),
 				"Invalid Email Or Password");
 	}
