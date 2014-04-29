@@ -21,6 +21,7 @@ import org.graphwalker.Util;
 import com.google.resting.component.EncodingTypes;
 import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
+import com.misfit.ta.backend.BackendTestEnvironment;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.BaseParams;
@@ -41,23 +42,25 @@ public class RequestHelper {
         
         if (requestInf == null) {
             requestInf = new BaseParams();
+            requestInf.headers.clear();
         }
+        
         // build uri
         URI uri = UriBuilder.fromUri(url).build();
         if (port != null)
             uri = UriBuilder.fromUri(url).port(port).build();
 
         // log address
-        logger.info(type.toUpperCase() + ": " + url + " - port: " + uri.getPort());
-        logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
-
-        logger.info("Request params: " + requestInf.getParamsAsJsonString());
-
+        if(BackendTestEnvironment.RequestLoggingEnable) {
+        	logger.info(type.toUpperCase() + ": " + url + " - port: " + uri.getPort());
+        	logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
+        	logger.info("Request params: " + requestInf.getParamsAsJsonString());
+        }
+        
         // send to TRS
         TRS.instance().addStep(type.toUpperCase() + ": " + url + " - port: " + uri.getPort(), null);
-        logger.info("Request headers: " + requestInf.getHeadersAsJsonString());
-
-        logger.info("Request params: " + requestInf.getParamsAsJsonString());
+        TRS.instance().addStep("Request headers: " + requestInf.getHeadersAsJsonString(), null);
+        TRS.instance().addStep("Request params: " + requestInf.getParamsAsJsonString(), null);
 
         // wrapper send request
         ServiceResponse response = null;
@@ -78,9 +81,11 @@ public class RequestHelper {
         ResultLogger.registerResponse();
         ResultLogger.addErrorCode(error);
 
-        logger.debug("Response raw Data: " + rawData);
-        logger.debug("Response code: " + error + "\n\n");
-
+        if(BackendTestEnvironment.RequestLoggingEnable) {
+        	logger.info("Response raw Data: " + rawData);
+        	logger.info("Response code: " + error + "\n\n");
+        }
+        
         // send to TRS
         TRS.instance().addCode("Response raw Data: " + rawData, null);
         TRS.instance().addCode("Response code: " + error + "\n\n", null);

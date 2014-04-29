@@ -1,5 +1,7 @@
 package com.misfit.ta.common;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
@@ -69,6 +71,23 @@ public class Verify {
 		}
 		
 		return null;
+	}
+	
+	public static boolean verifyAll(List<String> messages) {
+		
+		logger.error("\nErrors: ");
+		TRS.instance().addStep("Errors:", "errors");
+		
+		boolean pass = true;
+		for(String error : messages) {
+			if(error != null) {
+				logger.error(error);
+				TRS.instance().addCode("- " + error, null);
+				pass = false;
+			}
+		}
+		
+		return pass;
 	}
 	
 }
