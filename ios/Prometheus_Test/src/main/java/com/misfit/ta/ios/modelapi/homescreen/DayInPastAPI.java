@@ -21,6 +21,7 @@ public class DayInPastAPI extends ModelAPI {
 
 	
 	public void e_Init() {
+		ShortcutsTyper.delayTime(10000);
 		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 

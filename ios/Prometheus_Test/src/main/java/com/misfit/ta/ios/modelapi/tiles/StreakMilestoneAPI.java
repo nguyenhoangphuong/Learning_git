@@ -13,6 +13,7 @@ import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.common.MVPCommon;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -33,6 +34,8 @@ public class StreakMilestoneAPI extends ModelAPI {
 	private String email = "";
 	private String token = "";
 	private Goal todayBlankGoal;
+	
+	private List<String> errors = new ArrayList<String>();
 
 	public void e_init() {
 
@@ -100,13 +103,8 @@ public class StreakMilestoneAPI extends ModelAPI {
 			messages = Timeline.Streak7DaysMessages;
 		if(totalGoal >= 8 && totalGoal <= 11)
 			messages = Timeline.Streak8to11DaysMessages;
-		if(totalGoal >= 12 && totalGoal <= 13) {
-			List<String> list = new ArrayList<String>();
-			list.addAll(Arrays.asList(Timeline.Streak8to11DaysMessages));
-			list.addAll(Arrays.asList(Timeline.Streak12to13DaysOnMessages));
-
-			messages = list.toArray(new String[list.size()]);
-		}
+		if(totalGoal >= 12 && totalGoal <= 13)
+			messages = Timeline.Streak12to13DaysOnMessages;
 		if(totalGoal == 14)
 			messages = Timeline.Streak14DaysMessages;
 		if(totalGoal >= 15)
@@ -118,6 +116,8 @@ public class StreakMilestoneAPI extends ModelAPI {
 
 	public void v_End() {
 		
+		if(!Verify.verifyAll(errors))
+			Assert.fail("Not all assertions pass");
 	}
 	
 	public void checkStreakTile(String[] messages) {
@@ -130,7 +130,8 @@ public class StreakMilestoneAPI extends ModelAPI {
 		Timeline.openTile(title);
 		Gui.captureScreen("streaktile-" + System.nanoTime());
 		
-		Assert.assertTrue(Timeline.isStreakTileCorrect(title, dayDiff + 1, messages), "At least one tile has correct content");
+		errors.add(Verify.verifyTrue(Timeline.isStreakTileCorrect(title, dayDiff + 1, messages), 
+				String.format("At least one streak tile [%s - %d] has correct content", title, dayDiff + 1)));
 		
 		Timeline.closeCurrentTile();
 		Timeline.dragDownTimeline();

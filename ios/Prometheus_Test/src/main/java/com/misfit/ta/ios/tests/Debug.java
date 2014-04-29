@@ -10,11 +10,14 @@ import org.graphwalker.Util;
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.Gui;
+import com.misfit.ta.backend.BackendTestEnvironment;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.AppInstaller;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.gui.Timeline;
 
 
 public class Debug {
@@ -27,9 +30,11 @@ public class Debug {
 	
 	public static void main(String[] args) throws Exception {
 		
+//		BackendTestEnvironment.RequestLoggingEnable = true;
+//		MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq");
+		
 		Gui.init("192.168.1.144");
-		logger.info(HomeScreen.isPointEarnedProgessCircle());
-		logger.info(HomeScreen.isTutorialProgressCircle());
-		logger.info(HomeScreen.isSummaryProgressCircle());
+//		Gui.drag(400, 250, 100, 250);
+		Gui.swipeRight(500);
 	}
 }

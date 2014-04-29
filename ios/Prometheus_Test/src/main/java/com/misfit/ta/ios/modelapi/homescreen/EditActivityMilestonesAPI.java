@@ -1,6 +1,8 @@
 package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
@@ -10,6 +12,7 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.EditTagScreen;
 import com.misfit.ta.gui.Gui;
@@ -31,7 +34,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 	private String password = "qwerty1";
 	private int steps = 5000;
 	private int mins = 50;
-	
+	private List<String> errors = new ArrayList<String>();
 	
 	
 	public void e_init() {
@@ -86,10 +89,6 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(2000);
 	}
 	
-	public void e_Stay() {
-		
-	}
-	
 	
 	
 	public void v_HomeScreen() {
@@ -121,6 +120,12 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		
 	}
 	
+	public void v_End() {
+		
+		if(!Verify.verifyAll(errors)) 
+			Assert.fail("Not all assertions pass");
+	}
+	
 	
 	
 	private void capture() {
@@ -137,7 +142,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 			
 			// check hit goal animation
 			capture();
-			Assert.assertTrue(ViewUtils.isExistedView("UILabel", "GOAL"), "Goal animation plays");
+			errors.add(Verify.verifyTrue(ViewUtils.isExistedView("UILabel", "GOAL"), "Goal animation plays"));
 			Timeline.dragUpTimeline();
 			
 			// check 100% tile
@@ -151,7 +156,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 				Timeline.closeCurrentTile();
 			}
 			
-			Assert.assertTrue(pass, "Goal 100% tile displays correctly");
+			errors.add(Verify.verifyTrue(pass, String.format("Goal 100%% tile [%s - 1000pts] displays correctly", hit100GoalTime)));
 		}
 		
 		if(newPoint >= 1500) {
@@ -173,7 +178,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 				}
 			}
 			
-			Assert.assertTrue(pass, "Goal 150% tile displays correctly");
+			errors.add(Verify.verifyTrue(pass, String.format("Goal 150%% tile [1:%02dam - 1500pts] displays correctly", startMin)));
 		}
 		
 		if(newPoint >= 2000) {
@@ -195,7 +200,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 				}
 			}
 			
-			Assert.assertTrue(pass, "Goal 200% tile displays correctly");
+			errors.add(Verify.verifyTrue(pass, String.format("Goal 200%% tile [1:%02dam - 2000pts] displays correctly", startMin)));
 		}
 	}
 
@@ -210,7 +215,8 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		// check streak tile
 		Timeline.openTile("3");
 		capture();
-		Assert.assertTrue(Timeline.isStreakTileCorrect(hit100GoalTime, 3, Timeline.Streak3DaysMessages));
+		errors.add(Verify.verifyTrue(Timeline.isStreakTileCorrect(hit100GoalTime, 3, Timeline.Streak3DaysMessages),
+				String.format("Streak tile [%s - 3 days] displays correctly", hit100GoalTime)));
 		Timeline.closeCurrentTile();
 	}
 
@@ -227,14 +233,15 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 			Timeline.closeCurrentTile();
 		}
 		
-		Assert.assertTrue(pass, "Personal best milestone displays correctly");
+		errors.add(Verify.verifyTrue(pass, String.format("Personal best milestone [1:00am - %dpts new - 1000pts old] displays correctly", newPoint)));
 	}
 	
 	private void checkNewTileAndProgress(int newPoint) {
 		
 		// check progress circle
 		Timeline.dragDownTimeline();
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", newPoint + ""), "Total points updated correctly");
+		errors.add(Verify.verifyTrue(ViewUtils.isExistedView("UILabel", newPoint + ""), 
+				String.format("Total points [%d] updated correctly", newPoint)));
 		Timeline.dragUpTimeline();
 	}
 

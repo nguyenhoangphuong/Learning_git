@@ -1,6 +1,8 @@
 package com.misfit.ta.ios.modelapi.tiles;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
@@ -10,6 +12,7 @@ import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.common.MVPCommon;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
@@ -30,6 +33,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 	private String token = "";
 	private Goal blankGoal;
 	private boolean usUnit = true;
+	private List<String> errors = new ArrayList<String>();
 
 	
 	
@@ -159,6 +163,10 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		checkBadgesTile(false, 5, 7, 6);
 		checkBadgesTile(false, 6, 14, 12);
 		Timeline.dragDownTimeline();
+		
+		// print all errors
+		if(!Verify.verifyAll(errors))
+			Assert.fail("Not all assertions pass");
 	}
 	
 	
@@ -177,13 +185,16 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 
 			Timeline.openTile(title);
 			Gui.captureScreen("streaktile-" + System.nanoTime());
-			Assert.assertTrue(Timeline.isLifetimeDistanceBadgeTileCorrect(title, marathonsNumber, message));
+			errors.add(Verify.verifyTrue(Timeline.isLifetimeDistanceBadgeTileCorrect(title, marathonsNumber, message), 
+					String.format("Life time distance tile [%s - %d] is existed", title, marathonsNumber)));
 			Timeline.closeCurrentTile();
 			return;
 		}
 		
-		if(i > 1)
-			Assert.fail("No achievement tile");
+		if(i > 1) {
+			errors.add(String.format("No archievement tile [%d:%02dam - %d - %s] is existed", 
+					hitAchievementHour, hitAchievementMinute, marathonsNumber, usUnit ? "us" : "si"));
+		}
 	}
 
 	private void changeDistanceSettings(boolean usUnit) {
@@ -195,7 +206,9 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		else
 			HomeSettings.tapKm();
 		HomeSettings.tapBack();
-		ShortcutsTyper.delayTime(200);
+		
+		// wait until new settings saved
+		PrometheusHelper.waitForThrobberToDissappear();
 	}
 
 }

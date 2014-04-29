@@ -1,7 +1,9 @@
 package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
@@ -10,6 +12,7 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.common.MVPCommon;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
@@ -29,7 +32,7 @@ public class WeekViewAPI extends ModelAPI {
 	private int currentGoal;
 	private Calendar now = Calendar.getInstance();
 	private String token;
-
+	private List<String> errors = new ArrayList<String>();
 	
 	
 	public void e_Init() {
@@ -38,11 +41,15 @@ public class WeekViewAPI extends ModelAPI {
 		String password = "qqqqqq";
 		
 		token = MVPApi.signIn(email, password).token;
-		Goal goal = MVPApi.searchGoal(token, getTimeStampOfPreviousDay(0), null, 0l).goals[0];
+		for(int i = 14; i >=0; i--) {
+			MVPApi.createGoal(token, Goal.getDefaultGoal(System.currentTimeMillis() / 1000 - 3600 * 24 * i));
+		}
+		
+		Goal goal = MVPApi.searchGoal(token, getTimeStampOfPreviousDay(0), null, null).goals[0];
 		goal.getProgressData().setPoints(MVPCommon.randInt(10, 15) * 100 * 2.5);
 		MVPApi.updateGoal(token, goal);
 		
-//		PrometheusHelper.signIn(email,password);
+		PrometheusHelper.signIn(email,password);
 		HomeScreen.pullToRefresh();
 	}
 	
@@ -127,9 +134,9 @@ public class WeekViewAPI extends ModelAPI {
 		}
 		
 		System.out.println("DEBUG: Total goal " + totalGoal);
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", 
+		errors.add(Verify.verifyTrue(ViewUtils.isExistedView("UILabel", 
 				String.format(DefaultStrings.PointsDisplay, totalGoal)), 
-				"Week goal is correct");
+				String.format("Week goal [%d] is correct", totalGoal)));
 	}
 	
 	public void v_ThisWeekImprovement() {
@@ -149,8 +156,12 @@ public class WeekViewAPI extends ModelAPI {
 			}
 		}
 		
-		Assert.assertTrue(pass, "Improvement displays correctly");
+		errors.add(Verify.verifyTrue(pass, String.format("Improvement [%d%%] displays correctly", improvement)));
 		Timeline.dragDownTimeline();
+		
+		// verify all
+		if(!Verify.verifyAll(errors))
+			Assert.fail("Not all assertions pass");
 	}
 	
 	

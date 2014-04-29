@@ -118,7 +118,7 @@
 		<dependency>
 			<groupId>com.misfit.ta</groupId>
 			<artifactId>prometheus-backend</artifactId>
-			<version>0.0.6</version>
+			<version>0.0.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>

@@ -1,10 +1,14 @@
 package com.misfit.ta.ios.modelapi.tiles;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
@@ -21,9 +25,10 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 	
-	int hour = 6;
-	String email = MVPApi.generateUniqueEmail();
-	String password = "qwerty1";
+	private int hour = 6;
+	private String email = MVPApi.generateUniqueEmail();
+	private String password = "qwerty1";
+	private List<String> errors = new ArrayList<String>();
 	
 	
 	public void e_init() {
@@ -97,6 +102,9 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 		Gui.swipeUp(1000);
 		Gui.swipeUp(1000);
 		checkGoalTile(2000, Timeline.DailyGoalMessagesFor200Percent);
+		
+		if(!Verify.verifyAll(errors))
+			Assert.fail("Not all assertions pass");
 	}
 	
 	
@@ -106,8 +114,8 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 		String endTime = hour + ":50am";
 		
 		Timeline.openTile(startTime);
-		Assert.assertTrue(Timeline.isActivityTileCorrect(startTime, endTime, 50, 500, DefaultStrings.WalkingLevel[2]),
-				"Activity tile is displayed correctly");
+		errors.add(Verify.verifyTrue(Timeline.isActivityTileCorrect(startTime, endTime, 50, 500, DefaultStrings.WalkingLevel[2]),
+				String.format("Activity tile [%s - %s - 50mins - 500pts] is displayed correctly", startTime, endTime)));
 		Timeline.closeCurrentTile();
 		
 	}
@@ -116,8 +124,8 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 
 		String time = hour + ":50am";
 		Timeline.openNotableEventTile(time);
-		Assert.assertTrue(Timeline.isDailyGoalMilestoneTileCorrect(time, points, messages),
-				"Daily goal milestone tile is displayed correctly");
+		errors.add(Verify.verifyTrue(Timeline.isDailyGoalMilestoneTileCorrect(time, points, messages),
+				String.format("Daily goal milestone tile [%s - %d] is displayed correctly", time, points)));
 		Timeline.closeCurrentTile();
 	}
 	

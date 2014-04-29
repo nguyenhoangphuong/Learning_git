@@ -109,9 +109,6 @@ public class DayProgressAPI extends ModelAPI {
 	
 	public void v_Today() {
 
-		// TODO: wait until the bug is fixed
-//		if(this.isNoActivity)
-//			Assert.assertTrue(HomeScreen.isTodayDefault(), "Homescreen - Today - No activity is default");
 		Assert.assertTrue(HomeScreen.isToday(), "Current view is Today");
 	}
 
