@@ -43,14 +43,12 @@ public class HomeScreen {
 	}
 
 	public static void intputActivity(String duration, String steps) {
-		Gui.longTouchAView("EditText", "mID", DefaultStrings.DurationEditTextId);
-		Gui.type(duration);
-		Gui.pressBack();
-
-		ShortcutsTyper.delayOne();
 		Gui.longTouchAView("EditText", "mID", DefaultStrings.StepsEditTextId);
 		Gui.type(steps);
-		Gui.pressBack();
+		
+		ShortcutsTyper.delayOne();
+		Gui.longTouchAView("EditText", "mID", DefaultStrings.DurationEditTextId);
+		Gui.type(duration);
 	}
 
 	public static void cancelManual() {
@@ -75,7 +73,7 @@ public class HomeScreen {
 	}
 
 	public static String getTotalSleep() {
-		return ViewUtils.findView("TextView", "mText",
+		return ViewUtils.findView("TextView", "mID",
 				DefaultStrings.TotalSleepTextViewId, 0).text;
 	}
 

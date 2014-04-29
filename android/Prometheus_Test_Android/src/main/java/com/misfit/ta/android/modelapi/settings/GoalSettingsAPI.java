@@ -102,6 +102,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void e_ToGoalSettings() {
 		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
+		ShortcutsTyper.delayTime(2000);
 		Gui.setInvalidView();
 		ShortcutsTyper.delayTime(5000);
 		Settings.tapGoalsOnDashboard();
@@ -114,8 +115,9 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_PullToRefresh() {
-		// PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
+		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
 		ShortcutsTyper.delayOne();
+		isEdited = false;
 	}
 
 	/**
@@ -157,7 +159,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	 */
 	public void v_HomeScreenUpdated() {
 		if (isEdited) {
-			ShortcutsTyper.delayTime(2000);
+			ShortcutsTyper.delayTime(5000);
 			Assert.assertTrue(
 					ViewUtils.findView("TextView", "mText",
 							DefaultStrings.SyncNeededText, 0) != null

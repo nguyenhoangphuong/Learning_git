@@ -98,7 +98,7 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_PullToRefresh() {
-//		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
+		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
 		ShortcutsTyper.delayTime(5000);
 	}
 
@@ -108,9 +108,9 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 */
 	public void e_ToSleepGoalSettings() {
 		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
+		ShortcutsTyper.delayTime(2000);
 		Gui.setInvalidView();
 		ShortcutsTyper.delayTime(5000);
-		Gui.printView();
 		Settings.tapGoalsOnDashboard();
 		ShortcutsTyper.delayTime(1000);
 		Settings.tapSetSleepGoal();
@@ -144,7 +144,7 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_HomeScreenUpdated() {
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 		String totalSleep = HomeScreen.getTotalSleep();
 		String totalSleepHour = totalSleep.substring(0, totalSleep.indexOf(":"));
 		String totalSleepMintue = totalSleep.substring(totalSleep.indexOf(":") + 1, totalSleep.length());
