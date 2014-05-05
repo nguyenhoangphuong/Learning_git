@@ -68,7 +68,7 @@ public class DefaultStrings {
 	public static String AdjustGoalText = "Adjust Goal";
 	public static String MyProfileText = "My Profile";
 	public static String GoalsText = "Goals";
-	
+	public static String ShineSettingsText = "Shine Settings";
 	
 	public static String IncorrectSignInMessage = "Incorrect email or password, please check and try again.";
 	public static String WalkingLeftText = "of walking left";
@@ -76,8 +76,13 @@ public class DefaultStrings {
 	public static String ShineCustomEditTextInPickerId = "id/np__numberpicker_input";
 	public static String ShineSettingsRadioButtonId1 = "id/setting_radio_button_1";
 	public static String ShineSettingsRadioButtonId2 = "id/setting_radio_button_2";
+	public static String ShineSettingsRadioButtonId3 = "id/setting_radio_button_3 ";
 	public static String ShineSettingsDisplayClockCheckBoxId = "id/setting_toggle";
-	public static String ShineSettingsSleepTrackingSwitchId = "id/setting_toggle";
+	public static String ShineSettingsDistanceButtonId = "id/shine_setting_distance_unit";
+	public static String ShineSettingsWeightButtonId = "id/shine_setting_weight_unit";
+	public static String ShineSettingsSleepTrackingModeButtonId = "id/shine_setting_sleep_tracking_mode";
+	public static String ShineSettingsDisplayClockCheckboxId = "id/shine_setting_display_clock_checkbox";
+	public static String ShineSettingsDisplayOrderButtonId = "id/shine_setting_display_order_selector";
 	
 	// MainMenuTextView
 	public static String HistoryMainMenuTextViewId = "id/history_drawer_tv";

@@ -70,7 +70,7 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ConfirmNewGoal() {
-		currentGoalHr = goalHr;
+		currentGoalHr = goalHr; 
 		currentGoalMin = goalMin;
 		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
 				DefaultStrings.SetText);

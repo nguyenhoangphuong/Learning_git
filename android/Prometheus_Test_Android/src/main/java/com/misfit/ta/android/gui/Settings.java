@@ -18,27 +18,33 @@ public class Settings {
 	 * Settings Menu
 	 */
 	public static void tapSetActivityGoal() {
-		Gui.touchAView("ShineSettingCheckbox", "mID", DefaultStrings.ActivityGoalViewId);
+		Gui.touchAView("ShineSettingCheckbox", "mID",
+				DefaultStrings.ActivityGoalViewId);
 	}
-	
+
 	public static void tapSetSleepGoal() {
-		Gui.touchAView("ShineSettingCheckbox", "mID", DefaultStrings.SleepGoalViewId);
+		Gui.touchAView("ShineSettingCheckbox", "mID",
+				DefaultStrings.SleepGoalViewId);
 	}
 
 	public static void tapShineSettings() {
-		Gui.touchAView("MenuMainTextView", "mID", DefaultStrings.SettingsMainMenuTextViewId);
+		Gui.touchAView("MenuMainTextView", "mID",
+				DefaultStrings.SettingsMainMenuTextViewId);
 	}
 
 	public static void tapHelp() {
-		Gui.touchAView("MenuMainTextView", "mID", DefaultStrings.HelpAndAboutMainMenuTextViewId);
+		Gui.touchAView("MenuMainTextView", "mID",
+				DefaultStrings.HelpAndAboutMainMenuTextViewId);
 	}
-	
+
 	public static void tapGoalsOnDashboard() {
-		Gui.touchAView("MenuMainTextView", "mID", DefaultStrings.GoalsMainMenuTextViewId);
+		Gui.touchAView("MenuMainTextView", "mID",
+				DefaultStrings.GoalsMainMenuTextViewId);
 	}
 
 	public static void tapMyProfile() {
-		Gui.touchAView("MenuMainTextView", "mID", DefaultStrings.ProfileMainMenuTextViewId);
+		Gui.touchAView("MenuMainTextView", "mID",
+				DefaultStrings.ProfileMainMenuTextViewId);
 	}
 
 	public static String getCurrentBirthDate() {
@@ -61,47 +67,79 @@ public class Settings {
 				DefaultStrings.MaleButtonId, 0).isChecked;
 	}
 
-	public static boolean displayClock() {
+	public static boolean isClockDisplayed() {
 		return ViewUtils.findView("CheckBox", "mID",
 				DefaultStrings.ShineSettingsDisplayClockCheckBoxId, 0).isChecked;
 	}
 
-	public static boolean showProgressFirst() {
+	public static boolean isProgressShowedFirst() {
 		return ViewUtils.findView("RadioButton", "mID",
 				DefaultStrings.ShineSettingsRadioButtonId1, 0).isChecked;
 	}
 
-	public static boolean showClockFirst() {
+	public static boolean isClockShowedFirst() {
 		return ViewUtils.findView("RadioButton", "mID",
 				DefaultStrings.ShineSettingsRadioButtonId2, 0).isChecked;
 	}
 
-	public static boolean useMiles() {
+	public static boolean isMilesUnit() {
 		return ViewUtils.findView("RadioButton", "mID",
-				DefaultStrings.ShineSettingsRadioButtonId1, 1).isChecked;
+				DefaultStrings.ShineSettingsRadioButtonId1, 0).isChecked;
 	}
 
-	public static boolean useKm() {
+	public static boolean isKmUnit() {
 		return ViewUtils.findView("RadioButton", "mID",
-				DefaultStrings.ShineSettingsRadioButtonId2, 1).isChecked;
+				DefaultStrings.ShineSettingsRadioButtonId2, 0).isChecked;
 	}
 
-	public static boolean useLbs() {
+	public static boolean isLbsUnit() {
 		return ViewUtils.findView("RadioButton", "mID",
-				DefaultStrings.ShineSettingsRadioButtonId1, 2).isChecked;
+				DefaultStrings.ShineSettingsRadioButtonId1, 0).isChecked;
 	}
 
-	public static boolean useKg() {
+	public static boolean isKgUnit() {
 		return ViewUtils.findView("RadioButton", "mID",
-				DefaultStrings.ShineSettingsRadioButtonId2, 2).isChecked;
+				DefaultStrings.ShineSettingsRadioButtonId2, 0).isChecked;
+	}
+	
+	public static boolean isAutomaticSleepTracking(){ 
+		return ViewUtils.findView("RadioButton", "mID",
+				DefaultStrings.ShineSettingsRadioButtonId1, 0).isChecked;
+	}
+	
+	public static boolean isManualSleepTracking(){ 
+		return ViewUtils.findView("RadioButton", "mID",
+				DefaultStrings.ShineSettingsRadioButtonId2, 0).isChecked;
 	}
 
-	public static boolean trackSleep() {
-		return ViewUtils.findView("Switch", "mID",
-				DefaultStrings.ShineSettingsSleepTrackingSwitchId, 0).isChecked;
+	public static boolean isOffSleepTracking(){ 
+		return ViewUtils.findView("RadioButton", "mID",
+				DefaultStrings.ShineSettingsRadioButtonId3, 0).isChecked;
+	}
+	
+	public static void openDistancePopup() {
+		Gui.touchAView("ShineSettingCheckBox", "mID", DefaultStrings.ShineSettingsDistanceButtonId);
 	}
 
-
+	public static void openWeightPopup() {
+		Gui.touchAView("ShineSettingCheckBox", "mID", DefaultStrings.ShineSettingsWeightButtonId);
+	}
+	
+	public static void openSleepTrackingModePopup() {
+		Gui.touchAView("ShineSettingCheckBox", "mID", DefaultStrings.ShineSettingsSleepTrackingModeButtonId);
+	}
+	
+	public static void openDisplayOrderPopup() {
+		Gui.touchAView("ShineSettingCheckBox", "mID", DefaultStrings.ShineSettingsDisplayOrderButtonId);
+	}
+	
+	public static void showClock(boolean isShowed) {
+		if (!(isClockDisplayed() && isShowed)) {
+			Gui.touchAView("CheckBox", "mID",
+					DefaultStrings.ShineSettingsDisplayClockCheckBoxId);
+		}
+	}
+	
 	public static void swipeDownValuePicker(int fullScreenHeight,
 			int fullScreenWidth, int popupHeight, int popupWidth,
 			ViewNode viewOnPopup, int steps) {
@@ -115,12 +153,14 @@ public class Settings {
 		Gui.swipeUpViewOnPopup(fullScreenHeight, fullScreenWidth, popupHeight,
 				popupWidth, viewOnPopup, steps);
 	}
-	
+
 	public static String getDailyGoalSummary() {
-		return ViewUtils.findView("TextView", "mID", DefaultStrings.GoalSummaryTextViewId, 0).text;
+		return ViewUtils.findView("TextView", "mID",
+				DefaultStrings.GoalSummaryTextViewId, 0).text;
 	}
-	
+
 	public static String getNightlyGoalSummary() {
-		return ViewUtils.findView("TextView", "mID", DefaultStrings.GoalSummaryTextViewId, 1).text;
+		return ViewUtils.findView("TextView", "mID",
+				DefaultStrings.GoalSummaryTextViewId, 1).text;
 	}
 }
