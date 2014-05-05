@@ -1,6 +1,5 @@
 package com.misfit.ta.gui;
 
-import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 
 public class SleepViews {
@@ -9,6 +8,16 @@ public class SleepViews {
 		
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.EditSleepTitleLabel);
 	}
+	
+	public static boolean isNoSleepDataView() {
+		
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.NoSleepDataLabel);
+	}
+	
+	public static boolean isSyncToSeeSleepView() {
+		
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.SyncToSeeSleepLabel);
+	}
 
 	public static boolean hasRemoveSleepConfirmationAlert() {
 		
@@ -16,14 +25,19 @@ public class SleepViews {
 				DefaultStrings.RemoveSleepConfirmationAlertTitle);
 	}
 	
+	public static boolean hasEditSleepButton() {
+		
+		return ViewUtils.isExistedView("UIButton", 3);
+	}
+	
+	public static void tapEditSleep() {
+		
+		Gui.touchAVIew("UIButton", 3);
+	}
+	
 	public static void tapDeleteSleep() {
 		
-		String parentView = String.format("(ViewUtils findViewWithViewName: @\"%s\" andIndex: @\"%d\")", 
-				"PTSleepSessionEditView", 0);
-		String cmd = String.format("(Gui touchAView: (ViewUtils findViewWithViewName: @\"%s\" andIndex: @\"%d\" inView: %s))",
-				"UIButton", 0, parentView);
-		
-		NuRemoteClient.sendToServer(cmd);
+		Gui.touchAVIew("UILabel", DefaultStrings.RemoveSleepButton);
 	}
 
 }

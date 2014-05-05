@@ -14,6 +14,7 @@ import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -142,6 +143,7 @@ public class WeekViewAPI extends ModelAPI {
 	public void v_ThisWeekImprovement() {
 		
 		Timeline.dragUpTimelineAndHandleTutorial();
+		Gui.captureScreen("weekview" + System.nanoTime());
 		Integer improvement = calculateImprovement();
 		boolean pass = false;
 		

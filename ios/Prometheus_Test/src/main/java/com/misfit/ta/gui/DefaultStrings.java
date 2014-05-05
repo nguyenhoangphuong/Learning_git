@@ -45,6 +45,8 @@ public class DefaultStrings {
 	public static String EditSleepTitleLabel = "Edit Sleep";
 	public static String RemoveSleepConfirmationAlertMessage = "This action can't be undone.";
 	public static String RemoveSleepConfirmationAlertTitle = "Remove Sleep Session?";
+	public static String NoSleepDataLabel = "No sleep data yet";
+	public static String SyncToSeeSleepLabel = "Sync to see your sleep";
 	
 	// link
 	public static String NoShineAvailableMessage = "All Shines detected are linked to other accounts. Make sure your Shine is unlinked and try again.";
@@ -203,7 +205,7 @@ public class DefaultStrings {
 	public static String MoreImprovmentMessage = "more active than last week";
 	public static String _180MinNap = "180m nap";
 	public static String _8HourSleep = "8h sleep";
-	public static String RemoveSleepButton = "Remove Sleep";
+	public static String RemoveSleepButton = "Remove Session";
 	
 	public static String BatteryLowTitle = "Your battery is low!";
 	public static String BatteryLowMessage = "Please replace the battery on Shine within the next few days to prevent data loss.";

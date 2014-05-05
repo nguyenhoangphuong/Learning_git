@@ -9,11 +9,11 @@ import org.graphwalker.Util;
 
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.Gui;
 import com.misfit.ta.backend.BackendTestEnvironment;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.AppInstaller;
+import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -34,7 +34,7 @@ public class Debug {
 //		MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq");
 		
 		Gui.init("192.168.1.144");
-//		Gui.drag(400, 250, 100, 250);
-		Gui.swipeRight(500);
+		Gui.printView();
+		ViewUtils.isExistedView("UIButton", 1);
 	}
 }

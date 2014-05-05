@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.signin.ForgotPasswordAPI;
 import com.misfit.ta.ios.modelapi.signin.InvalidSignInAPI;
+import com.misfit.ta.ios.modelapi.signin.SignInWithFacebookAPI;
 import com.misfit.ta.ios.modelapi.signin.SuccessfulSignInAPI;
 import com.misfit.ta.utils.Files;
 

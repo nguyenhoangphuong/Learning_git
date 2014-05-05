@@ -1,26 +1,19 @@
 package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
-import com.misfit.ta.backend.data.timeline.TimelineItem;
-import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SleepViews;
-import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SleepTileRemovingAPI extends ModelAPI {
 	public SleepTileRemovingAPI(AutomationTest automation, File model,
@@ -31,9 +24,9 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	private String email;
 	private String token;
 	
-	private String currentTitle;
-	private int sleepTileCount = 0;
-	private List<String> allSleepTileTitles = new ArrayList<String>();
+	private static String OldestSleepTitle = "10:00am - 12:59pm";
+	private static String MidSleepTitle = "1:00pm - 3:59am";
+	private static String LatestSleepTitle = "5:00pm - 7:59am";
 	
 
 	public void e_init() {
@@ -47,40 +40,37 @@ public class SleepTileRemovingAPI extends ModelAPI {
 		
 		// pull to refresh
 		HomeScreen.pullToRefresh();
-	}
-	
-	public void e_inputSleep() {
 		
-		currentTitle = "5:59am";
-		sleepTileCount += 2;
-		allSleepTileTitles.add(currentTitle);
-		
+		// input 1 sleep and 2 naps
 		HomeScreen.tapOpenManualInput();
-		HomeScreen.tap8HourSleep();
-		HomeScreen.tapSave();
-		Timeline.dragUpTimelineAndHandleTutorial();
-		ShortcutsTyper.delayOne();
-	}
-	
-	public void e_inputNap() {
-		
-		currentTitle = "2:00pm";
-		sleepTileCount++;
-		allSleepTileTitles.add(currentTitle);
-		
-		HomeScreen.tapOpenManualInput();
-		PrometheusHelper.manualInputTime(new String[] {"2", "00", "PM"});
+		PrometheusHelper.manualInputTime(new String[] {"10", "00", "AM"});
+		HomeScreen.tap180MinNap();
+		PrometheusHelper.manualInputTime(new String[] {"1", "00", "PM"});
+		HomeScreen.tap180MinNap();
+		PrometheusHelper.manualInputTime(new String[] {"5", "00", "PM"});
 		HomeScreen.tap180MinNap();
 		HomeScreen.tapSave();
-		Timeline.dragUpTimelineAndHandleTutorial();
-	}
-	
-	public void e_editSleepTile() {
 		
-		Timeline.holdAndPressTile(currentTitle);
+		// go to sleep view
+		HomeScreen.tapSleepTimeline();
 	}
 	
-	public void e_removeSleepTile() {
+	public void e_toOldestSleepOfToday() {
+		
+		HomeScreen.tapPreviousDayButton(2);
+	}
+	
+	public void e_toLatestSleepOfToday() {
+		
+		HomeScreen.tapNextDayButton(1);
+	}
+	
+	public void e_editSleep() {
+		
+		SleepViews.tapEditSleep();
+	}
+	
+	public void e_removeSleep() {
 		
 		SleepViews.tapDeleteSleep();
 	}
@@ -93,27 +83,54 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	public void e_confirmRemove() {
 		
 		Gui.touchPopupButton(DefaultStrings.RemoveButton);
-		ShortcutsTyper.delayOne();
-		Timeline.dragDownTimeline();
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.EditSleepTitleLabel);
+	}
+	
+	public void e_forceDeleteSleep() {
+		
+		SleepViews.tapEditSleep();
+		SleepViews.tapDeleteSleep();
+		Gui.touchPopupButton(DefaultStrings.RemoveButton);
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.EditSleepTitleLabel);
 	}
 	
 	public void e_signOutAndSignInAgain() {
 		
 		PrometheusHelper.signOut();
 		PrometheusHelper.signIn(email, "qwerty1");
-		Timeline.dragUpTimelineAndHandleTutorial();
+		HomeScreen.tapSleepTimeline();
+		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingEtcLabel);
 	}
 
 
 
-	public void v_HomeScreen() {
+	public void v_SleepTimelineNoCheck() {
 		
-		Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen - Today");
+		// entry vertex
 	}
 	
-	public void v_HomeScreenWithSleepTile() {
+	public void v_SleepTimelineOldestSleep() {
+
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", OldestSleepTitle), 
+				"Current sleep is first sleep of today");
+	}
+	
+	public void v_SleepTimelineMidSleep() {
+
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", MidSleepTitle),
+				"Current sleep is second sleep of today");
+	}
+	
+	public void v_SleepTimelineLatestSleep() {
+
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", LatestSleepTitle),
+				"Current sleep is last sleep of today");
+	}
+	
+	public void v_SleepTimelineNoData() {
 		
-		Assert.assertTrue(Timeline.isTileExisted(currentTitle), "Current sleep tile is existed");
+		Assert.assertTrue(SleepViews.isNoSleepDataView(), 
+				"Current view is no sleep data view");
 	}
 	
 	public void v_EditSleep() {
@@ -125,28 +142,6 @@ public class SleepTileRemovingAPI extends ModelAPI {
 		
 		Assert.assertTrue(SleepViews.hasRemoveSleepConfirmationAlert(), 
 				"Action sheet confirmation is shown");		
-	}
-	
-	public void v_HomeScreenAfterRemoveSleep() {
-		
-		// make sure the no sleep tile is displayed on app
-		Assert.assertTrue(!ViewUtils.isExistedView("UILabel", currentTitle), "There's no sleep tile");
-	}
-	
-	public void v_HomeScreenAfterSignInAgain() {
-
-		for(String title : allSleepTileTitles)
-			Assert.assertTrue(!ViewUtils.isExistedView("UILabel", title), "There's no sleep tile");
-		
-		// make sure the tile is stored on server with state = deleted
-		List<TimelineItem> items = MVPApi.getTimelineItems(token, 0l, (long)Integer.MAX_VALUE, 0l);
-		int numberOfDeletedSleepTile = 0;
-		for(TimelineItem item : items) {
-			if(item.getItemType().equals(TimelineItemDataBase.TYPE_SLEEP) && item.getState() != null && item.getState() == 1)
-				numberOfDeletedSleepTile++;
-		}
-		
-		Assert.assertEquals(numberOfDeletedSleepTile, sleepTileCount, "Number of items with state = 1 (deleted) on server");
 	}
 
 }

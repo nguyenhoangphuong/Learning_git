@@ -21,14 +21,14 @@ public class DayInPastAPI extends ModelAPI {
 
 	
 	public void e_Init() {
-		ShortcutsTyper.delayTime(10000);
+
 		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 
 	public void e_BackToADayInPast() {
 		
 		// we're using qa account which has many days in the past
-		this.days = PrometheusHelper.randInt(2, 7);
+		this.days = PrometheusHelper.randInt(2, 14);
 		HomeScreen.tapPreviousDayButton(this.days);
 	}
 
