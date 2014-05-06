@@ -225,7 +225,8 @@ public class PrometheusHelper {
 		int minHour = 1;
 		int maxMinute = 45;
 		int minMinute = 0;
-		System.out.println("Start to edit sleep goal to " + hour + ":" + minute);
+		System.out
+				.println("Start to edit sleep goal to " + hour + ":" + minute);
 		String currentHour = PrometheusHelper.getCurrentValueInPicker(0);
 		int currentHourNumber = Integer.valueOf(currentHour);
 		hour = hour < minHour ? minHour : hour > maxHour ? maxHour : hour;
@@ -233,7 +234,7 @@ public class PrometheusHelper {
 				+ " to " + hour);
 		editSleepGoalOnPicker(currentHourNumber, hour, 0, fullScreenHeight,
 				fullScreenWidth, 1);
-		
+
 		String currentMinute = PrometheusHelper.getCurrentValueInPicker(1);
 		int currentMinuteNumber = Integer.valueOf(currentMinute);
 		minute = minute < minMinute ? minMinute
@@ -285,11 +286,11 @@ public class PrometheusHelper {
 	}
 
 	public static void manualInputActivity(String hour, String minute,
-			int lastDuration, int steps) {
+			int duration, int steps) {
 		HomeScreen.tapManual();
 		// input record
 		HomeScreen.inputManualTime(hour, minute);
-		HomeScreen.intputActivity(String.valueOf(lastDuration),
+		HomeScreen.intputActivity(String.valueOf(duration),
 				String.valueOf(steps));
 		HomeScreen.saveManual();
 	}

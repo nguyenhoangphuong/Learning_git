@@ -10,7 +10,6 @@ import com.misfit.ta.android.AutomationTest;
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
-import com.misfit.ta.android.chimpchat.core.TouchPressType;
 import com.misfit.ta.android.gui.HomeScreen;
 import com.misfit.ta.android.gui.PrometheusHelper;
 import com.misfit.ta.android.gui.Settings;
@@ -27,7 +26,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	private int fullScreenHeight = 0;
 	private int fullScreenWidth = 0;
 	private int goal = 1000;
-	private int currentGoal = 1000;
+	private int currentGoal = -1;
 	private boolean isEdited = false;
 
 	/**
@@ -45,18 +44,18 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ChangeGoal() {
-		goal = PrometheusHelper.randInt(1, 99) * 100;
+		goal = PrometheusHelper.randInt(1, 20) * 100;
 		System.out.println("******* New goal value: " + goal);
-		currentGoal = HomeScreen.getCurrentGoalInPicker();
+		int goalInPicker = HomeScreen.getCurrentGoalInPicker();
 		boolean swipeDown = true;
 		int steps = 0;
-		int delta = Math.abs(currentGoal - goal);
+		int delta = Math.abs(goalInPicker - goal);
 		if ((goal == 100 || goal == 9900) && delta > 4900) {
 			steps = (int) (9900 - delta) / 100;
 			swipeDown = (goal == 9900);
 		} else {
 			steps = (int) (delta / 100);
-			swipeDown = (goal < currentGoal);
+			swipeDown = (goal < goalInPicker);
 		}
 		ViewNode goalPickerNode = ViewUtils.findView("ShineCustomEditText",
 				"mID", DefaultStrings.ShineCustomEditTextInPickerId, 0);
@@ -76,7 +75,8 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_ConfirmNewGoal() {
 		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
 				DefaultStrings.SetText);
-		isEdited = true;
+		isEdited = currentGoal != goal;
+		currentGoal = goal;
 		ShortcutsTyper.delayTime(4000);
 	}
 
@@ -92,7 +92,9 @@ public class GoalSettingsAPI extends ModelAPI {
 		fullScreenWidth = Gui.getScreenWidth();
 		System.out.println(fullScreenHeight);
 		System.out.println(fullScreenWidth);
-		PrometheusHelper.manualInputActivity("06", "05", 5, 580);
+		int duration = PrometheusHelper.randInt(5, 9);
+		int steps = duration * PrometheusHelper.randInt(10, 180);
+		PrometheusHelper.manualInputActivity("06", "05", duration, steps);
 		ShortcutsTyper.delayTime(6000);
 	}
 
@@ -125,10 +127,10 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_ActivityGoalSettings() {
-		// ShortcutsTyper.delayOne();
-		// Assert.assertTrue(ViewUtils.findView("TextView", "mText",
-		// DefaultStrings.AdjustGoalText, 0) != null,
-		// "This is not adjust goal popup.");
+		ShortcutsTyper.delayTime(3000);
+		Assert.assertTrue(ViewUtils.findView("TextView", "mText",
+				DefaultStrings.AdjustGoalText, 0) != null,
+				"This is not adjust goal popup.");
 	}
 
 	/**
@@ -169,21 +171,40 @@ public class GoalSettingsAPI extends ModelAPI {
 			PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
 					DefaultStrings.SyncLaterText);
 			ShortcutsTyper.delayOne();
-
+		}
+		
+		if (currentGoal != -1) {
 			ViewNode homescreenGoal = ViewUtils.findView("TextView", "mID",
 					DefaultStrings.GoalHomeScreenTextViewId, 0);
 			String homescreenText = homescreenGoal.text;
 			String goalText = homescreenText.substring(3,
 					homescreenText.indexOf(" ", 3));
 			System.out.println("Goal in homescreen: " + goalText);
-			Assert.assertTrue(Integer.valueOf(goalText).equals(goal),
+			Assert.assertTrue(Integer.valueOf(goalText).equals(currentGoal),
 					"Goal in homescreen should be updated with the new value: "
 							+ goal);
+			verifyActivityProgress();
 		}
+		
 	}
 
 	public void e_BackToHomeScreen() {
 		Gui.touchAView("TextView", "mText", DefaultStrings.GoalsText);
+	}
+	
+	private void verifyActivityProgress() {
+		HomeScreen.tapDebug();
+		String[] values = HomeScreen.getDebugValues();
+		String activityProgress = values[1];
+		System.out.println("******* Calculated activity progress " + activityProgress + "%");
+		ViewNode currentPointNode = ViewUtils.findView("TextView", "mID",
+				DefaultStrings.PointsHomeScreenTextViewId, 0);
+		int currentPoint = Integer.valueOf(currentPointNode.text);
+		float progress = (1f * currentPoint) / currentGoal;
+		System.out.println("******* Expected activity progress (before flooring): " + (progress * 100f) + "%");
+		HomeScreen.tapDebug();
+		Integer floorProgress = (int) (Math.floor(progress * 100f));
+		Assert.assertTrue(Integer.valueOf(activityProgress).equals(floorProgress), "Progress is calculated properly");
 	}
 
 }
