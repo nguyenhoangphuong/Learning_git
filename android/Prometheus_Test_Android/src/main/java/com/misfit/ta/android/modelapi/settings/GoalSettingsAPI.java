@@ -193,6 +193,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	}
 	
 	private void verifyActivityProgress() {
+		ShortcutsTyper.delayOne();
 		HomeScreen.tapDebug();
 		String[] values = HomeScreen.getDebugValues();
 		String activityProgress = values[1];

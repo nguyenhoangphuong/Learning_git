@@ -8,10 +8,12 @@ import org.testng.Assert;
 
 import com.misfit.ta.android.AutomationTest;
 import com.misfit.ta.android.Gui;
+import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.android.gui.HomeScreen;
 import com.misfit.ta.android.gui.PrometheusHelper;
 import com.misfit.ta.android.gui.Settings;
+import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
@@ -146,8 +148,18 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	public void v_HomeScreenUpdated() {
 		ShortcutsTyper.delayTime(5000);
 		String totalSleep = HomeScreen.getTotalSleep();
-		String totalSleepHour = totalSleep.substring(0, totalSleep.indexOf(":"));
-		String totalSleepMintue = totalSleep.substring(totalSleep.indexOf(":") + 1, totalSleep.length());
+		int totalSleepHour = Integer.valueOf(totalSleep.substring(0, totalSleep.indexOf(":")));
+		int totalSleepMinute = Integer.valueOf(totalSleep.substring(totalSleep.indexOf(":") + 1, totalSleep.length()));
+		float calculatedProgress = (totalSleepHour + (totalSleepMinute / 60f)) / (currentGoalHr + (currentGoalMin / 60f));
+		ShortcutsTyper.delayOne();
+		HomeScreen.tapDebug();
+		String[] values = HomeScreen.getDebugValues();
+		String sleepProgress = values[3];
+		Integer expectedValue = (int) Math.floor(calculatedProgress * 100);
+		System.out.println("**** Expected sleep progress (before flooring): " + calculatedProgress * 100);
+		System.out.println("**** Expected sleep progress (after flooring): " + expectedValue);
+		System.out.println("**** Calculated sleep progress: " + sleepProgress);
+		Assert.assertTrue(Integer.valueOf(sleepProgress).equals(expectedValue), "Sleep progress is calculated properly");
 	}
 
 	/**
@@ -165,5 +177,5 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 	public void v_SleepGoalSettingsUpdated() {
 		
 	}
-
+	
 }
