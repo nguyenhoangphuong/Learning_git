@@ -1,6 +1,7 @@
 package com.misfit.ta.website;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,12 +23,17 @@ import com.misfit.ta.base.Clock;
 
 public class BlogStressTest {
 
-    protected int NUMBER_OF_USERS = 20;
-    protected int NUMBER_OF_THREADS = 2;
+    protected int NUMBER_OF_USERS = 1000;
+    protected int NUMBER_OF_THREADS = 200;
+    static int errorCount = 0;
 
     Logger logger = Util.setupLogger(BlogStressTest.class);
+    static ResultLogger rlog = ResultLogger.getLogger("BlogStressTest_"+ (new Date()));
 
     public BlogStressTest() {
+        NUMBER_OF_USERS = Settings.getInt("NUMBER_OF_USERS");
+        NUMBER_OF_THREADS = Settings.getInt("NUMBER_OF_THREADS");
+    
     }
     
     public void setParameters(int numberOfUsers, int numberOfThreads) {
@@ -37,9 +43,13 @@ public class BlogStressTest {
     }
 
     @Test(groups = { "blog_stress" })
-    public void signupOneMillionUsers(boolean randomizedOperations) {
+    public void blogStressTest(boolean randomizedOperations) {
 
-
+        rlog.log("UserCount\tErrorCode");
+        
+        System.out.println("LOG [BlogStressTest.blogStressTest]: NUMBER_OF_USERS= "+ NUMBER_OF_USERS);
+        System.out.println("LOG [BlogStressTest.blogStressTest]: NUMBER_OF_THREADS= " + NUMBER_OF_THREADS);
+        
         int userCount = 0;
         long start = System.currentTimeMillis();
 
@@ -48,8 +58,6 @@ public class BlogStressTest {
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
         while (userCount < NUMBER_OF_USERS) {
             for (int threads = 0; threads < Math.min(NUMBER_OF_THREADS, NUMBER_OF_USERS - userCount); threads++) {
-//                BackendDatabaseSeedingThread test = new BackendDatabaseSeedingThread(userCount, timelineItems,
-//                        graphItems, rlog, randomizedOperations);
                 BlogTestThread test = new BlogTestThread(userCount);
                 futures.add(executor.submit(test));
                 userCount++;
@@ -67,7 +75,7 @@ public class BlogStressTest {
         
         long now = System.currentTimeMillis();
         ResultLogger.totalTestRunTime = (now - start);
-        System.out.println("LOG [BackendDatabaseSeeding.signupOneMillionUsers]: " + ResultLogger.totalTestRunTime);
+        System.out.println("LOG [BlogStressTest.blogStressTest]: " + ResultLogger.totalTestRunTime);
         
         ResultLogger.logErrorSummary();
     }
@@ -83,8 +91,10 @@ public class BlogStressTest {
         	test.setParameters(numberOfUsers, numberOfThreads);
         }
         
-        test.signupOneMillionUsers(false);
+        test.blogStressTest(false);
         
+        rlog.log("\n\n\n" +
+        		"ErrorCount= " + errorCount);
     }
     
     class BlogTestThread implements Runnable {
@@ -99,10 +109,15 @@ public class BlogStressTest {
             String encoding = new String(encodedBytes);
             param.addHeader("Authorization", "Basic " + encoding);
             
-            
+            boolean failed = false;
             
             ServiceResponse res = RequestHelper.get("http://blog.int.misfitwearables.com", 80, param);
-            System.out.println("LOG [Debug.main]: " + res.getStatusCode());
+            String post = res.getContentData().toString();
+            if (res.getStatusCode() != 200 || !post.contains("test third post")) { 
+                errorCount++;
+                failed = true;
+            }
+            rlog.log(threadCount+ "\t" + res.getStatusCode() + "\t" + ((failed) ? "Failed": "") );
             
         }
         
