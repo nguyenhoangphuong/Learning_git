@@ -28,8 +28,9 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     flightModeOn = changed;
   }
 
+  @Override
   @AfterMethod(alwaysRun = true)
-  public void cleanUpTest(Method method, ITestResult tr) {
+  public void afterMethod(Method method, ITestResult tr) {
     if (flightModeOn) {
       // offline has been on, turn it off
       Gui.toggleFlightMode(null);
@@ -51,12 +52,14 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     logger.info("***** End of test case: " + method.getName());
     logger.info("***** Result: " + result);
     logger.info("*****************************************************");
+    super.afterMethod(method, tr);
     
   }
 
+  @Override
   @BeforeMethod(alwaysRun = true)
-  public void setUpTest(Method method) {
-
+  public void beforeMethod(Method method) {
+	super.beforeMethod(method);
     logger.info("*****************************************************");
     logger.info("***** Start of test case: " + method.getName());
     logger.info("*****************************************************");
