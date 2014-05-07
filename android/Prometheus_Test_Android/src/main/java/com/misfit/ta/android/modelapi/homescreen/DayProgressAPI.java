@@ -127,18 +127,31 @@ public class DayProgressAPI extends ModelAPI {
 	}
 
 	private void assertRemainWalkingTime() {
-		//we don't change goal wafter signing up, so it's always 1000
+		// we don't change goal after signing up, so it's always 1000
 		int remainMins = MVPCalculator.calculateNearestTimeRemainInMinute(
 				1000 - (int) this.totalPoints, MVPEnums.ACTIVITY_WALKING);
 		ViewNode remainWalkingTimeView = ViewUtils.findView("TextView", "mID",
 				DefaultStrings.RemainWalkingTimeHomeScreenTextViewId, 0);
-		String expectedRemainWalkingTimeText = PrometheusHelper.convertNearestTimeInMinuteToStringNumber(remainMins);
-		String realRemainWalkingTimeText = remainWalkingTimeView.text.substring(6, 6 + expectedRemainWalkingTimeText.length());
-		System.out.println("Real display of remain walking time: " + realRemainWalkingTimeText);
-		System.out.println("Expected display of remain walking time: " + expectedRemainWalkingTimeText);
-		Assert.assertTrue(Float.valueOf(expectedRemainWalkingTimeText).equals(Float.valueOf(realRemainWalkingTimeText)), "The remain walking time is correct!!!");
+		if (!remainWalkingTimeView.text.equals(DefaultStrings.HitGoalText)) {
+			String expectedRemainWalkingTimeText = PrometheusHelper
+					.convertNearestTimeInMinuteToStringNumber(remainMins);
+			String realRemainWalkingTimeText = remainWalkingTimeView.text
+					.substring(6, 6 + expectedRemainWalkingTimeText.length());
+			System.out.println("Real display of remain walking time: "
+					+ realRemainWalkingTimeText);
+			System.out.println("Expected display of remain walking time: "
+					+ expectedRemainWalkingTimeText);
+			Assert.assertTrue(Float.valueOf(expectedRemainWalkingTimeText)
+					.equals(Float.valueOf(realRemainWalkingTimeText)),
+					"The remain walking time is correct!!!");
+		} else {
+			System.out.println("******* Assert hit goal points");
+			ViewNode displayPoint = ViewUtils.findView("TextView", "mID",
+					DefaultStrings.PointsHomeScreenTextViewId, 0);
+			Assert.assertTrue(Integer.valueOf(displayPoint.text) >= 1000, "The hit goal points value is correct");
+		}
 	}
-	
+
 	private void assertActivityInfo() {
 		ViewNode displaySteps = ViewUtils.findView("TextView", "mID", DefaultStrings.StepsHomeScreenTextViewId, 0);
 		System.out.println("Display total steps: " + displaySteps.text);
