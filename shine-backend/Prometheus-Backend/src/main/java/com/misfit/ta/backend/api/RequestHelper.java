@@ -58,7 +58,7 @@ public class RequestHelper {
         }
         
         // send to TRS
-        TRS.instance().addCode(type.toUpperCase() + ": " + url + " - port: " + uri.getPort(), null);
+        TRS.instance().addStep(type.toUpperCase() + ": " + url + " - port: " + uri.getPort(), null);
         TRS.instance().addCode("Request headers: " + requestInf.getHeadersAsJsonString(), null);
         TRS.instance().addCode("Request params: " + requestInf.getParamsAsJsonString(), null);
 
