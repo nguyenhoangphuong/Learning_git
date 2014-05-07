@@ -27,12 +27,12 @@ public class SleepViews {
 	
 	public static boolean hasEditSleepButton() {
 		
-		return ViewUtils.isExistedView("UIButton", 3);
+		return ViewUtils.isExistedView("UIButton", DefaultStrings.EditSleepButtonTag);
 	}
 	
 	public static void tapEditSleep() {
 		
-		Gui.touchAVIew("UIButton", 3);
+		Gui.touchAVIew("UIButton", DefaultStrings.EditSleepButtonTag);
 	}
 	
 	public static void tapDeleteSleep() {

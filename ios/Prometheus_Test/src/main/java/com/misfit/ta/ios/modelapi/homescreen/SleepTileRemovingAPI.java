@@ -1,6 +1,7 @@
 package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
+
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
@@ -14,6 +15,7 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SleepViews;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SleepTileRemovingAPI extends ModelAPI {
 	public SleepTileRemovingAPI(AutomationTest automation, File model,
@@ -83,7 +85,7 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	public void e_confirmRemove() {
 		
 		Gui.touchPopupButton(DefaultStrings.RemoveButton);
-		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.EditSleepTitleLabel);
+		ShortcutsTyper.delayTime(2000);
 	}
 	
 	public void e_forceDeleteSleep() {
@@ -91,7 +93,7 @@ public class SleepTileRemovingAPI extends ModelAPI {
 		SleepViews.tapEditSleep();
 		SleepViews.tapDeleteSleep();
 		Gui.touchPopupButton(DefaultStrings.RemoveButton);
-		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.EditSleepTitleLabel);
+		ShortcutsTyper.delayTime(2000);
 	}
 	
 	public void e_signOutAndSignInAgain() {
@@ -135,7 +137,8 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	
 	public void v_EditSleep() {
 		
-		Assert.assertTrue(SleepViews.isEditSleepView(), "Current view is edit sleep popup");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.RemoveSleepButton), 
+				"Current view is edit sleep popup");
 	}
 	
 	public void v_RemoveSleepConfirm() {

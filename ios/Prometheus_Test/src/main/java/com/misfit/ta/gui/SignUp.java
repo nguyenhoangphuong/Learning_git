@@ -60,7 +60,15 @@ public class SignUp {
     	PrometheusHelper.enterWeight();
     }
     
-
+    public static void tapBeddit() {
+    	
+    	Gui.touchAVIew("UILabel", DefaultStrings.BedditLabel);
+    }
+    
+    public static void tapShine() {
+    	
+    	Gui.touchAVIew("UILabel", DefaultStrings.ShineLabel);
+    }
 
     
     /* STEP 3: SET YOUR GOAL */

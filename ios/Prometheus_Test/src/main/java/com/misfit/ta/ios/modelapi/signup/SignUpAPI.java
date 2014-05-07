@@ -87,6 +87,9 @@ public class SignUpAPI extends ModelAPI {
 		SignUp.enterWeight(w1, w2, isUSUnit);
 		
 		logger.info("Change weight to: " + w1 + w2 + (isUSUnit? " lbs" : " kg"));
+		
+		// select shine
+		SignUp.tapShine();
     }
     
     public void e_SetGoal() {

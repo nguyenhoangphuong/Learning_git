@@ -237,6 +237,7 @@ public class PrometheusHelper {
 		SignUp.enterBirthDay(String.valueOf(year), PrometheusHelper.getMonthString(month, true), String.valueOf(date));
 		SignUp.enterHeight(h1, h2, isUSUnit);
 		SignUp.enterWeight(w1, w2, isUSUnit);
+		SignUp.tapShine();
 		SignUp.tapNext();
 
 		// goal
@@ -287,6 +288,7 @@ public class PrometheusHelper {
 		SignUp.enterBirthDay();
 		SignUp.enterHeight();
 		SignUp.enterWeight();
+		SignUp.tapShine();
 		SignUp.tapNext();
 
 		// goal
