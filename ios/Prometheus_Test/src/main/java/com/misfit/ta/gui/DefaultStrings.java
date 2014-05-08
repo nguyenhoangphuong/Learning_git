@@ -38,6 +38,7 @@ public class DefaultStrings {
 	public static String SignUpProfileTitle = "My Info";
 	public static String SignUpSetYourGoalTitle = "Set your goal";
 	public static String SignUpLinkShineTitle = "Link Shine";
+	public static String SignUpConnectBedditTitle = "Connect Beddit";
 	public static String FinishSetUpButton = "FINISH SETUP";
 	public static String[] SignUpTutorial = { "\\_Walking\\_",
 			"\\_Swimming\\_", "\\_Biking\\_", "\\_Tennis\\_",
@@ -107,6 +108,9 @@ public class DefaultStrings {
 	public static String TutorialForUpdateActivityTag = "Hold down on an activity highlight to change the tag. You can only do this on the current day.";
 	public static String TutorialForDeleteSleepTile = "Hold down on a sleep highlight to remove it. You can only do this on the current day.";
 
+	public static String LinkNowButton = "LINK NOW";
+	public static String BuyNowButton = "BUY NOW";
+	
 	// edit tag
 	public static String EditTagTitle = "Edit Tag";
 	public static String PointLostPopupMessage = "Changing to this tag will decrease the amount of points earned.";

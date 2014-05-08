@@ -1,6 +1,8 @@
 package com.misfit.ta.ios.modelapi.social.board;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -11,7 +13,9 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.common.MVPCommon;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -33,6 +37,8 @@ public class LeaderboardAPI extends ModelAPI {
 	
 	private String tokenA, tokenB, tokenC;
 	private Goal todayGoalA;
+	
+	private List<String> errors = new ArrayList<String>();
 	
 	public LeaderboardAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
@@ -122,16 +128,19 @@ public class LeaderboardAPI extends ModelAPI {
 	public void e_signInAccountA() {
 	
 		PrometheusHelper.signIn(emailA, "qqqqqq");
+		HomeScreen.tapActivityTimeline();
 	}
 	
 	public void e_signInAccountB() {
 
 		PrometheusHelper.signIn(emailB, "qqqqqq");
+		HomeScreen.tapActivityTimeline();
 	}
 
 	public void e_signInAccountC() {
 
 		PrometheusHelper.signIn(emailC, "qqqqqq");
+		HomeScreen.tapActivityTimeline();
 	}
 	
 	public void e_goToLeaderboard() {
@@ -180,48 +189,56 @@ public class LeaderboardAPI extends ModelAPI {
 		
 		LeaderboardView.tapGotIt();
 		LeaderboardView.tapYesterday();
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleA), "500", "A's yesterday points");
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleB), "300", "B's yesterday points");
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleC), "-", "C's yesterday points");
+		Gui.captureScreen("leaderboard-" + System.nanoTime());
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleA), "500", "v_LeaderboardA: A's yesterday points"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleB), "300", "v_LeaderboardA: B's yesterday points"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleC), "-", "v_LeaderboardA: C's yesterday points"));
 		
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleA), "1", "A's yesterday rank");
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleB), "2", "B's yesterday rank");
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleC), "", "C's yesterday rank");
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleA), "1", "v_LeaderboardA: A's yesterday rank"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleB), "2", "v_LeaderboardA: B's yesterday rank"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleC), "", "v_LeaderboardA: C's yesterday rank"));
 		
 		LeaderboardView.tapToday();
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleA), "-", "A's today points");
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleB), "-", "B's today points");
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleC), "100", "C's today points");
+		Gui.captureScreen("leaderboard-" + System.nanoTime());
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleA), "-", "A's today points"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleB), "-", "B's today points"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleC), "100", "C's today points"));
 		
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleA), "", "A's today rank");
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleB), "", "B's today rank");
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleC), "1", "C's today rank");
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleA), "", "A's today rank"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleB), "", "B's today rank"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleC), "1", "C's today rank"));
 	}
 	
 	public void v_LeaderboardB() {
 
 		LeaderboardView.tapGotIt();
 		LeaderboardView.tapToday();
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleA), "-", "A's today points");
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleB), "200", "B's today points");
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleC), "100", "C's today points");
+		Gui.captureScreen("leaderboard-" + System.nanoTime());
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleA), "-", "v_LeaderboardB: A's today points"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleB), "200", "v_LeaderboardB: B's today points"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleC), "100", "v_LeaderboardB: C's today points"));
 		
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleA), "", "A's today rank");
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleB), "1", "B's today rank");
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleC), "2", "C's today rank");
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleA), "", "v_LeaderboardB: A's today rank"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleB), "1", "v_LeaderboardB: B's today rank"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleC), "2", "v_LeaderboardB: C's today rank"));
 	}
 
 	public void v_LeaderboardBUpdated() {
 
 		LeaderboardView.tapGotIt();
 		LeaderboardView.tapToday();
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleA), "300", "A's today points");
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleB), "200", "B's today points");
-		Assert.assertEquals(LeaderboardView.getPointOfUser(handleC), "100", "C's today points");
+		Gui.captureScreen("leaderboard-" + System.nanoTime());
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleA), "300", "v_LeaderboardBUpdated: A's today points"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleB), "200", "v_LeaderboardBUpdated: B's today points"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleC), "100", "v_LeaderboardBUpdated: C's today points"));
 		
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleA), "1", "A's today rank");
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleB), "2", "B's today rank");
-		Assert.assertEquals(LeaderboardView.getRankOfUser(handleC), "3", "C's today rank");
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleA), "1", "v_LeaderboardBUpdated: A's today rank"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleB), "2", "v_LeaderboardBUpdated: B's today rank"));
+		errors.add(Verify.verifyEquals(LeaderboardView.getRankOfUser(handleC), "3", "v_LeaderboardBUpdated: C's today rank"));
+		
+		if(!Verify.verifyAll(errors))
+			Assert.fail("Not all assertions are passed");
+		
 	}
 	
 }

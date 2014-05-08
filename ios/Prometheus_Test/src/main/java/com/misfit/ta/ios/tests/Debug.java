@@ -11,10 +11,9 @@ import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.BackendTestEnvironment;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.data.DataGenerator;
-import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.AppInstaller;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
@@ -22,6 +21,8 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.SleepViews;
 import com.misfit.ta.gui.Timeline;
+import com.misfit.ta.gui.social.LeaderboardView;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 
 public class Debug {
@@ -36,10 +37,8 @@ public class Debug {
 		
 //		BackendTestEnvironment.RequestLoggingEnable = true;
 //		MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq");
-		
-		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
-		ProfileData profile = DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null);
-		profile.setHandle("ASSHOLe");
-		MVPApi.createProfile(token, profile);
+			
+		Gui.init("192.168.1.144");
+		MVPApi.getPedometer(MVPApi.signIn("aut_sociala@a.a", "qqqqqq").token);
 	}
 }

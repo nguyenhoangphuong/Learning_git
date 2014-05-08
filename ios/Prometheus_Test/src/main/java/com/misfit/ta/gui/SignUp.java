@@ -1,5 +1,6 @@
 package com.misfit.ta.gui;
 
+import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
@@ -134,15 +135,11 @@ public class SignUp {
         PrometheusHelper.sync();
     }
     
-    public static void triggerSync() {
+    public static void connectSimulatedBeddit() {
     	
+    	NuRemoteClient.sendToServer("(Gui doActionForSwipeGestureIndex: 0 viewName: @\"UIView\" viewIndex: 4 controller: @\"PTBedditSetupViewController\" action: @\"userDidSwipe:\" direction: 1 state: 3)");
     }
     
-    public static void tapFinishSetup()
-    {
-    	Gui.touchAVIew("UIButton", DefaultStrings.FinishSetUpButton);
-    }
-
     
     /* VISIBLE CHECKING */
     public static boolean isSignUpAccountView() {
@@ -171,6 +168,10 @@ public class SignUp {
         return ViewUtils.isExistedView("UILabel", DefaultStrings.SignUpLinkShineTitle);
     }
 
+    public static boolean isSignUpConnectBedditView() {
+        return ViewUtils.isExistedView("UILabel", DefaultStrings.SignUpConnectBedditTitle);
+    }   
+    
     
     /* ALERT */
     public static boolean hasSignUpInvalidEmailMessage() {

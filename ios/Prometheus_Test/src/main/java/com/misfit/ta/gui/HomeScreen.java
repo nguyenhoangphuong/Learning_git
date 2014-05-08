@@ -79,6 +79,11 @@ public class HomeScreen {
 		Gui.touchAVIew("UIButton", DefaultStrings.SocialProfileButtonLabel);
 	}
 	
+	public static void tapLinkNow() {
+		
+		Gui.touchAVIew("UILabel", DefaultStrings.LinkNowButton);
+	}
+	
 	
 	static public void switchAutoSleepTrackingOn() {
 
@@ -237,11 +242,6 @@ public class HomeScreen {
 		String text = Gui.getProperty("PTBottomHalfCircleLabel", 0, "text");
 		return text.contains("tap for steps");
 	}
-	
-	public static boolean isTodayDefault() {
-		return ViewUtils.isExistedView("UILabel",
-				DefaultStrings.SyncShineToSeeYourActivityLabel);
-	}
 
 	public static boolean isNoActivity() {
 		return ViewUtils.isExistedView("UILabel",
@@ -266,6 +266,12 @@ public class HomeScreen {
 		return ViewUtils.isExistedView("PTGoalCircleView", 0);
 	}
 
+	public static boolean isActivityTimelineBedditPR() {
+		
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.LinkNowButton) &&
+				ViewUtils.isExistedView("UILabel", DefaultStrings.BuyNowButton);
+	}
+	
 	public static boolean isSleepTimeline() {
 
 		return ViewUtils.isExistedView("PTSleepGoalCircleView", 0);
@@ -280,6 +286,7 @@ public class HomeScreen {
 
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.SetWeightGoalButton);
 	}
+	
 	
 	// get
 	public static String getCurrentActivityGoalString() {

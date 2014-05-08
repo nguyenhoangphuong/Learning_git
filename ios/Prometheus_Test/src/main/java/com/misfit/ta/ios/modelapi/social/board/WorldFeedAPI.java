@@ -1,7 +1,9 @@
 package com.misfit.ta.ios.modelapi.social.board;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
@@ -15,6 +17,7 @@ import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
@@ -33,6 +36,7 @@ public class WorldFeedAPI extends ModelAPI {
 	private String tokenA;
 	private Goal goalA;
 	private ProfileData profileA, profileB;
+	private List<String> errors = new ArrayList<String>(); 
 	
 	public WorldFeedAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
@@ -211,7 +215,7 @@ public class WorldFeedAPI extends ModelAPI {
 	public void v_WorldFeedInitial() {
 		
 		Assert.assertTrue(WorldFeedView.isWorldViewDefault(), "Current view is world view");
-		Assert.assertTrue(WorldFeedView.hasPrivacyOptionPanel(), "Privacy option panel is visible");
+		errors.add(Verify.verifyTrue(WorldFeedView.hasPrivacyOptionPanel(), "Privacy option panel is visible"));
 	}
 	
 	public void v_WorldFeed() {
@@ -237,33 +241,39 @@ public class WorldFeedAPI extends ModelAPI {
 	
 	public void v_WorldFeedAWithRecords() {
 
-		Assert.assertTrue(WorldFeedView.has150PercentRecord(profileA.getHandle(), 150, profileA.getGender().equals(0)),
-				"There is 150% record of A on world view");
+		errors.add(Verify.verifyTrue(WorldFeedView.has150PercentRecord(profileA.getHandle(), 150, profileA.getGender().equals(0)),
+				"There is 150% record of A on world view"));
 	}
 	
 	public void v_WorldFeedBWithRecords() {
 
-		Assert.assertTrue(WorldFeedView.has100PercentRecord(profileB.getHandle(), 100, profileB.getGender().equals(0)),
-				"There is 100% record of B on world view");
+		errors.add(Verify.verifyTrue(WorldFeedView.has100PercentRecord(profileB.getHandle(), 100, profileB.getGender().equals(0)),
+				"There is 100% record of B on world view"));
 	}
 	
 	public void v_WorldFeedAWithoutRecords() {
 
-		Assert.assertTrue(!WorldFeedView.has100PercentRecord(profileA.getHandle(), 100, profileA.getGender().equals(0)),
-				"No 100% record of A on world view");
+		errors.add(Verify.verifyTrue(!WorldFeedView.has100PercentRecord(profileA.getHandle(), 100, profileA.getGender().equals(0)),
+				"No 100% record of A on world view"));
 	}
 
 	public void v_WorldFeedBWithoutRecords() {
 
-		Assert.assertTrue(!WorldFeedView.has100PercentRecord(profileB.getHandle(), 100, profileB.getGender().equals(0)) &&
+		errors.add(Verify.verifyTrue(!WorldFeedView.has100PercentRecord(profileB.getHandle(), 100, profileB.getGender().equals(0)) &&
 				!WorldFeedView.has150PercentRecord(profileB.getHandle(), 150, profileB.getGender().equals(0)),
-				"No 100% or 150% record of B on world view");
+				"No 100% or 150% record of B on world view"));
 	}
 		
 	public void v_WorldFeedBRefreshed() {
 
-		Assert.assertTrue(WorldFeedView.has200PercentRecord(profileA.getHandle(), 200, profileA.getGender().equals(0)),
-				"There is 200% record of A on world view");
+		errors.add(Verify.verifyTrue(WorldFeedView.has200PercentRecord(profileA.getHandle(), 200, profileA.getGender().equals(0)),
+				"There is 200% record of A on world view"));
 	}
 
+	public void v_End() {
+	
+		if(!Verify.verifyAll(errors))
+			Assert.fail("Not all assertions pass");
+	}
+	
 }
