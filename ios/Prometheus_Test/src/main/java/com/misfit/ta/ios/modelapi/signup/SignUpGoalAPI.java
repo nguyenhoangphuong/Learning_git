@@ -43,6 +43,7 @@ public class SignUpGoalAPI extends ModelAPI {
 		SignUp.enterBirthDay();
 		SignUp.enterWeight();
 		SignUp.enterHeight();
+		SignUp.tapShine();
 
 		SignUp.tapNext();
 	}

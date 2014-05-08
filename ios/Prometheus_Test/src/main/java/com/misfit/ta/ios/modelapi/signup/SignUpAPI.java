@@ -39,6 +39,7 @@ public class SignUpAPI extends ModelAPI {
 	private String month = "";
 	private String day = "";
     private static int goal = 0;
+    private boolean deviceSelected = false;
     
 
     public void e_Init() {
@@ -56,6 +57,7 @@ public class SignUpAPI extends ModelAPI {
     
     public void e_SignOutAtProfileView() {
     	SignUp.tapSignOut();
+    	deviceSelected = false;
     }
     
     public void e_inputProfile() {
@@ -89,7 +91,10 @@ public class SignUpAPI extends ModelAPI {
 		logger.info("Change weight to: " + w1 + w2 + (isUSUnit? " lbs" : " kg"));
 		
 		// select shine
-		SignUp.tapShine();
+		if(deviceSelected == false) {
+			SignUp.tapShine();
+			deviceSelected = true;
+		}
     }
     
     public void e_SetGoal() {
@@ -121,6 +126,7 @@ public class SignUpAPI extends ModelAPI {
     
     public void e_SignOut() {
     	PrometheusHelper.signOut();
+    	deviceSelected = false;
     }
     
     public void e_Sync() {
@@ -131,6 +137,9 @@ public class SignUpAPI extends ModelAPI {
 		PrometheusHelper.handleUpdateFirmwarePopup();
     }
  
+    
+    
+    
     public void v_InitialView() {
     	Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
     }
