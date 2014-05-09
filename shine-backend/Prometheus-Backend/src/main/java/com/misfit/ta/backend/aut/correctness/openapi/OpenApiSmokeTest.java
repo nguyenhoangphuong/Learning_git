@@ -21,9 +21,12 @@ import com.misfit.ta.backend.data.profile.ProfileResult;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.common.MVPCommon;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.utils.TextTool;
 
 public class OpenApiSmokeTest extends BackendAutomation {
+	
+	private List<String> errors = new ArrayList<String>();
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "smoke_test" })
 	public void OpenAPIDevPortalAuthenticationResourceAPIsSmokeTest() {
@@ -131,63 +134,66 @@ public class OpenApiSmokeTest extends BackendAutomation {
 		String toDate = MVPCommon.getDateString(timestamp);
 		
 		result = OpenAPI.getProfile(accessTokenA, "me");
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/me/profile ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/me/profile ok"));
 		
 		result = OpenAPI.getDevice(accessTokenA, "me");
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/me/device ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/me/device ok"));
 		
 		result = OpenAPI.getSummary(accessTokenA, "me", fromDate, toDate);
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/me/summary ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/me/summary ok"));
 		
 		result = OpenAPI.getGoals(accessTokenA, "me", fromDate, toDate);
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/me/activity/goals ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/me/activity/goals ok"));
 		
 		result = OpenAPI.getGoal(accessTokenA, "me", goalsA.get(0).getServerId());
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/me/activity/goals/:id ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/me/activity/goals/:id ok"));
 		
 		result = OpenAPI.getSessions(accessTokenA, "me", fromDate, toDate);
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/me/activity/sessions ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/me/activity/sessions ok"));
 		
 		result = OpenAPI.getSession(accessTokenA, "me", itemsA.get(0).getServerId());
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/me/activity/sessions/:id ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/me/activity/sessions/:id ok"));
 		
 		result = OpenAPI.getSleeps(accessTokenA, "me", fromDate, toDate);
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/me/activity/sleeps ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/me/activity/sleeps ok"));
 		
 		result = OpenAPI.getSleep(accessTokenA, "me", itemsA.get(1).getServerId());
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/me/activity/sleeps/:id ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/me/activity/sleeps/:id ok"));
 		
 		
 		// query and verify data of user B using client id and secret and userid route
 		String uidB = MVPApi.getUserId(tokenB);
 		
 		result = OpenAPI.getProfile(app, uidB);
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/:userid/profile ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/:userid/profile ok"));
 		
 		result = OpenAPI.getDevice(app, uidB);
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/:userid/device ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/:userid/device ok"));
 		
 		result = OpenAPI.getSummary(app, uidB, fromDate, toDate);
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /summary ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /summary ok"));
 		
 		result = OpenAPI.getGoals(app, uidB, fromDate, toDate);
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/goals ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/goals ok"));
 		
 		result = OpenAPI.getGoal(app, uidB, goalsB.get(0).getServerId());
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/goals/:id ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/goals/:id ok"));
 		
 		result = OpenAPI.getSessions(app, uidB, fromDate, toDate);
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/sessions ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/sessions ok"));
 		
 		result = OpenAPI.getSession(app, uidB, itemsB.get(0).getServerId());
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/sessions/:id ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/sessions/:id ok"));
 		
 		result = OpenAPI.getSleeps(app, uidB, fromDate, toDate);
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/sleeps ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/sleeps ok"));
 		
 		result = OpenAPI.getSleep(app, uidB, itemsB.get(1).getServerId());
-		Assert.assertTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/sleeps/:id ok");
+		errors.add(Verify.verifyTrue(result.isOK(), "[Resource APIs]: /users/:userid/activity/sleeps/:id ok"));
 		
+		
+		if(!Verify.verifyAll(errors))
+			Assert.fail("Not all assertions pass");
 	}
 
 	
