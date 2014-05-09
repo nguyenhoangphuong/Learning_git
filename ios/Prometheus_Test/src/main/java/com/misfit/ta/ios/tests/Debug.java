@@ -1,5 +1,7 @@
 package com.misfit.ta.ios.tests;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -11,6 +13,13 @@ import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.BackendTestEnvironment;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.backend.data.pedometer.Pedometer;
+import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.backend.data.profile.ProfileResult;
+import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.common.Verify;
 import com.misfit.ta.gui.AppInstaller;
 import com.misfit.ta.gui.DefaultStrings;
@@ -39,6 +48,7 @@ public class Debug {
 //		MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq");
 			
 		Gui.init("192.168.1.144");
-		MVPApi.getPedometer(MVPApi.signIn("aut_sociala@a.a", "qqqqqq").token);
+		logger.info(SleepViews.isTonightUtilitiesView());
+		
 	}
 }

@@ -1,6 +1,7 @@
 package com.misfit.ta.ios.modelapi.signup;
 
 import java.io.File;
+import java.util.Calendar;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
@@ -15,6 +16,7 @@ import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
+import com.misfit.ta.gui.SleepViews;
 import com.misfit.ta.gui.Timeline;
 
 public class SignUpWithBedditAPI extends ModelAPI {
@@ -81,8 +83,14 @@ public class SignUpWithBedditAPI extends ModelAPI {
     
     public void v_SleepTimeline() {
     	
-    	Assert.assertTrue(HomeScreen.isSleepTimeline(), "Current view is Sleep Timeline");
-    	Assert.assertTrue(HomeScreen.isToday(), "Current date title is Today");
+    	int hourOfDay = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    	if(hourOfDay > 6 && hourOfDay < 20) { 
+	    	Assert.assertTrue(HomeScreen.isSleepTimeline(), "Current view is Sleep Timeline");
+	    	Assert.assertTrue(HomeScreen.isToday(), "Current date title is Today");
+    	}
+    	else {
+    		Assert.assertTrue(SleepViews.isTonightUtilitiesView(), "Current view is Tonight");
+    	}
     }
     
     public void v_ActivityTimeline() {
@@ -102,3 +110,4 @@ public class SignUpWithBedditAPI extends ModelAPI {
     }
     
 }
+	

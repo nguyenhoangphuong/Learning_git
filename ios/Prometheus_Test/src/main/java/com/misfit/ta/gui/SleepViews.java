@@ -19,6 +19,12 @@ public class SleepViews {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.SyncToSeeSleepLabel);
 	}
 
+	public static boolean isTonightUtilitiesView() {
+		
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.TonightLabel);
+	}
+	
+	
 	public static boolean hasRemoveSleepConfirmationAlert() {
 		
 		return PrometheusHelper.hasAlert(DefaultStrings.RemoveSleepConfirmationAlertMessage, 
@@ -29,6 +35,7 @@ public class SleepViews {
 		
 		return ViewUtils.isExistedView("UIButton", DefaultStrings.EditSleepButtonTag);
 	}
+	
 	
 	public static void tapEditSleep() {
 		

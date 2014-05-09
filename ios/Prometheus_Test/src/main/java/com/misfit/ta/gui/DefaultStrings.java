@@ -51,6 +51,8 @@ public class DefaultStrings {
 	public static String NoSleepDataLabel = "No sleep data yet";
 	public static String SyncToSeeSleepLabel = "Sync to see your sleep";
 	public static String EditSleepButtonTag = "EditSleepButton";
+	public static String TonightLabel = "Tonight";
+	
 	
 	// link
 	public static String NoShineAvailableMessage = "All Shines detected are linked to other accounts. Make sure your Shine is unlinked and try again.";
