@@ -184,7 +184,7 @@ public class BackendDatabaseSeedingThread implements Runnable {
 
 		// update pedometer
 		pedo.setUpdatedAt(System.currentTimeMillis()/1000);
-		pedo.setLastSuccessfulTime(System.currentTimeMillis() / 1000);
+		pedo.setLastSuccessfulSyncedTime(System.currentTimeMillis() / 1000);
 		clock.tick("updatePedo");
 		pedo = MVPApi.updatePedometer(token, mySerial, "hw1234", now, now, now, "localId", null, now);
 		clock.tock();

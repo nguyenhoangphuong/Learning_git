@@ -44,11 +44,13 @@ public class Debug {
 	
 	public static void main(String[] args) throws Exception {
 		
-//		BackendTestEnvironment.RequestLoggingEnable = true;
-//		MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq");
+		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
+		Pedometer pedo = new Pedometer();
+		pedo.setBookmarkState(0);
+		MVPApi.updatePedometer(token, pedo);
 			
-		Gui.init("192.168.1.144");
-		logger.info(SleepViews.isTonightUtilitiesView());
+//		Gui.init("192.168.1.144");
+//		logger.info(SleepViews.isTonightUtilitiesView());
 		
 	}
 }

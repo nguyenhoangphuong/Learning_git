@@ -27,7 +27,7 @@ public class BackendPedometerTC extends BackendAutomation {
 		BaseResult result = MVPApi.createPedometer(token, pedo);
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		
-		pedo.setLastSuccessfulTime(System.currentTimeMillis() / 1000 + 1);
+		pedo.setLastSuccessfulSyncedTime(System.currentTimeMillis() / 1000 + 1);
 		pedo.setUnlinkedTime(System.currentTimeMillis() / 1000 + 2);
 		result = MVPApi.createPedometer(token, pedo);
 		Pedometer spedo = Pedometer.getPedometer(result.response);
@@ -39,20 +39,64 @@ public class BackendPedometerTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void UpdatePedometerFullParam() {
 		
+		// create pedometer
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
 		Pedometer pedo = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
 		
 		BaseResult result = MVPApi.createPedometer(token, pedo);
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		
-		pedo.setLastSuccessfulTime(System.currentTimeMillis() / 1000 + 1);
-		pedo.setUnlinkedTime(System.currentTimeMillis() / 1000 + 2);
-		result = MVPApi.updatePedometer(token, pedo);
 		Pedometer spedo = Pedometer.getPedometer(result.response);
+		pedo.setServerId(spedo.getServerId());
+		pedo.setUpdatedAt(spedo.getUpdatedAt());
+		pedo.setLocalId(spedo.getLocalId());
 		
-		Assert.assertEquals(result.statusCode, 210, "Status code");
-		Assert.assertEquals(pedo.getLocalId(), spedo.getLocalId(), "Local id");
 		
+		// update normal flow and test cache
+		long currentTimestamp = System.currentTimeMillis() / 1000;
+		for(int i = 0; i < MVPApi.CACHE_TRY_TIME; i++) {
+			
+			pedo.setLastSuccessfulSyncedTime(currentTimestamp++);
+			pedo.setUnlinkedTime(currentTimestamp++);
+			result = MVPApi.updatePedometer(token, pedo);
+			Assert.assertEquals(result.statusCode, 200, "Status code");
+			pedo.setUpdatedAt(Pedometer.getPedometer(result.response).getUpdatedAt());
+			
+			spedo = MVPApi.getPedometer(token);
+			Assert.assertEquals(spedo.getLocalId(), pedo.getLocalId(), "Local id");
+			Assert.assertEquals(spedo.getLastSuccessfulSyncedTime(), pedo.getLastSuccessfulSyncedTime(), "Last successful time");
+			Assert.assertEquals(spedo.getUnlinkedTime(), pedo.getUnlinkedTime(), "Unlinked time");
+			
+			spedo = Pedometer.getPedometer(MVPApi.userInfo(token).response);
+			Assert.assertEquals(spedo.getLocalId(), pedo.getLocalId(), "Local id");
+			Assert.assertEquals(spedo.getLastSuccessfulSyncedTime(), pedo.getLastSuccessfulSyncedTime(), "Last successful time");
+			Assert.assertEquals(spedo.getUnlinkedTime(), pedo.getUnlinkedTime(), "Unlinked time");
+		}
+		
+		// update force update
+		for(int i = 0; i < MVPApi.CACHE_TRY_TIME; i++) {
+			
+			pedo.setLastSuccessfulSyncedTime(currentTimestamp++);
+			pedo.setUnlinkedTime(currentTimestamp++);
+			pedo.setUpdatedAt(0);
+			result = MVPApi.updatePedometer(token, pedo);
+			Assert.assertEquals(result.statusCode, 210, "Status code");
+			
+			spedo = Pedometer.getPedometer(result.response);
+			Assert.assertEquals(spedo.getLocalId(), pedo.getLocalId(), "Local id");
+			Assert.assertEquals(spedo.getLastSuccessfulSyncedTime(), pedo.getLastSuccessfulSyncedTime(), "Last successful time");
+			Assert.assertEquals(spedo.getUnlinkedTime(), pedo.getUnlinkedTime(), "Unlinked time");
+			
+			spedo = MVPApi.getPedometer(token);
+			Assert.assertEquals(spedo.getLocalId(), pedo.getLocalId(), "Local id");
+			Assert.assertEquals(spedo.getLastSuccessfulSyncedTime(), pedo.getLastSuccessfulSyncedTime(), "Last successful time");
+			Assert.assertEquals(spedo.getUnlinkedTime(), pedo.getUnlinkedTime(), "Unlinked time");
+			
+			spedo = Pedometer.getPedometer(MVPApi.userInfo(token).response);
+			Assert.assertEquals(spedo.getLocalId(), pedo.getLocalId(), "Local id");
+			Assert.assertEquals(spedo.getLastSuccessfulSyncedTime(), pedo.getLastSuccessfulSyncedTime(), "Last successful time");
+			Assert.assertEquals(spedo.getUnlinkedTime(), pedo.getUnlinkedTime(), "Unlinked time");
+		}
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
@@ -189,40 +233,67 @@ public class BackendPedometerTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void UpdatePedometer() {
 		
-		// sign up and create pedometer
-		String email = MVPApi.generateUniqueEmail();
-		String serialNumberString = TextTool.getRandomString(10, 10);
-		
-		// link new account to a new device
-		String token = createNewAccount(email);
-		Pedometer pedo = createNewPedometer(token, serialNumberString);
-		
-		// update pedometer
-		pedo.setBookmarkState(3);
-		pedo.setClockState(3);
-		
-		Pedometer r = MVPApi.updatePedometer(token, pedo.toJson());
-		
-		Assert.assertEquals(3, (int)r.getClockState(), "Clock state is updated");
-		Assert.assertEquals(3, (int)r.getBookmarkState(), "Bookmark state is updated");
-		
-		// test cache on server
-		int count = 0;
-		for (int i = 0; i < MVPApi.CACHE_TRY_TIME; i++) {
+		// create pedometer
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+		Pedometer cpedo = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
 
-			Pedometer getpedo = MVPApi.getPedometer(token);
+		BaseResult result = MVPApi.createPedometer(token, cpedo);
+		Assert.assertEquals(result.statusCode, 200, "Status code");
 
-			if (getpedo == null) {
-				count++;
-				continue;
-			}
-
-			if (getpedo.getBookmarkState() != 3 ||
-				getpedo.getClockState() != 3)
-				count++;
+		Pedometer spedo = Pedometer.getPedometer(result.response);
+		cpedo.setServerId(spedo.getServerId());
+		cpedo.setUpdatedAt(spedo.getUpdatedAt());
+		cpedo.setLocalId(spedo.getLocalId());
+		
+		
+		// update normal flow and test cache
+		int clockState = 0;
+		int bookmarkState = 0;
+		for(int i = 0; i < MVPApi.CACHE_TRY_TIME; i++) {
+			
+			Pedometer pedo = new Pedometer();
+			pedo.setClockState(++clockState % 4);
+			pedo.setBookmarkState(++bookmarkState % 4);
+			pedo.setUpdatedAt(cpedo.getUpdatedAt());
+			result = MVPApi.updatePedometer(token, pedo);
+			Assert.assertEquals(result.statusCode, 200, "Status code");
+			cpedo.setUpdatedAt(Pedometer.getPedometer(result.response).getUpdatedAt());
+			
+			spedo = MVPApi.getPedometer(token);
+			Assert.assertEquals(spedo.getLocalId(), cpedo.getLocalId(), "Local id");
+			Assert.assertEquals(spedo.getClockState(), pedo.getClockState(), "Clock state");
+			Assert.assertEquals(spedo.getBookmarkState(), pedo.getBookmarkState(), "Bookmark state");
+			
+			spedo = Pedometer.getPedometer(MVPApi.userInfo(token).response);
+			Assert.assertEquals(spedo.getLocalId(), cpedo.getLocalId(), "Local id");
+			Assert.assertEquals(spedo.getClockState(), pedo.getClockState(), "Clock state");
+			Assert.assertEquals(spedo.getBookmarkState(), pedo.getBookmarkState(), "Bookmark state");
 		}
-
-		Assert.assertEquals(count, 0, "Fail count");
+		
+		// update force update
+		for(int i = 0; i < MVPApi.CACHE_TRY_TIME; i++) {
+			
+			Pedometer pedo = new Pedometer();
+			pedo.setClockState(++clockState % 4);
+			pedo.setBookmarkState(++bookmarkState % 4);
+			result = MVPApi.updatePedometer(token, pedo);
+			
+			spedo = Pedometer.getPedometer(result.response);
+			Assert.assertEquals(spedo.getLocalId(), cpedo.getLocalId(), "Local id");
+			Assert.assertEquals(spedo.getClockState(), pedo.getClockState(), "Clock state");
+			Assert.assertEquals(spedo.getBookmarkState(), pedo.getBookmarkState(), "Bookmark state");
+			
+			spedo = MVPApi.getPedometer(token);
+			Assert.assertEquals(spedo.getLocalId(), cpedo.getLocalId(), "Local id");
+			Assert.assertEquals(spedo.getClockState(), pedo.getClockState(), "Clock state");
+			Assert.assertEquals(spedo.getBookmarkState(), pedo.getBookmarkState(), "Bookmark state");
+			
+			spedo = Pedometer.getPedometer(MVPApi.userInfo(token).response);
+			Assert.assertEquals(spedo.getLocalId(), cpedo.getLocalId(), "Local id");
+			Assert.assertEquals(spedo.getClockState(), pedo.getClockState(), "Clock state");
+			Assert.assertEquals(spedo.getBookmarkState(), pedo.getBookmarkState(), "Bookmark state");
+		}
+		
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer", "KnownIssue" })

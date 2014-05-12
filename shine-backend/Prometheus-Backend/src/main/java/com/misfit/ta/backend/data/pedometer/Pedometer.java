@@ -11,7 +11,7 @@ public class Pedometer {
 	private Long linkedTime;
 	private Long unlinkedTime;
 	private Long lastSyncedTime;
-	private Long lastSuccessfulTime;
+	private Long lastSuccessfulSyncedTime;
 	private Integer clockState;
 	private Integer bookmarkState;
 	private Integer batteryLevel;
@@ -82,12 +82,12 @@ public class Pedometer {
 		this.lastSyncedTime = lastSyncedTime;
 	}
 	
-	public Long getLastSuccessfulTime() {
-		return lastSuccessfulTime;
+	public Long getLastSuccessfulSyncedTime() {
+		return lastSuccessfulSyncedTime;
 	}
 
-	public void setLastSuccessfulTime(Long lastSuccessfulTime) {
-		this.lastSuccessfulTime = lastSuccessfulTime;
+	public void setLastSuccessfulSyncedTime(Long lastSuccessfulTime) {
+		this.lastSuccessfulSyncedTime = lastSuccessfulTime;
 	}
 	
 	public Integer getClockState() {
@@ -154,7 +154,7 @@ public class Pedometer {
 			object.accumulate("linkedTime", linkedTime);
 			object.accumulate("unlinkedTime", unlinkedTime);
 			object.accumulate("lastSyncedTime", lastSyncedTime);
-			object.accumulate("lastSuccessfulTime", lastSuccessfulTime);
+			object.accumulate("lastSuccessfulSyncedTime", lastSuccessfulSyncedTime);
 			return object;
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -176,7 +176,7 @@ public class Pedometer {
 			object.accumulate("linkedTime", linkedTime != null ? linkedTime : JSONObject.NULL);
 			object.accumulate("unlinkedTime", unlinkedTime != null ? unlinkedTime : JSONObject.NULL);
 			object.accumulate("lastSyncedTime", lastSyncedTime != null ? lastSyncedTime : JSONObject.NULL);
-			object.accumulate("lastSuccessfulTime", lastSuccessfulTime != null ? lastSuccessfulTime : JSONObject.NULL);
+			object.accumulate("lastSuccessfulSyncedTime", lastSuccessfulSyncedTime != null ? lastSuccessfulSyncedTime : JSONObject.NULL);
 			return object;
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -197,6 +197,8 @@ public class Pedometer {
 				pedometer.setUnlinkedTime(obj.getLong("unlinkedTime"));
 			if(!obj.isNull("lastSyncedTime"))
 				pedometer.setLastSyncedTime(obj.getLong("lastSyncedTime"));
+			if(!obj.isNull("lastSuccessfulSyncedTime"))
+				pedometer.setLastSuccessfulSyncedTime(obj.getLong("lastSuccessfulSyncedTime"));
 			if(!obj.isNull("clockState"))
 				pedometer.setClockState(obj.getInt("clockState"));
 			if(!obj.isNull("bookmarkState"))
