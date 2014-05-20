@@ -34,9 +34,16 @@ public class MVPCommon {
 		return (long)r.nextInt((int)includeTo - (int)includeFrom + 1) + includeFrom;
 	}
 	
+	public static double randDouble() {
+		
+		Random r = new Random();
+		return r.nextDouble();
+	}
+	
 	public static boolean coin() {
 		
-		return System.nanoTime() % 2 == 0;
+		Random r = new Random();
+		return r.nextInt() % 2 == 0;
 	}
 	
 	
@@ -296,16 +303,49 @@ public class MVPCommon {
 		return formatter.format(cal.getTime());
 	}
 
-	public static String getISOTime(long timestamp) {
-		
+	public static String getISO8601Time(long timestamp) {
+
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(timestamp * 1000);
-		
+
 		TimeZone tz = TimeZone.getTimeZone("UTC");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
 		df.setTimeZone(tz);
-		
+
 		return df.format(cal.getTime());
+	}
+
+	public static String getISO8601Time(long timestamp, long timezoneOffsetInSeconds) {
+
+		// convert timestamp to UTC
+		TimeZone tz = TimeZone.getTimeZone("UTC");
+		Calendar cal = Calendar.getInstance(tz);
+		cal.setTimeInMillis(timestamp * 1000 + timezoneOffsetInSeconds * 1000);
+
+		// build tz string
+		String isoTz = String.format("%+03d:%02d", timezoneOffsetInSeconds / 3600, 
+				timezoneOffsetInSeconds % 3600);
+		
+		// build time string at UTC
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		df.setTimeZone(tz);
+
+		return df.format(cal.getTime()) + isoTz;
+	}
+	
+	public static String getISO8601Time(long timestamp, TimeZone tz) {
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(timestamp * 1000);
+
+		int offset = tz.getOffset(Calendar.ZONE_OFFSET);
+		String isoTz = String.format("%+03d:%02d",
+				offset / 3600000, offset % 360000);
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		df.setTimeZone(tz);
+
+		return df.format(cal.getTime()) + isoTz;
 	}
 	
 	

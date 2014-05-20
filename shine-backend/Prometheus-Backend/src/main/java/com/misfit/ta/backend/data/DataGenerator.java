@@ -288,8 +288,14 @@ public class DataGenerator {
 	
 	public static TimelineItem generateRandomSleepTimelineItem(long timestamp, Map<String, Object> options) {
 
-		long realStartTime = timestamp + MVPCommon.randInt(600, 1200);
 		long realEndTime = timestamp + MVPCommon.randInt(3600 * 5, 3600 * 10);
+		return generateRandomSleepTimelineItem(timestamp, realEndTime, options);
+	}
+	
+	public static TimelineItem generateRandomSleepTimelineItem(long timestamp, long endtime, Map<String, Object> options) {
+
+		long realStartTime = timestamp + MVPCommon.randInt(600, 1200);
+		long realEndTime = endtime;
 		int realSleepTimeInMinutes = (int)((realEndTime - realStartTime) / 60);
 		int	realDeepSleepTimeInMinutes = realSleepTimeInMinutes * MVPCommon.randInt(20, 40) / 100;
 		
@@ -397,39 +403,134 @@ public class DataGenerator {
 	
 	public static BedditSleepSession generateRandomBedditSleepSession(long timestamp, Map<String, Object> options) {
 		
+		// time data
 		BedditSleepSessionTimeData timeData = new BedditSleepSessionTimeData();
-		long realStartTime = timestamp + MVPCommon.randInt(600, 1200);
-		long realEndTime = timestamp + MVPCommon.randInt(3600 * 5, 3600 * 10);
-		timeData.setRealStartTime(realStartTime);
-		timeData.setRealEndTime(realEndTime);
+		long fallToSleepTime = timestamp + MVPCommon.randInt(600, 5400);
+		long getUpTime = timestamp + MVPCommon.randInt(3600 * 5, 3600 * 10);
+		timeData.setRealStartTime(timestamp);
+		timeData.setRealEndTime(getUpTime);
 		
+		
+		// properties
 		BedditSleepSessionProperties props = new BedditSleepSessionProperties();
 		props.setNormalizedSleepQuality(MVPCommon.randInt(60, 100));
+		props.setRestingHeartRate(MVPCommon.randInt(510, 580) * 0.1);
 		
+		
+		// sleep state
 		List<Object[]> sleepStates = new ArrayList<Object[]>();
-		long currentTimestamp = realStartTime;
-		while(currentTimestamp <= realEndTime) {
-			Object[] entry = new Object[] {currentTimestamp, MVPCommon.randInt(60, 80)};
-			sleepStates.add(entry);
-			currentTimestamp += 600;
+		
+		// --- awake before sleep
+		sleepStates.add(new Object[] {timestamp, 87} );
+		if (fallToSleepTime - timestamp > 2400) {
+		
+			long currentTimestamp = timestamp;
+			long endTime = fallToSleepTime - MVPCommon.randLong(600, 1200);
+			int lastState = 87;
+			
+			while(currentTimestamp <= endTime) {
+
+				long min = Math.min(300, (fallToSleepTime - timestamp) / 3);
+				long max = Math.min(300, (fallToSleepTime - timestamp) / 3);
+
+				currentTimestamp += MVPCommon.randLong(min, max);
+				sleepStates.add(new Object[] {currentTimestamp, lastState == 87 ? 65 : 87});
+			}
 		}
 		
+		// --- fall in sleep 
+		sleepStates.add(new Object[] {fallToSleepTime, 83} );
+		sleepStates.add(new Object[] {fallToSleepTime, 1} );
+		
+		long currentTimestamp = fallToSleepTime;
+		while(currentTimestamp <= getUpTime - 1200) {
+			currentTimestamp += 1200;
+			sleepStates.add(new Object[] {currentTimestamp, MVPCommon.randDouble()});
+		}
+		
+		// --- get up
+		boolean getUpnNormally = MVPCommon.coin();
+		
+		if(getUpnNormally) {
+			// get up normally
+			sleepStates.add(new Object[] {getUpTime, 1} );
+			sleepStates.add(new Object[] {getUpTime, 87} );
+		}
+		else {
+			// wake up by alarm
+			int numberOfSnooze = MVPCommon.randInt(0, 3);
+			timeData.setAlarmTime(getUpTime - numberOfSnooze * 5 * 60);
+			timeData.setRealAlarmTime(timeData.getAlarmTime());
+			props.setnSnooze(numberOfSnooze);
+			
+			// real get up time
+			if(numberOfSnooze > 0) {
+				
+				// continue sleeping after alarm
+				sleepStates.add(new Object[] {getUpTime, 1} );
+				sleepStates.add(new Object[] {getUpTime, 87} );
+			}
+			else {
+				
+				// wake up right after that
+				timeData.setRealEndTime(timeData.getAlarmTime());
+				sleepStates.add(new Object[] {timeData.getAlarmTime(), MVPCommon.randDouble()} );
+				sleepStates.add(new Object[] {timeData.getAlarmTime(), 87} );
+			}
+		}
+		
+		
+		// awake in the middle of the night (random)
+		if (MVPCommon.randDouble() < 0.2) {
+			
+			int numberOfAwaken = MVPCommon.randInt(1, 3);
+			currentTimestamp = fallToSleepTime;
+			while(numberOfAwaken > 0 && currentTimestamp < getUpTime - 3600) {
+				currentTimestamp += MVPCommon.randLong(0, (getUpTime - fallToSleepTime) / numberOfAwaken);
+				sleepStates.add(new Object[] {currentTimestamp, MVPCommon.coin() ? 65 : 87 });
+				
+				currentTimestamp += MVPCommon.randLong(600, 1800);
+				sleepStates.add(new Object[] {currentTimestamp, 83 });
+				numberOfAwaken--;
+			}
+		}
+		
+		
+		// sort sleep state array
+		for(int i = 0; i < sleepStates.size() - 1; i++) {
+			for(int j = i + 1; j < sleepStates.size(); j++) {
+				Long tsi = (Long) sleepStates.get(i)[0];
+				Long tsj = (Long) sleepStates.get(j)[0];
+				
+				if(tsi > tsj) {
+					Object[] t = sleepStates.get(i);
+					sleepStates.set(i, sleepStates.get(j));
+					sleepStates.set(j, t);
+				}
+			}
+		}
+			
+		
+		
+		// heart rate
 		List<Object[]> heartRates = new ArrayList<Object[]>();
-		currentTimestamp = realStartTime;
-		while(currentTimestamp <= realEndTime) {
-			Object[] entry = new Object[] {currentTimestamp, MVPCommon.randInt(6000, 8000) / 100d};
-			heartRates.add(entry);
+		currentTimestamp = fallToSleepTime;
+		while(currentTimestamp <= getUpTime) {
+			heartRates.add(new Object[] {currentTimestamp, MVPCommon.randInt(510, 590) * 0.1});
 			currentTimestamp += 600;
 		}
 		
+		
+		// snoring
 		List<Object[]> snoringEpisodes = new ArrayList<Object[]>();
-		currentTimestamp = realStartTime;
-		while(currentTimestamp <= realEndTime) {
-			Object[] entry = new Object[] {currentTimestamp, MVPCommon.randInt(60, 600)};
-			snoringEpisodes.add(entry);
+		currentTimestamp = fallToSleepTime + MVPCommon.randLong(3600, 7200);
+		while(currentTimestamp <= getUpTime - 2000) {
+			snoringEpisodes.add(new Object[] {currentTimestamp, MVPCommon.randInt(60, 600)});
 			currentTimestamp += MVPCommon.randLong(600, 60 * 120);
 		}
 		
+		
+		// sleep session
 		BedditSleepSession sleep = new BedditSleepSession();
 		sleep.setLocalId("bedditsleep-" + MVPApi.generateLocalId());
 		sleep.setTimestamp(timestamp);
@@ -441,9 +542,7 @@ public class DataGenerator {
 		
 		return sleep;
 	}
-	
-	
-	
+		
 	public static GraphItem generateRandomGraphItem(long timestamp, Map<String, Object> options) {
 		
 		GraphItem item = new GraphItem();

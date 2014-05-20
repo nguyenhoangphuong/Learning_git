@@ -164,8 +164,8 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		
 		// get detail with toDate in future
 		long timestamp = System.currentTimeMillis() / 1000;
-		BaseResult result = OpenAPI.getSummary(accessToken, "me", MVPCommon.getISOTime(timestamp - 3600 * 24 * 10), 
-				MVPCommon.getISOTime(timestamp + 3600 * 24 * 10), true);
+		BaseResult result = OpenAPI.getSummary(accessToken, "me", MVPCommon.getISO8601Time(timestamp - 3600 * 24 * 10), 
+				MVPCommon.getISO8601Time(timestamp + 3600 * 24 * 10), true);
 		List<OpenAPISummary> summaries = OpenAPISummary.getSummaries(result.response);
 		Collections.reverse(summaries);
 
@@ -297,14 +297,14 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		
 		// get summary detail = true
 		result = OpenAPI.getSummary(accessToken, "me", date, date, true);
-		summary = OpenAPISummary.getSummary(result.response);
+		summary = OpenAPISummary.getSummaries(result.response).get(0);
 
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(summary.getCalories(), 0, "Calories");
-		Assert.assertEquals(summary.getDistance(), 0, "Distance");
-		Assert.assertEquals(summary.getPoints(), 0, "Points");
+		Assert.assertEquals(summary.getCalories(), 0d, "Calories");
+		Assert.assertEquals(summary.getDistance(), 0d, "Distance");
+		Assert.assertEquals(summary.getPoints(), 0d, "Points");
 		Assert.assertEquals((int)summary.getSteps(), 0, "Steps");
-		Assert.assertEquals(summary.getActivityCalories(), 0, "Activity calories");
+		Assert.assertEquals(summary.getActivityCalories(), 0d, "Activity calories");
 	}
 	
 	/*

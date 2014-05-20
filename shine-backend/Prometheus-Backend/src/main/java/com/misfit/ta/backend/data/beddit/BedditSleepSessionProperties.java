@@ -7,13 +7,17 @@ public class BedditSleepSessionProperties {
 
 	// fields
 	protected Integer normalizedSleepQuality;
+	protected Integer nSnooze;
+	protected Double restingHeartRate;
 	
        
     // methods
     public JSONObject toJson() {
         JSONObject object = new JSONObject();
         try {
-            object.accumulate("normalizedSleepQuality", normalizedSleepQuality);
+        	object.accumulate("normalizedSleepQuality", normalizedSleepQuality);
+        	object.accumulate("nSnooze", nSnooze);
+        	object.accumulate("restingHeartRate", restingHeartRate);
             
             return object;
             
@@ -31,6 +35,12 @@ public class BedditSleepSessionProperties {
 			if (!json.isNull("normalizedSleepQuality"))
 				this.setNormalizedSleepQuality(json.getInt("normalizedSleepQuality"));
 			
+			if (!json.isNull("nSnooze"))
+				this.setnSnooze(json.getInt("nSnooze"));
+			
+			if (!json.isNull("restingHeartRate"))
+				this.setRestingHeartRate(json.getDouble("restingHeartRate"));
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -46,6 +56,22 @@ public class BedditSleepSessionProperties {
 
 	public void setNormalizedSleepQuality(Integer normalizedSleepQuality) {
 		this.normalizedSleepQuality = normalizedSleepQuality;
+	}
+
+	public Integer getnSnooze() {
+		return nSnooze;
+	}
+
+	public void setnSnooze(Integer nSnooze) {
+		this.nSnooze = nSnooze;
+	}
+
+	public Double getRestingHeartRate() {
+		return restingHeartRate;
+	}
+
+	public void setRestingHeartRate(Double restingHeartRate) {
+		this.restingHeartRate = restingHeartRate;
 	}
 	
 }

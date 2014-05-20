@@ -3,6 +3,7 @@ package com.misfit.ta.backend.aut.correctness.openapi.resourceapi;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -14,6 +15,7 @@ import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.correctness.openapi.OpenAPIAutomationBase;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISleep;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISleepDetail;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
@@ -25,6 +27,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 
 	private String accessToken;
 	private List<List<TimelineItem>> allTimelineItems;
+	private List<Goal> goals;
 	
 	private String fromDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * 2);
 	private String toDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000);
@@ -35,6 +38,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		super.beforeClass();
 		
 		allTimelineItems = new ArrayList<List<TimelineItem>>();
+		goals = new ArrayList<Goal>();
 		List<TimelineItem> batchItems = new ArrayList<TimelineItem>();
 		
 		// 5 days
@@ -43,6 +47,11 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 			long timestamp = System.currentTimeMillis() / 1000 - i * 3600 * 24;
 			List<TimelineItem> items = new ArrayList<TimelineItem>();
 			
+			// create goal
+			Goal goal = Goal.getDefaultGoal(timestamp);
+			goals.add(goal);
+			MVPApi.createGoal(myToken, goal);
+						
 			// add sleep item
 			items.add(DataGenerator.generateRandomSleepTimelineItem(timestamp + 600 * 1, null));
 			
@@ -113,7 +122,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 			SleepSessionItem csession = (SleepSessionItem)allTimelineItems.get(i).get(0).getData();
 			OpenAPISleep rsession = rsleeps.get(0);
 
-			Assert.assertEquals(rsession.getStartTime(), MVPCommon.getISOTime(csession.getRealStartTime()), "Sleep start time");
+			Assert.assertEquals(rsession.getStartTime(), MVPCommon.getISO8601Time(csession.getRealStartTime(), goals.get(i).getTimeZoneOffsetInSeconds()), "Sleep start time");
 			Assert.assertEquals(rsession.getAutoDetected(), csession.getIsAutoDetected(), "Sleep auto detected");
 			Assert.assertEquals((int)rsession.getDuration(), csession.getRealEndTime() - csession.getRealStartTime(), "Sleep duration");
 
@@ -123,7 +132,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 			for(int k = 0; k < cdetails.size(); k++) {
 				
 				long stateChangeTime = csession.getRealStartTime() + cdetails.get(k)[0] * 60;
-				Assert.assertEquals(rdetails.get(k).getDatetime(), MVPCommon.getISOTime(stateChangeTime), "Sleep state change timestamp");
+				Assert.assertEquals(rdetails.get(k).getDatetime(), MVPCommon.getISO8601Time(stateChangeTime, goals.get(i).getTimeZoneOffsetInSeconds()), "Sleep state change timestamp");
 				Assert.assertEquals(rdetails.get(k).getValue(), cdetails.get(k)[1], "Sleep new state");
 			}
 		}
@@ -216,6 +225,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		
 		// create a new timeline item
 		long timestamp = cal.getTimeInMillis() / 1000 - 3600 * 24 * 5;
+		MVPApi.createGoal(myToken, Goal.getDefaultGoal(timestamp));
 		TimelineItem deletedSleep = DataGenerator.generateRandomSleepTimelineItem(timestamp, null);
 		BaseResult result = MVPApi.createTimelineItem(myToken, deletedSleep);
 		deletedSleep.setServerId(TimelineItem.getTimelineItem(result.response).getServerId());
@@ -241,6 +251,82 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 
 		Assert.assertEquals(result.statusCode, 200, "Status code");
 		Assert.assertEquals(rsleeps.size(), 0, "Number of sleeps in response");
+	}
+	
+	public void GetSleepDifferentTimezones() {
+		
+		// create account
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+		
+		// create some goals with different timezone
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal.setTimeInMillis(System.currentTimeMillis() / 1000 - 3600 * 24 * 4);
+		int[] goalTimezoneOffsets = new int[] {0, +7, -8, +7, +10};
+		Goal[] goals = new Goal[goalTimezoneOffsets.length];
+		String[] dates = new String[goalTimezoneOffsets.length];
+		
+		for(int i = 0; i < goalTimezoneOffsets.length; i++) {
+
+			// create goal
+			long startTime = MVPCommon.getDayStartEpoch(cal.getTimeInMillis() / 1000, TimeZone.getTimeZone("UTC")) - 
+					(i == 0 ? 0 : goalTimezoneOffsets[i - 1] * 3600);
+			long endTime = MVPCommon.getDayEndEpoch(cal.getTimeInMillis() / 1000, TimeZone.getTimeZone("UTC")) - 
+					goalTimezoneOffsets[i] * 3600;
+			goals[i] = Goal.getDefaultGoal();
+			goals[i].setStartTime(startTime);
+			goals[i].setEndTime(endTime);
+			goals[i].setTimeZoneOffsetInSeconds(i == 0 ? 0 : goalTimezoneOffsets[i - 1] * 3600);
+			
+			MVPApi.createGoal(token, goals[i]);
+			
+			// save date string
+			dates[i] = MVPCommon.getUTCDateString(cal.getTimeInMillis() / 1000);
+			cal.setTimeInMillis(cal.getTimeInMillis() + 86400 * 1000);
+		}
+		
+		// create some sleeps		
+		List<TimelineItem> itemsNextDay = new ArrayList<TimelineItem>();
+		List<TimelineItem> itemsToday = new ArrayList<TimelineItem>();
+		for(int i = 0; i < goalTimezoneOffsets.length; i++) {
+			
+			itemsNextDay.add(DataGenerator.generateRandomSleepTimelineItem(
+					goals[i].getEndTime() - MVPCommon.randLong(3600 * 5, 3600 * 7), 
+					goals[i].getEndTime() + MVPCommon.randLong(3600, 3600 * 3), 
+					null));
+			
+			itemsNextDay.add(DataGenerator.generateRandomSleepTimelineItem(
+					goals[i].getEndTime() - MVPCommon.randLong(3600 * 1, 3600 * 3), 
+					goals[i].getEndTime() + MVPCommon.randLong(3600 * 5, 3600 * 7), 
+					null));
+			
+			itemsToday.add(DataGenerator.generateRandomSleepTimelineItem(
+					goals[i].getEndTime() - MVPCommon.randLong(3600 * 5, 3600 * 7), 
+					goals[i].getEndTime() - MVPCommon.randLong(3600 * 1, 3600 * 2), 
+					null));
+			
+			itemsToday.add(DataGenerator.generateRandomSleepTimelineItem(
+					goals[i].getStartTime() + MVPCommon.randLong(3600 * 1, 3600 * 2), 
+					goals[i].getStartTime() + MVPCommon.randLong(3600 * 5, 3600 * 7), 
+					null));
+		}
+
+		MVPApi.createTimelineItems(token, itemsNextDay);
+		MVPApi.createTimelineItems(token, itemsToday);
+		
+		
+		// query resource
+		String accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "https://www.google.com.vn/");
+		for(int i = 0; i < goalTimezoneOffsets.length; i++) {
+			
+			BaseResult result = OpenAPI.getSleeps(ClientApp, myUid, dates[i], dates[i]);
+			List<OpenAPISleep> rsleeps = OpenAPISleep.getSleepsFromResponse(result.response);
+			
+			Assert.assertEquals(result.statusCode, 200, "Status code");
+			Assert.assertEquals(rsleeps.size(), 
+					(i == 0 || i == goalTimezoneOffsets.length - 1) ? 2 : 4, 
+					"Number of sleeps in response");
+			
+		}
 	}
 	
 	

@@ -10,6 +10,8 @@ public class BedditSleepSessionTimeData {
 	protected Long realEndTime;
 	protected Long editedStartTime;
 	protected Long editedEndTime;
+	protected Long alarmTime;
+	protected Long realAlarmTime;
 	
 
     // methods
@@ -21,6 +23,8 @@ public class BedditSleepSessionTimeData {
         	object.accumulate("realEndTime", realEndTime);
         	object.accumulate("editedStartTime", editedStartTime);
         	object.accumulate("editedEndTime", editedEndTime);
+        	object.accumulate("alarmTime", alarmTime);
+        	object.accumulate("realAlarmTime", realAlarmTime);
             
             return object;
             
@@ -46,6 +50,12 @@ public class BedditSleepSessionTimeData {
 			
 			if (!json.isNull("editedEndTime"))
 				this.setEditedEndTime(json.getLong("editedEndTime"));
+			
+			if (!json.isNull("alarmTime"))
+				this.setAlarmTime(json.getLong("alarmTime"));
+			
+			if (!json.isNull("realAlarmTime"))
+				this.setRealAlarmTime(json.getLong("realAlarmTime"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -86,6 +96,22 @@ public class BedditSleepSessionTimeData {
 
 	public void setEditedEndTime(Long editedEndTime) {
 		this.editedEndTime = editedEndTime;
+	}
+
+	public Long getAlarmTime() {
+		return alarmTime;
+	}
+
+	public void setAlarmTime(Long alarmTime) {
+		this.alarmTime = alarmTime;
+	}
+
+	public Long getRealAlarmTime() {
+		return realAlarmTime;
+	}
+
+	public void setRealAlarmTime(Long realAlarmTime) {
+		this.realAlarmTime = realAlarmTime;
 	}
 
 }

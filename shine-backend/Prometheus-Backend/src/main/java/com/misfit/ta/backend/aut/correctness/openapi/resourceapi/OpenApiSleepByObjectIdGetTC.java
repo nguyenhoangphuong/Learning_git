@@ -12,6 +12,7 @@ import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.correctness.openapi.OpenAPIAutomationBase;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISleep;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISleepDetail;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
@@ -22,6 +23,7 @@ import com.misfit.ta.utils.TextTool;
 public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 
 	private String accessToken;
+	private Goal goal;
 	private TimelineItem itemA;
 	private TimelineItem itemB;
 	private TimelineItem itemC;
@@ -32,11 +34,13 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		super.beforeClass();
 		
 		long timestamp = System.currentTimeMillis() / 1000;
+		goal = Goal.getDefaultGoal(timestamp);
 		itemA = DataGenerator.generateRandomSleepTimelineItem(timestamp, null);
 		itemB = DataGenerator.generateRandomSleepTimelineItem(timestamp, null);
 		itemC = DataGenerator.generateRandomSleepTimelineItem(timestamp, null);
 
 		// call api
+		MVPApi.createGoal(myToken, goal);
 		BaseResult resultA = MVPApi.createTimelineItem(myToken, itemA);
 		BaseResult resultB = MVPApi.createTimelineItem(yourToken, itemB);
 		BaseResult resultC = MVPApi.createTimelineItem(strangerToken, itemC);
@@ -75,7 +79,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		SleepSessionItem sessionA = (SleepSessionItem)itemA.getData();
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISOTime(sessionA.getRealStartTime()), "Sleep start time");
+		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISO8601Time(sessionA.getRealStartTime(), goal.getTimeZoneOffsetInSeconds()), "Sleep start time");
 		Assert.assertEquals(ritem.getAutoDetected(), sessionA.getIsAutoDetected(), "Sleep auto detected");
 		Assert.assertEquals((int)ritem.getDuration(), sessionA.getRealEndTime() - sessionA.getRealStartTime(), "Sleep duration");
 
@@ -85,7 +89,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		for(int k = 0; k < cdetails.size(); k++) {
 			
 			long stateChangeTime = sessionA.getRealStartTime() + cdetails.get(k)[0] * 60;
-			Assert.assertEquals(rdetails.get(k).getDatetime(), MVPCommon.getISOTime(stateChangeTime), "Sleep state change timestamp");
+			Assert.assertEquals(rdetails.get(k).getDatetime(), MVPCommon.getISO8601Time(stateChangeTime, goal.getTimeZoneOffsetInSeconds()), "Sleep state change timestamp");
 			Assert.assertEquals(rdetails.get(k).getValue(), cdetails.get(k)[1], "Sleep new state");
 		}
 		
@@ -96,7 +100,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		sessionA = (SleepSessionItem)itemA.getData();
 
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISOTime(sessionA.getRealStartTime()), "Sleep start time");
+		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISO8601Time(sessionA.getRealStartTime(), goal.getTimeZoneOffsetInSeconds()), "Sleep start time");
 		Assert.assertEquals(ritem.getAutoDetected(), sessionA.getIsAutoDetected(), "Sleep auto detected");
 		Assert.assertEquals((int)ritem.getDuration(), sessionA.getRealEndTime() - sessionA.getRealStartTime(), "Sleep duration");
 
@@ -106,7 +110,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		for(int k = 0; k < cdetails.size(); k++) {
 
 			long stateChangeTime = sessionA.getRealStartTime() + cdetails.get(k)[0] * 60;
-			Assert.assertEquals(rdetails.get(k).getDatetime(), MVPCommon.getISOTime(stateChangeTime), "Sleep state change timestamp");
+			Assert.assertEquals(rdetails.get(k).getDatetime(), MVPCommon.getISO8601Time(stateChangeTime, goal.getTimeZoneOffsetInSeconds()), "Sleep state change timestamp");
 			Assert.assertEquals(rdetails.get(k).getValue(), cdetails.get(k)[1], "Sleep new state");
 		}
 	}
@@ -169,7 +173,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		SleepSessionItem sessionA = (SleepSessionItem)itemA.getData();
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISOTime(sessionA.getRealStartTime()), "Sleep start time");
+		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISO8601Time(sessionA.getRealStartTime(), goal.getTimeZoneOffsetInSeconds()), "Sleep start time");
 		Assert.assertEquals(ritem.getAutoDetected(), sessionA.getIsAutoDetected(), "Sleep auto detected");
 		Assert.assertEquals((int)ritem.getDuration(), sessionA.getRealEndTime() - sessionA.getRealStartTime(), "Sleep duration");
 
@@ -179,7 +183,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		for(int k = 0; k < cdetails.size(); k++) {
 			
 			long stateChangeTime = sessionA.getRealStartTime() + cdetails.get(k)[0] * 60;
-			Assert.assertEquals(rdetails.get(k).getDatetime(), MVPCommon.getISOTime(stateChangeTime), "Sleep state change timestamp");
+			Assert.assertEquals(rdetails.get(k).getDatetime(), MVPCommon.getISO8601Time(stateChangeTime, goal.getTimeZoneOffsetInSeconds()), "Sleep state change timestamp");
 			Assert.assertEquals(rdetails.get(k).getValue(), cdetails.get(k)[1], "Sleep new state");
 		}
 		
@@ -197,6 +201,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		
 		// create a new timeline item
 		long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * 5;
+		MVPApi.createGoal(myToken, Goal.getDefaultGoal(timestamp));
 		TimelineItem deletedSleep = DataGenerator.generateRandomSleepTimelineItem(timestamp, null);
 		BaseResult result = MVPApi.createTimelineItem(myToken, deletedSleep);
 		deletedSleep.setServerId(TimelineItem.getTimelineItem(result.response).getServerId());
@@ -208,7 +213,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		OpenAPISleep rsleep = OpenAPISleep.getSleepFromResponse(result.response);
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(rsleep.getStartTime(), MVPCommon.getISOTime(startTime), "Sleep start time");
+		Assert.assertEquals(rsleep.getStartTime(), MVPCommon.getISO8601Time(startTime, goal.getTimeZoneOffsetInSeconds()), "Sleep start time");
 		
 		
 		// now update state of that sleep to 1

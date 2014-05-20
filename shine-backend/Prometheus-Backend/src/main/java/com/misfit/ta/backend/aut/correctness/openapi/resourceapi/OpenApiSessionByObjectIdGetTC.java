@@ -10,6 +10,7 @@ import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.correctness.openapi.OpenAPIAutomationBase;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISession;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
@@ -19,6 +20,7 @@ import com.misfit.ta.utils.TextTool;
 public class OpenApiSessionByObjectIdGetTC extends OpenAPIAutomationBase {
 
 	private String accessToken;
+	private Goal goal;
 	private TimelineItem itemA;
 	private TimelineItem itemB;
 	private TimelineItem itemC;
@@ -29,11 +31,14 @@ public class OpenApiSessionByObjectIdGetTC extends OpenAPIAutomationBase {
 		super.beforeClass();
 		
 		long timestamp = System.currentTimeMillis() / 1000;
+		
+		goal = Goal.getDefaultGoal(timestamp);
 		itemA = DataGenerator.generateRandomActivitySessionTimelineItem(timestamp, null);
 		itemB = DataGenerator.generateRandomActivitySessionTimelineItem(timestamp, null);
 		itemC = DataGenerator.generateRandomActivitySessionTimelineItem(timestamp, null);
 
 		// call api
+		MVPApi.createGoal(myToken, goal);
 		BaseResult resultA = MVPApi.createTimelineItem(myToken, itemA);
 		BaseResult resultB = MVPApi.createTimelineItem(yourToken, itemB);
 		BaseResult resultC = MVPApi.createTimelineItem(strangerToken, itemC);
@@ -70,7 +75,7 @@ public class OpenApiSessionByObjectIdGetTC extends OpenAPIAutomationBase {
 		ActivitySessionItem sessionA = (ActivitySessionItem)itemA.getData();
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISOTime(itemA.getTimestamp()) , "Activity start time");
+		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISO8601Time(itemA.getTimestamp(), goal.getTimeZoneOffsetInSeconds()) , "Activity start time");
 		Assert.assertEquals(ritem.getActivityType(), MVPCommon.getActivityName(sessionA.getActivityType()) , "Activity type");
 		Assert.assertEquals(ritem.getCalories(), MVPCommon.round(sessionA.getCalories(), 1), "Activity calories");
 		Assert.assertEquals(ritem.getDistance(), MVPCommon.round(sessionA.getDistance(), 1), "Activity distance");
@@ -84,7 +89,7 @@ public class OpenApiSessionByObjectIdGetTC extends OpenAPIAutomationBase {
 		sessionA = (ActivitySessionItem)itemA.getData();
 
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISOTime(itemA.getTimestamp()) , "Activity start time");
+		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISO8601Time(itemA.getTimestamp(), goal.getTimeZoneOffsetInSeconds()) , "Activity start time");
 		Assert.assertEquals(ritem.getActivityType(), MVPCommon.getActivityName(sessionA.getActivityType()) , "Activity type");
 		Assert.assertEquals(ritem.getCalories(), MVPCommon.round(sessionA.getCalories(), 1), "Activity calories");
 		Assert.assertEquals(ritem.getDistance(), MVPCommon.round(sessionA.getDistance(), 1), "Activity distance");
@@ -145,7 +150,7 @@ public class OpenApiSessionByObjectIdGetTC extends OpenAPIAutomationBase {
 		ActivitySessionItem sessionA = (ActivitySessionItem)itemA.getData();
 		
 		Assert.assertEquals(result.statusCode, 200, "Status code");
-		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISOTime(itemA.getTimestamp()) , "Activity start time");
+		Assert.assertEquals(ritem.getStartTime(), MVPCommon.getISO8601Time(itemA.getTimestamp(), goal.getTimeZoneOffsetInSeconds()) , "Activity start time");
 		Assert.assertEquals(ritem.getActivityType(), MVPCommon.getActivityName(sessionA.getActivityType()) , "Activity type");
 		Assert.assertEquals(ritem.getCalories(), MVPCommon.round(sessionA.getCalories(), 1), "Activity calories");
 		Assert.assertEquals(ritem.getDistance(), MVPCommon.round(sessionA.getDistance(), 1), "Activity distance");

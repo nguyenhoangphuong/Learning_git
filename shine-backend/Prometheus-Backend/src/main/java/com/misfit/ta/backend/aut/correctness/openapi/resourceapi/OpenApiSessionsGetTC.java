@@ -13,6 +13,7 @@ import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.correctness.openapi.OpenAPIAutomationBase;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISession;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
@@ -23,6 +24,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 
 	private String accessToken;
 	private List<List<TimelineItem>> allSessions;
+	private List<Goal> goals;
 	
 	private String fromDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000 - 3600 * 24 * 2);
 	private String toDate = MVPCommon.getDateString(System.currentTimeMillis() / 1000);
@@ -33,6 +35,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		super.beforeClass();
 		
 		allSessions = new ArrayList<List<TimelineItem>>();
+		goals = new ArrayList<Goal>();
 		List<TimelineItem> batchItems = new ArrayList<TimelineItem>();
 		
 		// 5 days
@@ -40,6 +43,11 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		
 			long timestamp = System.currentTimeMillis() / 1000 - i * 3600 * 24;
 			List<TimelineItem> sessions = new ArrayList<TimelineItem>();
+			
+			// create goal
+			Goal goal = Goal.getDefaultGoal(timestamp);
+			goals.add(goal);
+			MVPApi.createGoal(myToken, goal);
 			
 			// add some session items
 			int j = 0;
@@ -116,7 +124,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 				ActivitySessionItem csession = (ActivitySessionItem)allSessions.get(i).get(j).getData();
 				OpenAPISession rsession = rsessions.get(j);
 				
-				Assert.assertEquals(rsession.getStartTime(), MVPCommon.getISOTime(allSessions.get(i).get(j).getTimestamp()) , "Activity start time");
+				Assert.assertEquals(rsession.getStartTime(), MVPCommon.getISO8601Time(allSessions.get(i).get(j).getTimestamp(), goals.get(i).getTimeZoneOffsetInSeconds()) , "Activity start time");
 				Assert.assertEquals(rsession.getActivityType(), MVPCommon.getActivityName(csession.getActivityType()) , "Activity type");
 				Assert.assertEquals(rsession.getCalories(), MVPCommon.round(csession.getCalories(), 1), "Activity calories");
 				Assert.assertEquals(rsession.getDistance(), MVPCommon.round(csession.getDistance(), 1), "Activity distance");
