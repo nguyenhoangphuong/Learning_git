@@ -110,8 +110,8 @@ public class DefaultStrings {
 	public static String TutorialForUpdateActivityTag = "Hold down on an activity highlight to change the tag. You can only do this on the current day.";
 	public static String TutorialForDeleteSleepTile = "Hold down on a sleep highlight to remove it. You can only do this on the current day.";
 
-	public static String LinkNowButton = "LINK NOW";
-	public static String BuyNowButton = "BUY NOW";
+	public static String LinkNowButton = "Link Now";
+	public static String BuyNowButton = "Buy Now";
 	
 	// edit tag
 	public static String EditTagTitle = "Edit Tag";
