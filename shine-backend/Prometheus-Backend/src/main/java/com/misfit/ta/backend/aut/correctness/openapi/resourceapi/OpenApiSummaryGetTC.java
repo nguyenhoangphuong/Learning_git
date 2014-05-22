@@ -42,7 +42,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 			MVPApi.createGoal(strangerToken, goal);
 		}
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "https://www.google.com.vn/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SUMMARY, ClientKey, "https://www.google.com.vn/");
 	}
 	
 	

@@ -75,7 +75,7 @@ public class Verify {
 	
 	public static boolean verifyAll(List<String> messages) {
 		
-		logger.error("\nErrors: ");
+		logger.error("Errors: ");
 		TRS.instance().addStep("Errors:", "errors");
 		
 		boolean pass = true;

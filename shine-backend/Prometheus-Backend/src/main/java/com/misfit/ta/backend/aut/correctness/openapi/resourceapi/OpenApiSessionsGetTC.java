@@ -1,7 +1,9 @@
 package com.misfit.ta.backend.aut.correctness.openapi.resourceapi;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -15,9 +17,11 @@ import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISession;
+import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISleep;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
 import com.misfit.ta.common.MVPCommon;
+import com.misfit.ta.common.Verify;
 import com.misfit.ta.utils.TextTool;
 
 public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
@@ -32,46 +36,46 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass() {
 		
-		super.beforeClass();
-		
-		allSessions = new ArrayList<List<TimelineItem>>();
-		goals = new ArrayList<Goal>();
-		List<TimelineItem> batchItems = new ArrayList<TimelineItem>();
-		
-		// 5 days
-		for(int i = 0; i < 5; i++) {
-		
-			long timestamp = System.currentTimeMillis() / 1000 - i * 3600 * 24;
-			List<TimelineItem> sessions = new ArrayList<TimelineItem>();
-			
-			// create goal
-			Goal goal = Goal.getDefaultGoal(timestamp);
-			goals.add(goal);
-			MVPApi.createGoal(myToken, goal);
-			
-			// add some session items
-			int j = 0;
-			for(; j < 3; j++) {
-				
-				long itemTimestamp = timestamp + j * 600;
-				TimelineItem session = DataGenerator.generateRandomActivitySessionTimelineItem(itemTimestamp, null);
-				sessions.add(session);
-			}
-			
-			// add some other timeline items
-			sessions.add(DataGenerator.generateRandomFoodTimelineItem(timestamp + 600 * j++, null));
-			sessions.add(DataGenerator.generateRandomLifetimeDistanceItem(timestamp + 600 * j++, null));
-								
-			allSessions.add(sessions);
-			batchItems.addAll(sessions);
-		}
-		
-		// call api
-		MVPApi.createTimelineItems(myToken, batchItems);
-		MVPApi.createTimelineItems(yourToken, batchItems);
-		MVPApi.createTimelineItems(strangerToken, batchItems);
-		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "https://www.google.com.vn/");
+//		super.beforeClass();
+//		
+//		allSessions = new ArrayList<List<TimelineItem>>();
+//		goals = new ArrayList<Goal>();
+//		List<TimelineItem> batchItems = new ArrayList<TimelineItem>();
+//		
+//		// 5 days
+//		for(int i = 0; i < 5; i++) {
+//		
+//			long timestamp = System.currentTimeMillis() / 1000 - i * 3600 * 24;
+//			List<TimelineItem> sessions = new ArrayList<TimelineItem>();
+//			
+//			// create goal
+//			Goal goal = Goal.getDefaultGoal(timestamp);
+//			goals.add(goal);
+//			MVPApi.createGoal(myToken, goal);
+//			
+//			// add some session items
+//			int j = 0;
+//			for(; j < 3; j++) {
+//				
+//				long itemTimestamp = timestamp + j * 600;
+//				TimelineItem session = DataGenerator.generateRandomActivitySessionTimelineItem(itemTimestamp, null);
+//				sessions.add(session);
+//			}
+//			
+//			// add some other timeline items
+//			sessions.add(DataGenerator.generateRandomFoodTimelineItem(timestamp + 600 * j++, null));
+//			sessions.add(DataGenerator.generateRandomLifetimeDistanceItem(timestamp + 600 * j++, null));
+//								
+//			allSessions.add(sessions);
+//			batchItems.addAll(sessions);
+//		}
+//		
+//		// call api
+//		MVPApi.createTimelineItems(myToken, batchItems);
+//		MVPApi.createTimelineItems(yourToken, batchItems);
+//		MVPApi.createTimelineItems(strangerToken, batchItems);
+//		
+//		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "https://www.google.com.vn/");
 	}
 	
 	
@@ -205,6 +209,106 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.UnauthorizedAccess, "Error message");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions" })
+	public void GetSessionsDifferentTimezones() {
+		
+		// create account
+		String email = MVPApi.generateUniqueEmail();
+		String token = MVPApi.signUp(email, "qqqqqq").token;
+		String uid = MVPApi.getUserId(token);
+		
+		// create some goals with different timezone
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal.setTimeInMillis(System.currentTimeMillis() - 3600 * 24 * 5 * 1000);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		
+		int[] goalTimezoneOffsets = new int[] {0, +7, -5, +7, +10};
+		Goal[] goals = new Goal[goalTimezoneOffsets.length];
+		String[] dates = new String[goalTimezoneOffsets.length];
+		
+		for(int i = 0; i < goalTimezoneOffsets.length; i++) {
+
+			// create goal
+			long startTime = MVPCommon.getDayStartEpoch(cal.getTimeInMillis() / 1000, TimeZone.getTimeZone("UTC")) - 
+					(i == 0 ? 0 : goalTimezoneOffsets[i - 1] * 3600);
+			long endTime = MVPCommon.getDayEndEpoch(cal.getTimeInMillis() / 1000, TimeZone.getTimeZone("UTC")) - 
+					goalTimezoneOffsets[i] * 3600;
+			goals[i] = Goal.getDefaultGoal();
+			goals[i].setStartTime(startTime);
+			goals[i].setEndTime(endTime);
+			goals[i].setTimeZoneOffsetInSeconds(i == 0 ? 0 : goalTimezoneOffsets[i - 1] * 3600);
+			
+			MVPApi.createGoal(token, goals[i]);
+			
+			// save date string
+			dates[i] = MVPCommon.getUTCDateString(cal.getTimeInMillis() / 1000);
+			cal.setTimeInMillis(cal.getTimeInMillis() + 86400 * 1000);
+		}
+		
+		// create some sleeps		
+		List<TimelineItem> items = new ArrayList<TimelineItem>();
+		for(int i = 0; i < goalTimezoneOffsets.length; i++) {
+			
+			// at the beginning of the day
+			items.add(DataGenerator.generateRandomActivitySessionTimelineItem(
+					goals[i].getStartTime(), 
+					null));
+			
+			// random
+			items.add(DataGenerator.generateRandomActivitySessionTimelineItem(
+					goals[i].getStartTime() + MVPCommon.randLong(100, 200), 
+					null));
+			
+			items.add(DataGenerator.generateRandomActivitySessionTimelineItem(
+					goals[i].getStartTime() + MVPCommon.randLong(200, 300), 
+					null));
+
+//			// in the middle of the day
+//			items.add(DataGenerator.generateRandomActivitySessionTimelineItem(
+//					MVPCommon.randLong(goals[i].getStartTime() + 1, goals[i].getEndTime() - 1),
+//					null));
+//			
+//			// at the end of the day
+//			items.add(DataGenerator.generateRandomActivitySessionTimelineItem(
+//					goals[i].getEndTime(), 
+//					null));
+		}
+
+		MVPApi.createTimelineItems(token, items);
+		
+		// query resource
+		List<String> errors = new ArrayList<String>();
+		String accessToken = OpenAPI.getAccessToken(email, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "https://www.google.com.vn/");
+		for(int i = 0; i < goalTimezoneOffsets.length; i++) {
+			
+			BaseResult result = OpenAPI.getSessions(accessToken, uid, dates[i], dates[i]);
+			List<OpenAPISession> rsessions = OpenAPISession.getSessionsFromResponse(result.response);
+			
+			errors.add(Verify.verifyEquals(result.statusCode, 200, "Status code"));
+			errors.add(Verify.verifyEquals(rsessions.size(), 3, 
+					String.format("Number of sessions in response in goals[%d]", i)));
+			
+			for(int j = 0; j < rsessions.size(); j++) {
+				
+				ActivitySessionItem expect = (ActivitySessionItem)items.get(i * 3 + j).getData();
+				OpenAPISession actual = rsessions.get(j);
+				
+				errors.add(Verify.verifyEquals(actual.getStartTime(), MVPCommon.getISO8601Time(items.get(i * 3 + j).getTimestamp(), goals[i].getTimeZoneOffsetInSeconds()) , "Activity start time"));
+				errors.add(Verify.verifyEquals(actual.getActivityType(), MVPCommon.getActivityName(expect.getActivityType()) , "Activity type"));
+				errors.add(Verify.verifyEquals(actual.getCalories(), MVPCommon.round(expect.getCalories(), 1), "Activity calories"));
+				errors.add(Verify.verifyEquals(actual.getDistance(), MVPCommon.round(expect.getDistance(), 1), "Activity distance"));
+				errors.add(Verify.verifyEquals(actual.getDuration(), expect.getDuration(), "Activity duration"));
+				errors.add(Verify.verifyEquals(actual.getPoints(), expect.getPoint() / 2.5, "Activity points"));
+				errors.add(Verify.verifyEquals(actual.getSteps(), expect.getSteps(), "Activity steps"));
+			}
+		}
+		
+		if(!Verify.verifyAll(errors))
+			Assert.fail("Not all assertions pass");
+	}
+
 	
 	/*
 	 * TODO:
