@@ -12,7 +12,6 @@ import java.util.zip.Checksum;
 
 import org.apache.commons.io.FileUtils;
 
-
 import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
@@ -22,6 +21,8 @@ import com.misfit.ta.backend.data.beddit.BedditSleepSessionTimeData;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;
 import com.misfit.ta.backend.data.goal.TripleTapData;
+import com.misfit.ta.backend.data.goalprogress.GoalProgress;
+import com.misfit.ta.backend.data.goalprogress.GoalSettings;
 import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.DisplayUnit;
@@ -110,6 +111,35 @@ public class DataGenerator {
 		return g;
 	}
 
+	public static GoalProgress generateRandomGoalProgress(long timestamp, int progressType, Map<String, Object> options) {
+		
+		GoalProgress g = new GoalProgress();
+		g.setLocalId("goalprogress-" + MVPApi.generateLocalId());
+		g.setTimestamp(timestamp);
+		
+		if(progressType == GoalProgress.GOAL_PROGRESS_TYPE_SLEEP) {
+			g.setDuration(MVPCommon.randInt(5 * 60, 10 * 60));
+			g.setProgressValue(MVPCommon.randInt(5 * 60, 10 * 60));
+		}
+		else if(progressType == GoalProgress.GOAL_PROGRESS_TYPE_WEIGHT) {
+			g.setDuration(null);
+			g.setProgressValue(MVPCommon.randInt(100, 200));
+		}
+		
+		return g;
+	}
+
+	public static GoalSettings geenrateRandomGoalSettings(long timestamp, int progressType, Map<String, Object> options) {
+		
+		GoalSettings gs = new GoalSettings();
+		gs.setAppliedFrom(timestamp);
+		gs.setGoalValue(progressType == GoalProgress.GOAL_PROGRESS_TYPE_SLEEP ? 
+				MVPCommon.randInt(7 * 60, 8 * 60) :
+				MVPCommon.randInt(100, 200));
+		
+		return gs;
+	}
+	
 	public static Pedometer generateRandomPedometer(long timestamp, Map<String, Object> options) {
 			
 		Pedometer item = new Pedometer();
@@ -384,7 +414,6 @@ public class DataGenerator {
 		return item;
 	}
 	
-
 	public static TimelineItem generateRandomTimezoneTimelineItem(long timestamp, Map<String, Object> options) {
 
 		TimezoneChangeItem data = new TimezoneChangeItem();

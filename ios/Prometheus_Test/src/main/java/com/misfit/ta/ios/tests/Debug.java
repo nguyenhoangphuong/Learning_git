@@ -50,13 +50,15 @@ public class Debug {
 
 	public static void main(String[] args) throws Exception {
 
-		String token = MVPApi.signUp("bd00@a.a", "qqqqqq").token;
-		for (int i = 0; i < 30; i++) {
-			long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * i;
-			
-			MVPApi.createGoal(token, Goal.getDefaultGoal(timestamp));
-			MVPApi.createBedditSleepSession(token, DataGenerator.generateRandomBedditSleepSession(timestamp, null));
-		}
+//		String token = MVPApi.signUp("bd00@a.a", "qqqqqq").token;
+//		for (int i = 0; i < 30; i++) {
+//			long timestamp = System.currentTimeMillis() / 1000 - 3600 * 24 * i;
+//			
+//			MVPApi.createGoal(token, Goal.getDefaultGoal(timestamp));
+//			MVPApi.createBedditSleepSession(token, DataGenerator.generateRandomBedditSleepSession(timestamp, null));
+//		}
+		
+		
 		
 		
 

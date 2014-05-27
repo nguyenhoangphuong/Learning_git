@@ -6,16 +6,24 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.backend.data.profile.ProfileData;
 
 public class Debug {
 
 	protected static Logger logger = Util.setupLogger(Debug.class);
 	
 	public static void main(String[] args) throws FileNotFoundException {
-			
-		String token = MVPApi.signIn("nhhai16991@gmail.com", "qqqqqq").token;
-		MVPApi.searchBedditSleepSessions(token, null, null, null);
+		
+		String token = MVPApi.signUp("shine_backend_smoke_test_you@qa.com", "qqqqqq").token;
+		ProfileData profile = new ProfileData();
+		profile.setHandle("shine_backend_smoke_test_you");
+		profile.setName("Shine Backend Smoke Test You");
+		
+		MVPApi.createProfile(token, DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null));
+		MVPApi.updateProfile(token, profile);
+		
 //		BackendHelper.unlink(token);
 //		BackendHelper.link(token, "HaiDangYeu");
 //		Goal goal = Goal.getDefaultGoal(631126800l);

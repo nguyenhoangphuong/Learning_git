@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.aut.correctness.openapi;
+package com.misfit.ta.backend.aut.correctness;
 
 import java.util.ArrayList;
 import java.util.List;

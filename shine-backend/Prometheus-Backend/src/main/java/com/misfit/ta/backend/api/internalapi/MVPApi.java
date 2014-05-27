@@ -468,6 +468,11 @@ public class MVPApi extends RequestHelper {
 		return new BaseResult(MVPApi.post(url, port, request));
 	}
 
+	public static BaseResult createGraphItemsRaw(String token, List<GraphItem> graphItems) {
+
+		return new BaseResult(createGraphItems(token, graphItems));
+	}
+	
 	public static ServiceResponse createGraphItems(String token, JSONArray jsonItems) {
 
 		String url = baseAddress + "graph_items/batch_insert";
@@ -478,7 +483,7 @@ public class MVPApi extends RequestHelper {
 
 		return MVPApi.post(url, port, request);
 	}
-
+	
 	public static ServiceResponse createGraphItems(String token, List<GraphItem> graphItems) {
 
 		JSONArray jsonItems = new JSONArray();
@@ -488,8 +493,8 @@ public class MVPApi extends RequestHelper {
 
 		return createGraphItems(token, jsonItems);
 	}
-
-	public static GraphItem getGraphItem(String token, String serverId) {
+	
+	public static BaseResult getGraphItemRaw(String token, String serverId) {
 		// prepare
 		String url = baseAddress + "graph_items/" + serverId;
 
@@ -500,10 +505,16 @@ public class MVPApi extends RequestHelper {
 		ServiceResponse response = MVPApi.get(url, port, requestInf);
 
 		// format data
+		return new BaseResult(response);
+	}
+
+	public static GraphItem getGraphItem(String token, String serverId) {
+	
+		ServiceResponse response = getGraphItemRaw(token, serverId).response;
 		return GraphItem.getGraphItem(response);
 	}
 
-	public static List<GraphItem> getGraphItems(String token, Long startTime, Long endTime, Long modifiedSince) {
+	public static BaseResult getGraphItemsRaw(String token, Long startTime, Long endTime, Long modifiedSince) {
 
 		String url = baseAddress + "graph_items";
 		String queryString = "";
@@ -523,6 +534,12 @@ public class MVPApi extends RequestHelper {
 		requestInf.addHeader("auth_token", token);
 	
 		ServiceResponse response = MVPApi.get(url, port, requestInf);
+		return new BaseResult(response);
+	}
+	
+	public static List<GraphItem> getGraphItems(String token, Long startTime, Long endTime, Long modifiedSince) {
+	
+		ServiceResponse response = getGraphItemsRaw(token, startTime, endTime, modifiedSince).response;
 		List<GraphItem> items = GraphItem.getGraphItems(response);
 
 		return items;
@@ -556,6 +573,11 @@ public class MVPApi extends RequestHelper {
 		ServiceResponse response = MVPApi.post(url, port, request);
 		return response;
 	}
+	
+	public static BaseResult createTimelineItemsRaw(String token, List<TimelineItem> items) {
+
+		return new BaseResult(createTimelineItems(token, items));
+	}
 
 	public static ServiceResponse createTimelineItems(String token, List<TimelineItem> items) {
 
@@ -576,6 +598,21 @@ public class MVPApi extends RequestHelper {
 		request.addParam("timeline_item", item.toJson().toString());
 
 		return new BaseResult(MVPApi.put(url, port, request));
+	}
+	
+	public static BaseResult getTimelineItemRaw(String token, String serverId) {
+
+		// prepare
+		String url = baseAddress + "timeline_items/" + serverId;
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+
+		// format data
+		return new BaseResult(response);
 	}
 	
 	public static TimelineItem getTimelineItem(String token, String serverId) {
@@ -601,6 +638,15 @@ public class MVPApi extends RequestHelper {
 
 	public static List<TimelineItem> getTimelineItems(String token, Long startTime, Long endTime, Long modifiedSince, Integer type) {
 
+		BaseResult result = getTimelineItemsRaw(token, startTime, endTime, modifiedSince, type);
+		List<TimelineItem> items = TimelineItem.getTimelineItems(result.response);
+		logger.info("Timeline items count: " + items.size());
+
+		return items;
+	}
+	
+	public static BaseResult getTimelineItemsRaw(String token, Long startTime, Long endTime, Long modifiedSince, Integer type) {
+
 		String url = baseAddress + "timeline_items";
 		String queryString = "";
 		
@@ -622,11 +668,7 @@ public class MVPApi extends RequestHelper {
 		requestInf.addHeader("auth_token", token);
 
 		ServiceResponse response = MVPApi.get(url, port, requestInf);
-		List<TimelineItem> items = TimelineItem.getTimelineItems(response);
-		logger.info("Timeline items count: " + items.size());
-
-		return items;
-
+		return new BaseResult(response);
 	}
 
 	
@@ -668,6 +710,15 @@ public class MVPApi extends RequestHelper {
 		return new BaseResult(response);
 	}
 
+	public static BaseResult unlinkDeviceRaw(String token) {
+		String url = baseAddress + "unlink_device";
+		BaseParams request = new BaseParams();
+		request.addHeader("auth_token", token);
+		ServiceResponse response = MVPApi.put(url, port, request);
+		
+		return new BaseResult(response);
+	}
+	
 	public static String unlinkDevice(String token) {
 		String url = baseAddress + "unlink_device";
 		BaseParams request = new BaseParams();
@@ -1024,8 +1075,24 @@ public class MVPApi extends RequestHelper {
 		return result;
 	}
 
+	public static BaseResult getStatisticsRaw(String token) {
+
+		// prepare
+		String url = baseAddress + "statistics";
+
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInf);
+
+		// format data
+		BaseResult result = new BaseResult(response);
+		return result;
+	}
+
 	public static Statistics getStatistics(String token) {
-		
+
 		BaseResult result = userInfo(token);
 		return Statistics.fromResponse(result.response);
 	}
