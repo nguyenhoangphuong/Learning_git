@@ -16,10 +16,10 @@ public class Debug {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		String token = MVPApi.signUp("shine_backend_smoke_test_you@qa.com", "qqqqqq").token;
+		String token = MVPApi.signUp("shine_backend_smoke_test_me@qa.com", "qqqqqq").token;
 		ProfileData profile = new ProfileData();
-		profile.setHandle("shine_backend_smoke_test_you");
-		profile.setName("Shine Backend Smoke Test You");
+		profile.setHandle("shine_backend_smoke_test_me");
+		profile.setName("Shine Backend Smoke Test Me");
 		
 		MVPApi.createProfile(token, DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null));
 		MVPApi.updateProfile(token, profile);

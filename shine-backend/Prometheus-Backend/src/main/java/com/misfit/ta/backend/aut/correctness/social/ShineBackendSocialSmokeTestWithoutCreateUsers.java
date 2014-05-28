@@ -47,7 +47,6 @@ public class ShineBackendSocialSmokeTestWithoutCreateUsers extends BackendAutoma
 		
 		List<String> friendUids = new ArrayList<String>();
 		friendUids.add(friendUid);
-		friendUids.add(friendUid);
 		
 		// friend request: send (multiple) / accept / ignore / delete / cancel / list
 		//                 get request from / to
