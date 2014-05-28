@@ -17,7 +17,6 @@ import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISession;
-import com.misfit.ta.backend.data.openapi.resourceapi.OpenAPISleep;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
 import com.misfit.ta.common.MVPCommon;
@@ -36,46 +35,46 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass() {
 		
-//		super.beforeClass();
-//		
-//		allSessions = new ArrayList<List<TimelineItem>>();
-//		goals = new ArrayList<Goal>();
-//		List<TimelineItem> batchItems = new ArrayList<TimelineItem>();
-//		
-//		// 5 days
-//		for(int i = 0; i < 5; i++) {
-//		
-//			long timestamp = System.currentTimeMillis() / 1000 - i * 3600 * 24;
-//			List<TimelineItem> sessions = new ArrayList<TimelineItem>();
-//			
-//			// create goal
-//			Goal goal = Goal.getDefaultGoal(timestamp);
-//			goals.add(goal);
-//			MVPApi.createGoal(myToken, goal);
-//			
-//			// add some session items
-//			int j = 0;
-//			for(; j < 3; j++) {
-//				
-//				long itemTimestamp = timestamp + j * 600;
-//				TimelineItem session = DataGenerator.generateRandomActivitySessionTimelineItem(itemTimestamp, null);
-//				sessions.add(session);
-//			}
-//			
-//			// add some other timeline items
-//			sessions.add(DataGenerator.generateRandomFoodTimelineItem(timestamp + 600 * j++, null));
-//			sessions.add(DataGenerator.generateRandomLifetimeDistanceItem(timestamp + 600 * j++, null));
-//								
-//			allSessions.add(sessions);
-//			batchItems.addAll(sessions);
-//		}
-//		
-//		// call api
-//		MVPApi.createTimelineItems(myToken, batchItems);
-//		MVPApi.createTimelineItems(yourToken, batchItems);
-//		MVPApi.createTimelineItems(strangerToken, batchItems);
-//		
-//		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "https://www.google.com.vn/");
+		super.beforeClass();
+		
+		allSessions = new ArrayList<List<TimelineItem>>();
+		goals = new ArrayList<Goal>();
+		List<TimelineItem> batchItems = new ArrayList<TimelineItem>();
+		
+		// 5 days
+		for(int i = 0; i < 5; i++) {
+		
+			long timestamp = System.currentTimeMillis() / 1000 - i * 3600 * 24;
+			List<TimelineItem> sessions = new ArrayList<TimelineItem>();
+			
+			// create goal
+			Goal goal = Goal.getDefaultGoal(timestamp);
+			goals.add(goal);
+			MVPApi.createGoal(myToken, goal);
+			
+			// add some session items
+			int j = 0;
+			for(; j < 3; j++) {
+				
+				long itemTimestamp = timestamp + j * 600;
+				TimelineItem session = DataGenerator.generateRandomActivitySessionTimelineItem(itemTimestamp, null);
+				sessions.add(session);
+			}
+			
+			// add some other timeline items
+			sessions.add(DataGenerator.generateRandomFoodTimelineItem(timestamp + 600 * j++, null));
+			sessions.add(DataGenerator.generateRandomLifetimeDistanceItem(timestamp + 600 * j++, null));
+								
+			allSessions.add(sessions);
+			batchItems.addAll(sessions);
+		}
+		
+		// call api
+		MVPApi.createTimelineItems(myToken, batchItems);
+		MVPApi.createTimelineItems(yourToken, batchItems);
+		MVPApi.createTimelineItems(strangerToken, batchItems);
+		
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "https://www.google.com.vn/");
 	}
 	
 	

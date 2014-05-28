@@ -26,6 +26,7 @@ import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.Verify;
+import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
 public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
@@ -66,12 +67,15 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		AccountResult ar = MVPApi.signUp(email, password);
 		Assert.assertTrue(ar.isOK(), "[sign_up] OK");
+		ShortcutsTyper.delayOne();
 		
 		BaseResult r = MVPApi.signOut(ar.token);
 		Assert.assertTrue(r.isOK(), "[sign_out] OK");
+		ShortcutsTyper.delayOne();
 		
 		ar = MVPApi.signIn(email, password);
 		Assert.assertTrue(ar.isOK(), "[sign_in] OK");
+		ShortcutsTyper.delayOne();
 		
 		return ar.token;
 	}
@@ -85,6 +89,7 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		BaseResult r = MVPApi.createProfile(token, profile);
 		errors.add(Verify.verifyTrue(r.isOK(), "[profile] Create Profile OK"));
+		ShortcutsTyper.delayOne();
 		
 		profile.setWeight(profile.getWeight() + 1);
 		r = MVPApi.updateProfile(token, profile);
@@ -103,12 +108,17 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		BaseResult r = MVPApi.createPedometer(token, pedo);
 		errors.add(Verify.verifyTrue(r.isOK(), "[pedometer] Create Pedometer (link) OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.getDeviceLinkingStatusRaw(token, pedo.getSerialNumberString());
 		errors.add(Verify.verifyTrue(r.isOK(), "[pedometer] Get linking status OK"));
 		
 		r = MVPApi.unlinkDeviceRaw(token);
 		errors.add(Verify.verifyTrue(r.isOK(), "[pedometer] Delete Pedometer (unlink) OK"));
+		ShortcutsTyper.delayOne();
+		
+		r = MVPApi.getPedometerRaw(token);
+		errors.add(Verify.verifyTrue(r.isOK(), "[pedometer] Get Pedometer OK"));
 		
 		// TODO:
 		// in the future, we may not allow modify serial number in update route
@@ -117,7 +127,6 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		pedo.setSerialNumberString(TextTool.getRandomString(10, 10));
 		r = MVPApi.updatePedometer(token, pedo);
 		errors.add(Verify.verifyTrue(r.isOK() || r.isExisted(), "[pedometer] Update Pedometer OK"));
-
 	}
 	
 	public void runGoalTest(String token) {
@@ -129,12 +138,14 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		BaseResult r = MVPApi.createGoal(token, goal);
 		errors.add(Verify.verifyTrue(r.isOK(), "[goal] Create Goal OK"));
+		ShortcutsTyper.delayOne();
 		String goalId = Goal.getGoal(r.response).getServerId();
 		goal.setServerId(goalId);
 		
 		goal.getProgressData().setCalorie(MVPCommon.randInt(1000, 2000) * 1d);
 		r = MVPApi.updateGoal(token, goal);
 		errors.add(Verify.verifyTrue(r.isOK() || r.isExisted(), "[goal] Update Goal OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.getGoal(token, goalId);
 		errors.add(Verify.verifyTrue(r.isOK(), "[goal] Get Goal OK"));
@@ -161,9 +172,11 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		BaseResult r = MVPApi.setGoalSettings(token, wType, wGoalSettings);
 		errors.add(Verify.verifyTrue(r.isOK(), "[goal_settings] Set weight goal settings OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.setGoalSettings(token, sType, sGoalSettings);
 		errors.add(Verify.verifyTrue(r.isOK(), "[goal_settings] Set sleep goal settings OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.getGoalSettings(token, wType);
 		errors.add(Verify.verifyTrue(r.isOK(), "[goal_settings] Get weight goal settings OK"));
@@ -179,17 +192,21 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		r = MVPApi.createGoalProgress(token, wType, wGoalProgress);
 		errors.add(Verify.verifyTrue(r.isOK(), "[goal_progress] Create Weight goal progress OK"));
+		ShortcutsTyper.delayOne();
 		wGoalProgress.setServerId(WeightGoalProgress.getWeightGoalProgressFromResponse(r.response).getServerId());
 		
 		r = MVPApi.createGoalProgress(token, sType, sGoalProgress);
 		errors.add(Verify.verifyTrue(r.isOK(), "[goal_progress] Create Sleep goal progress OK"));
+		ShortcutsTyper.delayOne();
 		sGoalProgress.setServerId(SleepGoalProgress.getSleepGoalProgressFromResponse(r.response).getServerId());
 		
 		r = MVPApi.updateGoalProgress(token, wGoalProgress);
 		errors.add(Verify.verifyTrue(r.isOK() || r.isExisted(), "[goal_progress] Update Weight goal progress OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.updateGoalProgress(token, sGoalProgress);
 		errors.add(Verify.verifyTrue(r.isOK() || r.isExisted(), "[goal_progress] Update Sleep goal progress OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.searchGoalProgress(token, wType, timestamp - 100, timestamp + 100, null);
 		errors.add(Verify.verifyTrue(r.isOK(), "[goal_progress] Search Weight goal progress (start - end) OK"));
@@ -208,7 +225,6 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		r = MVPApi.searchGoalProgress(token, sType, null, null, null);
 		errors.add(Verify.verifyTrue(r.isOK(), "[goal_progress] Search Sleep goal progress (all) OK"));
-
 	}
  
 	public void runTimelineItemTest(String token) {
@@ -225,17 +241,21 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		BaseResult r = MVPApi.createTimelineItem(token, DataGenerator.generateRandomFoodTimelineItem(timestamp, null));
 		errors.add(Verify.verifyTrue(r.isOK(), "[timeline_items] Create food item OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.createTimelineItem(token, timelineItems.get(0));
 		errors.add(Verify.verifyTrue(r.isOK(), "[timeline_items] Create normal timeline item OK"));
+		ShortcutsTyper.delayOne();
 		timelineItems.get(0).setServerId(TimelineItem.getTimelineItem(r.response).getServerId());
 		
 		r = MVPApi.createTimelineItemsRaw(token, timelineItems);
 		errors.add(Verify.verifyTrue(r.isOK() || r.isExisted(), "[timeline_items] Create timeline items (batch) OK"));
+		ShortcutsTyper.delayOne();
 		
 		timelineItems.get(0).setState(1);
 		r = MVPApi.updateTimelineItem(token, timelineItems.get(0));
 		errors.add(Verify.verifyTrue(r.isOK() || r.isExisted(), "[timeline_items] Update timeline item OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.getTimelineItemRaw(token, timelineItems.get(0).getServerId());
 		errors.add(Verify.verifyTrue(r.isOK(), "[timeline_items] Get timeline item OK"));
@@ -248,7 +268,7 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		r = MVPApi.getTimelineItemsRaw(token, null, null, null, null);
 		errors.add(Verify.verifyTrue(r.isOK(), "[timeline_items] Search timeline items (all) OK"));
-
+		
 		r = MVPApi.getTimelineItemsRaw(token, null, null, null, 2);
 		errors.add(Verify.verifyTrue(r.isOK(), "[timeline_items] Search timeline items (all with specific type) OK"));
 	}
@@ -264,10 +284,12 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		BaseResult r = MVPApi.createGraphItem(token, graphItems.get(0));
 		errors.add(Verify.verifyTrue(r.isOK(), "[graph_item] Create graph item OK"));
+		ShortcutsTyper.delayOne();
 		graphItems.get(0).setServerId(GraphItem.getGraphItem(r.response).getServerId());
 		
 		r = MVPApi.createGraphItemsRaw(token, graphItems);
 		errors.add(Verify.verifyTrue(r.isOK() || r.isExisted(), "[graph_item] Create graph items (batch) OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.getGraphItemRaw(token, graphItems.get(0).getServerId());
 		errors.add(Verify.verifyTrue(r.isOK(), "[graph_item] Get graph item OK"));
@@ -293,14 +315,17 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 				
 		BaseResult r = MVPApi.createBedditSleepSession(token, bedditSleeps.get(0));
 		errors.add(Verify.verifyTrue(r.isOK(), "[beddit_sleep] Create beddit sleep OK"));
+		ShortcutsTyper.delayOne();
 		bedditSleeps.get(0).setServerId(BedditSleepSession.getBedditSleepSessionFromResponse(r.response).getServerId());
 		
 		r = MVPApi.createBedditSleepSessions(token, bedditSleeps);
 		errors.add(Verify.verifyTrue(r.isOK() || r.isExisted(), "[beddit_sleep] Create beddit sleeps (batch) OK"));
+		ShortcutsTyper.delayOne();
 		
 		bedditSleeps.get(0).getProperties().setNormalizedSleepQuality(MVPCommon.randInt(60, 90));
 		r = MVPApi.updateBedditSleepSession(token, bedditSleeps.get(0));
 		errors.add(Verify.verifyTrue(r.isOK() || r.isExisted(), "[beddit_sleep] Update beddit sleep OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.searchBedditSleepSessions(token, timestamp - 3600, timestamp + 3600, null);
 		errors.add(Verify.verifyTrue(r.isOK(), "[beddit_sleep] Search beddit sleeps (start, end) OK"));
@@ -321,10 +346,12 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		BaseResult r = MVPApi.createStatistics(token, statistics);
 		errors.add(Verify.verifyTrue(r.isOK(), "[statistics] Create statistics OK"));
+		ShortcutsTyper.delayOne();
 		
 		statistics.setBestStreak(MVPCommon.randInt(10, 20));
 		r = MVPApi.updateStatistics(token, statistics);
 		errors.add(Verify.verifyTrue(r.isOK() || r.isExisted(), "[statistics] Update statistics OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = MVPApi.getStatisticsRaw(token);
 		errors.add(Verify.verifyTrue(r.isOK(), "[statistics] Get statistics OK"));

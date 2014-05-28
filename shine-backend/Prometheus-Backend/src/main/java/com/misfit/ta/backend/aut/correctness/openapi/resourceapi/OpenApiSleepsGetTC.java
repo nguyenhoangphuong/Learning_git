@@ -36,41 +36,41 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass() {
 		
-//		super.beforeClass();
+		super.beforeClass();
 		
-//		allTimelineItems = new ArrayList<List<TimelineItem>>();
-//		goals = new ArrayList<Goal>();
-//		List<TimelineItem> batchItems = new ArrayList<TimelineItem>();
-//		
-//		// 5 days
-//		for(int i = 0; i < 5; i++) {
-//		
-//			long timestamp = System.currentTimeMillis() / 1000 - i * 3600 * 24;
-//			List<TimelineItem> items = new ArrayList<TimelineItem>();
-//			
-//			// create goal
-//			Goal goal = Goal.getDefaultGoal(timestamp);
-//			goals.add(goal);
-//			MVPApi.createGoal(myToken, goal);
-//						
-//			// add sleep item
-//			items.add(DataGenerator.generateRandomSleepTimelineItem(timestamp + 600 * 1, null));
-//			
-//			// add some other timeline items (session, milestone, achievement)
-//			items.add(DataGenerator.generateRandomActivitySessionTimelineItem(timestamp + 600 * 1, null));
-//			items.add(DataGenerator.generateRandomFoodTimelineItem(timestamp + 600 * 2, null));
-//			items.add(DataGenerator.generateRandomLifetimeDistanceItem(timestamp + 600 * 3, null));
-//								
-//			allTimelineItems.add(items);
-//			batchItems.addAll(items);
-//		}
-//		
-//		// call api
-//		MVPApi.createTimelineItems(myToken, batchItems);
-//		MVPApi.createTimelineItems(yourToken, batchItems);
-//		MVPApi.createTimelineItems(strangerToken, batchItems);
-//		
-//		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SLEEP, ClientKey, "https://www.google.com.vn/");
+		allTimelineItems = new ArrayList<List<TimelineItem>>();
+		goals = new ArrayList<Goal>();
+		List<TimelineItem> batchItems = new ArrayList<TimelineItem>();
+		
+		// 5 days
+		for(int i = 0; i < 5; i++) {
+		
+			long timestamp = System.currentTimeMillis() / 1000 - i * 3600 * 24;
+			List<TimelineItem> items = new ArrayList<TimelineItem>();
+			
+			// create goal
+			Goal goal = Goal.getDefaultGoal(timestamp);
+			goals.add(goal);
+			MVPApi.createGoal(myToken, goal);
+						
+			// add sleep item
+			items.add(DataGenerator.generateRandomSleepTimelineItem(timestamp + 600 * 1, null));
+			
+			// add some other timeline items (session, milestone, achievement)
+			items.add(DataGenerator.generateRandomActivitySessionTimelineItem(timestamp + 600 * 1, null));
+			items.add(DataGenerator.generateRandomFoodTimelineItem(timestamp + 600 * 2, null));
+			items.add(DataGenerator.generateRandomLifetimeDistanceItem(timestamp + 600 * 3, null));
+								
+			allTimelineItems.add(items);
+			batchItems.addAll(items);
+		}
+		
+		// call api
+		MVPApi.createTimelineItems(myToken, batchItems);
+		MVPApi.createTimelineItems(yourToken, batchItems);
+		MVPApi.createTimelineItems(strangerToken, batchItems);
+		
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SLEEP, ClientKey, "https://www.google.com.vn/");
 	}
 	
 	

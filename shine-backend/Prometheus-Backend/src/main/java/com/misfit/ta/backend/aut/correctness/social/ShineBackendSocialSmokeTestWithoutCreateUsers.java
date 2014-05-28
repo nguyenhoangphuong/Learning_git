@@ -11,6 +11,7 @@ import com.misfit.ta.backend.api.internalapi.social.SocialAPI;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.common.Verify;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class ShineBackendSocialSmokeTestWithoutCreateUsers extends BackendAutomation {
 
@@ -53,9 +54,11 @@ public class ShineBackendSocialSmokeTestWithoutCreateUsers extends BackendAutoma
 		// ----------------------------------------------
 		BaseResult r = SocialAPI.sendFriendRequest(myToken, friendUid);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Send friend request OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = SocialAPI.acceptFriendRequest(friendToken, myUid);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Accept friend request OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = SocialAPI.getFriends(myToken);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Get friends list OK"));
@@ -65,10 +68,12 @@ public class ShineBackendSocialSmokeTestWithoutCreateUsers extends BackendAutoma
 		
 		r = SocialAPI.deleteFriend(myToken, friendUid);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Delete friend OK"));
+		ShortcutsTyper.delayOne();
 		
 		
 		r = SocialAPI.sendFriendRequests(myToken, friendUids);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Send friend requests (multiple) OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = SocialAPI.getFriendRequestsFromMe(myToken);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Get friend requests from me OK"));
@@ -78,9 +83,11 @@ public class ShineBackendSocialSmokeTestWithoutCreateUsers extends BackendAutoma
 	
 		r = SocialAPI.ignoreFriendRequest(friendToken, myUid);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Ignore friend request OK"));
+		ShortcutsTyper.delayOne();
 		
 		r = SocialAPI.cancelFriendRequest(myToken, friendUid);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Cancel friend request OK"));
+		ShortcutsTyper.delayOne();
 	}
 	
 	public void runDashboardTest(String myToken) {

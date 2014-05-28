@@ -195,7 +195,7 @@ public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 		SocialAPI.cancelFriendRequest(misfitToken, tungUid);
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest", "KnownIssue" })
 	public void SendFriendRequests_WithEmptyList() throws JSONException {
 	
 		List<String> friendIds = new ArrayList<String>();
@@ -205,7 +205,7 @@ public class SocialSendFriendRequestTC extends SocialTestAutomationBase {
 		Assert.assertEquals(result.rawData, "{}", "Data");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "SocialAPI", "SendFriendRequest", "KnownIssue" })
 	public void SendFriendRequests_ToUserWithInvalidUid() throws JSONException {
 		
 		// to invalid uid user

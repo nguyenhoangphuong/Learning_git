@@ -216,7 +216,7 @@ public class OpenApiSummaryGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_summary", "KnownIssue" })
 	public void GetSummaryInvalidParameters() {
 		
 		// invalid and missing parameters

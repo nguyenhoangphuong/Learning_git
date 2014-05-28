@@ -26,7 +26,7 @@ import com.misfit.ta.utils.TextTool;
 public class BackendServerCalculationIntegration extends BackendServerCalculationBase {
 
 
-	protected int delayTime = 30000;
+	protected int delayTime = 60000;
 
 	// test cases
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation", "ServerCalculationSmoke" })

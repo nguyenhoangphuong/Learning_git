@@ -792,7 +792,7 @@ public class MVPApi extends RequestHelper {
 		return Pedometer.getPedometer(response);
 	}
 
-	public static Pedometer getPedometer(String token) {
+	public static BaseResult getPedometerRaw(String token) {
 
 		// prepare
 		String url = baseAddress + "pedometer";
@@ -804,6 +804,12 @@ public class MVPApi extends RequestHelper {
 		ServiceResponse response = MVPApi.get(url, port, requestInf);
 
 		// format data
+		return new BaseResult(response);
+	}
+	
+	public static Pedometer getPedometer(String token) {
+
+		ServiceResponse response = getPedometerRaw(token).response;
 		return Pedometer.getPedometer(response);
 	}
 
