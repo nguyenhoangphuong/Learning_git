@@ -166,7 +166,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.message, DefaultValues.ResourceForbidden, "Error message");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps", "KnownIssue" })
 	public void GetSleepsInvalidParameters() {
 		
 		// invalid and missing parameters

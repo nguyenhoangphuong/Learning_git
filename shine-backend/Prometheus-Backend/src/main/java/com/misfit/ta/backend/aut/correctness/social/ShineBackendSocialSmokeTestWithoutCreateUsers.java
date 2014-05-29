@@ -16,6 +16,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class ShineBackendSocialSmokeTestWithoutCreateUsers extends BackendAutomation {
 
 	private List<String> errors = new ArrayList<String>();
+	private long DelayTime = 2000;
 	
 	
 	// test methods
@@ -54,11 +55,11 @@ public class ShineBackendSocialSmokeTestWithoutCreateUsers extends BackendAutoma
 		// ----------------------------------------------
 		BaseResult r = SocialAPI.sendFriendRequest(myToken, friendUid);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Send friend request OK"));
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(DelayTime);
 		
 		r = SocialAPI.acceptFriendRequest(friendToken, myUid);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Accept friend request OK"));
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(DelayTime);
 		
 		r = SocialAPI.getFriends(myToken);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Get friends list OK"));
@@ -68,12 +69,12 @@ public class ShineBackendSocialSmokeTestWithoutCreateUsers extends BackendAutoma
 		
 		r = SocialAPI.deleteFriend(myToken, friendUid);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Delete friend OK"));
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(DelayTime);
 		
 		
 		r = SocialAPI.sendFriendRequests(myToken, friendUids);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Send friend requests (multiple) OK"));
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(DelayTime);
 		
 		r = SocialAPI.getFriendRequestsFromMe(myToken);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Get friend requests from me OK"));
@@ -83,11 +84,11 @@ public class ShineBackendSocialSmokeTestWithoutCreateUsers extends BackendAutoma
 	
 		r = SocialAPI.ignoreFriendRequest(friendToken, myUid);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Ignore friend request OK"));
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(DelayTime);
 		
 		r = SocialAPI.cancelFriendRequest(myToken, friendUid);
 		errors.add(Verify.verifyTrue(r.isOK(), "[friend_request] Cancel friend request OK"));
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(DelayTime);
 	}
 	
 	public void runDashboardTest(String myToken) {
