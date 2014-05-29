@@ -124,9 +124,9 @@ public class EditSocialProfileAPI extends ModelAPI {
 			Gui.touchPopupButton("OK");
 		}
 		
-		SocialProfileView.tapCameraRoll();
-		SocialProfileView.tapAlbumImage(0);
-		SocialProfileView.tapChoosePhoto();
+		SocialProfileView.tapCameraRoll(); ShortcutsTyper.delayOne();
+		SocialProfileView.tapAlbumImage(0); ShortcutsTyper.delayOne();
+		SocialProfileView.tapChoosePhoto(); ShortcutsTyper.delayOne();
 
 		// submit
 		SocialProfileView.tapDone();

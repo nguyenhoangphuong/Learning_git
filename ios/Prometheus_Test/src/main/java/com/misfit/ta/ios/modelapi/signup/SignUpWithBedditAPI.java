@@ -8,6 +8,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
@@ -51,6 +52,7 @@ public class SignUpWithBedditAPI extends ModelAPI {
     public void e_connect() {
     	
         SignUp.connectSimulatedBeddit();
+        ShortcutsTyper.delayTime(3000);
     }
     
     public void e_goToActivityTimeline() {

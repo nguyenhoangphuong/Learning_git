@@ -86,7 +86,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "EditTag" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "EditTag", "KnownIssue" })
     public void EditActivityTagMilestones() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();

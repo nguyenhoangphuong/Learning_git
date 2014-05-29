@@ -9,6 +9,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.gui.*;
@@ -48,7 +49,9 @@ public class GoalSettingsAPI extends ModelAPI {
 		// input a dummy record
 		HomeScreen.tapOpenManualInput();
 		PrometheusHelper.inputManualRecord(new String[] { "1", "00", "am" }, 5, 500);
+		ShortcutsTyper.delayOne();
 		HomeScreen.tap180MinNap();
+		ShortcutsTyper.delayOne();
 		HomeScreen.tapSave();
 	}
 	

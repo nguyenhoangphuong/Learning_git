@@ -1,13 +1,12 @@
 package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
+import java.util.Calendar;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
@@ -24,47 +23,40 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	}
 	
 	private String email;
-	private String token;
 	
-	private static String OldestSleepTitle = "10:00am - 12:59pm";
-	private static String MidSleepTitle = "1:00pm - 3:59am";
-	private static String LatestSleepTitle = "5:00pm - 7:59am";
+	private static String OldestSleepTitle = "10:00pm - 5:59am";
+	private static String LatestSleepTitle = "5:00pm - 7:59pm";
 	
 
 	public void e_init() {
 		
 		email = PrometheusHelper.signUpDefaultProfile();
 		PrometheusHelper.handleUpdateFirmwarePopup();
-		token = MVPApi.signIn(email, "qwerty1").token;
 		
-		// set personal best to 500pts
-		BackendHelper.setPersonalBest(token, 500);
-		
-		// pull to refresh
-		HomeScreen.pullToRefresh();
-		
-		// input 1 sleep and 2 naps
+		// input 1 sleep and 1 nap
 		HomeScreen.tapOpenManualInput();
-		PrometheusHelper.manualInputTime(new String[] {"10", "00", "AM"});
-		HomeScreen.tap180MinNap();
-		PrometheusHelper.manualInputTime(new String[] {"1", "00", "PM"});
-		HomeScreen.tap180MinNap();
+		HomeScreen.tap8HourSleep();
+		ShortcutsTyper.delayTime(2000);
 		PrometheusHelper.manualInputTime(new String[] {"5", "00", "PM"});
 		HomeScreen.tap180MinNap();
+		ShortcutsTyper.delayTime(2000);
 		HomeScreen.tapSave();
 		
 		// go to sleep view
 		HomeScreen.tapSleepTimeline();
 	}
 	
-	public void e_toOldestSleepOfToday() {
-		
-		HomeScreen.tapPreviousDayButton(2);
-	}
-	
 	public void e_toLatestSleepOfToday() {
 		
-		HomeScreen.tapNextDayButton(1);
+		int hourOfDay = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    	if(hourOfDay > 6 && hourOfDay < 20) { 
+	    	// current view is today latest sleep
+    		// do nothing
+    	}
+    	else {
+    		// current view is tonight, back a view
+    		HomeScreen.tapPreviousDayButton(1);
+    	}
 	}
 	
 	public void e_editSleep() {
@@ -115,12 +107,6 @@ public class SleepTileRemovingAPI extends ModelAPI {
 
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", OldestSleepTitle), 
 				"Current sleep is first sleep of today");
-	}
-	
-	public void v_SleepTimelineMidSleep() {
-
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", MidSleepTitle),
-				"Current sleep is second sleep of today");
 	}
 	
 	public void v_SleepTimelineLatestSleep() {
