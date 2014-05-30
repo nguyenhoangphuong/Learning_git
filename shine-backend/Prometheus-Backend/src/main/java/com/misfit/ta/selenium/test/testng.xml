@@ -1,0 +1,34 @@
+<suite name="DemoTestNG" verbose="3"  parallel="classes" thread-count="2">   
+<!--   	<test name="Firefox test on local">
+  		<parameter name="browser" value="Firefox"/>
+  		<parameter name="version" value="Any"/>
+  		<parameter name="platform" value="Any"/>
+  		<parameter name="nodeUrl" value="http://localhost:5001/wd/hub"/>
+  		<parameter name="baseUrl" value="http://www.google.com.vn"/>
+    	<packages>
+      		<package name="com.misfit.ta.selenium.test.*"/>
+    	</packages>
+ 	</test> -->
+ 	
+<!--    	<test name="Chrome test on remote">
+  		<parameter name="browser" value="Chrome"/>
+  		<parameter name="version" value="Any"/>
+  		<parameter name="platform" value="Any"/>
+  		<parameter name="nodeUrl" value="http://localhost:5000/wd/hub"/>
+  		<parameter name="baseUrl" value="http://www.google.com.vn"/>
+    	<packages>
+      		<package name="com.misfit.ta.selenium.test.*"/>
+    	</packages>
+ 	</test> -->
+ 	
+  	<test name="Safari test on remote">
+  		<parameter name="browser" value="Safari"/>
+  		<parameter name="version" value="Any"/>
+  		<parameter name="platform" value="Any"/>
+  		<parameter name="nodeUrl" value="http://localhost:5002/wd/hub"/>
+  		<parameter name="baseUrl" value="http://www.google.com.vn"/>
+    	<packages>
+      		<package name="com.misfit.ta.selenium.test.*"/>
+    	</packages>
+ 	</test>
+ </suite>
