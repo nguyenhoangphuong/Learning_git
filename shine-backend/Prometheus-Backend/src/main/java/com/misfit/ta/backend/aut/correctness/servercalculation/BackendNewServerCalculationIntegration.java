@@ -15,6 +15,7 @@ import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendHelper;
+import com.misfit.ta.backend.aut.performance.newservercalculation.NewServerCalculationScenario;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
@@ -965,6 +966,14 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		}
 		
 		Assert.assertEquals(numberOfFailedItems, 0, "Number of failed sleeps");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServerCalculationGoalCreation", "NewServercalculation", "GoalCreation" })
+	public void NewServerCalculation_GoalCreation() throws IOException, JSONException {
+		NewServerCalculationScenario scenarioTest = new NewServerCalculationScenario();
+		String email = MVPApi.generateUniqueEmail();
+		System.out.println(email);
+		scenarioTest.runNewServerCalculationGoalCreationTest(email);
 	}
 	
 }

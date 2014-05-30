@@ -22,7 +22,7 @@ public class NewServerCalculationPerformanceTest {
 	protected static List<Long> seedRunningTime = Collections.synchronizedList(new ArrayList<Long>());
 	public static void main(String[] args) {
 		if (args.length == 0) {
-			args = new String[] { "50", "50" };
+			args = new String[] { "10", "10" };
 		}
 		
 		int numberOfSeed = Integer.valueOf(args[0]);
@@ -63,8 +63,6 @@ public class NewServerCalculationPerformanceTest {
 		public void run() {
 			NewServerCalculationScenario scenarioTest = new NewServerCalculationScenario();
 			scenarioTest.runNewServerCalculationIntegrationTest();
-//			System.out.println("************* " + time);
-//			seedRunningTime.add(time);
 		}
 
 		public SeedThread duplicate() {
