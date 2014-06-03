@@ -1,4 +1,4 @@
-package com.misfit.ta.selenium;
+package com.misfit.ta.selenium.driver;
 
 import java.util.List;
 
@@ -96,6 +96,11 @@ public abstract class Has extends org.openqa.selenium.By {
 
 	
 	// by tag with attribute
+	public static org.openqa.selenium.By tagWithAttribute(final String tag, final String attrName) {
+		
+		return tagWithAttribute(tag, attrName, null);
+	}
+	
 	public static org.openqa.selenium.By tagWithAttribute(final String tag, final String attrName, final String attrValue) {
 		
 		return tagWithAttribute(tag, attrName, attrValue, true);
@@ -147,7 +152,6 @@ public abstract class Has extends org.openqa.selenium.By {
 		return tagWithPartialAttribute(tag, attrName, attrValue, true);
 	}
 	
-
 	public static org.openqa.selenium.By tagWithPartialAttribute(final String tag, final String attrName, final String attrValue, final boolean caseSensitive) {
 
 		if (tag == null || attrName == null || attrValue == null)

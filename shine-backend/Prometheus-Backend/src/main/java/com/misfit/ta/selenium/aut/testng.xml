@@ -1,0 +1,24 @@
+<suite name="DemoTestNG" verbose="3" >   
+<!--    	<test name="Chrome test on local">
+  		<parameter name="browser" value="Chrome"/>
+    	<packages>
+      		<package name="com.misfit.ta.selenium.aut.test.*"/>
+    	</packages>
+ 	</test> -->
+
+   	<test name="Chrome test on remote">
+  		<parameter name="browser" value="Chrome"/>
+  		<parameter name="hubUrl" value="http://localhost:4444/wd/hub"/>
+    	<packages>
+      		<package name="com.misfit.ta.selenium.aut.test.*"/>
+    	</packages>
+ 	</test>
+ 	
+   	<test name="Safari test on remote">
+  		<parameter name="browser" value="Safari"/>
+  		<parameter name="hubUrl" value="http://localhost:4444/wd/hub"/>
+    	<packages>
+      		<package name="com.misfit.ta.selenium.aut.test.*"/>
+    	</packages>
+ 	</test>
+ </suite>
