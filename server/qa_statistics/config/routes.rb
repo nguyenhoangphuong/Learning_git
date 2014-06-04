@@ -3,6 +3,9 @@ QaStatistics::Application.routes.draw do
 
   get "log_filter" => "log_filter#index"
   post "log_filter" => "log_filter#post"
+
+  get "android_log_filter" => "android_log_filter#index"
+  post "android_log_filter" => "android_log_filter#post"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

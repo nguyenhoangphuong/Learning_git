@@ -1,0 +1,71 @@
+<h1>Android Log Filter</h1>
+<%= stylesheet_link_tag "application" ,  :media => "all" %>
+<%= form_tag android_log_filter_path, method: "post", remote: true, id: "android_log_filter_form" do %>
+
+<div class = "android_log_filter_form">
+	<table>
+	  <tr>
+	    <td><%= label_tag :startTime, "From time:", :style => "width: 70px; height: 15px;" %></td>
+	    <td><%= number_field_tag :startTime, @timeStamps[0], :style => "width: 150px; height: 15px;" %></td>
+	  </tr>
+	  <tr>
+	    <td><%= label_tag :endTime, "To time:", :style => "width: 70px; height: 15px;"%></td>
+	    <td><%= number_field_tag :endTime, @timeStamps[1], :style => "width: 150px; height: 15px;"  %></td>
+	  </tr>
+	  <tr>
+	  	<td><%= label_tag :androidAppVersion, "Android App version:" %></td>
+		<td><%= text_field_tag :androidAppVersion, "", :style => "width: 150px; height: 15px;" %></td>
+	  </tr>  
+	  <tr>
+	  	<td><%= label_tag :androidOSVersion, "Android OS version:" %></td>
+		<td><%= text_field_tag :androidOSVersion, "", :style => "width: 150px; height: 15px;" %></td>
+	  </tr>
+	  <tr>
+	  	<td><%= label_tag :androidPhoneModel, "Android Phone Model:" %></td>
+		<td><%= text_field_tag :androidPhoneModel, "", :style => "width: 150px; height: 15px;" %></td>
+	  </tr>
+	 <tr>
+	  	<td><%= label_tag :androidPhoneManufacturer, "Android Phone Manufacturer:" %></td>
+		<td><%= text_field_tag :androidPhoneManufacturer, "", :style => "width: 150px; height: 15px;" %></td>
+	  </tr>
+	  <tr>
+	  	<td><%= label_tag :androidSdk, "Android SDK:" %></td>
+		<td><%= text_field_tag :androidSdk, "", :style => "width: 150px; height: 15px;" %></td>
+	  </tr>
+	  <tr>
+	  	<td><%= label_tag :firmware, "Firmware version:" %></td>
+		<td><%= text_field_tag :firmware, "", :style => "width: 150px; height: 15px;" %></td>
+	  </tr>
+	  <tr>
+	  	<td><%= label_tag(:error_codes, "Failure reason:") %></td>
+	  	<td><%= select_tag "error_codes", options_from_collection_for_select(Sync::Log::SYNC_FAILED_ERRORS_ANDROID, :first, :last), :multiple => true, 
+	  	:style => "width: 300px; height: 200px;", :prompt => "None" %></td>
+	  </tr>
+	  <tr>
+ 		<td><%= submit_tag "Search", :name => "submit_button" %><%= submit_tag "Export", :name => "submit_button" %><%= submit_tag "Total success", :name => "submit_button" %><%= submit_tag "Total failure", :name => "submit_button" %></td>
+ 		<td></td>
+	  </tr>
+	</table>
+	
+ </div>
+<% end %>
+<div id="loading" style="display:none;">
+  <p><img src="/assets/ajax-loader-pacman.gif" /> Please keep calm and wait !!! It could take several minutes !!! </p>
+</div>
+<div id="android_log_filter_result"></div>
+
+ 
+<script type="text/javascript">
+$('#android_log_filter_form').submit( function () {
+	 var startTime = $('#startTime').val();
+	 var endTime = $('#endTime').val();
+	 if (!startTime && !endTime) {
+	 	alert("Please input at least one value for start time or end time. That will help improve searching");
+	 	return false;
+	 }
+	 console.log("ajax start");
+	 $("#loading").show();
+	});
+
+
+</script>

@@ -56,7 +56,48 @@ module Sync
       -31 => "CB handshake fail: Characteristic discovery",
       -32 => "CB handshake fail: Characteristic update",
       -40 => "OAD: Connecting timeout after OAD reset",
-      -41 => "OAD: Waiting for EOF timeout"
+      -41 => "OAD: Waiting for EOF timeout",
+      -50 => "No available serial number to reset",
+      -51 => "Cannot load firmware to reset SN",
+      -52 => "Cannot reset SN"
+    }
+
+    SYNC_FAILED_ERRORS_ANDROID = {
+      0 => "DEFAULT",
+      1 => "SCAN_FAILED_NO_SHINE_FOUND",
+      20 => "SERVER_VERIFY_FAILED_NETWORK",
+      25 => "CONNECT_DEVICE_FAILED_NO_MORE_SHINE_TO_CONNECT",
+      26 => "CONNECT_DEVICE_FAILED_LINKED_TO_ANOTHER_ACCOUNT",
+      27 => "CONNECT_DEVICE_FAILED_SHINE_DEACTIVATED",
+      28 => "CONNECT_DEVICE_FAILED_MUTIPLE_DETECTED_LINKED_TO_OTHERS",
+      29 => "CONNECT_DEVICE_FAILED_TIMEOUT",
+      30 => "CONNECT_DEVICE_FAILED",
+      31 => "PLAY_ANIMATION_FAILED",
+      32 => "PLAY_ANIMATION_FAILED_TIMEOUT",
+      35 => "GETTING_CONFIG_FAILED_TIMEOUT",
+      36 => "GETTING_CONFIG_FAILED",
+      40 => "GETTING_ACTIVITY_FAILED_TIMEOUT",
+      41 => "GETTING_ACTIVITY_FAILED",
+      45 => "SETTING_DEVICE_CONFIG_FAILED_TIMEOUT",
+      46 => "SETTING_DEVICE_CONFIG_FAILED",
+      47 => "CONNECT_DEVICE_AFTER_OADING_FAILED_TIMEOUT",
+      48 => "CONNECT_DEVICE_AFTER_OADING_FAILED",
+      50 => "OAD_FAILED_TIMEOUT",
+      51 => "OAD_FAILED",
+      52 => "PUSH_PEDOMETER_FAILED",
+      55 => "SUCCESSFULLY_COMPLETELY",
+      56 => "SUCCESSFULLY_BUT_OAD_FAILED",
+      57 => "OAD_TO_SPECIAL_FW_FAILED",
+      58 => "OAD_TO_SPECIAL_FW_FAILED_TIMEOUT",
+      59 => "GET_NEW_SERIAL_NUMBER_NETWORK_FAILED",
+      60 => "GET_NEW_SERIAL_NUMBER_GENERATED_5_SN",
+      61 => "GET_NEW_SERIAL_NUMBER_CANNOT_GENERATE",
+      62 => "CONNECT_DEVICE_AFTER_SPECIAL_OADING_FAILED_TIMEOUT",
+      63 => "CONNECT_DEVICE_AFTER_SPECIAL_OADING_FAILED",
+      64 => "RESET_SERIAL_NUMBER_FAILED",
+      65 => "RESET_SERIAL_NUMBER_FAILED_TIMEOUT",
+      66 => "INFORM_SERVER_NETWORK_FAILED",
+      67 => "DUPLICATE_BUT_LINKED"
     }
 
     SYNC_INCOMPLETE_ERROR_CODES = [-4, -6, -8, -10, -11, -12, -15, -16, -17, -18]
@@ -104,25 +145,43 @@ module Sync
       result
     end
 
-    def self.search_logs_by_criteria_android(isok, from_time, to_time, android_app_version, android_os_version, android_phone_model, android_phone_manufacturer, android_sdk, firmware)
+    def self.search_logs_by_criteria_android(isok, from_time, to_time, android_app_version, android_os_version, android_phone_model, android_phone_manufacturer, android_sdk, firmware, failure_reasons)
       # build search criteria
       result = self.where(isok: isok)
       result = result.and(:start_time.gte => from_time) if from_time.present?
       result = result.and(:start_time.lte => to_time) if to_time.present?
       result = result.and(:firmware_revision_string => firmware) if firmware.present?
       result = result.and(:'data.androidAppVersion' => android_app_version) if android_app_version.present?
-      result = result.in(:'data.androidOSVersion' => android_os_version) if android_os_version.present?
-      result = result.in(:'data.androidPhoneModel' => android_phone_model) if android_phone_model.present?
+      result = result.and(:'data.androidOsVersion' => android_os_version) if android_os_version.present?
+      result = result.and(:'data.androidPhoneModel' => android_phone_model) if android_phone_model.present?
       result = result.and(:'data.androidPhoneManufacturer' => android_phone_manufacturer) if android_phone_manufacturer.present?
-      result = result.in(:'data.androidSdk' => android_sdk) if android_sdk.present?
+      result = result.and(:'data.androidSdk' => android_sdk) if android_sdk.present?
+      result = result.in(:'data.failureReason' => failure_reasons) if failure_reasons.present?
       result
     end
 
-    def self.build_map_reduce_query_android(sync_logs, has_android_os_version, has_android_phone_model, has_android_sdk)
+    def self.search_total_logs_ios(startTime, endTime, isok)
+      result = self.where(isok: isok)
+      result = result.and(:start_time.gte => startTime) if startTime.present?
+      result = result.and(:start_time.lte => endTime) if endTime.present?
+      result = result.and(:'data.iosVersion'.exists => true)
+      result
+    end
+
+    def self.search_total_logs_android(startTime, endTime, isok)
+      result = self.where(isok: isok)
+      result = result.and(:start_time.gte => startTime) if startTime.present?
+      result = result.and(:start_time.lte => endTime) if endTime.present?
+      result = result.and(:'data.androidOsVersion'.exists => true)
+      result
+    end
+
+    def self.build_map_reduce_query_android(sync_logs, has_failure_reasons)
       map = "function() { var keys = new Object(); "
-      map << "keys.androidOSVersion = this.data.androidOSVersion; " if has_android_os_version
-      map << "keys.androidPhoneModel = this.data.androidPhoneModel;" if has_android_phone_model
-      map << "keys.androidSdk = this.data.androidSdk;" if has_android_sdk
+      # map << "keys.androidOSVersion = this.data.androidOSVersion; " if has_android_os_version
+      # map << "keys.androidPhoneModel = this.data.androidPhoneModel;" if has_android_phone_model
+      # map << "keys.androidSdk = this.data.androidSdk;" if has_android_sdk
+      map << "keys.failureCode = this.data.failureReason; " if has_failure_reasons
       map << "emit(keys, 1); }"
 
       reduce = %Q{
@@ -165,16 +224,35 @@ module Sync
       mr_result
     end
 
-    def self.calculate_statistics_from_logs_android(sync_logs, has_android_os_version, has_android_phone_model, has_android_sdk)
-      mr_result = build_map_reduce_query_android(sync_logs, has_android_os_version, has_android_phone_model, has_android_sdk)
+    def self.calculate_statistics_from_logs_android(sync_logs, has_failure_reasons)
+      mr_result = build_map_reduce_query_android(sync_logs, has_failure_reasons)
 
       result = []
       total_failures = 0
       mr_result.each do |entry|
-        total_failures += entry["value"].to_i
+          total_failures += entry["value"].to_i
       end
+      if has_failure_reasons
 
-      
+      #build label
+        tmpArray = []
+        tmpArray << "Failure code" if has_failure_reasons
+        tmpArray << "Failure reason" if has_failure_reasons
+        tmpArray << "Number of failures"
+        tmpArray << "Failure rate"
+        result << tmpArray
+        mr_result.each do |entry|
+          failures = entry["value"].to_i
+          percentage = (entry["value"] * 100 / total_failures).round(2)
+          tmpArray = []
+          tmpArray << entry["_id"]["failureCode"].to_i if has_failure_reasons
+          tmpArray << SYNC_FAILED_ERRORS_ANDROID[entry["_id"]["failureCode"].to_i] || "Unknown reason" if has_failure_reasons
+          tmpArray << failures
+          tmpArray << percentage
+          result << tmpArray
+        end        
+      end
+      return total_failures, result
     end
 
     def self.calculate_statistics_from_logs(sync_logs, has_ios_version, has_failure_reasons, has_device_infos, showLastCommand)
@@ -235,6 +313,17 @@ module Sync
       result = arrayResult.join("\n")
     end 
 
+    def self.calculate_statistics_by_criteria_android(statistics_params)
+      total_logs = search_logs_by_criteria_android(statistics_params["isok"], statistics_params["fromTime"], statistics_params["toTime"], 
+        statistics_params["androidAppVersion"], statistics_params["androidOSVersion"], statistics_params["androidPhoneModel"], statistics_params["androidPhoneManufacturer"], 
+        statistics_params["androidSdk"], statistics_params["firmware"], statistics_params["errorCodes"])
+      total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs_android(total_logs, !statistics_params["errorCodes"].nil?)
+      arrayResult = []
+      arrayResult << "Total failures: " + total_failures.to_s + "\<\/br\>"
+      arrayResult << build_statistics_result(statisticsFromLogs)
+      result = arrayResult.join("\n")
+    end 
+
     def self.export_statistics_by_criteria(statistics_params)
       total_logs = search_logs_by_criteria(statistics_params["isok"], statistics_params["fromTime"], statistics_params["toTime"], 
           statistics_params["appVersion"], statistics_params["syncMode"], statistics_params["iosVersions"], statistics_params["errorCodes"], 
@@ -250,6 +339,35 @@ module Sync
           csv << entry
         end
       end 
+    end
+
+     def self.export_statistics_by_criteria_android(statistics_params)
+       total_logs = search_logs_by_criteria_android(statistics_params["isok"], statistics_params["fromTime"], statistics_params["toTime"], 
+        statistics_params["androidAppVersion"], statistics_params["androidOSVersion"], statistics_params["androidPhoneModel"], statistics_params["androidPhoneManufacturer"], 
+        statistics_params["androidSdk"], statistics_params["firmware"], statistics_params["errorCodes"])
+      total_failures, statisticsFromLogs = Sync::Log.calculate_statistics_from_logs_android(total_logs, !statistics_params["errorCodes"].nil?)
+      row = []
+      row << "Total failures: "
+      row << total_failures.to_s
+      fileName = "failed_sync_statistics_android_" + Time.now.to_i.to_s + ".csv"
+      CSV.open(fileName, "wb") do |csv|
+        csv << row
+        statisticsFromLogs.each do |entry|
+          csv << entry
+        end
+      end 
+    end
+
+    def self.calculate_total_logs_android(startTime, endTime, isok)
+      total_logs = search_total_logs_android(startTime, endTime, isok)
+      result = total_logs.count.to_s +  "\<\/br\>"
+      result
+    end
+
+    def self.calculate_total_logs_ios(startTime, endTime, isok)
+      total_logs = search_total_logs_ios(startTime, endTime, isok)
+      result = total_logs.count.to_s +  "\<\/br\>"
+      result
     end
 
     def self.build_statistics_result(statisticsFromLogs)
