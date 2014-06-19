@@ -49,8 +49,8 @@ public class NotificationEndpointServer {
 
     	HttpRequestContext request = context.getRequest();
     	logger.info("===================================================================");
-    	logger.info(request.getBaseUri());
-    	logger.info(body + "\n\n");
+    	logger.info(request.getBaseUri() );
+    	logger.info("Body:\n" + body + "\n\n");
     	
     	try {
     		

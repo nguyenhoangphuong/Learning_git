@@ -24,9 +24,7 @@ number = getNumberOfRunningInstances()
 print 'Current number of instances: %d' % number
 
 if number >= MAX_INSTANCES:
-	print 'Fk, No good'
+	print 'Fuck, No good'
 	exit(1)
 else:
 	print 'Still okay'
-
-print 'Dummy'
