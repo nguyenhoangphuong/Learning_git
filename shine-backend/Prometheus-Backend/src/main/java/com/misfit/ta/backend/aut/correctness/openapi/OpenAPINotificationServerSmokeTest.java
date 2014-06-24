@@ -112,17 +112,6 @@ public class OpenAPINotificationServerSmokeTest extends BackendAutomation implem
                     e.printStackTrace();
                 }
 
-                // resultLogger.log("*** Notification received");
-                // resultLogger.log("Endpoint: " +
-                // server.context.getRequest().getBaseUri());
-                // resultLogger.log("Notification: " + messageString);
-                // resultLogger.log("Messages: " + messages.size());
-                // for(NotificationMessage message : messages)
-                // resultLogger.log(String.format("Owner: %s - ObjectId: %s - %s: %s",
-                // message.getOwnerId(), message.getId(), message.getType(),
-                // message.getAction()));
-                // resultLogger.log("\n");
-
                 return null;
             }
         };
@@ -145,21 +134,22 @@ public class OpenAPINotificationServerSmokeTest extends BackendAutomation implem
         subscribe();
 
         // sign up
-        resultLogger.log("\n- SIGN UP USERS A");
+        
+        String email = "nhhai16991@gmail.com";
         String password = "qqqqqq";
-        String emailA = MVPApi.generateUniqueEmail();
-        String tokenA = MVPApi.signUp(emailA, password).token;
-        String uidA = MVPApi.getUserId(tokenA);
+        String returnUrl = "https://www.google.com.vn/";
+        
+        String token = MVPApi.signIn(email, password).token;
+        String uidA = MVPApi.getUserId(token);
         resultLogger.log("UserA: " + uidA);
 
-        OpenAPI.getAccessToken(emailA, password, scope, ClientKey, returnUrl);
+        OpenAPI.getAccessToken(email, password, scope, ClientKey, returnUrl);
 
         // create profiles and pedometers for all users
         resultLogger.log("\n- CREATE PROFILES AND PEDOMETERS");
-        resultLogger.log("Expect: 4 messages total from EPA for user A and B");
-        ProfileData profileA = createRandomProfile(tokenA);
+        ProfileData profileA = createRandomProfile(token);
         expectedNotifcations++;
-        Pedometer pedometerA = createRandomPedometer(tokenA);
+        Pedometer pedometerA = createRandomPedometer(token);
         expectedNotifcations++;
         ShortcutsTyper.delayTime(5000);
 
@@ -168,31 +158,31 @@ public class OpenAPINotificationServerSmokeTest extends BackendAutomation implem
         // timezone, food
         resultLogger.log("\n- CREATE GOALS, TIMELINE ITEMS USING BOTH SINGLE AND BATCH INSERT");
         resultLogger.log("Expect: 6 messages total from EPB for user A and B");
-        Goal goalA = createDefaultGoal(tokenA, 0);
+        Goal goalA = createDefaultGoal(token, 0);
         expectedNotifcations++;
         List<TimelineItem> itemsA = new ArrayList<TimelineItem>();
 
-        itemsA.add(createSessionTimelineItem(tokenA));
+        itemsA.add(createSessionTimelineItem(token));
         expectedNotifcations++;
-        itemsA.addAll(createSleepMilestoneAchievementTimezoneFoodItems(tokenA));
+        itemsA.addAll(createSleepMilestoneAchievementTimezoneFoodItems(token));
         expectedNotifcations++;
         ShortcutsTyper.delayTime(5000);
 
         // update goals, profiles and pedometers for all users
         resultLogger.log("\n- UPDATE GOALS, PROFILES AND PEDOMETERS");
         resultLogger.log("Expect: 6 messages total from EPA for user A and B");
-        updateGoal(tokenA, goalA.getServerId());
+        updateGoal(token, goalA.getServerId());
         expectedNotifcations++;
-        updateProfile(tokenA, profileA.getServerId());
+        updateProfile(token, profileA.getServerId());
         expectedNotifcations++;
-        updatePedometer(tokenA, pedometerA.getServerId(), pedometerA.getSerialNumberString());
+        updatePedometer(token, pedometerA.getServerId(), pedometerA.getSerialNumberString());
         expectedNotifcations++;
 
         // update all timeline items
         resultLogger.log("\n- UPDATE ALL TIMELINE ITEMS");
         resultLogger.log("Expect: 4 messages total from EPB for user A and B");
         for (int i = 0; i < itemsA.size(); i++) {
-            updateTimelineItem(tokenA, itemsA.get(i).getItemType(), itemsA.get(i).getServerId());
+            updateTimelineItem(token, itemsA.get(i).getItemType(), itemsA.get(i).getServerId());
             expectedNotifcations += 1;
         }
 
@@ -204,7 +194,7 @@ public class OpenAPINotificationServerSmokeTest extends BackendAutomation implem
         resultLogger.log("Expect: 2 delete messages from EPB for user A");
         for (int i = 0; i < itemsA.size(); i++) {
             itemsA.get(i).setState(1);
-            MVPApi.updateTimelineItem(tokenA, itemsA.get(i));
+            MVPApi.updateTimelineItem(token, itemsA.get(i));
             expectedNotifcations++;
         }
 
