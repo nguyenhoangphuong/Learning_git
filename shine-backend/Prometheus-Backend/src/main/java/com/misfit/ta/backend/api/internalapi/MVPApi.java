@@ -979,7 +979,7 @@ public class MVPApi extends RequestHelper {
 	public static BaseResult pushSDKSyncLog(SDKSyncLog syncLog, boolean gzip) {
 	
 		String url = dataCenterBaseAddress + "events";
-		CloseableHttpClient httpclient = InsecureHttpClientHelper.getInsecureCloseableHttpClient();
+		CloseableHttpClient httpclient = new InsecureHttpClientHelper().getInsecureCloseableHttpClient();
 
 		String body = syncLog.toJson().toString();
 		if(gzip) {

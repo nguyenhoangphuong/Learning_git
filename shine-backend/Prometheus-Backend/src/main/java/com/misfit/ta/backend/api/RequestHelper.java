@@ -35,7 +35,6 @@ public class RequestHelper {
     public static final String HTTP_GET = "get";
     public static final String HTTP_DELETE = "delete";
     public static final String HTTP_PUT = "put";
-    private static CloseableHttpClient httpclient = InsecureHttpClientHelper.getInsecureCloseableHttpClient();
 
     // request helpers
     static public ServiceResponse request(String type, String url, Integer port, BaseParams requestInf) {
@@ -153,6 +152,7 @@ public class RequestHelper {
     static private ServiceResponse excuteHttpRequest(HttpUriRequest httprequest) {
 
         try {
+            CloseableHttpClient httpclient = new InsecureHttpClientHelper().getInsecureCloseableHttpClient();
             long start = System.currentTimeMillis();
             CloseableHttpResponse response = httpclient.execute(httprequest);
             ServiceResponse sr = new ServiceResponse(response, EncodingTypes.UTF8);

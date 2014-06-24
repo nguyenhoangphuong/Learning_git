@@ -193,8 +193,8 @@ public class OpenAPI extends RequestHelper {
 		String url = authenticateServerBaseAddress + "dialog/authorize?" +
 				(responseType == null ? "" : ("response_type=" + responseType)) +
 				(clientKey == null ? "" : ("&client_id=" + clientKey)) +
-				(redirectUrl == null ? "" : ("&redirect_uri=" + redirectUrl)) +
 				(scope == null ? "" : ("&scope=" + scope)) +
+				(redirectUrl == null ? "" : ("&redirect_uri=" + redirectUrl)) +
 				(state == null ? "" : ("&state=" + state));
 		
 		BaseParams requestInf = new BaseParams();
@@ -202,6 +202,9 @@ public class OpenAPI extends RequestHelper {
 			requestInf.addHeader("Cookie", cookie);
 
 		ServiceResponse response = get(url, authenticateServerPort, requestInf);
+		if (response.getStatusCode() != 200) {
+		    throw new IllegalStateException("Cant get auth dialog: error code = " + response.getStatusCode());
+		}
 		BaseResult result = new BaseResult(response);
 		
 		return result;
@@ -756,6 +759,7 @@ public class OpenAPI extends RequestHelper {
 		
 		BaseParams requestInf = new BaseParams();
 		get(subcriptionUrl, 443, requestInf);
+		
 	}
 	
 }
