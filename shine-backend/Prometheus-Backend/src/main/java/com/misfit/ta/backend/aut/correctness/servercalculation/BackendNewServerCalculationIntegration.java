@@ -968,12 +968,4 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		Assert.assertEquals(numberOfFailedItems, 0, "Number of failed sleeps");
 	}
 	
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServerCalculationGoalCreation", "NewServercalculation", "GoalCreation" })
-	public void NewServerCalculation_GoalCreation() throws IOException, JSONException {
-		NewServerCalculationScenario scenarioTest = new NewServerCalculationScenario();
-		String email = MVPApi.generateUniqueEmail();
-		System.out.println(email);
-		scenarioTest.runNewServerCalculationGoalCreationTest(email);
-	}
-	
 }

@@ -5,6 +5,7 @@ import com.google.resting.json.JSONObject;
 
 public class GoalSettings {
 
+	public static final int GOAL_SETTINGS_TYPE_ACTIVITY = 1;
 	public static final int GOAL_SETTINGS_TYPE_SLEEP = 2;
 	public static final int GOAL_SETTINGS_TYPE_WEIGHT = 3;
 	
@@ -12,7 +13,8 @@ public class GoalSettings {
 	// fields
 	protected Long appliedFrom;
 	protected Integer goalValue;
-
+	protected Integer goalType;
+	
 	
 	// methods
 	public JSONObject toJson() {
@@ -67,6 +69,14 @@ public class GoalSettings {
 
 	public void setGoalValue(Integer goalValue) {
 		this.goalValue = goalValue;
+	}
+
+	public Integer getGoalType() {
+		return goalType;
+	}
+
+	public void setGoalType(Integer goalType) {
+		this.goalType = goalType;
 	}
 	
 }

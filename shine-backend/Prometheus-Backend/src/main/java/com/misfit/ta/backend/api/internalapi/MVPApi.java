@@ -32,6 +32,7 @@ import com.misfit.ta.backend.data.goal.GoalRawData;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.goalprogress.GoalProgress;
 import com.misfit.ta.backend.data.goalprogress.GoalSettings;
+import com.misfit.ta.backend.data.goalprogress.GoalSettingsTracking;
 import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.ProfileData;
@@ -1214,6 +1215,16 @@ public class MVPApi extends RequestHelper {
 		return result;
 	}
 	
+	public static BaseResult createTrackingGoalSettings(String token, GoalSettingsTracking goalSettingsTracking) {
+		String url = baseAddress + "goals/track_changes";
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.post(url, port, requestInf, goalSettingsTracking.toJson().toString());
+		BaseResult result = new BaseResult(response);
+		return result;
+	}
 	
 	// others
 	public static BaseResult customRequest(String shortUrl, String verb, BaseParams params) {
