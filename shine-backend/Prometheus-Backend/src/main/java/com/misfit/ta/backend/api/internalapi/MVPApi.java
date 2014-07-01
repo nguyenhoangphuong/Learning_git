@@ -103,6 +103,16 @@ public class MVPApi extends RequestHelper {
 	public static AccountResult signUp(String email, String password) {
 		return sign(email, password, "signup");
 	}
+	
+	public static UserInfo signUp() {
+		String email = MVPApi.generateUniqueEmail();
+		UserInfo userInfo = new UserInfo(email, "qqqqqq");
+		String token = MVPApi.signUp(userInfo.getEmail(), userInfo.getPassword()).token;
+		String userId = MVPApi.getUserId(token);
+		userInfo.setToken(token);
+		userInfo.setUserId(userId);
+		return userInfo;
+	}
 
 	public static BaseResult signOut(String token) {
 		// trace
