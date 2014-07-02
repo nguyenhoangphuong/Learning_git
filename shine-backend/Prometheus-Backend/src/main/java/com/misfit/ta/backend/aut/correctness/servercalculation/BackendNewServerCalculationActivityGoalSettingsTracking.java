@@ -408,14 +408,11 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 				startDay, timezoneOffsetInSeconds[0]);
 		GoalSettingsGoalValueChange goalValue = new GoalSettingsGoalValueChange(
 				startDay, 878.8);
-		GoalSettingsTripleTapTypeChange tripleTapTypeChange = new GoalSettingsTripleTapTypeChange(
-				startDay, 5);
 		GoalSettingsAutoSleepStateChange autoSleepStateChange = new GoalSettingsAutoSleepStateChange(
 				startDay, 0);
 		List<TimestampObject> changes = new ArrayList<TimestampObject>();
 		changes.add(fromTimezone);
 		changes.add(goalValue);
-		// changes.add(tripleTapTypeChange);
 		changes.add(autoSleepStateChange);
 		goalSettingsTracking.setChanges(changes);
 		MVPApi.createTrackingGoalSettings(userInfo.getToken(),
@@ -462,6 +459,89 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 				"Timezone timeline item should be found") == null;
 		testPassed &= Verify.verifyEquals(actualItems.get(0).getTimestamp(),
 				startDay + 3600, "Timestamp of timeline item is not correct") == null;
+		testPassed &= Verify.verifyEquals(actualItems.get(0).getItemType(),
+				TimelineItemDataBase.TYPE_TIMEZONE,
+				"Type of timeline item is not correct") == null;
+		Assert.assertTrue(testPassed);
+
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend",
+			"NewServerCalculationGoalCreation", "NewServercalculation",
+			"GoalCreation", "TravelForwardDifferentDays", "Timezone" })
+	public void NewServerCalculation_GoalCreation_TimezoneChanging_TravelForward_DifferentDays()
+			throws IOException, JSONException {
+		UserInfo userInfo = MVPApi.signUp();
+
+		int[] timezoneOffsetInSeconds = { 25200, 34200 };
+		int diff = timezoneOffsetInSeconds[0] - timezoneOffsetInSeconds[1];
+		long startDay = MVPCommon
+				.getDayStartEpoch(System.currentTimeMillis() / 1000);
+		long endDay = MVPCommon
+				.getDayEndEpoch(System.currentTimeMillis() / 1000);
+		// create profile / pedometer / statistics
+		Pedometer pedometer = setUpNewAccount(userInfo.getToken(), startDay);
+
+		System.out.println("****** Startday: " + startDay);
+		GoalSettingsTracking goalSettingsTracking = new GoalSettingsTracking();
+
+		GoalSettingsTimezoneOffsetChange fromTimezone = new GoalSettingsTimezoneOffsetChange(
+				startDay, timezoneOffsetInSeconds[0]);
+		GoalSettingsGoalValueChange goalValue = new GoalSettingsGoalValueChange(
+				startDay, 878.8);
+		GoalSettingsAutoSleepStateChange autoSleepStateChange = new GoalSettingsAutoSleepStateChange(
+				startDay, 0);
+		List<TimestampObject> changes = new ArrayList<TimestampObject>();
+		changes.add(fromTimezone);
+		changes.add(goalValue);
+		changes.add(autoSleepStateChange);
+		goalSettingsTracking.setChanges(changes);
+		MVPApi.createTrackingGoalSettings(userInfo.getToken(),
+				goalSettingsTracking);
+
+		GoalRawData data = new GoalRawData();
+		// - session: 30 minutes - 3000 steps - 300 points at 22:30pm UTC+7
+		data.appendGoalRawData(generateEmptyRawData(0, 22 * 3600));
+		data.appendGoalRawData(generateSessionRawData(3000, 300, 30));
+		List<String> dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(startDay,
+				timezoneOffsetInSeconds[0] / 60, "0104", "18", data).rawData);
+		pushSyncData(startDay + 22 * 3600 + 30 * 60, userInfo.getUserId(),
+				pedometer.getSerialNumberString(), dataStrings);
+
+		goalSettingsTracking = new GoalSettingsTracking();
+		changes = new ArrayList<TimestampObject>();
+		// change timezone at 23:18pm UTC+7
+		GoalSettingsTimezoneOffsetChange toTimezone = new GoalSettingsTimezoneOffsetChange(
+				startDay + 23 * 3600 + 60 * 18, timezoneOffsetInSeconds[1]);
+		changes.add(toTimezone);
+		goalSettingsTracking.setChanges(changes);
+		MVPApi.createTrackingGoalSettings(userInfo.getToken(),
+				goalSettingsTracking);
+
+		boolean testPassed = true;
+		// verify end time of goal with new timezone, verify timeline items
+		logger.info("Waiting " + delayTime + " miliseconds");
+		ShortcutsTyper.delayTime(delayTime);
+
+		GoalsResult goalResult = MVPApi.searchGoal(userInfo.getToken(), 0l,
+				(long) Integer.MAX_VALUE, 0l);
+
+//		Goal goal = goalResult.goals[0];
+		List<TimelineItem> actualItems = MVPApi.getTimelineItems(
+				userInfo.getToken(), startDay, endDay + diff, null,
+				TimelineItemDataBase.TYPE_TIMEZONE);
+//		testPassed &= Verify.verifyEquals(goal.getEndTime(), endDay + diff,
+//				"End time of goal is not correct when user changes timezone") == null;
+//		testPassed &= Verify.verifyEquals(goal.getStartTime(), startDay,
+//				"Start time of goal is not correct") == null;
+		
+		testPassed &= Verify.verifyEquals(goalResult.goals.length, 2, "We assume that 2 goals are returned") == null;
+		
+		testPassed &= Verify.verifyTrue(actualItems.size() == 1,
+				"Timezone timeline item should be found") == null;
+		testPassed &= Verify.verifyEquals(actualItems.get(0).getTimestamp(),
+				startDay + 3600 * 23 + 60 * 18, "Timestamp of timeline item is not correct") == null;
 		testPassed &= Verify.verifyEquals(actualItems.get(0).getItemType(),
 				TimelineItemDataBase.TYPE_TIMEZONE,
 				"Type of timeline item is not correct") == null;
