@@ -37,9 +37,9 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		BackendServerCalculationBase {
 	protected int delayTime = 60000;
 
-	// @Test(groups = { "ios", "Prometheus", "MVPBackend",
-	// "NewServerCalculationGoalCreation", "NewServercalculation",
-	// "GoalCreation" })
+//	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
+//	 "NewServerCalculationGoalCreation", "NewServercalculation",
+//	 "GoalCreation" })
 	public void NewServerCalculation_GoalCreation() throws IOException,
 			JSONException {
 		NewServerCalculationScenario scenarioTest = new NewServerCalculationScenario();
@@ -223,9 +223,9 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		return pedometer;
 	}
 
-	// @Test(groups = { "ios", "Prometheus", "MVPBackend",
-	// "NewServerCalculationGoalCreation", "NewServercalculation",
-	// "GoalCreation" })
+	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
+	 "NewServerCalculationGoalCreation", "NewServercalculation",
+	 "GoalCreation", "TravelForward", "Timezone" })
 	public void NewServerCalculation_GoalCreation_TimezoneChanging_TravelForward()
 			throws IOException, JSONException {
 		UserInfo userInfo = MVPApi.signUp();
@@ -245,7 +245,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		GoalSettingsTimezoneOffsetChange fromTimezone = new GoalSettingsTimezoneOffsetChange(
 				startDay, timezoneOffsetInSeconds[0]);
 		GoalSettingsGoalValueChange goalValue = new GoalSettingsGoalValueChange(
-				startDay, 878.8);
+				startDay, 700.8);
 		GoalSettingsTripleTapTypeChange tripleTapTypeChange = new GoalSettingsTripleTapTypeChange(
 				startDay, 5);
 		GoalSettingsAutoSleepStateChange autoSleepStateChange = new GoalSettingsAutoSleepStateChange(
@@ -303,12 +303,13 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		testPassed &= Verify.verifyEquals(actualItems.get(0).getItemType(),
 				TimelineItemDataBase.TYPE_TIMEZONE,
 				"Type of timeline item is not correct") == null;
+		Assert.assertTrue(testPassed);
 
 	}
 
-	// @Test(groups = { "ios", "Prometheus", "MVPBackend",
-	// "NewServerCalculationGoalCreation", "NewServercalculation",
-	// "GoalCreation" })
+	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
+	 "NewServerCalculationGoalCreation", "NewServercalculation",
+	 "GoalCreation", "TravelBackward", "Timezone" })
 	public void NewServerCalculation_GoalCreation_TimezoneChanging_TravelBackward()
 			throws IOException, JSONException {
 		UserInfo userInfo = MVPApi.signUp();
@@ -391,9 +392,9 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 
 	}
 
-	// @Test(groups = { "ios", "Prometheus", "MVPBackend",
-	// "NewServerCalculationGoalCreation", "NewServercalculation",
-	// "GoalCreation" })
+	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
+	 "NewServerCalculationGoalCreation", "NewServercalculation",
+	 "GoalCreation", "TravelBackwardDifferentDays", "Timezone" })
 	public void NewServerCalculation_GoalCreation_TimezoneChanging_TravelBackward_DifferentDays()
 
 	throws IOException, JSONException {
@@ -550,17 +551,69 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 
 	private void changeActivityType(UserInfo userInfo, Long startDay, int hour,
 			int tripleTapType) {
-		GoalSettingsTracking goalSettingsTracking;
-		GoalSettingsTripleTapTypeChange tripleTapTypeChange;
-		List<TimestampObject> changes;
-		goalSettingsTracking = new GoalSettingsTracking();
-		changes = new ArrayList<TimestampObject>();
-		tripleTapTypeChange = new GoalSettingsTripleTapTypeChange(startDay
-				+ hour * 3600, tripleTapType);
+		GoalSettingsTracking goalSettingsTracking = new GoalSettingsTracking();
+		;
+		GoalSettingsTripleTapTypeChange tripleTapTypeChange = new GoalSettingsTripleTapTypeChange(
+				startDay + hour * 3600, tripleTapType);
+		List<TimestampObject> changes = new ArrayList<TimestampObject>();
+		;
 		changes.add(tripleTapTypeChange);
 		goalSettingsTracking.setChanges(changes);
 		MVPApi.createTrackingGoalSettings(userInfo.getToken(),
 				goalSettingsTracking);
+	}
+
+	@Test(groups = { "ios", "Prometheus", "MVPBackend",
+			"NewServerCalculationGoalCreation", "NewServercalculation",
+			"GoalCreation", "DataLoss" })
+	public void NewServerCalculation_GoalCreation_DataLoss() {
+		UserInfo userInfo = MVPApi.signUp();
+		long timestamp = System.currentTimeMillis() / 1000;
+		Long startDay = MVPCommon.getDayStartEpoch(timestamp);
+		Long endDay = MVPCommon.getDayEndEpoch(timestamp);
+		Pedometer pedometer = setUpNewAccount(userInfo.getToken(), startDay);
+
+		GoalSettingsTracking goalSettingsTracking = new GoalSettingsTracking();
+
+		GoalSettingsTimezoneOffsetChange timezone = new GoalSettingsTimezoneOffsetChange(
+				startDay, 25200);
+		GoalSettingsGoalValueChange goalValue = new GoalSettingsGoalValueChange(
+				startDay, 800.8);
+		GoalSettingsAutoSleepStateChange autoSleepStateChange = new GoalSettingsAutoSleepStateChange(
+				startDay, 1);
+		List<TimestampObject> changes = new ArrayList<TimestampObject>();
+		changes.add(timezone);
+		changes.add(goalValue);
+		// changes.add(tripleTapTypeChange);
+		changes.add(autoSleepStateChange);
+		goalSettingsTracking.setChanges(changes);
+		MVPApi.createTrackingGoalSettings(userInfo.getToken(),
+				goalSettingsTracking);
+
+		GoalRawData data = new GoalRawData();
+		data.appendGoalRawData(generateEmptyRawData(0, 30));
+		data.appendGoalRawData(generateSessionRawData(3000, 300, 30));
+		// push sync data in the middle of the day: timestamp - 3600
+		List<String> dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(timestamp - 3600, 25200,
+				"0104", "18", data).rawData);
+		pushSyncData(timestamp, userInfo.getUserId(),
+				pedometer.getSerialNumberString(), dataStrings);
+
+		logger.info("Waiting " + delayTime + " miliseconds");
+		ShortcutsTyper.delayTime(delayTime);
+
+		GoalsResult goalResult = MVPApi.searchGoal(userInfo.getToken(), 0l,
+				(long) Integer.MAX_VALUE, 0l);
+
+		Goal goal = goalResult.goals[0];
+		boolean testPassed = true;
+		// verify if goal is created with correct settings
+		testPassed &= Verify.verifyEquals(goal.getStartTime(), startDay,
+				"Start time of goal is not correct") == null;
+		testPassed &= Verify.verifyEquals(goal.getEndTime(), endDay,
+				"End time of goal is not correct") == null;
+
 	}
 
 }
