@@ -332,7 +332,7 @@ public class NewServerCalculationScenario extends BackendServerCalculationBase{
 				// - session: 60 minutes - 6000 steps - 600 points at 21:00
 				// - session: 40 minutes - 4000 steps - 400 points at 23:00
 				// expect:
-				// - 6 acitivity session tiles
+				// - 6 activity session tiles
 				// - 100% tile
 				// - 150% tile
 				// - 200% tile

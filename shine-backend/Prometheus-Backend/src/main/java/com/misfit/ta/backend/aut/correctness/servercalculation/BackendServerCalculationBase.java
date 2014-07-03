@@ -16,6 +16,7 @@ import com.misfit.ta.backend.data.timeline.timelineitemdata.LifetimeDistanceItem
 import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.MilestoneItemInfo;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
+import com.misfit.ta.backend.data.timeline.timelineitemdata.TimezoneChangeItem;
 
 public class BackendServerCalculationBase extends BackendAutomation {
 	
@@ -110,6 +111,11 @@ public class BackendServerCalculationBase extends BackendAutomation {
 		return false;
 	}
 
+	protected boolean isCorrectTimezoneTimelineItem(TimelineItem item, Integer fromTimezone, Integer toTimezone) {
+		TimezoneChangeItem timezoneItemData = (TimezoneChangeItem) item.getData();
+		return timezoneItemData.getAfterTimeZoneOffset().equals(toTimezone) && timezoneItemData.getBeforeTimeZoneOffset().equals(fromTimezone);
+	}
+	
 	protected boolean hasDailyGoalMilestone(List<TimelineItem> items, Goal goal, int offsetMinute, int eventType, int points) {
 
 		long goalStartTime = goal.getStartTime();
