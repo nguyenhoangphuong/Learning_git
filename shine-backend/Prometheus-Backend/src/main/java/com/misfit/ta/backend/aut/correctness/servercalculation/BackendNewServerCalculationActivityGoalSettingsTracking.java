@@ -531,8 +531,9 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		goalSettingsTracking = new GoalSettingsTracking();
 		changes = new ArrayList<TimestampObject>();
 		// change timezone at 23:18pm UTC+7
+		Long changeTimezoneTimestamp = startDay + 23 * 3600 + 60 * 18;
 		GoalSettingsTimezoneOffsetChange toTimezone = new GoalSettingsTimezoneOffsetChange(
-				startDay + 23 * 3600 + 60 * 18, timezoneOffsetInSeconds[1]);
+				changeTimezoneTimestamp, timezoneOffsetInSeconds[1]);
 		changes.add(toTimezone);
 		goalSettingsTracking.setChanges(changes);
 		MVPApi.createTrackingGoalSettings(userInfo.getToken(),
@@ -545,26 +546,25 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 
 		GoalsResult goalResult = MVPApi.searchGoal(userInfo.getToken(), 0l,
 				(long) Integer.MAX_VALUE, 0l);
-		
+		Long endDayOfNewGoal = endDay + 60 * 24 - diff * 3600;
 		List<TimelineItem> actualItems = MVPApi.getTimelineItems(
-				userInfo.getToken(), startDay, endDay + diff, null,
+				userInfo.getToken(), startDay, endDayOfNewGoal, null,
 				TimelineItemDataBase.TYPE_TIMEZONE);
 		
 		testPassed &= Verify.verifyEquals(goalResult.goals.length, 2,
 				"We assume that 2 goals are returned") == null;
 
 		testPassed &= Verify
-				.verifyEquals(goalResult.goals[1].getEndTime(), startDay + 23
-						* 3600 + 60 * 18,
+				.verifyEquals(goalResult.goals[1].getEndTime(), changeTimezoneTimestamp,
 						"End time of old goal is not correct when user changes timezone") == null;
 		testPassed &= Verify.verifyEquals(goalResult.goals[1].getStartTime(),
 				startDay, "Start time of old goal is not correct") == null;
 
-		testPassed &= Verify.verifyEquals(goalResult.goals[1].getEndTime(),
-				endDay + 60 * 24 - diff * 3600,
+		testPassed &= Verify.verifyEquals(goalResult.goals[0].getEndTime(),
+				endDayOfNewGoal,
 				"End time of new goal is not correct when user changes timezone") == null;
-		testPassed &= Verify.verifyEquals(goalResult.goals[1].getStartTime(),
-				startDay + 23 * 3600 + 60 * 18 + 1,
+		testPassed &= Verify.verifyEquals(goalResult.goals[0].getStartTime(),
+				changeTimezoneTimestamp + 1,
 				"Start time of new goal is not correct") == null;
 				 
 		testPassed &= Verify.verifyTrue(actualItems.size() == 1,
