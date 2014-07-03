@@ -501,7 +501,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 
 		GoalRawData data = new GoalRawData();
 		// - session: 30 minutes - 3000 steps - 300 points at 22:30pm UTC+7
-		data.appendGoalRawData(generateEmptyRawData(0, 22 * 3600));
+		data.appendGoalRawData(generateEmptyRawData(0, 22 * 60));
 		data.appendGoalRawData(generateSessionRawData(3000, 300, 30));
 		List<String> dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(startDay,
@@ -697,7 +697,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		Long endDay = MVPCommon.getDayEndEpoch(timestamp);
 		Pedometer pedometer = setUpNewAccount(userInfo.getToken(), startDay);
 
-		Long threeDaysAgoStartDay = startDay - 3600 * 3;
+		Long threeDaysAgoStartDay = startDay - 3600 * 3 * 24;
 		GoalSettingsTracking goalSettingsTracking = new GoalSettingsTracking();
 
 		GoalSettingsTimezoneOffsetChange timezone = new GoalSettingsTimezoneOffsetChange(
@@ -721,9 +721,18 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		List<String> dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(threeDaysAgoStartDay, 25200,
 				"0104", "18", data).rawData);
-		pushSyncData(timestamp, userInfo.getUserId(),
+		pushSyncData(timestamp - 3600 * 24 * 3, userInfo.getUserId(),
 				pedometer.getSerialNumberString(), dataStrings);
 
+		data = new GoalRawData();
+		data.appendGoalRawData(generateEmptyRawData(0, 30));
+		data.appendGoalRawData(generateSessionRawData(3000, 300, 30));
+		dataStrings = new ArrayList<String>();
+		dataStrings.add(MVPApi.getRawDataAsString(startDay, 25200,
+				"0104", "18", data).rawData);
+		pushSyncData(timestamp, userInfo.getUserId(),
+				pedometer.getSerialNumberString(), dataStrings);
+		
 		logger.info("Waiting " + delayTime + " miliseconds");
 		ShortcutsTyper.delayTime(delayTime);
 
@@ -732,12 +741,14 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 
 		Goal goal = goalResult.goals[0];
 		boolean testPassed = true;
+		testPassed &= Verify.verifyTrue(goalResult.goals.length > 1, 
+				"More goals should be created") == null;
 		// verify if goal is created with correct settings
 		testPassed &= Verify.verifyEquals(goal.getStartTime(), startDay,
 				"Start time of goal is not correct") == null;
 		testPassed &= Verify.verifyEquals(goal.getEndTime(), endDay,
 				"End time of goal is not correct") == null;
-
+		Assert.assertTrue(testPassed);
 	}
 
 }
