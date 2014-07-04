@@ -636,7 +636,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		// from 23:18 to 23:48
 		data.appendGoalRawData(generateSessionRawData(3000, 300, 30));
 		dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(startDay,
+		dataStrings.add(MVPApi.getRawDataAsString(startDay + 22 * 3600 + 30,
 				timezoneOffsetInSeconds[0] / 60, "0104", "18", data).rawData);
 		// push sync data the second time to create new goal after changing
 		// timezone
