@@ -650,7 +650,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 
 		GoalsResult goalResult = MVPApi.searchGoal(userInfo.getToken(), 0l,
 				(long) Integer.MAX_VALUE, 0l);
-		Long endDayOfNewGoal = endDay + 60 * 24 - diff * 3600;
+		Long endDayOfNewGoal = endDay + 3600 * 24 - diff * 3600;
 		List<TimelineItem> actualItems = MVPApi.getTimelineItems(
 				userInfo.getToken(), startDay, endDayOfNewGoal, null,
 				TimelineItemDataBase.TYPE_TIMEZONE);
