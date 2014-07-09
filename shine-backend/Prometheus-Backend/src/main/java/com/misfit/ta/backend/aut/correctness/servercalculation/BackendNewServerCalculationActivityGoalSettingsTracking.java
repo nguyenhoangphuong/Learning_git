@@ -629,6 +629,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		MVPApi.createTrackingGoalSettings(userInfo.getToken(),
 				goalSettingsTracking);
 
+		ShortcutsTyper.delayTime(10000);
 		data = new GoalRawData();
 		// - session: 30 minutes - 3000 steps - 300 points at 23:48pm UTC+7
 		// from 22:30 to 23:18
