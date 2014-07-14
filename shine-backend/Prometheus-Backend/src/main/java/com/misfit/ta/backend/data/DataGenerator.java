@@ -586,7 +586,7 @@ public class DataGenerator {
 	}
 
 	public static SyncFileData generateRandomSyncFileData(String fileHandle, long timestamp, int totalMinute) {
-		
+		// 16 bytes header + 4 bytes crc + minute data bytes 
 		int fileSize = 16 + 4 + totalMinute * 2;
 		totalMinute = Math.min(totalMinute, 1014);
 		String rawData = "";
