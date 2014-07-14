@@ -133,8 +133,6 @@ public class OpenAPINotificationServerSmokeTest extends BackendAutomation implem
 
         subscribe();
 
-        // sign up
-        
         String email = "nhhai16991@gmail.com";
         String password = "qqqqqq";
         String returnUrl = "https://www.google.com.vn/";

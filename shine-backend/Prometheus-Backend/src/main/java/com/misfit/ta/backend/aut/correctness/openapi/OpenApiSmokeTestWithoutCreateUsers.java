@@ -61,7 +61,6 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
 		errors.add(Verify.verifyTrue(result.statusCode < 400, "[Dev Portal]: Sign out flow is ok"));
 			
 
-		// create some test users
 		// NOTE: use created user to avoid creating on production
 		String userA = "aut_openapi_smokea@qa.com";
 		String userB = "aut_openapi_smokeb@qa.com";

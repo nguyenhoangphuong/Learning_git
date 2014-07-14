@@ -49,6 +49,9 @@ public class OpenApiDeviceGetTC extends OpenAPIAutomationBase {
 		Assert.assertEquals(result.code, 401, "OpenAPI code");
 		Assert.assertEquals(result.message, DefaultValues.InvalidAccessToken, "Error message");
 	}
+	
+	
+	
 		
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_device" })
 	public void GetDeviceWithValidAccessToken() {

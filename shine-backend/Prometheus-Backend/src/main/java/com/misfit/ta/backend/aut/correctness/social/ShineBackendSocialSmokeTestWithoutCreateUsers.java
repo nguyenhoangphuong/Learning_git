@@ -20,7 +20,7 @@ public class ShineBackendSocialSmokeTestWithoutCreateUsers extends BackendAutoma
 	
 	
 	// test methods
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "light_smoke_test" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "shineapi_light_smoke_test" })
 	public void ShineBackendSocialAPIsSmokeTest() {
 		
 		errors.clear();
