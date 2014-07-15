@@ -4,7 +4,7 @@
 
 	<groupId>com.misfit.ta</groupId>
 	<artifactId>prometheus-backend</artifactId>
-	<version>0.0.30</version>
+	<version>0.0.31</version>
 
 
 	<packaging>jar</packaging>

@@ -944,7 +944,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		data.appendGoalRawData(generateEmptyRawData(0, 12 * 60));
 		data.appendGoalRawData(generateSessionRawData(8000, 800, 80));
 		dataStrings
-				.add(MVPApi.getRawDataAsString(threeDaysAgoStartDay + 24 * 60,
+				.add(MVPApi.getRawDataAsString(threeDaysAgoStartDay + 24 * 3600,
 						25200, "0104", "18", data).rawData);
 
 		// yesterday
@@ -953,7 +953,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		data.appendGoalRawData(generateSessionRawData(5000, 500, 50));
 		dataStrings
 				.add(MVPApi.getRawDataAsString(
-						threeDaysAgoStartDay + 2 * 24 * 60, 25200, "0104",
+						threeDaysAgoStartDay + 2 * 24 * 3600, 25200, "0104",
 						"18", data).rawData);
 
 		// today
@@ -980,10 +980,6 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 			testPassed &= Verify.verifyEquals(goal.getEndTime(), endDay - i
 					* 24 * 3600, "End time of goal in day " + i
 					+ " is not correct") == null;
-			testPassed &= Verify.verifyEquals(goal.getStartTime(), startDay,
-					"Start time of goal is not correct") == null;
-			testPassed &= Verify.verifyEquals(goal.getEndTime(), endDay,
-					"End time of goal is not correct") == null;
 			testPassed &= Verify.verifyEquals(
 					(int) Math.floor(goal.getGoalValue()),
 					(int) Math.floor(goalValue.getgoalValue()), "Goal value is not correct") == null;
@@ -995,9 +991,9 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		Assert.assertTrue(testPassed);
 	}
 	 
-//	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
-//			 "NewServerCalculationGoalCreation", "NewServercalculation",
-//			 "GoalCreation", "PushTrackChangesSyncDataOfSeveralDays" })
+	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
+			 "NewServerCalculationGoalCreation", "NewServercalculation",
+			 "GoalCreation", "PushTrackChangesSyncDataOfSeveralDays" })
 			public void NewServerCalculation_GoalCreation_PushTrackChangesSyncDataOfSeveralDays() {
 				UserInfo userInfo = MVPApi.signUp();
 				long timestamp = System.currentTimeMillis() / 1000;
@@ -1007,9 +1003,9 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 
 				Long threeDaysAgoStartDay = startDay - 3600 * 3 * 24;
 				GoalSettingsTracking goalSettingsTracking = new GoalSettingsTracking();
-
+				int[] timezoneOffsetInSeconds = { 25200, 34200, 28800 };
 				GoalSettingsTimezoneOffsetChange timezone = new GoalSettingsTimezoneOffsetChange(
-						threeDaysAgoStartDay, 25200);
+						threeDaysAgoStartDay, timezoneOffsetInSeconds[0]);
 				GoalSettingsGoalValueChange goalValue = new GoalSettingsGoalValueChange(
 						threeDaysAgoStartDay, 800.8);
 				GoalSettingsAutoSleepStateChange autoSleepStateChange = new GoalSettingsAutoSleepStateChange(
@@ -1022,6 +1018,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 				MVPApi.createTrackingGoalSettings(userInfo.getToken(),
 						goalSettingsTracking);
 
+				// after this step, user doesn't sync 
 				List<String> dataStrings = new ArrayList<String>();
 				// 3 days ago
 				GoalRawData data = new GoalRawData();
@@ -1029,13 +1026,20 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 				data.appendGoalRawData(generateSessionRawData(6000, 600, 60));
 				dataStrings.add(MVPApi.getRawDataAsString(threeDaysAgoStartDay, 25200,
 						"0104", "18", data).rawData);
-
+				// change timezone at 20:00pm 3 days ago
+				GoalSettingsTracking goalSettingsTracking1 = new GoalSettingsTracking();
+				GoalSettingsTimezoneOffsetChange timezone1 = new GoalSettingsTimezoneOffsetChange(
+						threeDaysAgoStartDay + 20 * 3600, timezoneOffsetInSeconds[1]);
+				List<TimestampObject> changes1 = new ArrayList<TimestampObject>();
+				changes1.add(timezone1);
+				goalSettingsTracking1.setChanges(changes1);
+				
 				// 2 days ago
 				data = new GoalRawData();
 				data.appendGoalRawData(generateEmptyRawData(0, 12 * 60));
 				data.appendGoalRawData(generateSessionRawData(8000, 800, 80));
 				dataStrings
-						.add(MVPApi.getRawDataAsString(threeDaysAgoStartDay + 24 * 60,
+						.add(MVPApi.getRawDataAsString(threeDaysAgoStartDay + 24 * 3600,
 								25200, "0104", "18", data).rawData);
 
 				// yesterday
@@ -1044,7 +1048,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 				data.appendGoalRawData(generateSessionRawData(5000, 500, 50));
 				dataStrings
 						.add(MVPApi.getRawDataAsString(
-								threeDaysAgoStartDay + 2 * 24 * 60, 25200, "0104",
+								threeDaysAgoStartDay + 2 * 24 * 3600, 25200, "0104",
 								"18", data).rawData);
 
 				// today
@@ -1053,8 +1057,30 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 				dataStrings.add(MVPApi.getRawDataAsString(startDay, 25200, "0104",
 						"18", data).rawData);
 
+				GoalSettingsTracking goalSettingsTracking2 = new GoalSettingsTracking();
+				GoalSettingsTimezoneOffsetChange timezone2 = new GoalSettingsTimezoneOffsetChange(
+						threeDaysAgoStartDay + 2 * 24 * 3600, timezoneOffsetInSeconds[2]);
+				List<TimestampObject> changes2 = new ArrayList<TimestampObject>();
+				changes2.add(timezone2);
+				goalSettingsTracking2.setChanges(changes2);
+				
+				
+				MVPApi.createTrackingGoalSettings(userInfo.getToken(),
+						goalSettingsTracking1);
+				MVPApi.createTrackingGoalSettings(userInfo.getToken(),
+						goalSettingsTracking2);
 				pushSyncData(timestamp, userInfo.getUserId(),
 						pedometer.getSerialNumberString(), dataStrings);
+				
+				logger.info("Waiting " + delayTime + " miliseconds");
+				ShortcutsTyper.delayTime(delayTime);
+				
+				GoalsResult goalResult = MVPApi.searchGoal(userInfo.getToken(), 0l,
+						(long) Integer.MAX_VALUE, 0l);
+				boolean testPassed = true;
+				// Verify latest goal, it should be timezone[2]
+				testPassed &= Verify.verifyEquals(goalResult.goals[0].getTimeZoneOffsetInSeconds(), timezoneOffsetInSeconds[2], "Timezone of the latest goal is incorrect") == null;
+				Assert.assertTrue(testPassed);
 	 }
 
 }
