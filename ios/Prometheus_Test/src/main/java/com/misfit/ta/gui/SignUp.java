@@ -6,6 +6,9 @@ import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
 
 public class SignUp {
+	
+	public static final int SELECT_SHINE = 0;
+	public static final int SELECT_BEDDIT = 1;
 
     /* NAVIGATION */
     public static void tapSignUp() {
@@ -18,6 +21,10 @@ public class SignUp {
 
     public static void tapPrevious() {
     	Gui.touchAVIew("UIButtonLabel", DefaultStrings.BackButton);
+    }
+    
+    public static void tapSelectDevice(int deviceSelectCode) {
+    	Gui.touchAVIew("UIButtonLabel", DefaultStrings.ShineLabel);
     }
     
     public static void tapSignOut() {
@@ -149,6 +156,10 @@ public class SignUp {
     public static boolean isSignUpProfileView() {
         return ViewUtils.isExistedView("UILabel", DefaultStrings.SignUpProfileTitle);
     }
+
+	public static boolean isSelectDeviceView() {
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.SelectDeviceTitle);
+	}
 
 	public static boolean isSignUpTutorialView() {
 		int i = 0;

@@ -36,6 +36,7 @@ public class DefaultStrings {
 	public static String SignInTitle = "Sign in";
 	public static String SignUpTitle = "Sign up";
 	public static String SignUpProfileTitle = "My Info";
+	public static String SelectDeviceTitle = "My Devices";
 	public static String SignUpSetYourGoalTitle = "Set your goal";
 	public static String SignUpLinkShineTitle = "Link Shine";
 	public static String SignUpConnectBedditTitle = "Connect Beddit";

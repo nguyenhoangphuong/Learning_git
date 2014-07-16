@@ -10,7 +10,7 @@ import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
-
+import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.gui.DefaultStrings;
@@ -97,6 +97,10 @@ public class SignUpAPI extends ModelAPI {
 		}
     }
     
+    public void e_ShineSelected() {
+    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
+    }
+    
     public void e_SetGoal() {
         goal = new Random().nextInt(3);
         SignUp.setGoal(goal, SignUp.getCurrentGoal());
@@ -131,10 +135,6 @@ public class SignUpAPI extends ModelAPI {
     
     public void e_Sync() {
         SignUp.sync();
-		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
-		
-		PrometheusHelper.handleTutorial();
-		PrometheusHelper.handleUpdateFirmwarePopup();
     }
  
     
@@ -145,10 +145,14 @@ public class SignUpAPI extends ModelAPI {
     }
     
     public void v_HomeScreen() {
+    	// Swipe to get through first time's tutorial
+    	ShortcutsTyper.delayTime(1000);
+    	PrometheusHelper.handleTutorial();
+    	
     	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");
     	
     	// check tutorial tiles
-    	Timeline.dragUpTimelineAndHandleTutorial();
+    	Timeline.dragUpTimeline();
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileTapMeLabel), "Tap Me! tile is displayed");
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileActivitiesLabel), "Activities tile is displayed");
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileMilestonesLabel), "Milestones tile is displayed");
@@ -198,4 +202,7 @@ public class SignUpAPI extends ModelAPI {
         Assert.assertTrue(SignUp.isSignUpPairingView(), "This is not sign up pairing view.");
     }
 
+    public void v_SelectDevice() {
+    	Assert.assertTrue(SignUp.isSelectDeviceView(), "This is not select device view");
+    }
 }

@@ -193,15 +193,15 @@ public class PrometheusHelper {
 
 	/* Quick navigation */
 	public static void handleTutorial() {
-		boolean hasTutorialView = ViewUtils.isExistedView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
-
-		if (hasTutorialView) {
-			for (int i = 0; i < 3; i++) {
-				Gui.swipeLeft(500);
-			}
-			if (ViewUtils.isExistedView("UIButtonLabel", DefaultStrings.EndTutorialButton)) {
-				Gui.touchAVIew("UIButtonLabel", DefaultStrings.EndTutorialButton);
-			}
+		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
+			
+		for (int i = 0; i < 2; i++) {
+			Gui.swipeLeft(500);
+		}
+		
+		if (ViewUtils.isExistedView("UIButtonLabel",
+				DefaultStrings.EndTutorialButton)) {
+			Gui.touchAVIew("UIButtonLabel", DefaultStrings.EndTutorialButton);
 		}
 	}
 	
