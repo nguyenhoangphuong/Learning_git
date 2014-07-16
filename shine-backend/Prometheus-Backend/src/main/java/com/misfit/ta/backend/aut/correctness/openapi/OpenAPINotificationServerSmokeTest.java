@@ -207,6 +207,12 @@ public class OpenAPINotificationServerSmokeTest extends BackendAutomation implem
         Assert.assertTrue(messages.size() > 5, "expected= " + expectedNotifcations + " while received="
                 + messages.size());
     }
+    
+    private void failOnError(BaseResult r) {
+        if (r.statusCode >=400) {
+            Assert.fail("Faild with error code: "+ r.code);
+        }
+    }
 
     private void subscribe() {
         // subcribe profiles, devices to EPA
@@ -216,12 +222,17 @@ public class OpenAPINotificationServerSmokeTest extends BackendAutomation implem
         // TO
         // SOME EXCEPTION WHEN CONFIRMING USING CODE
         resultLogger.log("\n- SUBCRIBE TO EPA - " + EPA);
-        OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_PROFILE);
-        OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_DEVICE);
-
-        OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
-        OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
-        OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
+        BaseResult r;
+        r = OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_PROFILE);
+        failOnError(r);
+        r= OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_DEVICE);
+        failOnError(r);
+        r= OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_GOAL);
+        failOnError(r);
+        r=OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_SESSION);
+        failOnError(r);
+        r=OpenAPI.subscribeNotification(ClientKey, ClientSecret, EPA, OpenAPI.NOTIFICATION_RESOURCE_SLEEP);
+        failOnError(r);
         ShortcutsTyper.delayTime(10000);
         System.out.println("LOG [OpenAPINotificationServerLight.NotificationServerTestScenerio]: " + EPA);
 
