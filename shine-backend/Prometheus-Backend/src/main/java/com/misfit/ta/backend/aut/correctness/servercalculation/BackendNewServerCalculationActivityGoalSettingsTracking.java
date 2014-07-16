@@ -83,8 +83,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		goalSettingsTracking.setChanges(changes);
 		MVPApi.createTrackingGoalSettings(userInfo.getToken(),
 				goalSettingsTracking);
-		logger.info("Waiting " + delayTime + " miliseconds");
-		ShortcutsTyper.delayTime(delayTime);
+
 		GoalRawData data = new GoalRawData();
 		data.appendGoalRawData(generateEmptyRawData(0 * 60, 14 * 60));
 		List<String> dataStrings = new ArrayList<String>();
@@ -210,18 +209,6 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		Assert.assertTrue(testPassed);
 	}
 
-	private Pedometer setUpNewAccount(String token, Long startDay) {
-		ProfileData profile = DataGenerator.generateRandomProfile(startDay,
-				null);
-		Pedometer pedometer = DataGenerator.generateRandomPedometer(startDay,
-				null);
-		Statistics statistics = Statistics.getDefaultStatistics();
-
-		MVPApi.createProfile(token, profile);
-		MVPApi.createPedometer(token, pedometer);
-		MVPApi.createStatistics(token, statistics);
-		return pedometer;
-	}
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend",
 			"NewServerCalculationGoalCreation", "NewServercalculation",
@@ -1081,6 +1068,36 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 				// Verify latest goal, it should be timezone[2]
 				testPassed &= Verify.verifyEquals(goalResult.goals[0].getTimeZoneOffsetInSeconds(), timezoneOffsetInSeconds[2], "Timezone of the latest goal is incorrect") == null;
 				Assert.assertTrue(testPassed);
+	 }
+	 
+	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
+			 "NewServerCalculationGoalCreation", "NewServercalculation",
+			 "GoalCreation", "DefaultTrackChanges" })
+			public void NewServerCalculation_GoalCreation_DefaultTrackChanges() {
+				UserInfo userInfo = MVPApi.signUp();
+				long timestamp = System.currentTimeMillis() / 1000;
+				Long startDay = MVPCommon.getDayStartEpoch(timestamp);
+				Long endDay = MVPCommon.getDayEndEpoch(timestamp);
+				Pedometer pedometer = setUpNewAccount(userInfo.getToken(), startDay);
+				
+				// Don't push track changes
+				GoalRawData data = new GoalRawData();
+				data.appendGoalRawData(generateEmptyRawData(0 * 60, 14 * 60));
+				List<String> dataStrings = new ArrayList<String>();
+
+				dataStrings.add(MVPApi.getRawDataAsString(startDay,
+						25200 / 60, "0104", "18", data).rawData);
+				pushSyncData(startDay + 14 * 60, userInfo.getUserId(),
+						pedometer.getSerialNumberString(), dataStrings);
+
+				logger.info("Waiting " + delayTime + " miliseconds");
+				ShortcutsTyper.delayTime(delayTime);
+
+				GoalsResult goalResult = MVPApi.searchGoal(userInfo.getToken(), 0l,
+						(long) Integer.MAX_VALUE, 0l);
+
+				Goal goal = goalResult.goals[0];
+				boolean testPassed = true;
 	 }
 
 }

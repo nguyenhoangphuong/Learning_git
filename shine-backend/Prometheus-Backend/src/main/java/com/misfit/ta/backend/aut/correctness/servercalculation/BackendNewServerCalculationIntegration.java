@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.internalapi.UserInfo;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.performance.newservercalculation.NewServerCalculationScenario;
 import com.misfit.ta.backend.data.DataGenerator;
@@ -51,10 +52,10 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 		// sign up new account
 		boolean testPassed = true;
-		String email = MVPApi.generateUniqueEmail();
+		UserInfo userInfo = MVPApi.signUp();
 		long timestamp = System.currentTimeMillis() / 1000;
-		String token = MVPApi.signUp(email, "qqqqqq").token;
-		String userId = MVPApi.getUserId(token);
+		Long startDay = MVPCommon.getDayStartEpoch(timestamp);
+		Long endDay = MVPCommon.getDayEndEpoch(timestamp);
 
 
 		// create profile / pedometer / statistics
@@ -62,30 +63,20 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
 		Statistics statistics = Statistics.getDefaultStatistics();
 
-		MVPApi.createProfile(token, profile);
-		MVPApi.createPedometer(token, pedometer);
-		MVPApi.createStatistics(token, statistics);
+		MVPApi.createProfile(userInfo.getToken(), profile);
+		MVPApi.createPedometer(userInfo.getToken(), pedometer);
+		MVPApi.createStatistics(userInfo.getToken(), statistics);
 
-
+		Integer timezoneOffset = 25200;
+		setDefaultTrackingChanges(startDay - 3 * 3600 * 24, userInfo);
 		// create goals for 4 days
-		Goal[] goals = new Goal[4];
-		for(int i = 0; i < goals.length; i++) {
-
-			long goalTimestamp = timestamp - i * 3600 * 24;
-			Goal goal = Goal.getDefaultGoal(goalTimestamp);
-
-			// if today goal, increase length to 25h
-			if(i == 0)
-				goal.setEndTime(goal.getEndTime() + 3600);
-
-			GoalsResult result = MVPApi.createGoal(token, goal);
-
-			goal.setServerId(result.goals[0].getServerId());
-			goal.setUpdatedAt(result.goals[0].getUpdatedAt());
-
-			goals[i] = goal;
+		int daysNumber = 4;
+		Long[] startDayTimestamps = new Long[daysNumber];
+		Long[] endDayTimestamps = new Long[daysNumber];
+		for (int i = 0; i < daysNumber; i++) {
+			startDayTimestamps[i] = startDay - i * 3600 * 24;
+			endDayTimestamps[i]= endDay - i * 3600 * 24;
 		}
-
 
 		// story on 4th day (3 days ago):
 		// - session: 60 minutes - 6000 steps - 600 points at 7:00
@@ -218,33 +209,33 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 		// push data to server
 		List<String> dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(goals[3].getStartTime(), goals[3].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data3).rawData);
-		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime(), goals[2].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data2).rawData);
-		dataStrings.add(MVPApi.getRawDataAsString(goals[1].getStartTime(), goals[1].getTimeZoneOffsetInSeconds() / 60, "0103", "18", data1).rawData);
-		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime(), goals[0].getTimeZoneOffsetInSeconds() / 60, "0104", "18", data0).rawData);
-		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[3], timezoneOffset / 60, "0101", "18", data3).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[2], timezoneOffset / 60, "0102", "18", data2).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[1], timezoneOffset / 60, "0103", "18", data1).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[0], timezoneOffset / 60, "0104", "18", data0).rawData);
+		pushSyncData(timestamp, userInfo.getUserId(), pedometer.getSerialNumberString(), dataStrings);
 
 		logger.info("Waiting " + delayTime + " miliseconds");
 		ShortcutsTyper.delayTime(delayTime);
 
-
+		GoalsResult goalResult = MVPApi.searchGoal(userInfo.getToken(), 0l,
+				(long) Integer.MAX_VALUE, 0l);
+		Goal[] goals = goalResult.goals;
+		
 		// get data from server
-		List<GraphItem> graphitems3 = MVPApi.getGraphItems(token, goals[3].getStartTime(), goals[3].getEndTime(), 0l);
-		List<GraphItem> graphitems2 = MVPApi.getGraphItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
-		List<GraphItem> graphitems1 = MVPApi.getGraphItems(token, goals[1].getStartTime(), goals[1].getEndTime(), 0l);
-		List<GraphItem> graphitems0 = MVPApi.getGraphItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
+		List<GraphItem> graphitems3 = MVPApi.getGraphItems(userInfo.getToken(), startDayTimestamps[3], endDayTimestamps[3], 0l);
+		List<GraphItem> graphitems2 = MVPApi.getGraphItems(userInfo.getToken(), startDayTimestamps[2], endDayTimestamps[2], 0l);
+		List<GraphItem> graphitems1 = MVPApi.getGraphItems(userInfo.getToken(), startDayTimestamps[1], endDayTimestamps[1], 0l);
+		List<GraphItem> graphitems0 = MVPApi.getGraphItems(userInfo.getToken(), startDayTimestamps[0], endDayTimestamps[0], 0l);
 
-		List<TimelineItem> timelineitems3 = MVPApi.getTimelineItems(token, goals[3].getStartTime(), goals[3].getEndTime(), 0l);
-		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
-		List<TimelineItem> timelineitems1 = MVPApi.getTimelineItems(token, goals[1].getStartTime(), goals[1].getEndTime(), 0l);
-		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
+		List<TimelineItem> timelineitems3 = MVPApi.getTimelineItems(userInfo.getToken(), startDayTimestamps[3], endDayTimestamps[3], 0l);
+		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(userInfo.getToken(), startDayTimestamps[2], endDayTimestamps[2], 0l);
+		List<TimelineItem> timelineitems1 = MVPApi.getTimelineItems(userInfo.getToken(), startDayTimestamps[1], endDayTimestamps[1], 0l);
+		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(userInfo.getToken(), startDayTimestamps[0], endDayTimestamps[0], 0l);
 
-		Goal goal3 = MVPApi.getGoal(token, goals[3].getServerId()).goals[0];
-		Goal goal2 = MVPApi.getGoal(token, goals[2].getServerId()).goals[0];
-		Goal goal1 = MVPApi.getGoal(token, goals[1].getServerId()).goals[0];
-		Goal goal0 = MVPApi.getGoal(token, goals[0].getServerId()).goals[0];
+		
 
-		statistics = MVPApi.getStatistics(token);
+		statistics = MVPApi.getStatistics(userInfo.getToken());
 
 
 		// ===== VERIFY GRAPH ITEMS
@@ -336,30 +327,30 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		double calorie0 = MVPCalculator.calculateCalories(3000, (float)weight, (float)fullBMR, 25 * 60);
 
 
-		testPassed &= Verify.verifyEquals(goal3.getProgressData().getPoints(), 1800 * 2.5, "Goals[3] progress point") == null;
-		testPassed &= Verify.verifyEquals(goal2.getProgressData().getPoints(), 2200 * 2.5, "Goals[2] progress point") == null;
-		testPassed &= Verify.verifyEquals(goal1.getProgressData().getPoints(), 2800 * 2.5, "Goals[1] progress point") == null;
-		testPassed &= Verify.verifyEquals(goal0.getProgressData().getPoints(), 3000 * 2.5, "Goals[0] progress point") == null;
+		testPassed &= Verify.verifyEquals(goals[3].getProgressData().getPoints(), 1800 * 2.5, "Goals[3] progress point") == null;
+		testPassed &= Verify.verifyEquals(goals[2].getProgressData().getPoints(), 2200 * 2.5, "Goals[2] progress point") == null;
+		testPassed &= Verify.verifyEquals(goals[1].getProgressData().getPoints(), 2800 * 2.5, "Goals[1] progress point") == null;
+		testPassed &= Verify.verifyEquals(goals[0].getProgressData().getPoints(), 3000 * 2.5, "Goals[0] progress point") == null;
 
-		testPassed &= Verify.verifyEquals(goal3.getProgressData().getSteps(), 18000, "Goals[3] progress steps") == null;
-		testPassed &= Verify.verifyEquals(goal2.getProgressData().getSteps(), 22000, "Goals[2] progress steps") == null;
-		testPassed &= Verify.verifyEquals(goal1.getProgressData().getSteps(), 28000, "Goals[1] progress steps") == null;
-		testPassed &= Verify.verifyEquals(goal0.getProgressData().getSteps(), 30000, "Goals[1] progress steps") == null;
+		testPassed &= Verify.verifyEquals(goals[3].getProgressData().getSteps(), 18000, "Goals[3] progress steps") == null;
+		testPassed &= Verify.verifyEquals(goals[2].getProgressData().getSteps(), 22000, "Goals[2] progress steps") == null;
+		testPassed &= Verify.verifyEquals(goals[1].getProgressData().getSteps(), 28000, "Goals[1] progress steps") == null;
+		testPassed &= Verify.verifyEquals(goals[0].getProgressData().getSteps(), 30000, "Goals[1] progress steps") == null;
 
-		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData().getDistanceMiles(), miles3, distanceDelta, "Goals[3] progress distance in miles") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getDistanceMiles(), miles2, distanceDelta, "Goals[2] progress distance in miles") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getDistanceMiles(), miles1, distanceDelta, "Goals[1] progress distance in miles") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getDistanceMiles(), miles0, distanceDelta, "Goals[0] progress distance in miles") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[3].getProgressData().getDistanceMiles(), miles3, distanceDelta, "Goals[3] progress distance in miles") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[2].getProgressData().getDistanceMiles(), miles2, distanceDelta, "Goals[2] progress distance in miles") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[1].getProgressData().getDistanceMiles(), miles1, distanceDelta, "Goals[1] progress distance in miles") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[0].getProgressData().getDistanceMiles(), miles0, distanceDelta, "Goals[0] progress distance in miles") == null;
 
-		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[3] full bmr") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[2] full bmr") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[1] full bmr") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[0] full bmr") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[3].getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[3] full bmr") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[2].getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[2] full bmr") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[1].getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[1] full bmr") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[0].getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[0] full bmr") == null;
 
-		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData().getCalorie(), calorie3, totalCalorieDelta, "Goals[3] total calorie") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getCalorie(), calorie2, totalCalorieDelta, "Goals[2] total calorie") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getCalorie(), calorie1, totalCalorieDelta, "Goals[1] total calorie") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getCalorie(), calorie0, totalCalorieDelta, "Goals[0] total calorie") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[3].getProgressData().getCalorie(), calorie3, totalCalorieDelta, "Goals[3] total calorie") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[2].getProgressData().getCalorie(), calorie2, totalCalorieDelta, "Goals[2] total calorie") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[1].getProgressData().getCalorie(), calorie1, totalCalorieDelta, "Goals[1] total calorie") == null;
+		testPassed &= Verify.verifyNearlyEquals(goals[0].getProgressData().getCalorie(), calorie0, totalCalorieDelta, "Goals[0] total calorie") == null;
 
 		// ===== VERIFY STATISTICS
 		long personalBestTimestamp = goals[0].getStartTime() + (13 * 60 + 50) * 60;

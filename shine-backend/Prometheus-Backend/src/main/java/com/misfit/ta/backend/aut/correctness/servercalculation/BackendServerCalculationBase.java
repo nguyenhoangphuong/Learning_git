@@ -1,14 +1,25 @@
 package com.misfit.ta.backend.aut.correctness.servercalculation;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.internalapi.UserInfo;
 import com.misfit.ta.backend.aut.BackendAutomation;
+import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.TimestampObject;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
+import com.misfit.ta.backend.data.goalprogress.GoalSettingsAutoSleepStateChange;
+import com.misfit.ta.backend.data.goalprogress.GoalSettingsGoalValueChange;
+import com.misfit.ta.backend.data.goalprogress.GoalSettingsTimezoneOffsetChange;
+import com.misfit.ta.backend.data.goalprogress.GoalSettingsTracking;
+import com.misfit.ta.backend.data.goalprogress.GoalSettingsTripleTapTypeChange;
+import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.profile.DisplayUnit;
 import com.misfit.ta.backend.data.profile.ProfileData;
+import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.ActivitySessionItem;
@@ -27,6 +38,43 @@ public class BackendServerCalculationBase extends BackendAutomation {
 	protected static final double distanceDelta = 0.001;
 	
 	
+	protected void setDefaultTrackingChanges(Long startDay, UserInfo userInfo) {
+		GoalSettingsTracking goalSettingsTracking = new GoalSettingsTracking();
+
+		Integer timezoneOffset = 25200;
+		Double goalValue = 600.152;
+		Integer tripleTapType = 2;
+		Integer autoSleepState = 1;
+		GoalSettingsTimezoneOffsetChange timezone = new GoalSettingsTimezoneOffsetChange(
+				startDay, timezoneOffset);
+		GoalSettingsGoalValueChange goalValueChange = new GoalSettingsGoalValueChange(
+				startDay, goalValue);
+		GoalSettingsTripleTapTypeChange tripleTapTypeChange = new GoalSettingsTripleTapTypeChange(
+				startDay, tripleTapType);
+		GoalSettingsAutoSleepStateChange autoSleepStateChange = new GoalSettingsAutoSleepStateChange(
+				startDay, autoSleepState);
+		List<TimestampObject> changes = new ArrayList<TimestampObject>();
+		changes.add(timezone);
+		changes.add(goalValueChange);
+		changes.add(tripleTapTypeChange);
+		changes.add(autoSleepStateChange);
+
+		goalSettingsTracking.setChanges(changes);
+		MVPApi.createTrackingGoalSettings(userInfo.getToken(),
+				goalSettingsTracking);
+	}
+	protected Pedometer setUpNewAccount(String token, Long startDay) {
+		ProfileData profile = DataGenerator.generateRandomProfile(startDay,
+				null);
+		Pedometer pedometer = DataGenerator.generateRandomPedometer(startDay,
+				null);
+		Statistics statistics = Statistics.getDefaultStatistics();
+
+		MVPApi.createProfile(token, profile);
+		MVPApi.createPedometer(token, pedometer);
+		MVPApi.createStatistics(token, statistics);
+		return pedometer;
+	}
 	// data helpers
 	protected void changeDistanceUnit(String token, int unit) {
 
