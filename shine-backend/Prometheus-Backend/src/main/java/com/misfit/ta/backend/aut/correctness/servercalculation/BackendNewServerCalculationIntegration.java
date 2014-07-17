@@ -669,7 +669,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		MVPApi.createStatistics(userInfo.getToken(), statistics);
 
 		Integer timezoneOffset = 25200;
-		setDefaultTrackingChanges(startDay - 3 * 3600 * 24, userInfo);
+		setDefaultTrackingChanges(startDay, userInfo);
 
 		
 		// story:
