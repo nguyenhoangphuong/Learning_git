@@ -201,6 +201,15 @@ public class Timeline {
 				&& isDynamicMessageDisplayed(messages);
 	}
 
+	public static void dragUpTimelineAndHandleTutorial() {
+
+		dragUpTimeline();
+
+		// maybe there're 2 tutorials
+		PrometheusHelper.handleTagEditingTutorial();
+		PrometheusHelper.handleTagEditingTutorial();
+	}
+
 	public static boolean isSleepTileCorrect(String timeToTime, String totalDuration, String deepSleepDuration, String quality) {
 		
 		return ViewUtils.isExistedView("UILabel", timeToTime)
