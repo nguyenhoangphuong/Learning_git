@@ -239,6 +239,9 @@ public class PrometheusHelper {
 		SignUp.enterWeight(w1, w2, isUSUnit);
 		SignUp.tapShine();
 		SignUp.tapNext();
+		
+		// Select Shine
+		SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
 
 		// goal
 		SignUp.setGoal(goalLevel);
@@ -247,9 +250,12 @@ public class PrometheusHelper {
 
 		// linking shine
 		SignUp.sync();
-		waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
+
+		// Backed to "Device select" view. Click next
+		SignUp.tapNext();
 		
 		// tutorial
+		waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 		PrometheusHelper.handleTutorial();
 		
 		// firmware popup
@@ -290,6 +296,9 @@ public class PrometheusHelper {
 		SignUp.enterWeight();
 		SignUp.tapShine();
 		SignUp.tapNext();
+		
+		// Select Shine
+		SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
 
 		// goal
 		SignUp.setGoal(1);
@@ -298,9 +307,12 @@ public class PrometheusHelper {
 
 		// linking shine
 		SignUp.sync();
-		waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
+		
+		// Backed to "Device select" view. Click next
+		SignUp.tapNext();
 		
 		// tutorial
+		waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 		PrometheusHelper.handleTutorial();
 		
 		return email;
