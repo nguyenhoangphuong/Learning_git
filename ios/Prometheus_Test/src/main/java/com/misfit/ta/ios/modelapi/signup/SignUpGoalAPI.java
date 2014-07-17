@@ -48,6 +48,10 @@ public class SignUpGoalAPI extends ModelAPI {
 		SignUp.tapNext();
 	}
 	
+	public void e_ShineSelected() {
+    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
+    }
+	
 	public void e_OpenTutorial() {
 		SignUp.tapOpenTutorial();
 	}
@@ -112,6 +116,9 @@ public class SignUpGoalAPI extends ModelAPI {
 				"Current view is SignUp - Profile");
 	}
 	
+	public void v_SelectDevice() {
+    	Assert.assertTrue(SignUp.isSelectDeviceView(), "This is not select device view");
+    }
 	
 	private void assertGoal(int goalLevel) {
 		
