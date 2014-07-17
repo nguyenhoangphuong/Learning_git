@@ -47,7 +47,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 
 	// test cases
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "NewServercalculationSmoke" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "NewServercalculationSmoke", "Integration" })
 	public void NewServerCalculation_Integration() throws FileNotFoundException {
 
 		// sign up new account
@@ -649,48 +649,38 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation" })
-	public void NewServerCalculation_OverlapData() {
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "PushDuplicatedData"})
+	public void NewServerCalculation_PushDuplicatedData() {
 		
 		// sign up new account
 		boolean testPassed = true;
-		String email = MVPApi.generateUniqueEmail();
-//		String email = "sc041@a.a";
+		UserInfo userInfo = MVPApi.signUp();
 		long timestamp = System.currentTimeMillis() / 1000;
-		String token = MVPApi.signUp(email, "qqqqqq").token;
-		String userId = MVPApi.getUserId(token);
-
+		Long startDay = MVPCommon.getDayStartEpoch(timestamp);
+		Long endDay = MVPCommon.getDayEndEpoch(timestamp);
 
 		// create profile / pedometer / statistics
 		ProfileData profile = DataGenerator.generateRandomProfile(timestamp, null);
 		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
 		Statistics statistics = Statistics.getDefaultStatistics();
 
-		MVPApi.createProfile(token, profile);
-		MVPApi.createPedometer(token, pedometer);
-		MVPApi.createStatistics(token, statistics);
+		MVPApi.createProfile(userInfo.getToken(), profile);
+		MVPApi.createPedometer(userInfo.getToken(), pedometer);
+		MVPApi.createStatistics(userInfo.getToken(), statistics);
 
+		Integer timezoneOffset = 25200;
+		setDefaultTrackingChanges(startDay - 3 * 3600 * 24, userInfo);
 
-		// create goal for today
-		Goal goal = Goal.getDefaultGoal();
-		GoalsResult result = MVPApi.createGoal(token, goal);
-
-		goal.setServerId(result.goals[0].getServerId());
-		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
-		
 		
 		// story:
 		// 1st shine:
 		// - 4000 steps - 40 mins (400pts) at 0:00am
 		// - 2000 steps - 20 mins (200pts) at 2:00am
 		// - 4000 steps - 40 mins (400pts) at 3:00am
-		// 2nd shine:
-		// - 2000 steps - 20 mins (200pts) at 0:10am (overlap 0:10am - 0:30am)
-		// - 2000 steps - 20 mins (200pts) at 1:50am (overlap 2:00am - 2:10am)
-		// - 6000 steps - 60 mins (600pts) at 2:50am (overlap 3:00am - 3:40am)
+		
 		// expect:
-		// - 6 session tile (3 from each shine)
-		// - 2000 pogress pts
+		// - 2 session tile 
+		// - 1000 pogress pts
 		GoalRawData data1 = new GoalRawData();
 		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
 		data1.appendGoalRawData(generateEmptyRawData(0 * 60 + 40, 2 * 60));
@@ -701,63 +691,51 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
 		data1.appendGoalRawData(generateEmptyRawData(3 * 60 + 40, 24 * 60));
 		
-		GoalRawData data2 = new GoalRawData();
-		data2.appendGoalRawData(generateEmptyRawData(0, 10));
-		data2.appendGoalRawData(generateSessionRawData(2000, 200, 20));
-		data2.appendGoalRawData(generateEmptyRawData(0 * 60 + 10 + 20, 1 * 60 + 50));
-
-		data2.appendGoalRawData(generateSessionRawData(2000, 200, 20));
-		data2.appendGoalRawData(generateEmptyRawData(1 * 60 + 50 + 20, 2 * 60 + 50));
-
-		data2.appendGoalRawData(generateSessionRawData(6000, 600, 60));
-		
 		
 		// push to server
 		List<String> dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data1).rawData);
-		pushSyncData(timestamp + delayTime * 1, userId, pedometer.getSerialNumberString(), dataStrings);
+		dataStrings.add(MVPApi.getRawDataAsString(startDay, timezoneOffset / 60, "0101", "18", data1).rawData);
+		pushSyncData(timestamp + delayTime * 1, userInfo.getUserId(), pedometer.getSerialNumberString(), dataStrings);
 		
 		
 		// link to new shine 
 		String serialNumber = TextTool.getRandomString(10, 10);
-		BackendHelper.link(token, serialNumber);
+		BackendHelper.link(userInfo.getToken(), serialNumber);
 		
 		ShortcutsTyper.delayTime(delayTime);
 		
 		
 		// push data to server
 		dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2).rawData);
-		pushSyncData(timestamp + delayTime * 2, userId, serialNumber, dataStrings);
+		dataStrings.add(MVPApi.getRawDataAsString(startDay, timezoneOffset / 60, "0101", "18", data1).rawData);
+		pushSyncData(timestamp + delayTime * 2, userInfo.getUserId(), serialNumber, dataStrings);
 		
 		ShortcutsTyper.delayTime(delayTime);
 
 
 		// get server data
-		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0l);
-		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
+		GoalsResult goalResult = MVPApi.searchGoal(userInfo.getToken(), 0l,
+				(long) Integer.MAX_VALUE, 0l);
+		Goal[] goals = goalResult.goals;
+		Goal goal = goals[0];
+		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(userInfo.getToken(), startDay, endDay, 0l);
 		
 		
 		// VERIFY TIMELINE ITEMS
 		// number of session tiles are correct
-		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems), 6, "Goal has 6 session tiles") == null;
+		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems), 3, "Goal has 3 session tiles") == null;
 
 		// session tiles are correct
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 0 * 60, 40, 400), "Goal has session tile at 0:00 - 400 pts") == null;
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 2 * 60, 20, 200), "Goal has session tile at 2:00 - 200 pts") == null;
 		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 3 * 60, 40, 400), "Goal has session tile at 3:00 - 400 pts") == null;
 		
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 0 * 60 + 10, 20, 200), "Goal has session tile at 0:10 - 200 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 1 * 60 + 50, 20, 200), "Goal has session tile at 1:50 - 200 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 2 * 60 + 50, 60, 600), "Goal has session tile at 2:50 - 600 pts") == null;
-
 
 		// ===== VERIFY GOAL PROGRESS
 		double miles = MVPCalculator.calculateMiles(data1.getSteps(), profile.getHeight());
-		miles += MVPCalculator.calculateMiles(data2.getSteps(), profile.getHeight());
 		
-		testPassed &= Verify.verifyEquals(goal.getProgressData().getPoints(), 2000 * 2.5, "Goal progress point") == null;
-		testPassed &= Verify.verifyEquals(goal.getProgressData().getSteps(), 20000, "Goal progress steps") == null;
+		testPassed &= Verify.verifyEquals(goal.getProgressData().getPoints(), 1000, "Goal progress point") == null;
+		testPassed &= Verify.verifyEquals(goal.getProgressData().getSteps(), 10000, "Goal progress steps") == null;
 		testPassed &= Verify.verifyNearlyEquals(goal.getProgressData().getDistanceMiles(), miles, 0.001, "Goal progress distance in miles") == null;
 		
 		Assert.assertTrue(testPassed, "All asserts are passed");
