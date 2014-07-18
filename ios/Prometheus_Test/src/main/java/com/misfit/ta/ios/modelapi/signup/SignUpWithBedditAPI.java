@@ -45,14 +45,21 @@ public class SignUpWithBedditAPI extends ModelAPI {
         SignUp.enterWeight();
         
         // select beddit
-        SignUp.tapBeddit();
-        SignUp.tapNext();
+        e_Next();
+    }
+    
+    public void e_SelectBeddit() {
+    	SignUp.tapSelectDevice(SignUp.SELECT_BEDDIT);
     }
     
     public void e_connect() {
     	
         SignUp.connectSimulatedBeddit();
         ShortcutsTyper.delayTime(3000);
+    }
+    
+    public void e_Next() {
+    	SignUp.tapNext();
     }
     
     public void e_goToActivityTimeline() {
@@ -76,7 +83,9 @@ public class SignUpWithBedditAPI extends ModelAPI {
 		PrometheusHelper.handleUpdateFirmwarePopup();
     }
     
-
+    public void v_SelectDevice() {
+    	Assert.assertTrue(SignUp.isSelectDeviceView(), "This is not select device view");
+    }
     
     public void v_SignUpConnectBeddit() {
     	
@@ -111,5 +120,8 @@ public class SignUpWithBedditAPI extends ModelAPI {
     	Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TileMilestonesLabel), "Milestones tile is displayed");
     }
     
+    public void v_Wait() {
+    	ShortcutsTyper.delayTime(5000);
+    }
 }
 	

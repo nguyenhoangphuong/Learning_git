@@ -24,7 +24,17 @@ public class SignUp {
     }
     
     public static void tapSelectDevice(int deviceSelectCode) {
-    	Gui.touchAVIew("UIButtonLabel", DefaultStrings.ShineLabel);
+    	String deviceLabel = "";
+    	switch (deviceSelectCode) {
+    	case SELECT_SHINE:
+    		deviceLabel = DefaultStrings.ShineLabel;
+    		break;
+    	case SELECT_BEDDIT:
+    		deviceLabel = DefaultStrings.BedditLabel;
+    		break;
+    	}
+    	
+    	Gui.touchAVIew("UIButtonLabel", deviceLabel);
     }
     
     public static void tapSignOut() {
