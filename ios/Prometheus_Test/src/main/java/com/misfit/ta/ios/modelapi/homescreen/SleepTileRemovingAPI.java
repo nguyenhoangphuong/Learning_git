@@ -24,8 +24,8 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	
 	private String email;
 	
-	private static String OldestSleepTitle = "10:00pm - 5:59am";
-	private static String LatestSleepTitle = "5:00pm - 7:59pm";
+	private static String OldestSleepTitle = "10:00pm - 5:25am";
+	private static String LatestSleepTitle = "5:00pm - 7:49pm";
 	
 
 	public void e_init() {
