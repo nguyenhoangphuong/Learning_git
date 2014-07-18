@@ -283,4 +283,10 @@ public class ExtendedWebElementImpl implements ExtendedWebElement, Locatable, Wr
 	}
 
 
+    public Point getLocationOnScreenOnceScrolledIntoView() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
 }
