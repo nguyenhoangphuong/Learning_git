@@ -143,7 +143,7 @@ public class SocialProfileView {
 	
 	static public void tapAlbumImage(int index) {
 		
-		Gui.touchAVIew("PUPhotoView", index);
+		Gui.touchAVIew("PUPhotosGridCell", index);
 	}
 	
 	static public void tapChoosePhoto() {
