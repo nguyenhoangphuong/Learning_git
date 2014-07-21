@@ -42,7 +42,7 @@ public class BackendServerCalculationBase extends BackendAutomation {
 		GoalSettingsTracking goalSettingsTracking = new GoalSettingsTracking();
 
 		Integer timezoneOffset = 25200;
-		Double goalValue = 600.152;
+		Double goalValue = 1000.152;
 		Integer tripleTapType = 0;
 		Integer autoSleepState = 1;
 		GoalSettingsTimezoneOffsetChange timezone = new GoalSettingsTimezoneOffsetChange(

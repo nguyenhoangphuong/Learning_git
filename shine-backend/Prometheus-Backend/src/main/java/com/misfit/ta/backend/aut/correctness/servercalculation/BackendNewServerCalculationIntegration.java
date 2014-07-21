@@ -734,7 +734,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		// ===== VERIFY GOAL PROGRESS
 		double miles = MVPCalculator.calculateMiles(data1.getSteps(), profile.getHeight());
 		
-		testPassed &= Verify.verifyEquals(goal.getProgressData().getPoints(), 1000, "Goal progress point") == null;
+		testPassed &= Verify.verifyEquals((int) Math.floor(goal.getProgressData().getPoints()), 2500, "Goal progress point") == null;
 		testPassed &= Verify.verifyEquals(goal.getProgressData().getSteps(), 10000, "Goal progress steps") == null;
 		testPassed &= Verify.verifyNearlyEquals(goal.getProgressData().getDistanceMiles(), miles, 0.001, "Goal progress distance in miles") == null;
 		
