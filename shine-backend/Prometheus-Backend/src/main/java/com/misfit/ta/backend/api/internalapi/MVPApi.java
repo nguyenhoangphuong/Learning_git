@@ -62,7 +62,7 @@ public class MVPApi extends RequestHelper {
 		Integer.parseInt(Settings.getValue("MVPDataCenterPort"));
 	
 	public static int CACHE_TRY_TIME = 10;
-	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.66r";
+	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.65r";
 
 	
 	// generators
