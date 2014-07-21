@@ -18,7 +18,7 @@ public class DatabaseLaggingVerificationThread implements Runnable {
     
     // end = 30 days ago to now
     long endMax = System.currentTimeMillis()/1000;
-    long endMin = endMax - 2592000;
+    long endMin = endMax - 86400 * 4;
     long startMin = 1;
     long startMax = endMin - 86400;
     
