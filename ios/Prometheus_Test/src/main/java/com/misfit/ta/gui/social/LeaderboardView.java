@@ -30,7 +30,6 @@ public class LeaderboardView {
 	
 	public static void tapToday() {
 		
-		PrometheusHelper.handleUpdateFirmwarePopup();
 		Gui.touchAVIew("UILabel", DefaultStrings.LeaderBoardTodayButtonLabel);
 	}
 	
