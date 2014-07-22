@@ -44,6 +44,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 	protected int DURATION_DELTA = 10;
 	protected long TIMESTAMP_DELTA = 600; 
 	protected long QUALITY_DELTA = 3;
+	protected int GRAPH_ITEMS_DELTA = 2;
 
 
 	// test cases
@@ -171,7 +172,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 
 		// story on today:
-		// - session: 50 minutes - 5000 steps - 600 points at 8:00
+		// - session: 50 minutes - 5000 steps - 500 points at 8:00
 		// - session: 50 minutes - 5000 steps - 500 points at 9:00
 		// - session: 50 minutes - 5000 steps - 500 points at 10:00
 		// - session: 50 minutes - 5000 steps - 500 points at 11:00
@@ -239,10 +240,10 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 
 		// ===== VERIFY GRAPH ITEMS
-		testPassed &= Verify.verifyEquals(graphitems3.size(), 44, "Number of graph items") == null;
-		testPassed &= Verify.verifyEquals(graphitems2.size(), 44, "Number of graph items") == null;
-		testPassed &= Verify.verifyEquals(graphitems1.size(), 44, "Number of graph items") == null;
-		testPassed &= Verify.verifyEquals(graphitems0.size(), 26, "Number of graph items") == null;
+		testPassed &= Verify.verifyNearlyEquals(graphitems3.size(), 44, GRAPH_ITEMS_DELTA, "Number of graph items") == null;
+		testPassed &= Verify.verifyNearlyEquals(graphitems2.size(), 44, GRAPH_ITEMS_DELTA, "Number of graph items") == null;
+		testPassed &= Verify.verifyNearlyEquals(graphitems1.size(), 44, GRAPH_ITEMS_DELTA, "Number of graph items") == null;
+		testPassed &= Verify.verifyNearlyEquals(graphitems0.size(), 26, GRAPH_ITEMS_DELTA, "Number of graph items") == null;
 
 
 		// ===== VERIFY TIMELINE ITEMS

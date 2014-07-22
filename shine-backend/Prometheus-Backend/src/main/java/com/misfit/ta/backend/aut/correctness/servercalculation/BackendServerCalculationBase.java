@@ -34,7 +34,7 @@ public class BackendServerCalculationBase extends BackendAutomation {
 	// fields
 	protected static final int timestampDelta = 120;
 	protected static final double fullBmrDelta = 10;
-	protected static final double totalCalorieDelta = 30;
+	protected static final double totalCalorieDelta = 33;
 	protected static final double distanceDelta = 0.001;
 	
 	
@@ -42,7 +42,7 @@ public class BackendServerCalculationBase extends BackendAutomation {
 		GoalSettingsTracking goalSettingsTracking = new GoalSettingsTracking();
 
 		Integer timezoneOffset = 25200;
-		Double goalValue = 1000.152;
+		Double goalValue = 2500.152;
 		Integer tripleTapType = 0;
 		Integer autoSleepState = 1;
 		GoalSettingsTimezoneOffsetChange timezone = new GoalSettingsTimezoneOffsetChange(
