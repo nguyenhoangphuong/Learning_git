@@ -370,11 +370,10 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 		// sign up new account
 		boolean testPassed = true;
-		String email = MVPApi.generateUniqueEmail();
-//		String email = "sc038@a.a";
+		UserInfo userInfo = MVPApi.signUp();
 		long timestamp = System.currentTimeMillis() / 1000;
-		String token = MVPApi.signUp(email, "qqqqqq").token;
-		String userId = MVPApi.getUserId(token);
+		Long startDay = MVPCommon.getDayStartEpoch(timestamp);
+		Long endDay = MVPCommon.getDayEndEpoch(timestamp);
 
 
 		// create profile (height = 64") / pedometer / statistics
@@ -384,24 +383,12 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		profile.getDisplayedUnits().setDistanceUnit(1);
 		profile.setHeight(64d);
 
-		MVPApi.createProfile(token, profile);
-		MVPApi.createPedometer(token, pedometer);
-		MVPApi.createStatistics(token, statistics);
+		MVPApi.createProfile(userInfo.getToken(), profile);
+		MVPApi.createPedometer(userInfo.getToken(), pedometer);
+		MVPApi.createStatistics(userInfo.getToken(), statistics);
 
+		setDefaultTrackingChanges(startDay - 6 * 24 * 3600, userInfo);
 
-		// create goal for today
-		Goal[] goals = new Goal[6];
-		for(int i = 0; i < 6; i++) {
-
-			long goalTimestamp = timestamp - i * 3600 * 24;
-			Goal goal = Goal.getDefaultGoal(goalTimestamp);
-			GoalsResult result = MVPApi.createGoal(token, goal);
-
-			goal.setServerId(result.goals[0].getServerId());
-			goal.setUpdatedAt(result.goals[0].getUpdatedAt());
-
-			goals[i] = goal;
-		}
 
 		// story:
 		// 1st day:
@@ -480,50 +467,62 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		data0b.appendGoalRawData(generateEmptyRawData(6 * 60 + 150, 24 * 60));
 
 
+		// create timestamp for 6 days
+		int daysNumber = 6;
+		Long[] startDayTimestamps = new Long[daysNumber];
+		Long[] endDayTimestamps = new Long[daysNumber];
+		for (int i = 0; i < daysNumber; i++) {
+			startDayTimestamps[i] = startDay - i * 3600 * 24;
+			endDayTimestamps[i] = endDay - i * 3600 * 24;
+		}
+		int timezoneOffset = 25200;
 		// push to server
 		List<String> dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(goals[5].getStartTime(), goals[5].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data5).rawData);
-		dataStrings.add(MVPApi.getRawDataAsString(goals[4].getStartTime(), goals[4].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data4a).rawData);		
-		pushSyncData(timestamp + delayTime * 1, userId, pedometer.getSerialNumberString(), dataStrings);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[5], timezoneOffset / 60, "0101", "18", data5).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[4], timezoneOffset / 60, "0102", "18", data4a).rawData);		
+		pushSyncData(timestamp + delayTime * 1, userInfo.getUserId(), pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
-		changeDistanceUnit(token, 0);
+		changeDistanceUnit(userInfo.getToken(), 0);
 		
 		dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(goals[4].getStartTime() + 3600, goals[4].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data4b).rawData);
-		dataStrings.add(MVPApi.getRawDataAsString(goals[3].getStartTime(), goals[3].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data3).rawData);
-		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime(), goals[2].getTimeZoneOffsetInSeconds() / 60, "0103", "18", data2a).rawData);
-		pushSyncData(timestamp + delayTime * 2, userId, pedometer.getSerialNumberString(), dataStrings);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[4] + 3600, timezoneOffset / 60, "0101", "18", data4b).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[3],timezoneOffset / 60, "0102", "18", data3).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[2], timezoneOffset / 60, "0103", "18", data2a).rawData);
+		pushSyncData(timestamp + delayTime * 2, userInfo.getUserId(), pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
-		changeDistanceUnit(token, 1);
+		changeDistanceUnit(userInfo.getToken(), 1);
 		
 		dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(goals[2].getStartTime() + 3600, goals[2].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data2b).rawData);
-		dataStrings.add(MVPApi.getRawDataAsString(goals[1].getStartTime(), goals[1].getTimeZoneOffsetInSeconds() / 60, "0102", "18", data1).rawData);
-		pushSyncData(timestamp + delayTime * 3, userId, pedometer.getSerialNumberString(), dataStrings);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[2] + 3600, timezoneOffset / 60, "0101", "18", data2b).rawData);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[1], timezoneOffset / 60, "0102", "18", data1).rawData);
+		pushSyncData(timestamp + delayTime * 3, userInfo.getUserId(), pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
-		changeDistanceUnit(token, 0);
+		changeDistanceUnit(userInfo.getToken(), 0);
 		
 		dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime(), goals[0].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data0a).rawData);
-		pushSyncData(timestamp + delayTime * 4, userId, pedometer.getSerialNumberString(), dataStrings);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[0], timezoneOffset / 60, "0101", "18", data0a).rawData);
+		pushSyncData(timestamp + delayTime * 4, userInfo.getUserId(), pedometer.getSerialNumberString(), dataStrings);
 		ShortcutsTyper.delayTime(delayTime);
 		
-		changeDistanceUnit(token, 1);
+		changeDistanceUnit(userInfo.getToken(), 1);
 		
 		dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(goals[0].getStartTime() + 6 * 3600, goals[0].getTimeZoneOffsetInSeconds() / 60, "0101", "18", data0b).rawData);
-		pushSyncData(timestamp + delayTime * 5, userId, pedometer.getSerialNumberString(), dataStrings);
+		dataStrings.add(MVPApi.getRawDataAsString(startDayTimestamps[0] + 6 * 3600, timezoneOffset / 60, "0101", "18", data0b).rawData);
+		pushSyncData(timestamp + delayTime * 5, userInfo.getUserId(), pedometer.getSerialNumberString(), dataStrings);
+	
 		ShortcutsTyper.delayTime(delayTime);
-
+		GoalsResult goalResult = MVPApi.searchGoal(userInfo.getToken(), 0l,
+				(long) Integer.MAX_VALUE, 0l);
+		Goal[] goals = goalResult.goals;
 
 		// get server data
-		List<TimelineItem> timelineitems4 = MVPApi.getTimelineItems(token, goals[4].getStartTime(), goals[4].getEndTime(), 0l);
-		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
-		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
-		statistics = MVPApi.getStatistics(token);
+		List<TimelineItem> timelineitems4 = MVPApi.getTimelineItems(userInfo.getToken(), goals[4].getStartTime(), goals[4].getEndTime(), 0l);
+		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(userInfo.getToken(), goals[2].getStartTime(), goals[2].getEndTime(), 0l);
+		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(userInfo.getToken(), goals[0].getStartTime(), goals[0].getEndTime(), 0l);
+		statistics = MVPApi.getStatistics(userInfo.getToken());
 
 
 		// === VERIFY DISTANCE TILES
@@ -548,11 +547,10 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 		// sign up new account
 		boolean testPassed = true;
-		String email = MVPApi.generateUniqueEmail();
-//		String email = "sc034@a.a";
+		UserInfo userInfo = MVPApi.signUp();
 		long timestamp = System.currentTimeMillis() / 1000;
-		String token = MVPApi.signUp(email, "qqqqqq").token;
-		String userId = MVPApi.getUserId(token);
+		Long startDay = MVPCommon.getDayStartEpoch(timestamp);
+		Long endDay = MVPCommon.getDayEndEpoch(timestamp);
 
 
 		// create profile / pedometer / statistics
@@ -560,17 +558,12 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
 		Statistics statistics = Statistics.getDefaultStatistics();
 
-		MVPApi.createProfile(token, profile);
-		MVPApi.createPedometer(token, pedometer);
-		MVPApi.createStatistics(token, statistics);
+		MVPApi.createProfile(userInfo.getToken(), profile);
+		MVPApi.createPedometer(userInfo.getToken(), pedometer);
+		MVPApi.createStatistics(userInfo.getToken(), statistics);
 
 
-		// create goal for today
-		Goal goal = Goal.getDefaultGoal();
-		GoalsResult result = MVPApi.createGoal(token, goal);
-
-		goal.setServerId(result.goals[0].getServerId());
-		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
+		setDefaultTrackingChanges(startDay, userInfo);
 
 
 		// story
@@ -612,16 +605,19 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 		
 		// push to server
+		int timezoneOffset = 25200;
 		List<String> dataStrings = new ArrayList<String>();
-		dataStrings.add(MVPApi.getRawDataAsString(goal.getStartTime(), goal.getTimeZoneOffsetInSeconds() / 60, "0101", "18", data).rawData);
-		pushSyncData(timestamp, userId, pedometer.getSerialNumberString(), dataStrings);
+		dataStrings.add(MVPApi.getRawDataAsString(startDay, timezoneOffset / 60, "0101", "18", data).rawData);
+		pushSyncData(timestamp, userInfo.getUserId(), pedometer.getSerialNumberString(), dataStrings);
 		
 		ShortcutsTyper.delayTime(delayTime);
 		
-
+		GoalsResult goalResult = MVPApi.searchGoal(userInfo.getToken(), 0l,
+				(long) Integer.MAX_VALUE, 0l);
+		Goal goal = goalResult.goals[0];
 		// get server data
-		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0l);
-		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
+		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(userInfo.getToken(), goal.getStartTime(), goal.getEndTime(), 0l);
+		goal = MVPApi.getGoal(userInfo.getToken(), goal.getServerId()).goals[0];
 
 
 		// VERIFY TIMELINE ITEMS
@@ -636,7 +632,16 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 		// daily goal milestone tiles are correct
 		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems, goal, 10 * 60 + 32, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goal has 100% tile") == null;
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems, goal, 15 * 60 + 2, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goal has 150% tile") == null;
+		/*
+		 * This is a corner case.
+		 * Server calculation doesn't have the minute data so that it uses the average value to accumulate the daily goal milestone
+		 * from start day to 13:30: 1480 pts
+		 * 13:30 - 15:00: empty data
+		 * 15:00 - 16:00: 100 pts
+		 * 150 min and 100 pts ==> at 13:51 we have total 1500 pts ==> hit milestone
+		 */
+		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems, goal, 13 * 60 + 51, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goal has 150% tile") == null;
+		
 		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems, goal, 17 * 60 + 32, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goal has 200% tile") == null;
 
 
