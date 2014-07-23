@@ -409,6 +409,14 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
     
+    public static void touchATaggedView(String type, int tag) {
+        String message = "(Gui touchAViewWithViewName: @\"%type\" andTag: %tag)";
+        message = message.replace("%type", type);
+        message = message.replace("%tag", String.valueOf(tag));
+
+        NuRemoteClient.sendToServer(message);
+    }
+    
     /**
      * Tap Next
      * This method is used in Log In screen or Sign Up screens
@@ -514,6 +522,13 @@ public class Gui {
     public static void setText(String viewName, int index, String text) {
         String message = "(Gui enterTextForView: %textView withText: @\"%text\")";
         message = message.replace("%textView", ViewUtils.generateFindViewStatement(viewName, index));
+        message = message.replace("%text", text);
+        NuRemoteClient.sendToServer(message);
+    }
+    
+    public static void setTextTagged(String viewName, int tag, String text) {
+        String message = "(Gui enterTextForView: %textView withText: @\"%text\")";
+        message = message.replace("%textView", ViewUtils.generateFindTaggedViewStatement(viewName, tag));
         message = message.replace("%text", text);
         NuRemoteClient.sendToServer(message);
     }
