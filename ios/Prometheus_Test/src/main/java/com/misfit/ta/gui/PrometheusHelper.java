@@ -18,6 +18,14 @@ public class PrometheusHelper {
 	private static String[] shortDaysOfWeek = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 	private static String[] longDaysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
+	// Manual input field tags
+	public static final int TAG_MANUAL_ACTIVITY_TYPE = 1;
+	public static final int TAG_MANUAL_START_TIME = 2;
+	public static final int TAG_MANUAL_START_TIME_EPOCH = 3;
+	public static final int TAG_MANUAL_DURATION = 4;
+	public static final int TAG_MANUAL_STEPS = 5;
+	public static final int TAG_MANUAL_INTENSITY_LEVEL = 6;
+	
 	/* Input Helper */
 	public static void enterEmailPassword(String email, String password) {
 
@@ -100,18 +108,18 @@ public class PrometheusHelper {
 		manualInputTime(times);
 
 		// enter duration
-		Gui.touchAVIew("UITextField", 3);
-		Gui.setText("UITextField", 3, duration + "");
+		Gui.touchATaggedView("UITextField", TAG_MANUAL_DURATION);
+		Gui.setTextTagged("UITextField", TAG_MANUAL_DURATION, duration + "");
 		Gui.dismissPicker();
 		
 		// enter steps
-		Gui.touchAVIew("UITextField", 4);
-		Gui.setText("UITextField", 4, steps + "");
+		Gui.touchATaggedView("UITextField", TAG_MANUAL_STEPS);
+		Gui.setTextTagged("UITextField", TAG_MANUAL_STEPS, steps + "");
 		Gui.dismissPicker();
 	}
 
 	public static void manualInputTime(String[] times) {
-		Gui.touchAVIew("UITextField", 1);
+		Gui.touchATaggedView("UITextField", TAG_MANUAL_START_TIME);
 		Gui.setPicker(0, times[0]);
 		Gui.setPicker(1, times[1]);
 		Gui.setPicker(2, times[2]);

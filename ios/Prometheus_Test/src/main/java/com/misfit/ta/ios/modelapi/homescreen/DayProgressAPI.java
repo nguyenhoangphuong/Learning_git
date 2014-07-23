@@ -140,7 +140,12 @@ public class DayProgressAPI extends ModelAPI {
 					
 					int remainMins = MVPCalculator.calculateNearestTimeRemainInMinute(1000 - (int) this.totalPoints, MVPEnums.ACTIVITY_WALKING);
 					String remainTimeString = Gui.getProperty("PTBottomHalfCircleLabel", 0, "text");
-					remainTimeString = remainTimeString.substring(remainTimeString.indexOf('_') + 1, remainTimeString.lastIndexOf('_'));
+					
+					int beginIdx = remainTimeString.indexOf('_') + 1,
+						endIdx = remainTimeString.lastIndexOf('_');
+					if (beginIdx >= 0 && beginIdx < endIdx && endIdx <= remainTimeString.length()) {
+						remainTimeString = remainTimeString.substring(beginIdx, endIdx);
+					}
 
 					errors.add(Verify.verifyEquals(
 							remainTimeString, PrometheusHelper.convertNearestTimeInMinuteToString(remainMins), 
