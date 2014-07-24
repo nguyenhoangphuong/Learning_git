@@ -54,7 +54,7 @@ public class EditSocialProfileAPI extends ModelAPI {
 		PrometheusHelper.signIn(email, "qwerty1");
 		
 		// set up gui
-		PrometheusHelper.handleUpdateFirmwarePopup();
+		PrometheusHelper.handleCalloutMessagePopup();
 		HomeScreen.tapLeaderboard();
 		LeaderboardView.tapGotIt();
 		HomeScreen.tapSocialProfile();

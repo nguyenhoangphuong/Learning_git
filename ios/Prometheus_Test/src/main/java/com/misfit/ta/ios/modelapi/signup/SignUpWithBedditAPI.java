@@ -80,7 +80,7 @@ public class SignUpWithBedditAPI extends ModelAPI {
 		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 		
 		PrometheusHelper.handleTutorial();
-		PrometheusHelper.handleUpdateFirmwarePopup();
+		PrometheusHelper.handleCalloutMessagePopup();
     }
     
     public void v_SelectDevice() {
