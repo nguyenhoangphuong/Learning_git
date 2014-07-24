@@ -751,15 +751,15 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 	public void NewServerCalculation_RealSleepData() throws IOException, JSONException {
 
 		try {
-			Files.delete("sleeprawdata");
-			Files.getFile("sleeprawdata");
+			Files.delete("rawdata");
+			Files.getFile("rawdata");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		String[] testPaths = new String[] {
-			"sleeprawdata/test0", 
-			"sleeprawdata/test1", 
+			"rawdata/test0", 
+			"rawdata/test1", 
 //			"rawdata/test2", 
 //			"rawdata/test3", 
 //			"rawdata/test4"
