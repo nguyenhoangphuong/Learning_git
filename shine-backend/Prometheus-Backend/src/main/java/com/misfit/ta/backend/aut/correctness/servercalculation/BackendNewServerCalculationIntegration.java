@@ -751,7 +751,6 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 	public void NewServerCalculation_RealSleepData() throws IOException, JSONException {
 
 		try {
-			Files.delete("rawdata");
 			Files.getFile("rawdata");
 		} catch (Exception e) {
 			e.printStackTrace();
