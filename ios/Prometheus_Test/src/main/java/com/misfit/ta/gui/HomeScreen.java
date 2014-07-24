@@ -69,7 +69,6 @@ public class HomeScreen {
 	
 	public static void tapWordView() {
 		tapMenuSocial();
-		PrometheusHelper.handleUpdateFirmwarePopup();
 		Gui.touchAVIew("UIButton", DefaultStrings.WorldViewButtonLabel);
 	}
 	
