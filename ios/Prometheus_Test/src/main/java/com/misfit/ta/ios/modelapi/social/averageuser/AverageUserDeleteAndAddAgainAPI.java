@@ -59,6 +59,7 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 	
 	public void e_goToLeaderboard() {
 		
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapLeaderboard();
 		LeaderboardView.tapGotIt();
 		LeaderboardView.waitForNoFriendToDissapear();
