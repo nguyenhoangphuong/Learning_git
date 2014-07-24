@@ -365,7 +365,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "MarathonTile" })
 	public void NewServerCalculation_MarathonTile() {
 
 		// sign up new account
@@ -542,7 +542,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServercalculation", "Progress" })
 	public void NewServerCalculation_Progress() {
 
 		// sign up new account
@@ -767,9 +767,8 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		
 		for(String testFolderPath : testPaths) {
 			
-			String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
-//			String token = MVPApi.signUp("sc077@a.a", "qqqqqq").token;
-			String userId = MVPApi.getUserId(token);
+			UserInfo userInfo = MVPApi.signUp();
+			
 			
 			// parse test metadata file
 			long currentTimestamp = System.currentTimeMillis() / 1000;
@@ -785,17 +784,17 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 			logger.info("Number of days: " + numberOfDays);			
 			
 			Pedometer pedometer = DataGenerator.generateRandomPedometer(System.currentTimeMillis() / 1000, null);
-			MVPApi.createProfile(token, DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null));
-			MVPApi.createPedometer(token, pedometer);
-			MVPApi.createGoal(token, Goal.getDefaultGoal());
+			MVPApi.createProfile(userInfo.getToken(), DataGenerator.generateRandomProfile(System.currentTimeMillis() / 1000, null));
+			MVPApi.createPedometer(userInfo.getToken(), pedometer);
 			
-			// create goal in old day too
-			for(int i = numberOfDays; i >= 0; i--)
-				MVPApi.createGoal(token, Goal.getDefaultGoal(currentTimestamp - i * 3600 * 24));
+			
+			setDefaultTrackingChanges(MVPCommon.getDayStartEpoch(currentTimestamp - numberOfDays * 3600 * 24), userInfo);
 
 			// push raw data to server
 			File testFolder = new File(testFolderPath);
 			long startTimestamp = MVPCommon.getDayStartEpoch();
+			logger.info("*********Start timestamp: " + startTimestamp);
+			System.out.println("*********Start timestamp: " + startTimestamp);
 			int numberOfDaysToAdd = (int) ((currentTimestamp - lastSyncTime) / (3600 * 24));
 
 			for(File syncFolder : testFolder.listFiles()) {
@@ -803,13 +802,13 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 				if(syncFolder.isFile())
 					continue;
 
-				SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(startTimestamp, userId, pedometer.getSerialNumberString(), syncFolder.getAbsolutePath());
+				SDKSyncLog syncLog = ServerCalculationTestHelpers.createSDKSyncLogFromFilesInFolder(startTimestamp, userInfo.getUserId(), pedometer.getSerialNumberString(), syncFolder.getAbsolutePath());
 				
 				for(SDKSyncEvent event : syncLog.getEvents()) {
 					if(event.getEvent().equals(SDKSyncEvent.EVENT_GET_FILE_ACTIVITY)) {
 						
 						long timestamp = event.getResponseFinished().getValue().getTimestamp();
-						
+					
 						Calendar cal = Calendar.getInstance();
 						cal.setTimeInMillis(timestamp * 1000);
 						cal.add(Calendar.DAY_OF_MONTH, numberOfDaysToAdd);
@@ -827,7 +826,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 			ShortcutsTyper.delayTime(delayTime);
 			
 			// get timeline items
-			List<TimelineItem> actualItems = MVPApi.getTimelineItems(token, 
+			List<TimelineItem> actualItems = MVPApi.getTimelineItems(userInfo.getToken(), 
 					currentTimestamp - 3600 * 24 * numberOfDays, 
 					currentTimestamp + 3600 * 24, null, TimelineItemDataBase.TYPE_SLEEP);
 			List<TimelineItem> expectedItems = TimelineItem.getTimelineItems(json.getJSONArray("sleeps"));
