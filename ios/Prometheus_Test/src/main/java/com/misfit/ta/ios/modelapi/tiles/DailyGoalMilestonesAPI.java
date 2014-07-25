@@ -116,8 +116,9 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 		Timeline.openTile(startTime);
 		errors.add(Verify.verifyTrue(Timeline.isActivityTileCorrect(startTime, endTime, 50, 500, DefaultStrings.WalkingLevel[2]),
 				String.format("Activity tile [%s - %s - 50mins - 500pts] is displayed correctly", startTime, endTime)));
-		Timeline.closeCurrentTile();
 		
+		String title = startTime + " - " + endTime;
+		Timeline.closeTile(title);
 	}
 	
 	public void checkGoalTile(int points, String[] messages) {
@@ -126,7 +127,9 @@ public class DailyGoalMilestonesAPI extends ModelAPI {
 		Timeline.openNotableEventTile(time);
 		errors.add(Verify.verifyTrue(Timeline.isDailyGoalMilestoneTileCorrect(time, points, messages),
 				String.format("Daily goal milestone tile [%s - %d] is displayed correctly", time, points)));
-		Timeline.closeCurrentTile();
+		
+		String title = time;
+		Timeline.closeTile(title);
 	}
 	
 }
