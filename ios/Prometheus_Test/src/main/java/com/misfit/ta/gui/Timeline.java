@@ -125,6 +125,10 @@ public class Timeline {
 	public static void openNotableEventTile(String title) {
 		Gui.touchAVIew("PTTimelineItemNotableEventView", title);
 	}
+	
+	public static void closeCurrentTitle() {
+		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() - 120);
+	}
 
 	public static void closeTile(String title) {
 		Gui.touchAVIew("UILabel", title);
