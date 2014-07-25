@@ -120,6 +120,12 @@
 			<artifactId>prometheus-backend</artifactId>
 			<version>0.0.39</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.misfit.ta</groupId>
+			<artifactId>tools</artifactId>
+			<version>0.0.77</version>
+		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
