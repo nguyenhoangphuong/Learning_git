@@ -211,5 +211,8 @@ public class SignUp {
         // popup error message
         Gui.touchPopupButton(0);
     }
-
+    
+    public static void tapSave() {
+    	Gui.touchAVIew("UILabel", DefaultStrings.SaveButton);
+    }
 }

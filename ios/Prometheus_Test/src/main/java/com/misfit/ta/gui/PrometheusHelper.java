@@ -306,7 +306,6 @@ public class PrometheusHelper {
 		SignUp.enterBirthDay();
 		SignUp.enterHeight();
 		SignUp.enterWeight();
-		SignUp.tapShine();
 		SignUp.tapNext();
 		
 		// Select Shine
@@ -314,7 +313,7 @@ public class PrometheusHelper {
 
 		// goal
 		SignUp.setGoal(1);
-		SignUp.tapNext();
+		SignUp.tapSave();
 		waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
 
 		// linking shine
