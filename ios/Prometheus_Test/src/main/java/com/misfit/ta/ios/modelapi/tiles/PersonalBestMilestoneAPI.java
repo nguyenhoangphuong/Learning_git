@@ -70,7 +70,10 @@ public class PersonalBestMilestoneAPI extends ModelAPI {
 		Timeline.openTile(time);
 		errors.add(Verify.verifyTrue(Timeline.isPersonalBestTileCorrect(time, 500, 400, Timeline.PersonalBestMessages),
 				String.format("Personal best tile [%s - 500pts new - 400pts old] displayed correctly", time)));
-		Timeline.closeCurrentTile();
+		
+		String expandedTitle = time;
+		Timeline.closeTile(expandedTitle);
+		
 		Timeline.dragDownTimeline();
 		
 	}
