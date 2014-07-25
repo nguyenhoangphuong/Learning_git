@@ -126,7 +126,7 @@ public class Timeline {
 		Gui.touchAVIew("PTTimelineItemNotableEventView", title);
 	}
 	
-	public static void closeCurrentTitle() {
+	public static void closeCurrentTile() {
 		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() - 120);
 	}
 
