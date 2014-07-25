@@ -225,9 +225,9 @@ public class PrometheusHelper {
 		}
 	}
 	
-	public static void handleCalloutMessagePopup() {
-		if (ViewUtils.isExistedView("PTInAppCalloutView")) {
-			Gui.touchAVIew("UIButtonLabel", DefaultStrings.CalloutMessageTurnOffButtonTag);
+	public static void handleUpdateFirmwarePopup() {
+		if (ViewUtils.isExistedView("UILabel", DefaultStrings.UpdateFirmwareMessage)) {
+			Gui.touchAVIew("UIButtonLabel", DefaultStrings.FirmwareMessageTurnOffButtonTag);
 		}
 	}
 
@@ -267,7 +267,7 @@ public class PrometheusHelper {
 		PrometheusHelper.handleTutorial();
 		
 		// firmware popup
-		PrometheusHelper.handleCalloutMessagePopup();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		
 	}
 
@@ -336,7 +336,7 @@ public class PrometheusHelper {
 	}
 	
 	public static void signOut() {
-		PrometheusHelper.handleCalloutMessagePopup();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapOpenSettingsTray();
 		HomeScreen.tapSettings();
 		HomeSettings.tapSignOut();

@@ -31,7 +31,7 @@ public class SleepTileRemovingAPI extends ModelAPI {
 	public void e_init() {
 		
 		email = PrometheusHelper.signUpDefaultProfile();
-		PrometheusHelper.handleCalloutMessagePopup();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		
 		// input 1 sleep and 1 nap
 		HomeScreen.tapOpenManualInput();

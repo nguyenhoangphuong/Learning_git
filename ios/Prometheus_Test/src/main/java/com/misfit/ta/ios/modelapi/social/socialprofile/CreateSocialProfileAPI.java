@@ -37,7 +37,7 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	public void e_init() {
 		
 		PrometheusHelper.signUpDefaultProfile();
-		PrometheusHelper.handleCalloutMessagePopup();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 	}
 	
 	public void e_goToLeaderboard() {

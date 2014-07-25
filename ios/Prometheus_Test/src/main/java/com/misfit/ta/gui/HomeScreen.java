@@ -10,7 +10,7 @@ public class HomeScreen {
 
 	/* Navigation */
 	public static void tapOpenSettingsTray() {
-		PrometheusHelper.handleCalloutMessagePopup();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.MenuButtonTag);
 	}
 
@@ -74,7 +74,7 @@ public class HomeScreen {
 	
 	public static void tapSocialProfile() {
 		tapMenuSocial();
-		PrometheusHelper.handleCalloutMessagePopup();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		Gui.touchAVIew("UIButton", DefaultStrings.SocialProfileButtonLabel);
 	}
 	
