@@ -107,6 +107,7 @@ public class WorldFeedAPI extends ModelAPI {
 	
 	public void e_goToWorldFeed() {
 		
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapWordView();
 		WorldFeedView.pullToRefresh();
 		WorldFeedView.waitForPullToRefreshToFinish();
@@ -197,7 +198,7 @@ public class WorldFeedAPI extends ModelAPI {
 	
 	public void e_signOut() {
 
-		PrometheusHelper.signOut();
+		PrometheusHelper.signOutWithoutPopupHandling();
 	}
 	
 	

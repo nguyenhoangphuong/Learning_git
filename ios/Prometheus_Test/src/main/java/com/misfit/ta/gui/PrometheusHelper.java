@@ -340,7 +340,11 @@ public class PrometheusHelper {
 	
 	public static void signOut() {
 		PrometheusHelper.handleUpdateFirmwarePopup();
-		HomeScreen.tapOpenSettingsTray();
+		signOutWithoutPopupHandling();
+	}
+	
+	public static void signOutWithoutPopupHandling() {
+		HomeScreen.tapOpenSettingsTrayWithoutPopupHandling();
 		HomeScreen.tapSettings();
 		HomeSettings.tapSignOut();
 		HomeSettings.chooseSignOut();

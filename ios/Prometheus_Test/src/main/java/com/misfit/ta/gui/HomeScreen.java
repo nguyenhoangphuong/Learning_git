@@ -11,6 +11,10 @@ public class HomeScreen {
 	/* Navigation */
 	public static void tapOpenSettingsTray() {
 		PrometheusHelper.handleUpdateFirmwarePopup();
+		tapOpenSettingsTrayWithoutPopupHandling();
+	}
+	
+	public static void tapOpenSettingsTrayWithoutPopupHandling() {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.MenuButtonTag);
 	}
 
