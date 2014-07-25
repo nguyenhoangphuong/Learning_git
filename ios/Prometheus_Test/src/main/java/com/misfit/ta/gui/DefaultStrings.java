@@ -175,7 +175,7 @@ public class DefaultStrings {
 			"Wrist", "Waist", "Ankle/Foot" };
 	public static String UpdateFirmwareMessage = "We've made Shine even better! Tap menu and place Shine on the circle to update.";
 	public static int FirmwareMessageTurnOffButtonId = 17;
-	public static String FirmwareMessageTurnOffButtonTag = "CalloutCloseButton";
+	public static String CalloutMessageTurnOffButtonTag = "CalloutCloseButton";
 	
 	public static String[] WalkingLevel = { "KINDA ACTIVE", "PRETTY ACTIVE",
 			"VERY ACTIVE" };
