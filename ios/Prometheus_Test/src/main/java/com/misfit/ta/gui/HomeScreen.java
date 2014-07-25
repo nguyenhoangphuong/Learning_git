@@ -74,7 +74,6 @@ public class HomeScreen {
 	
 	public static void tapSocialProfile() {
 		tapMenuSocial();
-		PrometheusHelper.handleUpdateFirmwarePopup();
 		Gui.touchAVIew("UIButton", DefaultStrings.SocialProfileButtonLabel);
 	}
 	
