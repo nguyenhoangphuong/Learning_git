@@ -230,7 +230,7 @@ public class PrometheusHelper {
 	}
 	
 	public static void handleCalloutMessagePopup(String msg) {
-		if (ViewUtils.isExistedView("PTInAppCalloutView") && ViewUtils.isExistedView("UILabel", msg)) {
+		if (ViewUtils.isExistedView("PTInAppCalloutView") /*&& ViewUtils.isExistedView("UILabel", msg)*/) {
 			Gui.touchAVIew("UIButtonLabel", DefaultStrings.CalloutMessageTurnOffButtonTag);
 		}
 	}
@@ -344,7 +344,8 @@ public class PrometheusHelper {
 	}
 	
 	public static void signOutWithoutPopupHandling() {
-		HomeScreen.tapOpenSettingsTrayWithoutPopupHandling();
+		//HomeScreen.tapOpenSettingsTrayWithoutPopupHandling();
+		HomeScreen.tapOpenSettingsTray();
 		HomeScreen.tapSettings();
 		HomeSettings.tapSignOut();
 		HomeSettings.chooseSignOut();

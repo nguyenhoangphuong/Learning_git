@@ -162,12 +162,13 @@ public class Timeline {
 
 	public static boolean isPersonalBestTileCorrect(String time, int points,
 			int lastPoint, String[] messages) {
-
+		String outdidMessage = String.format(PersonalBestOutdidMessage, points
+				 -				- lastPoint);
 		return ViewUtils.isExistedView("UILabel", time)
 				&& ViewUtils.isExistedView("UILabel", String.valueOf(points))
 				&& ViewUtils.isExistedView("UILabel", LabelPoints)
 				&& ViewUtils.isExistedView("UILabel", LabelPersonalBest)
-				&& (isDynamicMessageDisplayed(messages));
+				&& (isDynamicMessageDisplayed(messages) || ViewUtils.isExistedView("UILabel", outdidMessage));
 	}
 
 	public static boolean isStreakTileCorrect(String time, int numberOfDays,
