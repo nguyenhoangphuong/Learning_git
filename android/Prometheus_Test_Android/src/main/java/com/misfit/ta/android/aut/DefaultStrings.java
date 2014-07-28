@@ -39,7 +39,7 @@ public class DefaultStrings {
 	public static String TimezoneEditTextId = "id/manual_timezone_edit_text";
 	public static String ManualViewId = "id/action_manual_input_view";
 	public static String DebugViewId = "id/action_debug_input_view";
-	public static String DebugTextViewId = "id/debug_tv";
+	public static String DebugTextViewId = "id/testing_tv";
 			
 	
 	public static String PointsHomeScreenTextViewId = "id/card_activity_current_points_tv";

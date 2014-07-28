@@ -7,11 +7,12 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
+import com.misfit.ta.android.gui.HomeScreen;
 import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SyncingTest {
-	private static int NUMBER_OF_SYNC = 30;
+	private static int NUMBER_OF_SYNC = 10;
 	
 	@Test(groups = { "android", "Prometheus", "Syncing", "AndroidAutomation", "ContinuousSyncing", "ManualSyncing", "Excluded" })
 	public void ManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
@@ -27,19 +28,21 @@ public class SyncingTest {
 		
 		int popupHeight = 0;
 		int popupWidth = 0;
-		
+		HomeScreen.tapDebug();
 		for (int i = 0; i < NUMBER_OF_SYNC; i++) {
-			System.out.println("Start syncing #" + i);
+			System.out.println("****Start syncing #" + i);
+			System.out.println("***Tap to sync #" + i);
 			Gui.touchAView("ThreeStateView", "mID", "id/action_three_state_imageview");
-			while(ViewUtils.findView("TextView", "mText", "Syncing", 0) != null) {
-				System.out.println("Still Syncing");
-				ShortcutsTyper.delayTime(300);
+			while("Syncing".equals(HomeScreen.getDebugValues()[5])) {
+				System.out.println("****Still Syncing");
+				ShortcutsTyper.delayTime(100);
 				Gui.setInvalidView();
 			}
-			
-			ShortcutsTyper.delayTime(1000);
+			System.out.println("***Finish syncing #" + i);
+			ShortcutsTyper.delayTime(3000);
 			
 			if (hasFailedSyncPopup()) {
+				System.out.println("***Has failed sync popup#" + i);
 				if (firstFailedSync) {
 					popupHeight = Gui.getHeight();
 					popupWidth = Gui.getWidth();
