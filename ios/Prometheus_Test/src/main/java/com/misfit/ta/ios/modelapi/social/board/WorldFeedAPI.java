@@ -132,6 +132,7 @@ public class WorldFeedAPI extends ModelAPI {
 		PrometheusHelper.inputManualRecord(new String[] {"12", "00", "AM"}, 10, 1000);
 		HomeScreen.tapSave();
 		ShortcutsTyper.delayTime(5000);
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapWordView();
 		
 		WorldFeedView.pullToRefresh();
@@ -145,6 +146,7 @@ public class WorldFeedAPI extends ModelAPI {
 		PrometheusHelper.inputManualRecord(new String[] {"12", "20", "AM"}, 5, 500);
 		HomeScreen.tapSave();
 		ShortcutsTyper.delayTime(5000);
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapWordView();
 		
 		WorldFeedView.pullToRefresh();
