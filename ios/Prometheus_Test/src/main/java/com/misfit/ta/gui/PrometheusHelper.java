@@ -313,7 +313,7 @@ public class PrometheusHelper {
 
 		// goal
 		SignUp.setGoal(1);
-		SignUp.tapSave();
+		SignUp.tapNext();
 		waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
 
 		// linking shine
