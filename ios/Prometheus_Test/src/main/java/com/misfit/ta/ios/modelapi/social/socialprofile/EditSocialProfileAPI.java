@@ -137,6 +137,7 @@ public class EditSocialProfileAPI extends ModelAPI {
 	public void e_goToLeaderboard() {
 		
 		SocialProfileView.tapBack();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapLeaderboard();
 	}
 	
