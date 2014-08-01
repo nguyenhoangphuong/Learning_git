@@ -76,6 +76,7 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		Gui.captureScreen("e_deleteAverageUserAndGoToLeaderboard" + System.nanoTime());
 		SocialProfileView.tapBack();
 		
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapLeaderboard();
 		LeaderboardView.pullToRefresh();
 	}
