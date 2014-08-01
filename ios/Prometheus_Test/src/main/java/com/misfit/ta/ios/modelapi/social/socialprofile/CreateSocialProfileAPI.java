@@ -47,6 +47,7 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	
 	public void e_goToWorldView() {
 		
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapWordView();
 	}
 	
