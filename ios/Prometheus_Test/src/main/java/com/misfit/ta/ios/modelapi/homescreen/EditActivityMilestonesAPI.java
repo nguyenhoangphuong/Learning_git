@@ -229,8 +229,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		for(int i = 0; i < 2 && !pass; i++) {
 			Timeline.openTile("1:00am");
 			capture();
-			pass = Timeline.isActivityTileCorrect("1:00am", "1:50am", 50, 2000, Timeline.LabelIntenseSwimming);
-			
+			pass = Timeline.isPersonalBestTileCorrect("1:00am", newPoint, 1000, Timeline.PersonalBestMessages);
 			Timeline.closeTile(Timeline.LabelIntenseSwimming);
 		}
 		
