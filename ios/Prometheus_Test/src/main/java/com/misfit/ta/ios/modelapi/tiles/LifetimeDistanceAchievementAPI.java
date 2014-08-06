@@ -187,12 +187,13 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 			Gui.captureScreen("streaktile-" + System.nanoTime());
 			errors.add(Verify.verifyTrue(Timeline.isLifetimeDistanceBadgeTileCorrect(title, marathonsNumber, message), 
 					String.format("Life time distance tile [%s - %d] is existed", title, marathonsNumber)));
-			Timeline.closeCurrentTile();
+//			Timeline.closeCurrentTile();
+			Timeline.closeAchievementTile();
 			return;
 		}
 		
 		if(i > 1) {
-			errors.add(String.format("No archievement tile [%d:%02dam - %d - %s] is existed", 
+			errors.add(String.format("No achievement tile [%d:%02dam - %d - %s] is existed", 
 					hitAchievementHour, hitAchievementMinute, marathonsNumber, usUnit ? "us" : "si"));
 		}
 	}

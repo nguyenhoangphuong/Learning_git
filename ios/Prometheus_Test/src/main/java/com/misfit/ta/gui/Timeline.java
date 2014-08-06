@@ -139,6 +139,9 @@ public class Timeline {
 		closeTile(LabelStreak);
 	}
 
+	public static void closeAchievementTile(){
+		closeTile(LabelAchievement);
+	}
 	public static void closeTile(String title) {
 		Gui.touchAVIew("UILabel", title);
 	}
