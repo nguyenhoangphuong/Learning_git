@@ -750,12 +750,6 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "NewServerCalculationSleep", "NewServercalculation", "NSCSleep" })
 	public void NewServerCalculation_RealSleepData() throws IOException, JSONException {
 
-		try {
-			Files.getFile("rawdata");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 		String[] testPaths = new String[] {
 			"rawdata/test0", 
 			"rawdata/test1", 
@@ -765,7 +759,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 		};
 		
 		for(String testFolderPath : testPaths) {
-			
+			logger.info("**** Loop #" + testFolderPath);
 			UserInfo userInfo = MVPApi.signUp();
 			
 			
@@ -937,7 +931,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 				numberOfFailedItems++;
 		}
 		
-		Assert.assertEquals(numberOfFailedItems, 0, "Number of failed sleeps");
+		Verify.verifyEquals(numberOfFailedItems, 0, "Number of failed sleeps is correct");
 	}
 	
 }

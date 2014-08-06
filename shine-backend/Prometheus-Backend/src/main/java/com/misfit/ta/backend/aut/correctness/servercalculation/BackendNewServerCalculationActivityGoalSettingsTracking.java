@@ -1080,7 +1080,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 				Long endDay = MVPCommon.getDayEndEpoch(timestamp);
 				Pedometer pedometer = setUpNewAccount(userInfo.getToken(), startDay);
 				
-				// Don't push track changes
+				// Don't push track changes, default timezone will be UTZC+0
 				GoalRawData data = new GoalRawData();
 				data.appendGoalRawData(generateEmptyRawData(0 * 60, 14 * 60));
 				List<String> dataStrings = new ArrayList<String>();
@@ -1090,6 +1090,8 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 				pushSyncData(startDay + 14 * 60, userInfo.getUserId(),
 						pedometer.getSerialNumberString(), dataStrings);
 
+				//data crosses 2 days in timezone UTC+0, hence 2 goals will be created
+				
 				logger.info("Waiting " + delayTime + " miliseconds");
 				ShortcutsTyper.delayTime(delayTime);
 
@@ -1098,6 +1100,12 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 
 				Goal goal = goalResult.goals[0];
 				boolean testPassed = true;
+				testPassed &= Verify.verifyEquals(goalResult.goals.length, 2, "Two goals are created oke") == null;
+				testPassed &= Verify.verifyEquals(goalResult.goals[0].getTimeZoneOffsetInSeconds(), 0, "Timezone of the latest goal is incorrect") == null;
+				testPassed &= Verify.verifyEquals(goalResult.goals[1].getTimeZoneOffsetInSeconds(), 0, "Timezone of the yesterday goal is incorrect") == null;
+
+				Assert.assertTrue(testPassed);
+
 	 }
 
 }
