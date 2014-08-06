@@ -35,9 +35,12 @@ public class SleepTileRemovingAPI extends ModelAPI {
 		
 		// input 1 sleep and 1 nap
 		HomeScreen.tapOpenManualInput();
+		Gui.swipeUp(5000);
 		HomeScreen.tap8HourSleep();
 		ShortcutsTyper.delayTime(2000);
+		Gui.swipeDown(5000);
 		PrometheusHelper.manualInputTime(new String[] {"5", "00", "PM"});
+		Gui.swipeUp(5000);
 		HomeScreen.tap180MinNap();
 		ShortcutsTyper.delayTime(2000);
 		HomeScreen.tapSave();

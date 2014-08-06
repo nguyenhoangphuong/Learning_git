@@ -214,7 +214,7 @@ public class DefaultStrings {
 	public static String LessImprovmentMessage = "less active than last week";
 	public static String MoreImprovmentMessage = "more active than last week";
 	public static String _180MinNap = "3-hour nap";
-	public static String _8HourSleep = "8h sleep";
+	public static String _8HourSleep = "8-hour night sleep";
 	public static String RemoveSleepButton = "Remove Session";
 	
 	public static String BatteryLowTitle = "Your battery is low!";
