@@ -133,7 +133,8 @@ public class StreakMilestoneAPI extends ModelAPI {
 		errors.add(Verify.verifyTrue(Timeline.isStreakTileCorrect(title, dayDiff + 1, messages), 
 				String.format("At least one streak tile [%s - %d] has correct content", title, dayDiff + 1)));
 		
-		Timeline.closeCurrentTile();
+		Timeline.closeStreakTile();
+		
 		Timeline.dragDownTimeline();
 	}
 
