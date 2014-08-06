@@ -153,7 +153,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 				Timeline.openTile(hit100GoalTime);
 				capture();
 				pass = Timeline.isDailyGoalMilestoneTileCorrect(hit100GoalTime, 1000, Timeline.DailyGoalMessagesFor100Percent);
-				Timeline.closeCurrentTile();
+				Timeline.closeMilestoneTile();
 			}
 			
 			errors.add(Verify.verifyTrue(pass, String.format("Goal 100%% tile [%s - 1000pts] displays correctly", hit100GoalTime)));
@@ -173,7 +173,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 					Timeline.openTile(hit150GoalTime);
 					capture();
 					pass = Timeline.isDailyGoalMilestoneTileCorrect(hit150GoalTime, 1500, Timeline.DailyGoalMessagesFor150Percent);
-					Timeline.closeCurrentTile();
+					Timeline.closeMilestoneTile();
 					break;
 				}
 			}
@@ -195,7 +195,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 					Timeline.openTile(hit200GoalTime);
 					capture();
 					pass = Timeline.isDailyGoalMilestoneTileCorrect(hit200GoalTime, 2000, Timeline.DailyGoalMessagesFor200Percent);
-					Timeline.closeCurrentTile();
+					Timeline.closeMilestoneTile();
 					break;
 				}
 			}
@@ -217,7 +217,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		capture();
 		errors.add(Verify.verifyTrue(Timeline.isStreakTileCorrect(hit100GoalTime, 3, Timeline.Streak3DaysMessages),
 				String.format("Streak tile [%s - 3 days] displays correctly", hit100GoalTime)));
-		Timeline.closeCurrentTile();
+		Timeline.closeStreakTile();
 	}
 
 	private void checkPersonalBestMilestone(int newPoint) {
@@ -229,8 +229,9 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		for(int i = 0; i < 2 && !pass; i++) {
 			Timeline.openTile("1:00am");
 			capture();
-			pass = Timeline.isPersonalBestTileCorrect("1:00am", newPoint, 1000, Timeline.PersonalBestMessages);
-			Timeline.closeCurrentTile();
+			pass = Timeline.isActivityTileCorrect("1:00am", "1:50am", 50, 2000, Timeline.LabelIntenseSwimming);
+			
+			Timeline.closeTile(Timeline.LabelIntenseSwimming);
 		}
 		
 		errors.add(Verify.verifyTrue(pass, String.format("Personal best milestone [1:00am - %dpts new - 1000pts old] displays correctly", newPoint)));

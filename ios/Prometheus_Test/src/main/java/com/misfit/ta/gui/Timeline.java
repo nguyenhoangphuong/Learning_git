@@ -16,6 +16,7 @@ public class Timeline {
 	public static String LabelAchievement = "ACHIEVEMENT";
 	public static String LabelTimeTravel = "TIME TRAVEL";
 	public static String LabelSleep = "SLEEP";
+	public static String LabelIntenseSwimming = "INTENSE SWIMMING";
 
 	public static String PersonalBestOutdidMessage = "You outdid your previous record by %d points!";
 
@@ -128,6 +129,14 @@ public class Timeline {
 	
 	public static void closeCurrentTile() {
 		Gui.touch(Gui.getScreenWidth() / 2, Gui.getScreenHeight() - 120);
+	}
+	
+	public static void closeMilestoneTile() {
+		closeTile(LabelMilestone);
+	}
+	
+	public static void closeStreakTile() {
+		closeTile(LabelStreak);
 	}
 
 	public static void closeTile(String title) {
