@@ -79,11 +79,16 @@ public class BackendHelper {
 	}
 	
 	public static void setPersonalBest(String token, int points) {
+		long timestamp = System.currentTimeMillis() / 1000;
+		setPersonalBest(token, points, timestamp);
+	}
+	
+	public static void setPersonalBest(String token, int points, long timestamp) {
 		
 		// create first
 		Statistics statistics = DefaultValues.RandomStatistic();
 		statistics.getPersonalRecords().getPersonalBestRecordsInPoint().setPoint((double)points * 2.5);
-		statistics.getPersonalRecords().getPersonalBestRecordsInPoint().setTimestamp(System.currentTimeMillis() / 1000);
+		statistics.getPersonalRecords().getPersonalBestRecordsInPoint().setTimestamp(timestamp);
 		statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
 		BaseResult result = MVPApi.createStatistics(token, statistics);
 
@@ -92,7 +97,7 @@ public class BackendHelper {
 
 			statistics = Statistics.fromResponse(result.response);
 			statistics.getPersonalRecords().getPersonalBestRecordsInPoint().setPoint((double)points * 2.5);
-			statistics.getPersonalRecords().getPersonalBestRecordsInPoint().setTimestamp(System.currentTimeMillis() / 1000);
+			statistics.getPersonalRecords().getPersonalBestRecordsInPoint().setTimestamp(timestamp);
 			statistics.setUpdatedAt(System.currentTimeMillis() / 1000);
 			MVPApi.updateStatistics(token, statistics);
 		}
