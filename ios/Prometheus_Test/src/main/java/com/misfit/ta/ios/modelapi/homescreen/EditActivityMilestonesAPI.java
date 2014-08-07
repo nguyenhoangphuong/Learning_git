@@ -47,7 +47,8 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		BackendHelper.completeGoalInPast(token, 2);
 
 		// create a personal best record
-		BackendHelper.setPersonalBest(token, 1000);
+		long yesterdayTimestamp = (System.currentTimeMillis() - 24*3600*1000) / 1000;
+		BackendHelper.setPersonalBest(token, 1000, yesterdayTimestamp);
 		
 		// get new data from server
 		HomeScreen.pullToRefresh();
@@ -230,7 +231,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 			Timeline.openTile("1:00am");
 			capture();
 			pass = Timeline.isPersonalBestTileCorrect("1:00am", newPoint, 1000, Timeline.PersonalBestMessages);
-			Timeline.closeTile(Timeline.LabelIntenseSwimming);
+			Timeline.closeTile(Timeline.LabelPersonalBest);
 		}
 		
 		errors.add(Verify.verifyTrue(pass, String.format("Personal best milestone [1:00am - %dpts new - 1000pts old] displays correctly", newPoint)));
