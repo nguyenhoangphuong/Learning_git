@@ -93,9 +93,10 @@ public class GoalSettingsAPI extends ModelAPI {
 		System.out.println(fullScreenHeight);
 		System.out.println(fullScreenWidth);
 		int duration = PrometheusHelper.randInt(5, 9);
-		int steps = duration * PrometheusHelper.randInt(10, 180);
+		int steps = duration * PrometheusHelper.randInt(100, 180);
 		PrometheusHelper.manualInputActivity("06", "05", duration, steps);
 		ShortcutsTyper.delayTime(6000);
+		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
 	}
 
 	/**

@@ -62,6 +62,15 @@ public class PrometheusHelper {
 		String email = generateUniqueEmail();
 		signUp(email);
 	}
+	
+	public static void signOut(int fullScreenHeight, int fullScreenWidth) {
+		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
+		ShortcutsTyper.delayTime(2000);
+		Gui.setInvalidView();
+		ShortcutsTyper.delayTime(5000);
+		Settings.tapShineSettings();
+		ShortcutsTyper.delayTime(3000);
+	}
 
 	public static float calculatePoint(int lastSteps, int lastDuration,
 			int activityType) {
@@ -305,8 +314,8 @@ public class PrometheusHelper {
 
 	public static void pullToRefresh(int fullScreenWidth, int fullScreenHeight) {
 		Gui.swipe(fullScreenWidth / 2, fullScreenHeight / 2,
-				fullScreenWidth / 2, fullScreenHeight / 2 + 800);
-		Gui.touch(fullScreenWidth / 2, fullScreenHeight / 2 + 800,
+				fullScreenWidth / 2, fullScreenHeight / 2 + 1000);
+		Gui.touch(fullScreenWidth / 2, fullScreenHeight / 2 + 1000,
 				TouchPressType.DOWN);
 	}
 

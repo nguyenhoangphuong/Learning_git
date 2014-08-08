@@ -7,6 +7,7 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.android.AutomationTest;
+import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.android.gui.HomeScreen;
@@ -37,12 +38,16 @@ public class DayProgressAPI extends ModelAPI {
 	private float weight = 140f; //140lbs
 	private boolean isMale = true;
 	private int year = 1982;
+	private int fullScreenHeight;
+	private int fullScreenWidth;
 
 	/**
 	 * This method implements the Edge 'e_Init'
 	 * 
 	 */
 	public void e_Init() {
+		fullScreenHeight = Gui.getScreenHeight();
+		fullScreenWidth = Gui.getScreenWidth();
 		ShortcutsTyper.delayOne();
 		// gender, height and weight have default values such as male, 5'4"", 140lbs
 		PrometheusHelper.signUp();
@@ -70,6 +75,8 @@ public class DayProgressAPI extends ModelAPI {
 		calculateTotalProgressInfo();
 		this.hour += 1;
 		
+		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
+		
 	}
 
 	/**
@@ -78,6 +85,7 @@ public class DayProgressAPI extends ModelAPI {
 	 */
 	public void v_Today() {
 //		Assert.assertTrue(isTodayView(), "This is Today view");
+		Gui.touchAView("TextView", "mID", DefaultStrings.FirmwareUpdateDismissButtonId);
 	}
 
 	/**

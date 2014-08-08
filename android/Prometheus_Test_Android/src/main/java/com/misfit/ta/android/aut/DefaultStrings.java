@@ -16,6 +16,7 @@ public class DefaultStrings {
 	public static String SignInFacebookButtonTextId = "id/sign_up_with_facebook_tv";
 	public static String SignUpButtonText = "Sign Up with Email";
 	public static String SignUpButtonTextId = "id/sign_up_with_email_tv";
+	public static String ShineOutButtonTextId = "id/setting_shine_out_btn";
 	
 	public static String ImageBackButtonId = "id/activity_back_btn";
 	public static String ImageNextButtonId = "id/activity_next_btn";
@@ -97,4 +98,6 @@ public class DefaultStrings {
 	
 	public static String GoalSummaryTextViewId = "id/setting_toggle_summary_tv";
 	public static String TotalSleepTextViewId = "id/card_sleep_total_hours_tv";
+	
+	public static String FirmwareUpdateDismissButtonId = "id/card_left_button";
 }
