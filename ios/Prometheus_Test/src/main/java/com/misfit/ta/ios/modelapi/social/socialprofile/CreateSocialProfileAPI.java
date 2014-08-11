@@ -42,7 +42,7 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	
 	public void e_goToLeaderboard() {
 		
-		HomeScreen.tapLeaderboard();
+		HomeScreen.tapMenuSocial();
 	}
 	
 	public void e_goToWorldView() {

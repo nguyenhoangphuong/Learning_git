@@ -66,10 +66,11 @@ public class HomeScreen {
 	}
 	
 	
-	public static void tapLeaderboard() {
+	public static void goToTodayViewOfLeaderboard() {
 		tapMenuSocial();
 		LeaderboardView.tapToday();
 	}
+	
 	
 	public static void tapWordView() {
 		tapMenuSocial();
