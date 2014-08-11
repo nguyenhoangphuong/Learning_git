@@ -302,7 +302,6 @@ public class PrometheusHelper {
 		HomeScreen.intputActivity(String.valueOf(duration),
 				String.valueOf(steps));
 		ShortcutsTyper.delayTime(500);
-		Gui.pressBack();
 		HomeScreen.saveManual();
 	}
 

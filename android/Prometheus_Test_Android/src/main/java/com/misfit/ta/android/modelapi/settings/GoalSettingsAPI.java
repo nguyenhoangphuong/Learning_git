@@ -28,7 +28,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	private int goal = 1000;
 	private int currentGoal = -1;
 	private boolean isEdited = false;
-
+	private boolean isFirstTime = true;
 	/**
 	 * This method implements the Edge 'e_CancelEdit'
 	 * 
@@ -92,8 +92,12 @@ public class GoalSettingsAPI extends ModelAPI {
 		fullScreenWidth = Gui.getScreenWidth();
 		System.out.println(fullScreenHeight);
 		System.out.println(fullScreenWidth);
+		if (isFirstTime) {
+			Gui.touchAView("TextView", "mID", DefaultStrings.FirmwareUpdateDismissButtonId);
+			isFirstTime = false;
+		}
 		int duration = PrometheusHelper.randInt(5, 9);
-		int steps = duration * PrometheusHelper.randInt(100, 180);
+		int steps = duration * PrometheusHelper.randInt(10, 180);
 		PrometheusHelper.manualInputActivity("06", "05", duration, steps);
 		ShortcutsTyper.delayTime(6000);
 		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);

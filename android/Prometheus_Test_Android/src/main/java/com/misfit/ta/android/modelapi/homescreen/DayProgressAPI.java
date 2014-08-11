@@ -40,7 +40,8 @@ public class DayProgressAPI extends ModelAPI {
 	private int year = 1982;
 	private int fullScreenHeight;
 	private int fullScreenWidth;
-
+	private boolean isFirstTime = true;
+	
 	/**
 	 * This method implements the Edge 'e_Init'
 	 * 
@@ -85,7 +86,10 @@ public class DayProgressAPI extends ModelAPI {
 	 */
 	public void v_Today() {
 //		Assert.assertTrue(isTodayView(), "This is Today view");
-		Gui.touchAView("TextView", "mID", DefaultStrings.FirmwareUpdateDismissButtonId);
+		if (isFirstTime) {
+			Gui.touchAView("TextView", "mID", DefaultStrings.FirmwareUpdateDismissButtonId);
+			isFirstTime = false;
+		}
 	}
 
 	/**
