@@ -250,14 +250,14 @@ public class PrometheusHelper {
 		SignUp.enterHeight(h1, h2, isUSUnit);
 		SignUp.enterWeight(w1, w2, isUSUnit);
 		SignUp.tapShine();
-		SignUp.tapNext();
+		SignUp.tapSave();
 		
 		// Select Shine
 		SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
 
 		// goal
 		SignUp.setGoal(goalLevel);
-		SignUp.tapNext();
+		SignUp.tapSave();
 		waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
 
 		// linking shine
@@ -306,14 +306,14 @@ public class PrometheusHelper {
 		SignUp.enterBirthDay();
 		SignUp.enterHeight();
 		SignUp.enterWeight();
-		SignUp.tapNext();
+		SignUp.tapSave();
 		
 		// Select Shine
 		SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
 
 		// goal
 		SignUp.setGoal(1);
-		SignUp.tapNext();
+		SignUp.tapSave();
 		waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
 
 		// linking shine
@@ -484,9 +484,4 @@ public class PrometheusHelper {
 		return String.format("%.1f hours", hours);
 	}
 	
-	public static void main(String[] args) {
-		Gui.init("192.168.1.144");
-		Gui.shutdown();
-	}
-
 }
