@@ -163,7 +163,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		checkBadgesTile(false, 5, 7, 6);
 		checkBadgesTile(false, 6, 14, 12);
 		Timeline.dragDownTimeline();
-		
+	
 		// print all errors
 		if(!Verify.verifyAll(errors))
 			Assert.fail("Not all assertions pass");

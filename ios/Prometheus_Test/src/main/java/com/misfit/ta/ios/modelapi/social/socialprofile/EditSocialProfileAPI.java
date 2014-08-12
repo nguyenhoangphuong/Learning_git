@@ -55,7 +55,7 @@ public class EditSocialProfileAPI extends ModelAPI {
 		
 		// set up gui
 		PrometheusHelper.handleUpdateFirmwarePopup();
-		HomeScreen.tapLeaderboard();
+		HomeScreen.goToTodayViewOfLeaderboard();
 		LeaderboardView.tapGotIt();
 		HomeScreen.tapSocialProfile();
 	}
@@ -138,7 +138,7 @@ public class EditSocialProfileAPI extends ModelAPI {
 		
 		SocialProfileView.tapBack();
 		PrometheusHelper.handleUpdateFirmwarePopup();
-		HomeScreen.tapLeaderboard();
+		HomeScreen.goToTodayViewOfLeaderboard();
 	}
 	
 	public void e_goToSocialProfile() {

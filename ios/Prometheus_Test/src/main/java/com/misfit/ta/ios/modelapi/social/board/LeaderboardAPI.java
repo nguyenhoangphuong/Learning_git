@@ -145,7 +145,7 @@ public class LeaderboardAPI extends ModelAPI {
 	
 	public void e_goToLeaderboard() {
 		
-		HomeScreen.tapLeaderboard();
+		HomeScreen.goToTodayViewOfLeaderboard();
 		LeaderboardView.waitForNoFriendToDissapear();
 	}
 	

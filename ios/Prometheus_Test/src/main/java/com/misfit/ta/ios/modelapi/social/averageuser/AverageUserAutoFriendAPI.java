@@ -34,7 +34,7 @@ public class AverageUserAutoFriendAPI extends ModelAPI {
 		
 		PrometheusHelper.signUpDefaultProfile();
 		
-		HomeScreen.tapLeaderboard();
+		HomeScreen.goToTodayViewOfLeaderboard();
 		LeaderboardView.tapDontHaveFacebook();
 		PrometheusHelper.waitForView("UILabel", DefaultStrings.ProfilePreviewViewTitle);
 		
@@ -58,7 +58,7 @@ public class AverageUserAutoFriendAPI extends ModelAPI {
 	public void e_goToLeaderboard() {
 		
 		PrometheusHelper.handleUpdateFirmwarePopup();
-		HomeScreen.tapLeaderboard();
+		HomeScreen.goToTodayViewOfLeaderboard();
 		LeaderboardView.tapGotIt();
 		LeaderboardView.waitForNoFriendToDissapear();
 	}

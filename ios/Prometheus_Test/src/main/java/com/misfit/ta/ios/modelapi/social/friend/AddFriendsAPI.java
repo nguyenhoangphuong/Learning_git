@@ -119,7 +119,7 @@ public class AddFriendsAPI extends ModelAPI {
 	public void e_goToLeaderboard() {
 		
 		SocialProfileView.tapBack();
-		HomeScreen.tapLeaderboard();
+		HomeScreen.goToTodayViewOfLeaderboard();
 		LeaderboardView.waitForNoFriendToDissapear();
 	}
 	
