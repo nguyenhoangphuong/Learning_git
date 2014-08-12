@@ -313,8 +313,8 @@ public class PrometheusHelper {
 
 	public static void pullToRefresh(int fullScreenWidth, int fullScreenHeight) {
 		Gui.swipe(fullScreenWidth / 2, fullScreenHeight / 2,
-				fullScreenWidth / 2, fullScreenHeight / 2 + 1000);
-		Gui.touch(fullScreenWidth / 2, fullScreenHeight / 2 + 1000,
+				fullScreenWidth / 2, fullScreenHeight / 2 + 1200);
+		Gui.touch(fullScreenWidth / 2, fullScreenHeight / 2 + 1200,
 				TouchPressType.DOWN);
 	}
 

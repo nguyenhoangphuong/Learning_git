@@ -69,7 +69,7 @@ public class AutomationTest extends com.misfit.ta.aut.AutomationTest {
     ScreenShooter.resetShotQueue();
     logger.info("***** Clean cache *****");
     Gui.cleanCache();
-    Gui.start("com.misfitwearables.prometheus/.MainActivity");
+    Gui.start("com.misfitwearables.prometheus.staging/.MainActivity");
     ShortcutsTyper.delayTime(5000);
   }
 

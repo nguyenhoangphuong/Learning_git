@@ -43,8 +43,8 @@ public class Settings {
 	}
 
 	public static void tapMyProfile() {
-		Gui.touchAView("MenuMainTextView", "mID",
-				DefaultStrings.ProfileMainMenuTextViewId);
+		Gui.touchAView("TextView", "mText",
+				DefaultStrings.MyInfoText);
 	}
 
 	public static String getCurrentBirthDate() {

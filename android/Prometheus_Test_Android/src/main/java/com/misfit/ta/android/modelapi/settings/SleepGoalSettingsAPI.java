@@ -92,7 +92,7 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 		PrometheusHelper.manualInputSleep();
 		ShortcutsTyper.delayTime(10000);
 		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
-		ShortcutsTyper.delayTime(6000);
+		ShortcutsTyper.delayTime(30000);
 	}
 
 	/**

@@ -67,7 +67,6 @@ public class DefaultStrings {
 	public static String SyncNeededText = "Sync Needed";
 	public static String SyncNeededStatementText = "Sync now to apply your new settings to Shine."; 
 	public static String AdjustGoalText = "Adjust Goal";
-	public static String MyProfileText = "My Profile";
 	public static String GoalsText = "Goals";
 	public static String ShineSettingsText = "Shine Settings";
 	public static String HitGoalText = "you hit your goal";
@@ -92,6 +91,7 @@ public class DefaultStrings {
 	public static String ProfileMainMenuTextViewId = "id/profile_drawer_tv";
 	public static String SettingsMainMenuTextViewId = "id/settings_drawer_tv";
 	public static String HelpAndAboutMainMenuTextViewId = "id/help_and_about_drawer_tv";
+	public static String MyInfoText = "My Info";
 	
 	public static String ActivityGoalViewId = "id/daily_goal_setting_view";
 	public static String SleepGoalViewId = "id/nightly_goal_setting_view";

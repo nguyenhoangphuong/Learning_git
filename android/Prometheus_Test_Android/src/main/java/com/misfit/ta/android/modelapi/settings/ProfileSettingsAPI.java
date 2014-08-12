@@ -48,6 +48,8 @@ public class ProfileSettingsAPI extends ModelAPI {
 		System.out.println(fullScreenHeight);
 		System.out.println(fullScreenWidth);
 		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
+		Settings.tapShineSettings();
+		Gui.swipeDown(2, 500);
 		Settings.tapMyProfile();
 		ShortcutsTyper.delayTime(2000);
 	}
@@ -131,7 +133,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_PressBack() {
-		Gui.touchAView("TextView", "mText", DefaultStrings.MyProfileText);
+		Gui.touchAView("TextView", "mText", DefaultStrings.MyInfoText);
 		checkAll = true;
 		ShortcutsTyper.delayTime(2000);
 	}
