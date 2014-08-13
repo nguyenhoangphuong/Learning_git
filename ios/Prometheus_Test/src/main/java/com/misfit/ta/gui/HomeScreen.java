@@ -29,9 +29,16 @@ public class HomeScreen {
 	public static void tapMyShine() {
 		Gui.touchAVIew("PTListItemView", DefaultStrings.MyShineButton);
 	}
+	
+	public static void tapDevices(){
+		Gui.touchAVIew("PTListItemView", DefaultStrings.DevicesButton);
+	}
+	
+	public static void tapActiveDevice(){
+		Gui.touchAVIew("PTDeviceItemView", 0);
+	}
 
 	public static void tapSetWeightGoal() {
-		
 		Gui.touchAVIew("UIButton", DefaultStrings.SetWeightGoalButton);
 	}
 	

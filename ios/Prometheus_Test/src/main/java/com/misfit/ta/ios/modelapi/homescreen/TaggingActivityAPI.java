@@ -157,7 +157,9 @@ public class TaggingActivityAPI extends ModelAPI {
 		int popUpCount = 0;
 
 		HomeScreen.tapOpenSettingsTray();
-		HomeScreen.tapMyShine();
+		HomeScreen.tapDevices();
+		HomeScreen.tapActiveDevice();
+		Gui.swipeUp(500);
 		HomeSettings.tapMisfitLabs();
 		
 		if(isAutoSleepTurnedOn) {
@@ -165,7 +167,7 @@ public class TaggingActivityAPI extends ModelAPI {
 			isAutoSleepTurnedOn = false;
 			HomeScreen.switchAutoSleepTrackingOff();
 			HomeSettings.tapSave();
-			PrometheusHelper.waitForView("UILabel", DefaultStrings.MyShineTitle);
+			PrometheusHelper.waitForView("UILabel", DefaultStrings.ShineTitle);
 			HomeSettings.tapMisfitLabs();
 		}
 
@@ -213,8 +215,9 @@ public class TaggingActivityAPI extends ModelAPI {
 		}
 
 		HomeSettings.tapSave();
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.MyShineTitle);
-		HomeSettings.tapCancel();
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.ShineLabel);
+		HomeSettings.tapSave();
+		HomeSettings.tapBack();
 
 		return popUpCount;
 	}

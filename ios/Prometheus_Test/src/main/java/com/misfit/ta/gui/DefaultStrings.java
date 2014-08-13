@@ -10,6 +10,7 @@ public class DefaultStrings {
 	public static String CancelButton = "Cancel";
 	public static String EditButton = "Edit";
 	public static String SignoutButton = "Sign Out";
+	public static String DevicesButton = "Devices";
 	public static String MaleLabel = "Male";
 	public static String FemaleLabel = "Female";
 	public static String LoadingLabel = "Loading";
@@ -87,6 +88,7 @@ public class DefaultStrings {
 	public static String SettingsButton = "Settings";
 	public static String MyShineButton = "My Shine";
 	public static String MyShineTitle = "My Shine";
+	public static String ShineTitle = "Shine";
 	public static String MyGoalButton = "My Goals";
 	public static String NoActivityLabel = "No activity yet.";
 	public static String SyncShineToSeeYourActivityLabel = "Sync Shine to see your activity.";
