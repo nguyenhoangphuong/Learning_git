@@ -30,7 +30,7 @@ public class SuccessfulSignInAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_FillCorrectEmailPassword() {
-		SignIn.fillSignIn("thy@misfitwearables.com", "test12");
+		SignIn.fillSignIn("thy@misfit.com", "test12");
 		SignIn.pressNext();
 	}
 

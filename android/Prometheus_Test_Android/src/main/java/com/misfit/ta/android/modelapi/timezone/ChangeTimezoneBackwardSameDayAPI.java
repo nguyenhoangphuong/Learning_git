@@ -6,6 +6,7 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.android.AutomationTest;
+import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.gui.PrometheusHelper;
 import com.misfit.ta.android.gui.Timezone;
 import com.misfit.ta.backend.data.goal.Goal;
@@ -22,7 +23,8 @@ public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 	private long beforeStartTime = 0;
 	private long beforeEndTime = 0;
 	private long beforeOffset = 0;
-
+	private int fullScreenHeight;
+	private int fullScreenWidth;
 	public ChangeTimezoneBackwardSameDayAPI(AutomationTest automation,
 			File model, boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
@@ -34,6 +36,8 @@ public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 		ShortcutsTyper.delayTime(2000);
 		PrometheusHelper.signUp(email);
 		ShortcutsTyper.delayTime(2000);
+		fullScreenHeight = Gui.getScreenHeight();
+		fullScreenWidth = Gui.getScreenWidth();
 		PrometheusHelper.manualInputActivity("06", "05", 5, 580);
 		ShortcutsTyper.delayTime(1000);
 	}
@@ -50,6 +54,7 @@ public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 		
 		Timezone.changeTimezone(currentTimezone);
 		System.out.println("Change timezone from " + this.previousTimezone + " to " + this.currentTimezone);
+		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
 	}
 
 	// vertex
@@ -58,6 +63,7 @@ public class ChangeTimezoneBackwardSameDayAPI extends ModelAPI {
 	}
 
 	public void v_HomeScreenUpdated() {
+		
 		// check goal start time and end time
 		Timezone.assertGoal(email, password, beforeStartTime, beforeEndTime, delta, beforeOffset, false);
 		Timezone.changeTimezone(7);

@@ -17,6 +17,18 @@ public class Settings {
 	/**
 	 * Settings Menu
 	 */
+	public static void touchViewOnShineSettingsScrollView(String viewName, String property, String propertyValue, int fullScreenHeight) {
+		int[] coords = Gui.getCoordinators(viewName, property, propertyValue);
+		if (coords[1] > fullScreenHeight) {
+			Gui.swipeDown(1, fullScreenHeight);
+			Gui.setInvalidView();
+			ViewNode scrollView = ViewUtils.findView("ScrollView", 0);
+			int gap = coords[1] - scrollView.scrollY;
+			Gui.touch(coords[0], gap);
+		} else {
+			Gui.touchAView(viewName, property, propertyValue);
+		}
+	}
 	public static void tapSetActivityGoal() {
 		Gui.touchAView("ShineSettingCheckbox", "mID",
 				DefaultStrings.ActivityGoalViewId);
@@ -42,9 +54,9 @@ public class Settings {
 				DefaultStrings.GoalsMainMenuTextViewId);
 	}
 
-	public static void tapMyProfile() {
-		Gui.touchAView("TextView", "mText",
-				DefaultStrings.MyInfoText);
+	public static void tapMyProfile(int fullScreenHeight) {
+		touchViewOnShineSettingsScrollView("TextView", "mText",
+				DefaultStrings.MyInfoText, fullScreenHeight);
 	}
 
 	public static String getCurrentBirthDate() {

@@ -22,6 +22,8 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 	private long beforeStartTime = 0;
 	private long beforeEndTime = 0;
 	private long beforeOffset = 0;
+	private int fullScreenHeight;
+	private int fullScreenWidth;
 
 	public ChangeTimezoneForwardSameDayAPI(AutomationTest automation,
 			File model, boolean efsm, PathGenerator generator, boolean weight) {
@@ -51,6 +53,7 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 		Timezone.changeTimezone(currentTimezone);
 		System.out.println("Change timezone from " + this.previousTimezone
 				+ " to " + this.currentTimezone);
+		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
 	}
 
 	// vertex

@@ -50,7 +50,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
 		Settings.tapShineSettings();
 		Gui.swipeDown(2, 500);
-		Settings.tapMyProfile();
+		Settings.tapMyProfile(fullScreenHeight);
 		ShortcutsTyper.delayTime(2000);
 	}
 
