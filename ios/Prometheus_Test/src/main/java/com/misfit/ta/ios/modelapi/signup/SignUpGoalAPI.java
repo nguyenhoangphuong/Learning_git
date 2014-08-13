@@ -45,7 +45,7 @@ public class SignUpGoalAPI extends ModelAPI {
 		SignUp.enterHeight();
 		SignUp.tapShine();
 
-		SignUp.tapNext();
+		SignUp.tapSave();
 	}
 	
 	public void e_ShineSelected() {
