@@ -144,6 +144,10 @@ public class HomeSettings {
 	public static boolean isAtMyShine() {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.MyShineTitle);
 	}
+	
+	public static boolean isAtMisfitLabs(){
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.MisfitLabsTitle);
+	}
 
 	public static boolean isAtEditActivityGoal() {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.HowToHitActivityGoalLabel);

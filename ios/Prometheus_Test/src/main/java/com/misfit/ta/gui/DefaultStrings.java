@@ -85,6 +85,7 @@ public class DefaultStrings {
 	public static String WeekDayButtonTag = "ButtonWeekly";
 	public static String ThisWeekTitle = "This week";
 	public static String LastWeekTitle = "Last week";
+	public static String MisfitLabsTitle = "Misfit Labs";
 	public static String SettingsButton = "Settings";
 	public static String MyShineButton = "My Shine";
 	public static String MyShineTitle = "My Shine";
