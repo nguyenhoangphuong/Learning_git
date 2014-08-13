@@ -9,6 +9,7 @@ public class DefaultStrings {
 	public static String DoneButton = "Done";
 	public static String CancelButton = "Cancel";
 	public static String EditButton = "Edit";
+	public static String SignoutButton = "Sign Out";
 	public static String MaleLabel = "Male";
 	public static String FemaleLabel = "Female";
 	public static String LoadingLabel = "Loading";
@@ -16,6 +17,7 @@ public class DefaultStrings {
 	public static String RemoveButton = "Remove";
 	public static String ShineLabel = "Shine";
 	public static String BedditLabel = "Beddit";
+	
 	
 	public static String ActivityLabel = "Activity";
 	public static String SleepLabel = "Sleep";

@@ -58,7 +58,7 @@ public class HomeSettings {
 	}
 	
 	public static void tapSignOut() {
-		Gui.touchAVIew("UIButtonLabel", DefaultStrings.CaptializedShineOutButton);
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SignoutButton);
 	}
 
 	public static void chooseSignOut() {
