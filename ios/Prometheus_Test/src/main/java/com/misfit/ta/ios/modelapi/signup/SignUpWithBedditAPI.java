@@ -45,7 +45,7 @@ public class SignUpWithBedditAPI extends ModelAPI {
         SignUp.enterWeight();
         
         // select beddit
-        e_Next();
+        e_Save();
     }
     
     public void e_SelectBeddit() {
@@ -60,6 +60,10 @@ public class SignUpWithBedditAPI extends ModelAPI {
     
     public void e_Next() {
     	SignUp.tapNext();
+    }
+    
+    public void e_Save(){
+    	SignUp.tapSave();
     }
     
     public void e_goToActivityTimeline() {
