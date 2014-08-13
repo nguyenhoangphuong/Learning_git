@@ -116,10 +116,14 @@ public class SignUpAPI extends ModelAPI {
     
     public void e_toLinkShine() {
     	
-    	SignUp.tapNext();
+    	SignUp.tapSave();
     	PrometheusHelper.waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
     }
 
+    public void e_Save(){
+    	SignUp.tapSave();
+    }
+    
     public void e_Next() {
         SignUp.tapNext();
     }
@@ -137,8 +141,7 @@ public class SignUpAPI extends ModelAPI {
         SignUp.sync();
     }
  
-    
-    
+   
     
     public void v_InitialView() {
     	Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
