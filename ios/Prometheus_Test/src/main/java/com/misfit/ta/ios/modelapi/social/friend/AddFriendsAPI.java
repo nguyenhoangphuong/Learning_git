@@ -17,6 +17,7 @@ import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.social.LeaderboardView;
 import com.misfit.ta.gui.social.SearchFriendView;
 import com.misfit.ta.gui.social.SocialProfileView;
@@ -66,14 +67,14 @@ public class AddFriendsAPI extends ModelAPI {
 		MVPApi.createProfile(tokenA, profileA);
 		MVPApi.createGoal(tokenA, goal);
 		MVPApi.createPedometer(tokenA, pedo);
-		MVPApi.unlinkDevice(tokenA);
+//		MVPApi.unlinkDevice(tokenA);
 		
 		String tokenB = MVPApi.signUp(emailB, "qwerty1").token;
 		pedo.setSerialNumberString(TextTool.getRandomString(10, 10));
 		MVPApi.createProfile(tokenB, profileB);
 		MVPApi.createGoal(tokenB, goal);
 		MVPApi.createPedometer(tokenB, pedo);
-		MVPApi.unlinkDevice(tokenB);
+//		MVPApi.unlinkDevice(tokenB);
 	}
 	
 	public void e_signInAccountA() {
