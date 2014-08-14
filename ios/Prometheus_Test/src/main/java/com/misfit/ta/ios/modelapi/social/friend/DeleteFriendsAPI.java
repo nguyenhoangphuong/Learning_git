@@ -63,14 +63,14 @@ public class DeleteFriendsAPI extends ModelAPI {
 		MVPApi.createProfile(tokenA, profileA);
 		MVPApi.createGoal(tokenA, goal);
 		MVPApi.createPedometer(tokenA, pedo);
-		MVPApi.unlinkDevice(tokenA);
+//		MVPApi.unlinkDevice(tokenA);
 		
 		String tokenB = MVPApi.signUp(emailB, "qwerty1").token;
 		pedo.setSerialNumberString(TextTool.getRandomString(10, 10));
 		MVPApi.createProfile(tokenB, profileB);
 		MVPApi.createGoal(tokenB, goal);
 		MVPApi.createPedometer(tokenB, pedo);
-		MVPApi.unlinkDevice(tokenB);
+//		MVPApi.unlinkDevice(tokenB);
 		
 		// make friends
 		SocialAPI.sendFriendRequest(tokenA, MVPApi.getUserId(tokenB));
