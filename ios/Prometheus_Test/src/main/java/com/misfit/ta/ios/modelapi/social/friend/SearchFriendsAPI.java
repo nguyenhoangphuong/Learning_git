@@ -64,6 +64,7 @@ public class SearchFriendsAPI extends ModelAPI {
 		
 		// log in and go to search friend view
 		PrometheusHelper.signIn(emailMe, "qwerty1");
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapWordView();
 		HomeScreen.tapSocialProfile();
 		SocialProfileView.tapSearchFriend();
@@ -143,7 +144,6 @@ public class SearchFriendsAPI extends ModelAPI {
 	public void v_InvalidParam() {
 		
 		// TODO: wait for bug fix
-//		Assert.assertTrue(SearchFriendView.hasInvalidParamAlert(), "Current view is search friend - invalid param alert");
 		SearchFriendView.tapCancelAlert();
 	}
 	
