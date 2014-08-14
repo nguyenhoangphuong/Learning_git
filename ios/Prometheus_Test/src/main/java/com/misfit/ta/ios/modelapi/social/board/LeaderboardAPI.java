@@ -145,7 +145,8 @@ public class LeaderboardAPI extends ModelAPI {
 	
 	public void e_goToLeaderboard() {
 		
-		HomeScreen.tapMenuSocial();
+		PrometheusHelper.handleUpdateFirmwarePopup();
+		HomeScreen.goToTodayViewOfLeaderboard();
 		LeaderboardView.waitForNoFriendToDissapear();
 	}
 	
@@ -212,8 +213,7 @@ public class LeaderboardAPI extends ModelAPI {
 	public void v_LeaderboardB() {
 
 		LeaderboardView.tapGotIt();
-//		Tap Yesterday before tap Today because of wrong taping Today directly
-		LeaderboardView.tapYesterday();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		LeaderboardView.tapToday();
 		Gui.captureScreen("leaderboard-" + System.nanoTime());
 		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleA), "-", "v_LeaderboardB: A's today points"));
@@ -228,8 +228,7 @@ public class LeaderboardAPI extends ModelAPI {
 	public void v_LeaderboardBUpdated() {
 
 		LeaderboardView.tapGotIt();
-		//Tap Yesterday before tap Today because of wrong taping Today directly
-		LeaderboardView.tapYesterday();
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		LeaderboardView.tapToday();
 		Gui.captureScreen("leaderboard-" + System.nanoTime());
 		errors.add(Verify.verifyEquals(LeaderboardView.getPointOfUser(handleA), "300", "v_LeaderboardBUpdated: A's today points"));
