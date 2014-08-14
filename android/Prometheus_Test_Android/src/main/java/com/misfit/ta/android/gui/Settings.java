@@ -86,32 +86,32 @@ public class Settings {
 
 	public static boolean isProgressShowedFirst() {
 		return ViewUtils.findView("RadioButton", "mID",
-				DefaultStrings.ShineSettingsRadioButtonId1, 0).isChecked;
+				DefaultStrings.ShineSettingsRadioButtonId, 0).isChecked;
 	}
 
 	public static boolean isClockShowedFirst() {
 		return ViewUtils.findView("RadioButton", "mID",
-				DefaultStrings.ShineSettingsRadioButtonId2, 0).isChecked;
+				DefaultStrings.ShineSettingsRadioButtonId, 1).isChecked;
 	}
 
 	public static boolean isMilesUnit() {
 		return ViewUtils.findView("RadioButton", "mID",
-				DefaultStrings.ShineSettingsRadioButtonId1, 0).isChecked;
+				DefaultStrings.ShineSettingsRadioButtonId, 0).isChecked;
 	}
 
 	public static boolean isKmUnit() {
 		return ViewUtils.findView("RadioButton", "mID",
-				DefaultStrings.ShineSettingsRadioButtonId2, 0).isChecked;
+				DefaultStrings.ShineSettingsRadioButtonId, 1).isChecked;
 	}
 
 	public static boolean isLbsUnit() {
 		return ViewUtils.findView("RadioButton", "mID",
-				DefaultStrings.ShineSettingsRadioButtonId1, 0).isChecked;
+				DefaultStrings.ShineSettingsRadioButtonId, 0).isChecked;
 	}
 
 	public static boolean isKgUnit() {
 		return ViewUtils.findView("RadioButton", "mID",
-				DefaultStrings.ShineSettingsRadioButtonId2, 0).isChecked;
+				DefaultStrings.ShineSettingsRadioButtonId, 1).isChecked;
 	}
 	
 	public static boolean isAutomaticSleepTracking(){ 
@@ -133,8 +133,8 @@ public class Settings {
 		Gui.touchAView("ShineSettingCheckBox", "mID", DefaultStrings.ShineSettingsDistanceButtonId);
 	}
 
-	public static void openWeightPopup() {
-		Gui.touchAView("ShineSettingCheckBox", "mID", DefaultStrings.ShineSettingsWeightButtonId);
+	public static void openWeightPopup(int fullScreenHeight) {
+		touchViewOnShineSettingsScrollView("TextView", "mText", DefaultStrings.WeightText, fullScreenHeight);
 	}
 	
 	public static void openSleepTrackingModePopup() {
@@ -142,7 +142,7 @@ public class Settings {
 	}
 	
 	public static void openDisplayOrderPopup() {
-		Gui.touchAView("ShineSettingCheckBox", "mID", DefaultStrings.ShineSettingsDisplayOrderButtonId);
+		Gui.touchAView("TextView", "mText", DefaultStrings.DisplayOrderText);
 	}
 	
 	public static void showClock(boolean isShowed) {

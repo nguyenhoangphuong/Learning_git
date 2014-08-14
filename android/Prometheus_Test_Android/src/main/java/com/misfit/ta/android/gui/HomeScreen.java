@@ -11,12 +11,10 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class HomeScreen {
 
 	public static void tapManual() {
-		// Gui.touchAView("FrameLayout", "mID", DefaultStrings.ManualViewId);
 		Gui.touchAView("TextView", "mText", "M");
 	}
 
 	public static void tapDebug() {
-		// Gui.touchAView("FrameLayout", "mID", DefaultStrings.DebugViewId);
 		Gui.touchAView("TextView", "mText", "D");
 	}
 

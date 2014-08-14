@@ -75,6 +75,7 @@ public class DefaultStrings {
 	public static String WalkingLeftText = "of walking left";
 	
 	public static String ShineCustomEditTextInPickerId = "id/np__numberpicker_input";
+	public static String ShineSettingsRadioButtonId = "id/setting_radio_button";
 	public static String ShineSettingsRadioButtonId1 = "id/setting_radio_button_1";
 	public static String ShineSettingsRadioButtonId2 = "id/setting_radio_button_2";
 	public static String ShineSettingsRadioButtonId3 = "id/setting_radio_button_3 ";
@@ -84,6 +85,15 @@ public class DefaultStrings {
 	public static String ShineSettingsSleepTrackingModeButtonId = "id/shine_setting_sleep_tracking_mode";
 	public static String ShineSettingsDisplayClockCheckboxId = "id/shine_setting_display_clock_checkbox";
 	public static String ShineSettingsDisplayOrderButtonId = "id/shine_setting_display_order_selector";
+	public static String MilesText = "miles";
+	public static String KilometersText = "kilometers";
+	public static String PoundsText = "pounds";
+	public static String KgText = "kg";
+	public static String ProgressFirstText = "Activity progress first";
+	public static String ClockFirstText = "Clock first";
+	public static String ShowClockText = "Show Clock";
+	public static String DisplayOrderText = "Display order";
+	public static String WeightText = "Weight";
 	
 	// MainMenuTextView
 	public static String HistoryMainMenuTextViewId = "id/history_drawer_tv";

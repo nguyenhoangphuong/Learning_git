@@ -159,7 +159,9 @@ public class SleepGoalSettingsAPI extends ModelAPI {
 		System.out.println("**** Expected sleep progress (before flooring): " + calculatedProgress * 100);
 		System.out.println("**** Expected sleep progress (after flooring): " + expectedValue);
 		System.out.println("**** Calculated sleep progress: " + sleepProgress);
+		HomeScreen.tapDebug();
 		Assert.assertTrue(Integer.valueOf(sleepProgress).equals(expectedValue), "Sleep progress is calculated properly");
+		
 	}
 
 	/**

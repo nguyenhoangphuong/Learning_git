@@ -18,7 +18,7 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 	private String password = "test12";
 	private int currentTimezone = 7;
 	private int previousTimezone = 7;
-	private int delta = 1;
+	private int delta = 3;
 	private long beforeStartTime = 0;
 	private long beforeEndTime = 0;
 	private long beforeOffset = 0;
@@ -53,6 +53,7 @@ public class ChangeTimezoneForwardSameDayAPI extends ModelAPI {
 		Timezone.changeTimezone(currentTimezone);
 		System.out.println("Change timezone from " + this.previousTimezone
 				+ " to " + this.currentTimezone);
+		ShortcutsTyper.delayTime(2000);
 		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
 	}
 

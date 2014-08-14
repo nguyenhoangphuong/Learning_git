@@ -54,12 +54,12 @@ public class ShineSettingsAPI extends ModelAPI {
 		}
 		if (showProgressFirst) {
 			ViewNode progressButton = ViewUtils.findView("RadioButton", "mID",
-					DefaultStrings.ShineSettingsRadioButtonId1, 0);
+					DefaultStrings.ShineSettingsRadioButtonId, 0);
 			Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth,
 					Gui.getScreenHeight(), Gui.getScreenWidth(), progressButton);
 		} else {
 			ViewNode clockButton = ViewUtils.findView("RadioButton", "mID",
-					DefaultStrings.ShineSettingsRadioButtonId2, 0);
+					DefaultStrings.ShineSettingsRadioButtonId, 1);
 			Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth,
 					Gui.getScreenHeight(), Gui.getScreenWidth(), clockButton);
 		}
@@ -80,12 +80,12 @@ public class ShineSettingsAPI extends ModelAPI {
 		}
 		if (useMiles) {
 			ViewNode milesButton = ViewUtils.findView("RadioButton", "mID",
-					DefaultStrings.ShineSettingsRadioButtonId1, 0);
+					DefaultStrings.ShineSettingsRadioButtonId, 0);
 			Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth,
 					Gui.getScreenHeight(), Gui.getScreenWidth(), milesButton);
 		} else {
 			ViewNode kmButton = ViewUtils.findView("RadioButton", "mID",
-					DefaultStrings.ShineSettingsRadioButtonId2, 0);
+					DefaultStrings.ShineSettingsRadioButtonId, 1);
 			Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth,
 					Gui.getScreenHeight(), Gui.getScreenWidth(), kmButton);
 		}
@@ -106,12 +106,12 @@ public class ShineSettingsAPI extends ModelAPI {
 		}
 		if (useLbs) {
 			ViewNode lbsButton = ViewUtils.findView("RadioButton", "mID",
-					DefaultStrings.ShineSettingsRadioButtonId1, 0);
+					DefaultStrings.ShineSettingsRadioButtonId, 0);
 			Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth,
 					Gui.getScreenHeight(), Gui.getScreenWidth(), lbsButton);
 		} else {
 			ViewNode kgButton = ViewUtils.findView("RadioButton", "mID",
-					DefaultStrings.ShineSettingsRadioButtonId2, 0);
+					DefaultStrings.ShineSettingsRadioButtonId, 1);
 			Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth,
 					Gui.getScreenHeight(), Gui.getScreenWidth(), kgButton);
 		}
@@ -173,7 +173,8 @@ public class ShineSettingsAPI extends ModelAPI {
 	 */
 	public void e_ToWeightView() {
 		ShortcutsTyper.delayOne();
-		Settings.openWeightPopup();
+		Settings.openWeightPopup(fullScreenHeight);
+		Gui.swipeUp(1, fullScreenHeight);
 	}
 
 	/**

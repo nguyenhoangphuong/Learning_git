@@ -6,6 +6,7 @@ import com.misfit.ta.android.aut.DefaultStrings;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalsResult;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class Timezone {
 
@@ -37,8 +38,12 @@ public class Timezone {
 
 	public static void changeTimezone(int offset) {
 		HomeScreen.tapManual();
+		Gui.setInvalidView();
 		int timezoneOffsetInSeconds = offset * 3600;
+		ShortcutsTyper.delayOne();
+		System.out.println("*** Touch on timezone field");
 		Gui.touchAView("TextView", "mID", DefaultStrings.TimezoneEditTextId);
+		System.out.println("*** Type new timezone offset");
 		Gui.type(String.valueOf(timezoneOffsetInSeconds));
 		HomeScreen.saveManual();
 	}
