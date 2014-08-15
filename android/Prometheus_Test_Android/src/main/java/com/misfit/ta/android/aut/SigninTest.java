@@ -16,7 +16,7 @@ import com.misfit.ta.utils.Files;
 
 public class SigninTest extends AutomationTest {
 
-	@Test(groups = { "android", "Prometheus", "signin", "invalidSignIn", "Included" })
+	@Test(groups = { "android", "Prometheus", "signin", "InvalidSignIn", "Included" })
     public void invalidSignInTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("invalidSignin", new InvalidSignInAPI(this, Files.getFile("model/signin/InvalidSignIn.graphml"), true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
@@ -26,7 +26,7 @@ public class SigninTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "android", "Prometheus", "signin", "succesfulSignIn", "Included" })
+    @Test(groups = { "android", "Prometheus", "signin", "SuccesfulSignIn", "Included" })
     public void successfulSignInTest() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("successfulSignin", new SuccessfulSignInAPI(this, Files.getFile("model/signin/SuccessfulSignIn.graphml"), true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
