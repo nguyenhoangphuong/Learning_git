@@ -49,6 +49,8 @@ public class ShineSettingsAPI extends ModelAPI {
 		showProgressFirst = PrometheusHelper.coin();
 		if (isProgressShowedFirst == showProgressFirst) {
 			System.out.println("****** Touch Cancel");
+			Gui.setInvalidView();
+			ShortcutsTyper.delayOne();
 			PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.CancelText);
 			return;
 		}
@@ -75,6 +77,8 @@ public class ShineSettingsAPI extends ModelAPI {
 		useMiles = PrometheusHelper.coin();
 		if (isMilesUnit == useMiles) {
 			System.out.println("****** Touch Cancel");
+			Gui.setInvalidView();
+			ShortcutsTyper.delayOne();
 			PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.CancelText);
 			return;
 		}
@@ -101,7 +105,12 @@ public class ShineSettingsAPI extends ModelAPI {
 		useLbs = PrometheusHelper.coin();
 		if (isLbsUnit == useLbs) {
 			System.out.println("****** Touch Cancel");
+			Gui.setInvalidView();
+			ShortcutsTyper.delayOne();
 			PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.CancelText);
+			Gui.setInvalidView();
+			ShortcutsTyper.delayOne();
+			Gui.swipe(100, 200, 100, fullScreenHeight);
 			return;
 		}
 		if (useLbs) {
@@ -115,6 +124,10 @@ public class ShineSettingsAPI extends ModelAPI {
 			Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth,
 					Gui.getScreenHeight(), Gui.getScreenWidth(), kgButton);
 		}
+		// We swiped to open the weight view then we have to return to the top
+		Gui.setInvalidView();
+		ShortcutsTyper.delayOne();
+		Gui.swipe(100, 200, 100, fullScreenHeight);
 	}
 
 	/**
@@ -137,6 +150,8 @@ public class ShineSettingsAPI extends ModelAPI {
 	public void e_PressBack() {
 		ShortcutsTyper.delayTime(2000);
 		Gui.setInvalidView();
+//		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
+//				DefaultStrings.SyncLaterText);
 		ShortcutsTyper.delayTime(2000);
 		Gui.touchAView("TextView", "mText", DefaultStrings.ShineSettingsText);
 	}
@@ -174,7 +189,6 @@ public class ShineSettingsAPI extends ModelAPI {
 	public void e_ToWeightView() {
 		ShortcutsTyper.delayOne();
 		Settings.openWeightPopup(fullScreenHeight);
-		Gui.swipeUp(1, fullScreenHeight);
 	}
 
 	/**

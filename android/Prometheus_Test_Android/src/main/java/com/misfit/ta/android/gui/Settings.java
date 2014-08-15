@@ -80,6 +80,7 @@ public class Settings {
 	}
 
 	public static boolean isClockDisplayed() {
+		Gui.setInvalidView();
 		return ViewUtils.findView("CheckBox", "mID",
 				DefaultStrings.ShineSettingsDisplayClockCheckBoxId, 0).isChecked;
 	}
