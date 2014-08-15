@@ -35,7 +35,7 @@ public class HomeScreen {
 	}
 	
 	public static void tapActiveDevice(){
-		Gui.touchAVIew("PTDeviceItemView", 0);
+		Gui.touchAVIew("PTDeviceItemView", 1);
 	}
 
 	public static void tapSetWeightGoal() {
