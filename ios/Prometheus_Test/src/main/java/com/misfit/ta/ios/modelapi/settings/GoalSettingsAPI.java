@@ -142,6 +142,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_CancelEdit() {
 
 		HomeSettings.tapCancel();
+		HomeScreen.tapOpenSettingsTray();
 		logger.info("Cancel new goal");
 	}
 
@@ -162,6 +163,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_ConfirmNewGoal() {
 
 		HomeSettings.tapOKAtNewGoalPopup();
+		HomeScreen.tapOpenSettingsTrayWithoutPopupHandling();
 	}
 
 	
