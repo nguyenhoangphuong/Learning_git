@@ -3,6 +3,8 @@ package com.misfit.ta.gui;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
+import org.graphwalker.GUI.App.MyEdgePaintFunction;
+
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
@@ -254,7 +256,7 @@ public class PrometheusHelper {
 		
 		// Select Shine
 		SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
-
+		
 		// goal
 		SignUp.setGoal(goalLevel);
 		SignUp.tapSave();
@@ -262,8 +264,11 @@ public class PrometheusHelper {
 
 		// linking shine
 		SignUp.sync();
-
+		ShortcutsTyper.delayTime(1000);
+		SignUp.tapOK();
+		
 		// Backed to "Device select" view. Click next
+		ShortcutsTyper.delayTime(1000);
 		SignUp.tapNext();
 		
 		// tutorial
@@ -318,7 +323,7 @@ public class PrometheusHelper {
 
 		// linking shine
 		SignUp.sync();
-		
+		SignUp.tapOK();
 		// Backed to "Device select" view. Click next
 		SignUp.tapNext();
 		
@@ -335,7 +340,7 @@ public class PrometheusHelper {
 		SignIn.tapLogIn();
 		ShortcutsTyper.delayOne();
 		SignIn.enterEmailPassword(email, password);
-		waitForViewToDissappear("UILabel", DefaultStrings.SignInTitle);
+		waitForViewToDissappear("UILabel", DefaultStrings.MyShineTitle);
 	}
 	
 	public static void signOut() {
