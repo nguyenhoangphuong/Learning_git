@@ -84,6 +84,7 @@ public class WeekViewAPI extends ModelAPI {
 		
 		// dismiss alert
 		HomeSettings.tapOKAtNewGoalPopup();
+		HomeScreen.tapOpenSettingsTray();
 		HomeScreen.changeToWeekView();
 	}
 	
