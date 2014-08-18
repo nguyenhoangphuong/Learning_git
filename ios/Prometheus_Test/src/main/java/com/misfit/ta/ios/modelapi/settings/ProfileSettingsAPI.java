@@ -65,6 +65,7 @@ public class ProfileSettingsAPI extends ModelAPI {
 		HomeSettings.tapBack();
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.EditProfileTitle);
 		HomeSettings.tapBack();
+		HomeScreen.tapOpenSettingsTray();
 	}
 
 	public void e_EditBirthDate() {
