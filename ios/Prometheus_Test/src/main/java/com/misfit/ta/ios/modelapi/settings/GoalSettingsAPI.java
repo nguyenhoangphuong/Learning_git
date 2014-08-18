@@ -149,6 +149,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_DoneEdit() {
 
 		HomeSettings.tapDoneAtNewGoal();
+//		HomeScreen.tapOpenSettingsTray();
 		
 		activityGoal = activityGoalTemporary;
 		sleepGoalHours = sleepGoalHoursTemp;
@@ -169,7 +170,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	
 	
 	public void v_HomeScreenNoCheck() {
-
+		
 	}
 	
 	public void v_ActivityTimeline() {
@@ -302,6 +303,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	
 	public void v_WeightTimelineUpdated() {
 
+		HomeScreen.tapOpenSettingsTray();
 		// check if new goal value had been updated
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", String.format("goal weight: %d.%d", weightDigit, weightFraction)),
 				"Weight goal value is correct");
