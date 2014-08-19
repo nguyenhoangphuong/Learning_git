@@ -290,6 +290,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	
 	public void v_SleepTimelineUpdated() {
 
+		HomeScreen.tapOpenSettingsTray();
 		// check if new goal value had been updated
 		String actual = HomeScreen.getCurrentSleepGoalString();
 		String expect = "of " + this.sleepGoalHours + " hour " +
