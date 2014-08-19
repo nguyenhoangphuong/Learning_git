@@ -12,7 +12,7 @@ import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SyncingTest {
-	private static int NUMBER_OF_SYNC = 10;
+	private static int NUMBER_OF_SYNC = 30;
 	
 	@Test(groups = { "android", "Prometheus", "Syncing", "AndroidAutomation", "ContinuousSyncing", "ManualSyncing", "Excluded" })
 	public void ManualSyncContinously() throws InterruptedException, StopConditionException, IOException {
@@ -28,11 +28,13 @@ public class SyncingTest {
 		
 		int popupHeight = 0;
 		int popupWidth = 0;
-		HomeScreen.tapDebug();
+		
 		for (int i = 0; i < NUMBER_OF_SYNC; i++) {
 			System.out.println("****Start syncing #" + i);
 			System.out.println("***Tap to sync #" + i);
 			Gui.touchAView("ThreeStateView", "mID", "id/action_three_state_imageview");
+			/*
+			HomeScreen.tapDebug();
 			while("Syncing".equals(HomeScreen.getDebugValues()[5])) {
 				System.out.println("****Still Syncing");
 				ShortcutsTyper.delayTime(100);
@@ -40,6 +42,7 @@ public class SyncingTest {
 			}
 			System.out.println("***Finish syncing #" + i);
 			ShortcutsTyper.delayTime(3000);
+			*/
 			
 			if (hasFailedSyncPopup()) {
 				System.out.println("***Has failed sync popup#" + i);
@@ -57,7 +60,6 @@ public class SyncingTest {
 			} else {
 				countSuccessfulSync++;
 			}
-			
 			// Magic line which makes ViewServer reload views after we dismiss popup  
 			ShortcutsTyper.delayTime(50);
 		}
