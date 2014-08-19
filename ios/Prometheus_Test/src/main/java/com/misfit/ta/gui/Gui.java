@@ -1021,9 +1021,9 @@ public class Gui {
     public static void main(String[] args) {
     	init("192.168.27.249");
     	printView();
+    	
     	shutdown();
     }
-    
 }
 
 

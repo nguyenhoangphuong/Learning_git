@@ -32,8 +32,6 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	private String name = "Social " + System.nanoTime();
 	private String handle = TextTool.getRandomString(5, 8).toLowerCase() + System.nanoTime();
 	
-	
-	
 	public void e_init() {
 		
 		PrometheusHelper.signUpDefaultProfile();

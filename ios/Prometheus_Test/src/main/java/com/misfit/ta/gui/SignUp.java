@@ -18,6 +18,8 @@ public class SignUp {
     public static void tapNext() {
     	Gui.touchAVIew("UIButtonLabel", DefaultStrings.NextButton);
     }
+    
+    
 
     public static void tapPrevious() {
     	Gui.touchAVIew("UIButtonLabel", DefaultStrings.BackButton);

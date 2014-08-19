@@ -218,6 +218,7 @@ public class TaggingActivityAPI extends ModelAPI {
 		PrometheusHelper.waitForView("UILabel", DefaultStrings.ShineLabel);
 		HomeSettings.tapSave();
 		HomeSettings.tapBack();
+		HomeScreen.tapOpenSettingsTray();
 
 		return popUpCount;
 	}

@@ -64,7 +64,7 @@ public class DayProgressAPI extends ModelAPI {
 
 		// Initalize
 		PrometheusHelper.signUp(MVPApi.generateUniqueEmail(), "qwerty1", isMale, 16, 9, year, true, "5'", "8\\\"", "120", ".0", 1);
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.NoActivityLabel);
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.TodayTitle);
 	}
 
 	public void e_inputActivity() {

@@ -1,0 +1,380 @@
+2014-08-14 17:00:17,687 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:00:17,688 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:00:17,688 [Thread-0] INFO  - 
+2014-08-14 17:00:35,657 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/Leaderboard.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:00:35,658 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:00:35,658 [Thread-0] INFO  - 
+2014-08-14 17:01:01,263 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:01:01,264 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:01:01,264 [Thread-0] INFO  - 
+2014-08-14 17:01:16,951 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:01:16,952 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:01:16,952 [Thread-0] INFO  - 
+2014-08-14 17:01:23,350 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:01:23,351 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:01:23,351 [Thread-0] INFO  - 
+2014-08-14 17:01:39,240 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:01:39,241 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:01:39,241 [Thread-0] INFO  - 
+2014-08-14 17:02:11,380 [main] INFO  - Done merging
+2014-08-14 17:02:11,446 [main] INFO  - Edge: 'e_init', INDEX=12 
+2014-08-14 17:02:11,447 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=1;
+2014-08-14 17:02:11,448 [main] INFO  - Edge: 'e_signInAccountA', INDEX=13 
+2014-08-14 17:02:11,448 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: phrase=1;
+2014-08-14 17:02:11,449 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=14 
+2014-08-14 17:02:11,449 [main] INFO  - Vertex: 'v_LeaderboardA', INDEX=4  DATA: phrase=1;
+2014-08-14 17:02:11,449 [main] INFO  - Edge: 'e_signOut', INDEX=15 
+2014-08-14 17:02:11,449 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=2;
+2014-08-14 17:02:11,454 [main] INFO  - Edge: 'e_signInAccountB', INDEX=16 
+2014-08-14 17:02:11,454 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=5  DATA: phrase=2;
+2014-08-14 17:02:11,455 [main] INFO  - Edge: 'e_inputActivityForB', INDEX=19 
+2014-08-14 17:02:11,455 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=7  DATA: phrase=2;
+2014-08-14 17:02:11,455 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=17 
+2014-08-14 17:02:11,455 [main] INFO  - Vertex: 'v_LeaderboardB', INDEX=6  DATA: phrase=2;
+2014-08-14 17:02:11,455 [main] INFO  - Edge: 'e_updateActivityForA', INDEX=20 
+2014-08-14 17:02:11,456 [main] INFO  - Vertex: 'v_LeaderboardB', INDEX=8  DATA: phrase=2;
+2014-08-14 17:02:11,456 [main] INFO  - Edge: 'e_pullToRefresh', INDEX=21 
+2014-08-14 17:02:11,456 [main] INFO  - Vertex: 'v_LeaderboardBUpdated', INDEX=9  DATA: phrase=2;
+2014-08-14 17:02:11,456 [main] INFO  - Edge: 'e_signOut', INDEX=18 
+2014-08-14 17:02:11,456 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=3;
+2014-08-14 17:02:11,459 [main] INFO  - Edge: 'e_signInAccountC', INDEX=22 
+2014-08-14 17:02:11,459 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=10  DATA: phrase=3;
+2014-08-14 17:02:11,460 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=23 
+2014-08-14 17:02:11,460 [main] INFO  - Vertex: 'v_LeaderboardBUpdated', INDEX=11  DATA: phrase=3;
+2014-08-14 17:02:14,743 [Thread-0] INFO  - Coverage Edges: 12/12 => 100%
+Coverage Vertices: 11/11 => 100%
+Unvisited Edges:  0
+Unvisited Vertices: 0
+Test sequence length:  12
+Execution time: 3 seconds
+2014-08-14 17:02:15,411 [main] INFO  - Done merging
+2014-08-14 17:02:17,363 [Thread-0] INFO  - Edge not reached: Edge: 'e_goToLeaderboard', INDEX=14
+Edge not reached: Edge: 'e_goToLeaderboard', INDEX=17
+Edge not reached: Edge: 'e_goToLeaderboard', INDEX=23
+Edge not reached: Edge: 'e_init', INDEX=12
+Edge not reached: Edge: 'e_inputActivityForB', INDEX=19
+Edge not reached: Edge: 'e_pullToRefresh', INDEX=21
+Edge not reached: Edge: 'e_signInAccountA', INDEX=13
+Edge not reached: Edge: 'e_signInAccountB', INDEX=16
+Edge not reached: Edge: 'e_signInAccountC', INDEX=22
+Edge not reached: Edge: 'e_signOut', INDEX=15
+Edge not reached: Edge: 'e_signOut', INDEX=18
+Edge not reached: Edge: 'e_updateActivityForA', INDEX=20
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=10
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=2
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=5
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=7
+Vertex not reached: Vertex: 'v_LaunchScreen', INDEX=3
+Vertex not reached: Vertex: 'v_LeaderboardA', INDEX=4
+Vertex not reached: Vertex: 'v_LeaderboardB', INDEX=6
+Vertex not reached: Vertex: 'v_LeaderboardB', INDEX=8
+Vertex not reached: Vertex: 'v_LeaderboardBUpdated', INDEX=11
+Vertex not reached: Vertex: 'v_LeaderboardBUpdated', INDEX=9
+Coverage Edges: 0/12 => 0%
+Coverage Vertices: 1/11 => 9%
+Unvisited Edges:  12
+Unvisited Vertices: 10
+Test sequence length:  0
+Execution time: 1 seconds
+2014-08-14 17:03:37,736 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:03:37,737 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:03:37,737 [Thread-0] INFO  - 
+2014-08-14 17:03:49,492 [main] INFO  - Done merging
+2014-08-14 17:03:49,545 [main] INFO  - Edge: 'e_init', INDEX=12 
+2014-08-14 17:03:49,545 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=1;
+2014-08-14 17:03:49,548 [main] INFO  - Edge: 'e_signInAccountA', INDEX=13 
+2014-08-14 17:03:49,548 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: phrase=1;
+2014-08-14 17:03:49,548 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=14 
+2014-08-14 17:03:49,548 [main] INFO  - Vertex: 'v_LeaderboardA', INDEX=4  DATA: phrase=1;
+2014-08-14 17:03:49,549 [main] INFO  - Edge: 'e_signOut', INDEX=15 
+2014-08-14 17:03:49,549 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=2;
+2014-08-14 17:03:49,550 [main] INFO  - Edge: 'e_signInAccountB', INDEX=16 
+2014-08-14 17:03:49,550 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=5  DATA: phrase=2;
+2014-08-14 17:03:49,550 [main] INFO  - Edge: 'e_inputActivityForB', INDEX=19 
+2014-08-14 17:03:49,550 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=7  DATA: phrase=2;
+2014-08-14 17:03:49,550 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=17 
+2014-08-14 17:03:49,551 [main] INFO  - Vertex: 'v_LeaderboardB', INDEX=6  DATA: phrase=2;
+2014-08-14 17:03:49,551 [main] INFO  - Edge: 'e_updateActivityForA', INDEX=20 
+2014-08-14 17:03:49,551 [main] INFO  - Vertex: 'v_LeaderboardB', INDEX=8  DATA: phrase=2;
+2014-08-14 17:03:49,551 [main] INFO  - Edge: 'e_pullToRefresh', INDEX=21 
+2014-08-14 17:03:49,551 [main] INFO  - Vertex: 'v_LeaderboardBUpdated', INDEX=9  DATA: phrase=2;
+2014-08-14 17:03:49,552 [main] INFO  - Edge: 'e_signOut', INDEX=18 
+2014-08-14 17:03:49,552 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=3;
+2014-08-14 17:03:49,553 [main] INFO  - Edge: 'e_signInAccountC', INDEX=22 
+2014-08-14 17:03:49,553 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=10  DATA: phrase=3;
+2014-08-14 17:03:49,553 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=23 
+2014-08-14 17:03:49,553 [main] INFO  - Vertex: 'v_LeaderboardBUpdated', INDEX=11  DATA: phrase=3;
+2014-08-14 17:03:52,212 [Thread-0] INFO  - Coverage Edges: 12/12 => 100%
+Coverage Vertices: 11/11 => 100%
+Unvisited Edges:  0
+Unvisited Vertices: 0
+Test sequence length:  12
+Execution time: 2 seconds
+2014-08-14 17:03:52,770 [main] INFO  - Done merging
+2014-08-14 17:03:55,080 [Thread-0] INFO  - Edge not reached: Edge: 'e_goToLeaderboard', INDEX=14
+Edge not reached: Edge: 'e_goToLeaderboard', INDEX=17
+Edge not reached: Edge: 'e_goToLeaderboard', INDEX=23
+Edge not reached: Edge: 'e_init', INDEX=12
+Edge not reached: Edge: 'e_inputActivityForB', INDEX=19
+Edge not reached: Edge: 'e_pullToRefresh', INDEX=21
+Edge not reached: Edge: 'e_signInAccountA', INDEX=13
+Edge not reached: Edge: 'e_signInAccountB', INDEX=16
+Edge not reached: Edge: 'e_signInAccountC', INDEX=22
+Edge not reached: Edge: 'e_signOut', INDEX=15
+Edge not reached: Edge: 'e_signOut', INDEX=18
+Edge not reached: Edge: 'e_updateActivityForA', INDEX=20
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=10
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=2
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=5
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=7
+Vertex not reached: Vertex: 'v_LaunchScreen', INDEX=3
+Vertex not reached: Vertex: 'v_LeaderboardA', INDEX=4
+Vertex not reached: Vertex: 'v_LeaderboardB', INDEX=6
+Vertex not reached: Vertex: 'v_LeaderboardB', INDEX=8
+Vertex not reached: Vertex: 'v_LeaderboardBUpdated', INDEX=11
+Vertex not reached: Vertex: 'v_LeaderboardBUpdated', INDEX=9
+Coverage Edges: 0/12 => 0%
+Coverage Vertices: 1/11 => 9%
+Unvisited Edges:  12
+Unvisited Vertices: 10
+Test sequence length:  0
+Execution time: 2 seconds
+2014-08-14 17:04:19,655 [main] INFO  - Done merging
+2014-08-14 17:04:19,709 [main] INFO  - Edge: 'e_init', INDEX=12 
+2014-08-14 17:04:19,709 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=1;
+2014-08-14 17:04:19,710 [main] INFO  - Edge: 'e_signInAccountA', INDEX=13 
+2014-08-14 17:04:19,710 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: phrase=1;
+2014-08-14 17:04:19,710 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=14 
+2014-08-14 17:04:19,710 [main] INFO  - Vertex: 'v_LeaderboardA', INDEX=4  DATA: phrase=1;
+2014-08-14 17:04:19,711 [main] INFO  - Edge: 'e_signOut', INDEX=15 
+2014-08-14 17:04:19,711 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=2;
+2014-08-14 17:04:19,714 [main] INFO  - Edge: 'e_signInAccountB', INDEX=16 
+2014-08-14 17:04:19,714 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=5  DATA: phrase=2;
+2014-08-14 17:04:19,714 [main] INFO  - Edge: 'e_inputActivityForB', INDEX=19 
+2014-08-14 17:04:19,714 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=7  DATA: phrase=2;
+2014-08-14 17:04:19,714 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=17 
+2014-08-14 17:04:19,714 [main] INFO  - Vertex: 'v_LeaderboardB', INDEX=6  DATA: phrase=2;
+2014-08-14 17:04:19,715 [main] INFO  - Edge: 'e_updateActivityForA', INDEX=20 
+2014-08-14 17:04:19,715 [main] INFO  - Vertex: 'v_LeaderboardB', INDEX=8  DATA: phrase=2;
+2014-08-14 17:04:19,715 [main] INFO  - Edge: 'e_pullToRefresh', INDEX=21 
+2014-08-14 17:04:19,715 [main] INFO  - Vertex: 'v_LeaderboardBUpdated', INDEX=9  DATA: phrase=2;
+2014-08-14 17:04:19,716 [main] INFO  - Edge: 'e_signOut', INDEX=18 
+2014-08-14 17:04:19,716 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=3;
+2014-08-14 17:04:19,718 [main] INFO  - Edge: 'e_signInAccountC', INDEX=22 
+2014-08-14 17:04:19,718 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=10  DATA: phrase=3;
+2014-08-14 17:04:19,718 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=23 
+2014-08-14 17:04:19,718 [main] INFO  - Vertex: 'v_LeaderboardBUpdated', INDEX=11  DATA: phrase=3;
+2014-08-14 17:04:23,014 [Thread-0] INFO  - Coverage Edges: 12/12 => 100%
+Coverage Vertices: 11/11 => 100%
+Unvisited Edges:  0
+Unvisited Vertices: 0
+Test sequence length:  12
+Execution time: 3 seconds
+2014-08-14 17:04:23,530 [main] INFO  - Done merging
+2014-08-14 17:04:27,549 [Thread-0] INFO  - Edge not reached: Edge: 'e_goToLeaderboard', INDEX=14
+Edge not reached: Edge: 'e_goToLeaderboard', INDEX=17
+Edge not reached: Edge: 'e_goToLeaderboard', INDEX=23
+Edge not reached: Edge: 'e_init', INDEX=12
+Edge not reached: Edge: 'e_inputActivityForB', INDEX=19
+Edge not reached: Edge: 'e_pullToRefresh', INDEX=21
+Edge not reached: Edge: 'e_signInAccountA', INDEX=13
+Edge not reached: Edge: 'e_signInAccountB', INDEX=16
+Edge not reached: Edge: 'e_signInAccountC', INDEX=22
+Edge not reached: Edge: 'e_signOut', INDEX=15
+Edge not reached: Edge: 'e_signOut', INDEX=18
+Edge not reached: Edge: 'e_updateActivityForA', INDEX=20
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=10
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=2
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=5
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=7
+Vertex not reached: Vertex: 'v_LaunchScreen', INDEX=3
+Vertex not reached: Vertex: 'v_LeaderboardA', INDEX=4
+Vertex not reached: Vertex: 'v_LeaderboardB', INDEX=6
+Vertex not reached: Vertex: 'v_LeaderboardB', INDEX=8
+Vertex not reached: Vertex: 'v_LeaderboardBUpdated', INDEX=11
+Vertex not reached: Vertex: 'v_LeaderboardBUpdated', INDEX=9
+Coverage Edges: 0/12 => 0%
+Coverage Vertices: 1/11 => 9%
+Unvisited Edges:  12
+Unvisited Vertices: 10
+Test sequence length:  0
+Execution time: 4 seconds
+2014-08-14 17:04:45,141 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/social/board.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:04:45,142 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:04:45,142 [Thread-0] INFO  - 
+2014-08-14 17:04:45,311 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/social/board.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandSource(CLI.java:914)
+	at org.graphwalker.CLI.run(CLI.java:258)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:04:45,312 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:04:45,312 [Thread-0] INFO  - 
+2014-08-14 17:04:52,917 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/social/board/.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:04:52,918 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:04:52,918 [Thread-0] INFO  - 
+2014-08-14 17:04:53,082 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/social/board/.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandSource(CLI.java:914)
+	at org.graphwalker.CLI.run(CLI.java:258)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:04:53,083 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:04:53,083 [Thread-0] INFO  - 
+2014-08-14 17:05:05,693 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/social\/board\/.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:05:05,694 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:05:05,694 [Thread-0] INFO  - 
+2014-08-14 17:05:05,858 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/social\/board\/.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandSource(CLI.java:914)
+	at org.graphwalker.CLI.run(CLI.java:258)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:05:05,859 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:05:05,859 [Thread-0] INFO  - 
+2014-08-14 17:05:30,232 [main] ERROR - java.lang.IllegalArgumentException: Could not get resource: ../src/main/resources/model/Leaderboard.graphml
+	at org.graphwalker.Util.getFile(Util.java:1076)
+	at org.graphwalker.io.GraphML.load(GraphML.java:106)
+	at org.graphwalker.ModelBasedTesting.readGraph(ModelBasedTesting.java:502)
+	at org.graphwalker.CLI.RunCommandOffline(CLI.java:664)
+	at org.graphwalker.CLI.run(CLI.java:240)
+	at org.graphwalker.CLI.main(CLI.java:165)
+
+2014-08-14 17:05:30,233 [Thread-0] WARN  - Trying to retrieve verbose statistics without specifying machine
+2014-08-14 17:05:30,233 [Thread-0] INFO  - 
+2014-08-14 17:05:44,516 [main] INFO  - Done merging
+2014-08-14 17:05:44,568 [main] INFO  - Edge: 'e_init', INDEX=12 
+2014-08-14 17:05:44,568 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=1;
+2014-08-14 17:05:44,593 [main] INFO  - Edge: 'e_signInAccountA', INDEX=13 
+2014-08-14 17:05:44,593 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=2  DATA: phrase=1;
+2014-08-14 17:05:44,594 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=14 
+2014-08-14 17:05:44,594 [main] INFO  - Vertex: 'v_LeaderboardA', INDEX=4  DATA: phrase=1;
+2014-08-14 17:05:44,594 [main] INFO  - Edge: 'e_signOut', INDEX=15 
+2014-08-14 17:05:44,595 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=2;
+2014-08-14 17:05:44,599 [main] INFO  - Edge: 'e_signInAccountB', INDEX=16 
+2014-08-14 17:05:44,599 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=5  DATA: phrase=2;
+2014-08-14 17:05:44,600 [main] INFO  - Edge: 'e_inputActivityForB', INDEX=19 
+2014-08-14 17:05:44,600 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=7  DATA: phrase=2;
+2014-08-14 17:05:44,600 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=17 
+2014-08-14 17:05:44,600 [main] INFO  - Vertex: 'v_LeaderboardB', INDEX=6  DATA: phrase=2;
+2014-08-14 17:05:44,600 [main] INFO  - Edge: 'e_updateActivityForA', INDEX=20 
+2014-08-14 17:05:44,600 [main] INFO  - Vertex: 'v_LeaderboardB', INDEX=8  DATA: phrase=2;
+2014-08-14 17:05:44,601 [main] INFO  - Edge: 'e_pullToRefresh', INDEX=21 
+2014-08-14 17:05:44,601 [main] INFO  - Vertex: 'v_LeaderboardBUpdated', INDEX=9  DATA: phrase=2;
+2014-08-14 17:05:44,601 [main] INFO  - Edge: 'e_signOut', INDEX=18 
+2014-08-14 17:05:44,602 [main] INFO  - Vertex: 'v_LaunchScreen', INDEX=3  DATA: phrase=3;
+2014-08-14 17:05:44,605 [main] INFO  - Edge: 'e_signInAccountC', INDEX=22 
+2014-08-14 17:05:44,605 [main] INFO  - Vertex: 'v_HomeScreen', INDEX=10  DATA: phrase=3;
+2014-08-14 17:05:44,606 [main] INFO  - Edge: 'e_goToLeaderboard', INDEX=23 
+2014-08-14 17:05:44,606 [main] INFO  - Vertex: 'v_LeaderboardBUpdated', INDEX=11  DATA: phrase=3;
+2014-08-14 17:05:48,207 [Thread-0] INFO  - Coverage Edges: 12/12 => 100%
+Coverage Vertices: 11/11 => 100%
+Unvisited Edges:  0
+Unvisited Vertices: 0
+Test sequence length:  12
+Execution time: 3 seconds
+2014-08-14 17:05:48,888 [main] INFO  - Done merging
+2014-08-14 17:05:50,838 [Thread-0] INFO  - Edge not reached: Edge: 'e_goToLeaderboard', INDEX=14
+Edge not reached: Edge: 'e_goToLeaderboard', INDEX=17
+Edge not reached: Edge: 'e_goToLeaderboard', INDEX=23
+Edge not reached: Edge: 'e_init', INDEX=12
+Edge not reached: Edge: 'e_inputActivityForB', INDEX=19
+Edge not reached: Edge: 'e_pullToRefresh', INDEX=21
+Edge not reached: Edge: 'e_signInAccountA', INDEX=13
+Edge not reached: Edge: 'e_signInAccountB', INDEX=16
+Edge not reached: Edge: 'e_signInAccountC', INDEX=22
+Edge not reached: Edge: 'e_signOut', INDEX=15
+Edge not reached: Edge: 'e_signOut', INDEX=18
+Edge not reached: Edge: 'e_updateActivityForA', INDEX=20
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=10
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=2
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=5
+Vertex not reached: Vertex: 'v_HomeScreen', INDEX=7
+Vertex not reached: Vertex: 'v_LaunchScreen', INDEX=3
+Vertex not reached: Vertex: 'v_LeaderboardA', INDEX=4
+Vertex not reached: Vertex: 'v_LeaderboardB', INDEX=6
+Vertex not reached: Vertex: 'v_LeaderboardB', INDEX=8
+Vertex not reached: Vertex: 'v_LeaderboardBUpdated', INDEX=11
+Vertex not reached: Vertex: 'v_LeaderboardBUpdated', INDEX=9
+Coverage Edges: 0/12 => 0%
+Coverage Vertices: 1/11 => 9%
+Unvisited Edges:  12
+Unvisited Vertices: 10
+Test sequence length:  0
+Execution time: 1 seconds

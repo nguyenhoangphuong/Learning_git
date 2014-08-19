@@ -323,7 +323,7 @@ public class PrometheusHelper {
 
 		// linking shine
 		SignUp.sync();
-		ShortcutsTyper.delayTime(1000);
+		ShortcutsTyper.delayTime(2000);
 		SignUp.tapOK();
 		// Backed to "Device select" view. Click next
 		ShortcutsTyper.delayTime(1000);

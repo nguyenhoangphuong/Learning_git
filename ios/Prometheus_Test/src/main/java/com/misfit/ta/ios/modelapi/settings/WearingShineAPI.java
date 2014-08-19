@@ -28,10 +28,7 @@ public class WearingShineAPI extends ModelAPI {
 		
 		PrometheusHelper.signUpDefaultProfile();
 		HomeScreen.tapOpenSettingsTray();
-		HomeScreen.tapDevices();
-		HomeScreen.tapActiveDevice();
-		Gui.swipeUp(500);
-		HomeSettings.tapMisfitLabs();
+		HomeScreen.tapSettings();
 	}
 	
 	public void e_ToWearingShine() {
@@ -46,7 +43,7 @@ public class WearingShineAPI extends ModelAPI {
 	public void e_Back() {
 		
 		HomeSettings.tapBack();
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.MisfitLabsTitle);
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.SettingsTitle);
 	}
 
 	public void e_ChoosePosition() {
@@ -71,8 +68,8 @@ public class WearingShineAPI extends ModelAPI {
 	}
 
 	public void v_MyShine() {
-		Assert.assertTrue(HomeSettings.isAtMisfitLabs(),
-				"Current view is Misfit Labs");
+		Assert.assertTrue(HomeSettings.isAtSettings(),
+				"Current view is Settings");
 	}
 
 	public void v_UpdatedWearingShine() {

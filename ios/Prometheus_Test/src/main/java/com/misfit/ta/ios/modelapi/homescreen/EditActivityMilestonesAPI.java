@@ -36,7 +36,6 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 	private int mins = 50;
 	private List<String> errors = new ArrayList<String>();
 	
-	
 	public void e_init() {
 		
 		// sign up

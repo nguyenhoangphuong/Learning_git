@@ -16,8 +16,8 @@ import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class SleepTileRemovingAPI extends ModelAPI {
-	public SleepTileRemovingAPI(AutomationTest automation, File model,
+public class SleepRemovingAPI extends ModelAPI {
+	public SleepRemovingAPI(AutomationTest automation, File model,
 			boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}

@@ -14,7 +14,7 @@ import com.misfit.ta.ios.modelapi.homescreen.DayInPastAPI;
 import com.misfit.ta.ios.modelapi.homescreen.DayProgressAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityFlowAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityMilestonesAPI;
-import com.misfit.ta.ios.modelapi.homescreen.SleepTileRemovingAPI;
+import com.misfit.ta.ios.modelapi.homescreen.SleepRemovingAPI;
 import com.misfit.ta.ios.modelapi.homescreen.TaggingActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.WeekViewAPI;
 import com.misfit.ta.ios.modelapi.signin.SignInWithFacebookAPI;
@@ -97,12 +97,12 @@ public class HomeScreenTest extends AutomationTest
     }
     
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "RemoveSleep" })
-    public void SleepTileRemoving() throws InterruptedException, StopConditionException, IOException
+    public void SleepRemoving() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
-        model.add("SleepTileRemoving", new SleepTileRemovingAPI(this, Files.getFile("model/homescreen/SleepTileRemoving.graphml"),
+        model.add("SleepTileRemoving", new SleepRemovingAPI(this, Files.getFile("model/homescreen/SleepRemoving.graphml"),
                 true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
-        model.execute("SleepTileRemoving");
+        model.execute("SleepRemoving");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);

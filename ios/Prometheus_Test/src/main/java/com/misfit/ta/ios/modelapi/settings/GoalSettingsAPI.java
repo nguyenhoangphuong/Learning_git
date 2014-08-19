@@ -149,7 +149,6 @@ public class GoalSettingsAPI extends ModelAPI {
 	public void e_DoneEdit() {
 
 		HomeSettings.tapDoneAtNewGoal();
-//		HomeScreen.tapOpenSettingsTray();
 		
 		activityGoal = activityGoalTemporary;
 		sleepGoalHours = sleepGoalHoursTemp;
