@@ -206,7 +206,7 @@ public class PrometheusHelper {
 		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 			
 		for (int i = 0; i < 2; i++) {
-			Gui.swipeLeft(500);
+			Gui.swipeLeft(200);
 		}
 		
 		if (ViewUtils.isExistedView("UIButtonLabel",

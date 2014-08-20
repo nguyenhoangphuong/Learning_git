@@ -138,7 +138,11 @@ public class SignUpAPI extends ModelAPI {
     }
     
     public void e_Sync() {
-        SignUp.sync();
+
+    	SignUp.sync();
+        ShortcutsTyper.delayTime(2000);
+		SignUp.tapOK();
+		ShortcutsTyper.delayTime(2000);
     }
  
    
