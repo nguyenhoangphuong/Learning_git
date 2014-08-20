@@ -100,7 +100,7 @@ public class HomeScreenTest extends AutomationTest
     public void SleepRemoving() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
-        model.add("SleepTileRemoving", new SleepRemovingAPI(this, Files.getFile("model/homescreen/SleepRemoving.graphml"),
+        model.add("SleepRemoving", new SleepRemovingAPI(this, Files.getFile("model/homescreen/SleepRemoving.graphml"),
                 true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("SleepRemoving");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
