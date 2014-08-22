@@ -52,6 +52,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 
 		changeDistanceSettings(false);
 		usUnit = false;
+		HomeScreen.tapOpenSettingsTray();
 	}
 
 	public void e_input() {
@@ -160,7 +161,7 @@ public class LifetimeDistanceAchievementAPI extends ModelAPI {
 		
 		Gui.swipeUp(1000);
 		checkBadgesTile(false, 4, 11, 2);
-		checkBadgesTile(false, 5, 7, 6);
+		checkBadgesTile(false, 5, 6, 6);
 		checkBadgesTile(false, 6, 14, 12);
 		Timeline.dragDownTimeline();
 	
