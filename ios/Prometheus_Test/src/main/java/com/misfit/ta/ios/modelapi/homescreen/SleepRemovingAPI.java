@@ -95,6 +95,7 @@ public class SleepRemovingAPI extends ModelAPI {
 		
 		PrometheusHelper.signOut();
 		PrometheusHelper.signIn(email, "qwerty1");
+		ShortcutsTyper.delayTime(2000);
 		HomeScreen.tapSleepTimeline();
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.LoadingEtcLabel);
 	}
