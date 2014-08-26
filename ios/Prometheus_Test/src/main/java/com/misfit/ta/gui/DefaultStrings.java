@@ -56,6 +56,7 @@ public class DefaultStrings {
 	public static String SyncToSeeSleepLabel = "Sync to see your sleep";
 	public static String EditSleepButtonTag = "EditSleepButton";
 	public static String TonightLabel = "Tonight";
+	public static String AlarmButton = "Set Alarm";
 	
 	
 	// link
@@ -128,6 +129,7 @@ public class DefaultStrings {
 	public static String TileActivitiesLabel = "Activities";
 	public static String TileSleepLabel = "Sleep";
 	public static String TileMilestonesLabel = "Milestones";
+	public static String TonightTitle = "Tonight";
 
 	// settings
 	public static String MyProfileButton = "My Info";
@@ -267,5 +269,7 @@ public class DefaultStrings {
 	public static String SearchingLabel = "Searching...";
 	public static String NoMatchesFoundLabel = "No matches found";
 	public static String InvalidParametersMessage = "Invalid parameters";
+	public static String SleepSoundButton = "Choose Sleep Sound";
+	public static String SleepSoundLabel = "Sleep Sound";
 	
 }

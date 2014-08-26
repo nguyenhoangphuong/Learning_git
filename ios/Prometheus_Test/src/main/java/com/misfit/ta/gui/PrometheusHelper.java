@@ -71,7 +71,7 @@ public class PrometheusHelper {
 		if(fraction != null) Gui.setPicker(1, fraction);
 		Gui.dismissPicker();
 	}
-
+	
 	public static void enterHeight() {
 
 		Gui.touchAVIew("PTHeightPickerControl", 0);
@@ -127,7 +127,15 @@ public class PrometheusHelper {
 		Gui.setPicker(2, times[2]);
 		Gui.dismissPicker();
 	}
+	
+	public static void inputAlarmTime(String[] times){
+		Gui.touchAVIew("UIDatePicker", 0);
+		Gui.setPicker(0, times[0]);
+		Gui.setPicker(1, times[1]);
+		Gui.setPicker(2, times[2]);
+	}
 
+	
 	/* Alerts */
 	public static boolean hasSignUpInvalidEmailMessage() {
 		return Gui.getPopupContent().equals(DefaultStrings.SignUpInvalidEmailMessage) && Gui.getPopupTitle().equals(DefaultStrings.Title);

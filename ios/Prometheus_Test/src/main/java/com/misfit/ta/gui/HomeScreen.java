@@ -26,6 +26,13 @@ public class HomeScreen {
 		Gui.touchAVIew("PTListItemView", DefaultStrings.MyGoalButton);
 	}
 
+	public static void tapSetAlarmTime(){
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.AlarmButton);
+	}
+	
+	public static void tapChangeSleepSound(){
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SleepSoundButton);
+	}
 	public static void tapMyShine() {
 		Gui.touchAVIew("PTListItemView", DefaultStrings.MyShineButton);
 	}
@@ -47,6 +54,10 @@ public class HomeScreen {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.ManualButton);
 	}
 
+	public static boolean isSleepSoundScreen(){
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.SleepSoundLabel);
+	}
+	
 	public static void tapProgressCircle() {
 		Gui.touchAVIew("PTGoalCircleView", 0);
 	}
@@ -205,6 +216,10 @@ public class HomeScreen {
 		return ViewUtils.isExistedView("UIButton", DefaultStrings.MenuButtonTag);
 	}
 	
+	public static boolean isAlarmScreen(){
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.TonightTitle);
+	}
+	
 	public static boolean isToday() {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.TodayTitle);
 	}
@@ -353,4 +368,9 @@ public class HomeScreen {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.WeekDayButtonTag);
 	}
 
+	public static void setSound(String[] sounds){
+		Gui.touchAVIew("UILabel", sounds[0]);
+		Gui.swipeUp(150);
+		Gui.touchAVIew("UILabel", sounds[1]);
+	}
 }
