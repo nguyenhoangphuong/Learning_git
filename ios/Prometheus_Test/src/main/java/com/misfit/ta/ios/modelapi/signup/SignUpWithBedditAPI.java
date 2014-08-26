@@ -7,10 +7,6 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
-
-import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
@@ -19,6 +15,9 @@ import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.SleepViews;
 import com.misfit.ta.gui.Timeline;
+import com.misfit.ta.ios.AutomationTest;
+import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class SignUpWithBedditAPI extends ModelAPI {
 	
@@ -81,6 +80,11 @@ public class SignUpWithBedditAPI extends ModelAPI {
     	
     	HomeScreen.tapLinkNow();
     	PrometheusHelper.sync();
+    	ShortcutsTyper.delayTime(2000);
+		SignUp.tapOK();
+		// Backed to "Device select" view. Click next
+		ShortcutsTyper.delayTime(1000);
+		SignUp.tapNext();
 		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 		
 		PrometheusHelper.handleTutorial();

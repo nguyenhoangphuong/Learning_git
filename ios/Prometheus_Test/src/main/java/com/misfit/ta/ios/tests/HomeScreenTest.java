@@ -14,6 +14,8 @@ import com.misfit.ta.ios.modelapi.homescreen.DayInPastAPI;
 import com.misfit.ta.ios.modelapi.homescreen.DayProgressAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityFlowAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityMilestonesAPI;
+import com.misfit.ta.ios.modelapi.homescreen.SetAlarmAPI;
+import com.misfit.ta.ios.modelapi.homescreen.SetWeightGoalAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SleepRemovingAPI;
 import com.misfit.ta.ios.modelapi.homescreen.TaggingActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.WeekViewAPI;
@@ -108,4 +110,26 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
 
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "RemoveSleep" })
+    public void SetWeightGoal() throws InterruptedException, StopConditionException, IOException
+    {
+        ModelHandler model = getModelhandler();
+        model.add("SetWeightGoal", new SetWeightGoalAPI(this, Files.getFile("model/homescreen/SetWeightGoal.graphml"),
+                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+        model.execute("SetWeightGoal");
+        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+        String actualResult = getModelhandler().getStatistics();
+        System.out.println(actualResult);
+    }
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "RemoveSleep" })
+    public void SetAlarm() throws InterruptedException, StopConditionException, IOException
+    {
+    	ModelHandler model = getModelhandler();
+    	model.add("SetAlarm", new SetAlarmAPI(this, Files.getFile("model/homescreen/SetAlarm.graphml"),
+    			true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+    	model.execute("SetAlarm");
+    	Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+    	String actualResult = getModelhandler().getStatistics();
+    	System.out.println(actualResult);
+    }
 }
