@@ -36,7 +36,6 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		
 		PrometheusHelper.signUpDefaultProfile();
 		
-//		HomeScreen.goToTodayViewOfLeaderboard();
 		HomeScreen.tapMenuSocial();
 		LeaderboardView.tapDontHaveFacebook();
 		PrometheusHelper.waitForView("UILabel", DefaultStrings.ProfilePreviewViewTitle);
@@ -77,9 +76,9 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		Gui.captureScreen("e_deleteAverageUserAndGoToLeaderboard" + System.nanoTime());
 		SocialProfileView.tapBack();
 		
+		LeaderboardView.pullToRefresh();
 		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.goToTodayViewOfLeaderboard();
-		LeaderboardView.pullToRefresh();
 	}
 	
 	public void e_addAverageUserAndGoToLeaderboard() {
@@ -97,8 +96,9 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		SearchFriendView.tapBack();
 		SocialProfileView.tapBack();
 		
-		HomeScreen.goToTodayViewOfLeaderboard();
 		LeaderboardView.pullToRefresh();
+		PrometheusHelper.handleUpdateFirmwarePopup();
+		HomeScreen.goToTodayViewOfLeaderboard();
 	}
 	
 	
