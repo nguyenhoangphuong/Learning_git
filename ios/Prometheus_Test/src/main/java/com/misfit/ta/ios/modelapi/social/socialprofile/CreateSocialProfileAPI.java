@@ -140,7 +140,7 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	}
 	
 	public void e_goToSocialProfile() {
-		
+		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapSocialProfile();
 	}
 	
