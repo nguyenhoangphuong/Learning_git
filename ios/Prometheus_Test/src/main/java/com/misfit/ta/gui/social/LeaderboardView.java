@@ -15,7 +15,7 @@ public class LeaderboardView {
 	
 	public static void tapGotIt() {
 		
-		Gui.touchAVIew("UILabel", DefaultStrings.OKGotItButton);
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.OKGotItButton);
 	}
 	
 	public static void tapUserWithHandle(String handle) {

@@ -55,9 +55,11 @@ public class EditSocialProfileAPI extends ModelAPI {
 		
 		// set up gui
 		PrometheusHelper.handleUpdateFirmwarePopup();
-		HomeScreen.goToTodayViewOfLeaderboard();
+		HomeScreen.tapMenuSocial();
+		PrometheusHelper.waitForView("UIButtonLabel", DefaultStrings.OKGotItButton);
 		LeaderboardView.tapGotIt();
-		HomeScreen.tapSocialProfile();
+		PrometheusHelper.handleUpdateFirmwarePopup();
+		HomeScreen.tapProfileSocial();
 	}
 	
 	public void e_tapEdit() {
@@ -125,9 +127,12 @@ public class EditSocialProfileAPI extends ModelAPI {
 			Gui.touchPopupButton("OK");
 		}
 		
-		SocialProfileView.tapCameraRoll(); ShortcutsTyper.delayOne();
-		SocialProfileView.tapAlbumImage(0); ShortcutsTyper.delayOne();
-		SocialProfileView.tapChoosePhoto(); ShortcutsTyper.delayOne();
+		SocialProfileView.tapCameraRoll(); 
+		ShortcutsTyper.delayOne();
+		SocialProfileView.tapAlbumImage(0); 
+		ShortcutsTyper.delayOne();
+		SocialProfileView.tapChoosePhoto(); 
+		ShortcutsTyper.delayOne();
 
 		// submit
 		SocialProfileView.tapDone();

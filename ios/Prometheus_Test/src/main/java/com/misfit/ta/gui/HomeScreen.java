@@ -79,7 +79,7 @@ public class HomeScreen {
 	}
 	
 	public static void tapMenuSocial() {
-		Gui.touchAVIew("UIButton", DefaultStrings.MenuSocial);
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.MenuSocial);
 		PrometheusHelper.waitForThrobberToDissappear();
 	}
 	
@@ -98,6 +98,10 @@ public class HomeScreen {
 	public static void tapSocialProfile() {
 		tapMenuSocial();
 		Gui.touchAVIew("UIButton", DefaultStrings.SocialProfileButtonLabel);
+	}
+	
+	public static void tapProfileSocial() {
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SocialProfileButtonLabel);
 	}
 	
 	public static void tapLinkNow() {
