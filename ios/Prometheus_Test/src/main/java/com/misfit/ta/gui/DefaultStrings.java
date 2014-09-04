@@ -21,6 +21,7 @@ public class DefaultStrings {
 	public static String ShineLabel = "Shine";
 	public static String StimulateLabel = "Stimulated device";
 	public static String FlashLabel = "Flash";
+	public static String LogActivityLabel = "Log Activity";
 	public static String BedditLabel = "Beddit";
 	
 	
@@ -115,6 +116,7 @@ public class DefaultStrings {
 	
 	public static String SocialProfileButtonLabel = "PROFILE";
 	public static String AddTrackingActivity = "add button";
+	public static String LogExerciseLabel = "Log Exercise";
 	public static String WorldViewButtonLabel = "FEED";
 	public static String LeaderBoardTodayButtonLabel = "TODAY";
 	public static String LeaderBoardYesterdayButtonLabel = "YESTERDAY";
@@ -214,7 +216,7 @@ public class DefaultStrings {
 
 	// Wearing Shine
 	public static String WearingShineTitle = "Help the Misfit team build better algorithms for you by selecting your favourite position to wear the Shine";
-	public static String WearingShineButton = "Wearing Shine";
+	public static String WearingShineButton = "Wearing device";
 	public static String PositionText[] = { "OTHER", "ANKLE", "WAIST", "WRIST",
 			"CHEST" };
 	public static String PositionDescription[] = {
