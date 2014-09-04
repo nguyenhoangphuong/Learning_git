@@ -332,6 +332,8 @@ public class PrometheusHelper {
 
 		// linking shine
 		SignUp.sync();
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.StimulateLabel);
+		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
 		// Backed to "Device select" view. Click next

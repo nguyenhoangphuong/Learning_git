@@ -7,6 +7,8 @@ public class DefaultStrings {
 	public static String BackButton = "Back";
 	public static String SaveButton = "Save";
 	public static String DoneButton = "Done";
+	public static String StartButton = "Start";
+	public static String StopButton = "Stop";
 	public static String CancelButton = "Cancel";
 	public static String EditButton = "Edit";
 	public static String SignoutButton = "Sign Out";
@@ -17,6 +19,8 @@ public class DefaultStrings {
 	public static String LoadingEtcLabel = "Loading...";
 	public static String RemoveButton = "Remove";
 	public static String ShineLabel = "Shine";
+	public static String StimulateLabel = "Stimulated device";
+	public static String FlashLabel = "Flash";
 	public static String BedditLabel = "Beddit";
 	
 	
@@ -41,7 +45,7 @@ public class DefaultStrings {
 	public static String SignUpProfileTitle = "My Info";
 	public static String SelectDeviceTitle = "My Devices";
 	public static String SignUpSetYourGoalTitle = "Set your goal";
-	public static String SignUpLinkShineTitle = "Link Shine";
+	public static String SignUpLinkShineTitle = "Link Device";
 	public static String SignUpConnectBedditTitle = "Connect Beddit";
 	public static String FinishSetUpButton = "FINISH SETUP";
 	public static String[] SignUpTutorial = { "\\_Walking\\_",
@@ -110,6 +114,7 @@ public class DefaultStrings {
 	public static String MenuSocial = "MenuSocial";
 	
 	public static String SocialProfileButtonLabel = "PROFILE";
+	public static String AddTrackingActivity = "add button";
 	public static String WorldViewButtonLabel = "FEED";
 	public static String LeaderBoardTodayButtonLabel = "TODAY";
 	public static String LeaderBoardYesterdayButtonLabel = "YESTERDAY";
@@ -118,6 +123,7 @@ public class DefaultStrings {
 	public static String TutorialForDeleteSleepTile = "Hold down on a sleep highlight to remove it. You can only do this on the current day.";
 
 	public static String LinkNowButton = "Link Now";
+	public static String TrackNowButton = "Track Now";
 	public static String BuyNowButton = "Buy Now";
 	
 	// edit tag

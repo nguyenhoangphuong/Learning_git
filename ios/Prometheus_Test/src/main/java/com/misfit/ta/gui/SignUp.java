@@ -9,6 +9,8 @@ public class SignUp {
 	
 	public static final int SELECT_SHINE = 0;
 	public static final int SELECT_BEDDIT = 1;
+	public static final int LINK_SHINE = 0;
+	public static final int LINK_FLASH = 1;
 
     /* NAVIGATION */
     public static void tapSignUp() {
@@ -37,6 +39,20 @@ public class SignUp {
     	}
     	
     	Gui.touchAVIew("UIButtonLabel", deviceLabel);
+    }
+    
+    public static void tapSelectLinkDevice(int deviceSelectCode){
+    	String deviceLabel = "";
+    	switch (deviceSelectCode) {
+		case LINK_SHINE:
+			deviceLabel = DefaultStrings.ShineLabel;
+			break;
+
+		case LINK_FLASH:
+			deviceLabel = DefaultStrings.FlashLabel;
+			break;
+		}
+    	Gui.touchAVIew("UILabel", deviceLabel);
     }
     
     public static void tapSignOut() {

@@ -14,6 +14,14 @@ public class HomeScreen {
 		tapOpenSettingsTrayWithoutPopupHandling();
 	}
 	
+	public static void tapTrackNow(){
+		Gui.touchAVIew("UIButton", DefaultStrings.TrackNowButton);
+	}
+	
+	public static boolean isActivityDialog(){
+		return ViewUtils.isExistedView("UIButton", DefaultStrings.StartButton);
+	}
+	
 	public static void tapOpenSettingsTrayWithoutPopupHandling() {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.MenuButtonTag);
 	}
@@ -22,6 +30,14 @@ public class HomeScreen {
 		Gui.touchAVIew("PTListItemView", DefaultStrings.SettingsButton);
 	}
 
+	public static void tapStartButton(){
+		Gui.touchAVIew("UIButton", DefaultStrings.StartButton);
+	}
+	
+	public static void tapStopButton(){
+		Gui.touchAVIew("UIButton", DefaultStrings.StopButton);
+	}
+	
 	public static void tapAdjustGoal() {
 		Gui.touchAVIew("PTListItemView", DefaultStrings.MyGoalButton);
 	}
@@ -104,11 +120,18 @@ public class HomeScreen {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SocialProfileButtonLabel);
 	}
 	
+	public static void tapAddTrackingActivity() {
+		Gui.touchAVIew("UIButton", DefaultStrings.AddTrackingActivity);
+	}
+	
 	public static void tapLinkNow() {
 		
 		Gui.touchAVIew("UILabel", DefaultStrings.LinkNowButton);
 	}
 	
+	public static boolean isDialogTracking(){
+		return ViewUtils.isExistedView("UIButton", DefaultStrings.TrackNowButton);
+	}
 	
 	static public void switchAutoSleepTrackingOn() {
 
