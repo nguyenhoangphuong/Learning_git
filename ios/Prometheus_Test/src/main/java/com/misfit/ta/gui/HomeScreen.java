@@ -121,12 +121,20 @@ public class HomeScreen {
 	}
 	
 	public static void tapAddTrackingActivity() {
-		Gui.touchAVIew("UIButton", DefaultStrings.AddTrackingActivity);
+		Gui.touchAVIew("UILabel", DefaultStrings.AddTrackingActivity);
+	}
+	
+	public static void tapLogExercise() {
+		Gui.touchAVIew("UILabel", DefaultStrings.LogExerciseLabel);
 	}
 	
 	public static void tapLinkNow() {
 		
 		Gui.touchAVIew("UILabel", DefaultStrings.LinkNowButton);
+	}
+	
+	public static void tapCancel(){
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.CancelButton);
 	}
 	
 	public static boolean isDialogTracking(){
@@ -339,6 +347,9 @@ public class HomeScreen {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.SetWeightGoalButton);
 	}
 	
+	public static boolean isLogActivityScreen(){
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.LogActivityLabel);
+	}
 	
 	// get
 	public static String getCurrentActivityGoalString() {

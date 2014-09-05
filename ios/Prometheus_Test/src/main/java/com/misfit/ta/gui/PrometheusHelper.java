@@ -271,7 +271,7 @@ public class PrometheusHelper {
 
 		// linking shine
 		SignUp.sync();
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.StimulateLabel);
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
 		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
@@ -332,7 +332,7 @@ public class PrometheusHelper {
 
 		// linking shine
 		SignUp.sync();
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.StimulateLabel);
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
 		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
@@ -352,7 +352,7 @@ public class PrometheusHelper {
 		SignIn.tapLogIn();
 		ShortcutsTyper.delayOne();
 		SignIn.enterEmailPassword(email, password);
-		waitForViewToDissappear("UILabel", DefaultStrings.MyShineTitle);
+//		waitForViewToDissappear("UILabel", DefaultStrings.MyShineTitle);
 	}
 	
 	public static void signOut() {

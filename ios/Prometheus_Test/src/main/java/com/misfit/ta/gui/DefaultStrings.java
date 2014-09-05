@@ -94,7 +94,7 @@ public class DefaultStrings {
 	public static String MisfitLabsTitle = "Misfit Labs";
 	public static String SettingsButton = "Settings";
 	public static String MyShineButton = "My Shine";
-	public static String MyShineTitle = "My Shine";
+	public static String MyShineTitle = "My Devices";
 	public static String ShineTitle = "Shine";
 	public static String MyGoalButton = "My Goals";
 	public static String NoActivityLabel = "No activity yet.";

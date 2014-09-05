@@ -74,16 +74,17 @@ public class SignUpWithBedditAPI extends ModelAPI {
     	
     	PrometheusHelper.signOut();
     	PrometheusHelper.signIn(email, "qqqqqq");
+    	PrometheusHelper.waitForView("UILabel", DefaultStrings.SelectDeviceTitle);
     }
     
     public void e_linkShine() {
     	
     	HomeScreen.tapLinkNow();
     	PrometheusHelper.sync();
-    	ShortcutsTyper.delayTime(2000);
-		SignUp.tapOK();
-		// Backed to "Device select" view. Click next
-		ShortcutsTyper.delayTime(1000);
+    	PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
+		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
+		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
+		SignUp.tapOK();		// Backed to "Device select" view. Click next
 		SignUp.tapNext();
 		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 		
