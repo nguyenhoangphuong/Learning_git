@@ -18,7 +18,6 @@ import com.misfit.ta.ios.modelapi.homescreen.SetAlarmAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SetWeightGoalAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SleepRemovingAPI;
 import com.misfit.ta.ios.modelapi.homescreen.TaggingActivityAPI;
-import com.misfit.ta.ios.modelapi.homescreen.TrackTaggingActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.WeekViewAPI;
 import com.misfit.ta.ios.modelapi.signin.SignInWithFacebookAPI;
 import com.misfit.ta.utils.Files;
