@@ -60,19 +60,6 @@ public class TilesTest extends AutomationTest {
     }
 	
 	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone", "LifetimeDistanceTile" })
-    public void LifetimeDistanceAchievement() throws InterruptedException, StopConditionException, IOException 
-    {    	
-        ModelHandler model = getModelhandler();
-        model.add("LifetimeDistanceAchievement", new LifetimeDistanceAchievementAPI(this, 
-        		Files.getFile("model/tiles/LifetimeDistanceAchievement.graphml"),
-                true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), true));
-        model.execute("LifetimeDistanceAchievement");
-        Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
-        String actualResult = getModelhandler().getStatistics();
-        System.out.println(actualResult);
-    }
-	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone", "LifetimeDistanceTile" })
 	public void LifetimeDistanceAchievementInUSMetric() throws InterruptedException, StopConditionException, IOException 
 	{    	
 		ModelHandler model = getModelhandler();
