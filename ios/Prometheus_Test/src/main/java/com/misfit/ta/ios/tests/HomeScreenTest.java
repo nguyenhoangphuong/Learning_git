@@ -18,6 +18,7 @@ import com.misfit.ta.ios.modelapi.homescreen.SetAlarmAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SetWeightGoalAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SleepRemovingAPI;
 import com.misfit.ta.ios.modelapi.homescreen.TaggingActivityAPI;
+import com.misfit.ta.ios.modelapi.homescreen.TrackTaggingActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.WeekViewAPI;
 import com.misfit.ta.ios.modelapi.signin.SignInWithFacebookAPI;
 import com.misfit.ta.utils.Files;
@@ -98,7 +99,7 @@ public class HomeScreenTest extends AutomationTest
         model.execute("EditTagToHitMilestones");
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "RemoveSleep" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SleepRemoving" })
     public void SleepRemoving() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -110,7 +111,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
 
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "RemoveSleep" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SetWeightGoal" })
     public void SetWeightGoal() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -121,7 +122,8 @@ public class HomeScreenTest extends AutomationTest
         String actualResult = getModelhandler().getStatistics();
         System.out.println(actualResult);
     }
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "RemoveSleep" })
+    
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SetAlarm" })
     public void SetAlarm() throws InterruptedException, StopConditionException, IOException
     {
     	ModelHandler model = getModelhandler();
@@ -132,4 +134,16 @@ public class HomeScreenTest extends AutomationTest
     	String actualResult = getModelhandler().getStatistics();
     	System.out.println(actualResult);
     }
+    
+//    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "TrackTaggingActivity" })
+//    public void TrackTaggingActivity() throws InterruptedException, StopConditionException, IOException
+//    {
+//    	ModelHandler model = getModelhandler();
+//    	model.add("TrackTaggingActivity", new TrackTaggingActivityAPI(this, Files.getFile("model/homescreen/TrackTaggingActivity.graphml"),
+//    			true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+//    	model.execute("TrackTaggingActivity");
+//    	Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+//    	String actualResult = getModelhandler().getStatistics();
+//    	System.out.println(actualResult);
+//    }
 }
