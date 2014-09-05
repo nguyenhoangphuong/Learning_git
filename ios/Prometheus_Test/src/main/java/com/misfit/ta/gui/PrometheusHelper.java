@@ -3,7 +3,6 @@ package com.misfit.ta.gui;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
-import org.graphwalker.GUI.App.MyEdgePaintFunction;
 
 import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
@@ -272,7 +271,8 @@ public class PrometheusHelper {
 
 		// linking shine
 		SignUp.sync();
-		ShortcutsTyper.delayTime(1000);
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.StimulateLabel);
+		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
 		
@@ -337,7 +337,6 @@ public class PrometheusHelper {
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
 		// Backed to "Device select" view. Click next
-		ShortcutsTyper.delayTime(1000);
 		SignUp.tapNext();
 		
 		// tutorial

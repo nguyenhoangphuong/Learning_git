@@ -140,9 +140,10 @@ public class SignUpAPI extends ModelAPI {
     public void e_Sync() {
 
     	SignUp.sync();
-        ShortcutsTyper.delayTime(3000);
+    	PrometheusHelper.waitForView("UILabel", DefaultStrings.StimulateLabel);
+		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
+		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
-		ShortcutsTyper.delayTime(2000);
     }
  
    

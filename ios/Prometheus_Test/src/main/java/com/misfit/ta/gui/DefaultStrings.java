@@ -19,7 +19,7 @@ public class DefaultStrings {
 	public static String LoadingEtcLabel = "Loading...";
 	public static String RemoveButton = "Remove";
 	public static String ShineLabel = "Shine";
-	public static String StimulateLabel = "Stimulated device";
+	public static String SimulateLabel = "Simulated device";
 	public static String FlashLabel = "Flash";
 	public static String LogActivityLabel = "Log Activity";
 	public static String BedditLabel = "Beddit";
