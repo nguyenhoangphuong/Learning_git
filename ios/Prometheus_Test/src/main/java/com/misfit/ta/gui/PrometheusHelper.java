@@ -337,6 +337,7 @@ public class PrometheusHelper {
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
 		// Backed to "Device select" view. Click next
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.SelectDeviceTitle);
 		SignUp.tapNext();
 		
 		// tutorial
