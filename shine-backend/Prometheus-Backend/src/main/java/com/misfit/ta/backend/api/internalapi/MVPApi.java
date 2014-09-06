@@ -570,6 +570,24 @@ public class MVPApi extends RequestHelper {
 
 		return new BaseResult(MVPApi.post(url, port, request));
 	}
+	
+	public static BaseResult editActivityTagging(String token, TimelineItem item, int activityType) {
+		String url = baseAddress + "timeline_items/" + item.getServerId(); 
+		url += "/tagging?type=" + activityType;
+		BaseParams request = new BaseParams();
+		
+		request.addHeader("auth_token", token);
+		return new BaseResult(MVPApi.post(url, port, request));
+	}
+	
+	public static BaseResult editActivityTagging(String token, String timelineItemId , int activityType) {
+		String url = baseAddress + "timeline_items/" + timelineItemId; 
+		url += "/tagging?type=" + activityType;
+		BaseParams request = new BaseParams();
+		
+		request.addHeader("auth_token", token);
+		return new BaseResult(MVPApi.post(url, port, request));
+	}
 
 	public static ServiceResponse createTimelineItems(String token, JSONArray items) {
 		
