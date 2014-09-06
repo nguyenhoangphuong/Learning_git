@@ -15,7 +15,7 @@ public class HomeScreen {
 	}
 	
 	public static void tapTrackNow(){
-		Gui.touchAVIew("UIButton", DefaultStrings.TrackNowButton);
+		Gui.touchATaggedView("UIButton", 1);
 	}
 	
 	public static boolean isActivityDialog(){
@@ -121,11 +121,11 @@ public class HomeScreen {
 	}
 	
 	public static void tapAddTrackingActivity() {
-		Gui.touchAVIew("UILabel", DefaultStrings.AddTrackingActivity);
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.AddTrackingActivity);
 	}
 	
 	public static void tapLogExercise() {
-		Gui.touchAVIew("UILabel", DefaultStrings.LogExerciseLabel);
+		Gui.touchATaggedView("UIButton", 2);
 	}
 	
 	public static void tapLinkNow() {
@@ -135,6 +135,14 @@ public class HomeScreen {
 	
 	public static void tapCancel(){
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.CancelButton);
+	}
+	
+	public static void tapNextActivity(){
+		Gui.touchAVIew("UIButtonLabel", ">>");
+	}
+	
+	public static void tapBackwardActivity(){
+		Gui.touchAVIew("UIButtonLabel", "<<");
 	}
 	
 	public static boolean isDialogTracking(){
@@ -235,6 +243,18 @@ public class HomeScreen {
 		}
 	}
 	
+	public static void tapLevelActivity(int level){
+		Gui.touchATaggedView("UIButton", level);
+	}
+	
+	public static void tapStartTimeButton(){
+		Gui.touchATaggedView("UIButton", 1);
+	}
+	
+	public static void tapEndTimeButton(){
+		Gui.touchATaggedView("UIButton", 2);
+	}
+	
 	public static void sync() {
 		PrometheusHelper.sync();
 	}
@@ -287,8 +307,6 @@ public class HomeScreen {
 	}
 
 	public static boolean isPointEarnedProgessCircle() {
-//		String text = Gui.getProperty("UILabel", 3, "text");
-//		return text.matches("^of .* points$");
 		return !isSummaryProgressCircle();
 	}
 
@@ -410,5 +428,13 @@ public class HomeScreen {
 		Gui.touchAVIew("UILabel", sounds[0]);
 		Gui.swipeUp(150);
 		Gui.touchAVIew("UILabel", sounds[1]);
+	}
+	
+	public static void inputTime(String[] times){
+		Gui.touchAVIew("UIDatePicker", 3);
+		Gui.setPicker(0, times[0]);
+		Gui.setPicker(1, times[1]);
+		Gui.setPicker(2, times[2]);
+		Gui.setPicker(3, times[3]);
 	}
 }

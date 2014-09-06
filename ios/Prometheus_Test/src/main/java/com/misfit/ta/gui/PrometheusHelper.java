@@ -353,7 +353,7 @@ public class PrometheusHelper {
 		SignIn.tapLogIn();
 		ShortcutsTyper.delayOne();
 		SignIn.enterEmailPassword(email, password);
-//		waitForViewToDissappear("UILabel", DefaultStrings.MyShineTitle);
+		waitForViewToDissappear("UILabel", DefaultStrings.MyShineTitle);
 	}
 	
 	public static void signOut() {

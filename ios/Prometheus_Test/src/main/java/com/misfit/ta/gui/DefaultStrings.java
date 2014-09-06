@@ -115,7 +115,7 @@ public class DefaultStrings {
 	public static String MenuSocial = "MenuSocial";
 	
 	public static String SocialProfileButtonLabel = "PROFILE";
-	public static String AddTrackingActivity = "add button";
+	public static String AddTrackingActivity = "AddButton";
 	public static String LogExerciseLabel = "Log Exercise";
 	public static String WorldViewButtonLabel = "FEED";
 	public static String LeaderBoardTodayButtonLabel = "TODAY";

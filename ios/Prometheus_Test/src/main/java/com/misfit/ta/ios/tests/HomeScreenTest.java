@@ -14,10 +14,12 @@ import com.misfit.ta.ios.modelapi.homescreen.DayInPastAPI;
 import com.misfit.ta.ios.modelapi.homescreen.DayProgressAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityFlowAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityMilestonesAPI;
+import com.misfit.ta.ios.modelapi.homescreen.LogActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SetAlarmAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SetWeightGoalAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SleepRemovingAPI;
 import com.misfit.ta.ios.modelapi.homescreen.TaggingActivityAPI;
+import com.misfit.ta.ios.modelapi.homescreen.TrackTaggingActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.WeekViewAPI;
 import com.misfit.ta.ios.modelapi.signin.SignInWithFacebookAPI;
 import com.misfit.ta.utils.Files;
@@ -145,4 +147,16 @@ public class HomeScreenTest extends AutomationTest
 //    	String actualResult = getModelhandler().getStatistics();
 //    	System.out.println(actualResult);
 //    }
+    
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "LogActivity" })
+    public void LogActivity() throws InterruptedException, StopConditionException, IOException
+    {
+    	ModelHandler model = getModelhandler();
+    	model.add("LogActivity", new LogActivityAPI(this, Files.getFile("model/homescreen/LogActivity.graphml"),
+    			true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
+    	model.execute("LogActivity");
+    	Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");
+    	String actualResult = getModelhandler().getStatistics();
+    	System.out.println(actualResult);
+    }
 }

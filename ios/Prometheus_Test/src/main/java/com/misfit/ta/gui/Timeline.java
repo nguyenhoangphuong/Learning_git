@@ -203,6 +203,11 @@ public class Timeline {
 				&& ViewUtils.isExistedView("UILabel", LabelAchievement)
 				&& ViewUtils.isExistedView("UILabel", message);
 	}
+	
+	public static boolean isTimelineSession(String time, String message){
+		return ViewUtils.isExistedView("UILabel", 5) && ViewUtils.isExistedView("UILabel", "MINUTES") 
+				&& ViewUtils.isExistedView("UILabel", message) && ViewUtils.isExistedView("UILabel", time);
+	}
 
 	public static boolean isTimezoneTileCorrect(String content,
 			int timezoneDiff, String[] messages) {
