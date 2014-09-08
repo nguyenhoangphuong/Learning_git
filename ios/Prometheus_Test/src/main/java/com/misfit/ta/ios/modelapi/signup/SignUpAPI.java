@@ -98,7 +98,7 @@ public class SignUpAPI extends ModelAPI {
     }
     
     public void e_ShineSelected() {
-    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
+    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE_FLASH, false);
     }
     
     public void e_SetGoal() {
@@ -141,7 +141,7 @@ public class SignUpAPI extends ModelAPI {
 
     	SignUp.sync();
     	PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
-		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
+		SignUp.tapSelectDevice(SignUp.LINK_SHINE, true);
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
     }

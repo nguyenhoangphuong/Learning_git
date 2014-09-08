@@ -49,7 +49,7 @@ public class SignUpGoalAPI extends ModelAPI {
 	}
 	
 	public void e_ShineSelected() {
-    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
+    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE_FLASH, false);
     }
 	
 	public void e_OpenTutorial() {
