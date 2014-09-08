@@ -262,7 +262,7 @@ public class PrometheusHelper {
 		SignUp.tapSave();
 		
 		// Select Shine
-		SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
+		SignUp.tapSelectDevice(SignUp.SELECT_SHINE_FLASH, false);
 		
 		// goal
 		SignUp.setGoal(goalLevel);
@@ -272,7 +272,7 @@ public class PrometheusHelper {
 		// linking shine
 		SignUp.sync();
 		PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
-		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
+		SignUp.tapSelectDevice(SignUp.LINK_SHINE, true);
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
 		
@@ -323,7 +323,7 @@ public class PrometheusHelper {
 		SignUp.tapSave();
 		
 		// Select Shine
-		SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
+		SignUp.tapSelectDevice(SignUp.SELECT_SHINE_FLASH, false);
 
 		// goal
 		SignUp.setGoal(1);
@@ -333,7 +333,7 @@ public class PrometheusHelper {
 		// linking shine
 		SignUp.sync();
 		PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
-		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
+		SignUp.tapSelectDevice(SignUp.LINK_SHINE, true);
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
 		// Backed to "Device select" view. Click next

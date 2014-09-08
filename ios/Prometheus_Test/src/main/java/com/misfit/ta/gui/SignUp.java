@@ -7,7 +7,7 @@ import com.misfit.ta.common.MVPEnums;
 
 public class SignUp {
 	
-	public static final int SELECT_SHINE = 0;
+	public static final int SELECT_SHINE_FLASH = 0;
 	public static final int SELECT_BEDDIT = 1;
 	public static final int LINK_SHINE = 0;
 	public static final int LINK_FLASH = 1;
@@ -27,11 +27,15 @@ public class SignUp {
     	Gui.touchAVIew("UIButtonLabel", DefaultStrings.BackButton);
     }
     
-    public static void tapSelectDevice(int deviceSelectCode) {
+    public static void tapSelectDevice(int deviceSelectCode, boolean isShine) {
     	String deviceLabel = "";
     	switch (deviceSelectCode) {
-    	case SELECT_SHINE:
-    		deviceLabel = DefaultStrings.ShineLabel;
+    	case SELECT_SHINE_FLASH:
+    		if(!isShine){
+    			deviceLabel = DefaultStrings.ShineFlashLabel;
+    		}else{
+    			deviceLabel = DefaultStrings.ShineLabel;
+    		}
     		break;
     	case SELECT_BEDDIT:
     		deviceLabel = DefaultStrings.BedditLabel;
