@@ -128,6 +128,8 @@ public class DefaultStrings {
 	public static String LinkNowButton = "Link Now";
 	public static String TrackNowButton = "Track Now";
 	public static String BuyNowButton = "Buy Now";
+	public static String ForwardLabel = ">>";
+	public static String BackwardLabel = "<<";
 	
 	// edit tag
 	public static String EditTagTitle = "Edit Tag";

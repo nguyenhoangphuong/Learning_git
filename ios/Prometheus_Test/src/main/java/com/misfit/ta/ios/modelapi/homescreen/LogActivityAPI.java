@@ -80,7 +80,7 @@ public class LogActivityAPI extends ModelAPI {
 			} while (number != i);
 		} else if (number > i) {
 			do {
-				HomeScreen.tapNextActivity();
+				HomeScreen.tapForwardActivity();
 				i++;
 			} while (number != i);
 		}

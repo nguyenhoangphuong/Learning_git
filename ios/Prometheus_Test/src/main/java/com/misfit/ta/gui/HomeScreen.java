@@ -19,7 +19,7 @@ public class HomeScreen {
 	}
 	
 	public static boolean isActivityDialog(){
-		return ViewUtils.isExistedView("UIButton", DefaultStrings.StartButton);
+		return ViewUtils.isExistedView("UIButtonLabel", DefaultStrings.StartButton);
 	}
 	
 	public static void tapOpenSettingsTrayWithoutPopupHandling() {
@@ -31,7 +31,7 @@ public class HomeScreen {
 	}
 
 	public static void tapStartButton(){
-		Gui.touchAVIew("UIButton", DefaultStrings.StartButton);
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.StartButton);
 	}
 	
 	public static void tapStopButton(){
@@ -133,16 +133,24 @@ public class HomeScreen {
 		Gui.touchAVIew("UILabel", DefaultStrings.LinkNowButton);
 	}
 	
+	public static void tapDone(){
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.DoneButton);
+	}
+	
 	public static void tapCancel(){
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.CancelButton);
 	}
 	
-	public static void tapNextActivity(){
-		Gui.touchAVIew("UIButtonLabel", ">>");
+	public static void tapForwardActivity(){
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.ForwardLabel);
 	}
 	
 	public static void tapBackwardActivity(){
-		Gui.touchAVIew("UIButtonLabel", "<<");
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.BackwardLabel);
+	}
+	
+	public static void tapSyncLater(){
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SyncLaterButton);
 	}
 	
 	public static boolean isDialogTracking(){

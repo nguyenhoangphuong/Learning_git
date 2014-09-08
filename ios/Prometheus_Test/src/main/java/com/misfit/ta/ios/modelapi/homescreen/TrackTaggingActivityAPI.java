@@ -1,15 +1,19 @@
 package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
+import java.util.Calendar;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.aut.AutomationTest;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
+import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class TrackTaggingActivityAPI extends ModelAPI {
 
@@ -18,13 +22,8 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 		super(automation, model, efsm, generator, weight);
 	}
 
-	/**
-	 * This method implements the Edge 'e_Sync'
-	 * 
-	 */
-	public void e_Sync() {
-	}
-
+	private int number = 0;
+	private String times = "";
 	/**
 	 * This method implements the Edge 'e_back'
 	 * 
@@ -46,7 +45,14 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_chooseActivityRandom() {
-		
+		number = PrometheusHelper.randInt(0, 5);
+		int i = 5;
+		if(number < 5){
+			do{
+				HomeScreen.tapBackwardActivity();
+				i--;
+			}while(number == i);
+		}
 	}
 
 	/**
@@ -79,6 +85,8 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 */
 	public void e_start() {
 		HomeScreen.tapStartButton();
+		Calendar now = Calendar.getInstance();
+		
 	}
 
 	/**
@@ -86,15 +94,16 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_stop() {
-		HomeScreen.tapStopButton();
+		HomeScreen.tapDone();
 	}
-	
+
 	/**
 	 * This method implements the Vertex 'v_ActivityScreen'
 	 * 
 	 */
 	public void v_ActivityScreen() {
-		Assert.assertTrue(HomeScreen.isActivityDialog(), "Current View is Activity Dialog");
+		Assert.assertTrue(HomeScreen.isActivityDialog(),
+				"Current View is Activity Dialog");
 	}
 
 	/**
@@ -102,6 +111,7 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_ActivityScreenCheck() {
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", LogActivityAPI.arrActivities[number]), "It's not correct activity!");
 	}
 
 	/**
@@ -109,7 +119,8 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_HomeScreen() {
-		Assert.assertTrue(HomeScreen.isHomeScreen(), "Current View is HomeScreen");
+		Assert.assertTrue(HomeScreen.isHomeScreen(),
+				"Current View is HomeScreen");
 	}
 
 	/**
@@ -117,6 +128,9 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_HomeScreenUpdated() {
+		ShortcutsTyper.delayTime(2000);
+		Timeline.dragUpTimelineAndHandleTutorial();
+		
 	}
 
 	/**
@@ -138,7 +152,12 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_TaggingActivityScreen() {
-		Assert.assertTrue(HomeScreen.isDialogTracking(), "Current View is Tagging Activity Screen");
+		Assert.assertTrue(HomeScreen.isDialogTracking(),
+				"Current View is Tagging Activity Screen");
+	}
+	
+	public void e_SyncLater(){
+		HomeScreen.tapSyncLater();
 	}
 
 }
