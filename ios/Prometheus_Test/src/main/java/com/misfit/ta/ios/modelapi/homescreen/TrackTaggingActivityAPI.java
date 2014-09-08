@@ -1,6 +1,7 @@
 package com.misfit.ta.ios.modelapi.homescreen;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.graphwalker.generators.PathGenerator;
@@ -23,7 +24,8 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	}
 
 	private int number = 0;
-	private String times = "";
+	private ArrayList<String> arrStartTimes = new ArrayList<String>();
+	private ArrayList<String> arrEndTimes = new ArrayList<String>();
 	/**
 	 * This method implements the Edge 'e_back'
 	 * 
@@ -44,10 +46,10 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 * This method implements the Edge 'e_chooseActivityRandom'
 	 * 
 	 */
-	public void e_chooseActivityRandom() {
+	public void chooseActivityRandom() {
 		number = PrometheusHelper.randInt(0, 5);
 		int i = 5;
-		if(number < 5){
+		if(number < i){
 			do{
 				HomeScreen.tapBackwardActivity();
 				i--;
@@ -84,17 +86,25 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_start() {
+		chooseActivityRandom();
 		HomeScreen.tapStartButton();
-		Calendar now = Calendar.getInstance();
-		
+		getCurrentTime();
+		ShortcutsTyper.delayTime(7000);
 	}
 
-	/**
-	 * This method implements the Edge 'e_stop'
-	 * 
-	 */
-	public void e_stop() {
-		HomeScreen.tapDone();
+	public void getCurrentTime(){
+		Calendar now = Calendar.getInstance();
+		int hour = now.get(Calendar.HOUR_OF_DAY);
+		int minute = now.get(Calendar.MINUTE);
+		boolean isAM = true;
+		if(hour > 12){
+			hour -= 12;
+			isAM = false;
+		}
+		arrStartTimes.add(String.valueOf(hour));
+		arrStartTimes.add(String.valueOf(minute));
+		arrStartTimes.add(isAM ? String.valueOf("AM") : String.valueOf("PM"));
+		isAM = true;
 	}
 
 	/**
@@ -104,14 +114,6 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	public void v_ActivityScreen() {
 		Assert.assertTrue(HomeScreen.isActivityDialog(),
 				"Current View is Activity Dialog");
-	}
-
-	/**
-	 * This method implements the Vertex 'v_ActivityScreenCheck'
-	 * 
-	 */
-	public void v_ActivityScreenCheck() {
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", LogActivityAPI.arrActivities[number]), "It's not correct activity!");
 	}
 
 	/**
@@ -128,16 +130,20 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_HomeScreenUpdated() {
-		ShortcutsTyper.delayTime(2000);
 		Timeline.dragUpTimelineAndHandleTutorial();
-		
+		checkTile();
 	}
-
-	/**
-	 * This method implements the Vertex 'v_RecordResultScreen'
-	 * 
-	 */
-	public void v_RecordResultScreen() {
+	
+	public void checkTile(){
+		String title = arrStartTimes.get(0) + ":" + String.format("%02d", Integer.parseInt(arrStartTimes.get(1))) + arrStartTimes.get(2).toLowerCase();
+		if(!ViewUtils.isExistedView("UILabel", title)){
+			title = arrStartTimes.get(0) + ":" + String.format("%02d", Integer.parseInt(arrStartTimes.get(1)) - 1) + arrStartTimes.get(3).toLowerCase();
+		}
+		System.out.println("Title : " + title);
+		
+		Timeline.openTile(title);
+		Timeline.closeCurrentTile();
+		Timeline.dragDownTimeline();
 	}
 
 	/**
@@ -156,8 +162,19 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 				"Current View is Tagging Activity Screen");
 	}
 	
+	public void e_Done(){
+		HomeScreen.tapDone();
+	}
+	
+	public void v_RecordScreenResult(){
+		
+	}
+	
 	public void e_SyncLater(){
 		HomeScreen.tapSyncLater();
 	}
-
+	
+	public void e_trackNow(){
+		HomeScreen.tapTrackNow();
+	}
 }

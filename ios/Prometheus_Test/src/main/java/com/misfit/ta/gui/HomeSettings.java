@@ -10,7 +10,7 @@ public class HomeSettings {
 	}
 
 	public static void tapCancel() {
-		Gui.touchAVIew("UIButton", DefaultStrings.CancelButton);
+		Gui.touchAVIew("UIButtonLabel", DefaultStrings.CancelButton);
 	}
 	
 	public static void tapMisfitLabs() {
