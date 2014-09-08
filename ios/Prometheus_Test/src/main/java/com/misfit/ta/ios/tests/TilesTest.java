@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.tiles.DailyGoalMilestonesAPI;
-import com.misfit.ta.ios.modelapi.tiles.LifetimeDistanceAchievementAPI;
 import com.misfit.ta.ios.modelapi.tiles.LifetimeDistanceAchievementInSIMetricAPI;
 import com.misfit.ta.ios.modelapi.tiles.LifetimeDistanceAchievementInUSMetricAPI;
 import com.misfit.ta.ios.modelapi.tiles.PersonalBestMilestoneAPI;
@@ -59,7 +58,7 @@ public class TilesTest extends AutomationTest {
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone", "LifetimeDistanceTile" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone", "LifetimeDistanceAchievementInUSMetric" })
 	public void LifetimeDistanceAchievementInUSMetric() throws InterruptedException, StopConditionException, IOException 
 	{    	
 		ModelHandler model = getModelhandler();
@@ -72,7 +71,7 @@ public class TilesTest extends AutomationTest {
 		System.out.println(actualResult);
 	}
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone", "LifetimeDistanceTile" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Tile", "Milestone", "LifetimeDistanceAchievementInSIMetric" })
 	public void LifetimeDistanceAchievementInSIMetric() throws InterruptedException, StopConditionException, IOException 
 	{    	
 		ModelHandler model = getModelhandler();
