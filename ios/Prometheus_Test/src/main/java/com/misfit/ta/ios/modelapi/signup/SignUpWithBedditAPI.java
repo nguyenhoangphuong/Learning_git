@@ -48,7 +48,7 @@ public class SignUpWithBedditAPI extends ModelAPI {
     }
     
     public void e_SelectBeddit() {
-    	SignUp.tapSelectDevice(SignUp.SELECT_BEDDIT);
+    	SignUp.tapSelectDevice(SignUp.SELECT_BEDDIT, false);
     }
     
     public void e_connect() {
@@ -82,7 +82,7 @@ public class SignUpWithBedditAPI extends ModelAPI {
     	HomeScreen.tapLinkNow();
     	PrometheusHelper.sync();
     	PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
-		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
+		SignUp.tapSelectDevice(SignUp.LINK_SHINE, true);
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();		// Backed to "Device select" view. Click next
 		SignUp.tapNext();
