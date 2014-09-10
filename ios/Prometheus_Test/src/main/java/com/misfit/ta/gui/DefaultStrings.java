@@ -282,5 +282,6 @@ public class DefaultStrings {
 	public static String InvalidParametersMessage = "Invalid parameters";
 	public static String SleepSoundButton = "Choose Sleep Sound";
 	public static String SleepSoundLabel = "Sleep Sound";
+	public static String ShowMyShineLabel = "Show My Shine";
 	
 }

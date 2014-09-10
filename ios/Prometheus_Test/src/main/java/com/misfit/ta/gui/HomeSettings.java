@@ -60,6 +60,10 @@ public class HomeSettings {
 	public static void tapSignOut() {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.SignoutButton);
 	}
+	
+	public static void tapShowMyShine(){
+		Gui.touchAVIew("UILabel", DefaultStrings.ShowMyShineLabel);
+	}
 
 	public static void chooseSignOut() {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.ShineOutButton);
@@ -159,6 +163,10 @@ public class HomeSettings {
 	
 	public static boolean isAtEditWeightGoal() {
 		return ViewUtils.isExistedView("PTWeightPickerView", 0);
+	}
+	
+	public static boolean isAtDevicesSettingScreen(){
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.DevicesButton);
 	}
 
 }
