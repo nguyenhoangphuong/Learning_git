@@ -25,7 +25,8 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 
 	private int number = 0;
 	private ArrayList<String> arrStartTimes = new ArrayList<String>();
-	private ArrayList<String> arrEndTimes = new ArrayList<String>();
+	private String title;
+	private String email;
 	/**
 	 * This method implements the Edge 'e_back'
 	 * 
@@ -78,7 +79,7 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_init() {
-		PrometheusHelper.signUpDefaultProfile();
+		email = PrometheusHelper.signUpDefaultProfile();
 	}
 
 	/**
@@ -131,16 +132,15 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	 */
 	public void v_HomeScreenUpdated() {
 		Timeline.dragUpTimelineAndHandleTutorial();
-		checkTile();
-	}
-	
-	public void checkTile(){
-		String title = arrStartTimes.get(0) + ":" + String.format("%02d", Integer.parseInt(arrStartTimes.get(1))) + arrStartTimes.get(2).toLowerCase();
+		title = arrStartTimes.get(0) + ":" + String.format("%02d", Integer.parseInt(arrStartTimes.get(1))) + arrStartTimes.get(2).toLowerCase();
 		if(!ViewUtils.isExistedView("UILabel", title)){
 			title = arrStartTimes.get(0) + ":" + String.format("%02d", Integer.parseInt(arrStartTimes.get(1)) - 1) + arrStartTimes.get(3).toLowerCase();
 		}
 		System.out.println("Title : " + title);
-		
+		checkTile();
+	}
+	
+	public void checkTile(){
 		Timeline.openTile(title);
 		Timeline.closeCurrentTile();
 		Timeline.dragDownTimeline();
@@ -176,5 +176,14 @@ public class TrackTaggingActivityAPI extends ModelAPI {
 	
 	public void e_trackNow(){
 		HomeScreen.tapTrackNow();
+	}
+	
+	public void v_HomeScreenAfterSignIn(){
+		checkTile();
+	}
+	
+	public void e_signOutAndSignInAgain(){
+		PrometheusHelper.signOut();
+		PrometheusHelper.signIn(email, "qwerty1");
 	}
 }
