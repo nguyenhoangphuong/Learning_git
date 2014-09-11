@@ -38,10 +38,10 @@ public class BackendGraphItemCreateTC extends BackendAutomation {
 		GraphItem g1 = GraphItem.getGraphItem(r1.response);
 		GraphItem g2 = GraphItem.getGraphItem(r2.response);
 
-		Assert.assertTrue(r2.isExisted(), "Status code is 210");
-		Assert.assertEquals(g1.getServerId(), g2.getServerId(), "Server Id is the same");
-		Assert.assertEquals(g1.getLocalId(), g2.getLocalId(), "Local id is the same");
-		Assert.assertEquals(g1.getUpdatedAt(), g2.getUpdatedAt(), "Updated at is the same");
+		Assert.assertTrue(r2.isExisted(), "Status code isn't 210 - it means duplicated content error");
+		Assert.assertEquals(g1.getServerId(), g2.getServerId(), "Server Id isn't the same");
+		Assert.assertEquals(g1.getLocalId(), g2.getLocalId(), "Local id isn't the same");
+		Assert.assertEquals(g1.getUpdatedAt(), g2.getUpdatedAt(), "Updated at isn't the same");
 		
 		// duplicate item by client id
 		GraphItem g3 = DefaultValues.RandomGraphItem(2020 * 1);
@@ -53,10 +53,10 @@ public class BackendGraphItemCreateTC extends BackendAutomation {
 		GraphItem g5 = GraphItem.getGraphItem(r3.response);
 		GraphItem g6 = GraphItem.getGraphItem(r4.response);
 
-		Assert.assertTrue(r4.isExisted(), "Status code is 210");
-		Assert.assertEquals(g5.getServerId(), g6.getServerId(), "Server Id is the same");
-		Assert.assertEquals(g5.getLocalId(), g6.getLocalId(), "Local id is the same");
-		Assert.assertEquals(g5.getUpdatedAt(), g6.getUpdatedAt(), "Updated at is the same");
+		Assert.assertTrue(r4.isExisted(), "Status code isn't 210 - it means duplicated content error");
+		Assert.assertEquals(g5.getServerId(), g6.getServerId(), "Server Id isn't the same");
+		Assert.assertEquals(g5.getLocalId(), g6.getLocalId(), "Local id isn't the same");
+		Assert.assertEquals(g5.getUpdatedAt(), g6.getUpdatedAt(), "Updated at isn't the same");
 
 	}
 
