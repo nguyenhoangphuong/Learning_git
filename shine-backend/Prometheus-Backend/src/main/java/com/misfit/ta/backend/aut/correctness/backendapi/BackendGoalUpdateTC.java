@@ -100,7 +100,7 @@ public class BackendGoalUpdateTC extends BackendAutomation {
 		g.setProgressData(new ProgressData(600, 8000, 5000, 800));
 		g.setLocalId("noneexistgoal");
 
-		GoalsResult r = MVPApi.updateGoal(token, defaultGoal);
+		GoalsResult r = MVPApi.updateGoal(token, g);
 		r.printKeyPairsValue();
 
 		Assert.assertTrue(r.isNotFound(), "Status code is 404");
