@@ -75,11 +75,20 @@ public class BackendTimelineItemCreateTC  extends BackendAutomation {
 		ServiceResponse r = MVPApi.createTimelineItems(token, items);
 		List<TimelineItem> ritems = TimelineItem.getTimelineItems(r);
 		
-		Assert.assertEquals(r.getStatusCode(), 200, "Status code is 200");
+		Assert.assertEquals(r.getStatusCode(), 200, "Status code isn't 200");
 		Assert.assertEquals(ritems.size(), items.size(), "Size of return items is the same");
 		for(TimelineItem ritem : ritems) {
 			Assert.assertNotNull(ritem.getServerId(), "ServerId is not null");
 		}
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "timeline_item" })
+	public void CreateTimelineItemsWithWrongType(){
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		TimelineItem item = DefaultValues.CreateTimelineItem(1800*4, 50);
+		BaseResult r = MVPApi.createTimelineItem(token, item);
+		
+		Assert.assertTrue(r.statusCode == 200, "Create timline item with wrong type");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "timeline_item" })
