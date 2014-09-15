@@ -121,6 +121,10 @@ public class BaseResult {
 	public boolean isServerErr() {
 		return this.statusCode == 500;
 	}
+	
+	public boolean isNotShineAccount(){
+		return this.statusCode == 400;
+	}
 
 	public boolean isEmptyErrMsg() {
 		return this.errorMessage == null ||

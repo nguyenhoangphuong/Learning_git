@@ -4,6 +4,7 @@ package com.misfit.ta.backend.aut.correctness.backendapi;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.api.*;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
@@ -105,5 +106,47 @@ public class BackendSignInTC extends BackendAutomation {
 
         Assert.assertNotEquals(r1.token, r2.token, "Different token after sign out and sign in again");
     }
-
+    
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "signin" })
+    public void SignUpFlow() {
+    	String email = MVPApi.generateUniqueEmail();
+    	String pass = "qwerty";
+    	
+    	//Sign Up New Account
+    	AccountResult accountResult = MVPApi.signUp(email, pass);
+    	Assert.assertTrue(accountResult.isOK(), "Sign Up failed!");
+    	//Sign In
+    	accountResult = MVPApi.signIn(email, pass);
+    	Assert.assertTrue(accountResult.isOK(), "Sign In failed!");
+    	//Sign Out
+    	MVPApi.signOut(accountResult.token);
+    	
+    	//Sign In with wrong pass
+    	accountResult = MVPApi.signIn(email, "qwerty1");
+    	Assert.assertTrue(!accountResult.isOK(), "Sign In is successfull with wrong password");
+    	//Sign In with wrong email
+    	accountResult = MVPApi.signIn("testqa14@misfitqa.com", pass);
+    	Assert.assertTrue(!accountResult.isOK(), "Sign In is successfull with wrong email");
+    	//Sign Up again with the same email
+    	AccountResult r1 = MVPApi.signUp(email, "qwerty1");
+    	Assert.assertTrue(!r1.isOK(), "Sign Up is successfull with the same email ");
+    }
+    
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "reset" })
+    public void ResetPassword_ReceiveEmail(){
+    	String email = MVPApi.generateUniqueEmail();
+    	String pass = "qwerty";
+    	
+    	//Sign Up
+    	AccountResult accountResult = MVPApi.signUp(email, pass);
+    	Assert.assertTrue(accountResult.isOK(), "Sign Up is failed");
+    	
+    	//Supplying true email to reset password
+    	BaseResult baseResult = MVPApi.requestEmailToChangePassword(email);
+    	Assert.assertTrue(baseResult.isOK(), "The email you entered is not associated with a Shine account");
+    	
+    	//Supplying wrong email to reset password
+    	baseResult = MVPApi.requestEmailToChangePassword("trunghoangqa1@misfitqa.com");
+    	Assert.assertTrue(baseResult.isNotShineAccount(), "Wrong email but associated with Shine account");
+    }
 }
