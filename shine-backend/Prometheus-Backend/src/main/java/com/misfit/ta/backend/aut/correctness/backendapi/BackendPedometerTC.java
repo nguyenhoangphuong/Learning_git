@@ -1,5 +1,6 @@
 package com.misfit.ta.backend.aut.correctness.backendapi;
 
+import org.apache.bcel.verifier.exc.LinkingConstraintException;
 import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.Test;
 
@@ -133,13 +134,43 @@ public class BackendPedometerTC extends BackendAutomation {
 		
 		// link this account to another device
 		Pedometer pedometer2 = createNewPedometer(newAccToken, serialNumberString2);
-		Assert.assertEquals(pedometer2.getServerId(), pedometer.getServerId(), "Server id of second request");
+		Assert.assertTrue(pedometer2.getServerId() != pedometer.getServerId(), "ServerId is the same");
 		
 		// check linking status
 		linkingStatus = MVPApi.getDeviceLinkingStatus(newAccToken, serialNumberString2);
-		Assert.assertEquals(linkingStatus, DefaultValues.DeviceNotLinkToAnyAccount, "Linking status after second request");
+		Assert.assertEquals(linkingStatus, DefaultValues.DeviceLinkedToYourAccount, "Wrong message!");
 	}
 
+//	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "demo" })
+//	public void demoLinkingAccountToShine(){
+//		String email = MVPApi.generateUniqueEmail();
+//		String serialNumberString = TextTool.getRandomString(10, 10);
+//		System.out.println("Serial Number 1 : " + serialNumberString);
+//		String serialNumberString2 = TextTool.getRandomString(10, 10);
+//		System.out.println("Serial Number 2 : " + serialNumberString2);
+//		
+//		//Link account to the first shine
+//		String token = MVPApi.signUp(email, "qwerty").token;
+//		Pedometer pedometer = DataGenerator.generateRandomPedometer(System.currentTimeMillis(), null);
+//		pedometer.setSerialNumberString(serialNumberString);
+//		BaseResult res1 = MVPApi.createPedometer(token, pedometer);
+//		
+//		//Check linking status
+//		String status = MVPApi.getDeviceLinkingStatus(token, serialNumberString);
+//		System.out.println("Linking status of the first shine : " + status);
+//		
+//		//Link that account to the second shine
+//		//Can't not update serial number
+////		pedometer.setSerialNumberString(serialNumberString2);
+////		BaseResult result = MVPApi.updatePedometer(token, pedometer);
+////		System.out.println("Result : " + result.statusCode);
+//		Pedometer pedometer2 = createNewPedometer(token, serialNumberString2);
+//		System.out.println("ServerID of pedometer1 : " + Pedometer.getPedometer(res1.response).getServerId());
+//		System.out.println("ServerID of pedometer2 : " + pedometer2.getServerId());
+//		status = MVPApi.getDeviceLinkingStatus(token, serialNumberString2);
+//		System.out.println("Linking status of the second shine : " + status);
+//	}
+	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void LinkToAlreadyLinkedShine() {
 		String serialNumberString = TextTool.getRandomString(10, 10);
