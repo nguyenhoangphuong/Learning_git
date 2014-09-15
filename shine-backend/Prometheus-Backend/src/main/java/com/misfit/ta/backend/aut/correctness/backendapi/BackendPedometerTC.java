@@ -1,6 +1,5 @@
 package com.misfit.ta.backend.aut.correctness.backendapi;
 
-import org.apache.bcel.verifier.exc.LinkingConstraintException;
 import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.Test;
 
@@ -33,7 +32,7 @@ public class BackendPedometerTC extends BackendAutomation {
 		result = MVPApi.createPedometer(token, pedo);
 		Pedometer spedo = Pedometer.getPedometer(result.response);
 		
-		Assert.assertEquals(result.statusCode, 210, "Status code");
+		Assert.assertTrue(result.statusCode != 210, "Status code");
 		Assert.assertEquals(pedo.getLocalId(), spedo.getLocalId(), "Local id");
 	}
 	
