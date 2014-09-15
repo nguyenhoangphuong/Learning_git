@@ -101,23 +101,50 @@ public class MVPApi extends RequestHelper {
 
 	private static BaseResult requestReset(String email, String shortUrl) {
 		// trace
-		logger.info("Email receives link reset password : " + email );
-		
-		//prepare
+		logger.info("Email receives link reset password : " + email);
+
+		// prepare
 		String url = baseAddress + shortUrl;
 		BaseParams requestInfo = new BaseParams();
 		requestInfo.addParam("email", email);
-		
-		//post and receive raw data
+
+		// post and receive raw data
 		ServiceResponse response = MVPApi.post(url, port, requestInfo);
-		
-		//format data
+
+		// format data
 		BaseResult result = new BaseResult(response);
 		return result;
 	}
 
 	public static BaseResult requestEmailToChangePassword(String email) {
 		return requestReset(email, "reset_password/request_token_email");
+	}
+
+	public static BaseResult changePassword(String token, String newPassword,
+			String confirmPass) {
+		return change(token, newPassword, confirmPass,
+				"reset_password/change_password");
+	}
+
+	private static BaseResult change(String token, String password,
+			String confirmPass, String shortUrl) {
+		// trace
+		logger.info("Change password : " + token);
+
+		// prepare
+		String url = baseAddress + shortUrl;
+		BaseParams requestInfo = new BaseParams();
+		requestInfo.addParam("token", token);
+		requestInfo.addParam("new_password", password);
+		requestInfo.addParam("confirm_password", confirmPass);
+
+		// post and receive raw data
+		ServiceResponse response = MVPApi.post(url, port, requestInfo);
+
+		// format data
+		BaseResult result = new BaseResult(response);
+		return result;
+
 	}
 
 	public static AccountResult signIn(String email, String password) {

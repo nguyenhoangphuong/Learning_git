@@ -149,4 +149,27 @@ public class BackendSignInTC extends BackendAutomation {
     	baseResult = MVPApi.requestEmailToChangePassword("trunghoangqa1@misfitqa.com");
     	Assert.assertTrue(baseResult.isNotShineAccount(), "Wrong email but associated with Shine account");
     }
+    
+    @Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "changepassword" })
+    public void ChangePassword(){
+    	String email = MVPApi.generateUniqueEmail();
+    	String pass = "qwerty";
+    	
+    	//SignUp
+    	MVPApi.signUp(email, pass);
+    	String token = MVPApi.signIn(email, pass).token;
+    	
+    	//Change password with new password = confirm password
+    	String newPassword = "qwerty1";
+    	BaseResult baseResult = MVPApi.changePassword(token, newPassword, newPassword);
+    	Assert.assertTrue(baseResult.isOK(), "Error message : " + baseResult.errorMessage);
+    	
+    	//SignIn after change password
+    	AccountResult accountResult = MVPApi.signIn(email, newPassword);
+    	Assert.assertTrue(accountResult.isOK(), "SignIn failed after changing password");
+    	
+    	//Change password with new password != confirm password
+    	baseResult = MVPApi.changePassword(token, newPassword, pass);
+    	Assert.assertTrue(!baseResult.isOK(), "Change password is failed!");
+    }
 }
