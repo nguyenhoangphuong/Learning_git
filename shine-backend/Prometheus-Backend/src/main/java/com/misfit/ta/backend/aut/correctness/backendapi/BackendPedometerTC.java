@@ -313,7 +313,8 @@ public class BackendPedometerTC extends BackendAutomation {
 		Pedometer r = MVPApi.updatePedometer(token, pedo.toJson());
 		
 		Assert.assertEquals(r.getSerialNumberString(), serialNumberString2, "Serial number");
-		Assert.assertTrue(r == null || r.getSerialNumberString() == serialNumberString, "Cannot update serial number or force client update");
+		Assert.assertTrue(r != null, "Cannot update serial number or force client update");
+		Assert.assertTrue(r.getSerialNumberString() != serialNumberString, "Cannot update serial number or force client update");
 				
 	}
 	
