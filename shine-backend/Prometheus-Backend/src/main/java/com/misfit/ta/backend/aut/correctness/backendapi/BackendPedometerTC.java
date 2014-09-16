@@ -387,6 +387,28 @@ public class BackendPedometerTC extends BackendAutomation {
 		Assert.assertTrue(baseResult.isOK(), "Link shine failed!");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "multipledevices", "pedometer" })
+	public void test(){
+		String email = MVPApi.generateUniqueEmail();
+		String pass = "qwerty";
+		
+		//SignUp account
+		String token = MVPApi.signUp(email, pass).token;
+		//Create the first pedometer with first shine
+		Pedometer pedometerItem = DataGenerator.generateRandomPedometer(System.currentTimeMillis(), null);
+		pedometerItem.setDeviceType(DataGenerator.SHINE_FLASH);
+		pedometerItem.setIsCurrent(true);
+		BaseResult baseResult = MVPApi.createPedometer(token, pedometerItem);
+		Assert.assertTrue(baseResult.isOK(), "Link shine failed!");
+		
+		//Create the second pedometer with beddit
+		pedometerItem = DataGenerator.generateRandomPedometer(System.currentTimeMillis(), null);
+		pedometerItem.setDeviceType(DataGenerator.PEBBLE);
+		pedometerItem.setIsCurrent(true);
+		baseResult = MVPApi.createPedometer(token, pedometerItem);
+		Assert.assertFalse(baseResult.isOK(), "Set current device for pebble is ok!");
+	}
+	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void GetLatestFirmwareVersion() {
 		
@@ -402,12 +424,32 @@ public class BackendPedometerTC extends BackendAutomation {
 		Assert.assertTrue(compareList(lsDevice, listDevices), "Get All Devices is wrong!");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer", "getAllDevices" })
+	public void GetPedometer(){
+		String email = MVPApi.generateUniqueEmail();
+		String pass = "qwerty";
+		String token = MVPApi.signUp(email, pass).token;
+		String serialNumberString = TextTool.getRandomString(10, 10);
+		Pedometer pedometer = createNewPedometer(token, serialNumberString);
+		//Call Api for getting pedometer with valid serverId
+		BaseResult baseResult = MVPApi.getPedometer(token, pedometer.getServerId());
+		Assert.assertTrue(baseResult.isOK(), "Can't get pedometer");
+		Pedometer pedometer2 = Pedometer.getPedometer(baseResult.response);
+		System.out.println("Client : " + serialNumberString);
+		System.out.println("Server : " + pedometer2.getSerialNumberString());
+		Assert.assertEquals(pedometer2.getSerialNumberString(), serialNumberString, "Serial number isn't the same!");
+		//Call Api for getting pedometer with invalid serverId
+		baseResult = MVPApi.getPedometer(token, "qwerty");
+		Pedometer pedometer3 = Pedometer.getPedometer(baseResult.response);
+		Assert.assertTrue(pedometer3 == null, "Get Pedometer with invalid serverId");
+	}
 	// helpers
 	private Pedometer createNewPedometer(String token, String serialNumberString) {
 		
 		long timestamp = System.currentTimeMillis();
 		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
 		pedometer.setSerialNumberString(serialNumberString);
+		pedometer.setIsCurrent(true);
 		
 		BaseResult result = MVPApi.createPedometer(token, pedometer);
 		return Pedometer.getPedometer(result.response);

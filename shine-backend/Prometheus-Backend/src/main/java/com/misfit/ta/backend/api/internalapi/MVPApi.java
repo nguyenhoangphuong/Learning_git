@@ -946,11 +946,31 @@ public class MVPApi extends RequestHelper {
 		// format data
 		return new BaseResult(response);
 	}
+	
+	public static BaseResult getPedometerRaw1(String token, String serverId, String shortUrl){
+		//trace
+		logger.info("getPedometerRaw1 : token " + token + "\nServerId : " + serverId);
+		
+		//prepare
+		String url = baseAddress + shortUrl + "?serverId=" + serverId;
+		
+		BaseParams requestInfo = new BaseParams();
+		requestInfo.addHeader("auth_token", token);
+		
+		//post and receive raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInfo);
+		
+		return new BaseResult(response);
+	}
 
 	public static Pedometer getPedometer(String token) {
 
 		ServiceResponse response = getPedometerRaw(token).response;
 		return Pedometer.getPedometer(response);
+	}
+	
+	public static BaseResult getPedometer(String token, String serverId){
+		return getPedometerRaw1(token, serverId, "pedometer");
 	}
 
 	private static BaseParams buildEditPedometerRequest(String token,

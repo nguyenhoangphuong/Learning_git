@@ -42,7 +42,7 @@ public class BaseResult {
 			this.response = response;
 			this.rawData = response.getContentData().toString();
 
-			if (!this.rawData.trim().isEmpty()) {
+			if (!this.rawData.trim().isEmpty() && !this.rawData.equalsIgnoreCase("null")) {
 				try {
 					json = new JSONObject(this.rawData.toString());
 
