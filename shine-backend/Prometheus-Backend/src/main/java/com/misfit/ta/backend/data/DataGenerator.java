@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 
 import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
+import com.misfit.ta.android.DeviceManager;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.beddit.BedditSleepSession;
 import com.misfit.ta.backend.data.beddit.BedditSleepSessionProperties;
@@ -51,6 +52,9 @@ import com.misfit.ta.utils.TextTool;
 
 public class DataGenerator {
 			
+	 public static final int SHINE_FLASH = 1;
+	 public static final int BEDDIT = 0;
+	 public static final int PEBBLE = 2;
 	// generators
 	public static ProfileData generateRandomProfile(long timestamp, Map<String, Object> options) {
 		
@@ -140,6 +144,7 @@ public class DataGenerator {
 		return gs;
 	}
 	
+	//Default : set value = true for isLinked, value = false = isCurrent
 	public static Pedometer generateRandomPedometer(long timestamp, Map<String, Object> options) {
 			
 		Pedometer item = new Pedometer();
@@ -153,7 +158,9 @@ public class DataGenerator {
 		item.setSerialNumberString(TextTool.getRandomString(10, 10));
 		item.setUnlinkedTime(null);
 		item.setUpdatedAt(timestamp);
-		
+		item.setDeviceType(DataGenerator.SHINE_FLASH);
+		item.setIsCurrent(false);
+		item.setIsLinked(true);
 		return item;
 	}
 

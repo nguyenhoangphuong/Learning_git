@@ -18,6 +18,9 @@ public class Pedometer {
 	private String localId;
 	private String serverId;
 	private Long updatedAt;
+	private Integer deviceType;
+	private boolean isCurrent;
+	private boolean isLinked;
 
 	
 	// constructors
@@ -38,10 +41,28 @@ public class Pedometer {
 		this.bookmarkState = 0;
 		this.batteryLevel = 100;
 		this.clockState = 0;
+		this.isCurrent = true;
+		this.isLinked = true;
 	}
 
 	
 	// getters setters
+	public boolean getIsCurrent(){
+		return isCurrent;
+	}
+	
+	public void setIsCurrent(boolean value){
+		isCurrent = value;
+	}
+	
+	public boolean getIsLinked(){
+		return isLinked;
+	}
+	
+	public void setIsLinked(boolean value){
+		isLinked = value;
+	}
+	
 	public String getSerialNumberString() {
 		return serialNumberString;
 	}
@@ -138,6 +159,13 @@ public class Pedometer {
 		this.updatedAt = updatedAt;
 	}
 
+	public int getDeviceType(){
+		return deviceType;
+	}
+	
+	public void setDeviceType(int deviceType){
+		this.deviceType = deviceType;
+	}
 	
 	// methods
 	public JSONObject toJson() {
@@ -152,6 +180,9 @@ public class Pedometer {
 			object.accumulate("bookmarkState", bookmarkState);
 			object.accumulate("batteryLevel", batteryLevel);
 			object.accumulate("linkedTime", linkedTime);
+			object.accumulate("deviceType", deviceType);
+			object.accumulate("isCurrent", isCurrent);
+			object.accumulate("isLinked", isLinked);
 			object.accumulate("unlinkedTime", unlinkedTime);
 			object.accumulate("lastSyncedTime", lastSyncedTime);
 			object.accumulate("lastSuccessfulSyncedTime", lastSuccessfulSyncedTime);
@@ -175,7 +206,10 @@ public class Pedometer {
 			object.accumulate("batteryLevel", batteryLevel != null ? batteryLevel : JSONObject.NULL);
 			object.accumulate("linkedTime", linkedTime != null ? linkedTime : JSONObject.NULL);
 			object.accumulate("unlinkedTime", unlinkedTime != null ? unlinkedTime : JSONObject.NULL);
+			object.accumulate("isCurrent", isCurrent);
+			object.accumulate("isLinked", unlinkedTime);
 			object.accumulate("lastSyncedTime", lastSyncedTime != null ? lastSyncedTime : JSONObject.NULL);
+			object.accumulate("deviceType", deviceType != null ? deviceType : JSONObject.NULL);
 			object.accumulate("lastSuccessfulSyncedTime", lastSuccessfulSyncedTime != null ? lastSuccessfulSyncedTime : JSONObject.NULL);
 			return object;
 		} catch (JSONException e) {
@@ -197,10 +231,18 @@ public class Pedometer {
 				pedometer.setUnlinkedTime(obj.getLong("unlinkedTime"));
 			if(!obj.isNull("lastSyncedTime"))
 				pedometer.setLastSyncedTime(obj.getLong("lastSyncedTime"));
+			if(!obj.isNull("deviceType"))
+				pedometer.setDeviceType(obj.getInt("deviceType"));
+			if(!obj.isNull("lastSyncedTime"))
+				pedometer.setLastSyncedTime(obj.getLong("lastSyncedTime"));
 			if(!obj.isNull("lastSuccessfulSyncedTime"))
 				pedometer.setLastSuccessfulSyncedTime(obj.getLong("lastSuccessfulSyncedTime"));
 			if(!obj.isNull("clockState"))
 				pedometer.setClockState(obj.getInt("clockState"));
+			if(!obj.isNull("isCurrent"))
+				pedometer.setIsCurrent(obj.getBoolean("isCurrent"));
+			if(!obj.isNull("isLinked"))
+				pedometer.setIsLinked(obj.getBoolean("isLinked"));
 			if(!obj.isNull("bookmarkState"))
 				pedometer.setBookmarkState(obj.getInt("bookmarkState"));
 			if(!obj.isNull("batteryLevel"))

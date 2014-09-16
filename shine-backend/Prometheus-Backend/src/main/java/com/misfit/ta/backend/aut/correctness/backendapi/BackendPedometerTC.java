@@ -3,6 +3,7 @@ package com.misfit.ta.backend.aut.correctness.backendapi;
 import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.Test;
 
+import com.misfit.ta.android.DeviceManager;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
@@ -11,6 +12,7 @@ import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.utils.TextTool;
+import com.sun.jna.platform.unix.X11.XClientMessageEvent.Data;
 
 import org.testng.Assert;
 
@@ -360,6 +362,41 @@ public class BackendPedometerTC extends BackendAutomation {
 		
 		Assert.assertEquals(r.statusCode, 400, "Status code");
 		Assert.assertEquals(pedo, null, "Pedometer from result");
+	}
+
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "multipledevices" })
+	public void LinkMultipleDevices(){
+		String email = MVPApi.generateUniqueEmail();
+		String pass = "qwerty";
+		//SignUp account
+		String token = MVPApi.signUp(email, pass).token;
+		//Create the first pedometer with first shine
+		Pedometer pedometerItem = DataGenerator.generateRandomPedometer(System.currentTimeMillis(), null);
+		pedometerItem.setDeviceType(DataGenerator.SHINE_FLASH);
+		BaseResult baseResult = MVPApi.createPedometer(token, pedometerItem);
+		Assert.assertTrue(baseResult.isOK(), "Link shine failed!");
+		
+		String status = MVPApi.getDeviceLinkingStatus(token, pedometerItem.getSerialNumberString());
+		Assert.assertEquals(status, DefaultValues.DeviceLinkedToYourAccount, "Link failed with the first shine!");
+		
+		//Create the second pedometer with beddit
+		pedometerItem = DataGenerator.generateRandomPedometer(System.currentTimeMillis(), null);
+		pedometerItem.setDeviceType(DataGenerator.PEBBLE);
+		pedometerItem.setIsCurrent(true);
+		baseResult = MVPApi.createPedometer(token, pedometerItem);
+		Assert.assertTrue(baseResult.isOK(), "Link pebble failed!");
+
+		//Create the third pedometer with shine
+		pedometerItem = DataGenerator.generateRandomPedometer(System.currentTimeMillis(), null);
+		pedometerItem.setDeviceType(DataGenerator.SHINE_FLASH);
+		baseResult = MVPApi.createPedometer(token, pedometerItem);
+		Assert.assertTrue(baseResult.isOK(), "Link shine failed!");
+		
+		//Create the fourth pedometer with shine
+		pedometerItem = DataGenerator.generateRandomPedometer(System.currentTimeMillis(), null);
+		pedometerItem.setDeviceType(DataGenerator.SHINE_FLASH);
+		baseResult = MVPApi.createPedometer(token, pedometerItem);
+		Assert.assertTrue(baseResult.isOK(), "Link shine failed!");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
