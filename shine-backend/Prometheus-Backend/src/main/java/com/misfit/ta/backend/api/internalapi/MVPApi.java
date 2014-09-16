@@ -78,6 +78,27 @@ public class MVPApi extends RequestHelper {
 		return System.nanoTime() + "-" + TextTool.getRandomString(10, 10);
 	}
 
+	public static List<String> getAllDevices(String token){
+		return getDevices(token, "devices/list");
+	}
+	
+	private static List<String> getDevices(String token, String shortUrl){
+		//trace
+		logger.info("Token of getDevices : " + token);
+		
+		//prepare
+		String url = baseAddress + shortUrl;
+		
+		BaseParams requestInfo = new BaseParams();
+		requestInfo.addHeader("auth_token", token);
+		
+		//post and receive raw data
+		ServiceResponse response = MVPApi.get(url, port, requestInfo);
+		List<String> result = new ArrayList<String>();
+		result.addAll(Pedometer.getListDevices(response));
+		
+		return result;
+	}
 	// account apis
 	static private AccountResult sign(String email, String password,
 			String shortUrl) {

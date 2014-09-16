@@ -1,9 +1,12 @@
 package com.misfit.ta.backend.aut.correctness.backendapi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.misfit.ta.android.DeviceManager;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
@@ -12,7 +15,6 @@ import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.utils.TextTool;
-import com.sun.jna.platform.unix.X11.XClientMessageEvent.Data;
 
 import org.testng.Assert;
 
@@ -20,6 +22,22 @@ public class BackendPedometerTC extends BackendAutomation {
 
 	private String password = "test12";
 
+	protected String defaultToken = "";
+	protected long defaultTimestamp = System.currentTimeMillis() / 1000;
+	protected List<String> listDevices = new ArrayList<String>();
+	@BeforeClass(alwaysRun = true)
+	public void setUp(){
+		defaultToken = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		Pedometer pedometer;
+		for(int i = 0; i < 7; i++){
+			pedometer = DataGenerator.generateRandomPedometer(defaultTimestamp, null);
+			listDevices.add(pedometer.getSerialNumberString());
+			pedometer.setDeviceType(i%2==0 ? DataGenerator.SHINE_FLASH : DataGenerator.PEBBLE);
+			if(i == 3){
+				pedometer.setIsCurrent(true);
+			}
+		}
+	}
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void CreateDuplicatePedometer() {
 		
@@ -142,36 +160,6 @@ public class BackendPedometerTC extends BackendAutomation {
 		Assert.assertEquals(linkingStatus, DefaultValues.DeviceLinkedToYourAccount, "Wrong message!");
 	}
 
-//	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "demo" })
-//	public void demoLinkingAccountToShine(){
-//		String email = MVPApi.generateUniqueEmail();
-//		String serialNumberString = TextTool.getRandomString(10, 10);
-//		System.out.println("Serial Number 1 : " + serialNumberString);
-//		String serialNumberString2 = TextTool.getRandomString(10, 10);
-//		System.out.println("Serial Number 2 : " + serialNumberString2);
-//		
-//		//Link account to the first shine
-//		String token = MVPApi.signUp(email, "qwerty").token;
-//		Pedometer pedometer = DataGenerator.generateRandomPedometer(System.currentTimeMillis(), null);
-//		pedometer.setSerialNumberString(serialNumberString);
-//		BaseResult res1 = MVPApi.createPedometer(token, pedometer);
-//		
-//		//Check linking status
-//		String status = MVPApi.getDeviceLinkingStatus(token, serialNumberString);
-//		System.out.println("Linking status of the first shine : " + status);
-//		
-//		//Link that account to the second shine
-//		//Can't not update serial number
-////		pedometer.setSerialNumberString(serialNumberString2);
-////		BaseResult result = MVPApi.updatePedometer(token, pedometer);
-////		System.out.println("Result : " + result.statusCode);
-//		Pedometer pedometer2 = createNewPedometer(token, serialNumberString2);
-//		System.out.println("ServerID of pedometer1 : " + Pedometer.getPedometer(res1.response).getServerId());
-//		System.out.println("ServerID of pedometer2 : " + pedometer2.getServerId());
-//		status = MVPApi.getDeviceLinkingStatus(token, serialNumberString2);
-//		System.out.println("Linking status of the second shine : " + status);
-//	}
-	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void LinkToAlreadyLinkedShine() {
 		String serialNumberString = TextTool.getRandomString(10, 10);
@@ -364,7 +352,7 @@ public class BackendPedometerTC extends BackendAutomation {
 		Assert.assertEquals(pedo, null, "Pedometer from result");
 	}
 
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "multipledevices" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "multipledevices", "pedometer" })
 	public void LinkMultipleDevices(){
 		String email = MVPApi.generateUniqueEmail();
 		String pass = "qwerty";
@@ -406,6 +394,14 @@ public class BackendPedometerTC extends BackendAutomation {
 		Assert.assertEquals(firmwareVersion, MVPApi.LATEST_FIRMWARE_VERSION_STRING, "Latest firmware version string");
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer", "getAllDevices" })
+	public void GetAllDevices(){
+		List<String> lsDevice = new ArrayList<String>();
+		lsDevice.addAll(MVPApi.getAllDevices("1635613756326872825-145615d8bfbde8e68a05800a9abf90a8"));
+		
+		Assert.assertTrue(compareList(lsDevice, listDevices), "Get All Devices is wrong!");
+	}
+	
 	// helpers
 	private Pedometer createNewPedometer(String token, String serialNumberString) {
 		
@@ -417,6 +413,10 @@ public class BackendPedometerTC extends BackendAutomation {
 		return Pedometer.getPedometer(result.response);
 	}
 
+	public static boolean compareList(List ls1, List ls2){
+        return ls1.toString().contentEquals(ls2.toString())?true:false;
+    }
+	
 	private String createNewAccount(String email) {
 		AccountResult acc = MVPApi.signUp(email, password);
 		return acc.token;

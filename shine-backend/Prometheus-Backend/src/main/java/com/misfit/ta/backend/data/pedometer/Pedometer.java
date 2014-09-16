@@ -1,6 +1,10 @@
 package com.misfit.ta.backend.data.pedometer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 
@@ -276,6 +280,21 @@ public class Pedometer {
 		}
 	}
 
+	public static List<String> getListDevices(ServiceResponse response){
+		try{
+			List<String> list = new ArrayList<String>();
+			JSONObject responseBody = new JSONObject(response.getResponseString());
+			JSONArray obj = responseBody.getJSONArray("devices");
+			for(int i = 0; i < obj.length(); i++){
+				Pedometer pedometer = fromJson(obj.getJSONObject(i));
+				list.add(pedometer.getSerialNumberString());
+			}
+			return list;
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public static String getMessage(ServiceResponse response) throws JSONException {
 		JSONObject responseBody = new JSONObject(response.getResponseString());
 		return responseBody.getString("message");
