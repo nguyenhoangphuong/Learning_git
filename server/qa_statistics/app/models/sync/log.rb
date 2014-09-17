@@ -55,17 +55,30 @@ module Sync
       -30 => "CB handshake fail: Service discovery",
       -31 => "CB handshake fail: Characteristic discovery",
       -32 => "CB handshake fail: Characteristic update",
+      -33 => "Cannot get activity data",
+      -34 => "Cannot get configurations",
+      -35 => "Cannot set configurations",
+      -36 => "Cannot activate Flash device",
       -40 => "OAD: Connecting timeout after OAD reset",
       -41 => "OAD: Waiting for EOF timeout",
+      -42 => "OAD failed",
       -50 => "No available serial number to reset",
       -51 => "Cannot load firmware to reset SN",
-      -52 => "Cannot reset SN"
+      -52 => "Cannot reset SN",
+      -53 => "Companion app: Cannot launch companion app",
+      -54 => "Companion app: Get empty data",
+      -55 => "Companion app: Cannot get data",
+      -56 => "Companion app: Cannot set point",
+      -57 => "Companion app: Cannot set step",
+      -58 => "Companion app: Cannot set goal",
+      -70 => "Cannot create and push new linked pedometer to server"
     }
 
     SYNC_FAILED_ERRORS_ANDROID = {
       0 => "DEFAULT",
       1 => "SCAN_FAILED_NO_SHINE_FOUND",
       20 => "SERVER_VERIFY_FAILED_NETWORK",
+      24 => "CONNECT_DEVICE_INVALID_SERIAL_NUMBER",
       25 => "CONNECT_DEVICE_FAILED_NO_MORE_SHINE_TO_CONNECT",
       26 => "CONNECT_DEVICE_FAILED_LINKED_TO_ANOTHER_ACCOUNT",
       27 => "CONNECT_DEVICE_FAILED_SHINE_DEACTIVATED",
@@ -97,7 +110,14 @@ module Sync
       64 => "RESET_SERIAL_NUMBER_FAILED",
       65 => "RESET_SERIAL_NUMBER_FAILED_TIMEOUT",
       66 => "INFORM_SERVER_NETWORK_FAILED",
-      67 => "DUPLICATE_BUT_LINKED"
+      67 => "DUPLICATE_BUT_LINKED",
+      68 => "BG_SYNC_TOO_MANY_FILES",
+      69 => "BG_SYNC_WHEN_USER_ACTIVE",
+      70 => "BG_SYNC_RSSI_TOO_WEAK",
+      71 => "VENUS_ACTIVATE_FAILED",
+      72 => "VENUS_ACTIVATE_FAILED_TIMEOUT",
+      73 => "VENUS_GET_ACTIVATION_STATE_FAILED",
+      74 => "VENUS_GET_ACTIVATION_STATE_FAILED_TIMEOUT"
     }
 
     SYNC_INCOMPLETE_ERROR_CODES = [-4, -6, -8, -10, -11, -12, -15, -16, -17, -18]

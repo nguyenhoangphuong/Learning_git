@@ -82,6 +82,11 @@ public class SignUp {
 					DefaultStrings.SignUpMetricButtonId);
 		}
 	}
+	
+	public static void handleSignUpTutorial() {
+		Gui.swipeLeft(2);
+		Gui.touchAView("Button", "mID", DefaultStrings.SignUpTutorialGotItButtonId);
+	}
 
 	public static void chooseDefaultHeightValue(int fullScreenHeight,
 			int fullScreenWidth) {

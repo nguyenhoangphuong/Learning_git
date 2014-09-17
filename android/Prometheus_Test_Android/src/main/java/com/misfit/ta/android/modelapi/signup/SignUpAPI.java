@@ -6,6 +6,7 @@ import org.graphwalker.generators.PathGenerator;
 
 import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.AutomationTest;
+import com.misfit.ta.android.gui.HomeScreen;
 import com.misfit.ta.android.gui.PrometheusHelper;
 import com.misfit.ta.android.gui.SignUp;
 import com.misfit.ta.modelAPI.ModelAPI;
@@ -43,7 +44,7 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_InputProfile() {
-		ShortcutsTyper.delayTime(2000);
+		ShortcutsTyper.delayTime(6000);
 		PrometheusHelper.editGender(true);
 		ShortcutsTyper.delayTime(500);
 		SignUp.inputUnits(true);
@@ -62,6 +63,7 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_Link() {
+		ShortcutsTyper.delayTime(5000);
 		SignUp.linkShine();
 		
 	}
@@ -83,7 +85,7 @@ public class SignUpAPI extends ModelAPI {
 		SignUp.pressBack();
 		ShortcutsTyper.delayTime(100);
 		SignUp.tapToSignOutAtProfilePage(fullScreenHeight, fullScreenWidth);
-		ShortcutsTyper.delayTime(500);
+		ShortcutsTyper.delayTime(10000);
 	}
 
 	/**
@@ -102,6 +104,8 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_HomeScreen() {
+		ShortcutsTyper.delayTime(2000);
+		SignUp.handleSignUpTutorial();
 	}
 
 	/**
@@ -131,5 +135,10 @@ public class SignUpAPI extends ModelAPI {
 	 * 
 	 */
 	public void v_SignUpProfile() {
+	}
+	
+	public void e_SignOutAtHomeScreen() {
+		ShortcutsTyper.delayTime(8000);
+		HomeScreen.signOutAtHomeScreen(fullScreenHeight, fullScreenWidth);
 	}
 }

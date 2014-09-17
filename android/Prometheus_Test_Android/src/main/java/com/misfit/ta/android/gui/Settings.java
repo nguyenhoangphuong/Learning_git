@@ -58,6 +58,11 @@ public class Settings {
 		touchViewOnShineSettingsScrollView("TextView", "mText",
 				DefaultStrings.MyInfoText, fullScreenHeight);
 	}
+	
+	public static void tapSignOut(int fullScreenHeight) {
+		touchViewOnShineSettingsScrollView("TextView", "mText",
+				DefaultStrings.SignOutText, fullScreenHeight);
+	}
 
 	public static String getCurrentBirthDate() {
 		return ViewUtils.findView("TextView", "mID",

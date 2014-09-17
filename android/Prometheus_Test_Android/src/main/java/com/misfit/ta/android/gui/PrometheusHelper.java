@@ -56,6 +56,8 @@ public class PrometheusHelper {
 		SignUp.pressNext();
 		ShortcutsTyper.delayTime(2000);
 		SignUp.linkShine();
+		ShortcutsTyper.delayTime(2000);
+		SignUp.handleSignUpTutorial();
 	}
 
 	public static void signUp() {
@@ -64,12 +66,7 @@ public class PrometheusHelper {
 	}
 	
 	public static void signOut(int fullScreenHeight, int fullScreenWidth) {
-		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
-		ShortcutsTyper.delayTime(2000);
-		Gui.setInvalidView();
-		ShortcutsTyper.delayTime(5000);
-		Settings.tapShineSettings();
-		ShortcutsTyper.delayTime(3000);
+		HomeScreen.signOutAtHomeScreen(fullScreenHeight, fullScreenWidth);
 	}
 
 	public static float calculatePoint(int lastSteps, int lastDuration,

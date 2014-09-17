@@ -74,5 +74,23 @@ public class HomeScreen {
 		return ViewUtils.findView("TextView", "mID",
 				DefaultStrings.TotalSleepTextViewId, 0).text;
 	}
+	
+	public static void signOutAtHomeScreen(int fullScreenHeight, int fullScreenWidth) {
+		Gui.setInvalidView();
+		ShortcutsTyper.delayTime(500);
+		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
+		Gui.setInvalidView();
+		ShortcutsTyper.delayTime(500);
+		Settings.tapShineSettings();
+		ShortcutsTyper.delayTime(500);
+		Settings.tapSignOut(fullScreenHeight);
+		ShortcutsTyper.delayTime(5000);
+		Gui.setInvalidView();
+		int popupHeight = Gui.getHeight();
+		int popupWidth = Gui.getWidth();
+		ViewNode signOutNode = ViewUtils.findViewContain("TextView", "mText", DefaultStrings.SignOutText, 1);
+		Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth, popupHeight, popupWidth, signOutNode);
+		ShortcutsTyper.delayTime(10000);
+	}
 
 }
