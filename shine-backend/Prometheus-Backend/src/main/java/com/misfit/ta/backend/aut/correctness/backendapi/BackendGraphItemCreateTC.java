@@ -134,10 +134,32 @@ public class BackendGraphItemCreateTC extends BackendAutomation {
 		System.out.println("ritems.size() : " + ritems.size());
 		System.out.println("dupItems.size() : " + dupItems.size());
 		Assert.assertEquals(r.getStatusCode(), 210, "Status code isn't 210 - it means duplicated error");
-//		Assert.assertEquals(ritems.size(), dupItems.size(), "Size of return items isnot the same");
 		for(GraphItem ritem : ritems) {
 			Assert.assertNotNull(ritem.getServerId(), "ServerId is not null");
 		}
+	}
+	
+	
+	//API for create new type account (test_get_old = 2) => create graph_item(actual is graph activity day) => get data
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
+	public void createGraphActivityDay(){
+		//Create new type account
+		String email = MVPApi.generateUniqueEmail();
+		String token = MVPApi.signUp(email, password, true).token;
+		//Create graph activity day
+		List<GraphItem> listGraphItem = new ArrayList<GraphItem>();
+		for(int i = 0; i < 40; i++){
+			GraphItem graphItem = DefaultValues.RandomGraphItem(2020 * i);
+			graphItem.setAverageValue(i * 1.0);
+			listGraphItem.add(graphItem);
+		}
+		ServiceResponse serviceResponse = MVPApi.createGraphItems(token, listGraphItem);
+		Assert.assertEquals(serviceResponse.getStatusCode(), 200, "Can't not create graph activity day for new type user");
+		
+		//Get data from the new schema DB
+		ServiceResponse responseResult = MVPApi.getGraphActivityDay(token);
+		List<GraphItem> listResult = GraphItem.getListGraphItem(responseResult);
+		Assert.assertEquals(listResult.size(), listGraphItem.size(), "Not the same graph_item in graph_activity_day"); 
 	}
 	
 }

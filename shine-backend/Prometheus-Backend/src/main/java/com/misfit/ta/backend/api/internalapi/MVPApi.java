@@ -78,30 +78,30 @@ public class MVPApi extends RequestHelper {
 		return System.nanoTime() + "-" + TextTool.getRandomString(10, 10);
 	}
 
-	public static List<String> getAllDevices(String token){
+	public static List<String> getAllDevices(String token) {
 		return getDevices(token, "devices/list");
 	}
-	
-	private static List<String> getDevices(String token, String shortUrl){
-		//trace
+
+	private static List<String> getDevices(String token, String shortUrl) {
+		// trace
 		logger.info("Token of getDevices : " + token);
-		
-		//prepare
+
+		// prepare
 		String url = baseAddress + shortUrl;
-		
+
 		BaseParams requestInfo = new BaseParams();
 		requestInfo.addHeader("auth_token", token);
-		
-		//post and receive raw data
+
+		// post and receive raw data
 		ServiceResponse response = MVPApi.get(url, port, requestInfo);
 		List<String> result = new ArrayList<String>();
 		result.addAll(Pedometer.getListDevices(response));
-		
+
 		return result;
 	}
-	// account apis
-	static private AccountResult sign(String email, String password,
-			String shortUrl) {
+
+	public static AccountResult sign(String email, String password,
+			String shortUrl, boolean isNewType) {
 		// trace
 		logger.info("Email: " + email + ", Password: " + password);
 
@@ -111,13 +111,21 @@ public class MVPApi extends RequestHelper {
 		BaseParams requestInf = new BaseParams();
 		requestInf.addParam("email", email);
 		requestInf.addParam("password", password);
-
+		if(isNewType){
+			requestInf.addHeader("test_get_old", "2");
+		}
 		// post and receive raw data
 		ServiceResponse response = MVPApi.post(url, port, requestInf);
 
 		// format data
 		AccountResult result = new AccountResult(response);
 		return result;
+	}
+
+	// account apis
+	static private AccountResult sign(String email, String password,
+			String shortUrl) {
+		return sign(email, password, shortUrl, false);
 	}
 
 	private static BaseResult requestReset(String email, String shortUrl) {
@@ -172,6 +180,9 @@ public class MVPApi extends RequestHelper {
 		return sign(email, password, "login");
 	}
 
+	public static AccountResult signUp(String email, String password, boolean isNewType){
+		return sign(email, password, "signup", isNewType);
+	}
 	public static AccountResult signUp(String email, String password) {
 		return sign(email, password, "signup");
 	}
@@ -609,19 +620,37 @@ public class MVPApi extends RequestHelper {
 		return GraphItem.getGraphItem(response);
 	}
 
-	public static ServiceResponse getMultipleGraphItems(String token){
+	//Get Graph Item from old schema DB
+	public static ServiceResponse getMultipleGraphItems(String token) {
 		return getGraphItemList(token, "graph_items");
 	}
-	
-	private static ServiceResponse getGraphItemList(String token, String shortUrl){
-		//trace
+
+	private static ServiceResponse getGraphItemList(String token,
+			String shortUrl) {
+		// trace
 		logger.info("Get multiple graph items : " + token);
-		//prepare
+		// prepare
 		String url = baseAddress + shortUrl;
 		BaseParams requestInfo = new BaseParams();
 		requestInfo.addHeader("auth_token", token);
-		requestInfo.addHeader("test_migrated", "1");
+		requestInfo.addHeader("test_get_old", "1");
 		
+		ServiceResponse response = MVPApi.get(url, port, requestInfo);
+		return response;
+	}
+	
+	public static ServiceResponse getGraphActivityDay(String token){
+		return getGraphActivityDay(token, "graph_items");
+	}
+
+	private static ServiceResponse getGraphActivityDay(String token, String shortUrl){
+		// trace
+		logger.info("Get multiple graph items : " + token);
+		// prepare
+		String url = baseAddress + shortUrl;
+		BaseParams requestInfo = new BaseParams();
+		requestInfo.addHeader("auth_token", token);
+				
 		ServiceResponse response = MVPApi.get(url, port, requestInfo);
 		return response;
 	}
@@ -962,20 +991,22 @@ public class MVPApi extends RequestHelper {
 		// format data
 		return new BaseResult(response);
 	}
-	
-	public static BaseResult getPedometerRaw1(String token, String serverId, String shortUrl){
-		//trace
-		logger.info("getPedometerRaw1 : token " + token + "\nServerId : " + serverId);
-		
-		//prepare
+
+	public static BaseResult getPedometerRaw1(String token, String serverId,
+			String shortUrl) {
+		// trace
+		logger.info("getPedometerRaw1 : token " + token + "\nServerId : "
+				+ serverId);
+
+		// prepare
 		String url = baseAddress + shortUrl + "?serverId=" + serverId;
-		
+
 		BaseParams requestInfo = new BaseParams();
 		requestInfo.addHeader("auth_token", token);
-		
-		//post and receive raw data
+
+		// post and receive raw data
 		ServiceResponse response = MVPApi.get(url, port, requestInfo);
-		
+
 		return new BaseResult(response);
 	}
 
@@ -984,8 +1015,8 @@ public class MVPApi extends RequestHelper {
 		ServiceResponse response = getPedometerRaw(token).response;
 		return Pedometer.getPedometer(response);
 	}
-	
-	public static BaseResult getPedometer(String token, String serverId){
+
+	public static BaseResult getPedometer(String token, String serverId) {
 		return getPedometerRaw1(token, serverId, "pedometer");
 	}
 
