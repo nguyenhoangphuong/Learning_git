@@ -11,6 +11,8 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
+import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.graph.GraphItem;
 
 public class BackendGraphItemCreateTC extends BackendAutomation {
@@ -28,6 +30,30 @@ public class BackendGraphItemCreateTC extends BackendAutomation {
 		Assert.assertTrue(item.getServerId() != null, "Server Id is not null");
 	}
 
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
+	public void CreateGraphItemsWithGoal(){
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		Goal defaultGoal = Goal.getDefaultGoal();
+		GoalsResult goalResult = MVPApi.createGoal(token, defaultGoal);
+		
+		goalResult.printKeyPairsValue();
+
+		Assert.assertTrue(goalResult.isOK(), "Status code is OK");
+		Assert.assertTrue(goalResult.goals[0].getServerId() != null, "Server Id is not null");
+		Assert.assertEquals(goalResult.goals[0].getLocalId(), defaultGoal.getLocalId(), "Local id is not the same");
+		
+		List<String> listValue = new ArrayList<String>();
+		List<GraphItem> listGraphItem = new ArrayList<GraphItem>();
+		for(int i = 0; i < 40; i++){
+			GraphItem graphItem = DefaultValues.RandomGraphItem(2020 * i);
+			graphItem.setAverageValue(i * 1.0);
+			listGraphItem.add(graphItem);
+			listValue.add(String.valueOf(i*1.0));
+		}
+		ServiceResponse serviceResponse = MVPApi.createGraphItems(token, listGraphItem);
+		Assert.assertEquals(serviceResponse.getStatusCode(), 200, "Can't not create multiple graph items for user");
+	}
+	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
 	public void CreateDuplicateGraphItem() {
 		
@@ -113,5 +139,5 @@ public class BackendGraphItemCreateTC extends BackendAutomation {
 			Assert.assertNotNull(ritem.getServerId(), "ServerId is not null");
 		}
 	}
-
+	
 }

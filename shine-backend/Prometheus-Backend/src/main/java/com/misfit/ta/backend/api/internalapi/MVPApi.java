@@ -609,6 +609,22 @@ public class MVPApi extends RequestHelper {
 		return GraphItem.getGraphItem(response);
 	}
 
+	public static ServiceResponse getMultipleGraphItems(String token){
+		return getGraphItemList(token, "graph_items");
+	}
+	
+	private static ServiceResponse getGraphItemList(String token, String shortUrl){
+		//trace
+		logger.info("Get multiple graph items : " + token);
+		//prepare
+		String url = baseAddress + shortUrl;
+		BaseParams requestInfo = new BaseParams();
+		requestInfo.addHeader("auth_token", token);
+		requestInfo.addHeader("test_migrated", "1");
+		
+		ServiceResponse response = MVPApi.get(url, port, requestInfo);
+		return response;
+	}
 	public static BaseResult getGraphItemsRaw(String token, Long startTime,
 			Long endTime, Long modifiedSince) {
 

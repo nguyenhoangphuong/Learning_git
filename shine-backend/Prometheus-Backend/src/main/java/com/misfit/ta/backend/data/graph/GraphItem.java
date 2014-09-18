@@ -1,5 +1,6 @@
 package com.misfit.ta.backend.data.graph;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -88,6 +89,46 @@ public class GraphItem {
 		} catch (JSONException e) {
 			return null;
 		}
+	}
+	
+	public static List<GraphItem> getListGraphItem(ServiceResponse response){
+		List<GraphItem> listResult = new ArrayList<GraphItem>();
+		try{
+			JSONObject jsonResponse = new JSONObject(response.getResponseString());
+			JSONArray jsonArray = jsonResponse.getJSONArray("graph_items");
+			for(int i = 0; i < jsonArray.length(); i++){
+				JSONObject jsonItem = jsonArray.getJSONObject(i);
+				GraphItem graphItem = GraphItem.parseFromJson(jsonItem);
+				listResult.add(graphItem);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return listResult; 
+	}
+	
+	private static GraphItem parseFromJson(JSONObject jsonItem){
+		GraphItem graphItem = new GraphItem();
+		try {
+			if (!jsonItem.isNull("serverId"))
+				graphItem.setServerId(jsonItem.getString("serverId"));
+
+			if (!jsonItem.isNull("localId"))
+				graphItem.setLocalId(jsonItem.getString("localId"));
+
+			if (!jsonItem.isNull("timestamp"))
+				graphItem.setTimestamp(jsonItem.getLong("timestamp"));
+
+			if (!jsonItem.isNull("updatedAt"))
+				graphItem.setUpdatedAt(jsonItem.getLong("updatedAt"));
+
+			if (!jsonItem.isNull("averageValue"))
+				graphItem.setAverageValue(jsonItem.getDouble("averageValue"));
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return graphItem;
 	}
 	
 	public static List<GraphItem> getGraphItems(ServiceResponse response) {
