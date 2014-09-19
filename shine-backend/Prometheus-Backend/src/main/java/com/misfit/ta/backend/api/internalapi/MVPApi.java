@@ -976,6 +976,19 @@ public class MVPApi extends RequestHelper {
 		// format data
 		return Pedometer.getPedometer(response);
 	}
+	
+	public static ServiceResponse UpdatePedometer(String token, JSONObject data){
+		// prepare
+		String url = baseAddress + "pedometer";
+		BaseParams requestInf = new BaseParams();
+		requestInf.addHeader("auth_token", token);
+		requestInf.addParam("pedometer", data.toString());
+
+		// post and recieve raw data
+		ServiceResponse response = MVPApi.put(url, port, requestInf);
+		
+		return response;
+	}
 
 	public static BaseResult getPedometerRaw(String token) {
 

@@ -138,6 +138,7 @@ public class BackendTimelineItemCreateTC  extends BackendAutomation {
 		
 		TimelineItem fooditem = DataGenerator.generateRandomFoodTimelineItem(System.currentTimeMillis() / 1000, null);
 		fooditem.setAttachedImage(TextTool.getRandomString(500, 1000) + "   ?! SDA()_");
+		fooditem.setAttachedImageUrl(TextTool.getRandomString(500, 1000) + "   ?! SDA()_");
 		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
 		BaseResult r = MVPApi.createTimelineItem(token, fooditem);
 

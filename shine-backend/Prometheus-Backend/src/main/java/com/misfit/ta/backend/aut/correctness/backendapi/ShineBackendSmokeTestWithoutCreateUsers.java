@@ -50,8 +50,11 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		// registration: sign_up / sign_in / sign_out
 		// ----------------------------------------------
-		String email = "test1405249288631klik3w@misfitqa.com";
+		String email = MVPApi.generateUniqueEmail();
 		String password = "qqqqqq";
+		
+		AccountResult accountResult = MVPApi.signUp(email, password);
+		Assert.assertTrue(accountResult.isOK(), "[sign_up] OK");
 		
 		AccountResult ar = MVPApi.signIn(email, password);
 		

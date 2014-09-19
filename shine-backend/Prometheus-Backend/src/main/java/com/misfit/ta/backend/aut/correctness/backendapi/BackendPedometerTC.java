@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
@@ -52,7 +53,8 @@ public class BackendPedometerTC extends BackendAutomation {
 		result = MVPApi.createPedometer(token, pedo);
 		Pedometer spedo = Pedometer.getPedometer(result.response);
 		
-		Assert.assertTrue(result.statusCode != 210, "Status code");
+		System.out.println("pedoId : " + pedo.getLocalId() + "\nspedoId : " + spedo.getLocalId());
+		Assert.assertTrue(result.statusCode == 210, "Status code");
 		Assert.assertEquals(pedo.getLocalId(), spedo.getLocalId(), "Local id");
 	}
 	
@@ -330,11 +332,9 @@ public class BackendPedometerTC extends BackendAutomation {
 		
 		// update pedometer
 		pedo.setSerialNumberString(serialNumberString2);
-		Pedometer r = MVPApi.updatePedometer(token, pedo.toJson());
+		ServiceResponse serviceResponse = MVPApi.UpdatePedometer(token, pedo.toJson());
 		
-		Assert.assertEquals(r.getSerialNumberString(), serialNumberString2, "Serial number");
-		Assert.assertTrue(r != null, "Cannot update serial number or force client update");
-		Assert.assertTrue(r.getSerialNumberString() != serialNumberString, "Cannot update serial number or force client update");
+		Assert.assertTrue(serviceResponse.getStatusCode() == 210, "Response code : 200!");
 				
 	}
 	
@@ -443,6 +443,11 @@ public class BackendPedometerTC extends BackendAutomation {
 		Pedometer pedometer3 = Pedometer.getPedometer(baseResult.response);
 		Assert.assertTrue(pedometer3 == null, "Get Pedometer with invalid serverId");
 	}
+	
+	public void SetCurrentDevice(){
+		
+	}
+	
 	// helpers
 	private Pedometer createNewPedometer(String token, String serialNumberString) {
 		
