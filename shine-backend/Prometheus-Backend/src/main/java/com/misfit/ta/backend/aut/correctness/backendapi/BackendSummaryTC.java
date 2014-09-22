@@ -26,7 +26,7 @@ public class BackendSummaryTC extends BackendAutomation {
 	private String token;
 	List<ShineHistoryRecord> weekRecords = new ArrayList<ShineHistoryRecord>();
 	List<ShineHistoryRecord> monthRecords = new ArrayList<ShineHistoryRecord>();
-	
+	String email = "";
 	@BeforeClass(alwaysRun = true)
 	public void setUp() {
 
@@ -134,9 +134,9 @@ public class BackendSummaryTC extends BackendAutomation {
 			}
 
 			// track the index
-			if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+			if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
 				sundayIndex.add(i);
-
+			}
 			if(cal.get(Calendar.MONTH) != currentMonth) {
 				monthIndex.add(i);
 				currentMonth = cal.get(Calendar.MONTH);
@@ -203,7 +203,8 @@ public class BackendSummaryTC extends BackendAutomation {
 		}
 
 		// create data
-		token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qqqqqq").token;
+		email = MVPApi.generateUniqueEmail();
+		token = MVPApi.signUp(email, "qqqqqq").token;
 		for(Goal goal : goals)
 			MVPApi.createGoal(token, goal);
 		MVPApi.createTimelineItems(token, items);
@@ -334,7 +335,7 @@ public class BackendSummaryTC extends BackendAutomation {
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "HistorySummary", "HistorySummaryWeekly", "Excluded" })
 	public void GetSummaryByMonth_SpecificRange() {
-
+		
 		// from the 3rd week => everything
 		BaseResult result = MVPApi.getSummaryByMonth(token, weekRecords.get(3).date);
 		List<ShineHistoryRecord> records = ShineHistoryRecord.getSummaryFromResponse(result.response);

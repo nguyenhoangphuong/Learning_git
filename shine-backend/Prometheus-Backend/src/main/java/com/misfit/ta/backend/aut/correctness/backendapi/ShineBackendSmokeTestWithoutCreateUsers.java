@@ -1,16 +1,23 @@
 package com.misfit.ta.backend.aut.correctness.backendapi;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
+import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.account.AccountResult;
+import com.misfit.ta.backend.data.goal.Goal;
+import com.misfit.ta.backend.data.goal.GoalsResult;
+import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.Verify;
@@ -29,6 +36,7 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		errors.clear();
 		
 		String token = runRegistrationTest();
+		runMigrationTest(token);
 		runProfileTest(token);	
 		runPedometerTest(token);
 		runGoalTest(token);
@@ -44,14 +52,50 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 			Assert.fail("Smoke test fails, some routes don't work as expected");
 	}
 	
-	
 	// test helpers
+
+	public void runMigrationTest(String token){
+		//Create goal
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		
+		Goal goal;
+		long startTime = MVPCommon.getDayStartEpoch(calendar.getTimeInMillis() / 1000, TimeZone.getTimeZone("UTC"));
+		long endTime = MVPCommon.getDayEndEpoch(calendar.getTimeInMillis() / 1000, TimeZone.getTimeZone("UTC")) - (-1) * 3600;
+		
+		goal = DataGenerator.generateRandomGoal(0, null);
+		goal.setStartTime(startTime);
+		goal.setEndTime(endTime);
+		goal.setTimeZoneOffsetInSeconds(0 * 3600);
+
+		GoalsResult goalResult = MVPApi.createGoal(token, goal);
+		Assert.assertTrue(goalResult.isOK(), "Create goal failed!");
+		
+		//Create graph item
+		List<GraphItem> listGraphItem = new ArrayList<GraphItem>();
+		for(int i = 0; i < 55; i++){
+			GraphItem graphItem = DefaultValues.RandomGraphItem(2020*i);
+			graphItem.setAverageValue(i * 1.0);
+			graphItem.setTimestamp(calendar.getTimeInMillis()/1000);
+			System.out.println("Timestamp : " +  graphItem.getTimestamp());
+			calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND) + 2020);
+			listGraphItem.add(graphItem);
+		}
+		
+		ServiceResponse serviceResponse = MVPApi.createGraphItems(token, listGraphItem);
+		Assert.assertEquals(serviceResponse.getStatusCode(), 200, "Can't not create multiple graph items for user");
+	}
+	
 	public String runRegistrationTest() {
 		
 		// registration: sign_up / sign_in / sign_out
 		// ----------------------------------------------
 		String email = MVPApi.generateUniqueEmail();
 		String password = "qqqqqq";
+		System.out.println("Email : " + email);
 		
 		AccountResult accountResult = MVPApi.signUp(email, password);
 		Assert.assertTrue(accountResult.isOK(), "[sign_up] OK");
