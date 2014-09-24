@@ -977,7 +977,7 @@ public class MVPApi extends RequestHelper {
 		return Pedometer.getPedometer(response);
 	}
 	
-	public static ServiceResponse UpdatePedometer(String token, JSONObject data){
+	public static ServiceResponse updateThePedometer(String token, JSONObject data){
 		// prepare
 		String url = baseAddress + "pedometer";
 		BaseParams requestInf = new BaseParams();
@@ -1005,7 +1005,7 @@ public class MVPApi extends RequestHelper {
 		return new BaseResult(response);
 	}
 
-	public static BaseResult getPedometerRaw1(String token, String serverId,
+	public static BaseResult getThePedometerRaw(String token, String serverId,
 			String shortUrl) {
 		// trace
 		logger.info("getPedometerRaw1 : token " + token + "\nServerId : "
@@ -1030,7 +1030,7 @@ public class MVPApi extends RequestHelper {
 	}
 
 	public static BaseResult getPedometer(String token, String serverId) {
-		return getPedometerRaw1(token, serverId, "pedometer");
+		return getThePedometerRaw(token, serverId, "pedometer");
 	}
 
 	private static BaseParams buildEditPedometerRequest(String token,

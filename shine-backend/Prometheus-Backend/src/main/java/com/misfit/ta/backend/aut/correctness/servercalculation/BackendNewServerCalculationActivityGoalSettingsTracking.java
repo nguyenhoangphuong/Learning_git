@@ -3,7 +3,6 @@ package com.misfit.ta.backend.aut.correctness.servercalculation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 import junit.framework.Assert;
 
@@ -13,7 +12,7 @@ import com.google.resting.json.JSONException;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.api.internalapi.UserInfo;
 import com.misfit.ta.backend.aut.performance.newservercalculation.NewServerCalculationScenario;
-import com.misfit.ta.backend.data.DataGenerator;
+import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.TimestampObject;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
@@ -24,9 +23,8 @@ import com.misfit.ta.backend.data.goalprogress.GoalSettingsGoalValueChange;
 import com.misfit.ta.backend.data.goalprogress.GoalSettingsTimezoneOffsetChange;
 import com.misfit.ta.backend.data.goalprogress.GoalSettingsTracking;
 import com.misfit.ta.backend.data.goalprogress.GoalSettingsTripleTapTypeChange;
+import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
-import com.misfit.ta.backend.data.profile.ProfileData;
-import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
 import com.misfit.ta.backend.data.timeline.timelineitemdata.TimelineItemDataBase;
 import com.misfit.ta.common.MVPCommon;
@@ -55,6 +53,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 			throws IOException, JSONException {
 		logger.info("Test if the goal is created corresponding to goal settings correctly (start time of file = timestamp of triple tap changing = start day)");
 		UserInfo userInfo = MVPApi.signUp();
+		System.out.println("Email : " + userInfo.getEmail());
 		long timestamp = System.currentTimeMillis() / 1000;
 		Long startDay = MVPCommon.getDayStartEpoch(timestamp);
 		Long endDay = MVPCommon.getDayEndEpoch(timestamp);
@@ -720,6 +719,7 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 		List<String> dataStrings = new ArrayList<String>();
 		dataStrings.add(MVPApi.getRawDataAsString(startDay, 25200 / 60, "0104",
 				"18", data).rawData);
+		System.out.println("Push Sync Data!");
 		pushSyncData(startDay + 6 * 3600, userInfo.getUserId(),
 				pedometer.getSerialNumberString(), dataStrings);
 		Long[] timestampList = { startDay, startDay + 8 * 3600,
@@ -1106,6 +1106,61 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 
 				Assert.assertTrue(testPassed);
 
+	 }
+	 
+	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
+			 "NewServerCalculationGoalCreation", "NewServercalculation",
+			 "GoalCreation", "PushTrackChangesSyncDataOfSeveralDays" })
+
+	 public void demoTest1(){
+		 String email = MVPApi.generateUniqueEmail();
+		 String password = "qwerty";
+		 
+		 String token = MVPApi.signUp(email, password, true).token;
+		 long timestamp = System.currentTimeMillis() / 1000 - 3600*24;
+		 
+		 Goal goal = Goal.getDefaultGoal(timestamp);
+		 GoalsResult result = MVPApi.createGoal(token, goal);
+		 
+		 Verify.verifyTrue(result.isOK(), "Can't create goal!");
+		 goal.setServerId(result.goals[0].getServerId());
+		 goal.setUpdatedAt(result.goals[0].getUpdatedAt());
+		 
+		 //6:00 AM  - 50 minutes - 4000 steps - 140 points
+		 //7:30 AM  - 60 mintutes - 4800 steps - 200 points
+		 //9:45 AM -  30 mitues - 4200 steps - 300  points
+		 //11:00 AM - 60 minutes - 4000 steps - 500 points
+		 //14:00 PM - 120 minutes - 7200 steps - 1200 points
+		 //18:30 PM - 40 mintues - 1200 steps - 200 points
+		 
+		 GoalRawData goalRawData = new GoalRawData();
+		 goalRawData.appendGoalRawData(generateEmptyRawData(0, 6*60));
+		 goalRawData.appendGoalRawData(generateSessionRawData(4000, 140, 50));
+		 
+		 goalRawData.appendGoalRawData(generateEmptyRawData(6*60 + 50, 7*60 + 30));
+		 goalRawData.appendGoalRawData(generateSessionRawData(4800, 200, 60));
+		 
+		 goalRawData.appendGoalRawData(generateEmptyRawData(8*60 + 30, 9*60 + 45));
+		 goalRawData.appendGoalRawData(generateSessionRawData(4200, 300, 30));
+		 
+		 goalRawData.appendGoalRawData(generateEmptyRawData(10*60 + 15, 11*60));
+		 goalRawData.appendGoalRawData(generateSessionRawData(4000, 500, 60));
+		 
+		 goalRawData.appendGoalRawData(generateEmptyRawData(12*60, 14*60));
+		 goalRawData.appendGoalRawData(generateSessionRawData(7200, 1200, 120));
+		 
+		 goalRawData.appendGoalRawData(generateEmptyRawData(16*60, 18*60 + 30));
+		 goalRawData.appendGoalRawData(generateSessionRawData(1200, 200, 40));
+		 
+		 goalRawData.appendGoalRawData(generateEmptyRawData(24*60, 25*60));
+			
+		 BaseResult baseResult = MVPApi.pushRawData(token, goal.getServerId(), goalRawData, 0);
+		 System.out.println("BaseResult : " + baseResult.isOK());
+		 logger.info("Waiting " + delayTime + " miliseconds");
+			ShortcutsTyper.delayTime(delayTime);
+		 List<GraphItem> graphItemList = MVPApi.getGraphItems(token, goal.getStartTime(), goal.getEndTime(), 0l);
+		 
+		 System.out.println("Size : " + graphItemList.size());
 	 }
 
 }
