@@ -9,7 +9,6 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
@@ -23,7 +22,6 @@ public class InvalidSignInAPI extends ModelAPI {
     private String[] invalidPasswords = {"qwert", "12345."};
     
     public void e_Init() {
-    	LaunchScreen.launch(); 
     }
     
     public void e_ChooseSignIn() {
@@ -75,9 +73,6 @@ public class InvalidSignInAPI extends ModelAPI {
     public void e_PressBack() {
         SignIn.tapPrevious();
     }
-
-    
-    
     
     public void v_InitialView() {
     }
