@@ -43,7 +43,6 @@ public class SignUpAPI extends ModelAPI {
     
 
     public void e_Init() {
-    	LaunchScreen.launch();
     }
  
     public void e_ChooseSignUp() {
@@ -98,7 +97,7 @@ public class SignUpAPI extends ModelAPI {
     }
     
     public void e_ShineSelected() {
-    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE_FLASH, false);
+    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
     }
     
     public void e_SetGoal() {
@@ -117,15 +116,16 @@ public class SignUpAPI extends ModelAPI {
     public void e_toLinkShine() {
     	
     	SignUp.tapSave();
-    	PrometheusHelper.waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
+    	ShortcutsTyper.delayOne();
+    	SignUp.sync();
+    	ShortcutsTyper.delayTime(2000);
+    	Random random = new Random();
+		int number = random.nextInt(13);
+		SignUp.tapSelectColor(number);
     }
 
     public void e_Save(){
     	SignUp.tapSave();
-    }
-    
-    public void e_Next() {
-        SignUp.tapNext();
     }
     
     public void e_Back() {
@@ -136,17 +136,6 @@ public class SignUpAPI extends ModelAPI {
     	PrometheusHelper.signOut();
     	deviceSelected = false;
     }
-    
-    public void e_Sync() {
-
-    	SignUp.sync();
-    	PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
-		SignUp.tapSelectDevice(SignUp.LINK_SHINE, true);
-		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
-		SignUp.tapOK();
-    }
- 
-   
     
     public void v_InitialView() {
     	Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
@@ -211,6 +200,7 @@ public class SignUpAPI extends ModelAPI {
     }
 
     public void v_SelectDevice() {
+    	ShortcutsTyper.delayTime(2000);
     	Assert.assertTrue(SignUp.isSelectDeviceView(), "This is not select device view");
     }
 }
