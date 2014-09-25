@@ -2,6 +2,7 @@ package com.misfit.ta.ios.modelapi.signup;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.Random;
 
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
@@ -10,7 +11,6 @@ import com.misfit.ios.ViewUtils;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
-import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.SleepViews;
@@ -30,7 +30,6 @@ public class SignUpWithBedditAPI extends ModelAPI {
     public void e_init() {
     	
     	// go to sign up view
-    	LaunchScreen.launch();
     	SignUp.tapSignUp();
     	
     	// input email and password
@@ -48,7 +47,7 @@ public class SignUpWithBedditAPI extends ModelAPI {
     }
     
     public void e_SelectBeddit() {
-    	SignUp.tapSelectDevice(SignUp.SELECT_BEDDIT, false);
+    	SignUp.tapSelectDevice(SignUp.SELECT_BEDDIT);
     }
     
     public void e_connect() {
@@ -80,12 +79,13 @@ public class SignUpWithBedditAPI extends ModelAPI {
     public void e_linkShine() {
     	
     	HomeScreen.tapLinkNow();
-    	PrometheusHelper.sync();
-    	PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
-		SignUp.tapSelectDevice(SignUp.LINK_SHINE, true);
-		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
-		SignUp.tapOK();		// Backed to "Device select" view. Click next
-		SignUp.tapNext();
+		SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
+		
+		PrometheusHelper.sync();
+		Random random = new Random();
+		int number = random.nextInt(13);
+		SignUp.tapSelectColor(number);
+		
 		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 		
 		PrometheusHelper.handleTutorial();
@@ -93,6 +93,7 @@ public class SignUpWithBedditAPI extends ModelAPI {
     }
     
     public void v_SelectDevice() {
+    	ShortcutsTyper.delayTime(2000);
     	Assert.assertTrue(SignUp.isSelectDeviceView(), "This is not select device view");
     }
     
