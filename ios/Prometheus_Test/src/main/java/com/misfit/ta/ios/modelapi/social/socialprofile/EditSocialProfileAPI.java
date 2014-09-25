@@ -52,7 +52,7 @@ public class EditSocialProfileAPI extends ModelAPI {
 		// sign out and sign in again
 		PrometheusHelper.signOut();
 		PrometheusHelper.signIn(email, "qwerty1");
-		
+		ShortcutsTyper.delayTime(2000);
 		// set up gui
 		PrometheusHelper.handleUpdateFirmwarePopup();
 		HomeScreen.tapMenuSocial();
@@ -129,7 +129,8 @@ public class EditSocialProfileAPI extends ModelAPI {
 		
 		SocialProfileView.tapCameraRoll(); 
 		ShortcutsTyper.delayOne();
-		SocialProfileView.tapAlbumImage(0); 
+		Gui.swipeDown(500);
+    	SocialProfileView.tapAlbumImage(0);
 		ShortcutsTyper.delayOne();
 		SocialProfileView.tapChoosePhoto(); 
 		ShortcutsTyper.delayOne();
