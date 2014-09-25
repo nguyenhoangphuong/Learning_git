@@ -18,7 +18,7 @@ public class PrometheusHelper {
 	private static String[] shortMonths = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 	private static String[] shortDaysOfWeek = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 	private static String[] longDaysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-
+	
 	// Manual input field tags
 	public static final int TAG_MANUAL_ACTIVITY_TYPE = 1;
 	public static final int TAG_MANUAL_START_TIME = 2;
@@ -26,6 +26,7 @@ public class PrometheusHelper {
 	public static final int TAG_MANUAL_DURATION = 4;
 	public static final int TAG_MANUAL_STEPS = 5;
 	public static final int TAG_MANUAL_INTENSITY_LEVEL = 6;
+	public static String[] ThemeColor = {"Gray", "Jet", "Storm", "Topaz", "Champagne", "Coral", "Wine", "SeaGlass", "Red", "Green", "Victoria's Secret", "Silver", "Default"};
 	
 	/* Input Helper */
 	public static void enterEmailPassword(String email, String password) {
@@ -246,8 +247,6 @@ public class PrometheusHelper {
 
 	public static void signUp(String email, String password, boolean isMale, int date, int month, int year, boolean isUSUnit, String h1, String h2, String w1, String w2, int goalLevel) {
 		
-		LaunchScreen.launch();
-
 		// email and password
 		SignUp.tapSignUp();
 		SignUp.enterEmailPassword(email, password);
@@ -262,17 +261,17 @@ public class PrometheusHelper {
 		SignUp.tapSave();
 		
 		// Select Shine
-		SignUp.tapSelectDevice(SignUp.SELECT_SHINE_FLASH, false);
+		SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
 		
 		// goal
 		SignUp.setGoal(goalLevel);
 		SignUp.tapSave();
 		waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
-
+		
 		// linking shine
 		SignUp.sync();
 		PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
-		SignUp.tapSelectDevice(SignUp.LINK_SHINE, true);
+		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
 		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
 		SignUp.tapOK();
 		
@@ -307,7 +306,6 @@ public class PrometheusHelper {
 	}
 
 	public static String signUpDefaultProfile(String email, String password) {
-		LaunchScreen.launch();
 		ShortcutsTyper.delayOne();
 
 		// email and password
@@ -323,7 +321,9 @@ public class PrometheusHelper {
 		SignUp.tapSave();
 		
 		// Select Shine
-		SignUp.tapSelectDevice(SignUp.SELECT_SHINE_FLASH, false);
+		waitForView("UILabel", DefaultStrings.SelectDeviceTitle);
+		int deviceCode = SignUp.SELECT_SHINE;
+		SignUp.tapSelectDevice(deviceCode);
 
 		// goal
 		SignUp.setGoal(1);
@@ -331,14 +331,22 @@ public class PrometheusHelper {
 		waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
 
 		// linking shine
-		SignUp.sync();
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
-		SignUp.tapSelectDevice(SignUp.LINK_SHINE, true);
-		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
-		SignUp.tapOK();
-		// Backed to "Device select" view. Click next
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.SelectDeviceTitle);
-		SignUp.tapNext();
+		switch(deviceCode) {
+		case SignUp.SELECT_SHINE:
+			SignUp.sync();
+			Random random = new Random();
+			int number = random.nextInt(13);
+			SignUp.tapSelectColor(number);
+			break;
+		}
+		
+//		PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
+//		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
+//		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
+//		SignUp.tapOK();
+//		// Backed to "Device select" view. Click next
+//		PrometheusHelper.waitForView("UILabel", DefaultStrings.SelectDeviceTitle);
+//		SignUp.tapNext();
 		
 		// tutorial
 		waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
@@ -349,11 +357,9 @@ public class PrometheusHelper {
 	
 	public static void signIn(String email, String password) {
 		
-		LaunchScreen.launch();
 		SignIn.tapLogIn();
 		ShortcutsTyper.delayOne();
 		SignIn.enterEmailPassword(email, password);
-		waitForViewToDissappear("UILabel", DefaultStrings.MyShineTitle);
 	}
 	
 	public static void signOut() {
@@ -365,7 +371,6 @@ public class PrometheusHelper {
 		HomeScreen.tapOpenSettingsTrayWithoutPopupHandling();
 		HomeScreen.tapSettings();
 		HomeSettings.tapSignOut();
-		HomeSettings.chooseSignOut();
 	}
 	
 	public static void sync() {

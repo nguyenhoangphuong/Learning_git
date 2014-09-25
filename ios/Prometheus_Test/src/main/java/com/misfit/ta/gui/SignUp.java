@@ -7,10 +7,12 @@ import com.misfit.ta.common.MVPEnums;
 
 public class SignUp {
 	
-	public static final int SELECT_SHINE_FLASH = 0;
-	public static final int SELECT_BEDDIT = 1;
+	public static final int SELECT_SHINE = 0;
+	public static final int SELECT_BEDDIT = 2;
+	public static final int SELECT_FLASH = 1;
 	public static final int LINK_SHINE = 0;
 	public static final int LINK_FLASH = 1;
+	public static final int LINK_BEDDIT= 2;
 
     /* NAVIGATION */
     public static void tapSignUp() {
@@ -21,21 +23,18 @@ public class SignUp {
     	Gui.touchAVIew("UIButtonLabel", DefaultStrings.NextButton);
     }
     
-    
-
     public static void tapPrevious() {
     	Gui.touchAVIew("UIButtonLabel", DefaultStrings.BackButton);
     }
     
-    public static void tapSelectDevice(int deviceSelectCode, boolean isShine) {
+    public static void tapSelectDevice(int deviceSelectCode) {
     	String deviceLabel = "";
     	switch (deviceSelectCode) {
-    	case SELECT_SHINE_FLASH:
-    		if(!isShine){
-    			deviceLabel = DefaultStrings.ShineFlashLabel;
-    		}else{
-    			deviceLabel = DefaultStrings.ShineLabel;
-    		}
+    	case SELECT_SHINE:
+    		deviceLabel = DefaultStrings.ShineLabel;
+    		break;
+    	case SELECT_FLASH :
+    		deviceLabel = DefaultStrings.FlashLabel;
     		break;
     	case SELECT_BEDDIT:
     		deviceLabel = DefaultStrings.BedditLabel;
@@ -64,6 +63,9 @@ public class SignUp {
     	Gui.touchPopupButton(DefaultStrings.SignOutAtProfileViewButton);
     }
     
+    public static void tapSelectColor(int number){
+    	Gui.touchAVIew("UILabel", PrometheusHelper.ThemeColor[number]);
+    }
     
     /* STEP 1: ENTER EMAIL AND PASSWORD */
     public static void enterEmailPassword(String email, String password) {
