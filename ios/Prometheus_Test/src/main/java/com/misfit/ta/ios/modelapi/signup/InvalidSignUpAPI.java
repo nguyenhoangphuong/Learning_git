@@ -21,7 +21,6 @@ public class InvalidSignUpAPI extends ModelAPI {
 
     
     public void e_Init() {
-        LaunchScreen.launch();
     }
 
     public void e_Back() {
@@ -50,10 +49,6 @@ public class InvalidSignUpAPI extends ModelAPI {
         SignUp.enterEmailPassword("test@test.com", "pass");
         PrometheusHelper.waitForAlert();
     }
-
-    
-    
-    
 
     public void v_InitialView() {
         Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is InitialScreen");
