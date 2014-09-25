@@ -1111,12 +1111,46 @@ public class BackendNewServerCalculationActivityGoalSettingsTracking extends
 	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
 			 "NewServerCalculationGoalCreation", "NewServercalculation",
 			 "GoalCreation", "PushTrackChangesSyncDataOfSeveralDays" })
-
-	 public void demoTest1(){
+	 public void createWrongRawDataForNewAccount(){
 		 String email = MVPApi.generateUniqueEmail();
 		 String password = "qwerty";
+		 String token = MVPApi.signUp(email, password).token;
+		 long timestamp = System.currentTimeMillis() / 1000 - 3600*24;
 		 
-		 String token = MVPApi.signUp(email, password, true).token;
+		 Goal goal = Goal.getDefaultGoal(timestamp);
+		 GoalsResult result = MVPApi.createGoal(token, goal);
+		 Verify.verifyTrue(result.isOK(), "Can't create goal!");
+		 goal.setServerId(result.goals[0].getServerId());
+		 goal.setUpdatedAt(result.goals[0].getUpdatedAt());
+		 
+		 GoalRawData goalRawData = new GoalRawData();
+		 goalRawData.appendGoalRawData(generateEmptyRawData(0, 6*60));
+		 goalRawData.appendGoalRawData(generateSessionRawData(-1, -1, 50));
+		 
+		 BaseResult baseResult = MVPApi.pushRawData(token, goal.getServerId(), goalRawData, 0);
+		 System.out.println("BaseResult : " + baseResult.isOK());
+	 }
+	 
+	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
+			 "NewServerCalculationGoalCreation", "NewServercalculation",
+			 "GoalCreation", "PushTrackChangesSyncDataOfSeveralDays" })
+	 public void pushRawDataWithOldAccount(){
+		 pushRawDataWithNewAccount(false);
+	 }
+	 
+	 @Test(groups = { "ios", "Prometheus", "MVPBackend",
+			 "NewServerCalculationGoalCreation", "NewServercalculation",
+			 "GoalCreation", "DefaultTrackChanges" })
+	 public void pushRawDataWithNewAccount(boolean isNew){
+		 String email = MVPApi.generateUniqueEmail();
+		 String password = "qwerty";
+		 String token = "";
+		 if(isNew){
+			 token = MVPApi.signUp(email, password, true).token;
+		 }else{
+			 token = MVPApi.signUp(email, password).token;
+		 }
+		 
 		 long timestamp = System.currentTimeMillis() / 1000 - 3600*24;
 		 
 		 Goal goal = Goal.getDefaultGoal(timestamp);

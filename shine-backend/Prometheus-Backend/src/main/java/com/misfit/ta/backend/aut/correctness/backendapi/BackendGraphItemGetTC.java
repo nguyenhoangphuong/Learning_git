@@ -46,7 +46,7 @@ public class BackendGraphItemGetTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
 	public void createGraphItemsBeforeMigration(){
 		String email = MVPApi.generateUniqueEmail();
-		String password = "qwerty1";
+		String password = "qwerty";
 		String token = MVPApi.signUp(email, password).token;
 		
 		List<GraphItem> listGraphItem = new ArrayList<GraphItem>();

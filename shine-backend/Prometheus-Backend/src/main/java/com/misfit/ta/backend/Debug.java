@@ -2,16 +2,11 @@ package com.misfit.ta.backend;
 
 import java.io.FileNotFoundException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.data.DataGenerator;
-import com.misfit.ta.backend.data.goal.Goal;
-import com.misfit.ta.backend.data.profile.ProfileData;
 
 public class Debug {
 
