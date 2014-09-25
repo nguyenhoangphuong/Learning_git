@@ -1,11 +1,13 @@
 package com.misfit.ta.ios.modelapi.signup;
 
 import java.io.File;
+
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.LaunchScreen;
@@ -25,7 +27,6 @@ public class SignUpGoalAPI extends ModelAPI {
 
 	
 	public void e_Init() {
-		LaunchScreen.launch();
 	}
 
 	public void e_ChooseSignUp() {
@@ -49,7 +50,7 @@ public class SignUpGoalAPI extends ModelAPI {
 	}
 	
 	public void e_ShineSelected() {
-    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE_FLASH, false);
+    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
     }
 	
 	public void e_OpenTutorial() {
@@ -117,6 +118,7 @@ public class SignUpGoalAPI extends ModelAPI {
 	}
 	
 	public void v_SelectDevice() {
+		ShortcutsTyper.delayTime(2000);
     	Assert.assertTrue(SignUp.isSelectDeviceView(), "This is not select device view");
     }
 	
