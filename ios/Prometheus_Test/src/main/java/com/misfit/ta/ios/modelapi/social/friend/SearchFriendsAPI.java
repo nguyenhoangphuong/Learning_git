@@ -14,6 +14,7 @@ import com.misfit.ta.gui.social.SearchFriendView;
 import com.misfit.ta.gui.social.SocialProfileView;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
 public class SearchFriendsAPI extends ModelAPI {
@@ -26,7 +27,7 @@ public class SearchFriendsAPI extends ModelAPI {
 	private String hMe = "ios_automation_1389337763336729000_ntgjeue";
 	private String hFriend = "ios_automation_1389337763336729000_ffsdqnnj1r19r";
 	private String hNew = "ios_automation_1389337763336729000_3rgruxt6l8n";
-	private String hRequestedMe = "ios_automation_1389337763336729000_ylmro2kguyrln54";
+	private String hRequestedMe = "ios_khoahong";
 	private String hRequestedByMe = "ios_automation_1389337763336729000_faakktn";
 	private String hIgnoredMe = "ios_automation_1389337763336729000_weaznqwzdwalqj";
 	private String hIgnoredByMe = "ios_automation_1389337763336729000_ptsbbni";
@@ -64,9 +65,13 @@ public class SearchFriendsAPI extends ModelAPI {
 		
 		// log in and go to search friend view
 		PrometheusHelper.signIn(emailMe, "qwerty1");
+		ShortcutsTyper.delayTime(1000);
 		PrometheusHelper.handleUpdateFirmwarePopup();
+		ShortcutsTyper.delayTime(1000);
 		HomeScreen.tapWordView();
+		ShortcutsTyper.delayTime(1000);
 		HomeScreen.tapSocialProfile();
+		ShortcutsTyper.delayTime(1000);
 		SocialProfileView.tapSearchFriend();
 		PrometheusHelper.waitForThrobberToDissappear();
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.SyncingLabel);
