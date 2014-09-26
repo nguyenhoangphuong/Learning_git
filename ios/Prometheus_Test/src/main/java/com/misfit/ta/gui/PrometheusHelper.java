@@ -257,11 +257,12 @@ public class PrometheusHelper {
 		SignUp.enterBirthDay(String.valueOf(year), PrometheusHelper.getMonthString(month, true), String.valueOf(date));
 		SignUp.enterHeight(h1, h2, isUSUnit);
 		SignUp.enterWeight(w1, w2, isUSUnit);
-		SignUp.tapShine();
 		SignUp.tapSave();
 		
 		// Select Shine
-		SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
+		waitForView("UILabel", DefaultStrings.SelectDeviceTitle);
+		int deviceCode = SignUp.SELECT_SHINE;
+		SignUp.tapSelectDevice(deviceCode);
 		
 		// goal
 		SignUp.setGoal(goalLevel);
@@ -269,15 +270,14 @@ public class PrometheusHelper {
 		waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
 		
 		// linking shine
-		SignUp.sync();
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
-		SignUp.tapSelectDevice(SignUp.LINK_SHINE);
-		PrometheusHelper.waitForView("UIButton", DefaultStrings.OKButton);
-		SignUp.tapOK();
-		
-		// Backed to "Device select" view. Click next
-		ShortcutsTyper.delayTime(1000);
-		SignUp.tapNext();
+		switch(deviceCode) {
+			case SignUp.SELECT_SHINE:
+				SignUp.sync();
+				Random random = new Random();
+				int number = random.nextInt(13);
+				SignUp.tapSelectColor(number);
+				break;
+		}
 		
 		// tutorial
 		waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
