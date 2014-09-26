@@ -5,7 +5,6 @@ import java.io.File;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
-import com.misfit.ios.AppHelper;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.aut.AutomationTest;
 import com.misfit.ta.backend.aut.BackendHelper;
@@ -104,7 +103,6 @@ public class UpgradeAppAPI extends ModelAPI {
 	
 	public void v_LaunchScreen() {
 		
-		Assert.assertTrue(LaunchScreen.isAtLaunchScreen(), "Current view is LaunchScreen");
 	}
 	
 	public void v_HomeScreen() {

@@ -12,7 +12,6 @@ import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
-import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Sync;
@@ -33,7 +32,6 @@ public class LinkOneShineAvailableAPI extends ModelAPI {
 		MVPApi.unlinkDevice(token);
 
 		// sign in
-		LaunchScreen.launch();
 		PrometheusHelper.signIn("v14@qa.com", "test12");
 		Sync.openSyncView();
 	}

@@ -21,7 +21,6 @@ public class SignInWithFacebookAPI extends ModelAPI {
 
 
 	public void e_Init() {
-		LaunchScreen.launch();
 	}
 
 	public void e_SignInWithFacebook() {

@@ -9,7 +9,6 @@ import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
 import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignIn;
 import com.misfit.ta.ios.AutomationTest;
@@ -24,7 +23,6 @@ public class ForgotPasswordAPI extends ModelAPI {
 	
 	public void e_gotoForgotPassword() 
 	{
-		LaunchScreen.launch();
 		SignIn.tapLogIn();
 		ShortcutsTyper.delayTime(200);
 		SignIn.tapForgotPassword();

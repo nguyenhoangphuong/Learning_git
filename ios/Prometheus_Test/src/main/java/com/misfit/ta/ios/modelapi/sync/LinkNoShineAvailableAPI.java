@@ -13,7 +13,6 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
-import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.ios.AutomationTest;
@@ -30,7 +29,6 @@ public class LinkNoShineAvailableAPI extends ModelAPI {
 		
 		// sign up a new account and go to LinkShine screen
 		String email = MVPApi.generateUniqueEmail();
-		LaunchScreen.launch();
 
 		SignUp.tapSignUp();
 		ShortcutsTyper.delayTime(1000);

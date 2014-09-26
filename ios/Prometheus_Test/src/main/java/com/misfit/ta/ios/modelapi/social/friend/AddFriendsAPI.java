@@ -134,7 +134,7 @@ public class AddFriendsAPI extends ModelAPI {
 	
 	public void v_LaunchScreen() {
 		
-		Assert.assertTrue(LaunchScreen.isAtLaunchScreen() || LaunchScreen.isAtInitialScreen(), "Current view is start up view");
+		Assert.assertTrue(LaunchScreen.isAtInitialScreen(), "Current view is start up view");
 	}
 	
 	public void v_HomeScreen() {
