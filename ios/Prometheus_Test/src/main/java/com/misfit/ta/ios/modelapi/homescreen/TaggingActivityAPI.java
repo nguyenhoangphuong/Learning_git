@@ -160,7 +160,7 @@ public class TaggingActivityAPI extends ModelAPI {
 		HomeScreen.tapDevices();
 		HomeScreen.tapActiveDevice();
 		Gui.swipeUp(500);
-		HomeSettings.tapMisfitLabs();
+		HomeSettings.tapTaggingAndSleep();
 		
 		if(isAutoSleepTurnedOn) {
 			
@@ -168,7 +168,7 @@ public class TaggingActivityAPI extends ModelAPI {
 			HomeScreen.switchAutoSleepTrackingOff();
 			HomeSettings.tapSave();
 			PrometheusHelper.waitForView("UILabel", DefaultStrings.ShineTitle);
-			HomeSettings.tapMisfitLabs();
+			HomeSettings.tapTaggingAndSleep();
 		}
 
 		switch (activity) {

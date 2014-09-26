@@ -96,11 +96,11 @@ public class DeviceSettingsAPI extends ModelAPI {
 	
 	public void e_goToMisfitLabsScreen(){
 		Gui.swipeUp(300);
-		HomeSettings.tapMisfitLabs();
+		HomeSettings.tapTaggingAndSleep();
 	}
 	
 	public void v_MisfitLabsScreen(){
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.MisfitLabsTitle), "Current view is Misfit Labs Screen");
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.TaggingAndSleepTitle), "Current view is Misfit Labs Screen");
 	}
 	
 	public void e_turnOffAutoSleep(){
@@ -108,6 +108,5 @@ public class DeviceSettingsAPI extends ModelAPI {
 	}
 	
 	public void v_MisfitLabsScreenUpdated(){
-		Assert.assertTrue(ViewUtils.isExistedView("UILabel", DefaultStrings.SleepLabel), "Sleep activity was tracked");
 	}
 }

@@ -13,8 +13,8 @@ public class HomeSettings {
 		Gui.touchAVIew("UIButtonLabel", DefaultStrings.CancelButton);
 	}
 	
-	public static void tapMisfitLabs() {
-		Gui.touchAVIew("UILabel", DefaultStrings.MisfitLabsButton);
+	public static void tapTaggingAndSleep() {
+		Gui.touchAVIew("UILabel", DefaultStrings.TaggingAndSleep);
 	}
 
 	public static void tapYourProfile() {

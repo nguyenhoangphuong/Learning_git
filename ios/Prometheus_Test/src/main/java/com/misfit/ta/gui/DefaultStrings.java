@@ -25,6 +25,7 @@ public class DefaultStrings {
 	public static String LogActivityLabel = "Log Activity";
 	public static String BedditLabel = "Beddit";
 	public static String EditActivityLabel = "Edit Activity";
+	public static String TaggingAndSleepTitle = "Tagging + Sleep";
 	
 	
 	public static String ActivityLabel = "Activity";
@@ -104,7 +105,7 @@ public class DefaultStrings {
 	public static String EndTutorialButton = "OK, I GOT IT";
 	public static String TutorialFirstPageLabel = "_PROGRESS AND CLOCK_\\n\\n Press Flash for your activity progress, then the time.";
 	public static String TileTimeTravelLabel = "TIME TRAVEL";
-	public static String MisfitLabsButton = "Misfit Labs";
+	public static String TaggingAndSleep = "Tagging and Sleep";
 	public static String ProgressCircleTutorial = "tap for steps, calories and distance";
 	public static String SyncingLabel = "Syncing...";
 	public static String CurrentWeightLabel = "Current Weight";
