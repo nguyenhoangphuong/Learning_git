@@ -334,6 +334,7 @@ public class PrometheusHelper {
 		switch(deviceCode) {
 		case SignUp.SELECT_SHINE:
 			SignUp.sync();
+			ShortcutsTyper.delayTime(2000);
 			Random random = new Random();
 			int number = random.nextInt(13);
 			SignUp.tapSelectColor(number);
