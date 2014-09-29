@@ -27,7 +27,7 @@ public class PrometheusHelper {
 	public static final int TAG_MANUAL_STEPS = 5;
 	public static final int TAG_MANUAL_INTENSITY_LEVEL = 6;
 	public static String[] ThemeColor = {"Gray", "Jet", "Storm", "Topaz", "Champagne", "Coral", "Wine", "SeaGlass", "Red", "Green", "Victoria's Secret", "Silver", "Default"};
-	
+	public static String[] ThemeColorForFlash = {"Zest", "Wave", "Reef", "Onyx", "Fuschia", "Frost", "Red", "Default"};
 	/* Input Helper */
 	public static void enterEmailPassword(String email, String password) {
 
@@ -211,9 +211,20 @@ public class PrometheusHelper {
 
 	/* Quick navigation */
 	public static void handleTutorial() {
+		handleTutorialForFlash(false);
+	}
+	
+	public static void handleTutorialForFlash(boolean isFlash){
 		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
-			
-		for (int i = 0; i < 2; i++) {
+		int number = 0;
+		
+		if(isFlash){
+			number = 3;
+		}else{
+			number = 2;
+		}
+		
+		for (int i = 0; i < number; i++) {
 			Gui.swipeLeft(200);
 		}
 		
@@ -275,7 +286,7 @@ public class PrometheusHelper {
 				SignUp.sync();
 				Random random = new Random();
 				int number = random.nextInt(13);
-				SignUp.tapSelectColor(number);
+				SignUp.tapSelectColorForShine(number);
 				break;
 		}
 		
@@ -305,7 +316,7 @@ public class PrometheusHelper {
 		return signUpDefaultProfile(email, password);
 	}
 
-	public static String signUpDefaultProfile(String email, String password) {
+	public static String signUpDefaultProfileWithFlash(String email, String password, boolean isFlash){
 		ShortcutsTyper.delayOne();
 
 		// email and password
@@ -322,7 +333,7 @@ public class PrometheusHelper {
 		
 		// Select Shine
 		waitForView("UILabel", DefaultStrings.SelectDeviceTitle);
-		int deviceCode = SignUp.SELECT_SHINE;
+		int deviceCode = SignUp.SELECT_FLASH;
 		SignUp.tapSelectDevice(deviceCode);
 
 		// goal
@@ -330,14 +341,14 @@ public class PrometheusHelper {
 		SignUp.tapSave();
 		waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
 
-		// linking shine
+		// linking flash
 		switch(deviceCode) {
-		case SignUp.SELECT_SHINE:
+		case SignUp.SELECT_FLASH:
 			SignUp.sync();
 			ShortcutsTyper.delayTime(2000);
 			Random random = new Random();
-			int number = random.nextInt(13);
-			SignUp.tapSelectColor(number);
+			int number = random.nextInt(8);
+			SignUp.tapSelectColorForShine(number);
 			break;
 		}
 		
@@ -354,6 +365,10 @@ public class PrometheusHelper {
 		PrometheusHelper.handleTutorial();
 		
 		return email;
+	}
+	
+	public static String signUpDefaultProfile(String email, String password) {
+		return signUpDefaultProfileWithFlash(email, password, false);
 	}
 	
 	public static void signIn(String email, String password) {

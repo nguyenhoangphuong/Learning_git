@@ -84,7 +84,7 @@ public class SignUpWithBedditAPI extends ModelAPI {
 		PrometheusHelper.sync();
 		Random random = new Random();
 		int number = random.nextInt(13);
-		SignUp.tapSelectColor(number);
+		SignUp.tapSelectColorForShine(number);
 		
 		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 		

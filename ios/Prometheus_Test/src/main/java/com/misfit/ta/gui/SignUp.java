@@ -63,8 +63,12 @@ public class SignUp {
     	Gui.touchPopupButton(DefaultStrings.SignOutAtProfileViewButton);
     }
     
-    public static void tapSelectColor(int number){
+    public static void tapSelectColorForShine(int number){
     	Gui.touchAVIew("UILabel", PrometheusHelper.ThemeColor[number]);
+    }
+    
+    public static void tapSelectColorForFlash(int number){
+    	Gui.touchAVIew("UILabel", PrometheusHelper.ThemeColorForFlash[number]);
     }
     
     /* STEP 1: ENTER EMAIL AND PASSWORD */
@@ -110,6 +114,10 @@ public class SignUp {
     public static void tapShine() {
     	
     	Gui.touchAVIew("UILabel", DefaultStrings.ShineLabel);
+    }
+    
+    public static void tapFlash(){
+    	Gui.touchAVIew("UILabel", DefaultStrings.FlashLabel);
     }
 
     

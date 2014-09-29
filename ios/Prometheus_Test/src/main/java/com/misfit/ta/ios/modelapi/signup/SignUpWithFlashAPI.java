@@ -9,9 +9,6 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ios.ViewUtils;
-import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.utils.ShortcutsTyper;
-import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.Gui;
@@ -21,12 +18,18 @@ import com.misfit.ta.gui.LaunchScreen;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.SignUp;
 import com.misfit.ta.gui.Timeline;
+import com.misfit.ta.ios.AutomationTest;
+import com.misfit.ta.modelAPI.ModelAPI;
+import com.misfit.ta.utils.ShortcutsTyper;
 
-public class SignUpAPI extends ModelAPI {
+public class SignUpWithFlashAPI extends ModelAPI{
+
+	private static final Logger logger = Util.setupLogger(SignUpWithFlashAPI.class);
 	
-	private static final Logger logger = Util.setupLogger(SignUpAPI.class);
-    public SignUpAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
+    public SignUpWithFlashAPI(AutomationTest automation, File model, boolean efsm, PathGenerator generator, boolean weight) {
+    	
         super(automation, model, efsm, generator, weight);
+        
     }
 
 	private boolean isMale = true;
@@ -50,7 +53,7 @@ public class SignUpAPI extends ModelAPI {
     }
     
     public void e_SubmitValidEmailPassword() {
-        SignUp.enterEmailPassword(MVPApi.generateUniqueEmail(), "test12");
+        SignUp.enterEmailPassword(MVPApi.generateUniqueEmail(), "qwerty");
         PrometheusHelper.waitForView("UILabel", DefaultStrings.SignUpProfileTitle);
     }
     
@@ -91,13 +94,13 @@ public class SignUpAPI extends ModelAPI {
 		
 		// select shine
 		if(deviceSelected == false) {
-			SignUp.tapShine();
+			SignUp.tapFlash();
 			deviceSelected = true;
 		}
     }
     
-    public void e_ShineSelected() {
-    	SignUp.tapSelectDevice(SignUp.SELECT_SHINE);
+    public void e_FlashSelected() {
+    	SignUp.tapSelectDevice(SignUp.SELECT_FLASH);
     }
     
     public void e_SetGoal() {
@@ -113,15 +116,15 @@ public class SignUpAPI extends ModelAPI {
     	SignUp.tapCloseTutorial();
     }
     
-    public void e_toLinkShine() {
+    public void e_toLinkFlash() {
     	
     	SignUp.tapSave();
     	ShortcutsTyper.delayOne();
     	SignUp.sync();
     	ShortcutsTyper.delayTime(2000);
     	Random random = new Random();
-		int number = random.nextInt(13);
-		SignUp.tapSelectColorForShine(number);
+		int number = random.nextInt(8);
+		SignUp.tapSelectColorForFlash(number);
     }
 
     public void e_Save(){
@@ -144,7 +147,7 @@ public class SignUpAPI extends ModelAPI {
     public void v_HomeScreen() {
     	// Swipe to get through first time's tutorial
     	ShortcutsTyper.delayTime(1000);
-    	PrometheusHelper.handleTutorial();
+    	PrometheusHelper.handleTutorialForFlash(true);
     	
     	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");
     	
@@ -203,4 +206,5 @@ public class SignUpAPI extends ModelAPI {
     	ShortcutsTyper.delayTime(2000);
     	Assert.assertTrue(SignUp.isSelectDeviceView(), "This is not select device view");
     }
+
 }
