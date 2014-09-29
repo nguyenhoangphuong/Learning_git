@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
@@ -147,6 +148,26 @@ public class DataGenerator {
 	//Default : set value = true for isLinked, value = false = isCurrent
 	public static Pedometer generateRandomPedometer(long timestamp, Map<String, Object> options) {
 			
+		return generateRandomPedometer(timestamp, options, false);
+	}
+	
+	public static String generateSerialNumberStringForShine(){
+		String[] colorArray = new String[]{"AZ", "BZ", "CZ", "JZ", "GZ", "HZ", "KZ", "MZ", "LZ"};
+		String result = "SH";
+		if(System.currentTimeMillis()/2 == 0){
+			result += "0";
+		}else{
+			result += "2";
+		}
+		
+		Random random = new Random();
+		int number = random.nextInt(7);
+		result += colorArray[number];
+		result += TextTool.getRandomString(1, 5);
+		return result;
+	}
+	
+	public static Pedometer generateRandomPedometer(long timestamp, Map<String, Object> options, boolean isColoredShine) {
 		Pedometer item = new Pedometer();
 		item.setLocalId("pedometer-" + MVPApi.generateLocalId());
 		item.setBatteryLevel(MVPCommon.randInt(20, 100));
@@ -155,7 +176,11 @@ public class DataGenerator {
 		item.setFirmwareRevisionString(MVPApi.LATEST_FIRMWARE_VERSION_STRING);
 		item.setLastSyncedTime(timestamp);
 		item.setLinkedTime(timestamp);
-		item.setSerialNumberString(TextTool.getRandomString(10, 10));
+		if(!isColoredShine){
+			item.setSerialNumberString(TextTool.getRandomString(10, 10));
+		}else{
+			item.setSerialNumberString(generateSerialNumberStringForShine());
+		}
 		item.setUnlinkedTime(null);
 		item.setUpdatedAt(timestamp);
 		item.setDeviceType(DataGenerator.SHINE_FLASH);

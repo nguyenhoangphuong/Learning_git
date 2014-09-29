@@ -39,6 +39,7 @@ public class BackendPedometerTC extends BackendAutomation {
 			}
 		}
 	}
+	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
 	public void CreateDuplicatePedometer() {
 		
@@ -56,6 +57,15 @@ public class BackendPedometerTC extends BackendAutomation {
 		System.out.println("pedoId : " + pedo.getLocalId() + "\nspedoId : " + spedo.getLocalId());
 		Assert.assertTrue(result.statusCode == 210, "Status code");
 		Assert.assertEquals(pedo.getLocalId(), spedo.getLocalId(), "Local id");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
+	public void createPedometerWithColoredShine(){
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qwerty").token;
+		Pedometer pedo = DataGenerator.generateRandomPedometer(System.currentTimeMillis()/1000, null, true);
+		pedo.setIsCurrent(true);
+		BaseResult result = MVPApi.createPedometer(token, pedo);
+		Assert.assertEquals(result.statusCode, 200, "Status code");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })
@@ -332,7 +342,7 @@ public class BackendPedometerTC extends BackendAutomation {
 		
 		// update pedometer
 		pedo.setSerialNumberString(serialNumberString2);
-		ServiceResponse serviceResponse = MVPApi.UpdatePedometer(token, pedo.toJson());
+		ServiceResponse serviceResponse = MVPApi.updateThePedometer(token, pedo.toJson());
 		
 		Assert.assertTrue(serviceResponse.getStatusCode() == 210, "Response code : 200!");
 				
