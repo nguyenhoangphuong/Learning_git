@@ -215,7 +215,6 @@ public class PrometheusHelper {
 	}
 	
 	public static void handleTutorialForFlash(boolean isFlash){
-		PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
 		int number = 0;
 		
 		if(isFlash){
@@ -333,7 +332,12 @@ public class PrometheusHelper {
 		
 		// Select Shine
 		waitForView("UILabel", DefaultStrings.SelectDeviceTitle);
-		int deviceCode = SignUp.SELECT_FLASH;
+		int deviceCode;
+		if(isFlash){
+			deviceCode = SignUp.SELECT_FLASH;
+		}else{
+			deviceCode = SignUp.SELECT_SHINE;
+		}
 		SignUp.tapSelectDevice(deviceCode);
 
 		// goal
@@ -341,15 +345,22 @@ public class PrometheusHelper {
 		SignUp.tapSave();
 		waitForView("UILabel", DefaultStrings.SignUpLinkShineTitle);
 
-		// linking flash
+		// linking flash or shine
+		SignUp.sync();
+		ShortcutsTyper.delayTime(2000);
+		int number;
+		Random random = new Random();
 		switch(deviceCode) {
-		case SignUp.SELECT_FLASH:
-			SignUp.sync();
-			ShortcutsTyper.delayTime(2000);
-			Random random = new Random();
-			int number = random.nextInt(8);
-			SignUp.tapSelectColorForShine(number);
-			break;
+			case SignUp.SELECT_FLASH:{
+				number = random.nextInt(8);
+				SignUp.tapSelectColorForShine(number);
+				break;
+			}
+			case SignUp.SELECT_SHINE :{
+				number = random.nextInt(13);
+				SignUp.tapSelectColorForShine(number);
+				break;
+			}
 		}
 		
 //		PrometheusHelper.waitForView("UILabel", DefaultStrings.SimulateLabel);
@@ -361,8 +372,14 @@ public class PrometheusHelper {
 //		SignUp.tapNext();
 		
 		// tutorial
-		waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
-		PrometheusHelper.handleTutorial();
+		
+		if(isFlash){
+			waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel);
+			PrometheusHelper.handleTutorialForFlash(true);
+		}else{
+			waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabelForShine);
+			PrometheusHelper.handleTutorialForFlash(false);
+		}
 		
 		return email;
 	}

@@ -106,8 +106,9 @@ public class WorldFeedAPI extends ModelAPI {
 	}
 	
 	public void e_goToWorldFeed() {
-		
+		ShortcutsTyper.delayTime(2000);
 		PrometheusHelper.handleUpdateFirmwarePopup();
+		ShortcutsTyper.delayTime(2000);
 		HomeScreen.tapWordView();
 		WorldFeedView.pullToRefresh();
 		WorldFeedView.waitForPullToRefreshToFinish();

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import com.misfit.ios.NuRemoteClient;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.gui.social.LeaderboardView;
+import com.misfit.ta.utils.ShortcutsTyper;
 
 public class HomeScreen {
 
@@ -108,6 +109,7 @@ public class HomeScreen {
 	
 	public static void tapWordView() {
 		tapMenuSocial();
+		ShortcutsTyper.delayTime(2000);
 		Gui.touchAVIew("UIButton", DefaultStrings.WorldViewButtonLabel);
 	}
 	

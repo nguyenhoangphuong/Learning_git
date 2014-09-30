@@ -104,6 +104,7 @@ public class DefaultStrings {
 	public static String SyncShineToSeeYourActivityLabel = "Sync Shine to see your activity.";
 	public static String EndTutorialButton = "OK, I GOT IT";
 	public static String TutorialFirstPageLabel = "_PROGRESS AND CLOCK_\\n\\n Press Flash for your activity progress, then the time.";
+	public static String TutorialFirstPageLabelForShine = "_PROGRESS AND CLOCK_\\n\\n Double tap Shine for your activity progress, then the time.";
 	public static String TileTimeTravelLabel = "TIME TRAVEL";
 	public static String TaggingAndSleep = "Tagging and Sleep";
 	public static String ProgressCircleTutorial = "tap for steps, calories and distance";
@@ -193,7 +194,7 @@ public class DefaultStrings {
 	public static String NewGoalInstruction = "Sync to update your new goal on your Shine.";
 	public static String[] WearingLocations = { "Head", "Upper Arm", "Chest",
 			"Wrist", "Waist", "Ankle/Foot" };
-	public static String UpdateFirmwareMessage = "We've made Shine even better! Tap menu and sync to update.";
+	public static String UpdateFirmwareMessage = "We've made Shine better! Tap menu and sync to update.";
 	public static int FirmwareMessageTurnOffButtonId = 17;
 	public static String CalloutMessageTurnOffButtonTag = "CalloutCloseButton";
 	
