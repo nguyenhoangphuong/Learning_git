@@ -1,6 +1,7 @@
 package com.misfit.ta.backend.aut.correctness.servercalculation;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.testng.Assert;
@@ -23,42 +24,43 @@ import com.misfit.ta.common.Verify;
 import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
-public class BackendServerCalculationIntegration extends BackendServerCalculationBase {
-
+public class BackendServerCalculationIntegration extends
+		BackendServerCalculationBase {
 
 	protected int delayTime = 60000;
 
 	// test cases
-	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation", "ServerCalculationSmoke" })
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation",
+			"ServerCalculationSmoke" })
 	public void ServerCalculation_Integration() throws FileNotFoundException {
 
 		// sign up new account
 		boolean testPassed = true;
 		String email = MVPApi.generateUniqueEmail();
-		//		String email = "sc059@a.a";
+		// String email = "sc059@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
-
 		// create profile / pedometer / statistics
-		ProfileData profile = DataGenerator.generateRandomProfile(timestamp, null);
-		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
+		ProfileData profile = DataGenerator.generateRandomProfile(timestamp,
+				null);
+		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp,
+				null);
 		Statistics statistics = Statistics.getDefaultStatistics();
 
 		MVPApi.createProfile(token, profile);
 		MVPApi.createPedometer(token, pedometer);
 		MVPApi.createStatistics(token, statistics);
 
-
 		// create goals for 4 days
 		Goal[] goals = new Goal[4];
-		for(int i = 0; i < goals.length; i++) {
+		for (int i = 0; i < goals.length; i++) {
 
 			long goalTimestamp = timestamp - i * 3600 * 24;
 			Goal goal = Goal.getDefaultGoal(goalTimestamp);
 
 			// if today goal, increase length to 25h
-			if(i == 0)
+			if (i == 0)
 				goal.setEndTime(goal.getEndTime() + 3600);
 
 			GoalsResult result = MVPApi.createGoal(token, goal);
@@ -68,7 +70,6 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 			goals[i] = goal;
 		}
-
 
 		// story on 4th day (3 days ago):
 		// - session: 60 minutes - 6000 steps - 600 points at 7:00
@@ -161,7 +162,6 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		data1.appendGoalRawData(generateSessionRawData(4000, 400, 40));
 		data1.appendGoalRawData(generateEmptyRawData(23 * 60 + 40, 24 * 60));
 
-
 		// story on today:
 		// - session: 50 minutes - 5000 steps - 600 points at 8:00
 		// - session: 50 minutes - 5000 steps - 500 points at 9:00
@@ -198,7 +198,6 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 		data0.appendGoalRawData(generateSessionRawData(5000, 500, 50));
 
-
 		// push data to server
 		MVPApi.pushRawData(token, goals[3].getServerId(), data3, 0);
 		MVPApi.pushRawData(token, goals[2].getServerId(), data2, 0);
@@ -208,17 +207,24 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		logger.info("Waiting " + delayTime + " miliseconds");
 		ShortcutsTyper.delayTime(delayTime);
 
-
 		// get data from server
-		List<GraphItem> graphitems3 = MVPApi.getGraphItems(token, goals[3].getStartTime(), goals[3].getEndTime(), 0l);
-		List<GraphItem> graphitems2 = MVPApi.getGraphItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
-		List<GraphItem> graphitems1 = MVPApi.getGraphItems(token, goals[1].getStartTime(), goals[1].getEndTime(), 0l);
-		List<GraphItem> graphitems0 = MVPApi.getGraphItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
+		List<GraphItem> graphitems3 = MVPApi.getGraphItems(token,
+				goals[3].getStartTime(), goals[3].getEndTime(), 0l);
+		List<GraphItem> graphitems2 = MVPApi.getGraphItems(token,
+				goals[2].getStartTime(), goals[2].getEndTime(), 0l);
+		List<GraphItem> graphitems1 = MVPApi.getGraphItems(token,
+				goals[1].getStartTime(), goals[1].getEndTime(), 0l);
+		List<GraphItem> graphitems0 = MVPApi.getGraphItems(token,
+				goals[0].getStartTime(), goals[0].getEndTime(), 0l);
 
-		List<TimelineItem> timelineitems3 = MVPApi.getTimelineItems(token, goals[3].getStartTime(), goals[3].getEndTime(), 0l);
-		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
-		List<TimelineItem> timelineitems1 = MVPApi.getTimelineItems(token, goals[1].getStartTime(), goals[1].getEndTime(), 0l);
-		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
+		List<TimelineItem> timelineitems3 = MVPApi.getTimelineItems(token,
+				goals[3].getStartTime(), goals[3].getEndTime(), 0l);
+		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token,
+				goals[2].getStartTime(), goals[2].getEndTime(), 0l);
+		List<TimelineItem> timelineitems1 = MVPApi.getTimelineItems(token,
+				goals[1].getStartTime(), goals[1].getEndTime(), 0l);
+		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token,
+				goals[0].getStartTime(), goals[0].getEndTime(), 0l);
 
 		Goal goal3 = MVPApi.getGoal(token, goals[3].getServerId()).goals[0];
 		Goal goal2 = MVPApi.getGoal(token, goals[2].getServerId()).goals[0];
@@ -227,128 +233,271 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 		statistics = MVPApi.getStatistics(token);
 
-
 		// ===== VERIFY GRAPH ITEMS
-		testPassed &= Verify.verifyEquals(graphitems3.size(), 44, "Number of graph items") == null;
-		testPassed &= Verify.verifyEquals(graphitems2.size(), 44, "Number of graph items") == null;
-		testPassed &= Verify.verifyEquals(graphitems1.size(), 44, "Number of graph items") == null;
-		testPassed &= Verify.verifyEquals(graphitems0.size(), 26, "Number of graph items") == null;
-
+		testPassed &= Verify.verifyEquals(graphitems3.size(), 44,
+				"Number of graph items") == null;
+		testPassed &= Verify.verifyEquals(graphitems2.size(), 44,
+				"Number of graph items") == null;
+		testPassed &= Verify.verifyEquals(graphitems1.size(), 44,
+				"Number of graph items") == null;
+		testPassed &= Verify.verifyEquals(graphitems0.size(), 26,
+				"Number of graph items") == null;
 
 		// ===== VERIFY TIMELINE ITEMS
 		// number of session tiles are correct
-		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems3), 4, "Goals[3] has 4 session tiles") == null;
-		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems2), 5, "Goals[2] has 5 session tiles") == null;
-		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems1), 6, "Goals[1] has 6 session tiles") == null;
-		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems0), 6, "Goals[0] has 6 session tiles") == null;
-
+		testPassed &= Verify.verifyEquals(
+				getNumberOfSessionTiles(timelineitems3), 4,
+				"Goals[3] has 4 session tiles") == null;
+		testPassed &= Verify.verifyEquals(
+				getNumberOfSessionTiles(timelineitems2), 5,
+				"Goals[2] has 5 session tiles") == null;
+		testPassed &= Verify.verifyEquals(
+				getNumberOfSessionTiles(timelineitems1), 6,
+				"Goals[1] has 6 session tiles") == null;
+		testPassed &= Verify.verifyEquals(
+				getNumberOfSessionTiles(timelineitems0), 6,
+				"Goals[0] has 6 session tiles") == null;
 
 		// session tiles are correct
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems3, goals[3], 7 * 60, 60, 600), "Goal[3] has session tile at 7:00 - 600 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems3, goals[3], 10 * 60, 50, 500), "Goal[3] has session tile at 10:00 - 500 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems3, goals[3], 13 * 60, 30, 300), "Goal[3] has session tile at 13:00 - 300 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems3, goals[3], 17 * 60, 40, 400), "Goal[3] has session tile at 17:00 - 400 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems3, goals[3], 7 * 60, 60,
+						600), "Goal[3] has session tile at 7:00 - 600 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems3, goals[3], 10 * 60, 50,
+						500), "Goal[3] has session tile at 10:00 - 500 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems3, goals[3], 13 * 60, 30,
+						300), "Goal[3] has session tile at 13:00 - 300 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems3, goals[3], 17 * 60, 40,
+						400), "Goal[3] has session tile at 17:00 - 400 pts") == null;
 
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems2, goals[2], 7 * 60, 60, 600), "Goal[2] has session tile at 7:00 - 600 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems2, goals[2], 10 * 60, 50, 500), "Goal[2] has session tile at 10:00 - 500 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems2, goals[2], 13 * 60, 30, 300), "Goal[2] has session tile at 13:00 - 300 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems2, goals[2], 17 * 60, 40, 400), "Goal[2] has session tile at 17:00 - 400 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems2, goals[2], 20 * 60, 40, 400), "Goal[2] has session tile at 20:00 - 400 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems2, goals[2], 7 * 60, 60,
+						600), "Goal[2] has session tile at 7:00 - 600 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems2, goals[2], 10 * 60, 50,
+						500), "Goal[2] has session tile at 10:00 - 500 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems2, goals[2], 13 * 60, 30,
+						300), "Goal[2] has session tile at 13:00 - 300 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems2, goals[2], 17 * 60, 40,
+						400), "Goal[2] has session tile at 17:00 - 400 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems2, goals[2], 20 * 60, 40,
+						400), "Goal[2] has session tile at 20:00 - 400 pts") == null;
 
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 7 * 60, 60, 600), "Goal[1] has session tile at 7:00 - 600 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 10 * 60, 50, 500), "Goal[1] has session tile at 10:00 - 500 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 13 * 60, 30, 300), "Goal[1] has session tile at 13:00 - 300 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 17 * 60, 40, 400), "Goal[1] has session tile at 17:00 - 400 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 21 * 60, 60, 600), "Goal[1] has session tile at 21:00 - 600 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems1, goals[1], 23 * 60, 40, 400), "Goal[1] has session tile at 23:00 - 400 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems1, goals[1], 7 * 60, 60,
+						600), "Goal[1] has session tile at 7:00 - 600 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems1, goals[1], 10 * 60, 50,
+						500), "Goal[1] has session tile at 10:00 - 500 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems1, goals[1], 13 * 60, 30,
+						300), "Goal[1] has session tile at 13:00 - 300 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems1, goals[1], 17 * 60, 40,
+						400), "Goal[1] has session tile at 17:00 - 400 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems1, goals[1], 21 * 60, 60,
+						600), "Goal[1] has session tile at 21:00 - 600 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems1, goals[1], 23 * 60, 40,
+						400), "Goal[1] has session tile at 23:00 - 400 pts") == null;
 
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 8 * 60, 50, 500), "Goal[0] has session tile at 8:00 - 500 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 9 * 60, 50, 500), "Goal[0] has session tile at 9:00 - 500 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 10 * 60, 50, 500), "Goal[0] has session tile at 10:00 - 500 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 11 * 60, 50, 500), "Goal[0] has session tile at 11:00 - 500 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 12 * 60, 50, 500), "Goal[0] has session tile at 12:00 - 500 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems0, goals[0], 13 * 60, 50, 500), "Goal[0] has session tile at 13:00 - 500 pts") == null;
-
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems0, goals[0], 8 * 60, 50,
+						500), "Goal[0] has session tile at 8:00 - 500 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems0, goals[0], 9 * 60, 50,
+						500), "Goal[0] has session tile at 9:00 - 500 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems0, goals[0], 10 * 60, 50,
+						500), "Goal[0] has session tile at 10:00 - 500 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems0, goals[0], 11 * 60, 50,
+						500), "Goal[0] has session tile at 11:00 - 500 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems0, goals[0], 12 * 60, 50,
+						500), "Goal[0] has session tile at 12:00 - 500 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems0, goals[0], 13 * 60, 50,
+						500), "Goal[0] has session tile at 13:00 - 500 pts") == null;
 
 		// daily goal milestone tiles are correct
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems3, goals[3], 10 * 60 + 40, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[3] has 100% tile") == null;
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems3, goals[3], 17 * 60 + 10, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goals[3] has 150% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems3, goals[3], 10 * 60 + 40,
+						TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000),
+				"Goals[3] has 100% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems3, goals[3], 17 * 60 + 10,
+						TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500),
+				"Goals[3] has 150% tile") == null;
 
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems2, goals[2], 10 * 60 + 40, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[2] has 100% tile") == null;
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems2, goals[2], 17 * 60 + 10, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goals[2] has 150% tile") == null;
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems2, goals[2], 20 * 60 + 20, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goals[2] has 200% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems2, goals[2], 10 * 60 + 40,
+						TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000),
+				"Goals[2] has 100% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems2, goals[2], 17 * 60 + 10,
+						TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500),
+				"Goals[2] has 150% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems2, goals[2], 20 * 60 + 20,
+						TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000),
+				"Goals[2] has 200% tile") == null;
 
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems1, goals[1], 10 * 60 + 40, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[1] has 100% tile") == null;
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems1, goals[1], 17 * 60 + 10, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goals[1] has 150% tile") == null;
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems1, goals[1], 21 * 60 + 20, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goals[1] has 200% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems1, goals[1], 10 * 60 + 40,
+						TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000),
+				"Goals[1] has 100% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems1, goals[1], 17 * 60 + 10,
+						TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500),
+				"Goals[1] has 150% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems1, goals[1], 21 * 60 + 20,
+						TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000),
+				"Goals[1] has 200% tile") == null;
 
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 9 * 60 + 50, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goals[0] has 100% tile") == null;
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 10 * 60 + 50, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goals[0] has 150% tile") == null;
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems0, goals[0], 11 * 60 + 50, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goals[0] has 200% tile") == null;
-
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems0, goals[0], 9 * 60 + 50,
+						TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000),
+				"Goals[0] has 100% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems0, goals[0], 10 * 60 + 50,
+						TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500),
+				"Goals[0] has 150% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems0, goals[0], 11 * 60 + 50,
+						TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000),
+				"Goals[0] has 200% tile") == null;
 
 		// personal best and streak tiles are correct
-		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems2, goals[2], 24 * 60 - 1, 2200, 400), "Goals[2] reaches 2200pts extended Goal[3] by 400pts") == null;
-		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems1, goals[1], 24 * 60 - 1, 2800, 600), "Goals[1] reaches 2800pts extended Goal[2] by 600pts") == null;
-		testPassed &= Verify.verifyTrue(hasPersonalBestMilestone(timelineitems0, goals[0], 13 * 60 + 50, 3000, 200), "Goals[0] reaches 3000pts extended Goal[1] by 200pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasPersonalBestMilestone(timelineitems2, goals[2], 24 * 60 - 1,
+						2200, 400),
+				"Goals[2] reaches 2200pts extended Goal[3] by 400pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasPersonalBestMilestone(timelineitems1, goals[1], 24 * 60 - 1,
+						2800, 600),
+				"Goals[1] reaches 2800pts extended Goal[2] by 600pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasPersonalBestMilestone(timelineitems0, goals[0],
+						13 * 60 + 50, 3000, 200),
+				"Goals[0] reaches 3000pts extended Goal[1] by 200pts") == null;
 
-		testPassed &= Verify.verifyTrue(hasStreakMilestone(timelineitems1, goals[1], 10 * 60 + 40, 3), "Goals[1] has 3-day streak tile") == null;
-		testPassed &= Verify.verifyTrue(hasStreakMilestone(timelineitems0, goals[0], 9 * 60 + 50, 4), "Goals[0] has 4-day streak tile") == null;
-
+		testPassed &= Verify.verifyTrue(
+				hasStreakMilestone(timelineitems1, goals[1], 10 * 60 + 40, 3),
+				"Goals[1] has 3-day streak tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasStreakMilestone(timelineitems0, goals[0], 9 * 60 + 50, 4),
+				"Goals[0] has 4-day streak tile") == null;
 
 		// ===== VERIFY GOAL PROGRESS
-		double miles3 = MVPCalculator.calculateMiles(6000, 60, profile.getHeight()) + 
-				MVPCalculator.calculateMiles(5000, 50, profile.getHeight()) +
-				MVPCalculator.calculateMiles(4000, 40, profile.getHeight()) +
-				MVPCalculator.calculateMiles(3000, 30, profile.getHeight());
-		double miles2 = miles3 + MVPCalculator.calculateMiles(4000, 40, profile.getHeight());
-		double miles1 = miles3 + MVPCalculator.calculateMiles(6000, 60, profile.getHeight()) 
+		double miles3 = MVPCalculator.calculateMiles(6000, 60,
+				profile.getHeight())
+				+ MVPCalculator.calculateMiles(5000, 50, profile.getHeight())
+				+ MVPCalculator.calculateMiles(4000, 40, profile.getHeight())
+				+ MVPCalculator.calculateMiles(3000, 30, profile.getHeight());
+		double miles2 = miles3
 				+ MVPCalculator.calculateMiles(4000, 40, profile.getHeight());
-		double miles0 = MVPCalculator.calculateMiles(5000, 50, profile.getHeight()) * 6;
+		double miles1 = miles3
+				+ MVPCalculator.calculateMiles(6000, 60, profile.getHeight())
+				+ MVPCalculator.calculateMiles(4000, 40, profile.getHeight());
+		double miles0 = MVPCalculator.calculateMiles(5000, 50,
+				profile.getHeight()) * 6;
 
 		double weight = profile.getWeight();
 		double height = profile.getHeight();
-		double fullBMR = MVPCalculator.calculateFullBMR((float)weight, (float)height, 
-				profile.calculateAge() + 1, profile.getGender().equals(0));
+		double fullBMR = MVPCalculator.calculateFullBMR((float) weight,
+				(float) height, profile.calculateAge() + 1, profile.getGender()
+						.equals(0));
 
-		double calorie3 = MVPCalculator.calculateCalories(1800, (float)weight, (float)fullBMR, 24 * 60);
-		double calorie2 = MVPCalculator.calculateCalories(2200, (float)weight, (float)fullBMR, 24 * 60);
-		double calorie1 = MVPCalculator.calculateCalories(2800, (float)weight, (float)fullBMR, 24 * 60);
-		double calorie0 = MVPCalculator.calculateCalories(3000, (float)weight, (float)fullBMR, 25 * 60);
+		double calorie3 = MVPCalculator.calculateCalories(1800, (float) weight,
+				(float) fullBMR, 24 * 60);
+		double calorie2 = MVPCalculator.calculateCalories(2200, (float) weight,
+				(float) fullBMR, 24 * 60);
+		double calorie1 = MVPCalculator.calculateCalories(2800, (float) weight,
+				(float) fullBMR, 24 * 60);
+		double calorie0 = MVPCalculator.calculateCalories(3000, (float) weight,
+				(float) fullBMR, 25 * 60);
 
+		testPassed &= Verify.verifyEquals(goal3.getProgressData().getPoints(),
+				1800 * 2.5, "Goals[3] progress point") == null;
+		testPassed &= Verify.verifyEquals(goal2.getProgressData().getPoints(),
+				2200 * 2.5, "Goals[2] progress point") == null;
+		testPassed &= Verify.verifyEquals(goal1.getProgressData().getPoints(),
+				2800 * 2.5, "Goals[1] progress point") == null;
+		testPassed &= Verify.verifyEquals(goal0.getProgressData().getPoints(),
+				3000 * 2.5, "Goals[0] progress point") == null;
 
-		testPassed &= Verify.verifyEquals(goal3.getProgressData().getPoints(), 1800 * 2.5, "Goals[3] progress point") == null;
-		testPassed &= Verify.verifyEquals(goal2.getProgressData().getPoints(), 2200 * 2.5, "Goals[2] progress point") == null;
-		testPassed &= Verify.verifyEquals(goal1.getProgressData().getPoints(), 2800 * 2.5, "Goals[1] progress point") == null;
-		testPassed &= Verify.verifyEquals(goal0.getProgressData().getPoints(), 3000 * 2.5, "Goals[0] progress point") == null;
+		testPassed &= Verify.verifyEquals(goal3.getProgressData().getSteps(),
+				18000, "Goals[3] progress steps") == null;
+		testPassed &= Verify.verifyEquals(goal2.getProgressData().getSteps(),
+				22000, "Goals[2] progress steps") == null;
+		testPassed &= Verify.verifyEquals(goal1.getProgressData().getSteps(),
+				28000, "Goals[1] progress steps") == null;
+		testPassed &= Verify.verifyEquals(goal0.getProgressData().getSteps(),
+				30000, "Goals[1] progress steps") == null;
 
-		testPassed &= Verify.verifyEquals(goal3.getProgressData().getSteps(), 18000, "Goals[3] progress steps") == null;
-		testPassed &= Verify.verifyEquals(goal2.getProgressData().getSteps(), 22000, "Goals[2] progress steps") == null;
-		testPassed &= Verify.verifyEquals(goal1.getProgressData().getSteps(), 28000, "Goals[1] progress steps") == null;
-		testPassed &= Verify.verifyEquals(goal0.getProgressData().getSteps(), 30000, "Goals[1] progress steps") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData()
+				.getDistanceMiles(), miles3, distanceDelta,
+				"Goals[3] progress distance in miles") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData()
+				.getDistanceMiles(), miles2, distanceDelta,
+				"Goals[2] progress distance in miles") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData()
+				.getDistanceMiles(), miles1, distanceDelta,
+				"Goals[1] progress distance in miles") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData()
+				.getDistanceMiles(), miles0, distanceDelta,
+				"Goals[0] progress distance in miles") == null;
 
-		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData().getDistanceMiles(), miles3, distanceDelta, "Goals[3] progress distance in miles") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getDistanceMiles(), miles2, distanceDelta, "Goals[2] progress distance in miles") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getDistanceMiles(), miles1, distanceDelta, "Goals[1] progress distance in miles") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getDistanceMiles(), miles0, distanceDelta, "Goals[0] progress distance in miles") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData()
+				.getFullBmrCalorie(), fullBMR, fullBmrDelta,
+				"Goals[3] full bmr") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData()
+				.getFullBmrCalorie(), fullBMR, fullBmrDelta,
+				"Goals[2] full bmr") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData()
+				.getFullBmrCalorie(), fullBMR, fullBmrDelta,
+				"Goals[1] full bmr") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData()
+				.getFullBmrCalorie(), fullBMR, fullBmrDelta,
+				"Goals[0] full bmr") == null;
 
-		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[3] full bmr") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[2] full bmr") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[1] full bmr") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getFullBmrCalorie(), fullBMR, fullBmrDelta, "Goals[0] full bmr") == null;
-
-		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData().getCalorie(), calorie3, totalCalorieDelta, "Goals[3] total calorie") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData().getCalorie(), calorie2, totalCalorieDelta, "Goals[2] total calorie") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData().getCalorie(), calorie1, totalCalorieDelta, "Goals[1] total calorie") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData().getCalorie(), calorie0, totalCalorieDelta, "Goals[0] total calorie") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal3.getProgressData()
+				.getCalorie(), calorie3, totalCalorieDelta,
+				"Goals[3] total calorie") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal2.getProgressData()
+				.getCalorie(), calorie2, totalCalorieDelta,
+				"Goals[2] total calorie") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal1.getProgressData()
+				.getCalorie(), calorie1, totalCalorieDelta,
+				"Goals[1] total calorie") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal0.getProgressData()
+				.getCalorie(), calorie0, totalCalorieDelta,
+				"Goals[0] total calorie") == null;
 
 		// ===== VERIFY STATISTICS
-		long personalBestTimestamp = goals[0].getStartTime() + (13 * 60 + 50) * 60;
-		testPassed &= Verify.verifyNearlyEquals(statistics.getLifetimeDistance(), miles0 + miles1 + miles2 + miles3, distanceDelta, "Lifetime distance") == null;
-		testPassed &= Verify.verifyEquals(statistics.getBestStreak(), 4, "Best streak number") == null;
-		testPassed &= Verify.verifyEquals(statistics.getTotalGoalHit(), 4, "Total goal hit number") == null;
-		testPassed &= Verify.verifyEquals(statistics.getPersonalRecords().getPersonalBestRecordsInPoint().getPoint(), 3000 * 2.5, "Personal best points") == null;
-		testPassed &= Verify.verifyEquals(statistics.getPersonalRecords().getPersonalBestRecordsInPoint().getTimestamp(), personalBestTimestamp, "Personal best timestamp") == null;
+		long personalBestTimestamp = goals[0].getStartTime() + (13 * 60 + 50)
+				* 60;
+		testPassed &= Verify.verifyNearlyEquals(
+				statistics.getLifetimeDistance(), miles0 + miles1 + miles2
+						+ miles3, distanceDelta, "Lifetime distance") == null;
+		testPassed &= Verify.verifyEquals(statistics.getBestStreak(), 4,
+				"Best streak number") == null;
+		testPassed &= Verify.verifyEquals(statistics.getTotalGoalHit(), 4,
+				"Total goal hit number") == null;
+		testPassed &= Verify.verifyEquals(statistics.getPersonalRecords()
+				.getPersonalBestRecordsInPoint().getPoint(), 3000 * 2.5,
+				"Personal best points") == null;
+		testPassed &= Verify.verifyEquals(statistics.getPersonalRecords()
+				.getPersonalBestRecordsInPoint().getTimestamp(),
+				personalBestTimestamp, "Personal best timestamp") == null;
 
 		Assert.assertTrue(testPassed, "All asserts are passed");
 
@@ -360,14 +509,15 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		// sign up new account
 		boolean testPassed = true;
 		String email = MVPApi.generateUniqueEmail();
-		//		String email = "sc038@a.a";
+		// String email = "sc038@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
-
 		// create profile (height = 64") / pedometer / statistics
-		ProfileData profile = DataGenerator.generateRandomProfile(timestamp, null);
-		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
+		ProfileData profile = DataGenerator.generateRandomProfile(timestamp,
+				null);
+		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp,
+				null);
 		Statistics statistics = Statistics.getDefaultStatistics();
 		profile.getDisplayedUnits().setDistanceUnit(1);
 		profile.setHeight(64d);
@@ -376,10 +526,9 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		MVPApi.createPedometer(token, pedometer);
 		MVPApi.createStatistics(token, statistics);
 
-
 		// create goal for today
 		Goal[] goals = new Goal[6];
-		for(int i = 0; i < 6; i++) {
+		for (int i = 0; i < 6; i++) {
 
 			long goalTimestamp = timestamp - i * 3600 * 24;
 			Goal goal = Goal.getDefaultGoal(goalTimestamp);
@@ -467,7 +616,6 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		data0b.appendGoalRawData(generateSessionRawData(21300, 1500, 150));
 		data0b.appendGoalRawData(generateEmptyRawData(6 * 60 + 150, 24 * 60));
 
-
 		// push to server
 		MVPApi.pushRawData(token, goals[5].getServerId(), data5, 0);
 		MVPApi.pushRawData(token, goals[4].getServerId(), data4a, 0);
@@ -492,27 +640,39 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		MVPApi.pushRawData(token, goals[0].getServerId(), data0b, 6 * 60);
 		ShortcutsTyper.delayTime(delayTime);
 
-
 		// get server data
-		List<TimelineItem> timelineitems4 = MVPApi.getTimelineItems(token, goals[4].getStartTime(), goals[4].getEndTime(), 0l);
-		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token, goals[2].getStartTime(), goals[2].getEndTime(), 0l);
-		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token, goals[0].getStartTime(), goals[0].getEndTime(), 0l);
+		List<TimelineItem> timelineitems4 = MVPApi.getTimelineItems(token,
+				goals[4].getStartTime(), goals[4].getEndTime(), 0l);
+		List<TimelineItem> timelineitems2 = MVPApi.getTimelineItems(token,
+				goals[2].getStartTime(), goals[2].getEndTime(), 0l);
+		List<TimelineItem> timelineitems0 = MVPApi.getTimelineItems(token,
+				goals[0].getStartTime(), goals[0].getEndTime(), 0l);
 		statistics = MVPApi.getStatistics(token);
 
-
 		// === VERIFY DISTANCE TILES
-		int numberOfDistanceTile = getNumberOfTile(timelineitems4, TimelineItemDataBase.TYPE_LIFETIME_DISTANCE);
-		numberOfDistanceTile += getNumberOfTile(timelineitems2, TimelineItemDataBase.TYPE_LIFETIME_DISTANCE);
-		numberOfDistanceTile += getNumberOfTile(timelineitems0, TimelineItemDataBase.TYPE_LIFETIME_DISTANCE);
+		int numberOfDistanceTile = getNumberOfTile(timelineitems4,
+				TimelineItemDataBase.TYPE_LIFETIME_DISTANCE);
+		numberOfDistanceTile += getNumberOfTile(timelineitems2,
+				TimelineItemDataBase.TYPE_LIFETIME_DISTANCE);
+		numberOfDistanceTile += getNumberOfTile(timelineitems0,
+				TimelineItemDataBase.TYPE_LIFETIME_DISTANCE);
 
-		testPassed &= Verify.verifyEquals(numberOfDistanceTile, 3, "Number of lifetime distance tiles") == null;
-		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems4, goals[4], 0 * 60 + 18, 2, 1), "2 marathons tile in SI unit") == null;
-		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems2, goals[2], 0 * 60 + 19, 6, 0), "6 marathons tile in US unit") == null;
-		testPassed &= Verify.verifyTrue(hasLifeTimeDistanceTile(timelineitems0, goals[0], 0 * 60 + 33, 12, 0), "12 marathons tile in US unit") == null;
-
+		testPassed &= Verify.verifyEquals(numberOfDistanceTile, 3,
+				"Number of lifetime distance tiles") == null;
+		testPassed &= Verify.verifyTrue(
+				hasLifeTimeDistanceTile(timelineitems4, goals[4], 0 * 60 + 18,
+						2, 1), "2 marathons tile in SI unit") == null;
+		testPassed &= Verify.verifyTrue(
+				hasLifeTimeDistanceTile(timelineitems2, goals[2], 0 * 60 + 19,
+						6, 0), "6 marathons tile in US unit") == null;
+		testPassed &= Verify.verifyTrue(
+				hasLifeTimeDistanceTile(timelineitems0, goals[0], 0 * 60 + 33,
+						12, 0), "12 marathons tile in US unit") == null;
 
 		// === VERIFY STATISTICS
-		testPassed &= Verify.verifyNearlyEquals(statistics.getLifetimeDistance(), 317.91d, 0.01, "Lifetime distance") == null;
+		testPassed &= Verify.verifyNearlyEquals(
+				statistics.getLifetimeDistance(), 317.91d, 0.01,
+				"Lifetime distance") == null;
 
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
@@ -523,20 +683,20 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		// sign up new account
 		boolean testPassed = true;
 		String email = MVPApi.generateUniqueEmail();
-		//		String email = "sc034@a.a";
+		// String email = "sc034@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
-
 		// create profile / pedometer / statistics
-		ProfileData profile = DataGenerator.generateRandomProfile(timestamp, null);
-		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
+		ProfileData profile = DataGenerator.generateRandomProfile(timestamp,
+				null);
+		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp,
+				null);
 		Statistics statistics = Statistics.getDefaultStatistics();
 
 		MVPApi.createProfile(token, profile);
 		MVPApi.createPedometer(token, pedometer);
 		MVPApi.createStatistics(token, statistics);
-
 
 		// create goal for today
 		Goal goal = Goal.getDefaultGoal();
@@ -545,21 +705,21 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		goal.setServerId(result.goals[0].getServerId());
 		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
 
-
 		// story
 		// - session: 60 minutes - 6000 steps - 600 points at 7:00
 		// - inactive: 4 minutes - 400 steps - 40 points at 9:00
 		// - inactive: 4 minutes - 400 steps - 40 points at 9:10
 		// - session: 50 minutes - 5000 steps - 500 points at 10:00
 		// - session: 30 minutes - 3000 steps - 300 points at 13:00
-		// - gap: 2 active + 4 idle / 60 minutes - 2000 steps - 200 points from 15:00 to 16:00
+		// - gap: 2 active + 4 idle / 60 minutes - 2000 steps - 200 points from
+		// 15:00 to 16:00
 		// - session: 40 minutes - 4000 steps - 400 points at 17:00
 		// expect:
 		// - 4 acitivity session tiles
 		// - 100% tile
 		// - 150% tile
 		// - 200% tile
-		// - progress is correct (points, steps, distance) 
+		// - progress is correct (points, steps, distance)
 		GoalRawData data = new GoalRawData();
 		data.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
 
@@ -583,39 +743,59 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		data.appendGoalRawData(generateSessionRawData(4000, 400, 40));
 		data.appendGoalRawData(generateEmptyRawData(17 * 60 + 40, 24 * 60));
 
-
 		// push to server
 		MVPApi.pushRawData(token, goal.getServerId(), data, 0);
 		ShortcutsTyper.delayTime(delayTime);
 
-
 		// get server data
-		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0l);
+		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token,
+				goal.getStartTime(), goal.getEndTime(), 0l);
 		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
-
 
 		// VERIFY TIMELINE ITEMS
 		// number of session tiles are correct
-		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems), 4, "Goal has 4 session tiles") == null;
+		testPassed &= Verify.verifyEquals(
+				getNumberOfSessionTiles(timelineitems), 4,
+				"Goal has 4 session tiles") == null;
 
 		// session tiles are correct
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 7 * 60, 60, 600), "Goal has session tile at 7:00 - 600 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 10 * 60, 50, 500), "Goal has session tile at 10:00 - 500 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 13 * 60, 30, 300), "Goal has session tile at 13:00 - 300 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 17 * 60, 40, 400), "Goal has session tile at 17:00 - 400 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 7 * 60, 60, 600),
+				"Goal has session tile at 7:00 - 600 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 10 * 60, 50, 500),
+				"Goal has session tile at 10:00 - 500 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 13 * 60, 30, 300),
+				"Goal has session tile at 13:00 - 300 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 17 * 60, 40, 400),
+				"Goal has session tile at 17:00 - 400 pts") == null;
 
 		// daily goal milestone tiles are correct
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems, goal, 10 * 60 + 32, TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000), "Goal has 100% tile") == null;
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems, goal, 15 * 60 + 2, TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500), "Goal has 150% tile") == null;
-		testPassed &= Verify.verifyTrue(hasDailyGoalMilestone(timelineitems, goal, 17 * 60 + 32, TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000), "Goal has 200% tile") == null;
-
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems, goal, 10 * 60 + 32,
+						TimelineItemDataBase.EVENT_TYPE_100_GOAL, 1000),
+				"Goal has 100% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems, goal, 15 * 60 + 2,
+						TimelineItemDataBase.EVENT_TYPE_150_GOAL, 1500),
+				"Goal has 150% tile") == null;
+		testPassed &= Verify.verifyTrue(
+				hasDailyGoalMilestone(timelineitems, goal, 17 * 60 + 32,
+						TimelineItemDataBase.EVENT_TYPE_200_GOAL, 2000),
+				"Goal has 200% tile") == null;
 
 		// ===== VERIFY GOAL PROGRESS
-		double miles = MVPCalculator.calculateMiles(data.getSteps(), profile.getHeight());
-		testPassed &= Verify.verifyEquals(goal.getProgressData().getPoints(), 2080 * 2.5, "Goal progress point") == null;
-		testPassed &= Verify.verifyEquals(goal.getProgressData().getSteps(), 20800, "Goal progress steps") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal.getProgressData().getDistanceMiles(), miles, 0.001, "Goal progress distance in miles") == null;
-
+		double miles = MVPCalculator.calculateMiles(data.getSteps(),
+				profile.getHeight());
+		testPassed &= Verify.verifyEquals(goal.getProgressData().getPoints(),
+				2080 * 2.5, "Goal progress point") == null;
+		testPassed &= Verify.verifyEquals(goal.getProgressData().getSteps(),
+				20800, "Goal progress steps") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal.getProgressData()
+				.getDistanceMiles(), miles, 0.001,
+				"Goal progress distance in miles") == null;
 
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
@@ -626,20 +806,20 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		// sign up new account
 		boolean testPassed = true;
 		String email = MVPApi.generateUniqueEmail();
-		//		String email = "sc041@a.a";
+		// String email = "sc041@a.a";
 		long timestamp = System.currentTimeMillis() / 1000;
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
-
 		// create profile / pedometer / statistics
-		ProfileData profile = DataGenerator.generateRandomProfile(timestamp, null);
-		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp, null);
+		ProfileData profile = DataGenerator.generateRandomProfile(timestamp,
+				null);
+		Pedometer pedometer = DataGenerator.generateRandomPedometer(timestamp,
+				null);
 		Statistics statistics = Statistics.getDefaultStatistics();
 
 		MVPApi.createProfile(token, profile);
 		MVPApi.createPedometer(token, pedometer);
 		MVPApi.createStatistics(token, statistics);
-
 
 		// create goal for today
 		Goal goal = Goal.getDefaultGoal();
@@ -647,7 +827,6 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 		goal.setServerId(result.goals[0].getServerId());
 		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
-
 
 		// story:
 		// 1st shine:
@@ -674,56 +853,73 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		GoalRawData data2 = new GoalRawData();
 		data2.appendGoalRawData(generateEmptyRawData(0, 10));
 		data2.appendGoalRawData(generateSessionRawData(2000, 200, 20));
-		data2.appendGoalRawData(generateEmptyRawData(0 * 60 + 10 + 20, 1 * 60 + 50));
+		data2.appendGoalRawData(generateEmptyRawData(0 * 60 + 10 + 20,
+				1 * 60 + 50));
 
 		data2.appendGoalRawData(generateSessionRawData(2000, 200, 20));
-		data2.appendGoalRawData(generateEmptyRawData(1 * 60 + 50 + 20, 2 * 60 + 50));
+		data2.appendGoalRawData(generateEmptyRawData(1 * 60 + 50 + 20,
+				2 * 60 + 50));
 
 		data2.appendGoalRawData(generateSessionRawData(6000, 600, 60));
 
-
 		// push to server
 		MVPApi.pushRawData(token, goal.getServerId(), data1, 0);
-		
-		
-		// link to new shine 
+
+		// link to new shine
 		String serialNumber = TextTool.getRandomString(10, 10);
 		BackendHelper.link(token, serialNumber);
 
 		ShortcutsTyper.delayTime(delayTime);
 
-		
 		// push to server
 		MVPApi.pushRawData(token, goal.getServerId(), data2, 0);
 		ShortcutsTyper.delayTime(delayTime);
 
-
 		// get server data
-		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token, goal.getStartTime(), goal.getEndTime(), 0l);
+		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token,
+				goal.getStartTime(), goal.getEndTime(), 0l);
 		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
-
 
 		// VERIFY TIMELINE ITEMS
 		// number of session tiles are correct
-		testPassed &= Verify.verifyEquals(getNumberOfSessionTiles(timelineitems), 6, "Goal has 6 session tiles") == null;
+		testPassed &= Verify.verifyEquals(
+				getNumberOfSessionTiles(timelineitems), 6,
+				"Goal has 6 session tiles") == null;
 
 		// session tiles are correct
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 0 * 60, 40, 400), "Goal has session tile at 0:00 - 400 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 2 * 60, 20, 200), "Goal has session tile at 2:00 - 200 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 3 * 60, 40, 400), "Goal has session tile at 3:00 - 400 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 0 * 60, 40, 400),
+				"Goal has session tile at 0:00 - 400 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 2 * 60, 20, 200),
+				"Goal has session tile at 2:00 - 200 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 3 * 60, 40, 400),
+				"Goal has session tile at 3:00 - 400 pts") == null;
 
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 0 * 60 + 10, 20, 200), "Goal has session tile at 0:10 - 200 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 1 * 60 + 50, 20, 200), "Goal has session tile at 1:50 - 200 pts") == null;
-		testPassed &= Verify.verifyTrue(hasSessionTileWithData(timelineitems, goal, 2 * 60 + 50, 60, 600), "Goal has session tile at 2:50 - 600 pts") == null;
-
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 0 * 60 + 10, 20,
+						200), "Goal has session tile at 0:10 - 200 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 1 * 60 + 50, 20,
+						200), "Goal has session tile at 1:50 - 200 pts") == null;
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 2 * 60 + 50, 60,
+						600), "Goal has session tile at 2:50 - 600 pts") == null;
 
 		// ===== VERIFY GOAL PROGRESS
-		double miles = MVPCalculator.calculateMiles(data1.getSteps(), profile.getHeight());
-		miles += MVPCalculator.calculateMiles(data2.getSteps(), profile.getHeight());
+		double miles = MVPCalculator.calculateMiles(data1.getSteps(),
+				profile.getHeight());
+		miles += MVPCalculator.calculateMiles(data2.getSteps(),
+				profile.getHeight());
 
-		testPassed &= Verify.verifyEquals(goal.getProgressData().getPoints(), 2000 * 2.5, "Goal progress point") == null;
-		testPassed &= Verify.verifyEquals(goal.getProgressData().getSteps(), 20000, "Goal progress steps") == null;
-		testPassed &= Verify.verifyNearlyEquals(goal.getProgressData().getDistanceMiles(), miles, 0.001, "Goal progress distance in miles") == null;
+		testPassed &= Verify.verifyEquals(goal.getProgressData().getPoints(),
+				2000 * 2.5, "Goal progress point") == null;
+		testPassed &= Verify.verifyEquals(goal.getProgressData().getSteps(),
+				20000, "Goal progress steps") == null;
+		testPassed &= Verify.verifyNearlyEquals(goal.getProgressData()
+				.getDistanceMiles(), miles, 0.001,
+				"Goal progress distance in miles") == null;
 
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
@@ -735,16 +931,16 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		String token = MVPApi.signUp(email, "qqqqqq").token;
 
 		// create profile (height = 64") / pedometer / statistics
-		ProfileData profile = DataGenerator.generateRandomProfile(timestamp, null);
+		ProfileData profile = DataGenerator.generateRandomProfile(timestamp,
+				null);
 		Statistics statistics = Statistics.getDefaultStatistics();
 
 		MVPApi.createProfile(token, profile);
 		MVPApi.createStatistics(token, statistics);
 
-
 		// create goal for today
 		Goal[] goals = new Goal[6];
-		for(int i = 0; i < 6; i++) {
+		for (int i = 0; i < 6; i++) {
 
 			long goalTimestamp = timestamp - i * 3600 * 24;
 			Goal goal = Goal.getDefaultGoal(goalTimestamp);
@@ -755,7 +951,6 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 
 			goals[i] = goal;
 		}
-
 
 		GoalRawData data5 = new GoalRawData();
 		data5.appendGoalRawData(generateSessionRawData(63720, 3600, 360));
@@ -796,7 +991,6 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		data0b.appendGoalRawData(generateSessionRawData(21300, 1500, 150));
 		data0b.appendGoalRawData(generateEmptyRawData(6 * 60 + 150, 24 * 60));
 
-
 		// push to server
 		MVPApi.pushRawData(token, goals[5].getServerId(), data5, 0);
 		MVPApi.pushRawData(token, goals[4].getServerId(), data4a, 0);
@@ -807,6 +1001,65 @@ public class BackendServerCalculationIntegration extends BackendServerCalculatio
 		MVPApi.pushRawData(token, goals[1].getServerId(), data1, 0);
 		MVPApi.pushRawData(token, goals[0].getServerId(), data0a, 0);
 		MVPApi.pushRawData(token, goals[0].getServerId(), data0b, 6 * 60);
+	}
+
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "servercalculation" })
+	public void TestTagInTagOutAPI() {
+		boolean testPassed = true;
+		String email = MVPApi.generateUniqueEmail();
+		long timestamp = System.currentTimeMillis() / 1000;
+		String token = MVPApi.signUp(email, "qqqqqq").token;
+
+		// create profile (height = 64") / pedometer / statistics
+		ProfileData profile = DataGenerator.generateRandomProfile(timestamp,
+				null);
+		Statistics statistics = Statistics.getDefaultStatistics();
+
+		MVPApi.createProfile(token, profile);
+		MVPApi.createStatistics(token, statistics);
+
+		// Create Goal for today
+		Goal goal = Goal.getDefaultGoal();
+		GoalsResult result = MVPApi.createGoal(token, goal);
+		goal.setServerId(result.goals[0].getServerId());
+		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
+
+		// story
+		GoalRawData data = new GoalRawData();
+		data.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
+		//points : 0, steps : 0, duration : 60, tag_in_out = [7*60, 8*60] : 7AM-8AM
+		int[] arrData = new int[]{7*60, 8*60};
+		List<int[]> listData = new ArrayList<int[]>();
+		listData.add(arrData);
+		data.appendGoalRawData(generateSessionRawData(0, 0, 60, listData));
+		
+		data.appendGoalRawData(generateEmptyRawData(8*60, 9 * 60));
+		
+		//tag in < tag out
+		arrData = new int[]{8*60, 7*60};
+		listData = new ArrayList<int[]>();
+		listData.add(arrData);
+		data.appendGoalRawData(generateSessionRawData(0, 0, 60, listData));
+		
+		// push to server
+		MVPApi.pushRawData(token, goal.getServerId(), data, 0);
+		ShortcutsTyper.delayTime(delayTime);
+		
+		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token,
+				goal.getStartTime(), goal.getEndTime(), 0l);
+		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
+		
+		testPassed &= Verify.verifyEquals(
+				getNumberOfSessionTiles(timelineitems), 1,
+				"Goal has 2 session tiles") == null;
+
+		// session tiles are correct
+		testPassed &= Verify.verifyTrue(
+				hasSessionTileWithData(timelineitems, goal, 7 * 60, 60, 0),
+				"Goal has session tile at 7:00 - 0 pts") == null;
+		
+		Assert.assertTrue(testPassed, "All asserts are passed");
+
 	}
 
 }
