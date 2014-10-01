@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.entity.EntityBuilder;
@@ -1263,6 +1264,11 @@ public class MVPApi extends RequestHelper {
 		return new BaseResult(response);
 	}
 
+	/* Utilities */
+	public int randInt(int includeFrom, int excludeTo) {
+		Random r = new Random();
+		return r.nextInt(excludeTo - includeFrom) + includeFrom;
+	}
 	
 	// test
 	public static void main(String[] args) throws JSONException {
