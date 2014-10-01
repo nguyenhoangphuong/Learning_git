@@ -16,8 +16,8 @@ public class GoalRawData {
 	protected int[] steps;
 	protected int[] variances;
 	protected int[] triple_tap_minutes;
-	protected List<long[]> tag_in_out_minutes;
-
+	protected List<int[]> tag_in_out_minutes;
+	
 	// constructor
 	public GoalRawData() {
 
@@ -25,7 +25,7 @@ public class GoalRawData {
 		steps = new int[0];
 		variances = new int[0];
 		triple_tap_minutes = new int[0];
-		tag_in_out_minutes = new ArrayList<long[]>();
+		tag_in_out_minutes = new ArrayList<int[]>();
 	}
 
 	// methods
@@ -56,7 +56,7 @@ public class GoalRawData {
 
 			if (tag_in_out_minutes != null) {
 				List<JSONArray> listJsonArray = new ArrayList<JSONArray>();
-				for (long[] tag_int_out_array : tag_in_out_minutes) {
+				for (int[] tag_int_out_array : tag_in_out_minutes) {
 
 					JSONArray tag_arr = new JSONArray(tag_int_out_array);
 					listJsonArray.add(tag_arr);
@@ -64,7 +64,7 @@ public class GoalRawData {
 				json.accumulate("tag_in_out_minutes", listJsonArray);
 
 			}
-
+			
 			return json;
 
 		} catch (JSONException e) {
@@ -113,13 +113,13 @@ public class GoalRawData {
 				JSONArray list_tag_arr_json = json.getJSONArray("tag_in_out_minutes");
 				for (int i = 0; i < list_tag_arr_json.length(); i++) {
 					JSONArray tag_arr_json = list_tag_arr_json.getJSONArray(i);
-					long[] tag_arr = new long[tag_arr_json.length()];
+					int[] tag_arr = new int[tag_arr_json.length()];
 					for (int j = 0; j < tag_arr.length; j++) {
-						tag_arr[j] = tag_arr_json.getLong(j);
+						tag_arr[j] = tag_arr_json.getInt(j);
 					}
 					tag_in_out_minutes.add(tag_arr);
 				}
-
+				
 			}
 
 		} catch (JSONException e) {
@@ -134,18 +134,20 @@ public class GoalRawData {
 		int[] points1 = this.getPoints();
 		int[] variances1 = this.getVariances();
 		int[] tripleTapMinutes1 = this.getTriple_tap_minutes();
-
+		
 		int[] steps2 = data.getSteps();
 		int[] points2 = data.getPoints();
 		int[] variances2 = data.getVariances();
 		int[] tripleTapMinutes2 = data.getTriple_tap_minutes();
-
+		List<int[]> tagInOutMinutes2 = data.getTagInOutMinutes();
+		
 		this.steps = ArrayUtils.addAll(steps1, steps2);
 		this.points = ArrayUtils.addAll(points1, points2);
 		this.variances = ArrayUtils.addAll(variances1, variances2);
 		this.triple_tap_minutes = ArrayUtils.addAll(tripleTapMinutes1,
 				tripleTapMinutes2);
-
+		this.tag_in_out_minutes.addAll(tagInOutMinutes2);
+		
 		return this;
 	}
 
@@ -181,5 +183,14 @@ public class GoalRawData {
 	public void setTriple_tap_minutes(int[] triple_tap_minutes) {
 		this.triple_tap_minutes = triple_tap_minutes;
 	}
+	
+	public void setTagInOutMinutes(List<int[]> data_tag_in_out_minutes){
+		this.tag_in_out_minutes = data_tag_in_out_minutes;
+	}
+	
+	public List<int[]> getTagInOutMinutes(){
+		return tag_in_out_minutes;
+	}
+
 
 }

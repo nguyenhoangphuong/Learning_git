@@ -88,6 +88,11 @@ public class BackendServerCalculationBase extends BackendAutomation {
 
 		return ServerCalculationTestHelpers.generateSessionRawData(totalSteps, totalPoints, duration);
 	}
+	
+	protected GoalRawData generateSessionRawData(int totalSteps, int totalPoints, int duration, List<int[]> list)  {
+		
+		return ServerCalculationTestHelpers.generateSessionRawData(totalSteps, totalPoints, duration, list);
+	}
 
 	protected GoalRawData generateEmptyRawData(int duration) {
 		

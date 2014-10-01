@@ -195,6 +195,34 @@ public class ServerCalculationTestHelpers {
 		return syncLog;
 	}
 	
+	public static GoalRawData generateSessionRawData(int totalSteps, int totalPoints, int duration, List<int[]> listData){
+		int stepPerMinute = totalSteps / duration;
+		int pointPerMinute = totalPoints / duration;
+
+		int[] steps = new int[duration];
+		int[] points = new int[duration];
+		int[] variances = new int[duration];
+		
+		Arrays.fill(steps, stepPerMinute);
+		Arrays.fill(points, (int)(pointPerMinute * 2.5));
+		Arrays.fill(variances, 10000);
+
+		// if steps/point is not devidable
+		if(totalSteps % duration != 0)
+			steps[0] = totalSteps % duration;
+
+		if(totalPoints % duration != 0)
+			points[0] = totalPoints % duration;
+
+		GoalRawData rawdata = new GoalRawData();
+		rawdata.setPoints(points);
+		rawdata.setSteps(steps);
+		rawdata.setTagInOutMinutes(listData);
+		rawdata.setVariances(variances);
+
+		return rawdata;
+
+	}
 
 	// generate data helper
 	public static GoalRawData generateSessionRawData(int totalSteps, int totalPoints, int duration)  {
@@ -231,16 +259,18 @@ public class ServerCalculationTestHelpers {
 		int[] steps = new int[duration];
 		int[] points = new int[duration];
 		int[] variances = new int[duration];
-
+		List<int[]> tag_in_out_minutes = new ArrayList<int[]>();
+		
 		Arrays.fill(steps, 0);
 		Arrays.fill(points, 0);
 		Arrays.fill(variances, 10000);
-
+		tag_in_out_minutes.add(new int[]{0,0});
+		
 		GoalRawData rawdata = new GoalRawData();
 		rawdata.setPoints(points);
 		rawdata.setSteps(steps);
 		rawdata.setVariances(variances);
-
+		rawdata.setTagInOutMinutes(tag_in_out_minutes);
 		return rawdata;
 	}
 
