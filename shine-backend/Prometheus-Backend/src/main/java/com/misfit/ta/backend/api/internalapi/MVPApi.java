@@ -1264,12 +1264,6 @@ public class MVPApi extends RequestHelper {
 		return new BaseResult(response);
 	}
 
-	/* Utilities */
-	public int randInt(int includeFrom, int excludeTo) {
-		Random r = new Random();
-		return r.nextInt(excludeTo - includeFrom) + includeFrom;
-	}
-	
 	// test
 	public static void main(String[] args) throws JSONException {
 	    

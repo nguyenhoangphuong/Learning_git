@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -292,6 +293,12 @@ public class ServerCalculationTestHelpers {
 		rawdata.setVariances(variances);
 
 		return rawdata;
+	}
+	
+	/* Utilities */
+	public int randInt(int includeFrom, int excludeTo) {
+		Random r = new Random();
+		return r.nextInt(excludeTo - includeFrom) + includeFrom;
 	}
 
 }
