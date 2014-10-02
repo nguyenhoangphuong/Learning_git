@@ -409,6 +409,11 @@ public class Gui {
         NuRemoteClient.sendToServer(message);
     }
     
+    public static void touchSearchFriend(){
+    	String message = "(Gui touchAView: (ViewUtils findViewWithViewName:@\"UIButtonLabel\" andIndex: 0 inView: (ViewUtils findViewWithViewName:@\"UIButton\" andTitle:@\"SearchFriendButton\")))";
+    	NuRemoteClient.sendToServer(message);
+    }
+    
     public static void touchATaggedView(String type, int tag) {
         String message = "(Gui touchAViewWithViewName: @\"%type\" andTag: %tag)";
         message = message.replace("%type", type);
@@ -1019,10 +1024,9 @@ public class Gui {
     }
     
     public static void main(String[] args) {
-    	init("192.168.27.249");
-    	printView();
-    	
-    	shutdown();
+//    	init("192.168.169.99");
+//    	printView();
+//    	shutdown();
     }
 }
 

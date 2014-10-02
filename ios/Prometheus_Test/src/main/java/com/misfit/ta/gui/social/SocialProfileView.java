@@ -36,15 +36,7 @@ public class SocialProfileView {
 	}
 	
 	static public void tapSearchFriend() {
-		
-//		Gui.touchAVIew("UILabel", DefaultStrings.SearchFriendButtonTag);
-		
-//		String parentView = String.format("((ViewUtils findViewWithViewName: @\"%s\" andTitle: @\"%s\") superview)", 
-//				"UILabel", DefaultStrings.FriendsLabel);
-//		String cmd = String.format("(Gui touchAView: (ViewUtils findViewWithViewName: @\"%s\" andIndex: @\"%d\" inView: %s))",
-//				"UIButton", 0, parentView);
-//		NuRemoteClient.sendToServer(cmd);
-		Gui.touchAVIew("UIButton", 2);
+		Gui.touchSearchFriend();
 	}
 	
 	static public void tapAccept(String friendHandle) {
