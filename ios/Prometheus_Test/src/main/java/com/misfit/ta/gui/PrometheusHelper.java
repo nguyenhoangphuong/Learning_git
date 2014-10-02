@@ -402,6 +402,7 @@ public class PrometheusHelper {
 	
 	public static void signOutWithoutPopupHandling() {
 		HomeScreen.tapOpenSettingsTrayWithoutPopupHandling();
+		PrometheusHelper.waitForView("PTListItemView", DefaultStrings.SettingsButton);
 		HomeScreen.tapSettings();
 		HomeSettings.tapSignOut();
 	}
