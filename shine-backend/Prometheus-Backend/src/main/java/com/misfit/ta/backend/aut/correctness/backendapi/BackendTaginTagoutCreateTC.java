@@ -64,7 +64,7 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		tripleTapDefault.setTimestamp(cal.getTimeInMillis() / 1000);
 		tripleTapTypeChanges.add(tripleTapDefault);
 		goal.setTripleTapTypeChanges(tripleTapTypeChanges);
-		
+
 		GoalsResult result = MVPApi.createGoal(token, goal);
 		goal.setServerId(result.goals[0].getServerId());
 		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
@@ -111,10 +111,10 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 				long timestampTemp = item.getTimestamp();
 
 				if (timestampTemp == timestampTennisSession) {
-					testPassed &= Verify.verifyEquals(
-							sessionData.getActivityType(),
-							MVPEnums.ACTIVITY_TENNIS,
-							"Not the tennis activity") == null;
+					testPassed &= Verify
+							.verifyEquals(sessionData.getActivityType(),
+									MVPEnums.ACTIVITY_TENNIS,
+									"Not the tennis activity") == null;
 				}
 			}
 		}
@@ -126,7 +126,7 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 	@Test(groups = { "MVPBackend", "servercalculation", "TaginTagout" })
 	public void TagOutLessThanTagIn() {
 		boolean testPassed = true;
-		
+
 		cal.set(Calendar.HOUR_OF_DAY, 5);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 0);
@@ -139,7 +139,7 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		tripleTapDefault.setTimestamp(cal.getTimeInMillis() / 1000);
 		tripleTapTypeChanges.add(tripleTapDefault);
 		goal.setTripleTapTypeChanges(tripleTapTypeChanges);
-		
+
 		GoalsResult result = MVPApi.createGoal(token, goal);
 		goal.setServerId(result.goals[0].getServerId());
 		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
@@ -176,11 +176,11 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		boolean testPassed = true;
 
 		// Timestamp : tripple tap at 6:59AM on current day for changing to
-		// first activity : swimming 
+		// first activity : swimming
 		cal.set(Calendar.HOUR_OF_DAY, 6);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 0);
-		
+
 		// Create Goal for today
 		Goal goal = Goal.getDefaultGoal();
 		List<TripleTapData> tripleTapTypeChanges = new ArrayList<TripleTapData>();
@@ -189,7 +189,7 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		tripleTapDefault.setTimestamp(cal.getTimeInMillis() / 1000);
 		tripleTapTypeChanges.add(tripleTapDefault);
 		goal.setTripleTapTypeChanges(tripleTapTypeChanges);
-		
+
 		GoalsResult result = MVPApi.createGoal(token, goal);
 		goal.setServerId(result.goals[0].getServerId());
 		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
@@ -217,9 +217,9 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		testPassed &= Verify.verifyEquals(
 				getNumberOfSessionTiles(timelineitems), 0,
 				"Goal has 0 session tiles") == null;
-		
+
 		testPassed &= Verify.verifyTrue(
-				!hasSessionTileWithData(timelineitems, goal, 7 * 60 , 30, 0),
+				!hasSessionTileWithData(timelineitems, goal, 7 * 60, 30, 0),
 				"Having timeline item at 7:00AM in 30 minutes") == null;
 
 		Assert.assertTrue(testPassed, "All asserts are passed");
@@ -241,12 +241,12 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		tripleTapDefault.setTimestamp(cal.getTimeInMillis() / 1000);
 		tripleTapTypeChanges.add(tripleTapDefault);
 		goal.setTripleTapTypeChanges(tripleTapTypeChanges);
-		
+
 		GoalsResult result = MVPApi.createGoal(token, goal);
 		goal.setServerId(result.goals[0].getServerId());
 		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
 
-		//timestamp at 7:00AM for soccer session
+		// timestamp at 7:00AM for soccer session
 		cal.set(Calendar.HOUR_OF_DAY, 7);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
@@ -272,9 +272,9 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
 
 		testPassed &= Verify.verifyTrue(
-				hasSessionTileWithData(timelineitems, goal, 7 * 60 , 20, 0),
+				hasSessionTileWithData(timelineitems, goal, 7 * 60, 20, 0),
 				"Goal doesn't have session tile at 7:00 - 7:20") == null;
-		
+
 		for (int i = 0; i < timelineitems.size(); i++) {
 			int type = timelineitems.get(i).getItemType();
 			if (type == 2) {
@@ -417,7 +417,7 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		tripleTapDefault.setTimestamp(cal.getTimeInMillis() / 1000);
 		tripleTapTypeChanges.add(tripleTapDefault);
 		goal.setTripleTapTypeChanges(tripleTapTypeChanges);
-		
+
 		GoalsResult result = MVPApi.createGoal(token, goal);
 		goal.setServerId(result.goals[0].getServerId());
 		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
@@ -425,8 +425,8 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		GoalRawData data = new GoalRawData();
 		// 0 - 7AM empty raw data
 		data.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
-		// 7:00 - 7:20AM 
-		int[] arrDataTaginTagout = new int[] { 7 * 60 , 7 * 60 + 20 };
+		// 7:00 - 7:20AM
+		int[] arrDataTaginTagout = new int[] { 7 * 60, 7 * 60 + 20 };
 		List<int[]> listDataTaginTagout = new ArrayList<int[]>();
 		listDataTaginTagout.add(arrDataTaginTagout);
 		data.appendGoalRawData(generateSessionRawData(1000, 30, 20,
@@ -434,7 +434,7 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		// 7:20 - 7:30AM empty raw data
 		data.appendGoalRawData(generateEmptyRawData(7 * 60 + 20, 7 * 60 + 30));
 		// 7:30 - 7:45AM : tag_in tag_out : 7:05 - 7:10
-		arrDataTaginTagout = new int[] { 7 * 60 + 5 , 7 * 60 + 10};
+		arrDataTaginTagout = new int[] { 7 * 60 + 5, 7 * 60 + 10 };
 		listDataTaginTagout = new ArrayList<int[]>();
 		listDataTaginTagout.add(arrDataTaginTagout);
 		data.appendGoalRawData(generateSessionRawData(1000, 30, 15,
@@ -448,11 +448,11 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 				goal.getStartTime(), goal.getEndTime(), 0l);
 		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
 
-		 testPassed &= Verify.verifyEquals(
-				 getNumberOfSessionTiles(timelineitems), 1,
-				 		"Goal has 2 session tiles") == null;
-		
-		 Assert.assertTrue(testPassed, "All asserts are passed");
+		testPassed &= Verify.verifyEquals(
+				getNumberOfSessionTiles(timelineitems), 1,
+				"Goal has 2 session tiles") == null;
+
+		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 
 	@Test(groups = { "MVPBackend", "servercalculation", "TaginTagout" })
@@ -462,16 +462,16 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		cal.set(Calendar.HOUR_OF_DAY, 6);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 0);
-		
+
 		// Create goal for today
 		Goal goal = Goal.getDefaultGoal();
 		List<TripleTapData> tripleTapTypeChanges = new ArrayList<TripleTapData>();
 		TripleTapData tripleTapDefault = new TripleTapData();
-		tripleTapDefault.setActivityType(MVPEnums.ACTIVITY_RUNNING);
+		tripleTapDefault.setActivityType(MVPEnums.ACTIVITY_SOCCER);
 		tripleTapDefault.setTimestamp(cal.getTimeInMillis() / 1000);
 		tripleTapTypeChanges.add(tripleTapDefault);
 		goal.setTripleTapTypeChanges(tripleTapTypeChanges);
-		
+
 		GoalsResult result = MVPApi.createGoal(token, goal);
 		goal.setServerId(result.goals[0].getServerId());
 		goal.setUpdatedAt(result.goals[0].getUpdatedAt());
@@ -479,8 +479,9 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		GoalRawData data = new GoalRawData();
 		// empty raw data : 0-7AM
 		data.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
-		
-		// points : 10, steps : 20, duration : 30, tag_in_out = [7 * 60, 7 * 60] : tag_in = tag_out
+
+		// points : 10, steps : 20, duration : 30, tag_in_out = [7 * 60, 7 * 60]
+		// : tag_in = tag_out
 		// 7AM-7:30AM
 		int[] arrDataTaginTagout = new int[] { 7 * 60, 7 * 60 };
 		List<int[]> listDataTaginTagout = new ArrayList<int[]>();
@@ -499,18 +500,18 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		testPassed &= Verify.verifyEquals(
 				getNumberOfSessionTiles(timelineitems), 0,
 				"Goal has 2 session tiles") == null;
-		
+
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
-	
+
 	@Test(groups = { "MVPBackend", "servercalculation", "TaginTagout" })
-	public void SequentActivitySession(){
+	public void SequentActivitySession() {
 		boolean testPassed = true;
 		// Timestamp tripple tap first activity
 		cal.set(Calendar.HOUR_OF_DAY, 6);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 0);
-		
+
 		// Create goal for today
 		Goal goal = Goal.getDefaultGoal();
 		GoalsResult result = MVPApi.createGoal(token, goal);
@@ -520,21 +521,23 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		GoalRawData data = new GoalRawData();
 		// empty raw data : 0-7AM
 		data.appendGoalRawData(generateEmptyRawData(0, 7 * 60));
-		// 7:00 - 7:20 AM 
+		// 7:00 - 7:20 AM
 		int[] arrDataTaginTagout = new int[] { 7 * 60, 7 * 60 + 20 };
 		List<int[]> listDataTaginTagout = new ArrayList<int[]>();
 		listDataTaginTagout.add(arrDataTaginTagout);
-		data.appendGoalRawData(generateSessionRawData(1000, 30, 20, listDataTaginTagout));
+		data.appendGoalRawData(generateSessionRawData(1000, 30, 20,
+				listDataTaginTagout));
 		// 7:20 - 7:40 AM
-		arrDataTaginTagout = new int[]{7 * 60 + 20, 7 * 60 + 40};
+		arrDataTaginTagout = new int[] { 7 * 60 + 20, 7 * 60 + 40 };
 		listDataTaginTagout = new ArrayList<int[]>();
 		listDataTaginTagout.add(arrDataTaginTagout);
-		data.appendGoalRawData(generateSessionRawData(1000, 30, 20, listDataTaginTagout));
+		data.appendGoalRawData(generateSessionRawData(1000, 30, 20,
+				listDataTaginTagout));
 
 		// push to server
 		MVPApi.pushRawData(token, goal.getServerId(), data, 0);
 		ShortcutsTyper.delayTime(delayTime);
-		
+
 		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token,
 				goal.getStartTime(), goal.getEndTime(), 0l);
 		goal = MVPApi.getGoal(token, goal.getServerId()).goals[0];
@@ -542,8 +545,7 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 		testPassed &= Verify.verifyEquals(
 				getNumberOfSessionTiles(timelineitems), 2,
 				"Goal has 2 session tiles") == null;
-		
+
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
-	
 }

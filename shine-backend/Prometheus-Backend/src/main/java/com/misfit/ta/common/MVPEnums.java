@@ -2,7 +2,7 @@ package com.misfit.ta.common;
 
 public class MVPEnums {
 	
-	public static final int ACTIVITY_RUNNING = 1;
+	public static final int ACTIVITY_RUNNING = 0;
 	public static final int ACTIVITY_CYCLING = 2;
 	public static final int ACTIVITY_SWIMMING = 3;
 	public static final int ACTIVITY_WALKING = 4;

@@ -49,9 +49,9 @@ public class GoalRawData {
 					json.accumulate("variances", variance);
 			}
 
-			if (triple_tap_minutes != null) {
-				for (int triple_tap : triple_tap_minutes)
-					json.accumulate("triple_tap_minutes", triple_tap);
+			if (triple_tap_minutes != null && triple_tap_minutes.length > 0) {
+				JSONArray tripleTapJsonArray = new JSONArray(triple_tap_minutes);
+				json.put("triple_tap_minutes", tripleTapJsonArray);
 			}
 
 			if (tag_in_out_minutes != null) {
