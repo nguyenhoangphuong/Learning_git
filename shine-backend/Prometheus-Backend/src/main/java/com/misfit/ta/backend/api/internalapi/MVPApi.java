@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.entity.EntityBuilder;

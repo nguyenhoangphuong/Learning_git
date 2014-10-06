@@ -53,7 +53,16 @@ public class GoalRawData {
 				JSONArray tripleTapJsonArray = new JSONArray(triple_tap_minutes);
 				json.put("triple_tap_minutes", tripleTapJsonArray);
 			}
-
+			
+			if (tag_in_out_minutes != null) {
+ 				List<JSONArray> listJsonArray = new ArrayList<JSONArray>();
+				for (int[] tag_int_out_array : tag_in_out_minutes) {
+ 
+ 					JSONArray tag_arr = new JSONArray(tag_int_out_array);
+ 					listJsonArray.add(tag_arr);
+				}
+				json.accumulate("tag_in_out_minutes", listJsonArray);
+			}
 			return json;
 
 		} catch (JSONException e) {
