@@ -190,7 +190,7 @@ public class BackendTripleTapForShine extends BackendServerCalculationBase{
 	@Test(groups = { "MVPBackend", "servercalculation", "TripleTap" })
 	public void TrippleTapAtMidNight(){
 		boolean testPassed = true;
-		cal = cal.getInstance();
+		cal = Calendar.getInstance();
 		
 		// create goals for 2 days
 		Goal[] goals = new Goal[2];
@@ -244,15 +244,9 @@ public class BackendTripleTapForShine extends BackendServerCalculationBase{
 		cal.set(Calendar.SECOND, 0);
 		long timestampTennisInThePast = cal.getTimeInMillis() / 1000;
 		
-//		int[] arrDataTaginTagout = new int[] { 23 * 60 + 52, 23 * 60 + 59 };
-//		List<int[]> listDataTaginTagout = new ArrayList<int[]>();
-//		listDataTaginTagout.add(arrDataTaginTagout);
 		data1.appendGoalRawData(generateSessionRawData(2400, 300, 8));
 		
 		GoalRawData data0 = new GoalRawData();
-//		arrDataTaginTagout = new int[] { 0, 8 };
-//		listDataTaginTagout = new ArrayList<int[]>();
-//		listDataTaginTagout.add(arrDataTaginTagout);
 		triple_tap_minutes = new int[]{0};
 		cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);
