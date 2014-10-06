@@ -25,7 +25,7 @@ public class DefaultStrings {
 	public static String LogActivityLabel = "Log Activity";
 	public static String BedditLabel = "Beddit";
 	public static String EditActivityLabel = "Edit Activity";
-	public static String TaggingAndSleepTitle = "Tagging + Sleep";
+	public static String TaggingAndSleepTitle = "Tagging and Sleep";
 	
 	
 	public static String ActivityLabel = "Activity";

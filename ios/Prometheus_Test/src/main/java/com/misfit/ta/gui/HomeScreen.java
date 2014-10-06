@@ -19,6 +19,10 @@ public class HomeScreen {
 		Gui.touchATaggedView("UIButton", 1);
 	}
 	
+	public static boolean isTrueActivity(String activity){
+		return ViewUtils.isExistedView("UILabel", activity);
+	}
+	
 	public static boolean isActivityDialog(){
 		return ViewUtils.isExistedView("UIButtonLabel", DefaultStrings.StartButton);
 	}

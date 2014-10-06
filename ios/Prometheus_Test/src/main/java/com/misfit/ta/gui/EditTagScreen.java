@@ -26,7 +26,7 @@ public class EditTagScreen {
 	
 	public static boolean isEditTagScreen() {
 		
-		return ViewUtils.isExistedView("UILabel", DefaultStrings.EditTagTitle);
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.EditActivityLabel);
 	}
 	
 	public static boolean hasPointLostAlert() {

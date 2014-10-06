@@ -8,10 +8,10 @@ import org.testng.Assert;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
-import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.EditTagScreen;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
+import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
@@ -21,6 +21,10 @@ import com.misfit.ta.utils.ShortcutsTyper;
 
 public class EditActivityFlowAPI extends ModelAPI {
 
+	public static final String[] arrActivities = new String[] { "Basketball",
+		"Tennis", "Swimming", "Soccer", "Cycling", "Running", "Yoga",
+		"Dancing" };
+	
 	public EditActivityFlowAPI(AutomationTest automation, File model,
 			boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
@@ -46,57 +50,56 @@ public class EditActivityFlowAPI extends ModelAPI {
 		Timeline.dragUpTimeline();
 	}
 
-	public void e_followTutorial() {
-		PrometheusHelper.handleTagEditingTutorial();
-	}
-
 	public void e_holdToEditActivity() {
-		Timeline.holdAndPressTile("1:00am");
+		Timeline.openTile("1:00am");
+		Gui.touchATaggedView("UIButton", 1000);
+		HomeSettings.tapOKAtNewGoalPopup();
 	}
 
 	public void e_changeToSwimming() {
 		currentActivity = MVPEnums.ACTIVITY_SWIMMING;
-		EditTagScreen.selectActivity(DefaultStrings.SwimmingLabel);
+		changeActivity("Swimming");
 		EditTagScreen.tapSave();
 	}
 
+	public void changeActivity(String activity){
+		for(int i = 0; i < 6; i++){
+			HomeScreen.tapBackwardActivity();
+		}
+		
+		while(!HomeScreen.isTrueActivity(activity)){
+			HomeScreen.tapForwardActivity();
+		}
+	}
+	
 	public void e_changeToCycling() {
 		currentActivity = MVPEnums.ACTIVITY_CYCLING;
-		EditTagScreen.selectActivity(DefaultStrings.CyclingLabel);
+		changeActivity("Cycling");
 		EditTagScreen.tapSave();
 	}
 
 	public void e_changeToSoccer() {
 		currentActivity = MVPEnums.ACTIVITY_SOCCER;
-		EditTagScreen.selectActivity(DefaultStrings.SoccerLabel);
+		changeActivity("Soccer");
 		EditTagScreen.tapSave();
 	}
 
 	public void e_changeToTennis() {
 		currentActivity = MVPEnums.ACTIVITY_TENNIS;
-		EditTagScreen.selectActivity(DefaultStrings.TennisLabel);
+		changeActivity("Tennis");
 		EditTagScreen.tapSave();
 	}
 
 	public void e_changeToBasketBall() {
 		currentActivity = MVPEnums.ACTIVITY_BASKETBALL;
-		EditTagScreen.selectActivity(DefaultStrings.BasketballLabel);
+		changeActivity("Basketball");
 		EditTagScreen.tapSave();
 	}
 
 	public void e_changeToDefault() {
 		currentActivity = MVPEnums.ACTIVITY_WALKING;
-		EditTagScreen.selectActivity(DefaultStrings.DefaultLabel);
+		changeActivity("Default");
 		EditTagScreen.tapSave();
-	}
-
-	public void e_confirmSyncAlert() {
-		Sync.tapPopupSyncLater();
-	}
-
-	public void e_confirmPointLostAlert() {
-		EditTagScreen.tapPopupChangeTag();
-		ShortcutsTyper.delayOne();
 	}
 
 	public void v_HomeScreen() {
@@ -104,31 +107,16 @@ public class EditActivityFlowAPI extends ModelAPI {
 				"Current view is HomeScreen - Today");
 	}
 
-	public void v_ActivityTutorial() {
-		Assert.assertTrue(HomeScreen.isEditTagTutorial(),
-				"Current view is HomeScreen - Edit Tag tutorial");
-	}
-
 	public void v_EditActivityTag() {
 		Assert.assertTrue(EditTagScreen.isEditTagScreen(),
 				"Current view is Edit Tag");
 	}
 
-	public void v_SyncRequireAlert() {
-		Assert.assertTrue(Sync.hasShineOutOfSyncMessage(),
-				"Sync require alert shows up");
-	}
-
 	public void v_HomeScreenUpdated() {
 		int newPoint = (int) Math.floor(MVPCalculator.calculatePointForNewTag(
 				steps, mins, currentActivity));
-
+		System.out.println("New point : " + newPoint);
 		checkNewTileAndProgress(newPoint);
-	}
-
-	public void v_LostPointAlert() {
-		Assert.assertTrue(EditTagScreen.hasPointLostAlert(),
-				"Point lost alert shows up");
 	}
 
 	private void capture() {
