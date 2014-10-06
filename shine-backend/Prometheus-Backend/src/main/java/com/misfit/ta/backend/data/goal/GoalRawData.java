@@ -35,18 +35,18 @@ public class GoalRawData {
 
 			JSONObject json = new JSONObject();
 			if (points != null) {
-				for (int point : points)
-					json.accumulate("points", point);
+				JSONArray pointJsonArray = new JSONArray(points);
+				json.put("points", pointJsonArray);
 			}
 
 			if (steps != null) {
-				for (int step : steps)
-					json.accumulate("steps", step);
+				JSONArray stepJsonArray = new JSONArray(steps);
+				json.put("steps", stepJsonArray);
 			}
 
 			if (variances != null) {
-				for (int variance : variances)
-					json.accumulate("variances", variance);
+				JSONArray varianceJsonArray = new JSONArray(variances);
+				json.put("variances", varianceJsonArray);
 			}
 
 			if (triple_tap_minutes != null && triple_tap_minutes.length > 0) {
@@ -54,17 +54,6 @@ public class GoalRawData {
 				json.put("triple_tap_minutes", tripleTapJsonArray);
 			}
 
-			if (tag_in_out_minutes != null) {
-				List<JSONArray> listJsonArray = new ArrayList<JSONArray>();
-				for (int[] tag_int_out_array : tag_in_out_minutes) {
-
-					JSONArray tag_arr = new JSONArray(tag_int_out_array);
-					listJsonArray.add(tag_arr);
-				}
-				json.accumulate("tag_in_out_minutes", listJsonArray);
-
-			}
-			
 			return json;
 
 		} catch (JSONException e) {
