@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.correctness.servercalculation.BackendServerCalculationBase;
 import com.misfit.ta.backend.data.DataGenerator;
@@ -15,6 +16,7 @@ import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.GoalRawData;
 import com.misfit.ta.backend.data.goal.GoalsResult;
 import com.misfit.ta.backend.data.goal.TripleTapData;
+import com.misfit.ta.backend.data.graph.GraphItem;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.statistics.Statistics;
 import com.misfit.ta.backend.data.timeline.TimelineItem;
@@ -34,7 +36,7 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 	@BeforeClass(alwaysRun = true)
 	public void setUp() {
 
-		// sign up and create items
+		// sign up
 		String email = MVPApi.generateUniqueEmail();
 		token = MVPApi.signUp(email, "qqqqqq").token;
 		ProfileData profile = DataGenerator.generateRandomProfile(timestamp,
@@ -546,6 +548,130 @@ public class BackendTaginTagoutCreateTC extends BackendServerCalculationBase {
 				getNumberOfSessionTiles(timelineitems), 2,
 				"Goal has 2 session tiles") == null;
 
+		Assert.assertTrue(testPassed, "All asserts are passed");
+	}
+	
+	@Test(groups = { "MVPBackend", "servercalculation", "TaginTagout" })
+	public void TagInYesterDayTagOutToday(){
+		boolean testPassed = true;
+		
+		// create goals for 2 days
+		Goal[] goals = new Goal[2];
+		for (int i = 0; i < goals.length; i++) {
+
+			long goalTimestamp = timestamp - i * 3600 * 24;
+			Goal goal = Goal.getDefaultGoal(goalTimestamp);
+			
+			if(i == 1){
+				cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) - 1);
+				cal.set(Calendar.HOUR_OF_DAY, 23);
+				cal.set(Calendar.MINUTE, 51);
+				cal.set(Calendar.SECOND, 0);
+				List<TripleTapData> tripleTapTypeChanges = new ArrayList<TripleTapData>();
+				TripleTapData tripleTapDefault = new TripleTapData();
+				tripleTapDefault.setActivityType(MVPEnums.ACTIVITY_TENNIS);
+				tripleTapDefault.setTimestamp(cal.getTimeInMillis() / 1000);
+				System.out.println("In the past : " + cal.getTimeInMillis() / 1000);
+				tripleTapTypeChanges.add(tripleTapDefault);
+				goal.setTripleTapTypeChanges(tripleTapTypeChanges);
+			}else{
+				cal = Calendar.getInstance();
+				cal.set(Calendar.HOUR_OF_DAY, 0);
+				cal.set(Calendar.MINUTE, 0);
+				cal.set(Calendar.SECOND, 0);
+				List<TripleTapData> tripleTapTypeChanges = new ArrayList<TripleTapData>();
+				TripleTapData tripleTapDefault = new TripleTapData();
+				tripleTapDefault.setActivityType(MVPEnums.ACTIVITY_TENNIS);
+				tripleTapDefault.setTimestamp(cal.getTimeInMillis() / 1000);
+				System.out.println("Today : " + cal.getTimeInMillis() / 1000);
+				tripleTapTypeChanges.add(tripleTapDefault);
+				goal.setTripleTapTypeChanges(tripleTapTypeChanges);
+			}
+			
+			GoalsResult result = MVPApi.createGoal(token, goal);
+
+			goal.setServerId(result.goals[0].getServerId());
+			goal.setUpdatedAt(result.goals[0].getUpdatedAt());
+
+			goals[i] = goal;
+		}
+		
+		GoalRawData data1 = new GoalRawData();
+		data1.appendGoalRawData(generateEmptyRawData(0, 23 * 60 + 50));
+		
+		cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) - 1);
+		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.set(Calendar.MINUTE, 52);
+		cal.set(Calendar.SECOND, 0);
+		long timestampTennisInThePast = cal.getTimeInMillis() / 1000;
+		
+		int[] arrDataTaginTagout = new int[] { 23 * 60 + 52, 23 * 60 + 59 };
+		List<int[]> listDataTaginTagout = new ArrayList<int[]>();
+		listDataTaginTagout.add(arrDataTaginTagout);
+		data1.appendGoalRawData(generateSessionRawData(2400, 300, 8, listDataTaginTagout));
+		
+		GoalRawData data0 = new GoalRawData();
+		arrDataTaginTagout = new int[] { 0, 8 };
+		listDataTaginTagout = new ArrayList<int[]>();
+		listDataTaginTagout.add(arrDataTaginTagout);
+		cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		long timestampTennisToday = cal.getTimeInMillis() / 1000;
+		data0.appendGoalRawData(generateSessionRawData(1800, 150, 10, listDataTaginTagout));
+		
+		MVPApi.pushRawData(token, goals[1].getServerId(), data1, 0);
+		MVPApi.pushRawData(token, goals[0].getServerId(), data0, 0);
+		
+		ShortcutsTyper.delayTime(delayTime);
+		
+		List<TimelineItem> timelineitems = MVPApi.getTimelineItems(token,
+				goals[1].getStartTime(), goals[1].getEndTime(), 0l);
+		List<TimelineItem> timelineitemsToday = MVPApi.getTimelineItems(token,
+				goals[0].getStartTime(), goals[0].getEndTime(), 0l);
+
+		testPassed &= Verify.verifyEquals(
+				getNumberOfSessionTiles(timelineitems), 1,
+				"Goal in the past has 1 session tiles") == null;
+		
+		testPassed &= Verify.verifyEquals(
+				getNumberOfSessionTiles(timelineitemsToday), 1,
+				"Goal in today has 1 session tiles") == null;
+
+		for (int i = 0; i < timelineitemsToday.size(); i++) {
+			int type = timelineitemsToday.get(i).getItemType();
+			if (type == 2) {
+				TimelineItem item = timelineitemsToday.get(i);
+				ActivitySessionItem sessionData = (ActivitySessionItem) item
+						.getData();
+				long timestampTemp = item.getTimestamp();
+
+				if (timestampTemp == timestampTennisToday) {
+					testPassed &= Verify.verifyEquals(
+							sessionData.getActivityType(),
+							MVPEnums.ACTIVITY_TENNIS,
+							"Not the tennis activity in today") == null;
+				}
+			}
+		}
+		for (int i = 0; i < timelineitems.size(); i++) {
+			int type = timelineitems.get(i).getItemType();
+			if (type == 2) {
+				TimelineItem item = timelineitems.get(i);
+				ActivitySessionItem sessionData = (ActivitySessionItem) item
+						.getData();
+				long timestampTemp = item.getTimestamp();
+				
+				if (timestampTemp == timestampTennisInThePast) {
+					testPassed &= Verify.verifyEquals(
+							sessionData.getActivityType(),
+							MVPEnums.ACTIVITY_TENNIS,
+							"Not the tennis activity in the past") == null;
+				}
+			}
+		}
 		Assert.assertTrue(testPassed, "All asserts are passed");
 	}
 }
