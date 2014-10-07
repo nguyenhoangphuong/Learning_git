@@ -214,7 +214,7 @@ public class BackendPedometerTC extends BackendAutomation {
 		createNewPedometer(token, serialNumberString);
 
 		String linkingStatus = MVPApi.getDeviceLinkingStatus(token, serialNumberString);
-		Assert.assertTrue(DefaultValues.DeviceLinkedToYourAccount.equals(linkingStatus), "Linking status");
+		Assert.assertTrue(DefaultValues.DeviceUsedToLinkToYourAccount.equals(linkingStatus), "Linking status");
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "pedometer" })

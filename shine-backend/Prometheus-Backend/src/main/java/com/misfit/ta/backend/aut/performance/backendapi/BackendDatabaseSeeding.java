@@ -20,8 +20,8 @@ public class BackendDatabaseSeeding {
 
     protected int NUMBER_OF_ITEMS_PER_DAY = 1;
     protected int NUMBER_OF_DAYS = 1;
-    protected int NUMBER_OF_USERS = 20;
-    protected int NUMBER_OF_THREADS = 2;
+    protected int NUMBER_OF_USERS = 1;
+    protected int NUMBER_OF_THREADS = 1;
 
     Logger logger = Util.setupLogger(BackendDatabaseSeeding.class);
 

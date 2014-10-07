@@ -69,6 +69,8 @@ public class NotificationEndpointServer {
                 if (onNotificationReceived != null) {
                     onNotificationReceived.call(this, message);
                 }
+            } else {
+                
             }
 
         } catch (JSONException e) {

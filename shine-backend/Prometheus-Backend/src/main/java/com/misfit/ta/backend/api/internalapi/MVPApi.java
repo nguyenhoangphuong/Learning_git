@@ -48,1430 +48,1424 @@ import com.misfit.ta.utils.TextTool;
 
 public class MVPApi extends RequestHelper {
 
-	// logger
-	protected static Logger logger = Util.setupLogger(MVPApi.class);
-
-	// fields
-	public static String baseAddress = Settings
-			.getValue("MVPBackendBaseAddress");
-	public static Integer port = Settings.getValue("MVPBackendPort") == null ? null
-			: Integer.parseInt(Settings.getValue("MVPBackendPort"));
-
-	public static String dataCenterBaseAddress = Settings
-			.getValue("MVPDataCenterBaseAddress");
-	public static Integer dataCenterPort = Settings
-			.getValue("MVPDataCenterPort") == null ? null : Integer
-			.parseInt(Settings.getValue("MVPDataCenterPort"));
-
-	public static int CACHE_TRY_TIME = 10;
-	public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.66r";
-
-	// generators
-	public static String generateUniqueEmail() {
-		return "test" + System.currentTimeMillis()
-				+ TextTool.getRandomString(6, 6).toLowerCase()
-				+ "@misfitqa.com";
-	}
-
-	public static String generateLocalId() {
-		return System.nanoTime() + "-" + TextTool.getRandomString(10, 10);
-	}
-
-	public static List<String> getAllDevices(String token) {
-		return getDevices(token, "devices/list");
-	}
-
-	private static List<String> getDevices(String token, String shortUrl) {
-		// trace
-		logger.info("Token of getDevices : " + token);
-
-		// prepare
-		String url = baseAddress + shortUrl;
-
-		BaseParams requestInfo = new BaseParams();
-		requestInfo.addHeader("auth_token", token);
-
-		// post and receive raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInfo);
-		List<String> result = new ArrayList<String>();
-		result.addAll(Pedometer.getListDevices(response));
-
-		return result;
-	}
-
-	public static AccountResult sign(String email, String password,
-			String shortUrl, boolean isNewType) {
-		// trace
-		logger.info("Email: " + email + ", Password: " + password);
-
-		// prepare
-		String url = baseAddress + shortUrl;
-
-		BaseParams requestInf = new BaseParams();
-		requestInf.addParam("email", email);
-		requestInf.addParam("password", password);
-		if(isNewType){
-			requestInf.addHeader("test_get_old", "2");
-		}
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
-
-		// format data
-		AccountResult result = new AccountResult(response);
-		return result;
-	}
-
-	// account apis
-	static private AccountResult sign(String email, String password,
-			String shortUrl) {
-		return sign(email, password, shortUrl, false);
-	}
-
-	private static BaseResult requestReset(String email, String shortUrl) {
-		// trace
-		logger.info("Email receives link reset password : " + email);
-
-		// prepare
-		String url = baseAddress + shortUrl;
-		BaseParams requestInfo = new BaseParams();
-		requestInfo.addParam("email", email);
-
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInfo);
-
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
-
-	public static BaseResult requestEmailToChangePassword(String email) {
-		return requestReset(email, "reset_password/request_token_email");
-	}
-
-	public static BaseResult changePassword(String token, String newPassword,
-			String confirmPass) {
-		return change(token, newPassword, confirmPass,
-				"reset_password/change_password");
-	}
-
-	private static BaseResult change(String token, String password,
-			String confirmPass, String shortUrl) {
-		// trace
-		logger.info("Change password : " + token);
-
-		// prepare
-		String url = baseAddress + shortUrl;
-		BaseParams requestInfo = new BaseParams();
-		requestInfo.addParam("token", token);
-		requestInfo.addParam("new_password", password);
-		requestInfo.addParam("confirm_password", confirmPass);
-
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInfo);
-
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-
-	}
-
-	public static AccountResult signIn(String email, String password) {
-		return sign(email, password, "login");
-	}
-
-	public static AccountResult signUp(String email, String password, boolean isNewType){
-		return sign(email, password, "signup", isNewType);
-	}
-	public static AccountResult signUp(String email, String password) {
-		return sign(email, password, "signup");
-	}
-
-	public static UserInfo signUp() {
-		String email = MVPApi.generateUniqueEmail();
-		UserInfo userInfo = new UserInfo(email, "qqqqqq");
-		String token = MVPApi.signUp(userInfo.getEmail(),
-				userInfo.getPassword()).token;
-		String userId = MVPApi.getUserId(token);
-		userInfo.setToken(token);
-		userInfo.setUserId(userId);
-		return userInfo;
-	}
-
-	public static BaseResult signOut(String token) {
-		// trace
-		logger.info("Token: " + token);
-
-		// prepare
-		String url = baseAddress + "logout";
-
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
-
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
-
-	// profile apis
-	public static ProfileResult createProfile(String token, ProfileData data) {
-
-		// prepare
-		String url = baseAddress + "profile";
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("profile", data.toJson().toString());
-
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
-
-		// format data
-		ProfileResult result = new ProfileResult(response);
-		return result;
-	}
+    // logger
+    protected static Logger logger = Util.setupLogger(MVPApi.class);
+
+    // fields
+    public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
+    public static Integer port = Settings.getValue("MVPBackendPort") == null ? null : Integer.parseInt(Settings
+            .getValue("MVPBackendPort"));
+
+    public static String dataCenterBaseAddress = Settings.getValue("MVPDataCenterBaseAddress");
+    public static Integer dataCenterPort = Settings.getValue("MVPDataCenterPort") == null ? null : Integer
+            .parseInt(Settings.getValue("MVPDataCenterPort"));
+
+    public static int CACHE_TRY_TIME = 10;
+    public static String LATEST_FIRMWARE_VERSION_STRING = "0.0.66r";
+
+    // generators
+    public static String generateUniqueEmail() {
+        return "test" + System.currentTimeMillis() + TextTool.getRandomString(6, 6).toLowerCase() + "@misfitqa.com";
+    }
+
+    public static String generateLocalId() {
+        return System.nanoTime() + "-" + TextTool.getRandomString(10, 10);
+    }
+
+    public static List<String> getAllDevices(String token) {
+        return getDevices(token, "devices/list");
+    }
+
+    private static List<String> getDevices(String token, String shortUrl) {
+        // trace
+        logger.info("Token of getDevices : " + token);
+
+        // prepare
+        String url = baseAddress + shortUrl;
+
+        BaseParams requestInfo = new BaseParams();
+        requestInfo.addHeader("auth_token", token);
+
+        // post and receive raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInfo);
+        List<String> result = new ArrayList<String>();
+        result.addAll(Pedometer.getListDevices(response));
+
+        return result;
+    }
+
+    public static AccountResult sign(String email, String password, String shortUrl, boolean isNewType) {
+        // trace
+        logger.info("Email: " + email + ", Password: " + password);
+
+        // prepare
+        String url = baseAddress + shortUrl;
+
+        BaseParams requestInf = new BaseParams();
+        requestInf.addParam("email", email);
+        requestInf.addParam("password", password);
+        if (isNewType) {
+            requestInf.addHeader("test_get_old", "2");
+        }
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
+
+        // format data
+        AccountResult result = new AccountResult(response);
+        return result;
+    }
+
+    // account apis
+    static private AccountResult sign(String email, String password, String shortUrl) {
+        return sign(email, password, shortUrl, false);
+    }
+
+    private static BaseResult requestReset(String email, String shortUrl) {
+        // trace
+        logger.info("Email receives link reset password : " + email);
+
+        // prepare
+        String url = baseAddress + shortUrl;
+        BaseParams requestInfo = new BaseParams();
+        requestInfo.addParam("email", email);
+
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInfo);
+
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
+
+    public static BaseResult requestEmailToChangePassword(String email) {
+        return requestReset(email, "reset_password/request_token_email");
+    }
+
+    public static BaseResult changePassword(String token, String newPassword, String confirmPass) {
+        return change(token, newPassword, confirmPass, "reset_password/change_password");
+    }
+
+    private static BaseResult change(String token, String password, String confirmPass, String shortUrl) {
+        // trace
+        logger.info("Change password : " + token);
+
+        // prepare
+        String url = baseAddress + shortUrl;
+        BaseParams requestInfo = new BaseParams();
+        requestInfo.addParam("token", token);
+        requestInfo.addParam("new_password", password);
+        requestInfo.addParam("confirm_password", confirmPass);
 
-	public static ProfileResult getProfile(String token) {
-		// prepare
-		String url = baseAddress + "profile";
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInfo);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+    }
 
-		// format data
-		ProfileResult result = new ProfileResult(response);
-		return result;
-	}
+    public static AccountResult signIn(String email, String password) {
+        return sign(email, password, "login");
+    }
 
-	public static ProfileResult updateProfile(String token, ProfileData data) {
+    public static AccountResult signUp(String email, String password, boolean isNewType) {
+        return sign(email, password, "signup", isNewType);
+    }
 
-		// prepare
-		String url = baseAddress + "profile";
+    public static AccountResult signUp(String email, String password) {
+        return sign(email, password, "signup");
+    }
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("profile", data.toJson().toString());
+    public static UserInfo signUp() {
+        String email = MVPApi.generateUniqueEmail();
+        UserInfo userInfo = new UserInfo(email, "qqqqqq");
+        String token = MVPApi.signUp(userInfo.getEmail(), userInfo.getPassword()).token;
+        String userId = MVPApi.getUserId(token);
+        userInfo.setToken(token);
+        userInfo.setUserId(userId);
+        return userInfo;
+    }
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.put(url, port, requestInf);
+    public static BaseResult signOut(String token) {
+        // trace
+        logger.info("Token: " + token);
 
-		// format data
-		ProfileResult result = new ProfileResult(response);
-		return result;
-	}
+        // prepare
+        String url = baseAddress + "logout";
 
-	public static BaseResult userInfo(String token) {
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		// prepare
-		String url = baseAddress + "user_info";
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+    // profile apis
+    public static ProfileResult createProfile(String token, ProfileData data) {
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+        // prepare
+        String url = baseAddress + "profile";
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("profile", data.toJson().toString());
 
-	public static String getUserId(String token) {
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
 
-		BaseResult result = userInfo(token);
-		try {
-			JSONObject json = new JSONObject(
-					result.response.getResponseString());
-			return json.getJSONObject("user").getString("id");
+        // format data
+        ProfileResult result = new ProfileResult(response);
+        return result;
+    }
 
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+    public static ProfileResult getProfile(String token) {
+        // prepare
+        String url = baseAddress + "profile";
 
-		return null;
-	}
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-	public static ProfileResult getProfileOfUserId(String token, String userid) {
-		// prepare
-		String url = baseAddress + "profiles/" + userid;
+        // post and receive raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        // format data
+        ProfileResult result = new ProfileResult(response);
+        return result;
+    }
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+    public static ProfileResult updateProfile(String token, ProfileData data) {
 
-		// format data
-		ProfileResult result = new ProfileResult(response);
-		return result;
-	}
+        // prepare
+        String url = baseAddress + "profile";
 
-	// goal apis
-	public static GoalsResult searchGoal(String token, Long startTime,
-			Long endTime, Long modifiedSince) {
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("profile", data.toJson().toString());
 
-		// prepare
-		String url = baseAddress + "goals";
-		String queryString = "";
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.put(url, port, requestInf);
 
-		if (startTime != null)
-			queryString += ("&startTime=" + startTime);
+        // format data
+        ProfileResult result = new ProfileResult(response);
+        return result;
+    }
 
-		if (endTime != null)
-			queryString += ("&endTime=" + endTime);
+    public static BaseResult userInfo(String token) {
 
-		if (modifiedSince != null)
-			queryString += ("&modifiedSince=" + modifiedSince);
+        // prepare
+        String url = baseAddress + "user_info";
 
-		url += ("?" + queryString);
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        // post and receive raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-		// format data
-		GoalsResult result = new GoalsResult(response);
-		return result;
-	}
+    public static String getUserId(String token) {
 
-	public static GoalsResult getGoal(String token, String serverId) {
+        BaseResult result = userInfo(token);
+        try {
+            JSONObject json = new JSONObject(result.response.getResponseString());
+            return json.getJSONObject("user").getString("id");
 
-		// prepare
-		String url = baseAddress + "goals/" + serverId;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        return null;
+    }
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+    public static ProfileResult getProfileOfUserId(String token, String userid) {
+        // prepare
+        String url = baseAddress + "profiles/" + userid;
 
-		// format data
-		GoalsResult result = new GoalsResult(response);
-		return result;
-	}
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-	public static GoalsResult createGoal(String token, Goal goal) {
+        // post and receive raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-		// prepare
-		String url = baseAddress + "goals";
+        // format data
+        ProfileResult result = new ProfileResult(response);
+        return result;
+    }
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("goal", goal.toJson().toString());
+    // goal apis
+    public static GoalsResult searchGoal(String token, Long startTime, Long endTime, Long modifiedSince) {
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
+        // prepare
+        String url = baseAddress + "goals";
+        String queryString = "";
 
-		// format data
-		GoalsResult result = new GoalsResult(response);
-		return result;
-	}
+        if (startTime != null)
+            queryString += ("&startTime=" + startTime);
 
-	public static GoalsResult updateGoal(String token, Goal goal) {
+        if (endTime != null)
+            queryString += ("&endTime=" + endTime);
 
-		// prepare
-		String url = baseAddress + "goals/" + goal.getServerId();
+        if (modifiedSince != null)
+            queryString += ("&modifiedSince=" + modifiedSince);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("goal", goal.toJson().toString());
+        url += ("?" + queryString);
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.put(url, port, requestInf);
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		// format data
-		GoalsResult result = new GoalsResult(response);
-		return result;
-	}
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-	public static BaseResult pushRawData(String token, String goalId,
-			GoalRawData rawData, int offsetMinute) {
+        // format data
+        GoalsResult result = new GoalsResult(response);
+        return result;
+    }
 
-		// prepare
-		String url = baseAddress + "goals/" + goalId + "/raw_data";
+    public static GoalsResult getGoal(String token, String serverId) {
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addHeader("platform", "android");
-		requestInf.addParam("minute_offset", offsetMinute + "");
-		requestInf.addParam("data", rawData.toJson().toString());
+        // prepare
+        String url = baseAddress + "goals/" + serverId;
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		// format data
-		GoalsResult result = new GoalsResult(response);
-		return result;
-	}
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-	public static BaseResult getRawDataAsString(Long timestamp,
-			Integer timezoneOffsetInMinutes, String fileHandle,
-			String fileFormat, GoalRawData rawData) {
+        // format data
+        GoalsResult result = new GoalsResult(response);
+        return result;
+    }
 
-		// prepare
-		String url = baseAddress + "internal/convert_shine_binary";
+    public static GoalsResult createGoal(String token, Goal goal) {
 
-		JSONObject header = new JSONObject();
-		try {
-			header.accumulate("timestamp", timestamp);
-			header.accumulate("file_handler", fileHandle);
-			header.accumulate("file_format_id", fileFormat);
-			header.accumulate("timezone", timezoneOffsetInMinutes);
-		} catch (Exception e) {
-		}
+        // prepare
+        String url = baseAddress + "goals";
 
-		logger.info(header.toString());
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("goal", goal.toJson().toString());
 
-		JSONObject rawDataJson = rawData.toJson();
-		JSONObject data = new JSONObject();
-		try {
-			data.accumulate("headers", header);
-			data.put("points", rawDataJson.getJSONArray("points"));
-			data.put("steps", rawDataJson.getJSONArray("steps"));
-			data.put("variances", rawDataJson.getJSONArray("variances"));
-			data.put("triple_tap_minutes",
-					rawDataJson.getJSONArray("triple_tap_minutes"));
-		} catch (Exception e) {
-		}
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addParam("data", data.toString());
+        // format data
+        GoalsResult result = new GoalsResult(response);
+        return result;
+    }
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
+    public static GoalsResult updateGoal(String token, Goal goal) {
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+        // prepare
+        String url = baseAddress + "goals/" + goal.getServerId();
 
-	public static BaseResult searchGoalProgress(String token, Integer type,
-			Long startTime, Long endTime, Long modifiedSince) {
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("goal", goal.toJson().toString());
 
-		// prepare
-		String url = baseAddress + "goal_progresses";
-		String queryString = "";
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.put(url, port, requestInf);
 
-		if (type != null)
-			queryString += ("&type=" + type);
+        // format data
+        GoalsResult result = new GoalsResult(response);
+        return result;
+    }
 
-		if (startTime != null)
-			queryString += ("&startTime=" + startTime);
+    public static BaseResult pushRawData(String token, String goalId, GoalRawData rawData, int offsetMinute) {
 
-		if (endTime != null)
-			queryString += ("&endTime=" + endTime);
+        // prepare
+        String url = baseAddress + "goals/" + goalId + "/raw_data";
 
-		if (modifiedSince != null)
-			queryString += ("&modifiedSince=" + modifiedSince);
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addHeader("platform", "android");
+        requestInf.addParam("minute_offset", offsetMinute + "");
+        requestInf.addParam("data", rawData.toJson().toString());
 
-		url += ("?" + queryString);
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        // format data
+        GoalsResult result = new GoalsResult(response);
+        return result;
+    }
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+    public static BaseResult getRawDataAsString(Long timestamp, Integer timezoneOffsetInMinutes, String fileHandle,
+            String fileFormat, GoalRawData rawData) {
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
+        // prepare
+        String url = baseAddress + "internal/convert_shine_binary";
 
-	}
+        JSONObject header = new JSONObject();
+        try {
+            header.accumulate("timestamp", timestamp);
+            header.accumulate("file_handler", fileHandle);
+            header.accumulate("file_format_id", fileFormat);
+            header.accumulate("timezone", timezoneOffsetInMinutes);
+        } catch (Exception e) {
+        }
 
-	public static BaseResult createGoalProgress(String token, Integer type,
-			GoalProgress goalProgress) {
+        logger.info(header.toString());
 
-		// prepare
-		String url = baseAddress + "goal_progresses"
-				+ (type == null ? "" : ("?type=" + type));
+        JSONObject rawDataJson = rawData.toJson();
+        JSONObject data = new JSONObject();
+        try {
+            data.accumulate("headers", header);
+            data.put("points", rawDataJson.getJSONArray("points"));
+            data.put("steps", rawDataJson.getJSONArray("steps"));
+            data.put("variances", rawDataJson.getJSONArray("variances"));
+            data.put("triple_tap_minutes", rawDataJson.getJSONArray("triple_tap_minutes"));
+        } catch (Exception e) {
+        }
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("goal_progress", goalProgress.toJson().toString());
+        BaseParams requestInf = new BaseParams();
+        requestInf.addParam("data", data.toString());
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-	public static BaseResult updateGoalProgress(String token,
-			GoalProgress goalProgress) {
+    public static BaseResult searchGoalProgress(String token, Integer type, Long startTime, Long endTime,
+            Long modifiedSince) {
 
-		// prepare
-		String url = baseAddress + "goal_progresses/"
-				+ goalProgress.getServerId();
+        // prepare
+        String url = baseAddress + "goal_progresses";
+        String queryString = "";
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("goal_progress", goalProgress.toJson().toString());
+        if (type != null)
+            queryString += ("&type=" + type);
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.put(url, port, requestInf);
+        if (startTime != null)
+            queryString += ("&startTime=" + startTime);
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+        if (endTime != null)
+            queryString += ("&endTime=" + endTime);
 
-	public static BaseResult getGoalSettings(String token, Integer type) {
+        if (modifiedSince != null)
+            queryString += ("&modifiedSince=" + modifiedSince);
 
-		// prepare
-		String url = baseAddress + "goal_settings"
-				+ (type == null ? "" : ("?type=" + type));
+        url += ("?" + queryString);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
 
-	public static BaseResult setGoalSettings(String token, Integer type,
-			GoalSettings goalSettings) {
+    }
 
-		// prepare
-		String url = baseAddress + "goal_settings"
-				+ (type == null ? "" : ("?type=" + type));
+    public static BaseResult createGoalProgress(String token, Integer type, GoalProgress goalProgress) {
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("goal_settings", goalSettings.toJson().toString());
+        // prepare
+        String url = baseAddress + "goal_progresses" + (type == null ? "" : ("?type=" + type));
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("goal_progress", goalProgress.toJson().toString());
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
 
-	// graph apis
-	public static BaseResult createGraphItem(String token, GraphItem item) {
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-		String url = baseAddress + "graph_items";
-		BaseParams request = new BaseParams();
+    public static BaseResult updateGoalProgress(String token, GoalProgress goalProgress) {
 
-		request.addHeader("auth_token", token);
-		request.addParam("graph_item", item.toJson().toString());
+        // prepare
+        String url = baseAddress + "goal_progresses/" + goalProgress.getServerId();
 
-		return new BaseResult(MVPApi.post(url, port, request));
-	}
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("goal_progress", goalProgress.toJson().toString());
 
-	public static BaseResult createGraphItemsRaw(String token,
-			List<GraphItem> graphItems) {
+        // post and receive raw data
+        ServiceResponse response = MVPApi.put(url, port, requestInf);
 
-		return new BaseResult(createGraphItems(token, graphItems));
-	}
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-	public static ServiceResponse createGraphItems(String token,
-			JSONArray jsonItems) {
+    public static BaseResult getGoalSettings(String token, Integer type) {
 
-		String url = baseAddress + "graph_items/batch_insert";
-		BaseParams request = new BaseParams();
+        // prepare
+        String url = baseAddress + "goal_settings" + (type == null ? "" : ("?type=" + type));
 
-		request.addHeader("auth_token", token);
-		request.addParam("graph_items", jsonItems.toString());
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		return MVPApi.post(url, port, request);
-	}
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-	public static ServiceResponse createGraphItems(String token,
-			List<GraphItem> graphItems) {
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-		JSONArray jsonItems = new JSONArray();
-		for (int i = 0; i < graphItems.size(); i++) {
-			jsonItems.put(graphItems.get(i).toJson());
-		}
+    public static BaseResult setGoalSettings(String token, Integer type, GoalSettings goalSettings) {
 
-		return createGraphItems(token, jsonItems);
-	}
+        // prepare
+        String url = baseAddress + "goal_settings" + (type == null ? "" : ("?type=" + type));
 
-	public static BaseResult getGraphItemRaw(String token, String serverId) {
-		// prepare
-		String url = baseAddress + "graph_items/" + serverId;
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("goal_settings", goalSettings.toJson().toString());
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-		// format data
-		return new BaseResult(response);
-	}
+    // graph apis
+    public static BaseResult createGraphItem(String token, GraphItem item) {
 
-	public static GraphItem getGraphItem(String token, String serverId) {
+        String url = baseAddress + "graph_items";
+        BaseParams request = new BaseParams();
 
-		ServiceResponse response = getGraphItemRaw(token, serverId).response;
-		return GraphItem.getGraphItem(response);
-	}
+        request.addHeader("auth_token", token);
+        request.addParam("graph_item", item.toJson().toString());
 
-	//Get Graph Item from old schema DB
-	public static ServiceResponse getMultipleGraphItems(String token) {
-		return getGraphItemList(token, "graph_items");
-	}
+        return new BaseResult(MVPApi.post(url, port, request));
+    }
 
-	private static ServiceResponse getGraphItemList(String token,
-			String shortUrl) {
-		// trace
-		logger.info("Get multiple graph items : " + token);
-		// prepare
-		String url = baseAddress + shortUrl;
-		BaseParams requestInfo = new BaseParams();
-		requestInfo.addHeader("auth_token", token);
-		requestInfo.addHeader("test_get_old", "1");
-		
-		ServiceResponse response = MVPApi.get(url, port, requestInfo);
-		return response;
-	}
-	
-	public static ServiceResponse getGraphActivityDay(String token){
-		return getGraphActivityDay(token, "graph_items");
-	}
+    public static BaseResult createGraphItemsRaw(String token, List<GraphItem> graphItems) {
 
-	private static ServiceResponse getGraphActivityDay(String token, String shortUrl){
-		// trace
-		logger.info("Get multiple graph items : " + token);
-		// prepare
-		String url = baseAddress + shortUrl;
-		BaseParams requestInfo = new BaseParams();
-		requestInfo.addHeader("auth_token", token);
-				
-		ServiceResponse response = MVPApi.get(url, port, requestInfo);
-		return response;
-	}
-	public static BaseResult getGraphItemsRaw(String token, Long startTime,
-			Long endTime, Long modifiedSince) {
+        return new BaseResult(createGraphItems(token, graphItems));
+    }
 
-		String url = baseAddress + "graph_items";
-		String queryString = "";
+    public static ServiceResponse createGraphItems(String token, JSONArray jsonItems) {
 
-		if (startTime != null)
-			queryString += ("&startTime=" + startTime);
+        String url = baseAddress + "graph_items/batch_insert";
+        BaseParams request = new BaseParams();
 
-		if (endTime != null)
-			queryString += ("&endTime=" + endTime);
+        request.addHeader("auth_token", token);
+        request.addParam("graph_items", jsonItems.toString());
 
-		if (modifiedSince != null)
-			queryString += ("&modifiedSince=" + modifiedSince);
+        return MVPApi.post(url, port, request);
+    }
 
-		url += ("?" + queryString);
+    public static ServiceResponse createGraphItems(String token, List<GraphItem> graphItems) {
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        JSONArray jsonItems = new JSONArray();
+        for (int i = 0; i < graphItems.size(); i++) {
+            jsonItems.put(graphItems.get(i).toJson());
+        }
 
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
-		return new BaseResult(response);
-	}
+        return createGraphItems(token, jsonItems);
+    }
 
-	public static List<GraphItem> getGraphItems(String token, Long startTime,
-			Long endTime, Long modifiedSince) {
+    public static BaseResult getGraphItemRaw(String token, String serverId) {
+        // prepare
+        String url = baseAddress + "graph_items/" + serverId;
 
-		ServiceResponse response = getGraphItemsRaw(token, startTime, endTime,
-				modifiedSince).response;
-		List<GraphItem> items = GraphItem.getGraphItems(response);
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		return items;
-	}
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-	// timeline apis
-	public static BaseResult createTimelineItem(String token, TimelineItem item) {
+        // format data
+        return new BaseResult(response);
+    }
 
-		String url = baseAddress + "timeline_items";
-		if (item.getItemType() == TimelineItemDataBase.TYPE_FOOD)
-			url += "?attached_image=true";
-		BaseParams request = new BaseParams();
+    public static GraphItem getGraphItem(String token, String serverId) {
 
-		request.addHeader("auth_token", token);
-		request.addParam("timeline_item", item.toJson().toString());
+        ServiceResponse response = getGraphItemRaw(token, serverId).response;
+        return GraphItem.getGraphItem(response);
+    }
 
-		return new BaseResult(MVPApi.post(url, port, request));
-	}
+    // Get Graph Item from old schema DB
+    public static ServiceResponse getMultipleGraphItems(String token) {
+        return getGraphItemList(token, "graph_items");
+    }
 
-	public static BaseResult editActivityTagging(String token,
-			TimelineItem item, int activityType) {
-		String url = baseAddress + "timeline_items/" + item.getServerId();
-		url += "/tagging?type=" + activityType;
-		BaseParams request = new BaseParams();
+    private static ServiceResponse getGraphItemList(String token, String shortUrl) {
+        // trace
+        logger.info("Get multiple graph items : " + token);
+        // prepare
+        String url = baseAddress + shortUrl;
+        BaseParams requestInfo = new BaseParams();
+        requestInfo.addHeader("auth_token", token);
+        requestInfo.addHeader("test_get_old", "1");
 
-		request.addHeader("auth_token", token);
-		return new BaseResult(MVPApi.post(url, port, request));
-	}
+        ServiceResponse response = MVPApi.get(url, port, requestInfo);
+        return response;
+    }
 
-	public static BaseResult editActivityTagging(String token,
-			String timelineItemId, int activityType) {
-		String url = baseAddress + "timeline_items/" + timelineItemId;
-		url += "/tagging?type=" + activityType;
-		BaseParams request = new BaseParams();
+    public static ServiceResponse getGraphActivityDay(String token) {
+        return getGraphActivityDay(token, "graph_items");
+    }
 
-		request.addHeader("auth_token", token);
-		return new BaseResult(MVPApi.post(url, port, request));
-	}
+    private static ServiceResponse getGraphActivityDay(String token, String shortUrl) {
+        // trace
+        logger.info("Get multiple graph items : " + token);
+        // prepare
+        String url = baseAddress + shortUrl;
+        BaseParams requestInfo = new BaseParams();
+        requestInfo.addHeader("auth_token", token);
 
-	public static ServiceResponse createTimelineItems(String token,
-			JSONArray items) {
+        ServiceResponse response = MVPApi.get(url, port, requestInfo);
+        return response;
+    }
 
-		// prepare
-		String url = baseAddress + "timeline_items/batch_insert";
+    public static BaseResult getGraphItemsRaw(String token, Long startTime, Long endTime, Long modifiedSince) {
 
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		request.addParam("timeline_items", items.toString());
+        String url = baseAddress + "graph_items";
+        String queryString = "";
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, request);
-		return response;
-	}
+        if (startTime != null)
+            queryString += ("&startTime=" + startTime);
 
-	public static BaseResult createTimelineItemsRaw(String token,
-			List<TimelineItem> items) {
+        if (endTime != null)
+            queryString += ("&endTime=" + endTime);
 
-		return new BaseResult(createTimelineItems(token, items));
-	}
+        if (modifiedSince != null)
+            queryString += ("&modifiedSince=" + modifiedSince);
 
-	public static ServiceResponse createTimelineItems(String token,
-			List<TimelineItem> items) {
+        url += ("?" + queryString);
 
-		JSONArray jsonItems = new JSONArray();
-		for (int i = 0; i < items.size(); i++) {
-			jsonItems.put(items.get(i).toJson());
-		}
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		return createTimelineItems(token, jsonItems);
-	}
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
+        return new BaseResult(response);
+    }
 
-	public static BaseResult updateTimelineItem(String token, TimelineItem item) {
+    public static List<GraphItem> getGraphItems(String token, Long startTime, Long endTime, Long modifiedSince) {
 
-		String url = baseAddress + "timeline_items/" + item.getServerId();
-		BaseParams request = new BaseParams();
+        ServiceResponse response = getGraphItemsRaw(token, startTime, endTime, modifiedSince).response;
+        List<GraphItem> items = GraphItem.getGraphItems(response);
 
-		request.addHeader("auth_token", token);
-		request.addParam("timeline_item", item.toJson().toString());
+        return items;
+    }
 
-		return new BaseResult(MVPApi.put(url, port, request));
-	}
+    // timeline apis
+    public static BaseResult createTimelineItem(String token, TimelineItem item) {
 
-	public static BaseResult getTimelineItemRaw(String token, String serverId) {
+        String url = baseAddress + "timeline_items";
+        if (item.getItemType() == TimelineItemDataBase.TYPE_FOOD)
+            url += "?attached_image=true";
+        BaseParams request = new BaseParams();
 
-		// prepare
-		String url = baseAddress + "timeline_items/" + serverId;
+        request.addHeader("auth_token", token);
+        request.addParam("timeline_item", item.toJson().toString());
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        return new BaseResult(MVPApi.post(url, port, request));
+    }
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+    public static BaseResult editActivityTagging(String token, TimelineItem item, int activityType) {
+        String url = baseAddress + "timeline_items/" + item.getServerId();
+        url += "/tagging?type=" + activityType;
+        BaseParams request = new BaseParams();
 
-		// format data
-		return new BaseResult(response);
-	}
+        request.addHeader("auth_token", token);
+        return new BaseResult(MVPApi.post(url, port, request));
+    }
 
-	public static TimelineItem getTimelineItem(String token, String serverId) {
+    public static BaseResult editActivityTagging(String token, String timelineItemId, int activityType) {
+        String url = baseAddress + "timeline_items/" + timelineItemId;
+        url += "/tagging?type=" + activityType;
+        BaseParams request = new BaseParams();
 
-		// prepare
-		String url = baseAddress + "timeline_items/" + serverId;
+        request.addHeader("auth_token", token);
+        return new BaseResult(MVPApi.post(url, port, request));
+    }
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+    public static ServiceResponse createTimelineItems(String token, JSONArray items) {
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+        // prepare
+        String url = baseAddress + "timeline_items/batch_insert";
 
-		// format data
-		return TimelineItem.getTimelineItem(response);
-	}
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        request.addParam("timeline_items", items.toString());
 
-	public static List<TimelineItem> getTimelineItems(String token,
-			Long startTime, Long endTime, Long modifiedSince) {
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, request);
+        return response;
+    }
 
-		return getTimelineItems(token, startTime, endTime, modifiedSince, null);
+    public static BaseResult createTimelineItemsRaw(String token, List<TimelineItem> items) {
 
-	}
+        return new BaseResult(createTimelineItems(token, items));
+    }
 
-	public static List<TimelineItem> getTimelineItems(String token,
-			Long startTime, Long endTime, Long modifiedSince, Integer type) {
+    public static ServiceResponse createTimelineItems(String token, List<TimelineItem> items) {
 
-		BaseResult result = getTimelineItemsRaw(token, startTime, endTime,
-				modifiedSince, type);
-		List<TimelineItem> items = TimelineItem
-				.getTimelineItems(result.response);
-		logger.info("Timeline items count: " + items.size());
+        JSONArray jsonItems = new JSONArray();
+        for (int i = 0; i < items.size(); i++) {
+            jsonItems.put(items.get(i).toJson());
+        }
 
-		return items;
-	}
+        return createTimelineItems(token, jsonItems);
+    }
 
-	public static BaseResult getTimelineItemsRaw(String token, Long startTime,
-			Long endTime, Long modifiedSince, Integer type) {
+    public static BaseResult updateTimelineItem(String token, TimelineItem item) {
 
-		String url = baseAddress + "timeline_items";
-		String queryString = "";
+        String url = baseAddress + "timeline_items/" + item.getServerId();
+        BaseParams request = new BaseParams();
 
-		if (startTime != null)
-			queryString += ("&startTime=" + startTime);
+        request.addHeader("auth_token", token);
+        request.addParam("timeline_item", item.toJson().toString());
 
-		if (endTime != null)
-			queryString += ("&endTime=" + endTime);
+        return new BaseResult(MVPApi.put(url, port, request));
+    }
 
-		if (modifiedSince != null)
-			queryString += ("&modifiedSince=" + modifiedSince);
+    public static BaseResult getTimelineItemRaw(String token, String serverId) {
 
-		if (type != null)
-			queryString += ("&itemType=" + type);
+        // prepare
+        String url = baseAddress + "timeline_items/" + serverId;
 
-		url += ("?" + queryString);
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
-		return new BaseResult(response);
-	}
+        // format data
+        return new BaseResult(response);
+    }
 
-	// pedometer apis
-	public static Pedometer showPedometer(String token) {
-		String url = baseAddress + "pedometer";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		ServiceResponse response = MVPApi.get(url, port, request);
-		Pedometer pedometer = Pedometer.getPedometer(response);
-		return pedometer;
-	}
+    public static TimelineItem getTimelineItem(String token, String serverId) {
 
-	public static String getDeviceLinkingStatus(String token,
-			String serialNumberString) {
-		String url = baseAddress
-				+ "device_linking_status"
-				+ (serialNumberString == null ? "" : "?serial_number_string="
-						+ serialNumberString);
+        // prepare
+        String url = baseAddress + "timeline_items/" + serverId;
 
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		try {
-			ServiceResponse response = MVPApi.get(url, port, request);
-			String message = Pedometer.getMessage(response);
-			return message;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-	public static BaseResult getDeviceLinkingStatusRaw(String token,
-			String serialNumberString) {
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-		String url = baseAddress
-				+ "device_linking_status"
-				+ (serialNumberString == null ? "" : "?serial_number_string="
-						+ serialNumberString);
+        // format data
+        return TimelineItem.getTimelineItem(response);
+    }
 
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		ServiceResponse response = MVPApi.get(url, port, request);
+    public static List<TimelineItem> getTimelineItems(String token, Long startTime, Long endTime, Long modifiedSince) {
 
-		return new BaseResult(response);
-	}
+        return getTimelineItems(token, startTime, endTime, modifiedSince, null);
 
-	public static BaseResult unlinkDeviceRaw(String token) {
-		String url = baseAddress + "unlink_device";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		ServiceResponse response = MVPApi.put(url, port, request);
+    }
 
-		return new BaseResult(response);
-	}
+    public static List<TimelineItem> getTimelineItems(String token, Long startTime, Long endTime, Long modifiedSince,
+            Integer type) {
 
-	public static String unlinkDevice(String token) {
-		String url = baseAddress + "unlink_device";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		try {
-			ServiceResponse response = MVPApi.put(url, port, request);
-			String message = Pedometer.getMessage(response);
-			return message;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+        BaseResult result = getTimelineItemsRaw(token, startTime, endTime, modifiedSince, type);
+        List<TimelineItem> items = TimelineItem.getTimelineItems(result.response);
+        logger.info("Timeline items count: " + items.size());
 
-	public static Pedometer createPedometer(String token,
-			String serialNumberString, String firmwareRevisionString,
-			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
-			String localId, String serverId, long updatedAt) {
-		String url = baseAddress + "pedometer";
-		BaseParams request = buildEditPedometerRequest(token,
-				serialNumberString, firmwareRevisionString, linkedTime,
-				unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
-		ServiceResponse response = MVPApi.post(url, port, request);
-		Pedometer result = Pedometer.getPedometer(response);
-		return result;
-	}
+        return items;
+    }
 
-	public static BaseResult createPedometer(String token, Pedometer item) {
+    public static BaseResult getTimelineItemsRaw(String token, Long startTime, Long endTime, Long modifiedSince,
+            Integer type) {
 
-		String url = baseAddress + "pedometer";
-		BaseParams request = new BaseParams();
+        String url = baseAddress + "timeline_items";
+        String queryString = "";
 
-		request.addHeader("auth_token", token);
-		request.addParam("pedometer", item.toJson().toString());
+        if (startTime != null)
+            queryString += ("&startTime=" + startTime);
 
-		return new BaseResult(MVPApi.post(url, port, request));
-	}
+        if (endTime != null)
+            queryString += ("&endTime=" + endTime);
 
-	public static Pedometer updatePedometer(String token,
-			String serialNumberString, String firmwareRevisionString,
-			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
-			String localId, String serverId, long updatedAt) {
-		String url = baseAddress + "pedometer";
-		BaseParams request = buildEditPedometerRequest(token,
-				serialNumberString, firmwareRevisionString, linkedTime,
-				unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
-		ServiceResponse response = MVPApi.put(url, port, request);
-		Pedometer result = Pedometer.getPedometer(response);
-		return result;
-	}
+        if (modifiedSince != null)
+            queryString += ("&modifiedSince=" + modifiedSince);
 
-	public static BaseResult updatePedometer(String token, Pedometer item) {
+        if (type != null)
+            queryString += ("&itemType=" + type);
 
-		// prepare
-		String url = baseAddress + "pedometer";
-		BaseParams request = new BaseParams();
+        url += ("?" + queryString);
 
-		request.addHeader("auth_token", token);
-		request.addParam("pedometer", item.toJson().toString());
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.put(url, port, request);
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
+        return new BaseResult(response);
+    }
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+    // pedometer apis
+    public static Pedometer showPedometer(String token) {
+        String url = baseAddress + "pedometer";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        ServiceResponse response = MVPApi.get(url, port, request);
+        Pedometer pedometer = Pedometer.getPedometer(response);
+        return pedometer;
+    }
 
-	public static Pedometer updatePedometer(String token, JSONObject data) {
+    public static String getDeviceLinkingStatus(String token, String serialNumberString) {
+        String url = baseAddress + "device_linking_status"
+                + (serialNumberString == null ? "" : "?serial_number_string=" + serialNumberString);
 
-		// prepare
-		String url = baseAddress + "pedometer";
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("pedometer", data.toString());
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        try {
+            ServiceResponse response = MVPApi.get(url, port, request);
+            String message = Pedometer.getMessage(response);
+            return message;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.put(url, port, requestInf);
+    public static BaseResult getDeviceLinkingStatusRaw(String token, String serialNumberString) {
 
-		// format data
-		return Pedometer.getPedometer(response);
-	}
-	
-	public static ServiceResponse updateThePedometer(String token, JSONObject data){
-		// prepare
-		String url = baseAddress + "pedometer";
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("pedometer", data.toString());
+        String url = baseAddress + "device_linking_status"
+                + (serialNumberString == null ? "" : "?serial_number_string=" + serialNumberString);
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.put(url, port, requestInf);
-		
-		return response;
-	}
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        ServiceResponse response = MVPApi.get(url, port, request);
 
-	public static BaseResult getPedometerRaw(String token) {
+        return new BaseResult(response);
+    }
 
-		// prepare
-		String url = baseAddress + "pedometer";
+    public static BaseResult unlinkDeviceRaw(String token) {
+        String url = baseAddress + "unlink_device";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        ServiceResponse response = MVPApi.put(url, port, request);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        return new BaseResult(response);
+    }
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+    public static String unlinkDevice(String token) {
+        String url = baseAddress + "unlink_device";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        try {
+            ServiceResponse response = MVPApi.put(url, port, request);
+            String message = Pedometer.getMessage(response);
+            return message;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-		// format data
-		return new BaseResult(response);
-	}
+    public static Pedometer createPedometer(String token, String serialNumberString, String firmwareRevisionString,
+            Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
+        String url = baseAddress + "pedometer";
+        BaseParams request = buildEditPedometerRequest(token, serialNumberString, firmwareRevisionString, linkedTime,
+                unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
+        ServiceResponse response = MVPApi.post(url, port, request);
+        Pedometer result = Pedometer.getPedometer(response);
+        return result;
+    }
 
-	public static BaseResult getThePedometerRaw(String token, String serverId,
-			String shortUrl) {
-		// trace
-		logger.info("getPedometerRaw1 : token " + token + "\nServerId : "
-				+ serverId);
+    public static Pedometer createPedometer(String token, String serialNumberString, String firmwareRevisionString,
+            String deviceModel, int deviceType, long unlinkedTime, String deviceAlias) {
+        String url = baseAddress + "pedometer";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        Pedometer pedometer = new Pedometer(serialNumberString, firmwareRevisionString,
+                System.currentTimeMillis() / 1000, TextTool.getRandomString(10, 11), deviceModel, deviceType,
+                unlinkedTime, deviceAlias);
+        request.addParam("pedometer", pedometer.toJson().toString());
+        ServiceResponse response = MVPApi.post(url, port, request);
+        Pedometer result = Pedometer.getPedometer(response);
+        return result;
+    }
 
-		// prepare
-		String url = baseAddress + shortUrl + "?serverId=" + serverId;
+    public static BaseResult createPedometer(String token, Pedometer item) {
 
-		BaseParams requestInfo = new BaseParams();
-		requestInfo.addHeader("auth_token", token);
+        String url = baseAddress + "pedometer";
+        BaseParams request = new BaseParams();
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInfo);
+        request.addHeader("auth_token", token);
+        request.addParam("pedometer", item.toJson().toString());
 
-		return new BaseResult(response);
-	}
+        return new BaseResult(MVPApi.post(url, port, request));
+    }
 
-	public static Pedometer getPedometer(String token) {
+    public static Pedometer updatePedometer(String token, String serialNumberString, String firmwareRevisionString,
+            Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId, String serverId, long updatedAt) {
+        String url = baseAddress + "pedometer";
+        BaseParams request = buildEditPedometerRequest(token, serialNumberString, firmwareRevisionString, linkedTime,
+                unlinkedTime, lastSyncedTime, localId, serverId, updatedAt);
+        ServiceResponse response = MVPApi.put(url, port, request);
+        Pedometer result = Pedometer.getPedometer(response);
+        return result;
+    }
 
-		ServiceResponse response = getPedometerRaw(token).response;
-		return Pedometer.getPedometer(response);
-	}
+    public static BaseResult updatePedometer(String token, Pedometer item) {
 
-	public static BaseResult getPedometer(String token, String serverId) {
-		return getThePedometerRaw(token, serverId, "pedometer");
-	}
+        // prepare
+        String url = baseAddress + "pedometer";
+        BaseParams request = new BaseParams();
 
-	private static BaseParams buildEditPedometerRequest(String token,
-			String serialNumberString, String firmwareRevisionString,
-			Long linkedTime, Long unlinkedTime, Long lastSyncedTime,
-			String localId, String serverId, long updatedAt) {
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		Pedometer pedometer = new Pedometer(serialNumberString,
-				firmwareRevisionString, linkedTime, unlinkedTime,
-				lastSyncedTime, localId, serverId, updatedAt);
-		request.addParam("pedometer", pedometer.toJson().toString());
-		return request;
-	}
+        request.addHeader("auth_token", token);
+        request.addParam("pedometer", item.toJson().toString());
 
-	public static String getLatestFirmwareVersionString() {
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.put(url, port, request);
 
-		// prepare
-		String url = baseAddress + "shine_firmwares/get_latest";
-		BaseParams requestInf = new BaseParams();
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+    public static Pedometer updatePedometer(String token, JSONObject data) {
 
-		// format data
-		try {
-			JSONObject json = new JSONObject(response.getResponseString());
-			return json.getString("version_number");
+        // prepare
+        String url = baseAddress + "pedometer";
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("pedometer", data.toString());
 
-		} catch (JSONException e) {
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.put(url, port, requestInf);
 
-			e.printStackTrace();
-			return null;
-		}
-	}
+        // format data
+        return Pedometer.getPedometer(response);
+    }
 
-	public static BaseResult generateNewSerialNumber(String token) {
+    public static ServiceResponse updateThePedometer(String token, JSONObject data) {
+        // prepare
+        String url = baseAddress + "pedometer";
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("pedometer", data.toString());
 
-		String url = baseAddress + "shine_serials/issue";
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.put(url, port, requestInf);
 
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
-		return new BaseResult(response);
-	}
+        return response;
+    }
 
-	// sync apis
-	public static ServiceResponse syncLog(String token, String log) {
+    public static BaseResult getPedometerRaw(String token) {
 
-		String url = baseAddress + "sync_logs";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		request.addParam("log", log);
+        // prepare
+        String url = baseAddress + "pedometer";
 
-		ServiceResponse response = MVPApi.post(url, port, request);
-		logger.info("Sync log status code: " + response.getStatusCode());
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		return response;
-	}
+        // post and receive raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-	public static BaseResult pushSyncLog(String token, SyncLog syncLog) {
+        // format data
+        return new BaseResult(response);
+    }
 
-		return pushSyncLog(token, syncLog, null);
-	}
+    public static BaseResult getThePedometerRaw(String token, String serverId, String shortUrl) {
+        // trace
+        logger.info("getPedometerRaw1 : token " + token + "\nServerId : " + serverId);
 
-	public static BaseResult pushSyncLog(String token, SyncLog syncLog,
-			String platform) {
+        // prepare
+        String url = baseAddress + shortUrl + "?serverId=" + serverId;
 
-		String url = baseAddress + "sync_logs";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		if (platform != null) {
-			request.removeHeader("platform");
-			request.addHeader("platform", platform);
-		}
+        BaseParams requestInfo = new BaseParams();
+        requestInfo.addHeader("auth_token", token);
 
-		request.addParam("log", syncLog.toJson().toString());
+        // post and receive raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInfo);
 
-		ServiceResponse response = MVPApi.post(url, port, request);
-		logger.info("Sync log status code: " + response.getStatusCode());
+        return new BaseResult(response);
+    }
 
-		return new BaseResult(response);
-	}
+    public static Pedometer getPedometer(String token) {
 
-	public static String getStagingDebugSyncLog(String email,
-			String serialNumber, Long timestamp) {
+        ServiceResponse response = getPedometerRaw(token).response;
+        return Pedometer.getPedometer(response);
+    }
 
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(timestamp * 1000);
+    public static BaseResult getPedometer(String token, String serverId) {
+        return getThePedometerRaw(token, serverId, "pedometer");
+    }
 
-		String s3Path = "staging/" + cal.get(Calendar.YEAR) + "/"
-				+ String.format("%02d", cal.get(Calendar.MONTH) + 1) + "/"
-				+ String.format("%02d", cal.get(Calendar.DATE)) + "/" + email
-				+ "/" + serialNumber + "/" + timestamp + "/" + "debug_log.txt";
+    private static BaseParams buildEditPedometerRequest(String token, String serialNumberString,
+            String firmwareRevisionString, Long linkedTime, Long unlinkedTime, Long lastSyncedTime, String localId,
+            String serverId, long updatedAt) {
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        Pedometer pedometer = new Pedometer(serialNumberString, firmwareRevisionString, linkedTime, unlinkedTime,
+                lastSyncedTime, localId, serverId, updatedAt);
+        request.addParam("pedometer", pedometer.toJson().toString());
+        return request;
+    }
 
-		logger.info(s3Path);
-		return AWSHelper.downloadFileAsString("shine-binary-data", s3Path);
-	}
+    public static String getLatestFirmwareVersionString() {
 
-	public static String getStagingDebugSyncLog(String s3Path) {
+        // prepare
+        String url = baseAddress + "shine_firmwares/get_latest";
+        BaseParams requestInf = new BaseParams();
 
-		return AWSHelper.downloadFileAsString("shine-binary-data", s3Path);
-	}
+        // post and receive raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-	public static String[] listStagingDebugSyncLogs(String email,
-			String serialNumber, long fromTimestamp, long toTimestamp) {
+        // format data
+        try {
+            JSONObject json = new JSONObject(response.getResponseString());
+            return json.getString("version_number");
 
-		Calendar fromCal = Calendar.getInstance();
-		fromCal.setTimeInMillis(fromTimestamp * 1000);
-		int fromYear = fromCal.get(Calendar.YEAR);
-		int fromMonth = fromCal.get(Calendar.MONTH) + 1;
-		int fromDate = fromCal.get(Calendar.DATE);
+        } catch (JSONException e) {
 
-		Calendar toCal = Calendar.getInstance();
-		toCal.setTimeInMillis(toTimestamp * 1000);
-		int toYear = toCal.get(Calendar.YEAR);
-		int toMonth = toCal.get(Calendar.MONTH) + 1;
-		int toDate = toCal.get(Calendar.DATE);
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-		List<String> result = new ArrayList<String>();
+    public static BaseResult generateNewSerialNumber(String token) {
 
-		for (int y = fromYear; y <= toYear; y++) {
-			for (int m = fromMonth; m <= toMonth; m++) {
-				for (int d = fromDate; d <= toDate; d++) {
+        String url = baseAddress + "shine_serials/issue";
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-					// prefix for this day
-					String prefix = "staging/" + y + "/"
-							+ String.format("%02d", m) + "/"
-							+ String.format("%02d", d) + "/" + email + "/"
-							+ serialNumber + "/";
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
+        return new BaseResult(response);
+    }
 
-					// check if timestamp is in range
-					List<String> keys = AWSHelper.listFiles(
-							"shine-binary-data", prefix);
-					for (String key : keys) {
+    // sync apis
+    public static ServiceResponse syncLog(String token, String log) {
 
-						if (!key.contains("debug_log.txt")) {
-							continue;
-						}
+        String url = baseAddress + "sync_logs";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        request.addParam("log", log);
 
-						String[] parts = key.split("/");
-						long timestamp = Long.valueOf(parts[6]);
-						if (timestamp > toTimestamp
-								|| timestamp < fromTimestamp)
-							continue;
+        ServiceResponse response = MVPApi.post(url, port, request);
+        logger.info("Sync log status code: " + response.getStatusCode());
 
-						result.add(key);
-					}
-				}
-			}
-		}
+        return response;
+    }
 
-		return result.toArray(new String[result.size()]);
-	}
+    public static BaseResult pushSyncLog(String token, SyncLog syncLog) {
 
-	public static String getLatestSyncLog(String email, String serialNumber,
-			long sinceTimestamp) {
+        return pushSyncLog(token, syncLog, null);
+    }
 
-		logger.info("Get latest sync log since: " + sinceTimestamp);
-		String[] paths = listStagingDebugSyncLogs(email, serialNumber,
-				sinceTimestamp, System.currentTimeMillis() / 1000 + 360);
-		if (paths.length == 0)
-			return "";
+    public static BaseResult pushSyncLog(String token, SyncLog syncLog, String platform) {
 
-		logger.info(paths[paths.length - 1]);
-		String log = getStagingDebugSyncLog(paths[paths.length - 1]);
+        String url = baseAddress + "sync_logs";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        if (platform != null) {
+            request.removeHeader("platform");
+            request.addHeader("platform", platform);
+        }
 
-		return log;
-	}
+        request.addParam("log", syncLog.toJson().toString());
 
-	public static BaseResult pushSDKSyncLog(SDKSyncLog syncLog, boolean gzip) {
+        ServiceResponse response = MVPApi.post(url, port, request);
+        logger.info("Sync log status code: " + response.getStatusCode());
 
-		String url = dataCenterBaseAddress + "events";
-		CloseableHttpClient httpclient = new InsecureHttpClientHelper()
-				.getInsecureCloseableHttpClient();
+        return new BaseResult(response);
+    }
 
-		String body = syncLog.toJson().toString();
-		if (gzip) {
-			try {
-				body = MVPCommon.compressGzip(body);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+    public static String getStagingDebugSyncLog(String email, String serialNumber, Long timestamp) {
 
-		EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder
-				.create();
-		entityBuilder.setText(body);
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestamp * 1000);
 
-		HttpPost httpPost = new HttpPost(url);
-		httpPost.addHeader("Content-Type", "application/json");
-		if (gzip) {
-			httpPost.addHeader("Content-Encoding", "gzip");
-		}
-		httpPost.addHeader("access_key_id",
-				"39347523984598654-ajwoeifja399438ga3948g494g843fff");
-		httpPost.setEntity(entityBuilder.build());
+        String s3Path = "staging/" + cal.get(Calendar.YEAR) + "/" + String.format("%02d", cal.get(Calendar.MONTH) + 1)
+                + "/" + String.format("%02d", cal.get(Calendar.DATE)) + "/" + email + "/" + serialNumber + "/"
+                + timestamp + "/" + "debug_log.txt";
 
-		// for debug only
-		BaseParams params = new BaseParams();
-		params.headers = Arrays.asList(httpPost.getAllHeaders());
+        logger.info(s3Path);
+        return AWSHelper.downloadFileAsString("shine-binary-data", s3Path);
+    }
 
-		try {
-			logger.info("POST: " + url);
-			logger.info("Request headers: " + params.getHeadersAsJsonString());
-			logger.info("Request params: " + syncLog.toJson().toString());
+    public static String getStagingDebugSyncLog(String s3Path) {
 
-			long start = System.currentTimeMillis();
-			CloseableHttpResponse response = httpclient.execute(httpPost);
-			ServiceResponse sr = new ServiceResponse(response,
-					EncodingTypes.UTF8);
-			long end = System.currentTimeMillis();
+        return AWSHelper.downloadFileAsString("shine-binary-data", s3Path);
+    }
 
-			HttpEntity entity = response.getEntity();
-			EntityUtils.consume(entity);
+    public static String[] listStagingDebugSyncLogs(String email, String serialNumber, long fromTimestamp,
+            long toTimestamp) {
 
-			response.close();
-			BaseResult result = new BaseResult(sr);
+        Calendar fromCal = Calendar.getInstance();
+        fromCal.setTimeInMillis(fromTimestamp * 1000);
+        int fromYear = fromCal.get(Calendar.YEAR);
+        int fromMonth = fromCal.get(Calendar.MONTH) + 1;
+        int fromDate = fromCal.get(Calendar.DATE);
 
-			logger.error("Time taken in REST: " + (end - start));
-			logger.info("Response raw Data: " + result.rawData);
-			logger.info("Response code: " + result.statusCode + "\n\n");
+        Calendar toCal = Calendar.getInstance();
+        toCal.setTimeInMillis(toTimestamp * 1000);
+        int toYear = toCal.get(Calendar.YEAR);
+        int toMonth = toCal.get(Calendar.MONTH) + 1;
+        int toDate = toCal.get(Calendar.DATE);
 
-			return result;
-		} catch (Exception e) {
-			return null;
-		}
-	}
+        List<String> result = new ArrayList<String>();
 
-	public static BaseResult pushSDKSyncLog(SDKSyncLog syncLog) {
+        for (int y = fromYear; y <= toYear; y++) {
+            for (int m = fromMonth; m <= toMonth; m++) {
+                for (int d = fromDate; d <= toDate; d++) {
 
-		return pushSDKSyncLog(syncLog, false);
-	}
+                    // prefix for this day
+                    String prefix = "staging/" + y + "/" + String.format("%02d", m) + "/" + String.format("%02d", d)
+                            + "/" + email + "/" + serialNumber + "/";
 
-	public static BaseResult getCursors(String token) {
+                    // check if timestamp is in range
+                    List<String> keys = AWSHelper.listFiles("shine-binary-data", prefix);
+                    for (String key : keys) {
 
-		String url = baseAddress + "cursors";
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+                        if (!key.contains("debug_log.txt")) {
+                            continue;
+                        }
 
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
-		return new BaseResult(response);
-	}
+                        String[] parts = key.split("/");
+                        long timestamp = Long.valueOf(parts[6]);
+                        if (timestamp > toTimestamp || timestamp < fromTimestamp)
+                            continue;
 
-	// statistics
-	public static BaseResult createStatistics(String token,
-			Statistics statistics) {
+                        result.add(key);
+                    }
+                }
+            }
+        }
 
-		// prepare
-		String url = baseAddress + "statistics";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		request.addParam("statistics", statistics.toJson().toString());
+        return result.toArray(new String[result.size()]);
+    }
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.post(url, port, request);
+    public static String getLatestSyncLog(String email, String serialNumber, long sinceTimestamp) {
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+        logger.info("Get latest sync log since: " + sinceTimestamp);
+        String[] paths = listStagingDebugSyncLogs(email, serialNumber, sinceTimestamp,
+                System.currentTimeMillis() / 1000 + 360);
+        if (paths.length == 0)
+            return "";
 
-	public static BaseResult updateStatistics(String token,
-			Statistics statistics) {
+        logger.info(paths[paths.length - 1]);
+        String log = getStagingDebugSyncLog(paths[paths.length - 1]);
 
-		// prepare
-		String url = baseAddress + "statistics";
-		BaseParams request = new BaseParams();
-		request.addHeader("auth_token", token);
-		request.addParam("statistics", statistics.toJson().toString());
+        return log;
+    }
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.put(url, port, request);
+    public static BaseResult pushSDKSyncLog(SDKSyncLog syncLog, boolean gzip) {
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+        String url = dataCenterBaseAddress + "events";
+        CloseableHttpClient httpclient = new InsecureHttpClientHelper().getInsecureCloseableHttpClient();
 
-	public static BaseResult getStatisticsRaw(String token) {
+        String body = syncLog.toJson().toString();
+        if (gzip) {
+            try {
+                body = MVPCommon.compressGzip(body);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-		// prepare
-		String url = baseAddress + "statistics";
+        EntityBuilder entityBuilder = org.apache.http.client.entity.EntityBuilder.create();
+        entityBuilder.setText(body);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.addHeader("Content-Type", "application/json");
+        if (gzip) {
+            httpPost.addHeader("Content-Encoding", "gzip");
+        }
+        httpPost.addHeader("access_key_id", "39347523984598654-ajwoeifja399438ga3948g494g843fff");
+        httpPost.setEntity(entityBuilder.build());
 
-		// post and receive raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+        // for debug only
+        BaseParams params = new BaseParams();
+        params.headers = Arrays.asList(httpPost.getAllHeaders());
 
-		// format data
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+        try {
+            logger.info("POST: " + url);
+            logger.info("Request headers: " + params.getHeadersAsJsonString());
+            logger.info("Request params: " + syncLog.toJson().toString());
 
-	public static Statistics getStatistics(String token) {
+            long start = System.currentTimeMillis();
+            CloseableHttpResponse response = httpclient.execute(httpPost);
+            ServiceResponse sr = new ServiceResponse(response, EncodingTypes.UTF8);
+            long end = System.currentTimeMillis();
 
-		BaseResult result = userInfo(token);
-		return Statistics.fromResponse(result.response);
-	}
+            HttpEntity entity = response.getEntity();
+            EntityUtils.consume(entity);
 
-	public static BaseResult getSummaryByMonth(String token, String startDate) {
+            response.close();
+            BaseResult result = new BaseResult(sr);
 
-		String url = baseAddress + "aggregate/monthly?";
+            logger.error("Time taken in REST: " + (end - start));
+            logger.info("Response raw Data: " + result.rawData);
+            logger.info("Response code: " + result.statusCode + "\n\n");
 
-		if (startDate != null) {
-			url += ("start_date=" + startDate);
-		}
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+    public static BaseResult pushSDKSyncLog(SDKSyncLog syncLog) {
 
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+        return pushSDKSyncLog(syncLog, false);
+    }
 
-		return new BaseResult(response);
-	}
+    public static BaseResult getCursors(String token) {
 
-	public static BaseResult getSummaryByWeek(String token, String startDate) {
+        String url = baseAddress + "cursors";
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		String url = baseAddress + "aggregate/weekly?";
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
+        return new BaseResult(response);
+    }
 
-		if (startDate != null) {
-			url += ("start_date=" + startDate);
-		}
+    // statistics
+    public static BaseResult createStatistics(String token, Statistics statistics) {
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        // prepare
+        String url = baseAddress + "statistics";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        request.addParam("statistics", statistics.toJson().toString());
 
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
+        // post and receive raw data
+        ServiceResponse response = MVPApi.post(url, port, request);
 
-		return new BaseResult(response);
-	}
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-	// beddit sleeps
-	public static BaseResult searchBedditSleepSessions(String token,
-			Long startTime, Long endTime, Long modifiedSince) {
+    public static BaseResult updateStatistics(String token, Statistics statistics) {
 
-		// prepare
-		String url = baseAddress + "beddit/sleep_sessions";
-		String queryString = "";
+        // prepare
+        String url = baseAddress + "statistics";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        request.addParam("statistics", statistics.toJson().toString());
 
-		if (startTime != null)
-			queryString += ("&startTime=" + startTime);
+        // post and receive raw data
+        ServiceResponse response = MVPApi.put(url, port, request);
 
-		if (endTime != null)
-			queryString += ("&endTime=" + endTime);
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-		if (modifiedSince != null)
-			queryString += ("&modifiedSince=" + modifiedSince);
+    public static BaseResult getStatisticsRaw(String token) {
 
-		url += ("?" + queryString);
+        // prepare
+        String url = baseAddress + "statistics";
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.get(url, port, requestInf);
-		BaseResult result = new BaseResult(response);
+        // post and receive raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-		return result;
-	}
+        // format data
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
 
-	public static BaseResult createBedditSleepSession(String token,
-			BedditSleepSession sleep) {
+    public static Statistics getStatistics(String token) {
 
-		// prepare
-		String url = baseAddress + "beddit/sleep_sessions";
+        BaseResult result = userInfo(token);
+        return Statistics.fromResponse(result.response);
+    }
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("sleep_session", sleep.toJson().toString());
+    public static BaseResult getSummaryByMonth(String token, String startDate) {
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
-		BaseResult result = new BaseResult(response);
+        String url = baseAddress + "aggregate/monthly?";
 
-		return result;
-	}
+        if (startDate != null) {
+            url += ("start_date=" + startDate);
+        }
 
-	public static BaseResult createBedditSleepSessions(String token,
-			List<BedditSleepSession> sleeps) {
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		// prepare
-		String url = baseAddress + "beddit/sleep_sessions/batch_insert";
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        return new BaseResult(response);
+    }
 
-		JSONArray jsonarr = new JSONArray(sleeps);
-		requestInf.addParam("sleep_sessions", jsonarr.toString());
+    public static BaseResult getSummaryByWeek(String token, String startDate) {
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf);
-		BaseResult result = new BaseResult(response);
+        String url = baseAddress + "aggregate/weekly?";
 
-		return result;
-	}
+        if (startDate != null) {
+            url += ("start_date=" + startDate);
+        }
 
-	public static BaseResult updateBedditSleepSession(String token,
-			BedditSleepSession sleep) {
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-		// prepare
-		String url = baseAddress + "beddit/sleep_sessions/"
-				+ sleep.getServerId();
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
 
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
-		requestInf.addParam("sleep_session", sleep.toJson().toString());
+        return new BaseResult(response);
+    }
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.put(url, port, requestInf);
-		BaseResult result = new BaseResult(response);
+    // beddit sleeps
+    public static BaseResult searchBedditSleepSessions(String token, Long startTime, Long endTime, Long modifiedSince) {
 
-		return result;
-	}
+        // prepare
+        String url = baseAddress + "beddit/sleep_sessions";
+        String queryString = "";
 
-	public static BaseResult createTrackingGoalSettings(String token,
-			GoalSettingsTracking goalSettingsTracking) {
-		String url = baseAddress + "goals/track_changes";
-		BaseParams requestInf = new BaseParams();
-		requestInf.addHeader("auth_token", token);
+        if (startTime != null)
+            queryString += ("&startTime=" + startTime);
 
-		// post and recieve raw data
-		ServiceResponse response = MVPApi.post(url, port, requestInf,
-				goalSettingsTracking.toJson().toString());
-		BaseResult result = new BaseResult(response);
-		return result;
-	}
+        if (endTime != null)
+            queryString += ("&endTime=" + endTime);
 
-	// others
-	public static BaseResult customRequest(String shortUrl, String verb,
-			BaseParams params) {
+        if (modifiedSince != null)
+            queryString += ("&modifiedSince=" + modifiedSince);
 
-		String url = baseAddress + shortUrl;
-		ServiceResponse response = MVPApi.request(verb, url, port, params);
+        url += ("?" + queryString);
 
-		return new BaseResult(response);
-	}
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
 
-	// test
-	public static void main(String[] args) throws JSONException {
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
+        BaseResult result = new BaseResult(response);
 
-	}
+        return result;
+    }
+
+    public static BaseResult createBedditSleepSession(String token, BedditSleepSession sleep) {
+
+        // prepare
+        String url = baseAddress + "beddit/sleep_sessions";
+
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("sleep_session", sleep.toJson().toString());
+
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
+        BaseResult result = new BaseResult(response);
+
+        return result;
+    }
+
+    public static BaseResult createBedditSleepSessions(String token, List<BedditSleepSession> sleeps) {
+
+        // prepare
+        String url = baseAddress + "beddit/sleep_sessions/batch_insert";
+
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+
+        JSONArray jsonarr = new JSONArray(sleeps);
+        requestInf.addParam("sleep_sessions", jsonarr.toString());
+
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
+        BaseResult result = new BaseResult(response);
+
+        return result;
+    }
+
+    public static BaseResult updateBedditSleepSession(String token, BedditSleepSession sleep) {
+
+        // prepare
+        String url = baseAddress + "beddit/sleep_sessions/" + sleep.getServerId();
+
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        requestInf.addParam("sleep_session", sleep.toJson().toString());
+
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.put(url, port, requestInf);
+        BaseResult result = new BaseResult(response);
+
+        return result;
+    }
+
+    public static BaseResult createTrackingGoalSettings(String token, GoalSettingsTracking goalSettingsTracking) {
+        String url = baseAddress + "goals/track_changes";
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+
+        // post and recieve raw data
+        ServiceResponse response = MVPApi.post(url, port, requestInf, goalSettingsTracking.toJson().toString());
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
+
+    // others
+    public static BaseResult customRequest(String shortUrl, String verb, BaseParams params) {
+
+        String url = baseAddress + shortUrl;
+        ServiceResponse response = MVPApi.request(verb, url, port, params);
+
+        return new BaseResult(response);
+    }
+
+    public static BaseResult getPedometers(String token) {
+        String url = baseAddress + "devices/list";
+        BaseParams request = new BaseParams();
+        request.addHeader("auth_token", token);
+        ServiceResponse response = MVPApi.get(url, port, request);
+        // Pedometer pedometer = Pedometer.getPedometer(response);
+
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
+
+    public static BaseResult getFeatures() {
+        String url = baseAddress + "features";
+        BaseParams requestInf = new BaseParams();
+        ServiceResponse response = MVPApi.get(url, port, requestInf);
+        BaseResult result = new BaseResult(response);
+        return result;
+    }
+
+    private static String[] flashColors = { "AZ", "BZ", "CZ", "DZ", "EZ", "FZ", "GZ" };
+
+    private static String[] shineColors = { "AZ", "BZ", "CZ", "DZ", "EZ", "FZ", "GZ", "HZ", "JZ", "KZ", "LZ", "MZ" };
+
+    public static void createAllShineWithColor(String token) {
+        for (int i = 0; i < shineColors.length; i++) {
+            String serialNumberString = "SH0" + shineColors[i] + System.currentTimeMillis() / 1000;
+            String firmwareRevisionString = "SH1.0.0r";
+
+            long unlinkedTime = -1;
+            if (i < flashColors.length - 1) {
+                unlinkedTime = System.currentTimeMillis() / 1000;
+            }
+            String deviceAlias = "Shine " + TextTool.getRandomString(3);
+            createPedometer(token, serialNumberString, firmwareRevisionString, Pedometer.DEVICE_MODEL_SHINE,
+                    Pedometer.DEVICE_TYPE_SHINE, unlinkedTime, deviceAlias);
+        }
+    }
+
+    public static void createAllFlashWithColor(String token) {
+        for (int i = 0; i < flashColors.length; i++) {
+            String serialNumberString = "F00" + flashColors[i] + System.currentTimeMillis() / 1000;
+            String firmwareRevisionString = "FL2.1.3r";
+
+            long unlinkedTime = -1;
+            if (i < flashColors.length - 1) {
+                unlinkedTime = System.currentTimeMillis() / 1000;
+
+            }
+            String deviceAlias = "Flash " + TextTool.getRandomString(3);
+            createPedometer(token, serialNumberString, firmwareRevisionString, Pedometer.DEVICE_MODEL_FLASH,
+                    Pedometer.DEVICE_TYPE_SHINE, unlinkedTime, deviceAlias);
+        }
+    }
+
+    // test
+    public static void main(String[] args) throws JSONException {
+
+    }
 
 }

@@ -1022,12 +1022,21 @@ public class Gui {
 		NuRemoteClient.sendToServer(cmd1);
 		NuRemoteClient.sendToServer(cmd2);
     }
+
     
-    public static void main(String[] args) {
-//    	init("192.168.169.99");
-//    	printView();
-//    	shutdown();
+    public static boolean isDoingQuietSync() {
+        String message = "(Gui printView)";
+       
+        NuRemoteClient.sendToServer(message, true, false);
+        String result = NuRemoteClient.getLastMessage();
+        
+        if(!result.isEmpty() && result.contains("Syncing...")) {
+            return true;
+        }
+        return false;
     }
+
+    
 }
 
 

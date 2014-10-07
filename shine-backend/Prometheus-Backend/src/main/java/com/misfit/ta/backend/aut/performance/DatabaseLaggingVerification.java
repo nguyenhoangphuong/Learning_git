@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -42,6 +43,8 @@ public class DatabaseLaggingVerification {
                 }
             }
             br.close();
+            Collections.reverse(users);
+            
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,6 +63,9 @@ public class DatabaseLaggingVerification {
       
         int userCount = 1;
         
+        Random rand = new Random();
+        
+        
 
         NUMBER_OF_ITEMS_PER_DAY = Settings.getInt("NUMBER_OF_ITEMS_PER_DAY");
         NUMBER_OF_DAYS = Settings.getInt("NUMBER_OF_DAYS");
@@ -72,10 +78,8 @@ public class DatabaseLaggingVerification {
         while (userCount < NUMBER_OF_USERS) {
             
             for (int threads = 0; threads < Math.min(NUMBER_OF_THREADS, NUMBER_OF_USERS - userCount); threads++) {
-//                int randomNumber = rand.next(boundary);
-//                UserToken userToken = users.get(randomNumber);
-//                System.out.println("LOG user: " + userToken.getId() + " - " + );
-                UserToken userToken = users.get(userCount);
+                int randomNum = rand.nextInt((users.size() - 1) + 1) + 1;
+                UserToken userToken = users.get(randomNum);
                 DatabaseLaggingVerificationThread test = new DatabaseLaggingVerificationThread(userToken);
                 futures.add(executor.submit(test));
                 userCount++;
