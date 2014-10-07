@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.homescreen.DayInPastAPI;
 import com.misfit.ta.ios.modelapi.homescreen.DayProgressAPI;
-import com.misfit.ta.ios.modelapi.homescreen.EditActivityFlowAPI;
+import com.misfit.ta.ios.modelapi.homescreen.EditActivityFlowByChangeActivityTypeAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityMilestonesAPI;
 import com.misfit.ta.ios.modelapi.homescreen.LogActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SetAlarmAPI;
@@ -79,10 +79,10 @@ public class HomeScreenTest extends AutomationTest
     }
     
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "EditTag" })
-    public void EditActivityTagFlow() throws InterruptedException, StopConditionException, IOException
+    public void EditActivityByChangeActivityTypeTagFlow() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
-        model.add("EditTagFlow", new EditActivityFlowAPI(this, Files.getFile("model/homescreen/EditActivityFlow.graphml"),
+        model.add("EditTagFlow", new EditActivityFlowByChangeActivityTypeAPI(this, Files.getFile("model/homescreen/EditActivityFlowByChangeActivityType.graphml"),
                 true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
         model.execute("EditTagFlow");
         Assert.assertTrue(getModelhandler().isAllModelsDone(), "Not all models are done");

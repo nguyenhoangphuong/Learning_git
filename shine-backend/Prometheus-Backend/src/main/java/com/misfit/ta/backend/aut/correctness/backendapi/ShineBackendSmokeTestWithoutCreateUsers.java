@@ -77,7 +77,7 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		//Create graph item
 		List<GraphItem> listGraphItem = new ArrayList<GraphItem>();
 		for(int i = 0; i < 55; i++){
-			GraphItem graphItem = DefaultValues.RandomGraphItem(2020*i);
+			GraphItem graphItem = DefaultValues.RandomGraphItem(2020 * i);
 			graphItem.setAverageValue(i * 1.0);
 			graphItem.setTimestamp(calendar.getTimeInMillis()/1000);
 			System.out.println("Timestamp : " +  graphItem.getTimestamp());

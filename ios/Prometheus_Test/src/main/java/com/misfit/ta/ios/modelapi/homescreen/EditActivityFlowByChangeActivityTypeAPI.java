@@ -13,19 +13,18 @@ import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class EditActivityFlowAPI extends ModelAPI {
+public class EditActivityFlowByChangeActivityTypeAPI extends ModelAPI {
 
 	public static final String[] arrActivities = new String[] { "Basketball",
 		"Tennis", "Swimming", "Soccer", "Cycling", "Running", "Yoga",
 		"Dancing" };
 	
-	public EditActivityFlowAPI(AutomationTest automation, File model,
+	public EditActivityFlowByChangeActivityTypeAPI(AutomationTest automation, File model,
 			boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
@@ -53,6 +52,7 @@ public class EditActivityFlowAPI extends ModelAPI {
 	public void e_holdToEditActivity() {
 		Timeline.openTile("1:00am");
 		Gui.touchATaggedView("UIButton", 1000);
+		ShortcutsTyper.delayTime(2000);
 		HomeSettings.tapOKAtNewGoalPopup();
 	}
 
