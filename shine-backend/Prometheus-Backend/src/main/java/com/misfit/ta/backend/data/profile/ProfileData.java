@@ -26,8 +26,17 @@ public class ProfileData {
 	protected String latestVersion;
 	protected String wearingPosition;
 	protected DisplayUnit displayedUnits;
+	protected Misc misc;
 	
-	protected String handle;
+	public Misc getMisc() {
+        return misc;
+    }
+
+    public void setMisc(Misc misc) {
+        this.misc = misc;
+    }
+
+    protected String handle;
 	protected Integer privacy;
 	protected String avatar;
 	protected String email;
@@ -61,6 +70,9 @@ public class ProfileData {
 			
 			if (displayedUnits != null)
 				object.accumulate("displayedUnits", displayedUnits.toJson());
+			
+			if (misc != null)
+                object.accumulate("misc", misc.toJson());
 			
 			object.accumulate("handle", handle);
 			object.accumulate("privacy", privacy);
@@ -122,6 +134,9 @@ public class ProfileData {
 
 			if (!json.isNull("displayedUnits"))
 				obj.setDisplayedUnits(DisplayUnit.fromJson(json.getJSONObject("displayedUnits")));
+			
+			if (!json.isNull("misc"))
+                obj.setDisplayedUnits(DisplayUnit.fromJson(json.getJSONObject("misc")));
 			
 			if (!json.isNull("handle"))
 				obj.setHandle(json.getString("handle"));

@@ -202,7 +202,10 @@ public class OpenAPI extends RequestHelper {
 			requestInf.addHeader("Cookie", cookie);
 
 		ServiceResponse response = get(url, authenticateServerPort, requestInf);
-		if (response.getStatusCode() != 200) {
+		if (response.getStatusCode() == 302) {
+		    
+		}
+		else if (response.getStatusCode() != 200) {
 		    throw new IllegalStateException("Cant get auth dialog: error code = " + response.getStatusCode());
 		}
 		BaseResult result = new BaseResult(response);
@@ -757,8 +760,12 @@ public class OpenAPI extends RequestHelper {
 	
 	public static void confirmSubcription(String subcriptionUrl) {
 		
+	    int port = 443;
+	    if (subcriptionUrl!= null && !subcriptionUrl.contains("https")) {
+	        port = 80;
+	    }
 		BaseParams requestInf = new BaseParams();
-		get(subcriptionUrl, 443, requestInf);
+		get(subcriptionUrl, port, requestInf);
 		
 	}
 	

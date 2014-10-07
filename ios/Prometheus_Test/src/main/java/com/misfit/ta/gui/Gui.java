@@ -1003,6 +1003,24 @@ public class Gui {
 		NuRemoteClient.sendToServer(cmd2);
     }
     
+    
+    public static boolean isDoingQuietSync() {
+        String message = "(Gui printView)";
+       
+        NuRemoteClient.sendToServer(message, true, false);
+        String result = NuRemoteClient.getLastMessage();
+        
+        if(!result.isEmpty() && result.contains("Syncing...")) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static void main (String[] args) {
+        Gui.init("192.168.1.244");
+        System.out.println("LOG [Gui.main]: " + isDoingQuietSync());
+    }
+    
 }
 
 

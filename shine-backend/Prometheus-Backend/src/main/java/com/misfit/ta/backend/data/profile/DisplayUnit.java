@@ -5,10 +5,9 @@ import com.google.resting.json.JSONObject;
 
 public class DisplayUnit {
 
-	// fields
-	private Integer weightUnit;
-	private Integer distanceUnit;
-	private Integer temperatureScale;
+    private Integer weightUnit;
+    private Integer distanceUnit;
+    private Integer temperatureScale;
 
 	// constructors
 	public DisplayUnit() {

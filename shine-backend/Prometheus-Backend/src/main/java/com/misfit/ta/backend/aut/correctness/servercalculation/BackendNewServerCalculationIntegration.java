@@ -766,7 +766,7 @@ public class BackendNewServerCalculationIntegration extends BackendServerCalcula
 			String userId = MVPApi.getUserId(token);
 			
 			// parse test metadata file
-			long currentTimestamp = System.currentTimeMillis() / 1000;
+			long currentTimestamp = System.currentTimeMillis() / 1000 - 3600 * 5;
 			String jsonString = FileUtils.readFileToString(new File(testFolderPath + "/" + 
 					ServerCalculationTestHelpers.TestMetaDataFile));
 			logger.info("Data: " + jsonString);

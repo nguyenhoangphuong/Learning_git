@@ -91,7 +91,7 @@ public class OpenAPINotificationServerSmokeTest extends BackendAutomation implem
 
                     JSONArray jarr = new JSONArray(messageString);
 
-                    resultLogger.log("Notification received 1111:");
+                    resultLogger.log("Notification received:");
 
                     for (int i = 0; i < jarr.length(); i++) {
 
