@@ -71,6 +71,8 @@ public class DefaultStrings {
 	public static String GoalsText = "Goals";
 	public static String ShineSettingsText = "Shine Settings";
 	public static String HitGoalText = "you hit your goal";
+	public static String ShineText = "Shine";
+	public static String FlashText = "Flash";
 	
 	public static String IncorrectSignInMessage = "Incorrect email or password, please check and try again.";
 	public static String WalkingLeftText = "of walking left";

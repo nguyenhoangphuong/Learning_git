@@ -20,12 +20,22 @@ public class ShineSettingsAPI extends ModelAPI {
 			boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
-
+	/**
+	 * The tests order is:
+	 * 1) Turn off clock -> back to homescreen -> check sync needed popup
+	 * 2) Change distance units
+	 * 3) Change weight units -> back to homescreen
+	 * 4) Turn on clock and change display order
+	 * The reason why we have to follow such an order is that there's a bug in re-loading views. 
+	 * For example: tap to open distance units popup, close it. After that, the views set doesn't have Show Clock text box, Press Back button...
+	 * 
+	 */
 	private boolean showProgressFirst = true;
 	private boolean useMiles = true;
 	private boolean useLbs = true;
 	private int fullScreenHeight;
 	private int fullScreenWidth;
+	private boolean isSyncNeeded = false;
 
 	/**
 	 * This method implements the Edge 'e_Init'
@@ -46,7 +56,7 @@ public class ShineSettingsAPI extends ModelAPI {
 	public void e_ChangeDisplayOrder() {
 		ShortcutsTyper.delayOne();
 		boolean isProgressShowedFirst = Settings.isProgressShowedFirst();
-		showProgressFirst = PrometheusHelper.coin();
+		showProgressFirst = false;
 		if (isProgressShowedFirst == showProgressFirst) {
 			System.out.println("****** Touch Cancel");
 			Gui.setInvalidView();
@@ -65,6 +75,7 @@ public class ShineSettingsAPI extends ModelAPI {
 			Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth,
 					Gui.getScreenHeight(), Gui.getScreenWidth(), clockButton);
 		}
+		isSyncNeeded = true;
 	}
 
 	/**
@@ -140,7 +151,7 @@ public class ShineSettingsAPI extends ModelAPI {
 		Gui.setInvalidView();
 		ShortcutsTyper.delayTime(5000);
 		Settings.tapShineSettings();
-		ShortcutsTyper.delayTime(3000);
+		ShortcutsTyper.delayTime(5000);
 	}
 
 	/**
@@ -150,10 +161,13 @@ public class ShineSettingsAPI extends ModelAPI {
 	public void e_PressBack() {
 		ShortcutsTyper.delayTime(2000);
 		Gui.setInvalidView();
-//		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
-//				DefaultStrings.SyncLaterText);
-		ShortcutsTyper.delayTime(2000);
 		Gui.touchAView("TextView", "mText", DefaultStrings.ShineSettingsText);
+		if (isSyncNeeded) {
+			ShortcutsTyper.delayTime(2000);
+			PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
+					DefaultStrings.SyncLaterText);
+			isSyncNeeded = false;
+		}
 	}
 
 	/**
@@ -169,7 +183,9 @@ public class ShineSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ToDisplayOrder() {
+		e_TurnClockOn();
 		ShortcutsTyper.delayOne();
+		Gui.setInvalidView();
 		Settings.openDisplayOrderPopup();
 	}
 
@@ -179,6 +195,7 @@ public class ShineSettingsAPI extends ModelAPI {
 	 */
 	public void e_ToDistanceView() {
 		ShortcutsTyper.delayOne();
+		Gui.setInvalidView();
 		Settings.openDistancePopup();
 	}
 
@@ -188,6 +205,7 @@ public class ShineSettingsAPI extends ModelAPI {
 	 */
 	public void e_ToWeightView() {
 		ShortcutsTyper.delayOne();
+		Gui.setInvalidView();
 		Settings.openWeightPopup(fullScreenHeight);
 	}
 
@@ -196,8 +214,10 @@ public class ShineSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_TurnClockOff() {
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(3000);
+		Gui.setInvalidView();
 		Settings.showClock(false);
+		isSyncNeeded = true;
 	}
 
 	/**
@@ -205,8 +225,10 @@ public class ShineSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_TurnClockOn() {
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(3000);
+		Gui.setInvalidView();
 		Settings.showClock(true);
+		isSyncNeeded = true;
 	}
 
 	/**

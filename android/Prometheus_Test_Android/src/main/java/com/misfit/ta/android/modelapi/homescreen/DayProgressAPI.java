@@ -49,7 +49,8 @@ public class DayProgressAPI extends ModelAPI {
 	public void e_Init() {
 		fullScreenHeight = Gui.getScreenHeight();
 		fullScreenWidth = Gui.getScreenWidth();
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(2000);
+		Gui.setInvalidView();
 		// gender, height and weight have default values such as male, 5'4"", 140lbs
 		PrometheusHelper.signUp();
 		ShortcutsTyper.delayTime(2000);

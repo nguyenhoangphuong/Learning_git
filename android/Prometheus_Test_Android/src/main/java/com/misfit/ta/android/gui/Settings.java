@@ -140,6 +140,7 @@ public class Settings {
 	}
 
 	public static void openWeightPopup(int fullScreenHeight) {
+		Gui.setInvalidView();
 		touchViewOnShineSettingsScrollView("TextView", "mText", DefaultStrings.WeightText, fullScreenHeight);
 	}
 	

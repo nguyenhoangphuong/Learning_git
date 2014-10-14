@@ -69,6 +69,7 @@ public class SignUp {
 	}
 
 	public static void linkShine() {
+		Gui.touchAView("TextView", "mText", DefaultStrings.ShineText);
 		Gui.longTouchAView("TextView", "mID",
 				DefaultStrings.SignUpLinkShineTextViewId);
 	}
