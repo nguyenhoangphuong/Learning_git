@@ -106,7 +106,7 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "authorization" })
 	public void AuthorizeUserUsingToken() {
 		
-		String returnUrl = "http://www.misfitwearables.com/";
+		String returnUrl = "http://misfit.com/";
 		
 		// log in user
 		BaseResult result = OpenAPI.logIn("nhhai16991@gmail.com", "qqqqqq");
@@ -115,16 +115,22 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 		// call authorize dialog and confirm
 		BaseResult result2 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, 
 				returnUrl, OpenAPI.RESOURCE_PROFILE, null, cookie);
-		BaseResult result3 = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result2), cookie);
+        System.out.println("LOG [OpenApiAuthorizeUsersTC.AuthorizeUserUsingCode]:=================== " + result2);
+
 		
-		String location = OpenAPI.parseReturnUrl(result3);
-		String token = OpenAPI.parseAccessToken(result3);
-		
-		logger.info(result3.getHeaderValue("Location"));
-		logger.info(location);
-		logger.info(token);
-		Assert.assertEquals(location, returnUrl, "Return url");
-		Assert.assertNotNull(token, "Return token");
+        if (result2.rawData.contains("Request for permission")) {
+            BaseResult result3 = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result2), cookie);
+            String location = OpenAPI.parseReturnUrl(result3);
+            String token = OpenAPI.parseAccessToken(result3);
+            logger.info(result3.getHeaderValue("Location"));
+            logger.info(location);
+            logger.info(token);
+            Assert.assertEquals(location, returnUrl, "Return url");
+            Assert.assertNotNull(token, "Return token");
+            
+        } else {
+            Assert.assertTrue(result2.statusCode == 200 || result2.statusCode == 304, "Error code is: " + result2.statusCode);
+        }
 	}
 	
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "authorization" })
@@ -139,6 +145,9 @@ public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 		// call authorize dialog and confirm
 		BaseResult result2 = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_CODE, clientKey, 
 				returnUrl, OpenAPI.RESOURCE_PROFILE, null, cookie);
+		
+		
+		
 		BaseResult result3 = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result2), cookie);
 		
 		String location = OpenAPI.parseReturnUrl(result3);

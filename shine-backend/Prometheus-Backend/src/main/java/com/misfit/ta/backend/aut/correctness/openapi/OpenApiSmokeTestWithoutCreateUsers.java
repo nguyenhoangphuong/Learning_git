@@ -74,7 +74,22 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
 		cookie = result.cookie;
 		
 		result = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, allScopes, null, cookie);
-		result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+		
+		
+		if (result.rawData.contains("Request for permission")) {
+            result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+            String location = OpenAPI.parseReturnUrl(result);
+            String token = OpenAPI.parseAccessToken(result);
+            logger.info(result.getHeaderValue("Location"));
+            logger.info(location);
+            logger.info(token);
+            Assert.assertEquals(location, returnUrl, "Return url");
+            Assert.assertNotNull(token, "Return token");
+            
+        } else {
+            Assert.assertTrue(result.statusCode == 200 || result.statusCode == 304, "Error code is: " + result.statusCode);
+        }
+//		result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
 		String accessTokenA = OpenAPI.parseAccessToken(result);
 		
 		
@@ -84,7 +99,23 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
 		cookie = result.cookie;
 		
 		result = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_CODE, clientKey, returnUrl, allScopes, null, cookie);
-		result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+		
+		if (result.rawData.contains("Request for permission")) {
+            result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+            String location = OpenAPI.parseReturnUrl(result);
+            String token = OpenAPI.parseAccessToken(result);
+            logger.info(result.getHeaderValue("Location"));
+            logger.info(location);
+            logger.info(token);
+            Assert.assertEquals(location, returnUrl, "Return url");
+            Assert.assertNotNull(token, "Return token");
+            
+        } else {
+            Assert.assertTrue(result.statusCode == 200 || result.statusCode == 304, "Error code is: " + result.statusCode);
+        }
+//		result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+		
+		
 		String code = OpenAPI.parseCode(result); 
 		
 		result = OpenAPI.exchangeCodeForToken(OpenAPI.GRANT_TYPE_AUTHORIZATION_CODE, code, clientKey, clientSecret, returnUrl, cookie);
