@@ -75,6 +75,9 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		result = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, allScopes, null, cookie);
 		
+		System.out
+                .println("LOG [OpenApiSmokeTestWithoutCreateUsers.OpenAPIDevPortalAuthenticationResourceAPIsSmokeTest]: --------------- 1"); 
+		
 		
 		if (result.rawData.contains("Request for permission")) {
             result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
