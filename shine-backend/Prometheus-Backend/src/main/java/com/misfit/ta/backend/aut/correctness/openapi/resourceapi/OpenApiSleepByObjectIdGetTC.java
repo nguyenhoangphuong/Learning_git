@@ -49,7 +49,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 		itemB.setServerId(TimelineItem.getTimelineItem(resultB.response).getServerId());
 		itemC.setServerId(TimelineItem.getTimelineItem(resultC.response).getServerId());
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SLEEP, ClientKey, "https://www.google.com.vn/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SLEEP, ClientKey, "http://misfit.com/");
 	}
 	
 	
@@ -118,7 +118,7 @@ public class OpenApiSleepByObjectIdGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps", "Excluded" })
 	public void GetSleepByObjectIdWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "http://misfit.com/");
 		BaseResult result = OpenAPI.getSleep(invalidScopeAccessToken, "me", itemA.getServerId());
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");

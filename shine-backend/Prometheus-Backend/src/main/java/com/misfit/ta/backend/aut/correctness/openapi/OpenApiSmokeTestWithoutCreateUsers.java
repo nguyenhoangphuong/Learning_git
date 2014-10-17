@@ -33,7 +33,7 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		String email = "nhhai16991@gmail.com";
 		String password = "qqqqqq";
-		String returnUrl = "https://www.google.com.vn/";
+		String returnUrl = "http://misfit.com";
 		String allScopes = OpenAPI.allScopesAsString();
 		
 		BaseResult result = null;

@@ -16,13 +16,13 @@ public class OpenApiExchangeTokenTC extends BackendAutomation {
 	protected static String clientKey = Settings.getParameter("MVPOpenAPIClientID");
 	protected static String clientSecret = Settings.getParameter("MVPOpenAPIClientSecret");
 	protected static String code = OpenAPI.getCode("nhhai16991@gmail.com", "qqqqqq", OpenAPI.RESOURCE_PROFILE,
-			clientKey, "https://www.google.com.vn/");
+			clientKey, "");
 	
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "exchange_token" })
 	public void ExchangeTokenMissingParameters() {
 		
-		String redirectUrl = "https://www.google.com.vn/";
+		String redirectUrl = "http://misfit.com/";
 		String grantType = OpenAPI.GRANT_TYPE_AUTHORIZATION_CODE;
 		
 		// without grant_type / code / client_id / client_secret / redirect_uri
@@ -83,7 +83,7 @@ public class OpenApiExchangeTokenTC extends BackendAutomation {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "exchange_token" })
 	public void ExchangeTokenUsingValidCode() {
 		
-		String redirectUrl = "https://www.google.com.vn/";
+		String redirectUrl = "http://misfit.com/";
 	
 		// get code using dialog/authorize and then exchange for token
 		BaseResult result = OpenAPI.exchangeCodeForToken(OpenAPI.GRANT_TYPE_AUTHORIZATION_CODE, code, 

@@ -62,7 +62,7 @@ public class OpenAPINotificationServerIOSScenerio extends BackendAutomation {
 	private static String LocalhostB = "http://0.0.0.0:8999/";
 	
 	private static String scope = OpenAPI.allScopesAsString();
-	private static String returnUrl = "https://www.google.com.vn/";
+	private static String returnUrl = "http://misfit.com/";
 	
 	private static ResultLogger resultLogger;
 	

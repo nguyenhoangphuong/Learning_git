@@ -388,7 +388,7 @@ public class OpenAPINotificationServerPerformanceTest {
 	protected static void authorizeUsersToApps(List<String> emails, final String password, List<OpenAPIThirdPartyApp> apps, int numberOfThread) {
 		
     	final String scope = OpenAPI.allScopesAsString();
-    	final String returnUrl = "https://www.google.com.vn/";
+    	final String returnUrl = "http://misfit.com/";
     	
     	Collection<Future<?>> futures = new LinkedList<Future<?>>();
     	ExecutorService executor = Executors.newFixedThreadPool(numberOfThread);

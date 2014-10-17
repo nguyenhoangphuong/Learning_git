@@ -111,7 +111,7 @@ public class OpenAPIResourceServerPerformanceTest {
 
 			accessToken = OpenAPI.getAccessToken(email, password,
 					OpenAPI.allScopesAsString(), clientKey,
-					"https://www.google.com.vn/");
+					"http://misfit.com/");
 
 			app = new OpenAPIThirdPartyApp();
 			app.setClientKey(clientKey);

@@ -47,7 +47,7 @@ public class OpenApiSessionByObjectIdGetTC extends OpenAPIAutomationBase {
 		itemB.setServerId(TimelineItem.getTimelineItem(resultB.response).getServerId());
 		itemC.setServerId(TimelineItem.getTimelineItem(resultC.response).getServerId());
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "https://www.google.com.vn/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "http://misfit.com/");
 	}
 	
 	
@@ -101,7 +101,7 @@ public class OpenApiSessionByObjectIdGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions", "Excluded" })
 	public void GetSessionByObjectIdWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "http://misfit.com/");
 		BaseResult result = OpenAPI.getSession(invalidScopeAccessToken, "me", itemA.getServerId());
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");

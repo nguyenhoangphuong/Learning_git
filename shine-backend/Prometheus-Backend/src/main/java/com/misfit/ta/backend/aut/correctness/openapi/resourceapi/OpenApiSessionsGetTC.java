@@ -74,7 +74,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		MVPApi.createTimelineItems(yourToken, batchItems);
 		MVPApi.createTimelineItems(strangerToken, batchItems);
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "https://www.google.com.vn/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "http://misfit.com/");
 	}
 	
 	
@@ -141,7 +141,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sessions", "Excluded" })
 	public void GetSessionsWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "http://misfit.com/");
 		BaseResult result = OpenAPI.getSessions(invalidScopeAccessToken, "me", fromDate, toDate);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
@@ -279,7 +279,7 @@ public class OpenApiSessionsGetTC extends OpenAPIAutomationBase {
 		
 		// query resource
 		List<String> errors = new ArrayList<String>();
-		String accessToken = OpenAPI.getAccessToken(email, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "https://www.google.com.vn/");
+		String accessToken = OpenAPI.getAccessToken(email, "qqqqqq", OpenAPI.RESOURCE_SESSION, ClientKey, "http://misfit.com/");
 		for(int i = 0; i < goalTimezoneOffsets.length; i++) {
 			
 			BaseResult result = OpenAPI.getSessions(accessToken, uid, dates[i], dates[i]);

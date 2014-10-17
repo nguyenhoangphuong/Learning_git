@@ -34,7 +34,7 @@ public class OpenAPINotificationServerAndroidScenerio extends BackendAutomation 
 	private static String Localhost = "http://0.0.0.0:8998/";
 	
 	private static String scope = OpenAPI.allScopesAsString();
-	private static String returnUrl = "https://www.google.com.vn/";
+	private static String returnUrl = "http://misfit.com/";
 	
 	private static ResultLogger resultLogger;
 	

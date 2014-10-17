@@ -14,7 +14,7 @@ import com.misfit.ta.utils.TextTool;
 public class OpenApiAuthorizeUsersTC extends BackendAutomation {
 	
 	protected static String clientKey = Settings.getParameter("MVPOpenAPIClientID");
-	protected static String returnUrl = "https://www.google.com.vn/";
+	protected static String returnUrl = "http://misfit.com";
 	
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "authorization" })

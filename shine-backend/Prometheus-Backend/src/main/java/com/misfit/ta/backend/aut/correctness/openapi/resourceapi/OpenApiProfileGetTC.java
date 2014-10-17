@@ -29,7 +29,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 		MVPApi.createProfile(yourToken, profile);
 		MVPApi.createProfile(strangerToken, profile);
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "http://misfit.com/");
 	}
 	
 	
@@ -78,7 +78,7 @@ public class OpenApiProfileGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_profile", "Excluded" })
 	public void GetProfileWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_DEVICE, ClientKey, "https://www.google.com.vn/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_DEVICE, ClientKey, "http://misfit.com/");
 		BaseResult result = OpenAPI.getProfile(invalidScopeAccessToken, "me");
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
