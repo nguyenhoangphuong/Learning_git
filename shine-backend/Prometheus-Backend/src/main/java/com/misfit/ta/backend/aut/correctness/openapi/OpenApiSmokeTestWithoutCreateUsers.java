@@ -75,10 +75,6 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		result = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, allScopes, null, cookie);
 		
-		System.out
-                .println("LOG [OpenApiSmokeTestWithoutCreateUsers.OpenAPIDevPortalAuthenticationResourceAPIsSmokeTest]: --------------- 1"); 
-		
-		
 		if (result.rawData.contains("Request for permission")) {
             result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
             String location = OpenAPI.parseReturnUrl(result);
@@ -90,7 +86,7 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
             Assert.assertNotNull(token, "Return token");
             
         } else {
-            Assert.assertTrue(result.statusCode == 200 || result.statusCode == 304, "Error code is: " + result.statusCode);
+            Assert.assertTrue(result.statusCode == 200 || result.statusCode == 302 || result.statusCode == 304, "Error code is: " + result.statusCode);
         }
 //		result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
 		String accessTokenA = OpenAPI.parseAccessToken(result);
@@ -114,7 +110,7 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
             Assert.assertNotNull(token, "Return token");
             
         } else {
-            Assert.assertTrue(result.statusCode == 200 || result.statusCode == 304, "Error code is: " + result.statusCode);
+            Assert.assertTrue(result.statusCode == 200 || result.statusCode == 304 || result.statusCode == 302, "Error code is: " + result.statusCode);
         }
 //		result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
 		
