@@ -256,7 +256,6 @@ public class RequestHelper {
             ServiceResponse sr = new ServiceResponse(response, EncodingTypes.UTF8);
             long end = System.currentTimeMillis();
             logger.info("Time taken in REST: " + (end - start));
-
             HttpEntity entity = response.getEntity();
             EntityUtils.consume(entity);
 

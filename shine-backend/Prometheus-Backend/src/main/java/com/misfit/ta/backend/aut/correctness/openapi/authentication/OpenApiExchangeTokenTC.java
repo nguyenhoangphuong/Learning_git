@@ -13,16 +13,17 @@ import com.misfit.ta.utils.TextTool;
 
 public class OpenApiExchangeTokenTC extends BackendAutomation {
 	
+    static String redirectUrl = "http://misfit.com/";
 	protected static String clientKey = Settings.getParameter("MVPOpenAPIClientID");
 	protected static String clientSecret = Settings.getParameter("MVPOpenAPIClientSecret");
 	protected static String code = OpenAPI.getCode("nhhai16991@gmail.com", "qqqqqq", OpenAPI.RESOURCE_PROFILE,
-			clientKey, "");
+			clientKey, redirectUrl);
 	
 
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "exchange_token" })
 	public void ExchangeTokenMissingParameters() {
 		
-		String redirectUrl = "http://misfit.com/";
+		
 		String grantType = OpenAPI.GRANT_TYPE_AUTHORIZATION_CODE;
 		
 		// without grant_type / code / client_id / client_secret / redirect_uri
@@ -93,7 +94,7 @@ public class OpenApiExchangeTokenTC extends BackendAutomation {
 		String tokenType = (String)result.getJsonResponseValue("token_type");
 		
 		Assert.assertNotNull(exchangedToken, "Exchanged token");
-		Assert.assertEquals(tokenType, "bearer", "Exchanged token type");
+		Assert.assertEquals(tokenType.toLowerCase(), "bearer", "Exchanged token type");
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
+import org.testng.Assert;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.Settings;
@@ -262,8 +263,10 @@ public class OpenAPI extends RequestHelper {
 		if(clientSecret != null)
 			requestInf.addParam("client_secret", clientSecret);
 		
-		if(redirectUrl != null)
+		if(redirectUrl != null) {
 			requestInf.addParam("redirect_uri", redirectUrl);
+			System.out.println("LOG [OpenAPI.exchangeCodeForToken]: -------- 1");
+		}
 		
 		if(cookie != null)
 			requestInf.addHeader("Cookie", cookie);
@@ -339,10 +342,26 @@ public class OpenAPI extends RequestHelper {
 		BaseResult result = OpenAPI.logIn(username, password);
 		String cookie = result.cookie;
 		
-		BaseResult result2 = authorizationDialog(RESPONSE_TYPE_TOKEN, clientKey, returnUrl, scope, null, cookie);
-		BaseResult result3 = authorizationConfirm(parseTransactionId(result2), cookie);
+		result = authorizationDialog(RESPONSE_TYPE_TOKEN, clientKey, returnUrl, scope, null, cookie);
 		
-		return parseAccessToken(result3);
+//		if (result.rawData.contains("Request for permission")) {
+//            result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+//            String location = OpenAPI.parseReturnUrl(result);
+//            String token = OpenAPI.parseAccessToken(result);
+//        } else {
+//        }
+		
+		if (result.rawData.contains("Request for permission")) {
+            result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+            String location = OpenAPI.parseReturnUrl(result);
+            String token = OpenAPI.parseAccessToken(result);
+            return parseCode(result);
+            
+        } else {
+//            Assert.assertTrue(result.statusCode == 200 || result.statusCode == 304, "Error code is: " + result.statusCode);
+            String location = OpenAPI.parseReturnUrl(result);
+            return parseCode(result);
+        }
 	}
 	
 	public static String getCode(String username, String password, String scope, String clientKey, String returnUrl) {
@@ -350,10 +369,23 @@ public class OpenAPI extends RequestHelper {
 		BaseResult result = OpenAPI.logIn(username, password);
 		String cookie = result.cookie;
 		
-		BaseResult result2 = authorizationDialog(RESPONSE_TYPE_CODE, clientKey, returnUrl, scope, null, cookie);
-		BaseResult result3 = authorizationConfirm(parseTransactionId(result2), cookie);
+		result = authorizationDialog(RESPONSE_TYPE_CODE, clientKey, returnUrl, scope, null, cookie);
 		
-		return parseCode(result3);
+		if (result.rawData.contains("Request for permission")) {
+            result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+            String location = OpenAPI.parseReturnUrl(result);
+            String token = OpenAPI.parseAccessToken(result);
+            return parseCode(result);
+            
+        } else {
+//            Assert.assertTrue(result.statusCode == 200 || result.statusCode == 304, "Error code is: " + result.statusCode);
+            String location = OpenAPI.parseReturnUrl(result);
+            return parseCode(result);
+        }
+		
+		
+//		BaseResult result3 = authorizationConfirm(parseTransactionId(result2), cookie);
+		
 	}
 	
 	public static List<OpenAPIThirdPartyApp> getAllApps(String cookie) {
