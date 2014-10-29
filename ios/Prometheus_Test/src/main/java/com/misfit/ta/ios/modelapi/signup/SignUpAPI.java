@@ -143,7 +143,7 @@ public class SignUpAPI extends ModelAPI {
     
     public void v_HomeScreen() {
     	// Swipe to get through first time's tutorial
-    	ShortcutsTyper.delayTime(1000);
+    	PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabelForShine, 10);
     	PrometheusHelper.handleTutorial();
     	
     	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");
