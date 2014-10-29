@@ -139,6 +139,7 @@ public class AddFriendsAPI extends ModelAPI {
 	
 	public void v_HomeScreen() {
 		
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.TodayTitle, 10);
 		Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");
 	}
 	
