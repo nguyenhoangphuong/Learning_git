@@ -31,6 +31,10 @@ public class BaseParams {
 		this.addHeader("locale", CurrentLocale);
 		this.addHeader("Content-Type", "application/json");
 	}
+	
+	public BaseParams(String accessKeyId){
+		this.addHeader("access_key_id", accessKeyId);
+	}
 
 	// public functions to add params/headers
 	public void addBasicAuthorizationHeader(String username, String password) {
