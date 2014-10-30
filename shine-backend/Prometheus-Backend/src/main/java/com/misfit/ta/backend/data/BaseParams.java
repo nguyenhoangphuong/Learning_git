@@ -34,6 +34,7 @@ public class BaseParams {
 	
 	public BaseParams(String accessKeyId){
 		this.addHeader("access_key_id", accessKeyId);
+		this.addHeader("Content-Type", "application/json");
 	}
 
 	// public functions to add params/headers

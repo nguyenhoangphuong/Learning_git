@@ -46,6 +46,21 @@ public class MetaWatchModel {
 		return calHmac(data, key);
 	}
 	
+	public String calSignatureWithoutUserId(String key){
+		String data = this.deviceModel + this.data;
+		return calHmac(data, key);
+	}
+	
+	public String calSignatureWithoutDeviceModel(String key){
+		String data = this.userId + this.data;
+		return calHmac(data, key);
+	}
+	
+	public String calSignatureWithoutData(String key){
+		String data = this.userId + this.deviceModel;
+		return calHmac(data, key);
+	}
+	
 	public JSONObject toJson(){
 		try{
 			JSONObject object = new JSONObject();
