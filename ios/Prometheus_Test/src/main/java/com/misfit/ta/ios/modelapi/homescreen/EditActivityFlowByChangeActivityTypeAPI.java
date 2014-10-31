@@ -8,6 +8,7 @@ import org.testng.Assert;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.EditTagScreen;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
@@ -152,6 +153,13 @@ public class EditActivityFlowByChangeActivityTypeAPI extends ModelAPI {
 
 		// check progress circle
 		Timeline.dragDownTimeline();
+		
+		String label = "_" + steps + "_ " + DefaultStrings.StepsLabel;
+		if (ViewUtils.isExistedView("PTRichTextLabel", label))
+		{
+			Gui.touchAVIew("PTRichTextLabel", label);
+		}
+		
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", newPoint + ""),
 				"Total points updated correctly");
 		Timeline.dragUpTimeline();

@@ -134,6 +134,8 @@ public class DefaultStrings {
 	public static String ForwardLabel = ">>";
 	public static String BackwardLabel = "<<";
 	
+	public static String StepsLabel = "steps";
+	
 	// edit tag
 	public static String EditTagTitle = "Edit Tag";
 	public static String PointLostPopupMessage = "Changing to this tag will decrease the amount of points earned.";
