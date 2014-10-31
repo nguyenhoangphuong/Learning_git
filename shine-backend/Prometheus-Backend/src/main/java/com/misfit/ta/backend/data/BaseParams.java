@@ -36,6 +36,12 @@ public class BaseParams {
 		this.addHeader("access_key_id", accessKeyId);
 		this.addHeader("Content-Type", "application/json");
 	}
+	
+	public BaseParams(String accessKeyId, boolean isBeddit){
+		this.addHeader("access_key_id", accessKeyId);
+		this.addHeader("Content-Type", "multipart/form-data");
+		this.addHeader("boundary", "----WebKitFormBoundaryrGKCBY7qhFd3TrwA");
+	}
 
 	// public functions to add params/headers
 	public void addBasicAuthorizationHeader(String username, String password) {

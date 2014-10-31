@@ -12,7 +12,7 @@ import com.misfit.ta.backend.data.MetaWatch.MetaWatchModel;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.utils.TextTool;
 
-public class MVPMetawatchApi extends RequestHelper {
+public class MVPDCApi extends RequestHelper {
 	 // logger
     protected static Logger logger = Util.setupLogger(MVPApi.class);
 
@@ -47,5 +47,12 @@ public class MVPMetawatchApi extends RequestHelper {
     public static String generateDeviceModel(){
     	int number = MVPCommon.randInt(0, models.length - 1);
     	return models[number] + TextTool.getRandomString(4,4);
+    }
+    
+    public static BaseResult pushBedditData(String accessKeyId){
+    	String url = dataCenterBaseAddress + "beddit";
+    	BaseParams requestInfo = new BaseParams(accessKeyId, true);
+    	ServiceResponse response = MVPApi.post(url, port, requestInfo);
+    	return new BaseResult(response);
     }
 }
