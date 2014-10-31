@@ -161,6 +161,16 @@ public class Timeline {
 				&& (bottomTitle == null || ViewUtils.isExistedView("UILabel",
 						bottomTitle));
 	}
+	
+	public static boolean isEditedActivityTileCorrect(String startTime,
+			String endTime, int duration, String bottomTitle) {
+
+		return ViewUtils.isExistedView("UILabel", startTime + " - " + endTime)
+				&& ViewUtils.isExistedView("UILabel", String.valueOf(duration))
+				&& ViewUtils.isExistedView("UILabel", LabelMinutes)
+				&& (bottomTitle == null || ViewUtils.isExistedView("UILabel",
+						bottomTitle));
+	}
 
 	public static boolean isDailyGoalMilestoneTileCorrect(String time,
 			int points, String[] goalMessages) {

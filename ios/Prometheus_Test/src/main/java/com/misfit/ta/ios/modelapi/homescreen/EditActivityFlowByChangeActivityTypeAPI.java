@@ -116,14 +116,14 @@ public class EditActivityFlowByChangeActivityTypeAPI extends ModelAPI {
 		int newPoint = (int) Math.floor(MVPCalculator.calculatePointForNewTag(
 				steps, mins, currentActivity));
 		System.out.println("New point : " + newPoint);
-		checkNewTileAndProgress(newPoint);
+		checkEditedTileAndProgress(newPoint);
 	}
 
 	private void capture() {
 		Gui.captureScreen("EditActivityFlow-" + System.nanoTime());
 	}
 
-	private void checkNewTileAndProgress(int newPoint) {
+	/*private void checkNewTileAndProgress(int newPoint) {
 
 		// check tile updated and progress
 		Timeline.openTile("1:00am - 1:05am");
@@ -138,6 +138,22 @@ public class EditActivityFlowByChangeActivityTypeAPI extends ModelAPI {
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", newPoint + ""),
 				"Total points updated correctly");
 		Timeline.dragUpTimeline();
-	}
+	}*/
 
+	private void checkEditedTileAndProgress(int newPoint) {
+
+		// check tile updated and progress
+		Timeline.openTile("1:00am - 1:05am");
+		Timeline.openTile("1:00am");
+		capture();
+		Assert.assertTrue(Timeline.isEditedActivityTileCorrect("1:00am", "1:05am",
+				mins, null), "Activity updated correctly");
+		Timeline.closeCurrentTile();
+
+		// check progress circle
+		Timeline.dragDownTimeline();
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", newPoint + ""),
+				"Total points updated correctly");
+		Timeline.dragUpTimeline();
+	}
 }
