@@ -52,6 +52,8 @@ public class MVPDCApi extends RequestHelper {
     public static BaseResult pushBedditData(String accessKeyId){
     	String url = dataCenterBaseAddress + "beddit";
     	BaseParams requestInfo = new BaseParams(accessKeyId, true);
+    	
+    	
     	ServiceResponse response = MVPApi.post(url, port, requestInfo);
     	return new BaseResult(response);
     }
