@@ -11,12 +11,14 @@ public class SleepViews {
 	
 	public static boolean isNoSleepDataView() {
 		
-		return ViewUtils.isExistedView("UILabel", DefaultStrings.NoSleepDataLabel);
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.NoSleepDataLabel)
+				|| ViewUtils.isExistedView("UILabel", DefaultStrings.SyncShineToSeeSleepLabel)
+				|| ViewUtils.isExistedView("UILabel", DefaultStrings.SyncFlashToSeeSleepLabel);
 	}
 	
 	public static boolean isSyncToSeeSleepView() {
 		
-		return ViewUtils.isExistedView("UILabel", DefaultStrings.SyncToSeeSleepLabel);
+		return ViewUtils.isExistedView("UILabel", DefaultStrings.SyncShineToSeeSleepLabel);
 	}
 
 	public static boolean isTonightUtilitiesView() {
