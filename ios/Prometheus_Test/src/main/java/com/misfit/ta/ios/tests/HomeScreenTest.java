@@ -13,7 +13,7 @@ import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.ios.modelapi.homescreen.DayInPastAPI;
 import com.misfit.ta.ios.modelapi.homescreen.DayProgressAPI;
 import com.misfit.ta.ios.modelapi.homescreen.EditActivityFlowByChangeActivityTypeAPI;
-import com.misfit.ta.ios.modelapi.homescreen.EditActivityMilestonesAPI;
+import com.misfit.ta.ios.modelapi.homescreen.CreateActivityMilestonesAPI;
 import com.misfit.ta.ios.modelapi.homescreen.LogActivityAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SetAlarmAPI;
 import com.misfit.ta.ios.modelapi.homescreen.SetWeightGoalAPI;
@@ -90,14 +90,14 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "EditTag", "KnownIssue" })
-    public void EditActivityTagMilestones() throws InterruptedException, StopConditionException, IOException
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "KnownIssue" })
+    public void CreateActivityMilestones() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
-        model.add("EditTagToHitMilestones", new EditActivityMilestonesAPI(this, 
-        		Files.getFile("model/homescreen/EditActivityMilestones.graphml"),
+        model.add("InputDataToHitMilestones", new CreateActivityMilestonesAPI(this, 
+        		Files.getFile("model/homescreen/CreateActivityMilestones.graphml"),
                 true, new NonOptimizedShortestPath(new EdgeCoverage(1.0)), false));
-        model.execute("EditTagToHitMilestones");
+        model.execute("InputDataToHitMilestones");
     }
     
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SleepRemoving" })
