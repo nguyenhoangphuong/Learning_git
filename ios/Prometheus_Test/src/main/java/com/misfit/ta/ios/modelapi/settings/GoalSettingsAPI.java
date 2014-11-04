@@ -51,7 +51,7 @@ public class GoalSettingsAPI extends ModelAPI {
 		PrometheusHelper.inputManualRecord(new String[] { "1", "00", "am" }, 5, 500);
 		ShortcutsTyper.delayOne();
 		Gui.swipeUp(5000);
-		HomeScreen.tap180MinNap();
+		HomeScreen.tap8HourSleep();
 		ShortcutsTyper.delayOne();
 		HomeScreen.tapSave();
 	}
