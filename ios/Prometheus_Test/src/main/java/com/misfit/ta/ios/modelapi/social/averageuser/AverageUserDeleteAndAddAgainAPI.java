@@ -120,7 +120,7 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 	
 	public void v_LeaderboardDeleted() {
 		
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.LeaderBoardYesterdayButtonLabel);
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.LeaderBoardYesterdayButtonLabel, 10);
 		Assert.assertTrue(LeaderboardView.isDefaultView(), "Current view is leaderboard view");
 		
 		Assert.assertTrue(!ViewUtils.isExistedView("UILabel", "misterfit"), "Average user's handle is not visible");
