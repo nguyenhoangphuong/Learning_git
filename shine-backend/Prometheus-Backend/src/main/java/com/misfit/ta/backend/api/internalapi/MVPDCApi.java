@@ -1,9 +1,18 @@
 package com.misfit.ta.backend.api.internalapi;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
+import org.codehaus.jackson.map.SerializationConfig.Feature;
 import org.graphwalker.Util;
 
 import com.google.resting.component.impl.ServiceResponse;
+import com.google.resting.json.JSONWriter;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.RequestHelper;
 import com.misfit.ta.backend.data.BaseParams;
@@ -16,6 +25,7 @@ public class MVPDCApi extends RequestHelper {
 	 // logger
     protected static Logger logger = Util.setupLogger(MVPApi.class);
 
+    protected static final String filePath = "/Volumes/Source/";
     // fields
     public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
     public static Integer port = Settings.getValue("MVPBackendPort") == null ? null : Integer.parseInt(Settings
@@ -56,5 +66,29 @@ public class MVPDCApi extends RequestHelper {
     	
     	ServiceResponse response = MVPApi.post(url, port, requestInfo);
     	return new BaseResult(response);
+    }
+    
+    public static boolean generateBedditDataFile(){
+    	String fileName = "sleep_" + MVPDCApi.generateUserId();
+    	try{
+    		MetaWatchModel metaWatch = new MetaWatchModel();
+    		metaWatch.setData(MVPDCApi.generateDataForMetawatch());
+    		metaWatch.setUserId(MVPDCApi.generateUserId());
+    		metaWatch.setDeviceModel(MVPDCApi.generateDeviceModel());
+    		metaWatch.setSignature(metaWatch.calSignature("assd"));
+    		File file = new File(filePath + fileName);
+    		
+    		ObjectMapper mapper = new ObjectMapper();
+    		mapper.configure(Feature.INDENT_OUTPUT, true);
+
+    		String text = metaWatch.toJson().toString();
+			mapper.writeValue(file, text);
+			System.err.println(text);
+			
+    	}catch(Exception e){
+    		System.err.println("Problem when writing file!" + e.getMessage());
+    		return false;
+    	}
+    	return true;
     }
 }

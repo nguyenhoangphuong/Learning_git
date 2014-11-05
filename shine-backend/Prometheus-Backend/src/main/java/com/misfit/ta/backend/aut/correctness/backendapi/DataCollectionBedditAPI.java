@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.testng.annotations.Test;
 
+import com.misfit.ta.backend.api.internalapi.MVPDCApi;
 import com.misfit.ta.backend.api.internalapi.MultipartUtility;
 import com.misfit.ta.backend.aut.BackendAutomation;
 
@@ -39,6 +40,8 @@ public class DataCollectionBedditAPI extends BackendAutomation{
 		} catch (IOException ex) {
 			System.err.println(ex);
 		}
+		
+//		MVPDCApi.generateBedditDataFile();
 //		try{
 //		 BufferedReader br = new BufferedReader(new FileReader("/Users/trunghoang/Downloads/sleep_1413745423_1413745440"));
 //		 StringBuilder sb = new StringBuilder();
