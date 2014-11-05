@@ -131,7 +131,6 @@ public class SearchFriendsAPI extends ModelAPI {
 	
 	public void v_SearchFriendInitial() {
 		
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.SearchFriendTitle, 10);
 		Assert.assertTrue(SearchFriendView.isSearchFriendView(), "Current view is search friend view");
 		Assert.assertTrue(SearchFriendView.hasPendingStatus(hRequestedByMe), hRequestedByMe + " status: PENDING");
 		Assert.assertTrue(SearchFriendView.hasPendingStatus(hIgnoredMe), hIgnoredMe + " status: PENDING");

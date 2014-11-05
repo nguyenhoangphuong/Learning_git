@@ -156,7 +156,6 @@ public class EditSocialProfileAPI extends ModelAPI {
 	
 	public void v_SocialProfile() {
 		
-		PrometheusHelper.waitForView("UILabel", DefaultStrings.SocialProfileViewTitle, 10);
 		Assert.assertTrue(SocialProfileView.isSocialProfileView(), "Current view is SocialProfile");
 	}
 	
