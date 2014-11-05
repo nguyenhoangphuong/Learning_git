@@ -194,6 +194,8 @@ public class CreateSocialProfileAPI extends ModelAPI {
 	public void v_WorldView() {
 	
 		Assert.assertTrue(WorldFeedView.isWorldViewDefault(), "Current view is World Feed with records");
+		
+		PrometheusHelper.waitForView("UIButton", DefaultStrings.SaveButton);
 		Assert.assertTrue(WorldFeedView.hasPrivacyOptionPanel(), "Include option is prompted");
 	}
 
