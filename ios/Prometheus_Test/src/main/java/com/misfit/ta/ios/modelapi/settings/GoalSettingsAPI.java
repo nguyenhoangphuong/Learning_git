@@ -190,7 +190,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	
 	public void v_WeightTimeline() {
 
-		Assert.assertTrue(HomeScreen.isWeightTimeline(), "Current view is HomeScreen - Weight");
+		Assert.assertTrue(HomeScreen.isWeightTimeline("63.5") || HomeScreen.isWeightTimeline("140.0"), "Current view is HomeScreen - Weight");
 	}
 	
 	public void v_ActivityGoalSettings() {
