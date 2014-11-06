@@ -162,4 +162,16 @@ public class BackendGraphItemCreateTC extends BackendAutomation {
 		Assert.assertEquals(listResult.size(), listGraphItem.size(), "Not the same graph_item in graph_activity_day"); 
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
+	public void createGraphItemWithTimestampNull(){
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		GraphItem graphItem = DefaultValues.RandomGraphItem();
+		graphItem.setTimestamp(null);
+		BaseResult r = MVPApi.createGraphItem(token, graphItem);
+//		GraphItem item = GraphItem.getGraphItem(r.response);
+
+//		Assert.assertTrue(r.isOK(), "Status code is 200");
+//		Assert.assertTrue(item.getServerId() != null, "Server Id is not null");
+
+	}
 }
