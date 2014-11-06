@@ -78,6 +78,7 @@ public class AverageUserDeleteAndAddAgainAPI extends ModelAPI {
 		
 		LeaderboardView.pullToRefresh();
 		PrometheusHelper.handleUpdateFirmwarePopup();
+		ShortcutsTyper.delayOne();
 		HomeScreen.goToTodayViewOfLeaderboard();
 	}
 	
