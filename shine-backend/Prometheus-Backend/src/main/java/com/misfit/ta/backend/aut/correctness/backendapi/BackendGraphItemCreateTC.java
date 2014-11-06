@@ -168,10 +168,27 @@ public class BackendGraphItemCreateTC extends BackendAutomation {
 		GraphItem graphItem = DefaultValues.RandomGraphItem();
 		graphItem.setTimestamp(null);
 		BaseResult r = MVPApi.createGraphItem(token, graphItem);
-//		GraphItem item = GraphItem.getGraphItem(r.response);
 
-//		Assert.assertTrue(r.isOK(), "Status code is 200");
-//		Assert.assertTrue(item.getServerId() != null, "Server Id is not null");
+		Assert.assertEquals(r.statusCode, 400, "Status code is 400");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
+	public void createGraphItemWithNegativeTimestamp(){
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		GraphItem graphItem = DefaultValues.RandomGraphItem();
+		graphItem.setTimestamp(-graphItem.getTimestamp());
+		BaseResult r = MVPApi.createGraphItem(token, graphItem);
 
+		Assert.assertEquals(r.statusCode, 400, "Status code is 400");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
+	public void createGraphItemWithTimestampZero(){
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		GraphItem graphItem = DefaultValues.RandomGraphItem();
+		graphItem.setTimestamp(0l);
+		BaseResult r = MVPApi.createGraphItem(token, graphItem);
+
+		Assert.assertEquals(r.statusCode, 400, "Status code is 400");
 	}
 }
