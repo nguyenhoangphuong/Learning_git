@@ -51,7 +51,7 @@ public class MVPDCApi extends RequestHelper {
     }
     
     public static String generateUserId(){
-    	return TextTool.getRandomString(6, 6) + System.nanoTime();
+    	return TextTool.getRandomString(6, 6) + System.nanoTime() + "@misfitqa.com";
     }
     
     public static String generateDeviceModel(){

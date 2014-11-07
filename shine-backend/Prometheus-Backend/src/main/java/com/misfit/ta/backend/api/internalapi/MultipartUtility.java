@@ -27,10 +27,10 @@ public class MultipartUtility {
     private final String boundary;
     private static final String LINE_FEED = "\r\n";
     private HttpsURLConnection httpConn;
-    private String charset;
     private OutputStream outputStream;
     private PrintWriter writer;
- 
+    private StringBuilder strBuilder;
+    private String charset;
     /**
      * This constructor initializes a new HTTP POST request with content type
      * is set to multipart/form-data
@@ -41,7 +41,6 @@ public class MultipartUtility {
     public MultipartUtility(String requestURL, String charset)
             throws IOException {
         this.charset = charset;
-         
 //      creates a unique boundary based on time stamp
         boundary = "===" + System.currentTimeMillis() + "===";
          
@@ -57,6 +56,7 @@ public class MultipartUtility {
         outputStream = httpConn.getOutputStream();
         writer = new PrintWriter(new OutputStreamWriter(outputStream, charset),
                 true);
+        strBuilder = new StringBuilder();
     }
  
     /**
@@ -71,6 +71,12 @@ public class MultipartUtility {
         writer.append(LINE_FEED);
         writer.append(value).append(LINE_FEED);
         writer.flush();
+        
+        strBuilder.append("--" + boundary).append(LINE_FEED);
+        strBuilder.append("Content-Disposition: form-data; name=\"" + name + "\"")
+                .append(LINE_FEED);
+        strBuilder.append(LINE_FEED);
+        strBuilder.append(value).append(LINE_FEED);
     }
  
     /**
@@ -95,6 +101,18 @@ public class MultipartUtility {
         writer.append(LINE_FEED);
         writer.flush();
  
+        strBuilder.append("--" + boundary).append(LINE_FEED);
+        strBuilder.append(
+                "Content-Disposition: form-data; name=\"" + fieldName
+                        + "\"; filename=\"" + fileName + "\"")
+                .append(LINE_FEED);
+        strBuilder.append(
+                "Content-Type: "
+                        + URLConnection.guessContentTypeFromName(fileName))
+                .append(LINE_FEED);
+        strBuilder.append("Content-Transfer-Encoding: binary").append(LINE_FEED);
+        strBuilder.append(LINE_FEED);
+        
         FileInputStream inputStream = new FileInputStream(uploadFile);
         byte[] buffer = new byte[4096];
         int bytesRead = -1;
@@ -116,6 +134,8 @@ public class MultipartUtility {
     public void addHeaderField(String name, String value) {
         writer.append(name + ": " + value).append(LINE_FEED);
         writer.flush();
+       
+        strBuilder.append(name + ": " + value).append(LINE_FEED);
     }
      
     /**
@@ -131,6 +151,9 @@ public class MultipartUtility {
         writer.append("--" + boundary + "--").append(LINE_FEED);
         writer.close();
  
+        strBuilder.append(LINE_FEED);
+        strBuilder.append("--" + boundary + "--").append(LINE_FEED);
+        
         // checks server's status code first
         int status = httpConn.getResponseCode();
         if (status == HttpsURLConnection.HTTP_OK) {
@@ -139,13 +162,14 @@ public class MultipartUtility {
             String line = null;
             while ((line = reader.readLine()) != null) {
                 response.add(line);
+                strBuilder.append(line);
             }
             reader.close();
             httpConn.disconnect();
         } else {
             throw new IOException("Server returned non-OK status: " + status);
         }
- 
+        System.err.println(strBuilder.toString());
         return response;
     }
 }
