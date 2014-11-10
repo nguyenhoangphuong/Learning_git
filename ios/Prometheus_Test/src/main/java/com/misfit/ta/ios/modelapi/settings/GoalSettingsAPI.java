@@ -164,7 +164,7 @@ public class GoalSettingsAPI extends ModelAPI {
 
 		HomeSettings.tapOKAtNewGoalPopup();
 		HomeScreen.tapOpenSettingsTrayWithoutPopupHandling();
-		HomeScreen.tapProgressCircle();
+		//HomeScreen.tapProgressCircle();
 	}
 
 	
