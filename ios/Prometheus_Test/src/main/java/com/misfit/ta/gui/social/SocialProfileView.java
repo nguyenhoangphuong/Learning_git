@@ -100,7 +100,7 @@ public class SocialProfileView {
 	
 	static public void tapCapturePhoto() {
 		
-		Gui.touchAVIew("UIButton", 1);
+		Gui.touchAVIew("UIButton", 0);
 	}
 	
 	static public void tapCancelCapturePhoto() {
