@@ -25,7 +25,7 @@ import com.misfit.ta.utils.Files;
 public class SocialFeatureTest extends AutomationTest 
 {
 
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "CreateSocialProfile" })
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "CreateSocialProfile", "iOSUI" })
     public void CreateSocialProfile() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -37,7 +37,7 @@ public class SocialFeatureTest extends AutomationTest
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "EditSocialProfile" })
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "EditSocialProfile", "iOSUI" })
     public void EditSocialProfile() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -50,7 +50,7 @@ public class SocialFeatureTest extends AutomationTest
     }
 
 	
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AddFriends" })
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AddFriends", "iOSUI" })
     public void AddFriends() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -62,7 +62,7 @@ public class SocialFeatureTest extends AutomationTest
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "SearchFriends" })
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "SearchFriends", "iOSUI" })
     public void SearchFriends() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -74,7 +74,7 @@ public class SocialFeatureTest extends AutomationTest
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "IgnoreFriends" })
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "IgnoreFriends", "iOSUI" })
     public void IgnoreFriends() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -86,7 +86,7 @@ public class SocialFeatureTest extends AutomationTest
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "DeleteFriends" })
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "DeleteFriends", "iOSUI" })
     public void DeleteFriends() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -98,7 +98,7 @@ public class SocialFeatureTest extends AutomationTest
         System.out.println(actualResult);
     }
 
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "Leaderboard" })
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "Leaderboard", "iOSUI" })
     public void LeaderboardTest() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -110,7 +110,7 @@ public class SocialFeatureTest extends AutomationTest
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "WorldFeed" })
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "WorldFeed", "iOSUI" })
     public void WorldFeedTest() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -123,7 +123,7 @@ public class SocialFeatureTest extends AutomationTest
     }
 	
 	
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AverageUserAutoFriend" })
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AverageUserAutoFriend", "iOSUI" })
     public void AverageUserAutoFriend() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -136,7 +136,7 @@ public class SocialFeatureTest extends AutomationTest
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AverageUserDeleteAndAddAgain" })
+	@Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SocialFeature", "AverageUserDeleteAndAddAgain", "iOSUI" })
     public void AverageUserDeleteAndAddAgain() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();

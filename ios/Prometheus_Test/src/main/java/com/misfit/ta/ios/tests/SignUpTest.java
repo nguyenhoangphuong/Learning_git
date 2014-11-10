@@ -19,7 +19,7 @@ import com.misfit.ta.utils.Files;
 
 public class SignUpTest extends AutomationTest {
     
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpFlow" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpFlow", "iOSUI" })
     public void SignUp() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("SignUp", new SignUpAPI(this, Files.getFile("model/signup/SignUp.graphml"), false,
@@ -30,7 +30,7 @@ public class SignUpTest extends AutomationTest {
         System.out.println(actualResult);
     }
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpFlow" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpFlow", "iOSUI" })
 	public void SignUpWithFlash() throws InterruptedException, StopConditionException, IOException {
 		ModelHandler model = getModelhandler();
 		model.add("SignUpWithFlash", new SignUpWithFlashAPI(this, Files.getFile("model/signup/SignUpWithFlash.graphml"), false,
@@ -41,7 +41,7 @@ public class SignUpTest extends AutomationTest {
 		System.out.println(actualResult);
 	}
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpBedditFlow" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpBedditFlow", "iOSUI" })
     public void SignUpWithBeddit() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("SignUpWithBeddit", new SignUpWithBedditAPI(this, Files.getFile("model/signup/SignUpWithBeddit.graphml"), 
@@ -52,7 +52,7 @@ public class SignUpTest extends AutomationTest {
         System.out.println(actualResult);
     }
 
-    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpInvalid" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpInvalid", "iOSUI" })
     public void InvalidSignUp() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("InvalidSignUp", new InvalidSignUpAPI(this, Files
@@ -64,7 +64,7 @@ public class SignUpTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpGoal" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "SignUp", "SignUpGoal", "iOSUI" })
     public void SignUpGoal() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("SignUpGoal", new SignUpGoalAPI(this, Files

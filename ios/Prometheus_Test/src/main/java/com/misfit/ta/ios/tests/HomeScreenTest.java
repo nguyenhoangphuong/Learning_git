@@ -27,7 +27,7 @@ import com.misfit.ta.utils.Files;
 public class HomeScreenTest extends AutomationTest 
 {
 
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "DayProgress", "iOSUI" })
     public void TodayProgress() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -39,7 +39,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "HomeScreen", "DayInPast", "Excluded" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "HomeScreen", "DayInPast", "Excluded", "iOSUI" })
     public void DayInPast() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -54,7 +54,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
 
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "TaggingActivity" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "TaggingActivity", "iOSUI" })
     public void TaggingActivity() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -66,7 +66,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "WeekView" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "WeekView", "iOSUI" })
     public void WeekView() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -78,7 +78,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "EditTag" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "EditTag", "iOSUI" })
     public void EditActivityByChangeActivityTypeTagFlow() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -90,7 +90,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "KnownIssue" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "KnownIssue", "iOSUI" })
     public void CreateActivityMilestones() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -100,7 +100,7 @@ public class HomeScreenTest extends AutomationTest
         model.execute("InputDataToHitMilestones");
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SleepRemoving" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SleepRemoving", "iOSUI" })
     public void SleepRemoving() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -112,7 +112,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
 
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SetWeightGoal" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SetWeightGoal", "iOSUI" })
     public void SetWeightGoal() throws InterruptedException, StopConditionException, IOException
     {
         ModelHandler model = getModelhandler();
@@ -124,7 +124,7 @@ public class HomeScreenTest extends AutomationTest
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SetAlarm" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "SetAlarm", "iOSUI" })
     public void SetAlarm() throws InterruptedException, StopConditionException, IOException
     {
     	ModelHandler model = getModelhandler();
@@ -136,7 +136,7 @@ public class HomeScreenTest extends AutomationTest
     	System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "TrackTaggingActivity" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "TrackTaggingActivity", "iOSUI" })
     public void TrackTaggingActivity() throws InterruptedException, StopConditionException, IOException
     {
     	ModelHandler model = getModelhandler();
@@ -148,7 +148,7 @@ public class HomeScreenTest extends AutomationTest
     	System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "LogActivity" })
+    @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "LogActivity", "iOSUI" })
     public void LogActivity() throws InterruptedException, StopConditionException, IOException
     {
     	ModelHandler model = getModelhandler();

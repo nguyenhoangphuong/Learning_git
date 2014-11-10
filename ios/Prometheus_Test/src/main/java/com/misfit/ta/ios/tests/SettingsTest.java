@@ -52,7 +52,7 @@ public class SettingsTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "GoalSettings" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "GoalSettings", "iOSUI" })
     public void GoalSettings_Weight() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("GoalSettingsWeight", new GoalSettingsAPI(this, Files.getFile("model/settings/GoalSettingsWeight.graphml"),
@@ -63,7 +63,7 @@ public class SettingsTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "UnitSettings" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "UnitSettings", "iOSUI" })
     public void UnitSettings() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("UnitSettings", new UnitSettingsAPI(this, Files.getFile("model/settings/UnitSettings.graphml"),
@@ -74,7 +74,7 @@ public class SettingsTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "WearingShine" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "WearingShine", "iOSUI" })
     public void WearingShine() throws InterruptedException, StopConditionException, IOException {
         ModelHandler model = getModelhandler();
         model.add("WearingShine", new WearingShineAPI(this, Files.getFile("model/settings/WearingShine.graphml"),
@@ -85,7 +85,7 @@ public class SettingsTest extends AutomationTest {
         System.out.println(actualResult);
     }
     
-    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "DevicesSettings" })
+    @Test(groups = { "iOS", "Prometheus", "iOSAutomation", "Settings", "DevicesSettings", "iOSUI" })
     public void DevicesSettings() throws InterruptedException, StopConditionException, IOException {
     	ModelHandler model = getModelhandler();
     	model.add("DevicesSettings", new DeviceSettingsAPI(this, Files.getFile("model/settings/DevicesSettings.graphml"),
