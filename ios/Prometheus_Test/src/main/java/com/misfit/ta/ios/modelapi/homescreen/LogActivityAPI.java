@@ -20,8 +20,8 @@ public class LogActivityAPI extends ModelAPI {
 	public static final String[] arrActivities = new String[] { "Basketball",
 			"Tennis", "Swimming", "Soccer", "Cycling", "Running", "Yoga",
 			"Dancing" };
-	public static final String[] arrLevel = new String[] { "Mild", "Moderate",
-			"Intense" };
+	public static final String[] arrLevel = new String[] { "MILD", "MODERATE",
+			"INTENSE" };
 
 	public LogActivityAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
@@ -159,7 +159,25 @@ public class LogActivityAPI extends ModelAPI {
 		boolean isChange = false;
 		String title = startTime[1] + ":" + String.format("%02d", Integer.parseInt(startTime[2])) + startTime[3].toLowerCase();
 		if(!ViewUtils.isExistedView("UILabel", title)){
-			title = startTime[1] + ":" + String.format("%02d", Integer.parseInt(startTime[2]) - 1) + startTime[3].toLowerCase();
+			Integer h = Integer.parseInt(startTime[1]);
+			Integer m = Integer.parseInt(startTime[2]);
+			String ampm = startTime[3];
+			
+			m -= 1;
+			if (m < 0)
+			{
+				m = 59;
+				h -= 1;
+				
+				if (h < 0)
+				{
+					h = 12;
+					if (ampm.equals("AM")) ampm = "PM"; else ampm = "AM";
+				}
+			}
+			
+			title = String.format("%02d", h) + ":" + String.format("%02d", m) + ampm.toLowerCase();
+			
 			isChange = true;
 		}
 		System.out.println("Title : " + title);
