@@ -186,7 +186,7 @@ public class SyncContinously {
                 }
 
                 // parse sync log and store the record
-                ShortcutsTyper.delayTime(5000);
+                ShortcutsTyper.delayTime(1800000);
 
                 // print result
                 System.out.println("-----------------------------------------------");
