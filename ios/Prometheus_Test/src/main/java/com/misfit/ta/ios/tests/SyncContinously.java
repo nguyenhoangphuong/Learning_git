@@ -24,7 +24,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class SyncContinously {
 
     public int numberOfSync = 1;
-    public String deviceIp = "192.168.1.62";
+    public String deviceIp = "192.168.169.99";
     private InstrumentHelper instrument = new InstrumentHelper();
 
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "QuietSync", "SyncContinously" })
@@ -174,7 +174,7 @@ public class SyncContinously {
                 Sync.tapToSync();
 
                 while (Gui.getProperty("PTAECASyncAnimationView", 0, "alpha").equals("1")) {
-                    ShortcutsTyper.delayTime(100);
+                	ShortcutsTyper.delayTime(100);
                 }
                 ShortcutsTyper.delayTime(3000);
 
