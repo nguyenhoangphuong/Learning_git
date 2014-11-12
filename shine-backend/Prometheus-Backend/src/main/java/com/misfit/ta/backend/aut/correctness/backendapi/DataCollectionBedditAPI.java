@@ -67,29 +67,4 @@ public class DataCollectionBedditAPI extends BackendAutomation{
 			System.err.println(ex);
         }
 	}
-	
-	@Test(groups = { "DataCollection", "BedditAPI" })
-	public void pushBedditDataWithModelNull(){
-		try {
-			MultipartUtility multipart = new MultipartUtility(requestURL,
-					charset);
-
-			multipart.addFormField("user_id", MVPDCApi.generateUserId());
-			multipart.addFormField("device_model",
-					" ");
-
-			multipart.addFilePart("thumbnail", uploadFile1);
-
-			List<String> response = multipart.finish();
-
-			System.out.println("SERVER REPLIED:");
-
-			for (String line : response) {
-				System.out.println(line);
-				Assert.assertNotEquals(line, "OK", "Test failed!");
-			}
-		} catch (IOException ex) {
-			System.err.println(ex);
-        }
-	}
 }
