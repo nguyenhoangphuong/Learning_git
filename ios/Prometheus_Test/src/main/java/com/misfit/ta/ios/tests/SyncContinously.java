@@ -14,6 +14,7 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.sync.SyncDebugLog;
 import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.InstrumentHelper;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Sync;
@@ -178,7 +179,7 @@ public class SyncContinously {
                 }
                 ShortcutsTyper.delayTime(3000);
 
-                if (Sync.hasAlert()) {
+                if (HomeScreen.hasSyncFailLabel()) {
                     failedSyncCount++;
                     Sync.tapOK();
                 } else {

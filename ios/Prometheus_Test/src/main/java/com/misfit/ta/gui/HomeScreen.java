@@ -418,6 +418,10 @@ public class HomeScreen {
 				&& DefaultStrings.WearingPositionForSwimmingTitle.equals(Gui
 						.getPopupTitle());
 	}
+	
+	public static boolean hasSyncFailLabel() {
+		return ViewUtils.isExistedView("UILabel", "S");
+	}
 
 	public static boolean hasSuggestWearingPositionForCyclingMessage() {
 		return Gui.hasAlert()
