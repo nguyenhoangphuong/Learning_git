@@ -7,6 +7,7 @@ import org.graphwalker.Util;
 import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
+import com.misfit.ios.ViewUtils;
 import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.PrometheusHelper;
@@ -65,13 +66,13 @@ public class SearchFriendsAPI extends ModelAPI {
 		
 		// log in and go to search friend view
 		PrometheusHelper.signIn(emailMe, "qwerty1");
-		ShortcutsTyper.delayTime(1000);
+		PrometheusHelper.waitForView("UILabel", DefaultStrings.UpdateFirmwareMessage, 10);
 		PrometheusHelper.handleUpdateFirmwarePopup();
-		ShortcutsTyper.delayTime(1000);
+		PrometheusHelper.waitForView("UIButton", DefaultStrings.WorldViewButtonLabel, 10);
 		HomeScreen.tapWordView();
-		ShortcutsTyper.delayTime(1000);
+		PrometheusHelper.waitForView("UIButton", DefaultStrings.SocialProfileButtonLabel, 10);
 		HomeScreen.tapSocialProfile();
-		ShortcutsTyper.delayTime(1000);
+		PrometheusHelper.waitForView("UIButton", DefaultStrings.SearchFriendButtonTag, 10);
 		SocialProfileView.tapSearchFriend();
 		PrometheusHelper.waitForThrobberToDissappear();
 		PrometheusHelper.waitForViewToDissappear("UILabel", DefaultStrings.SyncingLabel);
