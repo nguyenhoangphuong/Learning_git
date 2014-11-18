@@ -26,7 +26,7 @@ public class PrometheusHelper {
 	public static final int TAG_MANUAL_DURATION = 4;
 	public static final int TAG_MANUAL_STEPS = 5;
 	public static final int TAG_MANUAL_INTENSITY_LEVEL = 6;
-	public static String[] ThemeColor = {"Gray", "Jet", "Storm", "Topaz", "Champagne", "Coral", "Wine", "SeaGlass", "Red", "Green", "Victoria's Secret", "Silver"};
+	public static String[] ThemeColor = {"Storm", "Topaz", "Champagne", "Coral", "Wine", "SeaGlass", "Red", "Green", "Victoria's Secret", "Silver"};
 	public static String[] ThemeColorForFlash = {"Zest", "Wave", "Reef", "Onyx", "Fuschia", "Frost", "Red", "Default"};
 	/* Input Helper */
 	public static void enterEmailPassword(String email, String password) {
