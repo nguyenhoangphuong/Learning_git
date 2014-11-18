@@ -274,6 +274,7 @@ public class TaggingActivityAPI extends ModelAPI {
 	private void checkUpdatedTimeline(String[] levelTitle) {
 		
 		// check summary through process circle
+		Timeline.dragDownTimeline();
 		checkProgressCircle();
 		
 		
