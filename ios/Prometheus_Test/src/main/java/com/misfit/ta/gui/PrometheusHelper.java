@@ -284,7 +284,7 @@ public class PrometheusHelper {
 			case SignUp.SELECT_SHINE:
 				SignUp.sync();
 				Random random = new Random();
-				int number = random.nextInt(13);
+				int number = random.nextInt(9);
 				SignUp.tapSelectColorForShine(number);
 				break;
 		}
