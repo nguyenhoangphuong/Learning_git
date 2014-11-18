@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -1029,10 +1030,26 @@ public class MVPApi extends RequestHelper {
     }
 
     public static BaseResult generateNewSerialNumber(String token) {
-
+    	// 
         String url = baseAddress + "shine_serials/issue";
         BaseParams requestInf = new BaseParams();
         requestInf.addHeader("auth_token", token);
+        // device type and serial number params are optional
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
+        return new BaseResult(response);
+    }
+    
+    public static BaseResult generateNewSerialNumber(String token, String originalSerialNumber, String deviceType) {
+    	String url = baseAddress + "shine_serials/issue";
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        if (!StringUtils.isEmpty(originalSerialNumber)){
+        	requestInf.addParam("serial_number", originalSerialNumber);
+        }
+        // Device type: "shine" for Shine and "venus" for Flash
+        if (!StringUtils.isEmpty(deviceType)){
+        	requestInf.addParam("device_type", deviceType);
+        }
 
         ServiceResponse response = MVPApi.post(url, port, requestInf);
         return new BaseResult(response);
