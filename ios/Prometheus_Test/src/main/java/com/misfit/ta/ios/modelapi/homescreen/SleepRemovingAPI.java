@@ -36,6 +36,7 @@ public class SleepRemovingAPI extends ModelAPI {
 		// input 1 sleep and 1 nap
 		HomeScreen.tapOpenManualInput();
 		Gui.swipeUp(5000);
+		Gui.swipeUp(500);
 		HomeScreen.tap8HourSleep(); // 1st sleep
 		HomeScreen.tap8HourSleep(); // 2nd sleep
 		HomeScreen.tapSave();
