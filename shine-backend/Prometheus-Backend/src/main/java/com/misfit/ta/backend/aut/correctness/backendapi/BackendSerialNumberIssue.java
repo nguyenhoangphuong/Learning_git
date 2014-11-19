@@ -42,7 +42,7 @@ public class BackendSerialNumberIssue extends BackendAutomation{
 	@Test(groups = { "Prometheus", "MVPBackend", "api", "SerialNumber" })
 	public void GenerateNewSerialNumberSuccessFully(){
 		String serial = getRandomNumber(10);
-		BaseResult result = MVPApi.generateNewSerialNumber(token, serial, "venus");
+		BaseResult result = MVPApi.issueNewSerialNumber(token, serial, "venus");
 		Assert.assertEquals(result.statusCode, 200, "Generate SN for flash successfully");
 		String serialNumber = getSerialNumber(result);
 		
@@ -51,7 +51,7 @@ public class BackendSerialNumberIssue extends BackendAutomation{
 		Assert.assertEquals(getDuplicatedStatus(result), 0, "Duplicated status");
 		
 		serial = getRandomNumber(10);
-		result = MVPApi.generateNewSerialNumber(token, serial, "shine");
+		result = MVPApi.issueNewSerialNumber(token, serial, "shine");
 		Assert.assertEquals(result.statusCode, 200, "Generate SN for flash successfully");
 		serialNumber = getSerialNumber(result);
 		
@@ -64,37 +64,37 @@ public class BackendSerialNumberIssue extends BackendAutomation{
 	public void GenerateNewSerialNumberWithInvalidData(){
 		// Invalid device type
 		String serial = getRandomNumber(10);
-		BaseResult result = MVPApi.generateNewSerialNumber(token, serial, TextTool.getRandomString(6));
+		BaseResult result = MVPApi.issueNewSerialNumber(token, serial, TextTool.getRandomString(6));
 		Assert.assertEquals(result.statusCode, 400, "Invalid Device Type");
 		
 		// Device type is empty
-		result = MVPApi.generateNewSerialNumber(token, serial, " ");
+		result = MVPApi.issueNewSerialNumber(token, serial, " ");
 		Assert.assertEquals(result.statusCode, 400, "Device type is empty");
 		
 		// Device type is null
-		result = MVPApi.generateNewSerialNumber(token, serial, "");
+		result = MVPApi.issueNewSerialNumber(token, serial, "");
 		Assert.assertEquals(result.statusCode, 400, "Device type is null");
 		
 		// SerialNumber is wrong format
-		result = MVPApi.generateNewSerialNumber(token, TextTool.getRandomString(10, 10), "shine");
+		result = MVPApi.issueNewSerialNumber(token, TextTool.getRandomString(10, 10), "shine");
 		Assert.assertEquals(result.statusCode, 400, "SN is wrong format");
 		
 		// SerialNumber is empty
-		result = MVPApi.generateNewSerialNumber(token, " ", "shine");
+		result = MVPApi.issueNewSerialNumber(token, " ", "shine");
 		Assert.assertEquals(result.statusCode, 400, "SN is empty");
 		
 		// SerialNumber is null
-		result = MVPApi.generateNewSerialNumber(token, "", "shine");
+		result = MVPApi.issueNewSerialNumber(token, "", "shine");
 		Assert.assertEquals(result.statusCode, 400, "SN is null");
 		
 		// SerialNumber and device type are null
-		result = MVPApi.generateNewSerialNumber(token, "", "");
+		result = MVPApi.issueNewSerialNumber(token, "", "");
 		Assert.assertEquals(result.statusCode, 400, "SN and device type are null");
 	}
 	
 	@Test(groups = {"Prometheus", "MVPBackend", "api", "SerialNumber" })	
 	public void GenerateSNWithInvalidToken(){
-		BaseResult result = MVPApi.generateNewSerialNumber(MVPApi.generateLocalId(), "9876543210", "shine");
+		BaseResult result = MVPApi.issueNewSerialNumber(MVPApi.generateLocalId(), "9876543210", "shine");
 		Assert.assertEquals(result.statusCode, 401, "Invalid Token");
 	}
 }
