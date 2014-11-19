@@ -1055,6 +1055,26 @@ public class MVPApi extends RequestHelper {
         return new BaseResult(response);
     }
 
+    public static BaseResult generateNewSerialNumber(String token, String serialNumber, String deviceType){
+    	String url = baseAddress + "shine_serials/issue";
+//    	String queryString = "";
+//    	if(!serialNumber.isEmpty()){
+//    		queryString += "&serial_number" + serialNumber;
+//    	}
+//    	
+//    	if(!deviceType.isEmpty()){
+//    		queryString += "&device_type" + deviceType;
+//    	}
+//    	
+//    	url += "?" + queryString;
+    	BaseParams requestInfo = new BaseParams();
+    	requestInfo.addHeader("auth_token", token);
+    	requestInfo.addParam("serial_number", serialNumber);
+    	requestInfo.addParam("device_type", deviceType);
+    	
+    	ServiceResponse response = MVPApi.post(url, port, requestInfo);
+    	return new BaseResult(response);
+    }
     // sync apis
     public static ServiceResponse syncLog(String token, String log) {
 
