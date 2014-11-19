@@ -1055,7 +1055,7 @@ public class MVPApi extends RequestHelper {
         return new BaseResult(response);
     }
 
-    public static BaseResult generateNewSerialNumber(String token, String serialNumber, String deviceType){
+    public static BaseResult issueNewSerialNumber(String token, String serialNumber, String deviceType){
     	String url = baseAddress + "shine_serials/issue";
 //    	String queryString = "";
 //    	if(!serialNumber.isEmpty()){
