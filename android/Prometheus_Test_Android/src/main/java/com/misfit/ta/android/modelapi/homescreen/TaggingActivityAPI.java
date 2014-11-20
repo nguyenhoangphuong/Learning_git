@@ -7,27 +7,30 @@ import org.graphwalker.generators.PathGenerator;
 import org.testng.Assert;
 
 import com.misfit.ta.android.AutomationTest;
-import com.misfit.ta.android.Gui;
 import com.misfit.ta.android.ViewUtils;
 import com.misfit.ta.android.aut.DefaultStrings;
+import com.misfit.ta.android.gui.Gui;
 import com.misfit.ta.android.gui.HomeScreen;
 import com.misfit.ta.android.gui.PrometheusHelper;
+import com.misfit.ta.android.gui.Settings;
 import com.misfit.ta.android.hierarchyviewer.scene.ViewNode;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
 import com.misfit.ta.modelAPI.ModelAPI;
-import com.misfit.ta.report.TRS;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class DayProgressAPI extends ModelAPI {
-	public DayProgressAPI(AutomationTest automation, File model, boolean efsm,
-			PathGenerator generator, boolean weight) {
+public class TaggingActivityAPI extends ModelAPI {
+ 
+
+	public TaggingActivityAPI(AutomationTest automation, File model,
+			boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
 
 	private int lastDuration = 0;
 	private int lastSteps = 0;
 	private int hour = 6;
+	private int taggingIndex = 0;
 
 	private float lastPoints = 0f;
 	private float lastMiles = 0f;
@@ -41,6 +44,8 @@ public class DayProgressAPI extends ModelAPI {
 	private int fullScreenHeight;
 	private int fullScreenWidth;
 	private boolean isFirstTime = true;
+	private int[] TaggingType = { 2, 3, 5, 6, 7 };
+	private String[] TaggingText = {"Cycling", "Swimming", "Tennis", "Basketball", "Soccer"};
 	
 	/**
 	 * This method implements the Edge 'e_Init'
@@ -68,14 +73,15 @@ public class DayProgressAPI extends ModelAPI {
 						hour >= 10 ? String.valueOf(hour) : String.format(
 								"%02d", hour), "00");
 
-		this.lastDuration = PrometheusHelper.randInt(5, 9);
-		this.lastSteps = this.lastDuration * PrometheusHelper.randInt(10, 180);
+		this.lastDuration = PrometheusHelper.randInt(5, 7);
+		this.lastSteps = this.lastDuration * PrometheusHelper.randInt(100, 180);
 
-		HomeScreen.intputActivity(String.valueOf(this.lastDuration),
-				String.valueOf(this.lastSteps));
+		HomeScreen.inputTaggingActivity(String.valueOf(this.lastDuration),
+				String.valueOf(this.lastSteps), String.valueOf(TaggingType[taggingIndex]));
 		HomeScreen.saveManual();
 		calculateTotalProgressInfo();
 		this.hour += 1;
+		this.taggingIndex += 1;
 		
 		PrometheusHelper.pullToRefresh(fullScreenWidth, fullScreenHeight);
 		
@@ -124,7 +130,7 @@ public class DayProgressAPI extends ModelAPI {
 
 	private void calculateTotalProgressInfo() {
 		this.lastPoints = PrometheusHelper.calculatePoint(this.lastSteps,
-				this.lastDuration, MVPEnums.ACTIVITY_SLEEPING);
+				this.lastDuration, TaggingType[taggingIndex]);
 		this.lastMiles = PrometheusHelper.calculateMiles(lastSteps,
 				lastDuration, height);
 
@@ -175,6 +181,9 @@ public class DayProgressAPI extends ModelAPI {
 		System.out.println(String.format("%.1f", this.totalMiles));
 		System.out.println("Total miles: " + this.totalMiles);
 		Assert.assertTrue(displayMiles.text.equals(String.format("%.1f", this.totalMiles)));
+		
+		ViewNode activityNode = ViewUtils.findView("TextView", "mText", TaggingText[taggingIndex - 1], 0);
+		Assert.assertTrue(activityNode != null, "Tagging activity item is created OK");
 	}
 	
 	private void assertCaloriesValue() {

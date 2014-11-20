@@ -39,6 +39,7 @@ public class DefaultStrings {
 	public static String DurationEditTextId = "id/manual_duration_edit_text";
 	public static String StepsEditTextId = "id/manual_steps_edit_text";
 	public static String TimezoneEditTextId = "id/manual_timezone_edit_text";
+	public static String TaggingActivityEditTextId = "id/manual_activity_tagging_edit_text";
 	public static String ManualViewId = "id/action_manual_input_view";
 	public static String DebugViewId = "id/action_debug_input_view";
 	public static String DebugTextViewId = "id/testing_tv";

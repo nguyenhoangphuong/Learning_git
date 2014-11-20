@@ -64,7 +64,7 @@ public class SignUpAPI extends ModelAPI {
 	 */
 	public void e_Link() {
 		ShortcutsTyper.delayTime(5000);
-		SignUp.linkShine();
+		SignUp.linkShine(fullScreenHeight, fullScreenWidth);
 		
 	}
 

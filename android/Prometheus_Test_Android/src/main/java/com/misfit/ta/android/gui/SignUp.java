@@ -8,6 +8,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 import com.misfit.ta.utils.TextTool;
 
 public class SignUp {
+	public static String[] shineColors = {"Gray", "Black", "Champagne", "Coral", "Red", "SeaGlass", "Storm", "Topaz", "Wine", "Default"};
 
 	public static void chooseSignUp() {
 		Gui.touchAView("TextView", "mID", DefaultStrings.SignUpButtonTextId);
@@ -68,10 +69,12 @@ public class SignUp {
 		// TODO: add logic code here
 	}
 
-	public static void linkShine() {
+	public static void linkShine(int fullScreenHeight, int fullScreenWidth) {
 		Gui.touchAView("TextView", "mText", DefaultStrings.ShineText);
 		Gui.longTouchAView("TextView", "mID",
 				DefaultStrings.SignUpLinkShineTextViewId);
+		int colorCount = shineColors.length;
+		chooseColor(shineColors[PrometheusHelper.randInt(0, colorCount)], fullScreenHeight, fullScreenWidth);
 	}
 
 	public static void inputUnits(boolean isUS) {
@@ -113,5 +116,10 @@ public class SignUp {
 		Gui.touchAView("TextView", "mID",
 				DefaultStrings.BirthdayTextViewId);
 		PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth, DefaultStrings.SetText);
+	}
+	
+	public static void chooseColor(String color, int fullScreenHeight, int fullScreenWidth) {
+		ViewNode view = ViewUtils.findView("TextView", "mText", color, 0);
+		Gui.touchViewOnPopup(fullScreenHeight, fullScreenWidth, Gui.getScreenHeight(), Gui.getScreenWidth(), view);
 	}
 }
