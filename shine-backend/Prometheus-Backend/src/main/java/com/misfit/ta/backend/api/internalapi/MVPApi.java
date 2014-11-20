@@ -1436,6 +1436,16 @@ public class MVPApi extends RequestHelper {
         BaseResult result = new BaseResult(response);
         return result;
     }
+    
+    public static BaseResult confirmSerialNumber(String token, String serialNumber){
+    	String url = baseAddress + "shine_serials/confirm";
+    	
+    	BaseParams requestInfo = new BaseParams();
+    	requestInfo.addHeader("auth_token", token);
+    	requestInfo.addParam("serial_number", serialNumber);
+    	ServiceResponse response = MVPApi.post(url, port, requestInfo);
+    	return new BaseResult(response);
+    }
 
     // others
     public static BaseResult customRequest(String shortUrl, String verb, BaseParams params) {

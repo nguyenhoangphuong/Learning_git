@@ -75,10 +75,6 @@ public class BackendSerialNumberIssue extends BackendAutomation{
 		result = MVPApi.issueNewSerialNumber(token, serial, "");
 		Assert.assertEquals(result.statusCode, 400, "Device type is null");
 		
-		// SerialNumber is wrong format
-		result = MVPApi.issueNewSerialNumber(token, TextTool.getRandomString(10, 10), "shine");
-		Assert.assertEquals(result.statusCode, 400, "SN is wrong format");
-		
 		// SerialNumber is empty
 		result = MVPApi.issueNewSerialNumber(token, " ", "shine");
 		Assert.assertEquals(result.statusCode, 400, "SN is empty");
@@ -90,6 +86,38 @@ public class BackendSerialNumberIssue extends BackendAutomation{
 		// SerialNumber and device type are null
 		result = MVPApi.issueNewSerialNumber(token, "", "");
 		Assert.assertEquals(result.statusCode, 400, "SN and device type are null");
+		
+		// SerialNumber 
+		result = MVPApi.issueNewSerialNumber(token, "@@@@@", "");
+		Assert.assertEquals(result.statusCode, 400, "SN is @@@@@");
+	}
+	
+	@Test(groups = {"Prometheus", "MVPBackend", "api", "SerialNumber" })
+	public void ConfirmSNWithInvalidData(){
+		// SN is wrong data
+		BaseResult result = MVPApi.confirmSerialNumber(token, "@@@@@");
+		Assert.assertEquals(result.statusCode, 400, "SN is wrong data");
+		
+		// SN is null
+		result = MVPApi.confirmSerialNumber(token, "");
+		Assert.assertEquals(result.statusCode, 400, "SN is null");
+		
+		// SN is empty
+		result = MVPApi.confirmSerialNumber(token, " ");
+		Assert.assertEquals(result.statusCode, 400, "SN is empty");
+		
+		// SN is wrong data
+		result = MVPApi.confirmSerialNumber(token, "SH0AZZ0000001");
+		Assert.assertEquals(result.statusCode, 400, "SN is wrong data");
+
+		// 
+		String serial = getRandomNumber(10);
+		result = MVPApi.issueNewSerialNumber(token, serial, "venus");
+		Assert.assertEquals(result.statusCode, 200, "Generate SN for flash successfully");
+		String serialNumber = getSerialNumber(result);
+		
+		result = MVPApi.confirmSerialNumber(token, serialNumber);
+		Assert.assertEquals(result.statusCode, 200, "SN is wrong data");
 	}
 	
 	@Test(groups = {"Prometheus", "MVPBackend", "api", "SerialNumber" })	
