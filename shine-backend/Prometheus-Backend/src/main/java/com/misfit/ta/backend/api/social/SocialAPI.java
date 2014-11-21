@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.api.internalapi.social;
+package com.misfit.ta.backend.api.social;
 
 
 import java.util.List;
@@ -8,7 +8,7 @@ import org.graphwalker.Util;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;

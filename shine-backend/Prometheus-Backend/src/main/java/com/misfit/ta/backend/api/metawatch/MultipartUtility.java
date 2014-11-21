@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.api.internalapi;
+package com.misfit.ta.backend.api.metawatch;
 
 import java.io.BufferedReader;
 import java.io.File;

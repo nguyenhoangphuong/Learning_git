@@ -7,8 +7,8 @@ import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.misfit.ta.backend.api.internalapi.MVPDCApi;
-import com.misfit.ta.backend.api.internalapi.MultipartUtility;
+import com.misfit.ta.backend.api.metawatch.MVPDCApi;
+import com.misfit.ta.backend.api.metawatch.MultipartUtility;
 import com.misfit.ta.backend.aut.BackendAutomation;
 
 public class DataCollectionBedditAPI extends BackendAutomation{

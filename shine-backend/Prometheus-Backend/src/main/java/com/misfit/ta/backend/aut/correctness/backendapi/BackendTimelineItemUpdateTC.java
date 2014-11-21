@@ -3,7 +3,7 @@ package com.misfit.ta.backend.aut.correctness.backendapi;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.timeline.TimelineItem;

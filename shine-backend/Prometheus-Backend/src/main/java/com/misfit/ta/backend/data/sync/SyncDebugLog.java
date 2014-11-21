@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
 
 public class SyncDebugLog {
 

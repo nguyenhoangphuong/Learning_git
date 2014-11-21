@@ -6,7 +6,7 @@ import org.testng.annotations.*;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.profile.ProfileData;
 import com.misfit.ta.backend.data.profile.ProfileResult;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.utils.TextTool;
 

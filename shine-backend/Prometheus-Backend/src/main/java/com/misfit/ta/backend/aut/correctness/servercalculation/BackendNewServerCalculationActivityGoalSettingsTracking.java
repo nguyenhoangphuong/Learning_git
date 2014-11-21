@@ -9,8 +9,8 @@ import junit.framework.Assert;
 import org.testng.annotations.Test;
 
 import com.google.resting.json.JSONException;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.api.internalapi.UserInfo;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
+import com.misfit.ta.backend.api.metawatch.UserInfo;
 import com.misfit.ta.backend.aut.performance.newservercalculation.NewServerCalculationScenario;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.TimestampObject;

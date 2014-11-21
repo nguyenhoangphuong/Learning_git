@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.api.internalapi;
+package com.misfit.ta.backend.api.metawatch;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ import com.misfit.ta.utils.TextTool;
 public class MVPApi extends RequestHelper {
 
     // logger
-    protected static Logger logger = Util.setupLogger(MVPApi.class);
+    protected static Logger logger = Util.setupLogger(MetawatchApi.class);
 
     // fields
     public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");

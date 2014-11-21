@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.goal.Goal;

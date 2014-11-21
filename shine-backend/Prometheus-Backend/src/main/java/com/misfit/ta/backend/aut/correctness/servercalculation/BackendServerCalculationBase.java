@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.api.internalapi.UserInfo;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
+import com.misfit.ta.backend.api.metawatch.UserInfo;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.TimestampObject;

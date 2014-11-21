@@ -1,7 +1,8 @@
 package com.misfit.ta.backend.aut.quicktest;
 
 import org.testng.Assert;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+
+import com.misfit.ta.backend.api.metawatch.MVPApi;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.goal.Goal;
 import com.misfit.ta.backend.data.goal.ProgressData;

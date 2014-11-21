@@ -16,7 +16,7 @@ import org.apache.commons.io.FileUtils;
 import com.google.resting.json.JSONArray;
 import com.misfit.ta.Settings;
 import com.misfit.ta.android.DeviceManager;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
 import com.misfit.ta.backend.data.beddit.BedditSleepSession;
 import com.misfit.ta.backend.data.beddit.BedditSleepSessionProperties;
 import com.misfit.ta.backend.data.beddit.BedditSleepSessionTimeData;

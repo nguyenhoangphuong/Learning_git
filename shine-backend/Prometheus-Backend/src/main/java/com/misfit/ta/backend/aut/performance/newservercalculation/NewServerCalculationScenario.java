@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 import org.testng.Assert;
 
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.aut.correctness.servercalculation.BackendServerCalculationBase;
 import com.misfit.ta.backend.aut.correctness.social.SocialTestAutomationBase;

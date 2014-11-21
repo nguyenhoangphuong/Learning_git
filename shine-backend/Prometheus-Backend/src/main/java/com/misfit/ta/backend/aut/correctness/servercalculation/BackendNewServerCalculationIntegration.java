@@ -13,8 +13,8 @@ import org.testng.annotations.Test;
 
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
-import com.misfit.ta.backend.api.internalapi.UserInfo;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
+import com.misfit.ta.backend.api.metawatch.UserInfo;
 import com.misfit.ta.backend.aut.BackendHelper;
 import com.misfit.ta.backend.aut.performance.newservercalculation.NewServerCalculationScenario;
 import com.misfit.ta.backend.data.DataGenerator;

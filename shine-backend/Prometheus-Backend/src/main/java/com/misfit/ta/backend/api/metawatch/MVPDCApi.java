@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.api.internalapi;
+package com.misfit.ta.backend.api.metawatch;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;

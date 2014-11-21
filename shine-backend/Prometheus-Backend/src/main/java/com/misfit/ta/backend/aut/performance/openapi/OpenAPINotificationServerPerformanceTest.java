@@ -14,7 +14,7 @@ import org.graphwalker.Util;
 
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.metawatch.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.BaseResult;
