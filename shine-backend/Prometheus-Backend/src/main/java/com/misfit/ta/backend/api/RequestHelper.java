@@ -247,7 +247,7 @@ public class RequestHelper {
         return excuteHttpRequest(httpDelete);
     }
 
-    static private ServiceResponse excuteHttpRequest(HttpUriRequest httprequest) {
+    protected static ServiceResponse excuteHttpRequest(HttpUriRequest httprequest) {
 
         try {
             CloseableHttpClient httpclient = new InsecureHttpClientHelper().getInsecureCloseableHttpClient();
