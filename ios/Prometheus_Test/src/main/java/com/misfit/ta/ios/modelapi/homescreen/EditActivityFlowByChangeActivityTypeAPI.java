@@ -52,7 +52,7 @@ public class EditActivityFlowByChangeActivityTypeAPI extends ModelAPI {
 
 	public void e_holdToEditActivity() {
 		Timeline.openTile("1:00am");
-		Gui.touchATaggedView("UIButton", 1000);
+		Gui.touchATaggedView("UIButton", 1500);
 		ShortcutsTyper.delayTime(2000);
 		HomeSettings.tapOKAtNewGoalPopup();
 	}
