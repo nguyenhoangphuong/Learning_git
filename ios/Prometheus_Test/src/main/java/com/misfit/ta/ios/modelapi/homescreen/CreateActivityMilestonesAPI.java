@@ -174,13 +174,22 @@ public class CreateActivityMilestonesAPI extends ModelAPI {
 			return;
 		
 		float ppm = newPoint * 1f / mins;
-		String hit100GoalTime = String.format("1:%02dam", (int)(1000/ppm));
+		int minutes = (int)(1000/ppm);
+		String hit100GoalTime = String.format("1:%02dam", minutes);
+		String hit100GoalTime2 = String.format("1:%02dam", minutes-1);
+		String hit100GoalTime3 = String.format("1:%02dam", minutes+1);
 		
 		// check streak tile
 		Timeline.openTile("3");
 		capture();
-		errors.add(Verify.verifyTrue(Timeline.isStreakTileCorrect(hit100GoalTime, 3, Timeline.Streak3DaysMessages),
-				String.format("Streak tile [%s - 3 days] displays correctly", hit100GoalTime)));
+		errors.add(
+				Verify.verifyTrue(
+						Timeline.isStreakTileCorrect(hit100GoalTime, 3, Timeline.Streak3DaysMessages)
+						|| Timeline.isStreakTileCorrect(hit100GoalTime2, 3, Timeline.Streak3DaysMessages)
+						|| Timeline.isStreakTileCorrect(hit100GoalTime3, 3, Timeline.Streak3DaysMessages),
+						String.format("Streak tile [%s - 3 days] displays correctly", hit100GoalTime)
+				)
+		);
 		Timeline.closeStreakTile();
 	}
 
@@ -190,10 +199,11 @@ public class CreateActivityMilestonesAPI extends ModelAPI {
 			return;
 		
 		boolean pass = false;
-		for(int i = 0; i < 2 && !pass; i++) {
-			Timeline.openTile("1:05am");
+		for(int i = 0; i <= 5 && !pass; i++) {
+			String time = "1:0"+String.valueOf(i)+"am";
+			Timeline.openTile(time);
 			capture();
-			pass = Timeline.isPersonalBestTileCorrect("1:05am", newPoint, 1000, Timeline.PersonalBestMessages);
+			pass = Timeline.isPersonalBestTileCorrect(time, newPoint, 1000, Timeline.PersonalBestMessages);
 			Timeline.closeTile(Timeline.LabelPersonalBest);
 		}
 		
