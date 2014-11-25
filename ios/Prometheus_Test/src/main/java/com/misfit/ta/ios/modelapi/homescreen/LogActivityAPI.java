@@ -103,22 +103,28 @@ public class LogActivityAPI extends ModelAPI {
 		System.out.println("Current time : " + now.get(Calendar.HOUR_OF_DAY)
 				+ ":" + now.get(Calendar.MINUTE) + ":"
 				+ now.get(Calendar.SECOND));
+		
 		int hour = now.get(Calendar.HOUR_OF_DAY);
 		boolean isAM = true;
 		if(hour > 12){
 			hour -= 12;
 			isAM = false;
 		}
+		System.out.println("Hour : " + hour + " Minutes : " + now.get(Calendar.MINUTE));
 		endTime = new String[]{"Today", String.valueOf(hour), String.valueOf(now.get(Calendar.MINUTE)), isAM ? "AM" : "PM"};
+		
 		now.add(Calendar.MINUTE, -5);
-
+		hour = now.get(Calendar.HOUR_OF_DAY);
+		isAM = true;
+		if(hour > 12){
+			hour -= 12;
+			isAM = false;
+		}
 		System.out.println("New time after substracting 5 minutes : "
 				+ now.get(Calendar.HOUR_OF_DAY) + ":"
 				+ now.get(Calendar.MINUTE) + ":" + now.get(Calendar.SECOND));
-
-		
-		System.out.println("Hour : " + hour + " Minutes : " + now.get(Calendar.MINUTE));
 		startTime = new String[]{"Today", String.valueOf(hour), String.valueOf(now.get(Calendar.MINUTE)), isAM ? "AM" : "PM"};
+
 //		HomeScreen.inputTime(startTime);
 		// Choose end time
 		HomeScreen.tapEndTimeButton();
@@ -182,6 +188,7 @@ public class LogActivityAPI extends ModelAPI {
 		}
 		System.out.println("Title : " + title);
 		
+		PrometheusHelper.waitForView("UILabel", title);
 		Timeline.openTile(title);
 		Gui.captureScreen("ActivityTile-" + System.nanoTime());
 		if(isChange){
