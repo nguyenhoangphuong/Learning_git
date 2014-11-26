@@ -206,6 +206,7 @@ public class LogActivityAPI extends ModelAPI {
 		}
 		ShortcutsTyper.delayTime(2000);
 		System.out.println("Message : " + message);
+		PrometheusHelper.waitForView("UILabel", time, 10);
 		Assert.assertTrue(Timeline.isTimelineSession(time, message), "It's not correct activity tile created");
 		Timeline.closeTile(time);
 	}

@@ -215,7 +215,7 @@ public class Timeline {
 	}
 	
 	public static boolean isTimelineSession(String time, String message){
-		return ViewUtils.isExistedView("UILabel", 5) && ViewUtils.isExistedView("UILabel", "MINUTES") 
+		return ViewUtils.isExistedView("UILabel", "5") && ViewUtils.isExistedView("UILabel", "MINUTES") 
 				&& ViewUtils.isExistedView("UILabel", message) && ViewUtils.isExistedView("UILabel", time);
 	}
 
