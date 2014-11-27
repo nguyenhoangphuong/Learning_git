@@ -204,7 +204,7 @@ public class CreateActivityMilestonesAPI extends ModelAPI {
 			Timeline.openTile(time);
 			capture();
 			pass = Timeline.isPersonalBestTileCorrect(time, newPoint, 1000, Timeline.PersonalBestMessages);
-			Timeline.closeTile(Timeline.LabelPersonalBest);
+			Timeline.closeCurrentTile();
 		}
 		
 		errors.add(Verify.verifyTrue(pass, String.format("Personal best milestone [1:00am - %dpts new - 1000pts old] displays correctly", newPoint)));
