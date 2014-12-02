@@ -1475,6 +1475,15 @@ public class MVPApi extends RequestHelper {
         return result;
     }
 
+    public static BaseResult linkMetawatch(String token, String metawatchID){
+    	String url = baseAddress +  "link_metawatch";
+    	BaseParams requestInfo = new BaseParams();
+    	requestInfo.addHeader("auth_token", token);
+    	requestInfo.addParam("service_id", metawatchID);
+    	ServiceResponse response = MVPApi.post(url, port, requestInfo);
+    	return new BaseResult(response);
+    }
+    
     private static String[] flashColors = { "AZ", "BZ", "CZ", "DZ", "EZ", "FZ", "GZ" };
 
     private static String[] shineColors = { "AZ", "BZ", "CZ", "DZ", "EZ", "FZ", "GZ", "HZ", "JZ", "KZ", "LZ", "MZ" };
