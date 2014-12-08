@@ -9,7 +9,7 @@ import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
-import com.misfit.ta.backend.api.metawatch.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.common.MVPEnums;
 

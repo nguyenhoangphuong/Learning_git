@@ -7,7 +7,6 @@ import org.testng.annotations.*;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.backend.api.*;
-import com.misfit.ta.backend.api.metawatch.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 

@@ -6,7 +6,7 @@ import java.util.Random;
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
-import com.misfit.ta.backend.api.metawatch.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.sync.SyncLog;
 

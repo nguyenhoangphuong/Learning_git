@@ -23,7 +23,6 @@ import com.google.resting.component.EncodingTypes;
 import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.BackendTestEnvironment;
-import com.misfit.ta.backend.api.metawatch.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.report.TRS;

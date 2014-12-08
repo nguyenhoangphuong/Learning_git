@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import org.graphwalker.Util;
 
 import com.google.resting.json.JSONObject;
-import com.misfit.ta.backend.api.metawatch.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.goal.GoalRawData;
 import com.misfit.ta.backend.data.sync.sdk.SDKSyncEvent;
 import com.misfit.ta.backend.data.sync.sdk.SDKSyncLog;

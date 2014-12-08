@@ -1,5 +1,6 @@
 package com.misfit.ta.backend.api.metawatch;
 
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.BaseParams;
 
 public class MetawatchBaseParams extends BaseParams {

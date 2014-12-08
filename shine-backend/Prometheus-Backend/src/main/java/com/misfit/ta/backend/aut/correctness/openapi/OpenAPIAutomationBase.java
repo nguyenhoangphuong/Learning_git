@@ -4,7 +4,7 @@ package com.misfit.ta.backend.aut.correctness.openapi;
 import org.testng.annotations.BeforeClass;
 
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.api.metawatch.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.data.openapi.OpenAPIThirdPartyApp;
 

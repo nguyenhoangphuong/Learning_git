@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.api.metawatch;
+package com.misfit.ta.backend.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.api.InsecureHttpClientHelper;
-import com.misfit.ta.backend.api.RequestHelper;
+import com.misfit.ta.backend.api.metawatch.MetawatchApi;
+import com.misfit.ta.backend.api.metawatch.UserInfo;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;
