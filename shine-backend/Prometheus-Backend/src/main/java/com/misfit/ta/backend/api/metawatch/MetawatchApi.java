@@ -133,6 +133,18 @@ public class MetawatchApi extends MVPApi {
 		return new BaseResult(response);
 	}
 
+	public static BaseResult getToken(String code){
+		String url = baseAddress + "tokens/exchange";
+
+		BaseParams requestInfo = new BaseParams();
+		requestInfo.addParam("grant_type", "authorization_code");
+		requestInfo.addParam("redirect_uri", "http://localhost.com/auth/misfit/callback");
+		requestInfo.addParam("client_id", "7CmupcF7rWVjAqKR");
+		requestInfo.addParam("client_secret", "mqfxWOZvY0jIVPRvI8p8DVOQhqP1Igxz");
+		requestInfo.addParam("code", code);
+		ServiceResponse response = MVPApi.post(url, port, requestInfo);
+		return new BaseResult(response);
+	}
 	public static void main(String[] args) {
 		// registerMetawatch("mytoken", "thinh");
 		String email = "test" + System.currentTimeMillis() + "@misfitqa.com";

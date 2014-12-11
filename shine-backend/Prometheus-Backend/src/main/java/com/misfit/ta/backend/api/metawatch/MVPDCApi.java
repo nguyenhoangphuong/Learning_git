@@ -4,16 +4,19 @@ import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.graphwalker.Util;
+import org.openqa.selenium.internal.seleniumemulation.Open;
 import org.testng.Assert;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.Settings;
 import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.RequestHelper;
+import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.MetaWatch.MetaWatchModel;
 import com.misfit.ta.backend.data.MetawatchModel.MetawatchProfileModel;
+import com.misfit.ta.backend.data.account.AccountResult;
 import com.misfit.ta.common.MVPCommon;
 import com.misfit.ta.utils.TextTool;
 
@@ -104,7 +107,6 @@ public class MVPDCApi extends RequestHelper {
 	public static void main(String[] args){
 		String accessKeyId = "56915349444458734-yGW6kkeeWJsdlkfi23jifjkdflkfkjf8";
 		String secretKey = "eqFNHUAshCeQIZgSc48Yh80bTo9OVSYXkMfThspX";
-		String userId = MVPApi.generateLocalId();
 		String password = "qwerty";
 		
 //		MetaWatchModel metaWatch = new MetaWatchModel();
@@ -119,7 +121,8 @@ public class MVPDCApi extends RequestHelper {
 		System.err.println("-----Sign up misfit account");
 		// sign up
 		String email = MVPApi.generateUniqueEmail();
-		MVPApi.signUp(email, password);
+		AccountResult accountResult = MVPApi.signUp(email, password);
+		String userId = accountResult.user_id;
 //		System.err.println("-----Register");
 //		// register
 //		MetawatchApi.registerMetawatch("token", userId);
@@ -135,7 +138,13 @@ public class MVPDCApi extends RequestHelper {
 //
 //		result = MetawatchApi.getExchangeMetawatch(url);
 		System.err.println("-----Sign in meta watch account");
-		MetawatchApi.signInMetawatch(userId, email, password, true);
+		BaseResult result = MetawatchApi.signInMetawatch(userId, email, password, true);
+		String response = result.response.getResponseString();
+		String codeToken = response.substring(response.indexOf('=') + 1);
+		result = MetawatchApi.getToken(codeToken);
+		
+		OpenAPI.getCode(email, password, scope, clientKey, returnUrl);
+		
 		System.err.println("-----Push data");
 		// push data
 		MetaWatchModel metaWatch = new MetaWatchModel();
@@ -145,5 +154,10 @@ public class MVPDCApi extends RequestHelper {
 		
 		metaWatch.setSignature(metaWatch.calSignature(secretKey));
 		MVPDCApi.pushMetaWatch(accessKeyId, metaWatch);
+		System.err.println("-----Get Data");
+		
+		String startDate = "2014-12-05";
+		String endDate = "2014-12-10";
+		OpenAPI.getSessions(accessToken, "me", startDate, endDate);
 	}
 }

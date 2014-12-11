@@ -9,7 +9,7 @@ public class AccountResult extends BaseResult {
     // fields
     public String token;
     public String type;
-
+    public String user_id;
     // constructor
     public AccountResult(ServiceResponse response) {
         super(response);
@@ -20,6 +20,8 @@ public class AccountResult extends BaseResult {
                 this.token = json.getString("auth_token");
             if (!json.isNull("type"))
                 this.type = json.getString("type");
+            if (!json.isNull("user_id"))
+            	this.user_id = json.getString("user_id");
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
