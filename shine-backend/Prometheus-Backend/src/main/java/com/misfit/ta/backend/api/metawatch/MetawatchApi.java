@@ -25,9 +25,9 @@ public class MetawatchApi extends MVPApi {
 	protected static Logger logger = Util.setupLogger(MetawatchApi.class);
 
 	// fields
-	 public static String baseAddress = Settings
-	 .getValue("MVPOpenAPIMetawatchRegister");
-//	public static String baseAddress = "http://192.168.18.255:2100/auth/";
+//	 public static String baseAddress = Settings
+//	 .getValue("MVPOpenAPIMetawatchRegister");
+	public static String baseAddress = "http://192.168.18.255:2100/auth/";
 
 	public static Integer port = Settings.getValue("MVPBackendPort") == null ? null
 			: Integer.parseInt(Settings.getValue("MVPBackendPort"));
@@ -109,7 +109,8 @@ public class MetawatchApi extends MVPApi {
 	}
 
 	public static BaseResult getExchangeMetawatch(String url) {
-		ServiceResponse response = MVPApi.get(url, port, null);
+		BaseParams requestInfo = new MetawatchBaseParams();
+		ServiceResponse response = MVPApi.get(url, port, requestInfo);
 		return new BaseResult(response);
 	}
 

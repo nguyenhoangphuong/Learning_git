@@ -108,6 +108,7 @@ public class MVPDCApi extends RequestHelper {
 		String accessKeyId = "56915349444458734-yGW6kkeeWJsdlkfi23jifjkdflkfkjf8";
 		String secretKey = "eqFNHUAshCeQIZgSc48Yh80bTo9OVSYXkMfThspX";
 		String password = "qwerty";
+		String userId = MVPApi.generateLocalId();
 		
 //		MetaWatchModel metaWatch = new MetaWatchModel();
 //		metaWatch.setData(generateByteDataForMetaWatch());
@@ -118,46 +119,41 @@ public class MVPDCApi extends RequestHelper {
 //		BaseResult result = MVPDCApi.pushMetaWatch(accessKeyId, metaWatch);
 		
 		// Step to get result
-		System.err.println("-----Sign up misfit account");
-		// sign up
+		// register
+		System.err.println("-----Register");
 		String email = MVPApi.generateUniqueEmail();
-		AccountResult accountResult = MVPApi.signUp(email, password);
-		String userId = accountResult.user_id;
-//		System.err.println("-----Register");
-//		// register
-//		MetawatchApi.registerMetawatch("token", userId);
+		System.err.println("UserId : " + userId);
+		MetawatchApi.registerMetawatch("token", userId);
 //		// sign up && create profile
 //		// create profile
-//		System.err.println("-----Profile");
-//		MetawatchProfileModel profile = MetawatchApi.DefaultProfile();
-//		BaseResult result = MetawatchApi.createProfileMetawatch(email, password, profile,
-//				userId);
-//		// call get method
-//		String response = result.response.getResponseString();
-//		String url = response.substring(response.indexOf('h'));
-//
-//		result = MetawatchApi.getExchangeMetawatch(url);
-		System.err.println("-----Sign in meta watch account");
-		BaseResult result = MetawatchApi.signInMetawatch(userId, email, password, true);
+		System.err.println("-----Profile");
+		MetawatchProfileModel profile = MetawatchApi.DefaultProfile();
+		BaseResult result = MetawatchApi.createProfileMetawatch(email, password, profile,
+				userId);
+		// call get method
 		String response = result.response.getResponseString();
-		String codeToken = response.substring(response.indexOf('=') + 1);
-		result = MetawatchApi.getToken(codeToken);
-		
-		OpenAPI.getCode(email, password, scope, clientKey, returnUrl);
-		
+		String url = response.substring(response.indexOf('h'));
+
+		result = MetawatchApi.getExchangeMetawatch(url);
+		System.err.println("-----Sign in meta watch account");
+		result = MetawatchApi.signInMetawatch(userId, email, password, true);
+		response = result.response.getResponseString();
+		url = response.substring(response.indexOf('h'));
+		System.err.println("-----Get access token");
+		result = MetawatchApi.getExchangeMetawatch(url);
 		System.err.println("-----Push data");
 		// push data
-		MetaWatchModel metaWatch = new MetaWatchModel();
-		metaWatch.setData(generateByteDataForMetaWatch());
-		metaWatch.setUserId(userId);
-		metaWatch.setDeviceModel(MVPDCApi.generateDeviceModel());
-		
-		metaWatch.setSignature(metaWatch.calSignature(secretKey));
-		MVPDCApi.pushMetaWatch(accessKeyId, metaWatch);
-		System.err.println("-----Get Data");
-		
-		String startDate = "2014-12-05";
-		String endDate = "2014-12-10";
-		OpenAPI.getSessions(accessToken, "me", startDate, endDate);
+//		MetaWatchModel metaWatch = new MetaWatchModel();
+//		metaWatch.setData(generateByteDataForMetaWatch());
+//		metaWatch.setUserId(userId);
+//		metaWatch.setDeviceModel(MVPDCApi.generateDeviceModel());
+//		
+//		metaWatch.setSignature(metaWatch.calSignature(secretKey));
+//		MVPDCApi.pushMetaWatch(accessKeyId, metaWatch);
+//		System.err.println("-----Get Data");
+//		
+//		String startDate = "2014-12-05";
+//		String endDate = "2014-12-10";
+//		OpenAPI.getSessions(accessToken, "me", startDate, endDate);
 	}
 }
