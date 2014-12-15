@@ -1484,6 +1484,11 @@ public class MVPApi extends RequestHelper {
     	return new BaseResult(response);
     }
     
+    public static void main(String[] args){
+    	String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qwerty").token;
+    	BaseResult result = linkMetawatch(token, MVPApi.generateUniqueEmail());
+    }
+    
     private static String[] flashColors = { "AZ", "BZ", "CZ", "DZ", "EZ", "FZ", "GZ" };
 
     private static String[] shineColors = { "AZ", "BZ", "CZ", "DZ", "EZ", "FZ", "GZ", "HZ", "JZ", "KZ", "LZ", "MZ" };
@@ -1520,8 +1525,8 @@ public class MVPApi extends RequestHelper {
     }
 
     // test
-    public static void main(String[] args) throws JSONException {
-
-    }
+//    public static void main(String[] args) throws JSONException {
+//
+//    }
 
 }
