@@ -48,6 +48,13 @@ public class HomeScreen {
 		Gui.longTouchAView("EditText", "mID", DefaultStrings.DurationEditTextId);
 		Gui.type(duration);
 	}
+	
+	public static void inputTaggingActivity(String duration, String steps, String taggingType) {
+		intputActivity(duration, steps);
+		ShortcutsTyper.delayOne();
+		Gui.longTouchAView("EditText", "mID", DefaultStrings.TaggingActivityEditTextId);
+		Gui.type(taggingType);
+	}
 
 	public static void cancelManual() {
 		Gui.touchAView("Button", "mText", DefaultStrings.CancelText);

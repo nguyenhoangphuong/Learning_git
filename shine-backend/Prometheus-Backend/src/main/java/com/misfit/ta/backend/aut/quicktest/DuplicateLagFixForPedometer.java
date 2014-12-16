@@ -2,7 +2,7 @@ package com.misfit.ta.backend.aut.quicktest;
 
 import org.testng.Assert;
 
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.DataGenerator;
 import com.misfit.ta.backend.data.pedometer.Pedometer;

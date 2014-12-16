@@ -17,6 +17,7 @@ import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.EditTagScreen;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
+import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
@@ -24,16 +25,16 @@ import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class EditActivityMilestonesAPI extends ModelAPI {
+public class CreateActivityMilestonesAPI extends ModelAPI {
 	
-	public EditActivityMilestonesAPI(AutomationTest automation, File model, boolean efsm,
+	public CreateActivityMilestonesAPI(AutomationTest automation, File model, boolean efsm,
 			PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
 	private String email = PrometheusHelper.signUpDefaultProfile();
 	private String password = "qwerty1";
 	private int steps = 5000;
-	private int mins = 50;
+	private int mins = 5;
 	private List<String> errors = new ArrayList<String>();
 	
 	public void e_init() {
@@ -64,51 +65,14 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 		Timeline.dragUpTimelineAndHandleTutorial();	
 	}
 	
-	public void e_holdToEditActivity() {
-	
-		Timeline.holdAndPressTile("1:00am");
-	}
-	
-	public void e_changeToSwimming() {
-
-		EditTagScreen.selectActivity(DefaultStrings.SwimmingLabel);
-		EditTagScreen.tapSave();
-	}
-	
-	public void e_confirmSyncAlert() {
-		
-		Sync.tapPopupSyncLater();
-	}
-	
-	public void e_SignOut() {
-		PrometheusHelper.signOut();
-	}
-	 
-	public void e_SignIn() {
-		PrometheusHelper.signIn(email, password);
-		ShortcutsTyper.delayTime(2000);
-	}
-	
-	
-	
 	public void v_HomeScreen() {
 		
 		Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen - Today");
 	}
 	
-	public void v_EditActivityTag() {
-		
-		Assert.assertTrue(EditTagScreen.isEditTagScreen(), "Current view is Edit Tag");
-	}
-	
-	public void v_SyncRequireAlert() {
-		
-		Assert.assertTrue(Sync.hasShineOutOfSyncMessage(), "Sync require alert shows up");
-	}
-
 	public void v_HomeScreenUpdated() {
 
-		int newPoint = (int) Math.floor(MVPCalculator.calculatePointForNewTag(steps, mins, MVPEnums.ACTIVITY_SWIMMING));
+		int newPoint = (int) Math.floor(MVPCalculator.calculatePointForNewTag(steps, mins, MVPEnums.ACTIVITY_RUNNING)) + 2;
 
 		checkDailyGoalMilestone(newPoint);
 		checkStreakMilestone(newPoint);
@@ -150,7 +114,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 			boolean pass = false;
 			for(int i = 0; i < 2 && !pass; i++) {
 				
-				Timeline.openTile(hit100GoalTime);
+				Timeline.openTile("100");
 				capture();
 				pass = Timeline.isDailyGoalMilestoneTileCorrect(hit100GoalTime, 1000, Timeline.DailyGoalMessagesFor100Percent);
 				Timeline.closeMilestoneTile();
@@ -170,7 +134,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 				String hit150GoalTime = String.format("1:%02dam", startMin + i);
 				if(ViewUtils.isExistedView("UILabel", hit150GoalTime)) {
 					
-					Timeline.openTile(hit150GoalTime);
+					Timeline.openTile("150");
 					capture();
 					pass = Timeline.isDailyGoalMilestoneTileCorrect(hit150GoalTime, 1500, Timeline.DailyGoalMessagesFor150Percent);
 					Timeline.closeMilestoneTile();
@@ -192,7 +156,7 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 				String hit200GoalTime = String.format("1:%02dam", startMin + i);
 				if(ViewUtils.isExistedView("UILabel", hit200GoalTime)) {
 					
-					Timeline.openTile(hit200GoalTime);
+					Timeline.openTile("200");
 					capture();
 					pass = Timeline.isDailyGoalMilestoneTileCorrect(hit200GoalTime, 2000, Timeline.DailyGoalMessagesFor200Percent);
 					Timeline.closeMilestoneTile();
@@ -210,13 +174,22 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 			return;
 		
 		float ppm = newPoint * 1f / mins;
-		String hit100GoalTime = String.format("1:%02dam", (int)(1000/ppm));
+		int minutes = (int)(1000/ppm);
+		String hit100GoalTime = String.format("1:%02dam", minutes);
+		String hit100GoalTime2 = String.format("1:%02dam", minutes-1);
+		String hit100GoalTime3 = String.format("1:%02dam", minutes+1);
 		
 		// check streak tile
 		Timeline.openTile("3");
 		capture();
-		errors.add(Verify.verifyTrue(Timeline.isStreakTileCorrect(hit100GoalTime, 3, Timeline.Streak3DaysMessages),
-				String.format("Streak tile [%s - 3 days] displays correctly", hit100GoalTime)));
+		errors.add(
+				Verify.verifyTrue(
+						Timeline.isStreakTileCorrect(hit100GoalTime, 3, Timeline.Streak3DaysMessages)
+						|| Timeline.isStreakTileCorrect(hit100GoalTime2, 3, Timeline.Streak3DaysMessages)
+						|| Timeline.isStreakTileCorrect(hit100GoalTime3, 3, Timeline.Streak3DaysMessages),
+						String.format("Streak tile [%s - 3 days] displays correctly", hit100GoalTime)
+				)
+		);
 		Timeline.closeStreakTile();
 	}
 
@@ -226,11 +199,12 @@ public class EditActivityMilestonesAPI extends ModelAPI {
 			return;
 		
 		boolean pass = false;
-		for(int i = 0; i < 2 && !pass; i++) {
-			Timeline.openTile("1:00am");
+		for(int i = 0; i <= 5 && !pass; i++) {
+			String time = "1:0"+String.valueOf(i)+"am";
+			Timeline.openTile(time);
 			capture();
-			pass = Timeline.isPersonalBestTileCorrect("1:00am", newPoint, 1000, Timeline.PersonalBestMessages);
-			Timeline.closeTile(Timeline.LabelPersonalBest);
+			pass = Timeline.isPersonalBestTileCorrect(time, newPoint, 1000, Timeline.PersonalBestMessages);
+			Timeline.closeCurrentTile();
 		}
 		
 		errors.add(Verify.verifyTrue(pass, String.format("Personal best milestone [1:00am - %dpts new - 1000pts old] displays correctly", newPoint)));

@@ -10,7 +10,7 @@ import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.ResultLogger;
@@ -62,7 +62,7 @@ public class OpenAPINotificationServerIOSScenerio extends BackendAutomation {
 	private static String LocalhostB = "http://0.0.0.0:8999/";
 	
 	private static String scope = OpenAPI.allScopesAsString();
-	private static String returnUrl = "https://www.google.com.vn/";
+	private static String returnUrl = "http://misfit.com/";
 	
 	private static ResultLogger resultLogger;
 	

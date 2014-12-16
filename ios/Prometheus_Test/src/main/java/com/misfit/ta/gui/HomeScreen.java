@@ -374,6 +374,11 @@ public class HomeScreen {
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.CurrentWeightLabel);
 	}
 	
+	public static boolean isWeightTimeline(String currentWeightLabel) {
+
+		return ViewUtils.isExistedView("UILabel", currentWeightLabel);
+	}
+	
 	public static boolean isWeightTimelineInitial() {
 
 		return ViewUtils.isExistedView("UILabel", DefaultStrings.SetWeightGoalButton);
@@ -412,6 +417,10 @@ public class HomeScreen {
 						.getPopupContent())
 				&& DefaultStrings.WearingPositionForSwimmingTitle.equals(Gui
 						.getPopupTitle());
+	}
+	
+	public static boolean hasSyncFailLabel() {
+		return ViewUtils.isExistedView("UILabel", "S");
 	}
 
 	public static boolean hasSuggestWearingPositionForCyclingMessage() {

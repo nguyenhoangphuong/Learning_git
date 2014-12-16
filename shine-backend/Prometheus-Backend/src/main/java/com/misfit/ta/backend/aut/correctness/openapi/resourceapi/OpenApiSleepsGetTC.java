@@ -9,7 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.correctness.openapi.OpenAPIAutomationBase;
@@ -70,7 +70,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		MVPApi.createTimelineItems(yourToken, batchItems);
 		MVPApi.createTimelineItems(strangerToken, batchItems);
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SLEEP, ClientKey, "https://www.google.com.vn/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_SLEEP, ClientKey, "http://misfit.com/");
 	}
 	
 	
@@ -142,7 +142,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_sleeps", "Excluded" })
 	public void GetSleepsWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "http://misfit.com/");
 		BaseResult result = OpenAPI.getSleeps(invalidScopeAccessToken, "me", fromDate, toDate);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");
@@ -334,7 +334,7 @@ public class OpenApiSleepsGetTC extends OpenAPIAutomationBase {
 		
 		// query resource
 		List<String> errors = new ArrayList<String>();
-		String accessToken = OpenAPI.getAccessToken(email, "qqqqqq", OpenAPI.RESOURCE_SLEEP, ClientKey, "https://www.google.com.vn/");
+		String accessToken = OpenAPI.getAccessToken(email, "qqqqqq", OpenAPI.RESOURCE_SLEEP, ClientKey, "http://misfit.com/");
 		for(int i = 0; i < goalTimezoneOffsets.length - 1; i++) {
 			
 			BaseResult result = OpenAPI.getSleeps(accessToken, uid, dates[i], dates[i]);

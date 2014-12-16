@@ -23,7 +23,6 @@ import com.google.resting.component.EncodingTypes;
 import com.google.resting.component.content.IContentData;
 import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.backend.BackendTestEnvironment;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.report.TRS;
@@ -247,7 +246,7 @@ public class RequestHelper {
         return excuteHttpRequest(httpDelete);
     }
 
-    static private ServiceResponse excuteHttpRequest(HttpUriRequest httprequest) {
+    protected static ServiceResponse excuteHttpRequest(HttpUriRequest httprequest) {
 
         try {
             CloseableHttpClient httpclient = new InsecureHttpClientHelper().getInsecureCloseableHttpClient();
@@ -256,7 +255,6 @@ public class RequestHelper {
             ServiceResponse sr = new ServiceResponse(response, EncodingTypes.UTF8);
             long end = System.currentTimeMillis();
             logger.info("Time taken in REST: " + (end - start));
-
             HttpEntity entity = response.getEntity();
             EntityUtils.consume(entity);
 

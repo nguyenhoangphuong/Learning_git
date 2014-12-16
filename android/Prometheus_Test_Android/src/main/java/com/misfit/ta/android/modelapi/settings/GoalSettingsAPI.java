@@ -108,6 +108,8 @@ public class GoalSettingsAPI extends ModelAPI {
 	 * 
 	 */
 	public void e_ToGoalSettings() {
+		ShortcutsTyper.delayTime(2000);
+		Gui.setInvalidView();
 		HomeScreen.openDashboardMenu(fullScreenHeight, fullScreenWidth);
 		ShortcutsTyper.delayTime(2000);
 		Gui.setInvalidView();
@@ -175,10 +177,11 @@ public class GoalSettingsAPI extends ModelAPI {
 					"This is not sync needed popup.");
 			PrometheusHelper.dismissPopup(fullScreenHeight, fullScreenWidth,
 					DefaultStrings.SyncLaterText);
-			ShortcutsTyper.delayOne();
 		}
 		
 		if (currentGoal != -1) {
+			ShortcutsTyper.delayTime(3000);
+			Gui.setInvalidView();
 			ViewNode homescreenGoal = ViewUtils.findView("TextView", "mID",
 					DefaultStrings.GoalHomeScreenTextViewId, 0);
 			String homescreenText = homescreenGoal.text;

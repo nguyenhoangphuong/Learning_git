@@ -17,7 +17,7 @@ import com.misfit.ta.utils.Files;
 
 public class TimezoneTest extends AutomationTest {
 	
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "TimeZone" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "TimeZone", "iOSUI" })
 	public void ChangeTimezoneBackwardSameday() throws InterruptedException, StopConditionException, IOException 
 	{
 		ModelHandler model = getModelhandler();
@@ -30,7 +30,7 @@ public class TimezoneTest extends AutomationTest {
 		System.out.println(actualResult);
 	}
 
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "TimeZone" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "TimeZone", "iOSUI" })
 	public void ChangeTimezoneForwardSameday() throws InterruptedException, StopConditionException, IOException 
 	{
 		ModelHandler model = getModelhandler();
@@ -43,7 +43,7 @@ public class TimezoneTest extends AutomationTest {
 		System.out.println(actualResult);
 	}
 
-	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "TimeZone" })
+	@Test(groups = { "iOS", "Prometheus", "iOSAutomation", "TimeZone", "iOSUI" })
 	public void ChangeTimezoneBackwardDifferentDays() throws InterruptedException, StopConditionException, IOException 
 	{
 		ModelHandler model = getModelhandler();

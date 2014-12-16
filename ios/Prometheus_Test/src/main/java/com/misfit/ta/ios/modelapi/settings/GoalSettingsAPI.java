@@ -51,7 +51,7 @@ public class GoalSettingsAPI extends ModelAPI {
 		PrometheusHelper.inputManualRecord(new String[] { "1", "00", "am" }, 5, 500);
 		ShortcutsTyper.delayOne();
 		Gui.swipeUp(5000);
-		HomeScreen.tap180MinNap();
+		HomeScreen.tap8HourSleep();
 		ShortcutsTyper.delayOne();
 		HomeScreen.tapSave();
 	}
@@ -164,7 +164,7 @@ public class GoalSettingsAPI extends ModelAPI {
 
 		HomeSettings.tapOKAtNewGoalPopup();
 		HomeScreen.tapOpenSettingsTrayWithoutPopupHandling();
-		HomeScreen.tapProgressCircle();
+		//HomeScreen.tapProgressCircle();
 	}
 
 	
@@ -190,7 +190,7 @@ public class GoalSettingsAPI extends ModelAPI {
 	
 	public void v_WeightTimeline() {
 
-		Assert.assertTrue(HomeScreen.isWeightTimeline(), "Current view is HomeScreen - Weight");
+		Assert.assertTrue(HomeScreen.isWeightTimeline("63.5") || HomeScreen.isWeightTimeline("140.0"), "Current view is HomeScreen - Weight");
 	}
 	
 	public void v_ActivityGoalSettings() {

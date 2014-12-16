@@ -9,7 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.google.resting.component.impl.ServiceResponse;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
@@ -77,7 +77,7 @@ public class ShineBackendSmokeTestWithoutCreateUsers extends BackendAutomation {
 		//Create graph item
 		List<GraphItem> listGraphItem = new ArrayList<GraphItem>();
 		for(int i = 0; i < 55; i++){
-			GraphItem graphItem = DefaultValues.RandomGraphItem(2020*i);
+			GraphItem graphItem = DefaultValues.RandomGraphItem(2020 * i);
 			graphItem.setAverageValue(i * 1.0);
 			graphItem.setTimestamp(calendar.getTimeInMillis()/1000);
 			System.out.println("Timestamp : " +  graphItem.getTimestamp());

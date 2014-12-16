@@ -161,6 +161,16 @@ public class Timeline {
 				&& (bottomTitle == null || ViewUtils.isExistedView("UILabel",
 						bottomTitle));
 	}
+	
+	public static boolean isEditedActivityTileCorrect(String startTime,
+			String endTime, int duration, String bottomTitle) {
+
+		return ViewUtils.isExistedView("UILabel", startTime + " - " + endTime)
+				&& ViewUtils.isExistedView("UILabel", String.valueOf(duration))
+				&& ViewUtils.isExistedView("UILabel", LabelMinutes)
+				&& (bottomTitle == null || ViewUtils.isExistedView("UILabel",
+						bottomTitle));
+	}
 
 	public static boolean isDailyGoalMilestoneTileCorrect(String time,
 			int points, String[] goalMessages) {
@@ -205,7 +215,7 @@ public class Timeline {
 	}
 	
 	public static boolean isTimelineSession(String time, String message){
-		return ViewUtils.isExistedView("UILabel", 5) && ViewUtils.isExistedView("UILabel", "MINUTES") 
+		return ViewUtils.isExistedView("UILabel", "5") && ViewUtils.isExistedView("UILabel", "MINUTES") 
 				&& ViewUtils.isExistedView("UILabel", message) && ViewUtils.isExistedView("UILabel", time);
 	}
 

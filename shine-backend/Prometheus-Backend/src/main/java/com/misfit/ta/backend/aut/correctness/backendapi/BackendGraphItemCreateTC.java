@@ -7,7 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.google.resting.component.impl.ServiceResponse;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.data.BaseResult;
@@ -162,4 +162,33 @@ public class BackendGraphItemCreateTC extends BackendAutomation {
 		Assert.assertEquals(listResult.size(), listGraphItem.size(), "Not the same graph_item in graph_activity_day"); 
 	}
 	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
+	public void createGraphItemWithTimestampNull(){
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		GraphItem graphItem = DefaultValues.RandomGraphItem();
+		graphItem.setTimestamp(null);
+		BaseResult r = MVPApi.createGraphItem(token, graphItem);
+
+		Assert.assertEquals(r.statusCode, 400, "Status code is 400");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
+	public void createGraphItemWithNegativeTimestamp(){
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		GraphItem graphItem = DefaultValues.RandomGraphItem();
+		graphItem.setTimestamp(-graphItem.getTimestamp());
+		BaseResult r = MVPApi.createGraphItem(token, graphItem);
+
+		Assert.assertEquals(r.statusCode, 400, "Status code is 400");
+	}
+	
+	@Test(groups = { "ios", "Prometheus", "MVPBackend", "api", "graph_item" })
+	public void createGraphItemWithTimestampZero(){
+		String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), password).token;
+		GraphItem graphItem = DefaultValues.RandomGraphItem();
+		graphItem.setTimestamp(0l);
+		BaseResult r = MVPApi.createGraphItem(token, graphItem);
+
+		Assert.assertEquals(r.statusCode, 400, "Status code is 400");
+	}
 }

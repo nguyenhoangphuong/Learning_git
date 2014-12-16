@@ -1,5 +1,9 @@
 package com.misfit.ta.backend.data;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -22,7 +26,9 @@ public class BaseParams {
 	public List<Header> headers = new Vector<Header>();
 	public JSONRequestParams params = new JSONRequestParams();
 	com.google.resting.component.impl.BasicRequestParams asd;
-
+	public final String boundary = "WebKitFormBoundaryrGKCBY7qhFd3TrwA";
+	private final String LINE_FEED = "\r\n";
+	private StringBuilder strBuilder;
 	// constructor
 	public BaseParams() {
 		
@@ -31,6 +37,19 @@ public class BaseParams {
 		this.addHeader("locale", CurrentLocale);
 		this.addHeader("Content-Type", "application/json");
 	}
+	
+	public BaseParams(String accessKeyId){
+		this.addHeader("access_key_id", accessKeyId);
+		this.addHeader("Content-Type", "application/json");
+	}
+	
+	public BaseParams(String accessKeyId, boolean isBeddit){
+		this.addHeader("access_key_id", accessKeyId);
+		this.addHeader("Content-Type", "multipart/form-data");
+		this.addHeader("boundary", "----" + boundary);
+		strBuilder = new StringBuilder();
+	}
+	
 
 	// public functions to add params/headers
 	public void addBasicAuthorizationHeader(String username, String password) {
@@ -56,13 +75,10 @@ public class BaseParams {
 			}
 		}
 	}
-
 	
 	public void addParam(String key, String value) {
 		params.add(key, value);
 	}
-
-	
 	
 	public String getParamsAsJsonString() {
 

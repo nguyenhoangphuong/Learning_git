@@ -14,7 +14,7 @@ import org.graphwalker.Util;
 
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.aut.ResultLogger;
 import com.misfit.ta.backend.data.BaseResult;
@@ -388,7 +388,7 @@ public class OpenAPINotificationServerPerformanceTest {
 	protected static void authorizeUsersToApps(List<String> emails, final String password, List<OpenAPIThirdPartyApp> apps, int numberOfThread) {
 		
     	final String scope = OpenAPI.allScopesAsString();
-    	final String returnUrl = "https://www.google.com.vn/";
+    	final String returnUrl = "http://misfit.com/";
     	
     	Collection<Future<?>> futures = new LinkedList<Future<?>>();
     	ExecutorService executor = Executors.newFixedThreadPool(numberOfThread);

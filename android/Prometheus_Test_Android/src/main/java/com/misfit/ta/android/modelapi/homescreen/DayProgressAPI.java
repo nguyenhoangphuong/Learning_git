@@ -49,7 +49,8 @@ public class DayProgressAPI extends ModelAPI {
 	public void e_Init() {
 		fullScreenHeight = Gui.getScreenHeight();
 		fullScreenWidth = Gui.getScreenWidth();
-		ShortcutsTyper.delayOne();
+		ShortcutsTyper.delayTime(2000);
+		Gui.setInvalidView();
 		// gender, height and weight have default values such as male, 5'4"", 140lbs
 		PrometheusHelper.signUp();
 		ShortcutsTyper.delayTime(2000);
@@ -182,9 +183,11 @@ public class DayProgressAPI extends ModelAPI {
 		System.out.println("Full BMR: " + fullBMR);
 		String caloriesText = ViewUtils.findView("TextView", "mID", DefaultStrings.CaloriesHomeScreenTextViewId, 0).text;
 		System.out.println("Display calories: " + caloriesText);
-		float result = PrometheusHelper.calculateCalories(this.totalPoints, weight, fullBMR, now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE));
+		System.out.println(this.totalPoints);
+		System.out.println(this.hour * 60);
+		float result = PrometheusHelper.calculateCalories(this.totalPoints, weight, fullBMR, this.hour * 60);
 		System.out.println("Calculated calories: " + result);
-		if (Math.abs(Float.valueOf(caloriesText) - result) > 50f) {
+		if (Math.abs(Float.valueOf(caloriesText) - result) > 200f) {
 			Assert.fail("Calories calculation is not correct");
 		}
 	}

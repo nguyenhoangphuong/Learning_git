@@ -11,7 +11,7 @@ import com.google.resting.component.impl.ServiceResponse;
 import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.aut.ResultLogger;
@@ -63,7 +63,7 @@ public class OpenAPINotificationServerSmokeTest extends BackendAutomation implem
     private static String LocalhostA = "http://0.0.0.0:" + port + "/";
 
     private static String scope = OpenAPI.allScopesAsString();
-    private static String returnUrl = "https://www.google.com.vn/";
+    private static String returnUrl = "http://misfit.com/";
 
     private static ResultLogger resultLogger;
     private static int expectedNotifcations = 0;
@@ -135,7 +135,7 @@ public class OpenAPINotificationServerSmokeTest extends BackendAutomation implem
 
         String email = "nhhai16991@gmail.com";
         String password = "qqqqqq";
-        String returnUrl = "https://www.google.com.vn/";
+        String returnUrl = "http://misfit.com/";
         
         String token = MVPApi.signIn(email, password).token;
         String uidA = MVPApi.getUserId(token);

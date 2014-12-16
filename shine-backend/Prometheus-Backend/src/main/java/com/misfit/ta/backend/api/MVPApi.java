@@ -1,4 +1,4 @@
-package com.misfit.ta.backend.api.internalapi;
+package com.misfit.ta.backend.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -21,8 +22,8 @@ import com.google.resting.json.JSONArray;
 import com.google.resting.json.JSONException;
 import com.google.resting.json.JSONObject;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.api.InsecureHttpClientHelper;
-import com.misfit.ta.backend.api.RequestHelper;
+import com.misfit.ta.backend.api.metawatch.MetawatchApi;
+import com.misfit.ta.backend.api.metawatch.UserInfo;
 import com.misfit.ta.backend.data.BaseParams;
 import com.misfit.ta.backend.data.BaseResult;
 import com.misfit.ta.backend.data.account.AccountResult;
@@ -49,7 +50,7 @@ import com.misfit.ta.utils.TextTool;
 public class MVPApi extends RequestHelper {
 
     // logger
-    protected static Logger logger = Util.setupLogger(MVPApi.class);
+    protected static Logger logger = Util.setupLogger(MetawatchApi.class);
 
     // fields
     public static String baseAddress = Settings.getValue("MVPBackendBaseAddress");
@@ -1029,15 +1030,51 @@ public class MVPApi extends RequestHelper {
     }
 
     public static BaseResult generateNewSerialNumber(String token) {
-
+    	// 
         String url = baseAddress + "shine_serials/issue";
         BaseParams requestInf = new BaseParams();
         requestInf.addHeader("auth_token", token);
+        // device type and serial number params are optional
+        ServiceResponse response = MVPApi.post(url, port, requestInf);
+        return new BaseResult(response);
+    }
+    
+    public static BaseResult generateNewSerialNumber(String token, String originalSerialNumber, String deviceType) {
+    	String url = baseAddress + "shine_serials/issue";
+        BaseParams requestInf = new BaseParams();
+        requestInf.addHeader("auth_token", token);
+        if (!StringUtils.isEmpty(originalSerialNumber)){
+        	requestInf.addParam("serial_number", originalSerialNumber);
+        }
+        // Device type: "shine" for Shine and "venus" for Flash
+        if (!StringUtils.isEmpty(deviceType)){
+        	requestInf.addParam("device_type", deviceType);
+        }
 
         ServiceResponse response = MVPApi.post(url, port, requestInf);
         return new BaseResult(response);
     }
 
+    public static BaseResult issueNewSerialNumber(String token, String serialNumber, String deviceType){
+    	String url = baseAddress + "shine_serials/issue";
+//    	String queryString = "";
+//    	if(!serialNumber.isEmpty()){
+//    		queryString += "&serial_number" + serialNumber;
+//    	}
+//    	
+//    	if(!deviceType.isEmpty()){
+//    		queryString += "&device_type" + deviceType;
+//    	}
+//    	
+//    	url += "?" + queryString;
+    	BaseParams requestInfo = new BaseParams();
+    	requestInfo.addHeader("auth_token", token);
+    	requestInfo.addParam("serial_number", serialNumber);
+    	requestInfo.addParam("device_type", deviceType);
+    	
+    	ServiceResponse response = MVPApi.post(url, port, requestInfo);
+    	return new BaseResult(response);
+    }
     // sync apis
     public static ServiceResponse syncLog(String token, String log) {
 
@@ -1399,6 +1436,16 @@ public class MVPApi extends RequestHelper {
         BaseResult result = new BaseResult(response);
         return result;
     }
+    
+    public static BaseResult confirmSerialNumber(String token, String serialNumber){
+    	String url = baseAddress + "shine_serials/confirm";
+    	
+    	BaseParams requestInfo = new BaseParams();
+    	requestInfo.addHeader("auth_token", token);
+    	requestInfo.addParam("serial_number", serialNumber);
+    	ServiceResponse response = MVPApi.post(url, port, requestInfo);
+    	return new BaseResult(response);
+    }
 
     // others
     public static BaseResult customRequest(String shortUrl, String verb, BaseParams params) {
@@ -1428,6 +1475,20 @@ public class MVPApi extends RequestHelper {
         return result;
     }
 
+    public static BaseResult linkMetawatch(String token, String metawatchID){
+    	String url = baseAddress +  "link_metawatch";
+    	BaseParams requestInfo = new BaseParams();
+    	requestInfo.addHeader("auth_token", token);
+    	requestInfo.addParam("service_id", metawatchID);
+    	ServiceResponse response = MVPApi.post(url, port, requestInfo);
+    	return new BaseResult(response);
+    }
+    
+    public static void main(String[] args){
+    	String token = MVPApi.signUp(MVPApi.generateUniqueEmail(), "qwerty").token;
+    	BaseResult result = linkMetawatch(token, MVPApi.generateUniqueEmail());
+    }
+    
     private static String[] flashColors = { "AZ", "BZ", "CZ", "DZ", "EZ", "FZ", "GZ" };
 
     private static String[] shineColors = { "AZ", "BZ", "CZ", "DZ", "EZ", "FZ", "GZ", "HZ", "JZ", "KZ", "LZ", "MZ" };
@@ -1464,8 +1525,8 @@ public class MVPApi extends RequestHelper {
     }
 
     // test
-    public static void main(String[] args) throws JSONException {
-
-    }
+//    public static void main(String[] args) throws JSONException {
+//
+//    }
 
 }

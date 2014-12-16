@@ -146,7 +146,7 @@ public class SignUpWithFlashAPI extends ModelAPI{
     
     public void v_HomeScreen() {
     	// Swipe to get through first time's tutorial
-    	ShortcutsTyper.delayTime(1000);
+    	PrometheusHelper.waitForView("PTRichTextLabel", DefaultStrings.TutorialFirstPageLabel, 10);
     	PrometheusHelper.handleTutorialForFlash(true);
     	
     	Assert.assertTrue(HomeScreen.isToday(), "Current view is HomeScreen");

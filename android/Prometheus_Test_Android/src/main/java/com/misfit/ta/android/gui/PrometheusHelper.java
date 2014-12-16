@@ -55,7 +55,7 @@ public class PrometheusHelper {
 		ShortcutsTyper.delayOne();
 		SignUp.pressNext();
 		ShortcutsTyper.delayTime(2000);
-		SignUp.linkShine();
+		SignUp.linkShine(fullScreenHeight, fullScreenWidth);
 		ShortcutsTyper.delayTime(2000);
 		SignUp.handleSignUpTutorial();
 	}

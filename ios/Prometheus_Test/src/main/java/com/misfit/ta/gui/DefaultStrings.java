@@ -61,7 +61,8 @@ public class DefaultStrings {
 	public static String RemoveSleepConfirmationAlertMessage = "This action can't be undone.";
 	public static String RemoveSleepConfirmationAlertTitle = "Remove Sleep Session?";
 	public static String NoSleepDataLabel = "No sleep data yet";
-	public static String SyncToSeeSleepLabel = "Sync to see your sleep";
+	public static String SyncShineToSeeSleepLabel = "Sync Shine to see your sleep";
+	public static String SyncFlashToSeeSleepLabel = "Sync Flash to see your sleep";
 	public static String EditSleepButtonTag = "EditSleepButton";
 	public static String TonightLabel = "Tonight";
 	public static String AlarmButton = "Set Alarm";
@@ -133,6 +134,8 @@ public class DefaultStrings {
 	public static String BuyNowButton = "Buy Now";
 	public static String ForwardLabel = ">>";
 	public static String BackwardLabel = "<<";
+	
+	public static String StepsLabel = "steps";
 	
 	// edit tag
 	public static String EditTagTitle = "Edit Tag";

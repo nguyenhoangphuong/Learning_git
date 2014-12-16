@@ -8,7 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.aut.DefaultValues;
 import com.misfit.ta.backend.aut.correctness.openapi.OpenAPIAutomationBase;
@@ -42,7 +42,7 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 			MVPApi.createGoal(strangerToken, goal);
 		}
 		
-		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "https://www.google.com.vn/");
+		accessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_GOAL, ClientKey, "http://misfit.com/");
 	}
 	
 	
@@ -123,7 +123,7 @@ public class OpenApiGoalsGetTC extends OpenAPIAutomationBase {
 	@Test(groups = { "ios", "Prometheus", "MVPBackend", "openapi", "get_goals", "Excluded" })
 	public void GetGoalsWithoutPermission() {
 		
-		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "https://www.google.com.vn/");
+		String invalidScopeAccessToken = OpenAPI.getAccessToken(myEmail, "qqqqqq", OpenAPI.RESOURCE_PROFILE, ClientKey, "http://misfit.com/");
 		BaseResult result = OpenAPI.getGoals(invalidScopeAccessToken, "me", fromDate, toDate);
 		
 		Assert.assertEquals(result.statusCode, 403, "Status code");

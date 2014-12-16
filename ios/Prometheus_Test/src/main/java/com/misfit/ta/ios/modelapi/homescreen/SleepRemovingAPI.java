@@ -25,7 +25,7 @@ public class SleepRemovingAPI extends ModelAPI {
 	private String email;
 	
 	private static String OldestSleepTitle = "10:00pm - 5:25am";
-	private static String LatestSleepTitle = "5:00pm - 7:49pm";
+	private static String LatestSleepTitle = "10:00pm - 5:25am";
 	
 
 	public void e_init() {
@@ -36,13 +36,9 @@ public class SleepRemovingAPI extends ModelAPI {
 		// input 1 sleep and 1 nap
 		HomeScreen.tapOpenManualInput();
 		Gui.swipeUp(5000);
-		HomeScreen.tap8HourSleep();
-		ShortcutsTyper.delayTime(2000);
-		Gui.swipeDown(5000);
-		PrometheusHelper.manualInputTime(new String[] {"5", "00", "PM"});
-		Gui.swipeUp(5000);
-		HomeScreen.tap180MinNap();
-		ShortcutsTyper.delayTime(2000);
+		Gui.swipeUp(500);
+		HomeScreen.tap8HourSleep(); // 1st sleep
+		HomeScreen.tap8HourSleep(); // 2nd sleep
 		HomeScreen.tapSave();
 		
 		// go to sleep view

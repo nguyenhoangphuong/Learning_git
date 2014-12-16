@@ -14,6 +14,7 @@ import com.misfit.ta.backend.api.internalapi.MVPApi;
 import com.misfit.ta.backend.data.pedometer.Pedometer;
 import com.misfit.ta.backend.data.sync.SyncDebugLog;
 import com.misfit.ta.gui.DefaultStrings;
+import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.InstrumentHelper;
 import com.misfit.ta.gui.PrometheusHelper;
 import com.misfit.ta.gui.Sync;
@@ -24,7 +25,7 @@ import com.misfit.ta.utils.ShortcutsTyper;
 public class SyncContinously {
 
     public int numberOfSync = 1;
-    public String deviceIp = "192.168.1.62";
+    public String deviceIp = "192.168.169.99";
     private InstrumentHelper instrument = new InstrumentHelper();
 
     @Test(groups = { "iOS", "Prometheus", "HomeScreen", "iOSAutomation", "QuietSync", "SyncContinously" })
@@ -174,11 +175,11 @@ public class SyncContinously {
                 Sync.tapToSync();
 
                 while (Gui.getProperty("PTAECASyncAnimationView", 0, "alpha").equals("1")) {
-                    ShortcutsTyper.delayTime(100);
+                	ShortcutsTyper.delayTime(100);
                 }
                 ShortcutsTyper.delayTime(3000);
 
-                if (Sync.hasAlert()) {
+                if (HomeScreen.hasSyncFailLabel()) {
                     failedSyncCount++;
                     Sync.tapOK();
                 } else {
@@ -186,7 +187,7 @@ public class SyncContinously {
                 }
 
                 // parse sync log and store the record
-                ShortcutsTyper.delayTime(5000);
+                ShortcutsTyper.delayTime(1800000);
 
                 // print result
                 System.out.println("-----------------------------------------------");

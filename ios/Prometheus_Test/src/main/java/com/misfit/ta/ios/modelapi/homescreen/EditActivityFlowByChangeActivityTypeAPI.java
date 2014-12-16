@@ -8,24 +8,24 @@ import org.testng.Assert;
 import com.misfit.ios.ViewUtils;
 import com.misfit.ta.common.MVPCalculator;
 import com.misfit.ta.common.MVPEnums;
+import com.misfit.ta.gui.DefaultStrings;
 import com.misfit.ta.gui.EditTagScreen;
 import com.misfit.ta.gui.Gui;
 import com.misfit.ta.gui.HomeScreen;
 import com.misfit.ta.gui.HomeSettings;
 import com.misfit.ta.gui.PrometheusHelper;
-import com.misfit.ta.gui.Sync;
 import com.misfit.ta.gui.Timeline;
 import com.misfit.ta.ios.AutomationTest;
 import com.misfit.ta.modelAPI.ModelAPI;
 import com.misfit.ta.utils.ShortcutsTyper;
 
-public class EditActivityFlowAPI extends ModelAPI {
+public class EditActivityFlowByChangeActivityTypeAPI extends ModelAPI {
 
 	public static final String[] arrActivities = new String[] { "Basketball",
 		"Tennis", "Swimming", "Soccer", "Cycling", "Running", "Yoga",
 		"Dancing" };
 	
-	public EditActivityFlowAPI(AutomationTest automation, File model,
+	public EditActivityFlowByChangeActivityTypeAPI(AutomationTest automation, File model,
 			boolean efsm, PathGenerator generator, boolean weight) {
 		super(automation, model, efsm, generator, weight);
 	}
@@ -52,7 +52,8 @@ public class EditActivityFlowAPI extends ModelAPI {
 
 	public void e_holdToEditActivity() {
 		Timeline.openTile("1:00am");
-		Gui.touchATaggedView("UIButton", 1000);
+		Gui.touchATaggedView("UIButton", 1500);
+		ShortcutsTyper.delayTime(2000);
 		HomeSettings.tapOKAtNewGoalPopup();
 	}
 
@@ -116,14 +117,14 @@ public class EditActivityFlowAPI extends ModelAPI {
 		int newPoint = (int) Math.floor(MVPCalculator.calculatePointForNewTag(
 				steps, mins, currentActivity));
 		System.out.println("New point : " + newPoint);
-		checkNewTileAndProgress(newPoint);
+		checkEditedTileAndProgress(newPoint);
 	}
 
 	private void capture() {
 		Gui.captureScreen("EditActivityFlow-" + System.nanoTime());
 	}
 
-	private void checkNewTileAndProgress(int newPoint) {
+	/*private void checkNewTileAndProgress(int newPoint) {
 
 		// check tile updated and progress
 		Timeline.openTile("1:00am - 1:05am");
@@ -138,6 +139,29 @@ public class EditActivityFlowAPI extends ModelAPI {
 		Assert.assertTrue(ViewUtils.isExistedView("UILabel", newPoint + ""),
 				"Total points updated correctly");
 		Timeline.dragUpTimeline();
-	}
+	}*/
 
+	private void checkEditedTileAndProgress(int newPoint) {
+
+		// check tile updated and progress
+		Timeline.openTile("1:00am - 1:05am");
+		Timeline.openTile("1:00am");
+		capture();
+		Assert.assertTrue(Timeline.isEditedActivityTileCorrect("1:00am", "1:05am",
+				mins, null), "Activity updated correctly");
+		Timeline.closeCurrentTile();
+
+		// check progress circle
+		Timeline.dragDownTimeline();
+		
+		String label = "_" + steps + "_ " + DefaultStrings.StepsLabel;
+		if (ViewUtils.isExistedView("PTRichTextLabel", label))
+		{
+			Gui.touchAVIew("PTRichTextLabel", label);
+		}
+		
+		Assert.assertTrue(ViewUtils.isExistedView("UILabel", newPoint + ""),
+				"Total points updated correctly");
+		Timeline.dragUpTimeline();
+	}
 }

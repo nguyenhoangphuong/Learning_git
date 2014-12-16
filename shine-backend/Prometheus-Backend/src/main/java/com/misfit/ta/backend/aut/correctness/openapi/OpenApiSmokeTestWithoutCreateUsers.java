@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import com.google.resting.component.impl.ServiceResponse;
 import com.misfit.ta.Settings;
-import com.misfit.ta.backend.api.internalapi.MVPApi;
+import com.misfit.ta.backend.api.MVPApi;
 import com.misfit.ta.backend.api.openapi.OpenAPI;
 import com.misfit.ta.backend.aut.BackendAutomation;
 import com.misfit.ta.backend.data.BaseResult;
@@ -33,7 +33,7 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
 		
 		String email = "nhhai16991@gmail.com";
 		String password = "qqqqqq";
-		String returnUrl = "https://www.google.com.vn/";
+		String returnUrl = "http://misfit.com";
 		String allScopes = OpenAPI.allScopesAsString();
 		
 		BaseResult result = null;
@@ -74,7 +74,21 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
 		cookie = result.cookie;
 		
 		result = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_TOKEN, clientKey, returnUrl, allScopes, null, cookie);
-		result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+		
+		if (result.rawData.contains("Request for permission")) {
+            result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+            String location = OpenAPI.parseReturnUrl(result);
+            String token = OpenAPI.parseAccessToken(result);
+            logger.info(result.getHeaderValue("Location"));
+            logger.info(location);
+            logger.info(token);
+            Assert.assertEquals(location, returnUrl, "Return url");
+            Assert.assertNotNull(token, "Return token");
+            
+        } else {
+            Assert.assertTrue(result.statusCode == 200 || result.statusCode == 302 || result.statusCode == 304, "Error code is: " + result.statusCode);
+        }
+//		result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
 		String accessTokenA = OpenAPI.parseAccessToken(result);
 		
 		
@@ -84,7 +98,23 @@ public class OpenApiSmokeTestWithoutCreateUsers extends BackendAutomation {
 		cookie = result.cookie;
 		
 		result = OpenAPI.authorizationDialog(OpenAPI.RESPONSE_TYPE_CODE, clientKey, returnUrl, allScopes, null, cookie);
-		result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+		
+		if (result.rawData.contains("Request for permission")) {
+            result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+            String location = OpenAPI.parseReturnUrl(result);
+            String token = OpenAPI.parseAccessToken(result);
+            logger.info(result.getHeaderValue("Location"));
+            logger.info(location);
+            logger.info(token);
+            Assert.assertEquals(location, returnUrl, "Return url");
+            Assert.assertNotNull(token, "Return token");
+            
+        } else {
+            Assert.assertTrue(result.statusCode == 200 || result.statusCode == 304 || result.statusCode == 302, "Error code is: " + result.statusCode);
+        }
+//		result = OpenAPI.authorizationConfirm(OpenAPI.parseTransactionId(result), cookie);
+		
+		
 		String code = OpenAPI.parseCode(result); 
 		
 		result = OpenAPI.exchangeCodeForToken(OpenAPI.GRANT_TYPE_AUTHORIZATION_CODE, code, clientKey, clientSecret, returnUrl, cookie);

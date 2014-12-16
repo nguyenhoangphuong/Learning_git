@@ -33,7 +33,7 @@ public class SyncingTest {
 			System.out.println("****Start syncing #" + i);
 			System.out.println("***Tap to sync #" + i);
 			Gui.touchAView("ThreeStateView", "mID", "id/action_three_state_imageview");
-			/*
+			
 			HomeScreen.tapDebug();
 			while("Syncing".equals(HomeScreen.getDebugValues()[5])) {
 				System.out.println("****Still Syncing");
@@ -42,7 +42,7 @@ public class SyncingTest {
 			}
 			System.out.println("***Finish syncing #" + i);
 			ShortcutsTyper.delayTime(3000);
-			*/
+			
 			
 			if (hasFailedSyncPopup()) {
 				System.out.println("***Has failed sync popup#" + i);
@@ -67,6 +67,11 @@ public class SyncingTest {
 		System.out.println("Total failed syncs: " + countFailedSync);
 		
 		Gui.shutdown();
+	}
+	
+	@Test(groups = { "android", "Prometheus", "Syncing", "AndroidAutomation", "ContinuousSyncing", "ManualSyncing", "Pebble", "Excluded" })
+	public void ManualPebbleSyncContinously() throws InterruptedException, StopConditionException, IOException {
+		
 	}
 	
 	private boolean hasFailedSyncPopup() {
