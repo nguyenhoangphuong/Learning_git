@@ -14,3 +14,7 @@ public class Basic {
 	}
 
 }
+class Student{
+	
+	
+}
